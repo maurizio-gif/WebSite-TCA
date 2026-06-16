@@ -1,0 +1,191 @@
+---
+const interessi = [
+  "Tennis",
+  "Padel/Pickleball",
+  "Preparazione Atletica",
+  "Attività famiglia/bambini",
+  "Membership Club",
+  "Altro",
+];
+---
+
+<section class="lead" id="lead">
+  <div class="lead__inner">
+    <div class="lead__intro">
+      <h2 class="lead__title">Parliamone. Ti ricontattiamo noi.</h2>
+      <p class="lead__text">
+        Lascia i tuoi dati e raccontaci cosa cerchi: ti risponderemo con tutte
+        le informazioni — orari, disponibilità e la soluzione più adatta a te.
+      </p>
+    </div>
+
+    {/* TODO fase 2: configurare action e webhook n8n. Per ora form solo visivo (submit disabilitato). */}
+    <form class="lead__form" onsubmit="return false;">
+      <div class="lead__field">
+        <label for="lead-nome">Nome e cognome <span aria-hidden="true">*</span></label>
+        <input id="lead-nome" name="nome" type="text" required />
+      </div>
+
+      <div class="lead__field">
+        <label for="lead-email">Email <span aria-hidden="true">*</span></label>
+        <input id="lead-email" name="email" type="email" required />
+      </div>
+
+      <div class="lead__field">
+        <label for="lead-telefono">Telefono <span aria-hidden="true">*</span></label>
+        <input id="lead-telefono" name="telefono" type="tel" required />
+      </div>
+
+      <div class="lead__field">
+        <label for="lead-interesse">Sono interessato a</label>
+        <select id="lead-interesse" name="interesse">
+          <option value="" selected disabled>Seleziona…</option>
+          {interessi.map((i) => <option value={i}>{i}</option>)}
+        </select>
+      </div>
+
+      <div class="lead__field lead__field--full">
+        <label for="lead-messaggio">Messaggio</label>
+        <textarea id="lead-messaggio" name="messaggio" rows="4"></textarea>
+      </div>
+
+      <div class="lead__field lead__field--full lead__consent">
+        <input id="lead-privacy" name="privacy" type="checkbox" required />
+        <label for="lead-privacy">
+          Ho letto e accetto la <a href="/privacy-policy">Privacy Policy</a> e
+          acconsento al trattamento dei miei dati. <span aria-hidden="true">*</span>
+        </label>
+      </div>
+
+      <div class="lead__field--full">
+        <button class="lead__submit" type="submit">Invia richiesta</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .lead {
+    padding: 6rem 1.5rem;
+  }
+
+  .lead__inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .lead__intro {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .lead__title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    margin-bottom: 1rem;
+  }
+
+  .lead__text {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .lead__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .lead__field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lead__field--full {
+    grid-column: 1 / -1;
+  }
+
+  .lead__field label {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+
+  .lead__field label span {
+    color: var(--color-accent);
+  }
+
+  .lead__field input,
+  .lead__field select,
+  .lead__field textarea {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    width: 100%;
+  }
+
+  .lead__field input:focus,
+  .lead__field select:focus,
+  .lead__field textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .lead__field textarea {
+    resize: vertical;
+  }
+
+  .lead__consent {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .lead__consent input {
+    width: auto;
+    margin-top: 0.25rem;
+  }
+
+  .lead__consent label {
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  .lead__consent a {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .lead__submit {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--color-accent);
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .lead__submit:hover {
+    opacity: 0.88;
+  }
+
+  @media (max-width: 600px) {
+    .lead__form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

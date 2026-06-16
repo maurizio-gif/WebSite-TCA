@@ -1,0 +1,212 @@
+---
+const navLinks = [
+  { label: "Club", href: "/" },
+  { label: "Tennis", href: "/tennis" },
+  { label: "Padel e Pickleball", href: "/padel" },
+  { label: "Famiglia", href: "/famiglia" },
+  { label: "Summer Camps", href: "/summer-camps" },
+  { label: "Preparazione Atletica", href: "/preparazione-atletica" },
+  { label: "Torneo Avvenire", href: "/torneo-avvenire" },
+];
+---
+
+<header class="navbar">
+  <div class="navbar__inner">
+    <a class="navbar__logo" href="/" aria-label="Tennis Club Ambrosiano — home">
+      {/* TODO: sostituire con src/assets/logos/tca-logo.svg quando disponibile */}
+      <span class="img-placeholder navbar__logo-placeholder" data-name="tca-logo.svg"></span>
+    </a>
+
+    <nav class="navbar__nav" id="primary-nav" aria-label="Navigazione principale">
+      <ul class="navbar__list">
+        {
+          navLinks.map((link) => (
+            <li>
+              <a class="navbar__link" href={link.href}>
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="navbar__actions">
+      {/* TODO: collegare link esterno PerfectGym */}
+      <a class="navbar__cta" href="#">Iscriviti subito</a>
+      <button
+        class="navbar__toggle"
+        type="button"
+        aria-label="Apri menu"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .navbar__logo {
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .navbar__logo-placeholder {
+    width: 120px;
+    min-height: 44px;
+    font-size: 0.7rem;
+  }
+
+  .navbar__nav {
+    flex: 1;
+  }
+
+  .navbar__list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.25rem;
+  }
+
+  .navbar__link {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--color-text);
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+
+  .navbar__link:hover {
+    color: var(--color-accent);
+  }
+
+  .navbar__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .navbar__cta {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--color-accent);
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+  }
+
+  .navbar__cta:hover {
+    opacity: 0.88;
+  }
+
+  .navbar__toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .navbar__toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--color-text);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  /* ---------- Mobile ---------- */
+  @media (max-width: 1024px) {
+    .navbar__toggle {
+      display: flex;
+    }
+
+    .navbar__nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .navbar__nav.is-open {
+      max-height: 90vh;
+    }
+
+    .navbar__list {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding: 0.5rem 1.5rem 1rem;
+    }
+
+    .navbar__link {
+      display: block;
+      padding: 0.75rem 0;
+      font-size: 1rem;
+      width: 100%;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .navbar__list li:last-child .navbar__link {
+      border-bottom: none;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .navbar__cta {
+      padding: 0.55rem 0.9rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector(".navbar__toggle");
+  const nav = document.getElementById("primary-nav");
+
+  toggle?.addEventListener("click", () => {
+    const isOpen = nav?.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
+    toggle.setAttribute("aria-label", isOpen ? "Chiudi menu" : "Apri menu");
+  });
+</script>

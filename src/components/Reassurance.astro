@@ -1,0 +1,101 @@
+---
+const reasons = [
+  {
+    number: "01",
+    title: "Una storia che continua",
+    text:
+      "Sessant'anni di tennis, il Torneo Avvenire e una hall of fame di campioni che hanno iniziato qui. Entri in una tradizione viva.",
+  },
+  {
+    number: "02",
+    title: "Eccellenza accessibile",
+    text:
+      "Maestri qualificati, l'Academy di Renato Vavassori e impianti di livello, in un ambiente accogliente e senza formalismi.",
+  },
+  {
+    number: "03",
+    title: "Tutto in un unico luogo",
+    text:
+      "Oltre 30.000 mq: tennis, padel, preparazione atletica, attività per i più piccoli e spazi per ritrovarsi. Il tuo tempo libero, in un solo indirizzo.",
+  },
+  {
+    number: "04",
+    title: "A due passi da casa",
+    text:
+      "Metro Udine a pochi minuti e ampio parcheggio. Aperto tutti i giorni, dalle prime ore del mattino a tarda sera.",
+  },
+];
+---
+
+<section class="reassurance">
+  <div class="reassurance__inner">
+    <h2 class="reassurance__title">
+      Quattro buone ragioni per varcare il cancello.
+    </h2>
+
+    <div class="reassurance__grid">
+      {
+        reasons.map((r) => (
+          <div class="reassurance__item">
+            <span class="reassurance__number">{r.number}</span>
+            <h3 class="reassurance__item-title">{r.title}</h3>
+            <p class="reassurance__text">{r.text}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .reassurance {
+    padding: 6rem 1.5rem;
+  }
+
+  .reassurance__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .reassurance__title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .reassurance__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem 3.5rem;
+  }
+
+  .reassurance__number {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .reassurance__item-title {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .reassurance__text {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 760px) {
+    .reassurance__grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+</style>

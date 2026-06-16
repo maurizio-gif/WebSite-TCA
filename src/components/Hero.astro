@@ -1,0 +1,146 @@
+---
+// TODO: quando disponibile, usare src/assets/images/hero/hero-home.jpg come background.
+// Placeholder attuale: sfondo #1A1A1A.
+---
+
+<section class="hero">
+  <div class="hero__media" data-name="hero-home.jpg"></div>
+  <div class="hero__overlay"></div>
+
+  <div class="hero__content">
+    <p class="hero__eyebrow">Dal 1965, il tennis a Milano</p>
+    <h1 class="hero__title">
+      Il club dove la tradizione incontra il tuo prossimo dritto.
+    </h1>
+    <p class="hero__subtitle">
+      Sedici campi, una scuola tennis tra le più storiche della città, e oltre
+      30.000 mq dedicati allo sport e alla famiglia. A pochi passi dalla metro
+      Udine.
+    </p>
+
+    <div class="hero__ctas">
+      {/* TODO: collegare link esterno PerfectGym */}
+      <a class="hero__cta hero__cta--primary" href="#">Iscriviti ora</a>
+      {/* TODO: aprire modal form lead */}
+      <a class="hero__cta hero__cta--secondary" href="#">Prenota una visita</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Placeholder #1A1A1A — sostituire con la foto hero */
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    background-color: #1a1a1a;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero__media::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--color-overlay);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem;
+    color: #ffffff;
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero__title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__subtitle {
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 600px;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 2.5rem;
+  }
+
+  .hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hero__cta {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.9rem 1.9rem;
+    border-radius: 4px;
+    transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
+  }
+
+  .hero__cta--primary {
+    background: var(--color-accent);
+    color: #ffffff;
+  }
+
+  .hero__cta--primary:hover {
+    opacity: 0.88;
+  }
+
+  .hero__cta--secondary {
+    background: transparent;
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+  }
+
+  .hero__cta--secondary:hover {
+    background: #ffffff;
+    color: var(--color-text);
+    border-color: #ffffff;
+  }
+
+  @media (max-width: 600px) {
+    .hero__ctas {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero__cta {
+      text-align: center;
+    }
+  }
+</style>

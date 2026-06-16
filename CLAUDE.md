@@ -1,0 +1,100 @@
+# CLAUDE.md — Tennis Club Ambrosiano
+
+Convenzioni di progetto per il sito del Tennis Club Ambrosiano. Questo file è la
+fonte di verità per stack, flusso di lavoro, struttura e regole.
+
+---
+
+## Stack
+- **Astro** — framework, output statico
+- **CSS puro / CSS custom properties** — nessun framework CSS, nessuna libreria UI
+- **GitHub** — versioning (`origin` → github.com/maurizio-gif/WebSite-TCA.git)
+- **Netlify** — deploy (build: `npm run build`, publish: `dist`)
+
+---
+
+## Flusso di lavoro
+1. Prima di ogni task complesso, esponi il piano in massimo 5 righe
+2. Attendi l'approvazione prima di eseguire
+3. Produci sempre file completi e pronti all'uso, mai troncati
+4. Non eseguire commit né push: li gestisce l'utente manualmente
+5. Usa `feature/nome` per lo sviluppo, `main` va in produzione
+
+---
+
+## Struttura directory
+```
+src/components/   → componenti riutilizzabili (PascalCase)
+src/layouts/      → layout di pagina (BaseLayout, ecc.)
+src/pages/        → pagine principali (routing file-based)
+src/assets/
+  images/
+    hero/         → foto hero (full-screen, con overlay)
+    disciplines/  → foto tennis, padel, famiglia, ecc.
+    torneo/       → foto Torneo Avvenire
+    club/         → foto generiche struttura
+  logos/
+    partners/     → loghi sponsor e partner
+src/styles/       → CSS globale e variabili CSS custom
+public/           → file statici (favicon, ecc.)
+```
+
+---
+
+## Palette
+Definite in `src/styles/global.css` come CSS custom properties su `:root`.
+
+| Variabile          | Valore              | Uso                        |
+|--------------------|---------------------|----------------------------|
+| `--color-bg`       | `#FFFFFF`           | Sfondo pagina              |
+| `--color-text`     | `#1A1A1A`           | Testo principale           |
+| `--color-accent`   | `#C8102E`           | Accento (CTA, link, brand) |
+| `--color-border`   | `#E5E7EB`           | Bordi, divisori            |
+| `--color-overlay`  | `rgba(0,0,0,0.45)`  | Overlay su immagini hero   |
+
+---
+
+## Tipografia
+Entrambi i font sono caricati da **Google Fonts** (in `BaseLayout.astro`).
+
+- **Titoli / hero** → serif: **Playfair Display** (`--font-serif`)
+- **Navbar / body** → sans-serif: **Inter** (`--font-sans`)
+
+---
+
+## Integrazioni esterne
+Da **predisporre** ora, **non implementare** finché non indicato.
+
+| Integrazione            | Destinazione            | Stato        |
+|-------------------------|-------------------------|--------------|
+| Iscrizioni membership   | Link esterno PerfectGym | Predisporre  |
+| Prenotazione campi      | Link esterno Playtomic  | Predisporre  |
+| Form lead               | Webhook n8n             | Fase 2       |
+| Modal                   | Da definire             | Fase 2       |
+
+---
+
+## Pagine previste
+| Rotta                     | Pagina                |
+|---------------------------|-----------------------|
+| `/`                       | Home                  |
+| `/tennis`                 | Tennis                |
+| `/padel`                  | Padel e Pickleball    |
+| `/famiglia`               | Famiglia              |
+| `/summer-camps`           | Summer Camps          |
+| `/preparazione-atletica`  | Preparazione Atletica |
+| `/torneo-avvenire`        | Torneo Avvenire       |
+| `/contatti`               | Contatti              |
+
+---
+
+## Regole
+- Nessuna spiegazione del codice salvo richiesta esplicita
+- Nessun placeholder di testo: i copy sono forniti nel brief
+- **Immagini non ancora disponibili**: usa l'utility `.img-placeholder` →
+  box `#E5E7EB` con il nome file centrato (vedi `src/styles/global.css`)
+- Un file per componente
+- I componenti usano la notazione **PascalCase**
+- Se un task tocca più file, completali tutti prima di fermarti
+- Se incontri un ostacolo, proponilo senza procedere autonomamente
+- "Preparazione Atletica" — mai "fitness", ovunque (anche SEO/meta)

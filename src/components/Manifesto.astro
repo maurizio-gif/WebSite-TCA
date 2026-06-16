@@ -1,0 +1,75 @@
+---
+---
+
+<section class="manifesto">
+  <div class="manifesto__inner">
+    <h2 class="manifesto__title">
+      Un club fondato sulla tradizione, costruito per il presente.
+    </h2>
+
+    <div class="manifesto__body">
+      <p>
+        Il Tennis Club Ambrosiano è la casa del Torneo Avvenire, la gara che dal
+        1965 scopre i talenti del tennis di domani. Da quella stessa vocazione —
+        il futuro che si allena ogni giorno — nasce tutto ciò che facciamo oggi.
+      </p>
+      <p>
+        Qui trovi alcuni dei migliori impianti della zona est di Milano: campi
+        da tennis, padel e pickleball, spazi per la preparazione atletica e un
+        calendario di attività che accompagna ogni età. Che tu voglia tornare a
+        giocare, far crescere un figlio nello sport o semplicemente prenderti
+        cura di te, il Club è pensato per renderlo semplice.
+      </p>
+    </div>
+
+    <p class="manifesto__quote">Sei a casa. Ti manca solo la racchetta.</p>
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    padding: 7rem 1.5rem;
+  }
+
+  .manifesto__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .manifesto__title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    line-height: 1.2;
+    margin-bottom: 2.5rem;
+  }
+
+  .manifesto__body p {
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text);
+  }
+
+  .manifesto__body p + p {
+    margin-top: 1.5rem;
+  }
+
+  .manifesto__quote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    color: var(--color-accent);
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 600px) {
+    .manifesto {
+      padding: 4.5rem 1.5rem;
+    }
+
+    .manifesto__body p {
+      font-size: 1rem;
+    }
+  }
+</style>
