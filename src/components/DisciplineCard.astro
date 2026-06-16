@@ -1,0 +1,95 @@
+---
+interface Props {
+  title: string;
+  text: string;
+  href: string;
+  image: string;
+}
+
+const { title, text, href, image } = Astro.props;
+---
+
+<a class="discipline-card" href={href}>
+  <div class="discipline-card__media">
+    {/* TODO: sostituire con la foto reale quando disponibile */}
+    <span class="img-placeholder discipline-card__placeholder" data-name={image}
+    ></span>
+    <span class="discipline-card__hover"></span>
+  </div>
+
+  <div class="discipline-card__body">
+    <h3 class="discipline-card__title">{title}</h3>
+    <p class="discipline-card__text">{text}</p>
+    <span class="discipline-card__link">Scopri di più →</span>
+  </div>
+</a>
+
+<style>
+  .discipline-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .discipline-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .discipline-card__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .discipline-card__placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .discipline-card__hover {
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .discipline-card:hover .discipline-card__hover {
+    opacity: 0.28;
+  }
+
+  .discipline-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.5rem;
+  }
+
+  .discipline-card__title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .discipline-card__text {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    flex: 1;
+  }
+
+  .discipline-card__link {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-top: 1.25rem;
+  }
+</style>
