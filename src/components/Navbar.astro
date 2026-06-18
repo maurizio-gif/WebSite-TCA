@@ -847,9 +847,9 @@ const navItems = [
   .g-menu__sub-desc {
     display: block;
     font-family: var(--font-body);
-    font-size: clamp(11px, 2.5vw, 13px);
+    font-size: clamp(12.1px, 2.75vw, 14.3px);
     font-weight: 300;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.85);
     margin-top: 0.2rem;
     transition: color 0.18s;
     line-height: 1.35;
@@ -860,14 +860,13 @@ const navItems = [
     flex-shrink: 0;
     background-size: cover;
     background-position: center;
-    opacity: 0.35;
+    opacity: 1;
     border-radius: 2px;
     transition: opacity 0.25s;
   }
 
   .g-menu__sub-link:hover .g-menu__sub-name { color: #fff; }
-  .g-menu__sub-link:hover .g-menu__sub-desc { color: rgba(255,255,255,0.55); }
-  .g-menu__sub-link:hover .g-menu__sub-thumb { opacity: 0.7; }
+  .g-menu__sub-link:hover .g-menu__sub-desc { color: #fff; }
 
   /* Voci secondarie nel menu mobile */
   .g-menu__item--secondary { border-bottom: none; }
