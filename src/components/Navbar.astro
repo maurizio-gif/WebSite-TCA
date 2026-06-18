@@ -182,6 +182,7 @@ const navItems = [
     <div class="navbar__right">
       <button class="navbar__cta btn btn-red" data-open-modal="modal-contatti">{t.nav.contattaci}</button>
       <a class="navbar__mobile-contact" data-open-modal="modal-contatti">{t.nav.contattaci}</a>
+      <button class="navbar__mobile-accedi" id="btn-accedi" type="button">ACCEDI</button>
 
       <div class="lang-switcher" aria-label="Seleziona lingua / Select language">
         <a class={`lang-switcher__link${lang === 'it' ? ' is-active' : ''}`} href={itPath} hreflang="it" aria-label="Italiano">IT</a>
@@ -204,6 +205,27 @@ const navItems = [
     </div>
   </div>
 </header>
+
+<!-- Modal Accedi -->
+<dialog class="accedi-modal" id="modal-accedi" aria-labelledby="accedi-title">
+  <div class="accedi-modal__inner">
+    <button class="accedi-modal__close" id="accedi-close" aria-label="Chiudi">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M1 1L17 17M17 1L1 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <p class="accedi-modal__eyebrow">Il tuo Club</p>
+    <h2 class="accedi-modal__title" id="accedi-title">Accedi al tuo Account per gestire l'abbonamento e le prenotazioni.</h2>
+    <div class="accedi-modal__btns">
+      <a class="accedi-modal__btn accedi-modal__btn--red" href="#" target="_blank" rel="noopener">
+        ACCEDI DA WEB
+      </a>
+      <a class="accedi-modal__btn accedi-modal__btn--outline" href="#" target="_blank" rel="noopener">
+        ACCEDI DA APP
+      </a>
+    </div>
+  </div>
+</dialog>
 
 <!-- Menu fullscreen (mobile) -->
 <nav class="g-menu" id="g-menu" aria-label="Menu mobile" aria-hidden="true">
@@ -568,6 +590,7 @@ const navItems = [
   .lang-switcher__sep { font-size: 10px; color: var(--color-border); }
 
   .navbar__mobile-contact { display: none; }
+  .navbar__mobile-accedi  { display: none; }
 
   /* ── Burger ── */
   .navbar__burger {
@@ -603,13 +626,31 @@ const navItems = [
       font-family: var(--font-display);
       font-size: 13px; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--color-text); text-decoration: none;
+      color: #fff; text-decoration: none;
+      background: var(--color-accent);
+      border: 1.5px solid var(--color-accent);
+      padding: 6px 14px; white-space: nowrap;
+      transition: background 0.18s, border-color 0.18s;
+      cursor: pointer;
+    }
+    .navbar__mobile-contact:hover {
+      background: var(--color-accent-dark);
+      border-color: var(--color-accent-dark);
+    }
+
+    .navbar__mobile-accedi {
+      display: inline-flex; align-items: center;
+      font-family: var(--font-display);
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--color-text);
+      background: none;
       border: 1.5px solid var(--color-border);
       padding: 6px 14px; white-space: nowrap;
       transition: border-color 0.18s, color 0.18s;
       cursor: pointer;
     }
-    .navbar__mobile-contact:hover {
+    .navbar__mobile-accedi:hover {
       color: var(--color-accent);
       border-color: var(--color-accent);
     }
@@ -768,6 +809,100 @@ const navItems = [
   }
   .g-menu__cta-btn--outline:hover { border-color: #fff; color: #fff; }
 
+  /* ════════════════════════════════════════════
+     MODAL ACCEDI
+  ════════════════════════════════════════════ */
+  .accedi-modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(92vw, 480px);
+    max-height: 90vh;
+    background: #fff;
+    border: none;
+    padding: 0;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.22);
+    z-index: 600;
+  }
+
+  .accedi-modal::backdrop {
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(3px);
+  }
+
+  .accedi-modal__inner {
+    padding: 2.8rem 2.4rem 2.4rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .accedi-modal__close {
+    position: absolute;
+    top: 1.2rem; right: 1.2rem;
+    background: none; border: none;
+    cursor: pointer; padding: 6px;
+    color: var(--color-text-light);
+    transition: color 0.18s;
+  }
+  .accedi-modal__close:hover { color: var(--color-text); }
+
+  .accedi-modal__eyebrow {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .accedi-modal__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3.5vw, 1.9rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: -0.01em; line-height: 1.05;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .accedi-modal__btns {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .accedi-modal__btn {
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex; align-items: center;
+    padding: 12px 22px;
+    border: 2px solid transparent;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    white-space: nowrap;
+  }
+
+  .accedi-modal__btn--red {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+  .accedi-modal__btn--red:hover {
+    background: var(--color-accent-dark);
+    border-color: var(--color-accent-dark);
+  }
+
+  .accedi-modal__btn--outline {
+    background: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+  .accedi-modal__btn--outline:hover {
+    border-color: var(--color-text);
+  }
+
   /* Footer mobile menu */
   .g-menu__footer {
     font-family: var(--font-display); font-size: clamp(11px, 0.6vw, 11px);
@@ -789,6 +924,12 @@ const navItems = [
 </style>
 
 <script>
+  // ── Modal Accedi ──
+  const accediModal = document.getElementById('modal-accedi') as HTMLDialogElement | null;
+  document.getElementById('btn-accedi')?.addEventListener('click', () => accediModal?.showModal());
+  document.getElementById('accedi-close')?.addEventListener('click', () => accediModal?.close());
+  accediModal?.addEventListener('click', (e) => { if (e.target === accediModal) accediModal.close(); });
+
   const menu   = document.getElementById('g-menu') as HTMLElement | null;
   const burger = document.getElementById('burger-btn') as HTMLButtonElement | null;
 
