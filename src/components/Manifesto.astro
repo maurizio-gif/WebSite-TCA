@@ -26,7 +26,7 @@ const p = (path: string) => getLocalePath(lang, path);
           Club è pensato per renderlo semplice.
         </p>
       </div>
-      <a class="btn manifesto__cta" href={p('/storia')} data-anim="from-left" data-anim-delay="280">
+      <a class="btn btn-red manifesto__cta" href={p('/storia')} data-anim="from-left" data-anim-delay="280">
         Scopri la nostra storia →
       </a>
     </div>
@@ -78,22 +78,6 @@ const p = (path: string) => getLocalePath(lang, path);
 
   .manifesto__cta {
     align-self: flex-start;
-    font-family: var(--font-display);
-    font-size: clamp(12px, 1vw, 15px);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-text);
-    border: 2px solid var(--color-text);
-    padding: 11px 24px;
-    text-decoration: none;
-    transition: background 0.18s, color 0.18s, border-color 0.18s;
-    display: inline-block;
-  }
-  .manifesto__cta:hover {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    color: #fff;
   }
 
   .manifesto__quote {
