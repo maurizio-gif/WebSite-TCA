@@ -1,0 +1,28 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import LeadFormPlaceholder from "../../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../../components/InfoPratiche.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Padel & Pickleball | Tennis Club Ambrosiano Milan"
+  description="Padel and Pickleball at Tennis Club Ambrosiano in Milan. Dedicated courts, courses for all levels and tournaments for members."
+>
+  <PageHero
+    eyebrow="Adults · Padel"
+    title="Padel"
+    titleAccent="& Pickleball"
+    sub="Dedicated courts, structured courses and tournaments. The fastest-growing racket sport in the world, right here at TCA."
+    image="/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif"
+    imageAlt="Padel courts at Tennis Club Ambrosiano"
+    ctaLabel="Request Information"
+  />
+  {/* TODO: translate content sections to English */}
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>

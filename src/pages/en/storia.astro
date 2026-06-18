@@ -1,0 +1,23 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="History | Tennis Club Ambrosiano Milan"
+  description="The history of Tennis Club Ambrosiano: from its foundation in 1965 to the present day. Six decades of tennis, community and passion in Milan."
+>
+  <PageHero
+    eyebrow="The Club · History"
+    title="Our"
+    titleAccent="History"
+    sub="Six decades of tennis, passion and community. From 1965 to today, TCA has been one of Milan's most beloved clubs — a place where sport becomes a way of life."
+    image="/c0fbb171-c501-4040-81bf-867eb27bb1b3_TCA+Landscape.avif"
+    imageAlt="Aerial view of Tennis Club Ambrosiano"
+  />
+  {/* TODO: translate content sections to English */}
+</BaseLayout>

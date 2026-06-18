@@ -1,33 +1,51 @@
 ---
+import { useTranslations, getLocalePath, getAlternatePath, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'it' } = Astro.props;
+const t = useTranslations(lang);
+const p = (path: string) => getLocalePath(lang, path);
+
+// Switcher IT ↔ EN
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const rawPath = Astro.url.pathname;
+const cleanPath = base && rawPath.startsWith(base)
+  ? (rawPath.slice(base.length) || '/')
+  : rawPath;
+const { it: itPath, en: enPath } = getAlternatePath(cleanPath);
+
 const navItems = [
   {
-    label: "Adulti",
+    label: t.nav.adulti,
     href: null,
     children: [
-      { label: "Tennis",                href: "/tennis" },
-      { label: "Padel e Pickleball",    href: "/padel" },
-      { label: "Preparazione Atletica", href: "/preparazione-atletica" },
+      { label: t.nav.tennis,       href: p('/tennis') },
+      { label: t.nav.padel,        href: p('/padel') },
+      { label: t.nav.prepAtletica, href: p('/preparazione-atletica') },
     ],
   },
   {
-    label: "Junior",
+    label: t.nav.junior,
     href: null,
     children: [
-      { label: "Scuola Tennis",  href: "/scuola-tennis" },
-      { label: "Summer Camps",   href: "/summer-camps" },
-      { label: "Agonistica",     href: "/agonistica" },
+      { label: t.nav.scuolaTennis, href: p('/scuola-tennis') },
+      { label: t.nav.summerCamps,  href: p('/summer-camps') },
+      { label: t.nav.agonistica,   href: p('/agonistica') },
     ],
   },
-  { label: "Torneo Avvenire", href: "/torneo-avvenire", children: [] },
-  { label: "Storia",          href: "/storia",          children: [] },
-  { label: "Eventi",          href: "/eventi",          children: [] },
+  { label: t.nav.torneoAvvenire, href: p('/torneo-avvenire'), children: [] },
+  { label: t.nav.storia,         href: p('/storia'),          children: [] },
+  { label: t.nav.eventi,         href: p('/eventi'),          children: [] },
 ];
 ---
 
 <header class="navbar" id="navbar">
   <div class="navbar__inner">
     <!-- Logo -->
-    <a class="navbar__logo" href="/" aria-label="Tennis Club Ambrosiano — home">
+    <a class="navbar__logo" href={p('/')} aria-label="Tennis Club Ambrosiano — home">
       <img
         src="/logos/tca-logo.png"
         alt="Tennis Club Ambrosiano"
@@ -68,13 +86,30 @@ const navItems = [
 
     <div class="navbar__right">
       <!-- TODO: collegare link esterno PerfectGym -->
-      <a class="navbar__cta btn btn-red" href="#">Diventa Socio</a>
-      <a class="navbar__mobile-contact" href="/contatti">Contattaci</a>
+      <a class="navbar__cta btn btn-red" href="#">{t.nav.diventaSocio}</a>
+      <a class="navbar__mobile-contact" href={p('/contatti')}>{t.nav.contattaci}</a>
+
+      <!-- Switcher lingua (desktop) -->
+      <div class="lang-switcher" aria-label="Seleziona lingua / Select language">
+        <a
+          class={`lang-switcher__link${lang === 'it' ? ' is-active' : ''}`}
+          href={itPath}
+          hreflang="it"
+          aria-label="Italiano"
+        >IT</a>
+        <span class="lang-switcher__sep" aria-hidden="true">|</span>
+        <a
+          class={`lang-switcher__link${lang === 'en' ? ' is-active' : ''}`}
+          href={enPath}
+          hreflang="en"
+          aria-label="English"
+        >EN</a>
+      </div>
 
       <button
         class="navbar__burger"
         type="button"
-        aria-label="Apri menu"
+        aria-label={t.nav.openMenu}
         aria-expanded="false"
         aria-controls="g-menu"
         id="burger-btn"
@@ -91,56 +126,50 @@ const navItems = [
 <nav class="g-menu" id="g-menu" aria-label="Menu mobile" aria-hidden="true">
   <div class="g-menu__inner">
     <ul class="g-menu__list">
-      <!-- Adulti accordion -->
-      <li class="g-menu__item g-menu__item--accordion">
-        <button class="g-menu__link g-menu__accordion-btn" aria-expanded="false">
-          Adulti
-          <svg class="g-menu__acc-icon" width="16" height="10" viewBox="0 0 16 10" fill="none">
-            <path d="M1 1L8 9L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <ul class="g-menu__sub">
-          <li><a class="g-menu__sub-link" href="/tennis">Tennis</a></li>
-          <li><a class="g-menu__sub-link" href="/padel">Padel e Pickleball</a></li>
-          <li><a class="g-menu__sub-link" href="/preparazione-atletica">Preparazione Atletica</a></li>
-        </ul>
-      </li>
-
-      <!-- Junior accordion -->
-      <li class="g-menu__item g-menu__item--accordion">
-        <button class="g-menu__link g-menu__accordion-btn" aria-expanded="false">
-          Junior
-          <svg class="g-menu__acc-icon" width="16" height="10" viewBox="0 0 16 10" fill="none">
-            <path d="M1 1L8 9L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <ul class="g-menu__sub">
-          <li><a class="g-menu__sub-link" href="/scuola-tennis">Scuola Tennis</a></li>
-          <li><a class="g-menu__sub-link" href="/summer-camps">Summer Camps</a></li>
-          <li><a class="g-menu__sub-link" href="/agonistica">Agonistica</a></li>
-        </ul>
-      </li>
-
-      <li class="g-menu__item">
-        <a class="g-menu__link" href="/torneo-avvenire">Torneo Avvenire</a>
-      </li>
-
-      <li class="g-menu__item">
-        <a class="g-menu__link" href="/storia">Storia</a>
-      </li>
-
-      <li class="g-menu__item">
-        <a class="g-menu__link" href="/eventi">Eventi</a>
-      </li>
+      {navItems.map((item) => (
+        item.children && item.children.length > 0 ? (
+          <li class="g-menu__item g-menu__item--accordion">
+            <button class="g-menu__link g-menu__accordion-btn" aria-expanded="false">
+              {item.label}
+              <svg class="g-menu__acc-icon" width="16" height="10" viewBox="0 0 16 10" fill="none">
+                <path d="M1 1L8 9L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <ul class="g-menu__sub">
+              {item.children.map((child) => (
+                <li><a class="g-menu__sub-link" href={child.href}>{child.label}</a></li>
+              ))}
+            </ul>
+          </li>
+        ) : (
+          <li class="g-menu__item">
+            <a class="g-menu__link" href={item.href}>{item.label}</a>
+          </li>
+        )
+      ))}
     </ul>
 
     <div class="g-menu__ctas">
-      <a class="g-menu__cta-btn g-menu__cta-btn--red btn btn-red" href="#">Diventa Socio</a>
-      <a class="g-menu__cta-btn g-menu__cta-btn--outline" href="/contatti">Contattaci</a>
+      <a class="g-menu__cta-btn g-menu__cta-btn--red btn btn-red" href="#">{t.nav.diventaSocio}</a>
+      <a class="g-menu__cta-btn g-menu__cta-btn--outline" href={p('/contatti')}>{t.nav.contattaci}</a>
     </div>
 
     <div class="g-menu__footer">
-      Tennis Club Ambrosiano &mdash; Via Feltre 33, Milano
+      <!-- Switcher lingua (mobile) -->
+      <div class="g-menu__lang">
+        <a
+          class={`g-menu__lang-link${lang === 'it' ? ' is-active' : ''}`}
+          href={itPath}
+          hreflang="it"
+        >IT</a>
+        <span class="g-menu__lang-sep" aria-hidden="true">|</span>
+        <a
+          class={`g-menu__lang-link${lang === 'en' ? ' is-active' : ''}`}
+          href={enPath}
+          hreflang="en"
+        >EN</a>
+      </div>
+      {t.nav.menuFooter}
     </div>
   </div>
 </nav>
@@ -290,6 +319,42 @@ const navItems = [
     padding: 7px 18px;
   }
 
+  /* ---- Language switcher (desktop) ---- */
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .lang-switcher__link {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+
+  .lang-switcher__link:hover { color: var(--color-text); }
+
+  .lang-switcher__link.is-active {
+    color: var(--color-accent);
+    pointer-events: none;
+  }
+
+  .lang-switcher__sep {
+    font-size: 10px;
+    color: var(--color-border);
+  }
+
+  /* ---- Mobile contact button — nascosto su desktop ---- */
+  .navbar__mobile-contact {
+    display: none;
+  }
+
   /* ---- Burger ---- */
   .navbar__burger {
     display: none;
@@ -305,7 +370,6 @@ const navItems = [
   }
 
   .navbar__burger:hover { background: rgba(0, 0, 0, 0.06); }
-  .navbar.is-dark .navbar__burger:hover { background: rgba(255, 255, 255, 0.08); }
 
   .burger-bar {
     display: block;
@@ -313,22 +377,18 @@ const navItems = [
     height: 2px;
     background: var(--color-text);
     border-radius: 2px;
-    transition: transform 0.28s ease, opacity 0.2s ease, background 0.35s;
+    transition: transform 0.28s ease, opacity 0.2s ease;
   }
 
   body.menu-open .b1 { transform: translateY(7px) rotate(45deg); }
   body.menu-open .b2 { opacity: 0; transform: scaleX(0); }
   body.menu-open .b3 { transform: translateY(-7px) rotate(-45deg); }
 
-  /* ---- Mobile contact button (header) — nascosto su desktop ---- */
-  .navbar__mobile-contact {
-    display: none;
-  }
-
-  /* ---- Mobile ---- */
+  /* ---- Mobile breakpoints ---- */
   @media (max-width: 1023px) {
     .navbar__nav { display: none; }
     .navbar__burger { display: flex; }
+    .lang-switcher { display: none; }
   }
 
   @media (max-width: 640px) {
@@ -510,15 +570,49 @@ const navItems = [
     color: #fff;
   }
 
+  /* ---- Footer mobile menu ---- */
   .g-menu__footer {
     font-family: var(--font-display);
     font-size: clamp(9px, 0.6vw, 11px);
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.15);
-    margin-top: 4vh;
+    margin-top: 2vh;
     padding-top: 2vh;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* ---- Language switcher (mobile menu) ---- */
+  .g-menu__lang {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .g-menu__lang-link {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+
+  .g-menu__lang-link:hover { color: rgba(255, 255, 255, 0.7); }
+
+  .g-menu__lang-link.is-active {
+    color: var(--color-accent);
+    pointer-events: none;
+  }
+
+  .g-menu__lang-sep {
+    color: rgba(255, 255, 255, 0.12);
+    font-size: 11px;
   }
 </style>
 
@@ -531,7 +625,9 @@ const navItems = [
     const open = menu?.classList.toggle('is-open');
     document.body.classList.toggle('menu-open', open ?? false);
     burger.setAttribute('aria-expanded', String(!!open));
-    burger.setAttribute('aria-label', open ? 'Chiudi menu' : 'Apri menu');
+    burger.setAttribute('aria-label', open
+      ? burger.getAttribute('data-close') ?? 'Chiudi menu'
+      : burger.getAttribute('data-open')  ?? 'Apri menu');
     menu?.setAttribute('aria-hidden', String(!open));
   });
 
@@ -550,13 +646,11 @@ const navItems = [
   accordionBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const expanded = btn.getAttribute('aria-expanded') === 'true';
-      // Chiudi tutti gli altri
       accordionBtns.forEach((b) => {
         b.setAttribute('aria-expanded', 'false');
         const sub = b.nextElementSibling as HTMLElement | null;
         sub?.classList.remove('is-expanded');
       });
-      // Apri/chiudi questo
       if (!expanded) {
         btn.setAttribute('aria-expanded', 'true');
         const sub = btn.nextElementSibling as HTMLElement | null;
@@ -565,7 +659,7 @@ const navItems = [
     });
   });
 
-  // Desktop dropdown: click on button (touch devices / accessibility)
+  // Desktop dropdown: click per touch device / accessibilità
   const dropdownItems = document.querySelectorAll<HTMLElement>('.navbar__item--has-dropdown');
   dropdownItems.forEach((item) => {
     const btn = item.querySelector<HTMLButtonElement>('.navbar__link--btn');
@@ -573,7 +667,6 @@ const navItems = [
       const isOpen = item.classList.toggle('is-open');
       btn.setAttribute('aria-expanded', String(isOpen));
     });
-    // Chiudi cliccando fuori
     document.addEventListener('click', (e) => {
       if (!item.contains(e.target as Node)) {
         item.classList.remove('is-open');

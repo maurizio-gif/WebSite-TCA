@@ -1,0 +1,28 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import LeadFormPlaceholder from "../../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../../components/InfoPratiche.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Athletic Training | Tennis Club Ambrosiano Milan"
+  description="Athletic training at Tennis Club Ambrosiano. Personal training, functional training and sport-specific conditioning for tennis and padel players."
+>
+  <PageHero
+    eyebrow="Adults · Athletic Training"
+    title="Athletic"
+    titleAccent="Training"
+    sub="Certified athletic trainers, personalised programmes and a state-of-the-art gym. Performance improvement for players at every level."
+    image="/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif"
+    imageAlt="Athletic training at Tennis Club Ambrosiano"
+    ctaLabel="Request Information"
+  />
+  {/* TODO: translate content sections to English */}
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>

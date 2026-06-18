@@ -1,0 +1,26 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import LeadFormPlaceholder from "../../components/LeadFormPlaceholder.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Avvenire Tournament | Tennis Club Ambrosiano Milan"
+  description="The Avvenire Tournament, since 1961. One of the world's most prestigious junior tennis tournaments, held every September at Tennis Club Ambrosiano in Milan."
+>
+  <PageHero
+    eyebrow="The Club · Avvenire Tournament"
+    title="Avvenire"
+    titleAccent="Tournament"
+    sub="Since 1961, the most prestigious junior tennis tournament in the world. Every September, the best under-14 players gather at TCA for a legendary event."
+    image="/aLVimGGNHVfTOey3_Z8T_0650_2.avif"
+    imageAlt="Avvenire Tournament at Tennis Club Ambrosiano"
+    ctaLabel="Learn More"
+  />
+  {/* TODO: translate content sections to English */}
+  <LeadFormPlaceholder />
+</BaseLayout>

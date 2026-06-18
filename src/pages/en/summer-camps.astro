@@ -1,0 +1,28 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import LeadFormPlaceholder from "../../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../../components/InfoPratiche.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Summer Camps | Tennis Club Ambrosiano Milan"
+  description="Summer camps for children and teenagers at Tennis Club Ambrosiano. Tennis, padel, sports activities and fun in a safe and welcoming environment."
+>
+  <PageHero
+    eyebrow="Juniors · Summer Camps"
+    title="Summer"
+    titleAccent="Camps"
+    sub="An unforgettable summer on the courts. Tennis, padel, sports and activities for children aged 5 to 16, with qualified coaches and daily supervision."
+    image="/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif"
+    imageAlt="Summer camps at Tennis Club Ambrosiano"
+    ctaLabel="Request Information"
+  />
+  {/* TODO: translate content sections to English */}
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>

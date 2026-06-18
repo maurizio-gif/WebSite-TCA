@@ -1,0 +1,28 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import LeadFormPlaceholder from "../../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../../components/InfoPratiche.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Tennis School | Tennis Club Ambrosiano Milan"
+  description="Tennis school for juniors at Tennis Club Ambrosiano. Courses from age 4, qualified coaches and a method trusted since 1965."
+>
+  <PageHero
+    eyebrow="Juniors · Tennis School"
+    title="Tennis"
+    titleAccent="School"
+    sub="From the very first lesson to competitive play. Our coaches guide young players with a proven method, in a safe and motivating environment."
+    image="/ajAJSI1P9HI4UhOS_tenniskidsTCA.avif"
+    imageAlt="Tennis school for children at Tennis Club Ambrosiano"
+    ctaLabel="Request Information"
+  />
+  {/* TODO: translate content sections to English */}
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>
