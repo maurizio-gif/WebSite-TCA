@@ -64,8 +64,9 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
 
     <script>
       // ── Scroll animations ──────────────────────────────────────────────────
-      const NOT_HERO = 'section:not(.hero)';
 
+      // rootMargin '0px' — nessuna soglia negativa che esclude elementi
+      // a bordo viewport; threshold 0.05 = scatta appena 5% è visibile.
       const obs = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
@@ -74,13 +75,8 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
           setTimeout(() => el.classList.add('is-visible'), delay);
           obs.unobserve(el);
         });
-      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+      }, { threshold: 0.05, rootMargin: '0px' });
 
-      /**
-       * Assegna data-anim e registra l'elemento.
-       * type:  "reveal" | "from-left" | "scale" | "true" (slide-up)
-       * group: se true, calcola lo stagger tra fratelli con data-anim
-       */
       function register(
         selector: string,
         type: string,
@@ -88,7 +84,8 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
         stagger = 0
       ) {
         document.querySelectorAll<HTMLElement>(selector).forEach((el, i) => {
-          if (el.closest('.hero')) return;           // mai sull'hero
+          if (el.closest('.hero')) return;
+          // Non sovrascrivere animazioni già definite nel markup
           if (!el.hasAttribute('data-anim')) el.setAttribute('data-anim', type);
           if (!el.dataset.animDelay && (baseDelay + stagger * i) > 0) {
             el.dataset.animDelay = String(baseDelay + stagger * i);
@@ -97,36 +94,56 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
         });
       }
 
-      // ── Titoli: wipe sinistra→destra ──
-      register(`${NOT_HERO} h2`,             'reveal', 0,   0);
-      register(`${NOT_HERO} h3`,             'reveal', 60,  0);
+      const NH = 'section:not(.hero)';
 
-      // ── Eyebrow: slide da sinistra (anticipa il titolo) ──
-      register(`${NOT_HERO} .eyebrow`,       'from-left', 0, 0);
+      // ── Titoli: wipe sinistra→destra ──
+      // Escludi .panel__head h2 (AttivitaSplit: ha animazioni proprie sulle righe)
+      register(`${NH} h2:not(.panel__title)`,  'reveal',     0,   0);
+      register(`${NH} h3`,                     'reveal',    60,   0);
+
+      // ── Eyebrow: slide da sinistra (escludi panel__head che è su sfondo scuro) ──
+      register(`${NH} .eyebrow:not(.eyebrow--light)`, 'from-left', 0, 0);
+
+      // ── Panel testa AttivitaSplit: solo fade (già su sfondo scuro, opacity è critica) ──
+      register('.panel__head .eyebrow',        'fade',       0,   0);
+      register('.panel__title',                'from-left', 60,   0);
+      register('.panel__sub',                  'fade',     120,   0);
 
       // ── Testi / body copy ──
-      register('.manifesto__body p',         'from-left', 120, 100);
-      register('.manifesto__quote',          'reveal',    180, 0);
-      register('.torneo__desc',              'from-left', 100, 0);
-      register('.torneo__cta',               'from-left', 200, 0);
+      register('.manifesto__body p',           'from-left', 120, 100);
+      register('.manifesto__quote',            'reveal',    200,   0);
+      register('.torneo__desc',                'from-left', 100,   0);
+      register('.torneo__cta',                 'from-left', 200,   0);
 
       // ── Stats Torneo: scale-in in sequenza ──
-      register('.torneo__stat',              'scale',  150, 90);
+      register('.torneo__stat',                'scale',     150,  90);
 
-      // ── Sezioni card/blocchi: slide-up con stagger ──
-      register('.conversion__card',          'true',   0,   120);
-      register('.info__item',                'true',   0,    80);
-      register('.info__actions',             'true',   240,   0);
-      register('.reassurance__item',         'true',   0,    90);
-      register('.eventi-home__head',         'from-left', 0, 0);
-      register('.ev-item',                   'true',   0,   100);
-
-      // ── Mappa ──
-      register('.info__map',                 'scale',  80,   0);
+      // ── Card / blocchi ──
+      register('.conversion__card',            'true',        0, 120);
+      register('.info__item',                  'true',        0,  80);
+      register('.info__actions',               'true',      240,   0);
+      register('.reassurance__item',           'true',        0,  90);
+      register('.eventi-home__head',           'from-left',   0,   0);
+      register('.ev-item',                     'true',        0, 100);
+      register('.info__map',                   'scale',      80,   0);
 
       // ── Elementi già marcati nel markup ──
       document.querySelectorAll<HTMLElement>('[data-anim]').forEach((el) => {
         if (!el.classList.contains('is-visible')) obs.observe(el);
+      });
+
+      // ── Fallback: elementi già nel viewport al caricamento ──
+      // requestAnimationFrame garantisce che il layout sia calcolato
+      requestAnimationFrame(() => {
+        const vh = window.innerHeight;
+        document.querySelectorAll<HTMLElement>('[data-anim]').forEach((el) => {
+          if (el.classList.contains('is-visible')) return;
+          const rect = el.getBoundingClientRect();
+          if (rect.top < vh && rect.bottom > 0) {
+            const delay = el.dataset.animDelay ? parseInt(el.dataset.animDelay, 10) : 0;
+            setTimeout(() => el.classList.add('is-visible'), delay);
+          }
+        });
       });
     </script>
   </body>
