@@ -1,4 +1,8 @@
 ---
+import { getLocalePath, type Lang } from '../i18n/utils';
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+const p = (path: string) => getLocalePath(lang, path);
 ---
 
 <section class="manifesto">
@@ -7,19 +11,24 @@
       Un club fondato<br>sulla tradizione,<br><em>costruito per il presente.</em>
     </h2>
 
-    <div class="manifesto__body" data-anim="from-left" data-anim-delay="150">
-      <p>
-        Il Tennis Club Ambrosiano è la casa del Torneo Avvenire, la gara che dal
-        1965 scopre i talenti del tennis di domani. Da quella stessa vocazione —
-        il futuro che si allena ogni giorno — nasce tutto ciò che facciamo oggi.
-      </p>
-      <p>
-        Qui trovi alcuni dei migliori impianti della zona est di Milano: campi
-        da tennis, padel e pickleball, spazi per la preparazione atletica e un
-        calendario di attività che accompagna ogni età. Che tu voglia tornare a
-        giocare, far crescere un figlio nello sport o semplicemente prenderti
-        cura di te, il Club è pensato per renderlo semplice.
-      </p>
+    <div class="manifesto__right">
+      <div class="manifesto__body" data-anim="from-left" data-anim-delay="150">
+        <p>
+          Il Tennis Club Ambrosiano è la casa del Torneo Avvenire, la gara che dal
+          1965 scopre i talenti del tennis di domani. Da quella stessa vocazione —
+          il futuro che si allena ogni giorno — nasce tutto ciò che facciamo oggi.
+        </p>
+        <p>
+          Qui trovi alcuni dei migliori impianti della zona est di Milano: campi
+          da tennis, padel, spazi per la preparazione atletica e un calendario di
+          attività che accompagna ogni età. Che tu voglia tornare a giocare, far
+          crescere un figlio nello sport o semplicemente prenderti cura di te, il
+          Club è pensato per renderlo semplice.
+        </p>
+      </div>
+      <a class="btn manifesto__cta" href={p('/storia')} data-anim="from-left" data-anim-delay="280">
+        Scopri la nostra storia →
+      </a>
     </div>
 
     <p class="manifesto__quote" data-anim="reveal" data-anim-delay="200">Sei a casa. Ti manca solo la racchetta.</p>
@@ -27,9 +36,7 @@
 </section>
 
 <style>
-  .manifesto {
-    padding: 8vh var(--pad-x);
-  }
+  .manifesto { padding: 8vh var(--pad-x); }
 
   .manifesto__inner {
     max-width: var(--max-width);
@@ -48,10 +55,12 @@
     letter-spacing: -0.01em;
     line-height: 0.95;
   }
+  .manifesto__title em { color: var(--color-accent); font-style: normal; }
 
-  .manifesto__title em {
-    color: var(--color-accent);
-    font-style: normal;
+  .manifesto__right {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
   }
 
   .manifesto__body {
@@ -59,13 +68,32 @@
     flex-direction: column;
     gap: 1.5rem;
   }
-
   .manifesto__body p {
     font-family: var(--font-body);
     font-size: clamp(14px, 1.05vw, 17px);
     font-weight: 300;
     line-height: 1.8;
     color: var(--color-text-light);
+  }
+
+  .manifesto__cta {
+    align-self: flex-start;
+    font-family: var(--font-display);
+    font-size: clamp(12px, 1vw, 15px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    border: 2px solid var(--color-text);
+    padding: 11px 24px;
+    text-decoration: none;
+    transition: background 0.18s, color 0.18s, border-color 0.18s;
+    display: inline-block;
+  }
+  .manifesto__cta:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
   }
 
   .manifesto__quote {
@@ -80,11 +108,7 @@
   }
 
   @media (max-width: 860px) {
-    .manifesto__inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-
+    .manifesto__inner { grid-template-columns: 1fr; gap: 2.5rem; }
     .manifesto__quote { grid-column: 1; }
   }
 </style>
