@@ -53,21 +53,29 @@ docs/                  → brief, note e documentazione interna
 ## Palette
 Definite in `src/styles/global.css` come CSS custom properties su `:root`.
 
-| Variabile          | Valore              | Uso                        |
-|--------------------|---------------------|----------------------------|
-| `--color-bg`       | `#FFFFFF`           | Sfondo pagina              |
-| `--color-text`     | `#1A1A1A`           | Testo principale           |
-| `--color-accent`   | `#C8102E`           | Accento (CTA, link, brand) |
-| `--color-border`   | `#E5E7EB`           | Bordi, divisori            |
-| `--color-overlay`  | `rgba(0,0,0,0.45)`  | Overlay su immagini hero   |
+| Variabile             | Valore              | Uso                           |
+|-----------------------|---------------------|-------------------------------|
+| `--color-bg`          | `#FFFFFF`           | Sfondo pagina                 |
+| `--color-text`        | `#1A1A1A`           | Testo principale              |
+| `--color-text-light`  | `#555555`           | Testo secondario / body       |
+| `--color-accent`      | `#8B1A1A`           | Rosso TCA (CTA, link, brand)  |
+| `--color-accent-dark` | `#6B1414`           | Hover su accent               |
+| `--color-border`      | `#EBEBEB`           | Bordi, divisori               |
+| `--color-off-white`   | `#F5F3F0`           | Sfondi sezioni alternate      |
+| `--color-overlay`     | `rgba(0,0,0,0.55)`  | Overlay su immagini hero      |
+| `--max-width`         | `1500px`            | Larghezza max contenuto       |
+| `--pad-x`             | `clamp(20px,5vw,72px)` | Padding orizzontale fluid  |
+| `--header-h`          | `60px`              | Altezza navbar fixed          |
 
 ---
 
 ## Tipografia
 Entrambi i font sono caricati da **Google Fonts** (in `BaseLayout.astro`).
 
-- **Titoli / hero** → serif: **Playfair Display** (`--font-serif`)
-- **Navbar / body** → sans-serif: **Inter** (`--font-sans`)
+- **Titoli / display** → condensed: **Barlow Condensed** w800, UPPERCASE (`--font-display` / alias `--font-serif`)
+- **Body / form** → **Barlow** w300/400 (`--font-body` / alias `--font-sans`)
+
+Stile reference: `https://maurizio-gif.github.io/TCA/`
 
 ---
 

@@ -3,8 +3,9 @@
 
 <section class="conversion">
   <div class="conversion__inner">
+    <span class="eyebrow eyebrow--grey">Inizia ora</span>
     <h2 class="conversion__title">
-      Pronto a iniziare? Scegli il tuo punto di partenza.
+      Pronto a iniziare?<br><em>Scegli il tuo punto di partenza.</em>
     </h2>
 
     <div class="conversion__grid">
@@ -16,12 +17,10 @@
           pochi minuti.
         </p>
         {/* TODO: collegare link esterno PerfectGym */}
-        <a class="conversion__cta conversion__cta--accent" href="#"
-          >Iscriviti ora</a
-        >
+        <a class="btn btn-red" href="#">Iscriviti ora</a>
       </div>
 
-      <div class="conversion__card conversion__card--accent">
+      <div class="conversion__card conversion__card--dark">
         <h3 class="conversion__card-title">Vuoi giocare a tennis?</h3>
         <p class="conversion__card-text">
           Corsi, lezioni e percorsi agonistici partono da una valutazione del
@@ -29,9 +28,7 @@
           ricontattiamo per costruire il percorso giusto per te.
         </p>
         {/* TODO: aprire modal form lead */}
-        <a class="conversion__cta conversion__cta--light" href="#"
-          >Richiedi una prova</a
-        >
+        <a class="btn btn-outline" href="#">Richiedi una prova</a>
       </div>
     </div>
   </div>
@@ -39,85 +36,84 @@
 
 <style>
   .conversion {
-    padding: 6rem 1.5rem;
+    padding: 7vh var(--pad-x);
   }
 
   .conversion__inner {
-    max-width: 1080px;
+    max-width: var(--max-width);
     margin: 0 auto;
   }
 
   .conversion__title {
-    font-family: var(--font-serif);
-    font-size: clamp(1.9rem, 4vw, 2.8rem);
-    text-align: center;
-    margin-bottom: 3rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 4vh;
+  }
+
+  .conversion__title em {
+    color: var(--color-accent);
+    font-style: normal;
   }
 
   .conversion__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
   }
 
   .conversion__card {
     display: flex;
     flex-direction: column;
     padding: 2.5rem;
-    border-radius: 6px;
+    gap: 1rem;
   }
 
   .conversion__card--light {
     background: var(--color-bg);
-    border: 1px solid var(--color-border);
   }
 
-  .conversion__card--accent {
+  .conversion__card--dark {
     background: var(--color-accent);
-    color: #ffffff;
+    color: #fff;
+  }
+
+  .conversion__card--dark .btn-outline {
+    border-color: rgba(255, 255, 255, 0.55);
+    color: #fff;
   }
 
   .conversion__card-title {
-    font-family: var(--font-serif);
-    font-size: 1.7rem;
-    margin-bottom: 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
   }
 
   .conversion__card-text {
-    font-family: var(--font-sans);
-    font-size: 1rem;
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.98vw, 16px);
+    font-weight: 300;
     line-height: 1.7;
     flex: 1;
-    margin-bottom: 2rem;
   }
 
-  .conversion__cta {
-    align-self: flex-start;
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    font-weight: 600;
-    padding: 0.85rem 1.8rem;
-    border-radius: 4px;
-    transition: opacity 0.2s ease;
+  .conversion__card--light .conversion__card-text {
+    color: var(--color-text-light);
   }
 
-  .conversion__cta:hover {
-    opacity: 0.88;
-  }
-
-  .conversion__cta--accent {
-    background: var(--color-accent);
-    color: #ffffff;
-  }
-
-  .conversion__cta--light {
-    background: #ffffff;
-    color: var(--color-accent);
+  .conversion__card--dark .conversion__card-text {
+    color: rgba(255, 255, 255, 0.8);
   }
 
   @media (max-width: 760px) {
-    .conversion__grid {
-      grid-template-columns: 1fr;
-    }
+    .conversion__grid { grid-template-columns: 1fr; }
   }
 </style>

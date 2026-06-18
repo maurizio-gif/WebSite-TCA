@@ -12,15 +12,14 @@ const { title, text, href, image } = Astro.props;
 <a class="discipline-card" href={href}>
   <div class="discipline-card__media">
     {/* TODO: sostituire con la foto reale quando disponibile */}
-    <span class="img-placeholder discipline-card__placeholder" data-name={image}
-    ></span>
-    <span class="discipline-card__hover"></span>
+    <span class="img-placeholder discipline-card__placeholder" data-name={image}></span>
+    <span class="discipline-card__overlay"></span>
   </div>
 
   <div class="discipline-card__body">
     <h3 class="discipline-card__title">{title}</h3>
     <p class="discipline-card__text">{text}</p>
-    <span class="discipline-card__link">Scopri di più →</span>
+    <span class="discipline-card__cta">Scopri di più →</span>
   </div>
 </a>
 
@@ -30,14 +29,14 @@ const { title, text, href, image } = Astro.props;
     flex-direction: column;
     background: var(--color-bg);
     border: 1px solid var(--color-border);
-    border-radius: 6px;
+    border-top: 3px solid var(--color-border);
     overflow: hidden;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transition: border-top-color 0.2s ease, transform 0.25s ease;
   }
 
   .discipline-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    border-top-color: var(--color-accent);
+    transform: translateY(-4px);
   }
 
   .discipline-card__media {
@@ -52,7 +51,7 @@ const { title, text, href, image } = Astro.props;
     min-height: 0;
   }
 
-  .discipline-card__hover {
+  .discipline-card__overlay {
     position: absolute;
     inset: 0;
     background: var(--color-accent);
@@ -60,36 +59,41 @@ const { title, text, href, image } = Astro.props;
     transition: opacity 0.25s ease;
   }
 
-  .discipline-card:hover .discipline-card__hover {
-    opacity: 0.28;
-  }
+  .discipline-card:hover .discipline-card__overlay { opacity: 0.2; }
 
   .discipline-card__body {
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 1.5rem;
+    padding: 20px 22px;
+    gap: 10px;
   }
 
   .discipline-card__title {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 1.6vw, 1.6rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
   }
 
   .discipline-card__text {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-text-light);
     flex: 1;
   }
 
-  .discipline-card__link {
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 600;
+  .discipline-card__cta {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 0.9vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--color-accent);
-    margin-top: 1.25rem;
+    margin-top: 6px;
   }
 </style>

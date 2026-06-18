@@ -6,84 +6,86 @@ const disciplines = [
     title: "Tennis",
     image: "tennis.jpg",
     href: "/tennis",
-    text:
-      "Sedici campi e una tradizione che parla da sé. Corsi per adulti e bambini, lezioni individuali e la Vavassori Tennis Academy per chi punta all'agonismo.",
+    text: "Sedici campi e una tradizione che parla da sé. Corsi per adulti e bambini, lezioni individuali e la Vavassori Tennis Academy per chi punta all'agonismo.",
   },
   {
     title: "Padel e Pickleball",
     image: "padel.jpg",
     href: "/padel",
-    text:
-      "Gli sport di racchetta del momento, per soci e non soci. Campi prenotabili, lezioni con istruttori certificati FITP e tornei aperti a tutti i livelli.",
+    text: "Gli sport di racchetta del momento, per soci e non soci. Campi prenotabili, lezioni con istruttori certificati FITP e tornei aperti a tutti i livelli.",
   },
   {
     title: "Preparazione Atletica",
     image: "preparazione-atletica.jpg",
     href: "/preparazione-atletica",
-    text:
-      "Spazi e programmi per allenarti meglio: forza, mobilità, condizionamento. Attrezzatura Precor e Technogym di ultima generazione e allenamenti di gruppo guidati da esperti.",
+    text: "Spazi e programmi per allenarti meglio: forza, mobilità, condizionamento. Attrezzatura Precor e Technogym di ultima generazione e allenamenti di gruppo guidati da esperti.",
   },
   {
     title: "Famiglia",
     image: "famiglia.jpg",
     href: "/famiglia",
-    text:
-      "Un luogo dove crescere insieme. Attività junior, corsi kids, feste di compleanno e uno spazio dove tutta la famiglia trova il proprio sport.",
+    text: "Un luogo dove crescere insieme. Attività junior, corsi kids, feste di compleanno e uno spazio dove tutta la famiglia trova il proprio sport.",
   },
 ];
 ---
 
 <section class="disciplines">
   <div class="disciplines__inner">
-    <h2 class="disciplines__title">Cosa ti piacerebbe fare oggi?</h2>
+    <span class="eyebrow">Le discipline</span>
+    <h2 class="disciplines__title">Cosa ti piacerebbe<br><em>fare oggi?</em></h2>
 
     <div class="disciplines__grid">
-      {
-        disciplines.map((d) => (
-          <DisciplineCard
-            title={d.title}
-            text={d.text}
-            href={d.href}
-            image={`disciplines/${d.image}`}
-          />
-        ))
-      }
+      {disciplines.map((d) => (
+        <DisciplineCard
+          title={d.title}
+          text={d.text}
+          href={d.href}
+          image={`disciplines/${d.image}`}
+        />
+      ))}
     </div>
   </div>
 </section>
 
 <style>
   .disciplines {
-    padding: 6rem 1.5rem;
+    padding: 7vh var(--pad-x);
+    background: var(--color-off-white);
   }
 
   .disciplines__inner {
-    max-width: 1280px;
+    max-width: var(--max-width);
     margin: 0 auto;
   }
 
   .disciplines__title {
-    font-family: var(--font-serif);
-    font-size: clamp(1.9rem, 4vw, 2.8rem);
-    text-align: center;
-    margin-bottom: 3rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 4vh;
+  }
+
+  .disciplines__title em {
+    color: var(--color-accent);
+    font-style: normal;
   }
 
   .disciplines__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
   }
 
   @media (max-width: 1024px) {
-    .disciplines__grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .disciplines__grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 560px) {
-    .disciplines__grid {
-      grid-template-columns: 1fr;
-    }
+    .disciplines__grid { grid-template-columns: 1fr; }
   }
 </style>

@@ -3,11 +3,11 @@ const columns = [
   {
     heading: "Discipline",
     links: [
-      { label: "Tennis", href: "/tennis" },
-      { label: "Padel e Pickleball", href: "/padel" },
+      { label: "Tennis",                href: "/tennis" },
+      { label: "Padel e Pickleball",    href: "/padel" },
       { label: "Preparazione Atletica", href: "/preparazione-atletica" },
-      { label: "Famiglia", href: "/famiglia" },
-      { label: "Summer Camps", href: "/summer-camps" },
+      { label: "Famiglia",              href: "/famiglia" },
+      { label: "Summer Camps",          href: "/summer-camps" },
     ],
   },
   {
@@ -15,11 +15,11 @@ const columns = [
     links: [
       { label: "Torneo Avvenire", href: "/torneo-avvenire" },
       // TODO: collegare link esterno PerfectGym
-      { label: "Iscrizioni", href: "#" },
+      { label: "Iscrizioni",      href: "#" },
       // TODO: definire pagina Partner
-      { label: "Partner", href: "#" },
+      { label: "Partner",         href: "#" },
       // TODO: definire pagina News
-      { label: "News", href: "#" },
+      { label: "News",            href: "#" },
     ],
   },
 ];
@@ -27,46 +27,29 @@ const columns = [
 
 <footer class="footer">
   <div class="footer__inner">
-    <div class="footer__col">
-      <h3 class="footer__heading">{columns[0].heading}</h3>
-      <ul class="footer__list">
-        {
-          columns[0].links.map((l) => (
-            <li>
-              <a class="footer__link" href={l.href}>
-                {l.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+    <div class="footer__brand">
+      {/* TODO: sostituire con logo SVG bianco */}
+      <span class="footer__name">Tennis Club<br>Ambrosiano</span>
+      <p class="footer__tagline">Dal 1965, il tennis a Milano.</p>
     </div>
 
-    <div class="footer__col">
-      <h3 class="footer__heading">{columns[1].heading}</h3>
-      <ul class="footer__list">
-        {
-          columns[1].links.map((l) => (
-            <li>
-              <a class="footer__link" href={l.href}>
-                {l.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+    {columns.map((col) => (
+      <div class="footer__col">
+        <h3 class="footer__heading">{col.heading}</h3>
+        <ul class="footer__list">
+          {col.links.map((l) => (
+            <li><a class="footer__link" href={l.href}>{l.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
 
     <div class="footer__col">
       <h3 class="footer__heading">Contatti</h3>
       <ul class="footer__list">
         <li><span class="footer__text">Via Feltre 33, Milano</span></li>
         <li><a class="footer__link" href="tel:+390226414392">+39 02 2641 4392</a></li>
-        <li>
-          <a class="footer__link" href="mailto:info@tcambrosiano.com"
-            >info@tcambrosiano.com</a
-          >
-        </li>
+        <li><a class="footer__link" href="mailto:info@tcambrosiano.com">info@tcambrosiano.com</a></li>
       </ul>
     </div>
 
@@ -74,20 +57,14 @@ const columns = [
       <h3 class="footer__heading">Social</h3>
       <ul class="footer__list">
         <li>
-          <a
-            class="footer__link"
-            href="https://www.instagram.com/clubambrosiano"
-            target="_blank"
-            rel="noopener">Instagram</a
-          >
+          <a class="footer__link" href="https://www.instagram.com/clubambrosiano" target="_blank" rel="noopener">
+            Instagram
+          </a>
         </li>
         <li>
-          <a
-            class="footer__link"
-            href="https://www.facebook.com/tcambrosiano"
-            target="_blank"
-            rel="noopener">Facebook</a
-          >
+          <a class="footer__link" href="https://www.facebook.com/tcambrosiano" target="_blank" rel="noopener">
+            Facebook
+          </a>
         </li>
       </ul>
     </div>
@@ -99,63 +76,87 @@ const columns = [
         <a class="footer__link" href="/privacy-policy">Privacy Policy</a>
         <a class="footer__link" href="/terms-conditions">Termini e Condizioni</a>
       </div>
-      <p class="footer__sign">Tennis Club Ambrosiano — Dal 1965</p>
+      <p class="footer__sign">Tennis Club Ambrosiano &mdash; Dal 1965</p>
     </div>
   </div>
 </footer>
 
 <style>
   .footer {
-    background: var(--color-text);
+    background: #0f1013;
     color: #ffffff;
   }
 
   .footer__inner {
-    max-width: 1280px;
+    max-width: var(--max-width);
     margin: 0 auto;
-    padding: 4rem 1.5rem 3rem;
+    padding: 5vh var(--pad-x) 4vh;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2.5rem;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .footer__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .footer__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    color: #fff;
+  }
+
+  .footer__tagline {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.9vw, 14px);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.45);
   }
 
   .footer__heading {
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    font-family: var(--font-display);
+    font-size: clamp(9px, 0.7vw, 11px);
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.35);
     margin-bottom: 1.25rem;
+    /* Override h3 global uppercase (è già uppercase) */
+    line-height: 1.4;
   }
 
   .footer__list {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
+    gap: 0.6rem;
   }
 
   .footer__link,
   .footer__text {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.85);
-    transition: color 0.2s ease;
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.9vw, 15px);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.18s;
   }
 
-  .footer__link:hover {
-    color: var(--color-accent);
-  }
+  .footer__link:hover { color: #fff; }
 
   .footer__bottom {
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .footer__bottom-inner {
-    max-width: 1280px;
+    max-width: var(--max-width);
     margin: 0 auto;
-    padding: 1.5rem;
+    padding: 1.5rem var(--pad-x);
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -170,25 +171,24 @@ const columns = [
   }
 
   .footer__sign {
-    font-family: var(--font-serif);
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--font-display);
+    font-size: clamp(9px, 0.7vw, 11px);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.25);
   }
 
-  @media (max-width: 860px) {
-    .footer__inner {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  @media (max-width: 1024px) {
+    .footer__inner { grid-template-columns: 1fr 1fr 1fr; }
+    .footer__brand { grid-column: 1 / -1; }
   }
 
-  @media (max-width: 520px) {
-    .footer__inner {
-      grid-template-columns: 1fr;
-    }
+  @media (max-width: 640px) {
+    .footer__inner { grid-template-columns: 1fr 1fr; }
+    .footer__bottom-inner { flex-direction: column; align-items: flex-start; }
+  }
 
-    .footer__bottom-inner {
-      flex-direction: column;
-      align-items: flex-start;
-    }
+  @media (max-width: 400px) {
+    .footer__inner { grid-template-columns: 1fr; }
   }
 </style>

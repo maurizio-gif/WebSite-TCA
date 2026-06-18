@@ -1,212 +1,258 @@
 ---
 const navLinks = [
-  { label: "Club", href: "/" },
-  { label: "Tennis", href: "/tennis" },
-  { label: "Padel e Pickleball", href: "/padel" },
-  { label: "Famiglia", href: "/famiglia" },
-  { label: "Summer Camps", href: "/summer-camps" },
+  { label: "Club",                  href: "/" },
+  { label: "Tennis",                href: "/tennis" },
+  { label: "Padel e Pickleball",    href: "/padel" },
+  { label: "Famiglia",              href: "/famiglia" },
+  { label: "Summer Camps",          href: "/summer-camps" },
   { label: "Preparazione Atletica", href: "/preparazione-atletica" },
-  { label: "Torneo Avvenire", href: "/torneo-avvenire" },
+  { label: "Torneo Avvenire",       href: "/torneo-avvenire" },
 ];
 ---
 
-<header class="navbar">
+<header class="navbar" id="navbar">
   <div class="navbar__inner">
     <a class="navbar__logo" href="/" aria-label="Tennis Club Ambrosiano — home">
       {/* TODO: sostituire con src/assets/logos/tca-logo.svg quando disponibile */}
       <span class="img-placeholder navbar__logo-placeholder" data-name="tca-logo.svg"></span>
     </a>
 
-    <nav class="navbar__nav" id="primary-nav" aria-label="Navigazione principale">
-      <ul class="navbar__list">
-        {
-          navLinks.map((link) => (
-            <li>
-              <a class="navbar__link" href={link.href}>
-                {link.label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-
-    <div class="navbar__actions">
+    <div class="navbar__right">
       {/* TODO: collegare link esterno PerfectGym */}
-      <a class="navbar__cta" href="#">Iscriviti subito</a>
+      <a class="navbar__cta btn btn-red" href="#">Iscriviti subito</a>
+
       <button
-        class="navbar__toggle"
+        class="navbar__burger"
         type="button"
         aria-label="Apri menu"
         aria-expanded="false"
-        aria-controls="primary-nav"
+        aria-controls="g-menu"
+        id="burger-btn"
       >
-        <span></span>
-        <span></span>
-        <span></span>
+        <span class="burger-bar b1"></span>
+        <span class="burger-bar b2"></span>
+        <span class="burger-bar b3"></span>
       </button>
     </div>
   </div>
 </header>
 
+<!-- Menu fullscreen -->
+<nav class="g-menu" id="g-menu" aria-label="Navigazione principale" aria-hidden="true">
+  <div class="g-menu__inner">
+    <ul class="g-menu__list">
+      {navLinks.map((link, i) => (
+        <li>
+          <a class="g-menu__link" href={link.href}>
+            <em>{String(i + 1).padStart(2, '0')}</em>
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="g-menu__footer">
+      Tennis Club Ambrosiano &mdash; Via Feltre 33, Milano
+    </div>
+  </div>
+</nav>
+
 <style>
+  /* ---- Navbar ---- */
   .navbar {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 100;
-    background: var(--color-bg);
+    left: 0;
+    right: 0;
+    z-index: 500;
+    height: var(--header-h);
+    background: rgba(255, 255, 255, 0.96);
     border-bottom: 1px solid var(--color-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background 0.35s, border-color 0.35s;
+  }
+
+  .navbar.is-dark {
+    background: rgba(18, 18, 20, 0.92);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .navbar.is-dark .burger-bar {
+    background: rgba(255, 255, 255, 0.85);
   }
 
   .navbar__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
-    max-width: 1280px;
+    height: 100%;
+    padding: 0 var(--pad-x);
+    max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0.75rem 1.5rem;
   }
 
-  .navbar__logo {
-    flex-shrink: 0;
-    display: block;
-  }
+  .navbar__logo { display: block; flex-shrink: 0; }
 
   .navbar__logo-placeholder {
-    width: 120px;
-    min-height: 44px;
-    font-size: 0.7rem;
+    width: 110px;
+    min-height: calc(var(--header-h) - 18px);
+    font-size: 0.65rem;
   }
 
-  .navbar__nav {
-    flex: 1;
-  }
-
-  .navbar__list {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.25rem;
-  }
-
-  .navbar__link {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    color: var(--color-text);
-    white-space: nowrap;
-    transition: color 0.2s ease;
-  }
-
-  .navbar__link:hover {
-    color: var(--color-accent);
-  }
-
-  .navbar__actions {
+  .navbar__right {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    flex-shrink: 0;
   }
 
+  /* ---- CTA ---- */
   .navbar__cta {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #ffffff;
-    background: var(--color-accent);
-    padding: 0.6rem 1.2rem;
-    border-radius: 4px;
-    white-space: nowrap;
-    transition: opacity 0.2s ease;
+    font-size: clamp(11px, 1vw, 13px);
+    padding: 8px 18px;
   }
 
-  .navbar__cta:hover {
-    opacity: 0.88;
-  }
-
-  .navbar__toggle {
-    display: none;
+  /* ---- Burger ---- */
+  .navbar__burger {
+    display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    width: 40px;
-    height: 40px;
-    padding: 8px;
-    background: transparent;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
+    background: none;
+    border: none;
     cursor: pointer;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background 0.15s;
   }
 
-  .navbar__toggle span {
+  .navbar__burger:hover { background: rgba(0, 0, 0, 0.06); }
+  .navbar.is-dark .navbar__burger:hover { background: rgba(255, 255, 255, 0.08); }
+
+  .burger-bar {
     display: block;
+    width: 22px;
     height: 2px;
-    width: 100%;
     background: var(--color-text);
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    border-radius: 2px;
+    transition: transform 0.28s ease, opacity 0.2s ease, background 0.35s;
   }
 
-  /* ---------- Mobile ---------- */
-  @media (max-width: 1024px) {
-    .navbar__toggle {
-      display: flex;
-    }
+  body.menu-open .b1 { transform: translateY(7px) rotate(45deg); }
+  body.menu-open .b2 { opacity: 0; transform: scaleX(0); }
+  body.menu-open .b3 { transform: translateY(-7px) rotate(-45deg); }
 
-    .navbar__nav {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--color-bg);
-      border-bottom: 1px solid var(--color-border);
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-    }
-
-    .navbar__nav.is-open {
-      max-height: 90vh;
-    }
-
-    .navbar__list {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
-      padding: 0.5rem 1.5rem 1rem;
-    }
-
-    .navbar__link {
-      display: block;
-      padding: 0.75rem 0;
-      font-size: 1rem;
-      width: 100%;
-      border-bottom: 1px solid var(--color-border);
-    }
-
-    .navbar__list li:last-child .navbar__link {
-      border-bottom: none;
-    }
+  /* ---- Menu fullscreen ---- */
+  .g-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 490;
+    background: #0f1013;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.32s ease, visibility 0.32s ease;
   }
 
-  @media (max-width: 520px) {
-    .navbar__cta {
-      padding: 0.55rem 0.9rem;
-      font-size: 0.8rem;
-    }
+  .g-menu.is-open {
+    pointer-events: all;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .g-menu__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: calc(var(--header-h) + 5vh) var(--pad-x) 5vh;
+    overflow-y: auto;
+  }
+
+  .g-menu__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    flex: 1;
+  }
+
+  .g-menu__link {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 4.2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+    line-height: 1.05;
+    display: flex;
+    align-items: baseline;
+    gap: 0.55em;
+    transition: color 0.18s, transform 0.2s ease;
+  }
+
+  .g-menu__link em {
+    font-style: normal;
+    font-size: 0.38em;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.18);
+    min-width: 3em;
+    transition: color 0.18s;
+  }
+
+  .g-menu__link:hover { color: #fff; transform: translateX(10px); }
+  .g-menu__link:hover em { color: var(--color-accent); }
+
+  .g-menu__footer {
+    font-family: var(--font-display);
+    font-size: clamp(9px, 0.6vw, 11px);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.15);
+    margin-top: 4vh;
+    padding-top: 2vh;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    .g-menu__link { font-size: clamp(1.8rem, 9vw, 2.8rem); }
+    .g-menu__inner { padding: calc(var(--header-h) + 3vh) 24px 5vh; }
+    .navbar__cta { display: none; }
   }
 </style>
 
 <script>
-  const toggle = document.querySelector(".navbar__toggle");
-  const nav = document.getElementById("primary-nav");
+  const navbar = document.getElementById('navbar');
+  const menu   = document.getElementById('g-menu');
+  const burger = document.getElementById('burger-btn');
 
-  toggle?.addEventListener("click", () => {
-    const isOpen = nav?.classList.toggle("is-open");
-    toggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
-    toggle.setAttribute("aria-label", isOpen ? "Chiudi menu" : "Apri menu");
+  // Dark mode: attivo quando il cursore è sull'hero
+  const hero = document.querySelector('.hero');
+  if (hero) {
+    const obs = new IntersectionObserver(
+      ([e]) => navbar?.classList.toggle('is-dark', e.isIntersecting),
+      { threshold: 0.01 }
+    );
+    obs.observe(hero);
+  }
+
+  // Apri/chiudi menu
+  burger?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('is-open');
+    document.body.classList.toggle('menu-open', open);
+    burger.setAttribute('aria-expanded', String(!!open));
+    burger.setAttribute('aria-label', open ? 'Chiudi menu' : 'Apri menu');
+    menu?.setAttribute('aria-hidden', String(!open));
+  });
+
+  // Chiudi con ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu?.classList.contains('is-open')) {
+      menu.classList.remove('is-open');
+      document.body.classList.remove('menu-open');
+      burger?.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+    }
   });
 </script>

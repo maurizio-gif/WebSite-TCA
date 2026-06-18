@@ -12,7 +12,8 @@ const interessi = [
 <section class="lead" id="lead">
   <div class="lead__inner">
     <div class="lead__intro">
-      <h2 class="lead__title">Parliamone. Ti ricontattiamo noi.</h2>
+      <span class="eyebrow">Contattaci</span>
+      <h2 class="lead__title">Parliamone.<br><em>Ti ricontattiamo noi.</em></h2>
       <p class="lead__text">
         Lascia i tuoi dati e raccontaci cosa cerchi: ti risponderemo con tutte
         le informazioni — orari, disponibilità e la soluzione più adatta a te.
@@ -58,7 +59,7 @@ const interessi = [
       </div>
 
       <div class="lead__field--full">
-        <button class="lead__submit" type="submit">Invia richiesta</button>
+        <button class="btn btn-red lead__submit" type="submit">Invia richiesta</button>
       </div>
     </form>
   </div>
@@ -66,32 +67,40 @@ const interessi = [
 
 <style>
   .lead {
-    padding: 6rem 1.5rem;
+    padding: 7vh var(--pad-x);
   }
 
   .lead__inner {
-    max-width: 760px;
+    max-width: var(--max-width);
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
   }
 
-  .lead__intro {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
+  .lead__intro { display: flex; flex-direction: column; gap: 1rem; }
 
   .lead__title {
-    font-family: var(--font-serif);
-    font-size: clamp(1.9rem, 4vw, 2.8rem);
-    margin-bottom: 1rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+  }
+
+  .lead__title em {
+    color: var(--color-accent);
+    font-style: normal;
   }
 
   .lead__text {
-    font-family: var(--font-sans);
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--color-text);
-    max-width: 600px;
-    margin: 0 auto;
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.05vw, 17px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-text-light);
   }
 
   .lead__form {
@@ -100,37 +109,34 @@ const interessi = [
     gap: 1.25rem;
   }
 
-  .lead__field {
-    display: flex;
-    flex-direction: column;
-  }
+  .lead__field { display: flex; flex-direction: column; }
 
-  .lead__field--full {
-    grid-column: 1 / -1;
-  }
+  .lead__field--full { grid-column: 1 / -1; }
 
   .lead__field label {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin-bottom: 0.4rem;
+    font-family: var(--font-display);
+    font-size: clamp(10px, 0.85vw, 12px);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-grey-mid);
+    margin-bottom: 6px;
   }
 
-  .lead__field label span {
-    color: var(--color-accent);
-  }
+  .lead__field label span { color: var(--color-accent); }
 
   .lead__field input,
   .lead__field select,
   .lead__field textarea {
-    font-family: var(--font-sans);
+    font-family: var(--font-body);
     font-size: 0.95rem;
+    font-weight: 300;
     padding: 0.75rem 0.85rem;
     border: 1px solid var(--color-border);
-    border-radius: 4px;
     background: var(--color-bg);
     color: var(--color-text);
     width: 100%;
+    transition: border-color 0.18s;
   }
 
   .lead__field input:focus,
@@ -140,52 +146,32 @@ const interessi = [
     border-color: var(--color-accent);
   }
 
-  .lead__field textarea {
-    resize: vertical;
-  }
+  .lead__field textarea { resize: vertical; }
 
-  .lead__consent {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 0.6rem;
-  }
+  .lead__consent { flex-direction: row; align-items: flex-start; gap: 0.6rem; }
 
-  .lead__consent input {
-    width: auto;
-    margin-top: 0.25rem;
-  }
+  .lead__consent input { width: auto; margin-top: 0.25rem; }
 
   .lead__consent label {
-    font-weight: 400;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 300;
+    letter-spacing: 0;
+    text-transform: none;
     line-height: 1.5;
+    color: var(--color-text-light);
     margin-bottom: 0;
   }
 
-  .lead__consent a {
-    color: var(--color-accent);
-    text-decoration: underline;
-  }
+  .lead__consent a { color: var(--color-accent); text-decoration: underline; }
 
-  .lead__submit {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #ffffff;
-    background: var(--color-accent);
-    border: none;
-    padding: 0.9rem 2rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-  }
+  .lead__submit { width: 100%; justify-content: center; }
 
-  .lead__submit:hover {
-    opacity: 0.88;
+  @media (max-width: 860px) {
+    .lead__inner { grid-template-columns: 1fr; gap: 2.5rem; }
   }
 
   @media (max-width: 600px) {
-    .lead__form {
-      grid-template-columns: 1fr;
-    }
+    .lead__form { grid-template-columns: 1fr; }
   }
 </style>

@@ -4,93 +4,87 @@
 <section class="torneo">
   <div class="torneo__inner">
     <div class="torneo__text">
-      <p class="torneo__eyebrow">Dal 1965</p>
-      <h2 class="torneo__title">La gara che immagina il futuro del tennis.</h2>
+      <span class="eyebrow">Dal 1965</span>
+      <h2 class="torneo__title">
+        La gara che immagina<br><em>il futuro del tennis.</em>
+      </h2>
       <p class="torneo__body">
         Nato dall'iniziativa di alcuni soci con una parola in mente — avvenire —
         il nostro torneo giovanile è diventato un appuntamento internazionale e
         un trampolino per generazioni di campioni. È il cuore della nostra
         identità: la prova che il talento, qui, trova terreno fertile.
       </p>
-      <a class="torneo__cta" href="/torneo-avvenire"
-        >Scopri la storia del Torneo Avvenire →</a
-      >
+      <a class="torneo__cta" href="/torneo-avvenire">
+        Scopri la storia del Torneo Avvenire →
+      </a>
     </div>
 
     <div class="torneo__media">
       {/* TODO: sostituire con la foto reale quando disponibile */}
-      <span
-        class="img-placeholder torneo__placeholder"
-        data-name="torneo/torneo-avvenire.jpg"></span>
+      <span class="img-placeholder torneo__placeholder" data-name="torneo/torneo-avvenire.jpg"></span>
     </div>
   </div>
 </section>
 
 <style>
   .torneo {
-    padding: 6rem 1.5rem;
-    background: #f9f9f9;
+    padding: 7vh var(--pad-x);
+    background: var(--color-off-white);
   }
 
   .torneo__inner {
-    max-width: 1280px;
+    max-width: var(--max-width);
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: 4rem;
-  }
-
-  .torneo__eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: 1rem;
+    gap: 5rem;
   }
 
   .torneo__title {
-    font-family: var(--font-serif);
-    font-size: clamp(1.9rem, 4vw, 2.8rem);
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 2rem;
+  }
+
+  .torneo__title em {
+    color: var(--color-accent);
+    font-style: normal;
   }
 
   .torneo__body {
-    font-family: var(--font-sans);
-    font-size: 1.05rem;
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.05vw, 17px);
+    font-weight: 300;
     line-height: 1.8;
-    color: var(--color-text);
+    color: var(--color-text-light);
     margin-bottom: 2rem;
   }
 
   .torneo__cta {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-family: var(--font-display);
+    font-size: clamp(12px, 1.1vw, 15px);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-accent);
+    transition: letter-spacing 0.2s ease;
   }
 
-  .torneo__cta:hover {
-    text-decoration: underline;
-  }
+  .torneo__cta:hover { letter-spacing: 0.14em; }
 
   .torneo__placeholder {
     aspect-ratio: 4 / 3;
     height: 100%;
-    border-radius: 6px;
+    border: 1px solid var(--color-border);
   }
 
   @media (max-width: 860px) {
-    .torneo__inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-
-    .torneo__media {
-      order: -1;
-    }
+    .torneo__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .torneo__media { order: -1; }
   }
 </style>

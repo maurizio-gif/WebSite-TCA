@@ -1,28 +1,28 @@
 ---
 // TODO: quando disponibile, usare src/assets/images/hero/hero-home.jpg come background.
-// Placeholder attuale: sfondo #1A1A1A.
+// Placeholder attuale: sfondo #141416.
 ---
 
 <section class="hero">
-  <div class="hero__media" data-name="hero-home.jpg"></div>
-  <div class="hero__overlay"></div>
+  <div class="hero__bg" data-name="hero-home.jpg"></div>
+  <div class="hero__grad"></div>
 
   <div class="hero__content">
-    <p class="hero__eyebrow">Dal 1965, il tennis a Milano</p>
+    <span class="eyebrow eyebrow--light">Dal 1965, il tennis a Milano</span>
     <h1 class="hero__title">
-      Il club dove la tradizione incontra il tuo prossimo dritto.
+      Il club dove<br>la tradizione<br>incontra il tuo<br><em>prossimo dritto.</em>
     </h1>
-    <p class="hero__subtitle">
-      Sedici campi, una scuola tennis tra le più storiche della città, e oltre
-      30.000 mq dedicati allo sport e alla famiglia. A pochi passi dalla metro
-      Udine.
+    <p class="hero__sub">
+      Sedici campi, una scuola tennis tra le più storiche della città,
+      e oltre 30.000 mq dedicati allo sport e alla famiglia.
+      A pochi passi dalla metro Udine.
     </p>
 
-    <div class="hero__ctas">
+    <div class="hero__actions">
       {/* TODO: collegare link esterno PerfectGym */}
-      <a class="hero__cta hero__cta--primary" href="#">Iscriviti ora</a>
+      <a class="btn btn-red" href="#">Iscriviti ora</a>
       {/* TODO: aprire modal form lead */}
-      <a class="hero__cta hero__cta--secondary" href="#">Prenota una visita</a>
+      <a class="btn btn-outline" href="#">Prenota una visita</a>
     </div>
   </div>
 </section>
@@ -32,115 +32,82 @@
     position: relative;
     min-height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     overflow: hidden;
+    padding-top: var(--header-h);
   }
 
-  /* Placeholder #1A1A1A — sostituire con la foto hero */
-  .hero__media {
+  /* Placeholder scuro — sostituire con la foto hero */
+  .hero__bg {
     position: absolute;
     inset: 0;
-    background-color: #1a1a1a;
+    background-color: #141416;
     background-size: cover;
     background-position: center;
   }
 
-  .hero__media::after {
+  .hero__bg::after {
     content: attr(data-name);
     position: absolute;
     bottom: 1rem;
-    right: 1rem;
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.35);
+    right: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.25);
+    letter-spacing: 0.08em;
   }
 
-  .hero__overlay {
+  /* Gradiente diagonale come nel sito di riferimento */
+  .hero__grad {
     position: absolute;
     inset: 0;
-    background: var(--color-overlay);
+    background: linear-gradient(105deg, rgba(20, 20, 22, 0.82) 28%, rgba(139, 26, 26, 0.42));
   }
 
   .hero__content {
     position: relative;
     z-index: 2;
-    max-width: 760px;
+    width: 100%;
+    max-width: var(--max-width);
     margin: 0 auto;
-    padding: 6rem 1.5rem;
+    padding: 8vh var(--pad-x);
     color: #ffffff;
-  }
-
-  .hero__eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 1.25rem;
   }
 
   .hero__title {
-    font-family: var(--font-serif);
-    font-size: clamp(2.4rem, 6vw, 4.5rem);
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 7.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 3vh;
+    max-width: 16ch;
   }
 
-  .hero__subtitle {
-    font-family: var(--font-sans);
-    font-size: clamp(1rem, 2vw, 1.25rem);
-    font-weight: 400;
-    line-height: 1.6;
-    max-width: 600px;
-    color: rgba(255, 255, 255, 0.92);
-    margin-bottom: 2.5rem;
+  .hero__title em {
+    color: var(--color-accent);
+    font-style: normal;
   }
 
-  .hero__ctas {
+  .hero__sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.2vw, 19px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 60ch;
+    margin-bottom: 3.5vh;
+  }
+
+  .hero__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 12px;
   }
 
-  .hero__cta {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    font-weight: 600;
-    padding: 0.9rem 1.9rem;
-    border-radius: 4px;
-    transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
-  }
-
-  .hero__cta--primary {
-    background: var(--color-accent);
-    color: #ffffff;
-  }
-
-  .hero__cta--primary:hover {
-    opacity: 0.88;
-  }
-
-  .hero__cta--secondary {
-    background: transparent;
-    color: #ffffff;
-    border: 1.5px solid rgba(255, 255, 255, 0.7);
-  }
-
-  .hero__cta--secondary:hover {
-    background: #ffffff;
-    color: var(--color-text);
-    border-color: #ffffff;
-  }
-
-  @media (max-width: 600px) {
-    .hero__ctas {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .hero__cta {
-      text-align: center;
-    }
+  @media (max-width: 768px) {
+    .hero__content { padding: 6vh 20px; }
+    .hero__title { font-size: clamp(2.6rem, 10vw, 4rem); }
   }
 </style>

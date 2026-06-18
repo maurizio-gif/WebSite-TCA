@@ -4,15 +4,32 @@
 
 :root {
   /* Palette */
-  --color-bg: #ffffff;
-  --color-text: #1a1a1a;
-  --color-accent: #c8102e;
-  --color-border: #e5e7eb;
-  --color-overlay: rgba(0, 0, 0, 0.45);
+  --color-bg:           #FFFFFF;
+  --color-text:         #1A1A1A;
+  --color-text-light:   #555555;
+  --color-accent:       #8B1A1A;
+  --color-accent-dark:  #6B1414;
+  --color-border:       #EBEBEB;
+  --color-off-white:    #F5F3F0;
+  --color-grey-mid:     #999999;
+  --color-overlay:      rgba(0, 0, 0, 0.55);
+
+  /* Layout */
+  --max-width: 1500px;
+  --pad-x:     clamp(20px, 5vw, 72px);
+  --header-h:  60px;
 
   /* Tipografia */
-  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Barlow Condensed", sans-serif;
+  --font-body:    "Barlow", system-ui, sans-serif;
+
+  /* Alias usati nei componenti esistenti */
+  --font-serif: var(--font-display);
+  --font-sans:  var(--font-body);
+}
+
+@media (max-width: 768px) {
+  :root { --header-h: 52px; }
 }
 
 /* ---------- Reset essenziale ---------- */
@@ -30,7 +47,7 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-weight: 400;
   color: var(--color-text);
   background-color: var(--color-bg);
@@ -44,9 +61,11 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  line-height: 1.15;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
 }
 
 a {
@@ -61,12 +80,79 @@ svg {
   max-width: 100%;
 }
 
+/* ---------- Layout base ---------- */
+/* La navbar è fixed: il main non ha padding-top perché
+   le sezioni hero gestiscono il proprio offset internamente */
+.site-main { display: block; }
+
+/* Impedisce lo scroll del body quando il menu è aperto */
+body.menu-open { overflow: hidden; }
+
+/* ---------- Utility: eyebrow ---------- */
+.eyebrow {
+  font-family: var(--font-display);
+  font-size: clamp(9px, 0.85vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: block;
+  margin-bottom: 0.8vh;
+}
+
+.eyebrow--light { color: rgba(255, 255, 255, 0.45); }
+.eyebrow--grey  { color: var(--color-grey-mid); }
+
+/* ---------- Utility: bottoni ---------- */
+.btn {
+  font-family: var(--font-display);
+  font-size: clamp(12px, 1.1vw, 15px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: clamp(10px, 1.1vh, 14px) clamp(18px, 2vw, 32px);
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.btn-red {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+}
+
+.btn-red:hover {
+  background: var(--color-accent-dark);
+  border-color: var(--color-accent-dark);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.btn-outline:hover { border-color: #fff; }
+
+.btn-outline--dark {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.btn-outline--dark:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
 /* ---------- Utility: placeholder immagini ----------
    Da usare finché la foto reale non è disponibile.
-   Box #E5E7EB con il nome file centrato.
+   Box var(--color-border) con il nome file centrato.
    Uso:
      <div class="img-placeholder" data-name="hero-home.jpg"></div>
-   Il nome file viene mostrato tramite l'attributo data-name.
 */
 .img-placeholder {
   display: flex;
@@ -75,8 +161,8 @@ svg {
   width: 100%;
   min-height: 240px;
   background-color: var(--color-border);
-  color: #6b7280;
-  font-family: var(--font-sans);
+  color: var(--color-grey-mid);
+  font-family: var(--font-body);
   font-size: 0.875rem;
   text-align: center;
   padding: 1rem;
