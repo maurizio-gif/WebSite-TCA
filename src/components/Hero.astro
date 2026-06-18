@@ -110,9 +110,31 @@ const p = (path: string) => getLocalePath(lang, path);
   }
 
   @media (max-width: 768px) {
-    .hero__content { padding: 6vh 20px 7vh; }
-    .hero__title { font-size: clamp(2.8rem, 11vw, 4.5rem); }
-    .hero__sub { font-size: clamp(0.8rem, 3.5vw, 1rem); }
+    /* Altezza corretta su mobile: svh esclude le chrome bar del browser */
+    .hero {
+      min-height: 100svh;
+      align-items: center;
+    }
+
+    .hero__content {
+      padding: 8vh 24px 8vh;
+      text-align: center;
+    }
+
+    .hero__title {
+      font-size: clamp(3.4rem, 14vw, 5.5rem);
+      max-width: none;
+    }
+
+    .hero__sub {
+      font-size: clamp(0.85rem, 3.8vw, 1.1rem);
+      letter-spacing: 0.12em;
+    }
+
+    .hero__actions {
+      justify-content: center;
+    }
+
     .hero__img { object-position: 60% center; }
   }
 </style>
