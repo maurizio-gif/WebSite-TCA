@@ -574,18 +574,10 @@ const navItems = [
   }
 
   .navbar__cta {
+    font-family: var(--font-body);
+    font-weight: 600;
     font-size: clamp(12px, 1vw, 14px);
     padding: 7px 18px;
-    box-shadow: 0 4px 0 0 var(--color-accent-dark);
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.18s, border-color 0.18s;
-  }
-  .navbar__cta:hover {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 0 var(--color-accent-dark);
-  }
-  .navbar__cta:active {
-    transform: translateY(4px);
-    box-shadow: none;
   }
 
   .lang-switcher {
@@ -606,8 +598,8 @@ const navItems = [
 
   /* ACCEDI — visibile sempre, stile outline sottile */
   .navbar__accedi {
-    font-family: var(--font-display);
-    font-size: clamp(12px, 0.9vw, 13px); font-weight: 700;
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.9vw, 13px); font-weight: 600;
     letter-spacing: 0.12em; text-transform: uppercase;
     color: var(--color-text);
     background: none;
@@ -662,8 +654,8 @@ const navItems = [
     .navbar__accedi { font-size: 11px; padding: 5px 10px; }
     .navbar__mobile-contact {
       display: inline-flex; align-items: center;
-      font-family: var(--font-display);
-      font-size: 13px; font-weight: 700;
+      font-family: var(--font-body);
+      font-size: 13px; font-weight: 600;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: #fff; text-decoration: none;
       background: var(--color-accent);
