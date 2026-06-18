@@ -171,3 +171,35 @@ body.menu-open { overflow: hidden; }
 .img-placeholder::after {
   content: attr(data-name);
 }
+
+/* ---------- Scroll animations ----------
+   Uso: aggiungere data-anim o data-anim="fade" all'elemento.
+   JS in BaseLayout aggiunge .is-visible quando entra nel viewport.
+   Usa data-anim-delay="200" per ritardare (ms).
+*/
+[data-anim] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s cubic-bezier(.22,.68,0,1.2),
+              transform 0.65s cubic-bezier(.22,.68,0,1.2);
+  will-change: opacity, transform;
+}
+
+[data-anim="fade"] {
+  transform: none;
+  transition: opacity 0.7s ease;
+}
+
+[data-anim].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Rispetta le preferenze di accessibilità */
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
