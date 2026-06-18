@@ -80,8 +80,25 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
         </div>
         <div class="lm__field lm__field--full">
           <label for="lm-cell">Cellulare <span aria-hidden="true">*</span></label>
-          <input id="lm-cell" name="cellulare" type="tel" autocomplete="tel"
-                 placeholder="+39 3XX XXX XXXX" required />
+          <div class="lm__tel-wrap">
+            <select id="lm-prefix" name="prefisso" class="lm__tel-prefix" autocomplete="tel-country-code">
+              <option value="+39" selected>🇮🇹 +39</option>
+              <option value="+41">🇨🇭 +41</option>
+              <option value="+43">🇦🇹 +43</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+34">🇪🇸 +34</option>
+              <option value="+351">🇵🇹 +351</option>
+              <option value="+31">🇳🇱 +31</option>
+              <option value="+32">🇧🇪 +32</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+55">🇧🇷 +55</option>
+              <option value="+54">🇦🇷 +54</option>
+            </select>
+            <input id="lm-cell" name="cellulare" type="tel" autocomplete="tel-national"
+                   placeholder="3XX XXX XXXX" required />
+          </div>
         </div>
       </div>
 
@@ -396,7 +413,56 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     background: #fff;
   }
 
+  .lm__input--error {
+    border-color: #c0392b !important;
+    background: #fff5f5 !important;
+  }
+
   .lm__field textarea { resize: vertical; min-height: 110px; }
+
+  /* ── Tel con prefisso ── */
+  .lm__tel-wrap {
+    display: flex;
+    gap: 0;
+  }
+
+  .lm__tel-prefix {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 300;
+    padding: 0.7rem 0.5rem;
+    border: 1px solid var(--lm-input-bd);
+    border-right: none;
+    background: var(--lm-input-bg);
+    color: var(--lm-text);
+    flex-shrink: 0;
+    width: auto;
+    min-width: 90px;
+    cursor: pointer;
+    -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236B5C57' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    padding-right: 22px;
+    transition: border-color 0.18s;
+  }
+
+  .lm__tel-prefix:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    z-index: 1;
+  }
+
+  .lm__tel-wrap input[type="tel"] {
+    flex: 1;
+    min-width: 0;
+    border-left: 1px solid var(--lm-input-bd) !important;
+  }
+
+  .lm__tel-wrap:focus-within .lm__tel-prefix,
+  .lm__tel-wrap:focus-within input[type="tel"] {
+    border-color: var(--color-accent);
+  }
 
   /* ── Attività checkboxes ── */
   .lm__checks {
@@ -731,6 +797,26 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
   });
 
   // ─── STEP 1 → verifica email ──────────────────────────────────────────────
+  // Regex RFC-5322 semplificata: verifica presenza di @, dominio e TLD
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+  }
+
+  // Feedback inline sull'input email mentre si digita
+  var emailInput = modal.querySelector('#lm-email');
+  emailInput.addEventListener('blur', function() {
+    if (emailInput.value && !isValidEmail(emailInput.value)) {
+      emailInput.classList.add('lm__input--error');
+    } else {
+      emailInput.classList.remove('lm__input--error');
+    }
+  });
+  emailInput.addEventListener('input', function() {
+    if (emailInput.classList.contains('lm__input--error') && isValidEmail(emailInput.value)) {
+      emailInput.classList.remove('lm__input--error');
+    }
+  });
+
   modal.querySelector('#lm-step1-next').addEventListener('click', async function() {
     const step1     = getStep(1);
     const emailInput = modal.querySelector('#lm-email');
@@ -738,8 +824,11 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     const nextBtn   = step1.querySelector('#lm-step1-next');
 
     clearError(step1);
-    if (!emailInput.validity.valid || !emailInput.value.trim()) {
-      showError(step1, 'Inserisci un indirizzo email valido.');
+    emailInput.classList.remove('lm__input--error');
+
+    if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
+      emailInput.classList.add('lm__input--error');
+      showError(step1, 'Inserisci un indirizzo email valido (es. nome@dominio.it).');
       emailInput.focus();
       return;
     }
@@ -789,9 +878,10 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     if (!cell.value.trim())    { showError(step2, 'Inserisci il numero di cellulare.'); cell.focus(); return; }
     if (!privacy.checked)      { showError(step2, 'Il consenso alla Privacy Policy è obbligatorio.'); return; }
 
+    var prefix = modal.querySelector('#lm-prefix');
     collectedData.nome      = nome.value.trim();
     collectedData.cognome   = cognome.value.trim();
-    collectedData.cellulare = cell.value.trim();
+    collectedData.cellulare = (prefix ? prefix.value : '+39') + ' ' + cell.value.trim();
     collectedData.privacy   = privacy.checked;
     collectedData.marketing = modal.querySelector('#lm-marketing').checked;
     collectedData.attivita  = Array.from(modal.querySelectorAll('input[name="attivita"]:checked')).map(function(c) { return c.value; });
