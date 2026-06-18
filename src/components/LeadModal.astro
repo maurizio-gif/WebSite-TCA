@@ -1,84 +1,211 @@
 ---
-// TODO Fase 2: connettere al webhook n8n
-// action="https://n8n.tcambrosiano.com/webhook/lead"
-// method="POST"
+// Webhook URL per verifica utente esistente (n8n Fase 2)
+// POST { email } → { exists: boolean }
+const WEBHOOK_CHECK = '#TODO-WEBHOOK-CHECK';
+// Webhook submit dati nuovo utente
+const WEBHOOK_LEAD  = '#TODO-WEBHOOK-LEAD';
 
-const interessi = [
-  "Tennis",
-  "Padel / Pickleball",
-  "Preparazione Atletica",
-  "Scuola Tennis (bambini)",
-  "Summer Camps",
-  "Membership Club",
-  "Informazioni generali",
+const attivita = [
+  { id: 'tennis',     label: 'Tennis' },
+  { id: 'padel',      label: 'Padel / Pickleball' },
+  { id: 'prep',       label: 'Preparazione Atletica' },
+  { id: 'scuola',     label: 'Scuola Tennis (bambini)' },
+  { id: 'agonistica', label: 'Agonistica Tennis' },
+  { id: 'camps',      label: 'Summer Camps' },
+  { id: 'membership', label: 'Membership / Abbonamento' },
 ];
+
+const PHONE     = '+39 02 2641 4392';
+const PHONE_TEL = 'tel:+390226414392';
+const WA_URL    = 'https://wa.me/390226414392'; // TODO: aggiorna numero WA
+const EMAIL_TO  = 'info@tcambrosiano.com';
 ---
 
 <dialog id="modal-contatti" class="lm" aria-labelledby="lm-title">
   <div class="lm__panel">
 
+    <!-- Header fisso -->
     <div class="lm__head">
       <div>
         <span class="eyebrow eyebrow--light">Contattaci</span>
-        <h2 class="lm__title" id="lm-title">Parliamone.<br><em>Ti ricontattiamo noi.</em></h2>
+        <h2 class="lm__title" id="lm-title">Parliamone.<br><em>Siamo qui per te.</em></h2>
       </div>
-      <button class="lm__close" aria-label="Chiudi" data-lm-close>✕</button>
+      <button class="lm__close" aria-label="Chiudi" data-lm-close>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
 
-    <div class="lm__body">
-      <p class="lm__sub">
-        Lascia i tuoi dati e raccontaci cosa cerchi: ti risponderemo con tutte
-        le informazioni su orari, disponibilità e la soluzione più adatta a te.
-      </p>
+    <!-- Step indicator -->
+    <div class="lm__steps" aria-hidden="true">
+      <span class="lm__step is-active" data-step-dot="1">1</span>
+      <span class="lm__step-line"></span>
+      <span class="lm__step" data-step-dot="2">2</span>
+      <span class="lm__step-line"></span>
+      <span class="lm__step" data-step-dot="3">3</span>
+    </div>
 
-      <form class="lm__form" id="form-contatti" novalidate>
-        <div class="lm__field">
-          <label for="lm-nome">Nome e cognome <span aria-hidden="true">*</span></label>
-          <input id="lm-nome" name="nome" type="text" autocomplete="name" required />
-        </div>
-
-        <div class="lm__field">
-          <label for="lm-email">Email <span aria-hidden="true">*</span></label>
-          <input id="lm-email" name="email" type="email" autocomplete="email" required />
-        </div>
-
-        <div class="lm__field">
-          <label for="lm-telefono">Telefono</label>
-          <input id="lm-telefono" name="telefono" type="tel" autocomplete="tel" />
-        </div>
-
-        <div class="lm__field">
-          <label for="lm-interesse">Sono interessato a</label>
-          <select id="lm-interesse" name="interesse">
-            <option value="" selected disabled>Seleziona…</option>
-            {interessi.map((i) => <option value={i}>{i}</option>)}
-          </select>
-        </div>
-
-        <div class="lm__field lm__field--full">
-          <label for="lm-messaggio">Messaggio</label>
-          <textarea id="lm-messaggio" name="messaggio" rows="3"></textarea>
-        </div>
-
-        <div class="lm__field lm__field--full lm__privacy">
-          <input id="lm-privacy" name="privacy" type="checkbox" required />
-          <label for="lm-privacy">
-            Ho letto e accetto la <a href="/privacy-policy">Privacy Policy</a> e
-            acconsento al trattamento dei miei dati. <span aria-hidden="true">*</span>
-          </label>
-        </div>
-
-        <div class="lm__field--full">
-          <button class="btn btn-red lm__submit" type="submit">Invia richiesta</button>
-        </div>
-      </form>
-
-      <div class="lm__success" hidden aria-live="polite">
-        <div class="lm__success-icon" aria-hidden="true">✓</div>
-        <h3 class="lm__success-title">Messaggio inviato!</h3>
-        <p class="lm__success-text">Ti risponderemo entro 24 ore.<br>A presto al TCA.</p>
-        <button class="btn btn-red" data-lm-close>Chiudi</button>
+    <!-- ─── STEP 1: EMAIL ─────────────────────────────── -->
+    <div class="lm__body" data-step="1">
+      <p class="lm__sub">Inizia con il tuo indirizzo email.</p>
+      <div class="lm__field">
+        <label for="lm-email">Email <span aria-hidden="true">*</span></label>
+        <input id="lm-email" name="email" type="email" autocomplete="email"
+               placeholder="nome@esempio.com" required />
       </div>
+      <div class="lm__actions">
+        <button class="btn btn-red lm__next" id="lm-step1-next" type="button">
+          Continua <span class="lm__arrow">→</span>
+        </button>
+      </div>
+      <div class="lm__loader" hidden aria-live="polite">
+        <span class="lm__spinner"></span> Verifica in corso…
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+    </div>
+
+    <!-- ─── STEP 2: DATI NUOVO UTENTE ────────────────── -->
+    <div class="lm__body" data-step="2" hidden>
+      <p class="lm__sub">Piacere di conoscerti! Aggiungi i tuoi dati per procedere.</p>
+
+      <div class="lm__grid">
+        <div class="lm__field">
+          <label for="lm-nome">Nome <span aria-hidden="true">*</span></label>
+          <input id="lm-nome" name="nome" type="text" autocomplete="given-name" required />
+        </div>
+        <div class="lm__field">
+          <label for="lm-cognome">Cognome <span aria-hidden="true">*</span></label>
+          <input id="lm-cognome" name="cognome" type="text" autocomplete="family-name" required />
+        </div>
+        <div class="lm__field lm__field--full">
+          <label for="lm-cell">Cellulare <span aria-hidden="true">*</span></label>
+          <input id="lm-cell" name="cellulare" type="tel" autocomplete="tel"
+                 placeholder="+39 3XX XXX XXXX" required />
+        </div>
+      </div>
+
+      <p class="lm__label-group">Attività di interesse</p>
+      <div class="lm__checks">
+        {attivita.map((a) => (
+          <label class="lm__check-item">
+            <input type="checkbox" name="attivita" value={a.id} />
+            <span>{a.label}</span>
+          </label>
+        ))}
+      </div>
+
+      <!-- Doppio consenso -->
+      <div class="lm__consent">
+        <label class="lm__consent-item">
+          <input id="lm-privacy" name="privacy" type="checkbox" required />
+          <span>
+            Ho letto e accetto la <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
+            Acconsento al trattamento dei dati personali per rispondermi a questa richiesta.
+            <strong>(obbligatorio)</strong>
+          </span>
+        </label>
+        <label class="lm__consent-item">
+          <input id="lm-marketing" name="marketing" type="checkbox" />
+          <span>
+            Acconsento a ricevere comunicazioni commerciali, offerte e novità dal
+            Tennis Club Ambrosiano via email, SMS e WhatsApp.
+            <em>(facoltativo)</em>
+          </span>
+        </label>
+      </div>
+
+      <div class="lm__actions">
+        <button class="lm__back" id="lm-step2-back" type="button">← Indietro</button>
+        <button class="btn btn-red lm__next" id="lm-step2-next" type="button">
+          Continua <span class="lm__arrow">→</span>
+        </button>
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+    </div>
+
+    <!-- ─── STEP 3: CANALE DI CONTATTO ───────────────── -->
+    <div class="lm__body" data-step="3" hidden>
+      <p class="lm__sub">Come preferisci contattarci?</p>
+      <div class="lm__channels">
+        <button class="lm__channel-btn" data-channel="phone" type="button">
+          <svg class="lm__channel-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M6.6 10.8C7.8 13.2 9.8 15.2 12.2 16.4L14.2 14.4C14.5 14.1 14.9 14 15.3 14.2C16.5 14.6 17.8 14.8 19 14.8C19.6 14.8 20 15.2 20 15.8V19C20 19.6 19.6 20 19 20C10.2 20 3 12.8 3 4C3 3.4 3.4 3 4 3H7.5C8.1 3 8.5 3.4 8.5 4C8.5 5.3 8.7 6.5 9.1 7.7C9.2 8.1 9.1 8.5 8.8 8.8L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <span class="lm__channel-label">TELEFONO</span>
+          <span class="lm__channel-sub">{PHONE}</span>
+        </button>
+
+        <button class="lm__channel-btn" data-channel="email" type="button">
+          <svg class="lm__channel-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <span class="lm__channel-label">EMAIL</span>
+          <span class="lm__channel-sub">{EMAIL_TO}</span>
+        </button>
+
+        <button class="lm__channel-btn" data-channel="whatsapp" type="button">
+          <svg class="lm__channel-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0034 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.9C9.87812 3.30493 11.1801 2.99659 12.5 3H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="lm__channel-label">WHATSAPP</span>
+          <span class="lm__channel-sub">Risposta rapida</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ─── STEP 4a: TELEFONO ─────────────────────────── -->
+    <div class="lm__body" data-step="4-phone" hidden>
+      <p class="lm__sub">Siamo disponibili dal lunedì al venerdì, 9:00–19:00.</p>
+      <a class="btn btn-red lm__cta-big" href={PHONE_TEL}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M6.6 10.8C7.8 13.2 9.8 15.2 12.2 16.4L14.2 14.4C14.5 14.1 14.9 14 15.3 14.2C16.5 14.6 17.8 14.8 19 14.8C19.6 14.8 20 15.2 20 15.8V19C20 19.6 19.6 20 19 20C10.2 20 3 12.8 3 4C3 3.4 3.4 3 4 3H7.5C8.1 3 8.5 3.4 8.5 4C8.5 5.3 8.7 6.5 9.1 7.7C9.2 8.1 9.1 8.5 8.8 8.8L6.6 10.8Z" stroke="currentColor" stroke-width="1.8"/>
+        </svg>
+        Chiama ora — {PHONE}
+      </a>
+      <button class="lm__back lm__back--center" data-step-back="3" type="button">← Scegli altro canale</button>
+    </div>
+
+    <!-- ─── STEP 4b: EMAIL ────────────────────────────── -->
+    <div class="lm__body" data-step="4-email" hidden>
+      <p class="lm__sub">Scrivi il tuo messaggio e ti risponderemo entro 24 ore.</p>
+      <div class="lm__field">
+        <label for="lm-msg">Messaggio <span aria-hidden="true">*</span></label>
+        <textarea id="lm-msg" name="messaggio" rows="5"
+                  placeholder="Raccontaci cosa cerchi…" required></textarea>
+      </div>
+      <div class="lm__actions">
+        <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
+        <button class="btn btn-red lm__next" id="lm-step4e-send" type="button">
+          Invia messaggio <span class="lm__arrow">→</span>
+        </button>
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+    </div>
+
+    <!-- ─── STEP 4c: WHATSAPP ─────────────────────────── -->
+    <div class="lm__body" data-step="4-whatsapp" hidden>
+      <p class="lm__sub">Apriremo una conversazione WhatsApp. Rispondiamo di solito entro pochi minuti.</p>
+      <a class="btn lm__cta-big lm__cta-wa" href={WA_URL} target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0034 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.9C9.87812 3.30493 11.1801 2.99659 12.5 3H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        Apri WhatsApp
+      </a>
+      <button class="lm__back lm__back--center" data-step-back="3" type="button">← Scegli altro canale</button>
+    </div>
+
+    <!-- ─── SUCCESS ───────────────────────────────────── -->
+    <div class="lm__body lm__success" data-step="success" hidden aria-live="polite">
+      <div class="lm__success-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M5 14L11 20L23 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 class="lm__success-title">Messaggio inviato!</h3>
+      <p class="lm__success-text">Ti risponderemo entro 24 ore.<br>A presto al TCA.</p>
+      <button class="btn btn-red" data-lm-close>Chiudi</button>
     </div>
 
   </div>
@@ -90,7 +217,7 @@ const interessi = [
     border: none;
     padding: 0;
     background: transparent;
-    max-width: min(94vw, 680px);
+    max-width: min(94vw, 620px);
     width: 100%;
     margin: auto;
   }
@@ -107,69 +234,109 @@ const interessi = [
     color: #ffffff;
     display: flex;
     flex-direction: column;
+    max-height: 92vh;
+    overflow-y: auto;
   }
 
+  /* ── Header ── */
   .lm__head {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 1.5rem;
-    padding: 2.5rem 2.5rem 2rem;
+    padding: 2rem 2rem 1.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    position: sticky;
+    top: 0;
+    background: #0f1013;
+    z-index: 2;
   }
 
   .lm__title {
     font-family: var(--font-display);
-    font-size: clamp(1.7rem, 3.5vw, 2.8rem);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
     line-height: 0.92;
     margin-top: 0.4rem;
-    color: #ffffff;
+    color: #fff;
   }
 
-  .lm__title em {
-    color: var(--color-accent);
-    font-style: normal;
-  }
+  .lm__title em { color: var(--color-accent); font-style: normal; }
 
   .lm__close {
     background: none;
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: rgba(255, 255, 255, 0.55);
-    font-size: 1.1rem;
-    line-height: 1;
-    width: 2.2rem;
-    height: 2.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 2rem; height: 2rem;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
     cursor: pointer;
     transition: border-color 0.18s, color 0.18s;
+    padding: 0;
+  }
+  .lm__close:hover { border-color: rgba(255,255,255,0.4); color: #fff; }
+
+  /* ── Step indicator ── */
+  .lm__steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0.9rem 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
   }
 
-  .lm__close:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-    color: #ffffff;
+  .lm__step {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.3);
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.25s, border-color 0.25s, color 0.25s;
+    flex-shrink: 0;
   }
 
+  .lm__step.is-active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  .lm__step.is-done {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.5);
+  }
+
+  .lm__step-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin: 0 6px;
+  }
+
+  /* ── Body steps ── */
   .lm__body {
-    padding: 2rem 2.5rem 2.5rem;
+    padding: 1.8rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
   }
 
   .lm__sub {
     font-family: var(--font-body);
-    font-size: clamp(13px, 0.9vw, 15px);
+    font-size: clamp(13px, 0.95vw, 15px);
     font-weight: 300;
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.55);
-    margin-bottom: 1.8rem;
+    color: rgba(255,255,255,0.5);
+    margin: 0;
   }
 
-  /* ── Form ── */
-  .lm__form {
+  /* ── Form fields ── */
+  .lm__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
@@ -181,172 +348,491 @@ const interessi = [
     gap: 6px;
   }
 
-  .lm__field--full {
-    grid-column: 1 / -1;
-  }
+  .lm__field--full { grid-column: 1 / -1; }
 
-  .lm__field label {
+  .lm__field label,
+  .lm__label-group {
     font-family: var(--font-display);
-    font-size: clamp(11px, 0.75vw, 11px);
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.38);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.38);
+    margin: 0;
   }
 
   .lm__field label span { color: var(--color-accent); }
 
   .lm__field input,
-  .lm__field select,
   .lm__field textarea {
     font-family: var(--font-body);
     font-size: clamp(13px, 0.95vw, 15px);
     font-weight: 300;
     padding: 0.7rem 0.85rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(255, 255, 255, 0.04);
-    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.04);
+    color: #fff;
     width: 100%;
     transition: border-color 0.18s;
-    -webkit-appearance: none;
-    appearance: none;
+    -webkit-appearance: none; appearance: none;
   }
 
   .lm__field input:focus,
-  .lm__field select:focus,
   .lm__field textarea:focus {
     outline: none;
     border-color: var(--color-accent);
   }
 
-  .lm__field select option { background: #1a1a1a; color: #fff; }
-  .lm__field textarea { resize: vertical; min-height: 80px; }
+  .lm__field textarea { resize: vertical; min-height: 110px; }
 
-  .lm__privacy {
-    flex-direction: row !important;
-    align-items: flex-start;
-    gap: 0.65rem;
+  /* ── Attività checkboxes ── */
+  .lm__checks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
-  .lm__privacy input[type="checkbox"] {
-    width: auto;
+  .lm__check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.14);
+    padding: 5px 10px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .lm__check-item:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+
+  .lm__check-item input[type="checkbox"] {
+    accent-color: var(--color-accent);
     flex-shrink: 0;
-    margin-top: 0.15em;
+  }
+
+  .lm__check-item:has(input:checked) {
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  /* ── Consensi ── */
+  .lm__consent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .lm__consent-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    cursor: pointer;
+  }
+
+  .lm__consent-item input[type="checkbox"] {
+    flex-shrink: 0;
+    margin-top: 0.2em;
     accent-color: var(--color-accent);
   }
 
-  .lm__privacy label {
-    font-family: var(--font-body) !important;
-    font-size: clamp(11px, 0.82vw, 13px) !important;
-    font-weight: 300 !important;
-    letter-spacing: 0 !important;
-    text-transform: none !important;
-    color: rgba(255, 255, 255, 0.45) !important;
+  .lm__consent-item span {
+    font-family: var(--font-body);
+    font-size: clamp(11px, 0.8vw, 12px);
+    font-weight: 300;
     line-height: 1.55;
+    color: rgba(255,255,255,0.4);
   }
 
-  .lm__privacy a {
-    color: var(--color-accent);
-    text-decoration: underline;
+  .lm__consent-item span a { color: var(--color-accent); text-decoration: underline; }
+  .lm__consent-item span strong { color: rgba(255,255,255,0.7); font-weight: 500; }
+  .lm__consent-item span em { color: rgba(255,255,255,0.3); font-style: normal; }
+
+  /* ── Actions / navigation ── */
+  .lm__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
   }
 
-  .lm__submit {
-    width: 100%;
-    justify-content: center;
+  .lm__back {
+    font-family: var(--font-display);
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    background: none; border: none; cursor: pointer;
+    padding: 0;
+    transition: color 0.18s;
+  }
+  .lm__back:hover { color: rgba(255,255,255,0.7); }
+  .lm__back--center { align-self: center; margin-top: 0.5rem; }
+
+  .lm__next { gap: 0.4rem; }
+  .lm__arrow { display: inline-block; transition: transform 0.18s; }
+  .lm__next:hover .lm__arrow { transform: translateX(4px); }
+
+  /* ── Loader ── */
+  .lm__loader {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
   }
 
-  /* ── Success state ── */
-  .lm__success {
-    text-align: center;
-    padding: 3rem 1rem;
+  .lm__spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: lm-spin 0.7s linear infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes lm-spin { to { transform: rotate(360deg); } }
+
+  .lm__error {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: #e05555;
+    margin: 0;
+  }
+
+  /* ── Canali ── */
+  .lm__channels {
     display: flex;
     flex-direction: column;
+    gap: 2px;
+  }
+
+  .lm__channel-btn {
+    display: flex;
     align-items: center;
     gap: 1rem;
+    padding: 1.1rem 1rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #fff;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.18s, border-color 0.18s;
+    position: relative;
+  }
+
+  .lm__channel-btn::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--color-accent);
+    transform: scaleY(0);
+    transition: transform 0.22s cubic-bezier(0.22, 0.68, 0, 1.1);
+  }
+
+  .lm__channel-btn:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.18);
+  }
+
+  .lm__channel-btn:hover::before { transform: scaleY(1); }
+
+  .lm__channel-icon {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    opacity: 0.8;
+  }
+
+  .lm__channel-label {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    flex: 1;
+  }
+
+  .lm__channel-sub {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+  }
+
+  /* ── CTA grande (phone / wa) ── */
+  .lm__cta-big {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: clamp(13px, 1vw, 15px);
+  }
+
+  .lm__cta-wa {
+    background: #25D366;
+    border-color: #25D366;
+    color: #fff;
+  }
+  .lm__cta-wa:hover { background: #1fba59; border-color: #1fba59; }
+
+  /* ── Success ── */
+  .lm__success {
+    align-items: center;
+    text-align: center;
+    padding: 3rem 2rem;
   }
 
   .lm__success-icon {
-    font-size: 2.5rem;
-    color: var(--color-accent);
-    width: 4rem;
-    height: 4rem;
+    width: 4rem; height: 4rem;
     border: 2px solid var(--color-accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-accent);
   }
 
   .lm__success-title {
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.2rem);
-    font-weight: 800;
-    text-transform: uppercase;
-    color: #ffffff;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 800; text-transform: uppercase;
+    color: #fff; margin: 0;
   }
 
   .lm__success-text {
     font-family: var(--font-body);
-    font-size: clamp(13px, 0.95vw, 16px);
-    font-weight: 300;
-    line-height: 1.7;
-    color: rgba(255, 255, 255, 0.6);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 300; line-height: 1.7;
+    color: rgba(255,255,255,0.5);
   }
 
   /* ── Mobile ── */
   @media (max-width: 560px) {
-    .lm__head { padding: 1.8rem 1.5rem 1.5rem; }
-    .lm__body { padding: 1.5rem 1.5rem 2rem; }
-    .lm__form { grid-template-columns: 1fr; }
+    .lm__head  { padding: 1.4rem 1.2rem 1.2rem; }
+    .lm__body  { padding: 1.4rem 1.2rem 1.6rem; }
+    .lm__steps { padding: 0.75rem 1.2rem; }
+    .lm__grid  { grid-template-columns: 1fr; }
+    .lm__channel-sub { display: none; }
   }
 </style>
 
-<script>
-  // ── Open modal from any [data-open-modal] button ──────────────────────────
+<script define:vars={{ WEBHOOK_CHECK, WEBHOOK_LEAD }}>
+  // ─── State ────────────────────────────────────────────────────────────────
+  let collectedData = {
+    email: '',
+    nome: '', cognome: '', cellulare: '',
+    attivita: [] as string[],
+    privacy: false, marketing: false,
+    isNewUser: true,
+  };
+
+  // ─── Helpers ──────────────────────────────────────────────────────────────
+  const modal     = document.getElementById('modal-contatti') as HTMLDialogElement;
+  const stepDots  = modal.querySelectorAll<HTMLElement>('[data-step-dot]');
+
+  function getStep(n: string | number): HTMLElement | null {
+    return modal.querySelector(`[data-step="${n}"]`);
+  }
+
+  function showStep(n: string | number, activeDot?: number) {
+    modal.querySelectorAll<HTMLElement>('[data-step]').forEach(el => {
+      el.hidden = el.dataset.step !== String(n);
+    });
+    // Aggiorna i pallini 1-2-3
+    if (activeDot !== undefined) {
+      stepDots.forEach(dot => {
+        const d = parseInt(dot.dataset.stepDot!);
+        dot.classList.toggle('is-active', d === activeDot);
+        dot.classList.toggle('is-done',   d <  activeDot);
+      });
+    }
+    const stepsBar = modal.querySelector<HTMLElement>('.lm__steps');
+    if (stepsBar) stepsBar.hidden = (n === 'success');
+  }
+
+  function showError(stepEl: HTMLElement, msg: string) {
+    const err = stepEl.querySelector<HTMLElement>('.lm__error');
+    if (!err) return;
+    err.textContent = msg;
+    err.hidden = false;
+  }
+
+  function clearError(stepEl: HTMLElement) {
+    const err = stepEl.querySelector<HTMLElement>('.lm__error');
+    if (err) err.hidden = true;
+  }
+
+  // ─── Open modal ───────────────────────────────────────────────────────────
   document.addEventListener('click', (e) => {
     const trigger = (e.target as Element).closest('[data-open-modal]') as HTMLElement | null;
-    if (trigger) {
-      const id = trigger.dataset.openModal;
-      const dialog = document.getElementById(id!) as HTMLDialogElement | null;
-      dialog?.showModal();
+    if (trigger?.dataset.openModal === 'modal-contatti') {
+      modal.showModal();
+      showStep(1, 1);
     }
   });
 
-  // ── Close on [data-lm-close] or backdrop click ───────────────────────────
+  // ─── Close ────────────────────────────────────────────────────────────────
+  function closeAndReset() {
+    modal.close();
+    collectedData = { email:'', nome:'', cognome:'', cellulare:'', attivita:[], privacy:false, marketing:false, isNewUser:true };
+    (modal.querySelector('#lm-email') as HTMLInputElement).value = '';
+    (modal.querySelector('#lm-nome') as HTMLInputElement).value = '';
+    (modal.querySelector('#lm-cognome') as HTMLInputElement).value = '';
+    (modal.querySelector('#lm-cell') as HTMLInputElement).value = '';
+    (modal.querySelector('#lm-msg') as HTMLTextAreaElement).value = '';
+    modal.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach(c => c.checked = false);
+    showStep(1, 1);
+  }
+
   document.addEventListener('click', (e) => {
-    const btn = (e.target as Element).closest('[data-lm-close]');
-    if (btn) {
-      const dialog = btn.closest('dialog') as HTMLDialogElement | null;
-      dialog?.close();
-      // Reset form & show form again
-      const form = dialog?.querySelector('form') as HTMLFormElement | null;
-      const success = dialog?.querySelector('.lm__success') as HTMLElement | null;
-      form?.reset();
-      if (form) form.hidden = false;
-      if (success) success.hidden = true;
+    if ((e.target as Element).closest('[data-lm-close]')) closeAndReset();
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeAndReset();
+  });
+
+  // ─── Step back (generico) ─────────────────────────────────────────────────
+  modal.addEventListener('click', (e) => {
+    const btn = (e.target as Element).closest<HTMLElement>('[data-step-back]');
+    if (!btn) return;
+    const target = btn.dataset.stepBack!;
+    const dot = target === '3' ? 3 : 2;
+    showStep(target, dot);
+  });
+
+  // ─── STEP 1 → verifica email ──────────────────────────────────────────────
+  modal.querySelector('#lm-step1-next')?.addEventListener('click', async () => {
+    const step1 = getStep(1)!;
+    const emailInput = modal.querySelector<HTMLInputElement>('#lm-email')!;
+    const loader = step1.querySelector<HTMLElement>('.lm__loader')!;
+    const nextBtn = step1.querySelector<HTMLButtonElement>('#lm-step1-next')!;
+
+    clearError(step1);
+    if (!emailInput.validity.valid || !emailInput.value.trim()) {
+      showError(step1, 'Inserisci un indirizzo email valido.');
+      emailInput.focus();
+      return;
+    }
+
+    collectedData.email = emailInput.value.trim();
+
+    // Mostra loader
+    nextBtn.disabled = true;
+    loader.hidden = false;
+
+    try {
+      let isExisting = false;
+
+      if (WEBHOOK_CHECK && WEBHOOK_CHECK !== '#TODO-WEBHOOK-CHECK') {
+        const res = await fetch(WEBHOOK_CHECK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: collectedData.email }),
+        });
+        const data = await res.json();
+        isExisting = !!data.exists;
+      }
+      // Se webhook non configurato → tratta sempre come nuovo utente
+
+      collectedData.isNewUser = !isExisting;
+      loader.hidden = true;
+      nextBtn.disabled = false;
+
+      if (isExisting) {
+        showStep(3, 3);
+      } else {
+        showStep(2, 2);
+      }
+    } catch {
+      loader.hidden = true;
+      nextBtn.disabled = false;
+      // Fallback: tratta come nuovo
+      collectedData.isNewUser = true;
+      showStep(2, 2);
     }
   });
 
-  // Close on backdrop click
-  document.addEventListener('click', (e) => {
-    const dialog = e.target as HTMLDialogElement;
-    if (dialog.tagName === 'DIALOG' && dialog.id === 'modal-contatti') {
-      dialog.close();
-      const form = dialog.querySelector('form') as HTMLFormElement | null;
-      const success = dialog.querySelector('.lm__success') as HTMLElement | null;
-      form?.reset();
-      if (form) form.hidden = false;
-      if (success) success.hidden = true;
+  // ─── STEP 2 back ──────────────────────────────────────────────────────────
+  modal.querySelector('#lm-step2-back')?.addEventListener('click', () => showStep(1, 1));
+
+  // ─── STEP 2 → raccolta dati ───────────────────────────────────────────────
+  modal.querySelector('#lm-step2-next')?.addEventListener('click', async () => {
+    const step2 = getStep(2)!;
+    clearError(step2);
+
+    const nome     = (modal.querySelector<HTMLInputElement>('#lm-nome'))!;
+    const cognome  = (modal.querySelector<HTMLInputElement>('#lm-cognome'))!;
+    const cell     = (modal.querySelector<HTMLInputElement>('#lm-cell'))!;
+    const privacy  = (modal.querySelector<HTMLInputElement>('#lm-privacy'))!;
+
+    if (!nome.value.trim())    { showError(step2, 'Inserisci il tuo nome.'); nome.focus(); return; }
+    if (!cognome.value.trim()) { showError(step2, 'Inserisci il tuo cognome.'); cognome.focus(); return; }
+    if (!cell.value.trim())    { showError(step2, 'Inserisci il tuo numero di cellulare.'); cell.focus(); return; }
+    if (!privacy.checked)      { showError(step2, 'Il consenso alla Privacy Policy è obbligatorio.'); return; }
+
+    collectedData.nome      = nome.value.trim();
+    collectedData.cognome   = cognome.value.trim();
+    collectedData.cellulare = cell.value.trim();
+    collectedData.privacy   = privacy.checked;
+    collectedData.marketing = (modal.querySelector<HTMLInputElement>('#lm-marketing'))!.checked;
+    collectedData.attivita  = Array.from(
+      modal.querySelectorAll<HTMLInputElement>('input[name="attivita"]:checked')
+    ).map(c => c.value);
+
+    // Invia i dati al webhook se configurato
+    if (WEBHOOK_LEAD && WEBHOOK_LEAD !== '#TODO-WEBHOOK-LEAD') {
+      try {
+        await fetch(WEBHOOK_LEAD, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(collectedData),
+        });
+      } catch { /* non bloccare il flusso */ }
     }
+
+    showStep(3, 3);
   });
 
-  // ── Form submit — show success (no real POST yet) ─────────────────────────
-  document.getElementById('form-contatti')?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const form = e.currentTarget as HTMLFormElement;
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    const success = form.closest('.lm__body')?.querySelector('.lm__success') as HTMLElement | null;
-    form.hidden = true;
-    if (success) success.hidden = false;
-    // TODO Fase 2: fetch('/webhook/...', { method:'POST', body: new FormData(form) })
+  // ─── STEP 3 → scelta canale ───────────────────────────────────────────────
+  modal.querySelectorAll<HTMLButtonElement>('.lm__channel-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ch = btn.dataset.channel;
+      if (ch === 'phone')     showStep('4-phone');
+      if (ch === 'email')     showStep('4-email');
+      if (ch === 'whatsapp')  showStep('4-whatsapp');
+      // Nascondi step indicator allo step 4
+      const stepsBar = modal.querySelector<HTMLElement>('.lm__steps');
+      if (stepsBar) stepsBar.hidden = true;
+    });
+  });
+
+  // ─── STEP 4b → invia email ────────────────────────────────────────────────
+  modal.querySelector('#lm-step4e-send')?.addEventListener('click', async () => {
+    const step4e = getStep('4-email')!;
+    clearError(step4e);
+    const msg = (modal.querySelector<HTMLTextAreaElement>('#lm-msg'))!;
+    if (!msg.value.trim()) { showError(step4e, 'Scrivi un messaggio prima di inviare.'); msg.focus(); return; }
+
+    const payload = { ...collectedData, messaggio: msg.value.trim() };
+
+    if (WEBHOOK_LEAD && WEBHOOK_LEAD !== '#TODO-WEBHOOK-LEAD') {
+      try {
+        await fetch(WEBHOOK_LEAD, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      } catch { /* mostra success comunque */ }
+    }
+
+    showStep('success');
   });
 </script>
