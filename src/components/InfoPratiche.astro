@@ -3,67 +3,67 @@
 
 <section class="info">
   <div class="info__inner">
-    <span class="eyebrow">Come trovarci</span>
-    <h2 class="info__title">Vieni a trovarci.</h2>
-
-    <div class="info__layout">
-
-      <!-- Info grid -->
-      <div class="info__details">
-        <div class="info__grid">
-          <div class="info__item">
-            <span class="info__label">Indirizzo</span>
-            <p class="info__value">Via Feltre 33, 20134 Milano</p>
-          </div>
-
-          <div class="info__item">
-            <span class="info__label">Come arrivare</span>
-            <p class="info__value">
-              Metro Udine (linea M2), a pochi minuti a piedi.<br>
-              Ampio parcheggio disponibile.
-            </p>
-          </div>
-
-          <div class="info__item">
-            <span class="info__label">Orari Club</span>
-            <p class="info__value">Lun–Ven 7:00–24:00 · Sab–Dom 8:00–21:00</p>
-          </div>
-
-          <div class="info__item">
-            <span class="info__label">Reception</span>
-            <p class="info__value">
-              <a href="tel:+390226414392">+39 02 2641 4392</a><br>
-              <a href="mailto:info@tcambrosiano.com">info@tcambrosiano.com</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="info__actions">
-          {/* TODO: inserire numero WhatsApp */}
-          <a class="btn btn-outline--dark" href="#">WhatsApp</a>
-          <a class="btn btn-outline--dark" href="tel:+390226414392">Chiama</a>
-        </div>
-      </div>
-
-      <!-- Google Maps embed -->
-      <div class="info__map">
-        <iframe
-          class="info__map-iframe"
-          src="https://maps.google.com/maps?q=Via+Feltre+33,+20134+Milano&t=&z=16&ie=UTF8&iwloc=&output=embed"
-          title="Tennis Club Ambrosiano — Via Feltre 33, Milano"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen
-        ></iframe>
-      </div>
-
+    <div class="info__head">
+      <span class="eyebrow">Come trovarci</span>
+      <h2 class="info__title">Vieni a trovarci.</h2>
     </div>
+
+    <!-- Google Maps embed — protagonista -->
+    <div class="info__map">
+      <iframe
+        class="info__map-iframe"
+        src="https://maps.google.com/maps?q=Via+Feltre+33,+20134+Milano&t=&z=16&ie=UTF8&iwloc=&output=embed"
+        title="Tennis Club Ambrosiano — Via Feltre 33, Milano"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <!-- Info sotto la mappa -->
+    <div class="info__bottom">
+      <div class="info__grid">
+        <div class="info__item">
+          <span class="info__label">Indirizzo</span>
+          <p class="info__value">Via Feltre 33, 20134 Milano</p>
+        </div>
+
+        <div class="info__item">
+          <span class="info__label">Come arrivare</span>
+          <p class="info__value">
+            Metro Udine (linea M2), a pochi minuti a piedi.<br>
+            Ampio parcheggio disponibile.
+          </p>
+        </div>
+
+        <div class="info__item">
+          <span class="info__label">Orari Club</span>
+          <p class="info__value">Lun–Ven 7:00–24:00<br>Sab–Dom 8:00–21:00</p>
+        </div>
+
+        <div class="info__item">
+          <span class="info__label">Reception</span>
+          <p class="info__value">
+            <a href="tel:+390226414392">+39 02 2641 4392</a><br>
+            <a href="mailto:info@tcambrosiano.com">info@tcambrosiano.com</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="info__actions">
+        {/* TODO: inserire numero WhatsApp */}
+        <a class="btn btn-outline--dark" href="#">WhatsApp</a>
+        <a class="btn btn-outline--dark" href="tel:+390226414392">Chiama</a>
+        <a class="btn btn-red" href="https://maps.google.com/?q=Via+Feltre+33,+20134+Milano" target="_blank" rel="noopener">Indicazioni</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <style>
   .info {
-    padding: 7vh var(--pad-x);
+    padding: 7vh var(--pad-x) 8vh;
     background: var(--color-off-white);
     border-top: 1px solid var(--color-border);
   }
@@ -73,6 +73,10 @@
     margin: 0 auto;
   }
 
+  .info__head {
+    margin-bottom: 3vh;
+  }
+
   .info__title {
     font-family: var(--font-display);
     font-size: clamp(2.2rem, 4vw, 4rem);
@@ -80,30 +84,46 @@
     text-transform: uppercase;
     letter-spacing: -0.01em;
     line-height: 0.95;
-    margin-bottom: 4vh;
+    margin-top: 0.5rem;
   }
 
-  /* Layout: info a sinistra, mappa a destra */
-  .info__layout {
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    gap: 3rem;
-    align-items: start;
+  /* Mappa — elemento principale */
+  .info__map {
+    width: 100%;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    margin-bottom: 1px;
   }
 
-  /* Info grid */
-  .info__grid {
+  .info__map-iframe {
+    display: block;
+    width: 100%;
+    height: 500px;
+    border: none;
+    filter: grayscale(10%) contrast(1.05);
+  }
+
+  /* Info row sotto la mappa */
+  .info__bottom {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto;
     gap: 1px;
     background: var(--color-border);
     border: 1px solid var(--color-border);
-    margin-bottom: 2vh;
+    border-top: none;
+    align-items: stretch;
+  }
+
+  .info__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--color-border);
   }
 
   .info__item {
     background: var(--color-bg);
-    padding: 20px 24px;
+    padding: 22px 24px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -111,7 +131,7 @@
 
   .info__label {
     font-family: var(--font-display);
-    font-size: clamp(9px, 0.8vw, 11px);
+    font-size: clamp(9px, 0.7vw, 10px);
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -120,7 +140,7 @@
 
   .info__value {
     font-family: var(--font-body);
-    font-size: clamp(13px, 1vw, 16px);
+    font-size: clamp(13px, 0.9vw, 15px);
     font-weight: 400;
     line-height: 1.6;
     color: var(--color-text);
@@ -130,41 +150,44 @@
     color: var(--color-text);
     transition: color 0.18s;
   }
-
   .info__value a:hover { color: var(--color-accent); }
 
   .info__actions {
+    background: var(--color-bg);
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  /* Mappa */
-  .info__map {
-    position: sticky;
-    top: calc(var(--header-h) + 1.5rem);
-    border: 1px solid var(--color-border);
-    overflow: hidden;
-    background: var(--color-border);
-  }
-
-  .info__map-iframe {
-    display: block;
-    width: 100%;
-    height: 420px;
-    border: none;
-    filter: grayscale(15%) contrast(1.05);
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 22px 28px;
+    white-space: nowrap;
   }
 
   /* Responsive */
-  @media (max-width: 1024px) {
-    .info__layout { grid-template-columns: 1fr; }
-    .info__map { position: static; }
-    .info__map-iframe { height: 360px; }
+  @media (max-width: 1200px) {
+    .info__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 900px) {
+    .info__map-iframe { height: 420px; }
+
+    .info__bottom {
+      grid-template-columns: 1fr;
+    }
+
+    .info__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--color-border);
+      padding: 18px 22px;
+    }
   }
 
   @media (max-width: 560px) {
-    .info__grid { grid-template-columns: 1fr; }
     .info__map-iframe { height: 300px; }
+    .info__grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 400px) {
+    .info__grid { grid-template-columns: 1fr; }
   }
 </style>
