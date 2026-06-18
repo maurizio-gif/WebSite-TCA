@@ -573,20 +573,7 @@ const navItems = [
     flex-shrink: 0;
   }
 
-  .navbar__cta {
-    font-size: clamp(12px, 1vw, 14px);
-    padding: 7px 18px;
-    box-shadow: 0 4px 0 0 var(--color-accent-dark);
-    transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.18s, border-color 0.18s;
-  }
-  .navbar__cta:hover {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 0 var(--color-accent-dark);
-  }
-  .navbar__cta:active {
-    transform: translateY(4px);
-    box-shadow: none;
-  }
+  .navbar__cta { font-size: clamp(12px, 1vw, 14px); padding: 7px 18px; }
 
   .lang-switcher {
     display: flex; align-items: center; gap: 4px; flex-shrink: 0;
@@ -614,19 +601,12 @@ const navItems = [
     border: 1.5px solid var(--color-border);
     padding: 6px 14px; white-space: nowrap;
     cursor: pointer;
-    box-shadow: 0 3px 0 0 rgba(0,0,0,0.15);
-    transition: border-color 0.18s, color 0.18s, transform 0.1s ease, box-shadow 0.1s ease;
+    transition: border-color 0.18s, color 0.18s;
     display: inline-flex; align-items: center;
   }
   .navbar__accedi:hover {
     color: var(--color-accent);
     border-color: var(--color-accent);
-    transform: translateY(1px);
-    box-shadow: 0 2px 0 0 rgba(139,26,26,0.25);
-  }
-  .navbar__accedi:active {
-    transform: translateY(3px);
-    box-shadow: none;
   }
 
   /* ── Burger ── */
@@ -669,19 +649,12 @@ const navItems = [
       background: var(--color-accent);
       border: 1.5px solid var(--color-accent);
       padding: 6px 14px; white-space: nowrap;
-      box-shadow: 0 3px 0 0 var(--color-accent-dark);
-      transition: background 0.18s, border-color 0.18s, transform 0.1s ease, box-shadow 0.1s ease;
+      transition: background 0.18s, border-color 0.18s;
       cursor: pointer;
     }
     .navbar__mobile-contact:hover {
       background: var(--color-accent-dark);
       border-color: var(--color-accent-dark);
-      transform: translateY(1px);
-      box-shadow: 0 2px 0 0 var(--color-accent-dark);
-    }
-    .navbar__mobile-contact:active {
-      transform: translateY(3px);
-      box-shadow: none;
     }
 
   }
