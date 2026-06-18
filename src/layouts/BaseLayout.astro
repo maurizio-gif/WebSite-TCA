@@ -132,19 +132,25 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
         if (!el.classList.contains('is-visible')) obs.observe(el);
       });
 
-      // ── Fallback: elementi già nel viewport al caricamento ──
-      // requestAnimationFrame garantisce che il layout sia calcolato
+      // ── Fallback 1: elementi già nel viewport al caricamento ──
       requestAnimationFrame(() => {
         const vh = window.innerHeight;
         document.querySelectorAll<HTMLElement>('[data-anim]').forEach((el) => {
           if (el.classList.contains('is-visible')) return;
           const rect = el.getBoundingClientRect();
-          if (rect.top < vh && rect.bottom > 0) {
+          if (rect.top < vh + 60 && rect.bottom > 0) {
             const delay = el.dataset.animDelay ? parseInt(el.dataset.animDelay, 10) : 0;
             setTimeout(() => el.classList.add('is-visible'), delay);
           }
         });
       });
+
+      // ── Failsafe: dopo 2s sblocca qualsiasi elemento ancora nascosto ──
+      setTimeout(() => {
+        document.querySelectorAll<HTMLElement>('[data-anim]').forEach((el) => {
+          el.classList.add('is-visible');
+        });
+      }, 2000);
     </script>
   </body>
 </html>

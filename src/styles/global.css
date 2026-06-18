@@ -196,18 +196,17 @@ body.menu-open { overflow: hidden; }
   transform: translateY(0);
 }
 
-/* Wipe sinistra→destra — per h2, h3 */
+/* Slide da sinistra + fade — per h2, h3 (effetto "scrittura da sx") */
 [data-anim="reveal"] {
-  opacity: 1;
-  transform: none;
-  clip-path: inset(0 102% 0 0);
-  transition: clip-path 0.85s cubic-bezier(0.77, 0, 0.175, 1);
-  will-change: clip-path;
+  opacity: 0;
+  transform: translateX(-28px);
+  transition: opacity 0.75s cubic-bezier(0.22, 0.68, 0, 1.1),
+              transform 0.75s cubic-bezier(0.22, 0.68, 0, 1.1);
+  will-change: opacity, transform;
 }
 [data-anim="reveal"].is-visible {
-  clip-path: inset(0 0% 0 0);
   opacity: 1;
-  transform: none;
+  transform: translateX(0);
 }
 
 /* Slide da sinistra — per eyebrow, paragrafi */
