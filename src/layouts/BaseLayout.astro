@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
-import { getLangFromUrl, useTranslations, getAlternatePath, type Lang } from "../i18n/utils";
+import { getLangFromUrl, useTranslations, getAlternatePath, getLocalePath, type Lang } from "../i18n/utils";
 
 interface Props {
   title: string;
@@ -23,8 +23,10 @@ const cleanPath = base && rawPath.startsWith(base)
   ? (rawPath.slice(base.length) || '/')
   : rawPath;
 
-const { it: itPath, en: enPath } = getAlternatePath(cleanPath);
+const { it: itClean } = getAlternatePath(cleanPath);
 const siteOrigin = Astro.site?.origin ?? '';
+const itHreflang = `${siteOrigin}${getLocalePath('it', itClean)}`;
+const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
 ---
 
 <!doctype html>
@@ -39,9 +41,9 @@ const siteOrigin = Astro.site?.origin ?? '';
     <meta name="description" content={desc} />
 
     <!-- hreflang — SEO multilingua -->
-    <link rel="alternate" hreflang="it"        href={`${siteOrigin}${itPath}`} />
-    <link rel="alternate" hreflang="en"        href={`${siteOrigin}${enPath}`} />
-    <link rel="alternate" hreflang="x-default" href={`${siteOrigin}${itPath}`} />
+    <link rel="alternate" hreflang="it"        href={itHreflang} />
+    <link rel="alternate" hreflang="en"        href={enHreflang} />
+    <link rel="alternate" hreflang="x-default" href={itHreflang} />
 
     <!-- Google Fonts: Barlow Condensed (display/titoli) + Barlow (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

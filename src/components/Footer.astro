@@ -1,5 +1,5 @@
 ---
-import { useTranslations, getLocalePath, type Lang } from '../i18n/utils';
+import { useTranslations, getLocalePath, publicUrl, type Lang } from '../i18n/utils';
 
 interface Props {
   lang?: Lang;
@@ -42,7 +42,7 @@ const columns = [
   <div class="footer__inner">
     <div class="footer__brand">
       <img
-        src="/logos/tca-logo.png"
+        src={publicUrl('/logos/tca-logo.png')}
         alt="Tennis Club Ambrosiano"
         class="footer__logo"
         width="100"

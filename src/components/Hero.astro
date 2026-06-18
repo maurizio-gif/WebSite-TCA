@@ -1,5 +1,5 @@
 ---
-import { useTranslations, getLocalePath, type Lang } from '../i18n/utils';
+import { useTranslations, getLocalePath, publicUrl, type Lang } from '../i18n/utils';
 
 interface Props {
   lang?: Lang;
@@ -13,7 +13,7 @@ const p = (path: string) => getLocalePath(lang, path);
 <section class="hero">
   <div class="hero__bg">
     <img
-      src="/c0fbb171-c501-4040-81bf-867eb27bb1b3_TCA+Landscape.avif"
+      src={publicUrl('/c0fbb171-c501-4040-81bf-867eb27bb1b3_TCA+Landscape.avif')}
       alt="Tennis Club Ambrosiano — vista aerea dei campi"
       class="hero__img"
       fetchpriority="high"
