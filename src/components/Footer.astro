@@ -1,25 +1,29 @@
 ---
 const columns = [
   {
-    heading: "Discipline",
+    heading: "Adulti",
     links: [
       { label: "Tennis",                href: "/tennis" },
       { label: "Padel e Pickleball",    href: "/padel" },
       { label: "Preparazione Atletica", href: "/preparazione-atletica" },
-      { label: "Famiglia",              href: "/famiglia" },
-      { label: "Summer Camps",          href: "/summer-camps" },
+    ],
+  },
+  {
+    heading: "Junior",
+    links: [
+      { label: "Scuola Tennis",  href: "/scuola-tennis" },
+      { label: "Summer Camps",   href: "/summer-camps" },
+      { label: "Agonistica",     href: "/agonistica" },
     ],
   },
   {
     heading: "Il Club",
     links: [
       { label: "Torneo Avvenire", href: "/torneo-avvenire" },
+      { label: "Storia",          href: "/storia" },
+      { label: "Eventi",          href: "/eventi" },
       // TODO: collegare link esterno PerfectGym
-      { label: "Iscrizioni",      href: "#" },
-      // TODO: definire pagina Partner
-      { label: "Partner",         href: "#" },
-      // TODO: definire pagina News
-      { label: "News",            href: "#" },
+      { label: "Diventa Socio",   href: "#" },
     ],
   },
 ];
@@ -28,8 +32,13 @@ const columns = [
 <footer class="footer">
   <div class="footer__inner">
     <div class="footer__brand">
-      {/* TODO: sostituire con logo SVG bianco */}
-      <span class="footer__name">Tennis Club<br>Ambrosiano</span>
+      <img
+        src="/logos/tca-logo-orizzontale.avif"
+        alt="Tennis Club Ambrosiano"
+        class="footer__logo"
+        width="140"
+        height="44"
+      />
       <p class="footer__tagline">Dal 1965, il tennis a Milano.</p>
     </div>
 
@@ -92,7 +101,7 @@ const columns = [
     margin: 0 auto;
     padding: 5vh var(--pad-x) 4vh;
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
     gap: 3rem;
   }
 
@@ -102,14 +111,14 @@ const columns = [
     gap: 1rem;
   }
 
-  .footer__name {
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2vw, 2rem);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
-    line-height: 0.95;
-    color: #fff;
+  .footer__logo {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+    object-position: left center;
+    /* Il logo è scuro — invertiamo per il footer dark */
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
   }
 
   .footer__tagline {

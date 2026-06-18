@@ -1,0 +1,135 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import LeadFormPlaceholder from "../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../components/InfoPratiche.astro";
+---
+
+<BaseLayout
+  title="Agonistica | Tennis Club Ambrosiano"
+  description="Settore agonistico del Tennis Club Ambrosiano: squadre giovanili, preparazione ai tornei FIT e percorsi per atleti under 18 a Milano."
+>
+  <PageHero
+    eyebrow="Junior · Agonistica"
+    title="Agonistica"
+    titleAccent="Giovanile"
+    sub="Il TCA forma campioni dal 1965. Squadre giovanili, tornei FIT, preparazione tecnica e atletica per ragazzi con ambizioni competitive."
+    image="/ajADmY1P9HI4UhI2_235804_lifestyle_tennis_junior_coco_range_action-6-.avif"
+    imageAlt="Tennis agonistico giovanile TCA"
+    ctaLabel="Entra in squadra"
+  />
+
+  <section class="content-section">
+    <div class="content-section__inner">
+      <span class="eyebrow">Il percorso</span>
+      <h2 class="section-title">Dalla scuola<br><em>all'agonismo.</em></h2>
+      <div class="steps">
+        <div class="step">
+          <span class="step__n">01</span>
+          <div class="step__body">
+            <h3>Selezione e valutazione</h3>
+            <p>I maestri valutano il potenziale e indicano il percorso più adatto per ogni atleta.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step__n">02</span>
+          <div class="step__body">
+            <h3>Allenamenti tecnico-tattici</h3>
+            <p>Sedute quotidiane di alto livello con focus su colpi, tattica e match play.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step__n">03</span>
+          <div class="step__body">
+            <h3>Preparazione atletica dedicata</h3>
+            <p>Programmi sport-specific per la performance tennis: esplosività, resistenza e agilità.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step__n">04</span>
+          <div class="step__body">
+            <h3>Tornei e trasferte</h3>
+            <p>Partecipazione ai circuiti FIT regionali e nazionali con supporto tecnico completo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>
+
+<style>
+  .content-section {
+    padding: 7vh var(--pad-x);
+  }
+
+  .content-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 4vh;
+  }
+
+  .section-title em { color: var(--color-accent); font-style: normal; }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--color-border);
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step__n {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 4rem);
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+    flex-shrink: 0;
+    min-width: 3rem;
+  }
+
+  .step__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-top: 0.25rem;
+  }
+
+  .step h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.5vw, 1.5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .step p {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 1vw, 16px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    max-width: 65ch;
+  }
+</style>

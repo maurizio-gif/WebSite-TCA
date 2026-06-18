@@ -1,0 +1,126 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  titleAccent?: string;
+  sub?: string;
+  image: string;
+  imageAlt: string;
+  imagePosition?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  titleAccent,
+  sub,
+  image,
+  imageAlt,
+  imagePosition = "center center",
+  ctaLabel,
+  ctaHref = "#lead",
+} = Astro.props;
+---
+
+<section class="page-hero">
+  <div class="page-hero__bg">
+    <img
+      src={image}
+      alt={imageAlt}
+      class="page-hero__img"
+      style={`object-position: ${imagePosition};`}
+      fetchpriority="high"
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+  <div class="page-hero__grad"></div>
+
+  <div class="page-hero__content">
+    {eyebrow && <span class="eyebrow eyebrow--light">{eyebrow}</span>}
+    <h1 class="page-hero__title">
+      {title}{titleAccent && <><br /><em>{titleAccent}</em></>}
+    </h1>
+    {sub && <p class="page-hero__sub">{sub}</p>}
+    {ctaLabel && (
+      <div class="page-hero__actions">
+        <a class="btn btn-red" href={ctaHref}>{ctaLabel}</a>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding-top: var(--header-h);
+  }
+
+  .page-hero__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .page-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .page-hero__grad {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, rgba(15, 15, 18, 0.78) 28%, rgba(139, 26, 26, 0.30));
+  }
+
+  .page-hero__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 8vh var(--pad-x);
+    color: #ffffff;
+  }
+
+  .page-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6vw, 6.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.93;
+    margin-bottom: 2.5vh;
+  }
+
+  .page-hero__title em {
+    color: var(--color-accent);
+    font-style: normal;
+  }
+
+  .page-hero__sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.2vw, 19px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 60ch;
+    margin-bottom: 3.5vh;
+  }
+
+  .page-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 768px) {
+    .page-hero { min-height: 55vh; }
+    .page-hero__content { padding: 5vh 20px 6vh; }
+    .page-hero__title { font-size: clamp(2.2rem, 9vw, 3.5rem); }
+  }
+</style>

@@ -1,0 +1,169 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import InfoPratiche from "../components/InfoPratiche.astro";
+---
+
+<BaseLayout
+  title="La Nostra Storia | Tennis Club Ambrosiano"
+  description="La storia del Tennis Club Ambrosiano: dalla fondazione nel 1965 ai giorni nostri, sessant'anni di tennis, sport e community a Milano."
+>
+  <PageHero
+    eyebrow="Dal 1965"
+    title="La nostra"
+    titleAccent="Storia"
+    sub="Sessant'anni di passione per il tennis e per lo sport. Una storia fatta di campioni, community, tradizione e innovazione nel cuore di Milano."
+    image="/c0fbb171-c501-4040-81bf-867eb27bb1b3_TCA+Landscape.avif"
+    imageAlt="Il Tennis Club Ambrosiano visto dall'alto"
+    imagePosition="center 40%"
+  />
+
+  <section class="content-section">
+    <div class="content-section__inner">
+      <span class="eyebrow">La timeline</span>
+      <h2 class="section-title">Sessant'anni<br><em>di storia.</em></h2>
+
+      <div class="timeline">
+        {[
+          { year: "1965", text: "Fondazione del Tennis Club Ambrosiano. I primi campi vengono aperti in Via Feltre, cuore del quartiere Feltre-Udine di Milano." },
+          { year: "1960", text: "Prima edizione del Torneo Avvenire. L'evento diventa rapidamente uno dei tornei giovanili più importanti d'Italia e del mondo." },
+          { year: "1980s", text: "Ampliamento della struttura: nuovi campi, spogliatoi e servizi per rispondere alla crescente domanda dei soci." },
+          { year: "2000s", text: "Apertura dei campi da padel. Il club abbraccia il nuovo sport e lo integra nell'offerta per i soci." },
+          { year: "2020s", text: "Avvio del progetto di modernizzazione digitale e ampliamento dell'offerta con il pickleball e i programmi di preparazione atletica." },
+          { year: "2026", text: "Il TCA guarda al futuro con un sito rinnovato, nuove tecnologie e un'offerta sempre più completa per adulti e famiglie." },
+        ].map((item) => (
+          <div class="timeline__item">
+            <span class="timeline__year">{item.year}</span>
+            <p class="timeline__text">{item.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section content-section--alt">
+    <div class="content-section__inner">
+      <div class="two-col">
+        <div>
+          <span class="eyebrow">Il club oggi</span>
+          <h2 class="section-title">Una community<br><em>viva.</em></h2>
+          <p class="body-text">
+            Oggi il Tennis Club Ambrosiano è uno dei club sportivi più attivi di Milano.
+            Oltre 2.000 soci, 16 campi da tennis, campi da padel e pickleball, una scuola
+            tennis tra le più storiche della città e un settore agonistico di alto livello.
+          </p>
+        </div>
+        <div class="gallery">
+          <img src="/e61f532a-43c0-476e-9cb0-5da3ecadbadd_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0476.avif" alt="Club TCA" class="gallery__img" />
+          <img src="/ac3d4514-51a9-4cab-8cdc-256e61621885_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO1162.avif" alt="Club TCA" class="gallery__img" />
+          <img src="/6363d330-2506-4091-b2cc-6fbfc4a66256_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO1169.avif" alt="Club TCA" class="gallery__img" />
+          <img src="/a46fcf94-e41a-460d-b6c9-0af53fdc34a9_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0685.avif" alt="Club TCA" class="gallery__img" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <InfoPratiche />
+</BaseLayout>
+
+<style>
+  .content-section {
+    padding: 7vh var(--pad-x);
+  }
+
+  .content-section--alt {
+    background: var(--color-off-white);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .content-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 4vh;
+  }
+
+  .section-title em { color: var(--color-accent); font-style: normal; }
+
+  .body-text {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 18px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    max-width: 60ch;
+  }
+
+  /* Timeline */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--color-border);
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 2rem;
+    padding: 1.75rem 2rem;
+    border-bottom: 1px solid var(--color-border);
+    align-items: start;
+  }
+
+  .timeline__item:last-child { border-bottom: none; }
+
+  .timeline__year {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2vw, 2rem);
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .timeline__text {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 1vw, 16px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+  }
+
+  /* Two col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .gallery__img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 860px) {
+    .two-col { grid-template-columns: 1fr; }
+    .timeline__item { grid-template-columns: 80px 1fr; gap: 1rem; }
+  }
+
+  @media (max-width: 500px) {
+    .timeline__item { grid-template-columns: 1fr; gap: 0.5rem; }
+  }
+</style>

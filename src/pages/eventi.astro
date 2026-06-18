@@ -1,0 +1,184 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import LeadFormPlaceholder from "../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../components/InfoPratiche.astro";
+---
+
+<BaseLayout
+  title="Eventi | Tennis Club Ambrosiano"
+  description="Gli eventi del Tennis Club Ambrosiano: tornei interni, serate sociali, aperitivi in club, esibizioni e tutto quello che anima la community TCA durante l'anno."
+>
+  <PageHero
+    eyebrow="Community"
+    title="Eventi"
+    titleAccent="e Community"
+    sub="Tornei interni, serate sociali, aperitivi e molto altro. La vita del TCA va ben oltre il campo: è una community che si ritrova tutto l'anno."
+    image="/2515b443-fe23-4723-a3cd-450d4dcf2114_TCA+Home+4.avif"
+    imageAlt="Evento al Tennis Club Ambrosiano"
+  />
+
+  <section class="content-section">
+    <div class="content-section__inner">
+      <span class="eyebrow">Prossimi eventi</span>
+      <h2 class="section-title">In agenda<br><em>quest'anno.</em></h2>
+
+      <div class="event-list">
+        <div class="event-item">
+          <div class="event-item__date">
+            <span class="event-item__day">28</span>
+            <span class="event-item__month">GIU</span>
+          </div>
+          <div class="event-item__info">
+            <span class="event-item__tag">Torneo</span>
+            <h3 class="event-item__title">Torneo Interno Soci — Estate 2026</h3>
+            <p class="event-item__desc">Tabellone aperto a tutti i soci. Categorie per livello. Premiazione con aperitivo finale.</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-item__date">
+            <span class="event-item__day">12</span>
+            <span class="event-item__month">LUG</span>
+          </div>
+          <div class="event-item__info">
+            <span class="event-item__tag">Sociale</span>
+            <h3 class="event-item__title">Aperitivo d'Estate TCA</h3>
+            <p class="event-item__desc">La tradizionale serata estiva dei soci. Musica, cibo e il piacere di stare insieme.</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-item__date">
+            <span class="event-item__day">25</span>
+            <span class="event-item__month">AGO</span>
+          </div>
+          <div class="event-item__info">
+            <span class="event-item__tag">Padel</span>
+            <h3 class="event-item__title">Padel Tournament — Settembre Edition</h3>
+            <p class="event-item__desc">Torneo di padel a coppie: maschile, femminile e misto. Iscrizioni aperte ai soci.</p>
+          </div>
+        </div>
+        <div class="event-item">
+          <div class="event-item__date">
+            <span class="event-item__day">15</span>
+            <span class="event-item__month">SET</span>
+          </div>
+          <div class="event-item__info">
+            <span class="event-item__tag">Torneo</span>
+            <h3 class="event-item__title">Torneo Avvenire 2026</h3>
+            <p class="event-item__desc">La 65ª edizione del torneo giovanile più importante d'Italia. I migliori under 14 al mondo al TCA.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>
+
+<style>
+  .content-section {
+    padding: 7vh var(--pad-x);
+  }
+
+  .content-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 4vh;
+  }
+
+  .section-title em { color: var(--color-accent); font-style: normal; }
+
+  .event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--color-border);
+  }
+
+  .event-item {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid var(--color-border);
+    align-items: flex-start;
+    transition: background 0.15s;
+  }
+
+  .event-item:last-child { border-bottom: none; }
+  .event-item:hover { background: var(--color-off-white); }
+
+  .event-item__date {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 52px;
+    padding-top: 0.2rem;
+  }
+
+  .event-item__day {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .event-item__month {
+    font-family: var(--font-display);
+    font-size: clamp(9px, 0.7vw, 11px);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+  }
+
+  .event-item__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .event-item__tag {
+    font-family: var(--font-display);
+    font-size: clamp(9px, 0.7vw, 11px);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .event-item__title {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.6vw, 1.6rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    color: var(--color-text);
+  }
+
+  .event-item__desc {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-text-light);
+    max-width: 65ch;
+  }
+
+  @media (max-width: 560px) {
+    .event-item { flex-direction: column; gap: 0.75rem; padding: 1.5rem; }
+    .event-item__date { flex-direction: row; gap: 0.4rem; align-items: baseline; }
+  }
+</style>

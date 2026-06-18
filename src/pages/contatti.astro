@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LeadFormPlaceholder from "../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../components/InfoPratiche.astro";
+---
+
+<BaseLayout
+  title="Contatti | Tennis Club Ambrosiano"
+  description="Contatta il Tennis Club Ambrosiano: indirizzo, telefono, email e come raggiungerci. Via Feltre 33, Milano — Metro Udine (M2)."
+>
+  <div class="page-header">
+    <div class="page-header__inner">
+      <span class="eyebrow">Siamo a Milano</span>
+      <h1 class="page-header__title">Contatti</h1>
+      <p class="page-header__sub">Vieni a trovarci, scrivici o chiamaci. Siamo qui per risponderti.</p>
+    </div>
+  </div>
+
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: calc(var(--header-h) + 6vh) var(--pad-x) 5vh;
+    background: var(--color-off-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-header__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .page-header__title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
+    margin-bottom: 1.5vh;
+  }
+
+  .page-header__sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 18px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    max-width: 55ch;
+  }
+</style>

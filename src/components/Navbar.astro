@@ -1,25 +1,74 @@
 ---
-const navLinks = [
-  { label: "Club",                  href: "/" },
-  { label: "Tennis",                href: "/tennis" },
-  { label: "Padel e Pickleball",    href: "/padel" },
-  { label: "Famiglia",              href: "/famiglia" },
-  { label: "Summer Camps",          href: "/summer-camps" },
-  { label: "Preparazione Atletica", href: "/preparazione-atletica" },
-  { label: "Torneo Avvenire",       href: "/torneo-avvenire" },
+const navItems = [
+  {
+    label: "Adulti",
+    href: null,
+    children: [
+      { label: "Tennis",                href: "/tennis" },
+      { label: "Padel e Pickleball",    href: "/padel" },
+      { label: "Preparazione Atletica", href: "/preparazione-atletica" },
+    ],
+  },
+  {
+    label: "Junior",
+    href: null,
+    children: [
+      { label: "Scuola Tennis",  href: "/scuola-tennis" },
+      { label: "Summer Camps",   href: "/summer-camps" },
+      { label: "Agonistica",     href: "/agonistica" },
+    ],
+  },
+  { label: "Torneo Avvenire", href: "/torneo-avvenire", children: [] },
+  { label: "Storia",          href: "/storia",          children: [] },
+  { label: "Eventi",          href: "/eventi",          children: [] },
 ];
 ---
 
 <header class="navbar" id="navbar">
   <div class="navbar__inner">
+    <!-- Logo -->
     <a class="navbar__logo" href="/" aria-label="Tennis Club Ambrosiano — home">
-      {/* TODO: sostituire con src/assets/logos/tca-logo.svg quando disponibile */}
-      <span class="img-placeholder navbar__logo-placeholder" data-name="tca-logo.svg"></span>
+      <img
+        src="/logos/tca-logo-orizzontale.avif"
+        alt="Tennis Club Ambrosiano"
+        class="navbar__logo-img"
+        width="120"
+        height="38"
+      />
     </a>
 
+    <!-- Desktop nav -->
+    <nav class="navbar__nav" aria-label="Navigazione principale">
+      <ul class="navbar__list">
+        {navItems.map((item) =>
+          item.children && item.children.length > 0 ? (
+            <li class="navbar__item navbar__item--has-dropdown">
+              <button class="navbar__link navbar__link--btn" aria-haspopup="true" aria-expanded="false">
+                {item.label}
+                <svg class="navbar__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                  <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <ul class="navbar__dropdown">
+                {item.children.map((child) => (
+                  <li>
+                    <a class="navbar__dropdown-link" href={child.href}>{child.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ) : (
+            <li class="navbar__item">
+              <a class="navbar__link" href={item.href}>{item.label}</a>
+            </li>
+          )
+        )}
+      </ul>
+    </nav>
+
     <div class="navbar__right">
-      {/* TODO: collegare link esterno PerfectGym */}
-      <a class="navbar__cta btn btn-red" href="#">Iscriviti subito</a>
+      <!-- TODO: collegare link esterno PerfectGym -->
+      <a class="navbar__cta btn btn-red" href="#">Diventa Socio</a>
 
       <button
         class="navbar__burger"
@@ -37,18 +86,59 @@ const navLinks = [
   </div>
 </header>
 
-<!-- Menu fullscreen -->
-<nav class="g-menu" id="g-menu" aria-label="Navigazione principale" aria-hidden="true">
+<!-- Menu fullscreen (mobile) -->
+<nav class="g-menu" id="g-menu" aria-label="Menu mobile" aria-hidden="true">
   <div class="g-menu__inner">
     <ul class="g-menu__list">
-      {navLinks.map((link, i) => (
-        <li>
-          <a class="g-menu__link" href={link.href}>
-            <em>{String(i + 1).padStart(2, '0')}</em>
-            {link.label}
-          </a>
-        </li>
-      ))}
+      <!-- Adulti accordion -->
+      <li class="g-menu__item g-menu__item--accordion">
+        <button class="g-menu__link g-menu__accordion-btn" aria-expanded="false">
+          <em>01</em>
+          Adulti
+          <svg class="g-menu__acc-icon" width="16" height="10" viewBox="0 0 16 10" fill="none">
+            <path d="M1 1L8 9L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="g-menu__sub">
+          <li><a class="g-menu__sub-link" href="/tennis">Tennis</a></li>
+          <li><a class="g-menu__sub-link" href="/padel">Padel e Pickleball</a></li>
+          <li><a class="g-menu__sub-link" href="/preparazione-atletica">Preparazione Atletica</a></li>
+        </ul>
+      </li>
+
+      <!-- Junior accordion -->
+      <li class="g-menu__item g-menu__item--accordion">
+        <button class="g-menu__link g-menu__accordion-btn" aria-expanded="false">
+          <em>02</em>
+          Junior
+          <svg class="g-menu__acc-icon" width="16" height="10" viewBox="0 0 16 10" fill="none">
+            <path d="M1 1L8 9L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="g-menu__sub">
+          <li><a class="g-menu__sub-link" href="/scuola-tennis">Scuola Tennis</a></li>
+          <li><a class="g-menu__sub-link" href="/summer-camps">Summer Camps</a></li>
+          <li><a class="g-menu__sub-link" href="/agonistica">Agonistica</a></li>
+        </ul>
+      </li>
+
+      <li class="g-menu__item">
+        <a class="g-menu__link" href="/torneo-avvenire">
+          <em>03</em>Torneo Avvenire
+        </a>
+      </li>
+
+      <li class="g-menu__item">
+        <a class="g-menu__link" href="/storia">
+          <em>04</em>Storia
+        </a>
+      </li>
+
+      <li class="g-menu__item">
+        <a class="g-menu__link" href="/eventi">
+          <em>05</em>Eventi
+        </a>
+      </li>
     </ul>
 
     <div class="g-menu__footer">
@@ -78,6 +168,30 @@ const navLinks = [
     border-bottom-color: rgba(255, 255, 255, 0.08);
   }
 
+  .navbar.is-dark .navbar__link,
+  .navbar.is-dark .navbar__link--btn {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .navbar.is-dark .navbar__link:hover,
+  .navbar.is-dark .navbar__link--btn:hover {
+    color: #fff;
+  }
+
+  .navbar.is-dark .navbar__dropdown {
+    background: #1a1a1e;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .navbar.is-dark .navbar__dropdown-link {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .navbar.is-dark .navbar__dropdown-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
   .navbar.is-dark .burger-bar {
     background: rgba(255, 255, 255, 0.85);
   }
@@ -90,31 +204,128 @@ const navLinks = [
     padding: 0 var(--pad-x);
     max-width: var(--max-width);
     margin: 0 auto;
+    gap: 1.5rem;
   }
 
-  .navbar__logo { display: block; flex-shrink: 0; }
+  /* ---- Logo ---- */
+  .navbar__logo { display: block; flex-shrink: 0; line-height: 0; }
 
-  .navbar__logo-placeholder {
-    width: 110px;
-    min-height: calc(var(--header-h) - 18px);
-    font-size: 0.65rem;
+  .navbar__logo-img {
+    height: calc(var(--header-h) - 20px);
+    width: auto;
+    object-fit: contain;
+    object-position: left center;
   }
 
+  /* ---- Desktop nav ---- */
+  .navbar__nav { flex: 1; display: flex; justify-content: center; }
+
+  .navbar__list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.15rem;
+  }
+
+  .navbar__item { position: relative; }
+
+  .navbar__link,
+  .navbar__link--btn {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 0.85vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    text-decoration: none;
+    padding: 0 0.75rem;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.18s;
+  }
+
+  .navbar__link:hover,
+  .navbar__link--btn:hover {
+    color: var(--color-accent);
+  }
+
+  .navbar__chevron {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .navbar__item--has-dropdown:hover .navbar__chevron,
+  .navbar__item--has-dropdown.is-open .navbar__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ---- Dropdown ---- */
+  .navbar__dropdown {
+    position: absolute;
+    top: calc(var(--header-h) - 2px);
+    left: 0;
+    min-width: 200px;
+    list-style: none;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-top: 2px solid var(--color-accent);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    pointer-events: none;
+  }
+
+  .navbar__item--has-dropdown:hover .navbar__dropdown,
+  .navbar__item--has-dropdown.is-open .navbar__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  .navbar__dropdown-link {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.9vw, 14px);
+    font-weight: 400;
+    color: var(--color-text);
+    text-decoration: none;
+    display: block;
+    padding: 10px 18px;
+    transition: color 0.15s, background 0.15s;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .navbar__dropdown li:last-child .navbar__dropdown-link { border-bottom: none; }
+
+  .navbar__dropdown-link:hover {
+    color: var(--color-accent);
+    background: var(--color-off-white);
+  }
+
+  /* ---- Right side ---- */
   .navbar__right {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-shrink: 0;
   }
 
-  /* ---- CTA ---- */
   .navbar__cta {
-    font-size: clamp(11px, 1vw, 13px);
-    padding: 8px 18px;
+    font-size: clamp(11px, 0.9vw, 13px);
+    padding: 7px 18px;
   }
 
   /* ---- Burger ---- */
   .navbar__burger {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
@@ -141,6 +352,16 @@ const navLinks = [
   body.menu-open .b1 { transform: translateY(7px) rotate(45deg); }
   body.menu-open .b2 { opacity: 0; transform: scaleX(0); }
   body.menu-open .b3 { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 1023px) {
+    .navbar__nav { display: none; }
+    .navbar__burger { display: flex; }
+  }
+
+  @media (max-width: 640px) {
+    .navbar__cta { display: none; }
+  }
 
   /* ---- Menu fullscreen ---- */
   .g-menu {
@@ -172,23 +393,32 @@ const navLinks = [
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 3vh;
     flex: 1;
+  }
+
+  .g-menu__item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .g-menu__link {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 4.2rem);
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
     color: rgba(255, 255, 255, 0.45);
     text-decoration: none;
-    line-height: 1.05;
+    line-height: 1.1;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 0.55em;
-    transition: color 0.18s, transform 0.2s ease;
+    padding: 1.8vh 0;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.18s;
+    text-align: left;
   }
 
   .g-menu__link em {
@@ -197,12 +427,55 @@ const navLinks = [
     font-weight: 600;
     letter-spacing: 0.1em;
     color: rgba(255, 255, 255, 0.18);
-    min-width: 3em;
+    min-width: 2.8em;
     transition: color 0.18s;
   }
 
-  .g-menu__link:hover { color: #fff; transform: translateX(10px); }
+  .g-menu__link:hover { color: #fff; }
   .g-menu__link:hover em { color: var(--color-accent); }
+
+  /* Accordion icon */
+  .g-menu__acc-icon {
+    margin-left: auto;
+    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.25);
+    transition: transform 0.28s ease, color 0.18s;
+  }
+
+  .g-menu__accordion-btn[aria-expanded="true"] { color: #fff; }
+  .g-menu__accordion-btn[aria-expanded="true"] em { color: var(--color-accent); }
+  .g-menu__accordion-btn[aria-expanded="true"] .g-menu__acc-icon {
+    transform: rotate(180deg);
+    color: var(--color-accent);
+  }
+
+  /* Accordion sub-list */
+  .g-menu__sub {
+    list-style: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .g-menu__sub.is-expanded {
+    max-height: 300px;
+  }
+
+  .g-menu__sub-link {
+    font-family: var(--font-body);
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+    display: block;
+    padding: 0.65vh 0 0.65vh calc(0.55em + 2.8em + 0.55em);
+    transition: color 0.15s, padding-left 0.18s;
+  }
+
+  .g-menu__sub-link:hover {
+    color: rgba(255, 255, 255, 0.9);
+    padding-left: calc(0.55em + 2.8em + 0.55em + 6px);
+  }
 
   .g-menu__footer {
     font-family: var(--font-display);
@@ -214,18 +487,12 @@ const navLinks = [
     padding-top: 2vh;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
   }
-
-  @media (max-width: 768px) {
-    .g-menu__link { font-size: clamp(1.8rem, 9vw, 2.8rem); }
-    .g-menu__inner { padding: calc(var(--header-h) + 3vh) 24px 5vh; }
-    .navbar__cta { display: none; }
-  }
 </style>
 
 <script>
-  const navbar = document.getElementById('navbar');
-  const menu   = document.getElementById('g-menu');
-  const burger = document.getElementById('burger-btn');
+  const navbar = document.getElementById('navbar') as HTMLElement | null;
+  const menu   = document.getElementById('g-menu') as HTMLElement | null;
+  const burger = document.getElementById('burger-btn') as HTMLButtonElement | null;
 
   // Dark mode: attivo quando il cursore è sull'hero
   const hero = document.querySelector('.hero');
@@ -237,10 +504,10 @@ const navLinks = [
     obs.observe(hero);
   }
 
-  // Apri/chiudi menu
+  // Apri/chiudi menu burger
   burger?.addEventListener('click', () => {
     const open = menu?.classList.toggle('is-open');
-    document.body.classList.toggle('menu-open', open);
+    document.body.classList.toggle('menu-open', open ?? false);
     burger.setAttribute('aria-expanded', String(!!open));
     burger.setAttribute('aria-label', open ? 'Chiudi menu' : 'Apri menu');
     menu?.setAttribute('aria-hidden', String(!open));
@@ -252,7 +519,44 @@ const navLinks = [
       menu.classList.remove('is-open');
       document.body.classList.remove('menu-open');
       burger?.setAttribute('aria-expanded', 'false');
-      menu.setAttribute('aria-hidden', 'true');
+      menu?.setAttribute('aria-hidden', 'true');
     }
+  });
+
+  // Accordion nel menu mobile
+  const accordionBtns = document.querySelectorAll<HTMLButtonElement>('.g-menu__accordion-btn');
+  accordionBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      // Chiudi tutti gli altri
+      accordionBtns.forEach((b) => {
+        b.setAttribute('aria-expanded', 'false');
+        const sub = b.nextElementSibling as HTMLElement | null;
+        sub?.classList.remove('is-expanded');
+      });
+      // Apri/chiudi questo
+      if (!expanded) {
+        btn.setAttribute('aria-expanded', 'true');
+        const sub = btn.nextElementSibling as HTMLElement | null;
+        sub?.classList.add('is-expanded');
+      }
+    });
+  });
+
+  // Desktop dropdown: click on button (touch devices / accessibility)
+  const dropdownItems = document.querySelectorAll<HTMLElement>('.navbar__item--has-dropdown');
+  dropdownItems.forEach((item) => {
+    const btn = item.querySelector<HTMLButtonElement>('.navbar__link--btn');
+    btn?.addEventListener('click', () => {
+      const isOpen = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+    });
+    // Chiudi cliccando fuori
+    document.addEventListener('click', (e) => {
+      if (!item.contains(e.target as Node)) {
+        item.classList.remove('is-open');
+        btn?.setAttribute('aria-expanded', 'false');
+      }
+    });
   });
 </script>
