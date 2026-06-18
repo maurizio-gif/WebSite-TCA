@@ -23,7 +23,7 @@ const p = (path: string) => getLocalePath(lang, path);
 
   <div class="torneo__inner">
     <div class="torneo__content">
-      <span class="eyebrow eyebrow--light">Il nostro torneo</span>
+      <span class="eyebrow eyebrow--light" data-anim="from-left">Il nostro torneo</span>
       <h2 class="torneo__title">
         Torneo<br><em>Avvenire</em>
       </h2>
@@ -32,7 +32,7 @@ const p = (path: string) => getLocalePath(lang, path);
         è diventato uno degli appuntamenti internazionali più attesi del circuito under 16.
         Un trampolino per generazioni di campioni.
       </p>
-      <a class="btn btn-red" href={p('/torneo-avvenire')}>Scopri il Torneo →</a>
+      <a class="btn btn-red" href={p('/torneo-avvenire')} data-anim="from-left" data-anim-delay="200">Scopri il Torneo →</a>
     </div>
 
     <div class="torneo__stats">
