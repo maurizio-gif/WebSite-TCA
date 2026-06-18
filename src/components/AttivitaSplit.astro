@@ -11,24 +11,24 @@ const p = (path: string) => getLocalePath(lang, path);
 const adulti = [
   {
     num: '01',
+    name: 'Preparazione Atletica',
+    desc: 'Allenamento in Sala Pesi e Corsi di Gruppo.',
+    href: p('/preparazione-atletica'),
+    img: publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'),
+  },
+  {
+    num: '02',
     name: 'Tennis',
     desc: 'Sedici campi, istruttori federali e tornei interni per tutti i livelli.',
     href: p('/tennis'),
     img: publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif'),
   },
   {
-    num: '02',
-    name: 'Padel e Pickleball',
-    desc: 'Gli sport di racchetta più amati del momento. Campi coperti e aperti, lezioni e tornei.',
+    num: '03',
+    name: 'Padel',
+    desc: 'Campi coperti e aperti, lezioni con istruttori certificati e tornei.',
     href: p('/padel'),
     img: publicUrl('/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif'),
-  },
-  {
-    num: '03',
-    name: 'Preparazione Atletica',
-    desc: 'Forza, mobilità e condizionamento. Allenati per dare il meglio in campo.',
-    href: p('/preparazione-atletica'),
-    img: publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'),
   },
 ];
 
@@ -42,17 +42,17 @@ const junior = [
   },
   {
     num: '02',
-    name: 'Summer Camps',
-    desc: "Sport, divertimento e nuove amicizie. Programmi intensivi estate.",
-    href: p('/summer-camps'),
-    img: publicUrl('/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif'),
-  },
-  {
-    num: '03',
-    name: 'Agonistica',
+    name: 'Agonistica Tennis',
     desc: 'Squadre federate, tornei nazionali e internazionali. Per chi vuole competere.',
     href: p('/agonistica'),
     img: publicUrl('/0cd25eb6-cb2a-48cf-a65e-2a7107787fba_Web_Square-1PA_1811.avif'),
+  },
+  {
+    num: '03',
+    name: 'Summer Camps',
+    desc: 'Sport, divertimento e nuove amicizie. Programmi intensivi estate.',
+    href: p('/summer-camps'),
+    img: publicUrl('/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif'),
   },
 ];
 ---
@@ -66,7 +66,7 @@ const junior = [
       <div class="panel__head">
         <span class="eyebrow eyebrow--light">Le nostre discipline</span>
         <h2 class="panel__title">Adulti</h2>
-        <p class="panel__sub">Tennis · Padel · Preparazione Atletica</p>
+        <p class="panel__sub">Preparazione Atletica · Tennis · Padel</p>
       </div>
       <div class="panel__rows">
         {adulti.map((item) => (
