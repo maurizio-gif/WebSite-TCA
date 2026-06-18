@@ -1,0 +1,600 @@
+---
+import { getCollection } from 'astro:content';
+import { getLocalePath, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'it' } = Astro.props;
+const p = (path: string) => getLocalePath(lang, path);
+
+const MESI = ['GEN','FEB','MAR','APR','MAG','GIU','LUG','AGO','SET','OTT','NOV','DIC'];
+const fDay  = (d: Date) => d.getDate().toString().padStart(2, '0');
+const fMon  = (d: Date) => MESI[d.getMonth()];
+const fYear = (d: Date) => d.getFullYear();
+const fFull = (d: Date) =>
+  `${fDay(d)} ${['gennaio','febbraio','marzo','aprile','maggio','giugno',
+    'luglio','agosto','settembre','ottobre','novembre','dicembre'][d.getMonth()]} ${fYear(d)}`;
+
+// Carica gli eventi dalla Content Collection, ordina per data, mostra i 3 prossimi
+const allEventi = await getCollection('eventi', ({ data }) => data.pubblicato);
+const sorted    = allEventi.sort((a, b) => a.data.data.getTime() - b.data.data.getTime());
+const eventi3   = sorted.slice(0, 3);
+
+// Pre-render il body di ogni evento (per i dialog inline)
+const rendered  = await Promise.all(
+  eventi3.map(async (entry) => {
+    const { Content } = await entry.render();
+    return { entry, Content };
+  })
+);
+---
+
+<section class="eventi-home">
+  <div class="eventi-home__inner">
+
+    <div class="eventi-home__head">
+      <div>
+        <span class="eyebrow">In calendario</span>
+        <h2 class="eventi-home__title">Prossimi<br><em>eventi</em></h2>
+      </div>
+      <a class="eventi-home__all" href={p('/eventi')}>
+        Tutti gli eventi <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <ul class="eventi-list" role="list">
+      {rendered.map(({ entry }) => {
+        const ev   = entry.data;
+        const slug = entry.slug;
+        return (
+          <li
+            class="event-item"
+            role="button"
+            tabindex="0"
+            data-open-event={slug}
+            aria-label={`Apri dettaglio: ${ev.titolo}`}
+          >
+            <div class="event-item__date">
+              <span class="event-item__month">{fMon(ev.data)}</span>
+              <span class="event-item__day">{fDay(ev.data)}</span>
+              <span class="event-item__year">{fYear(ev.data)}</span>
+            </div>
+
+            <div class="event-item__body">
+              <div class="event-item__meta">
+                <span class={`event-item__cat event-item__cat--${ev.categoria.toLowerCase()}`}>
+                  {ev.categoria}
+                </span>
+                {ev.luogo && (
+                  <span class="event-item__luogo">{ev.luogo}</span>
+                )}
+              </div>
+              <h3 class="event-item__title">{ev.titolo}</h3>
+              <p class="event-item__desc">{ev.descrizione}</p>
+            </div>
+
+            <span class="event-item__open" aria-hidden="true">
+              <span class="event-item__open-label">Dettagli</span>
+              <span class="event-item__open-arrow">→</span>
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+
+  </div>
+</section>
+
+<!-- ── Event modals (uno per evento) ─────────────────────────────────────── -->
+{rendered.map(({ entry, Content }) => {
+  const ev   = entry.data;
+  const slug = entry.slug;
+  return (
+    <dialog
+      id={`ev-${slug}`}
+      class="em"
+      aria-labelledby={`em-title-${slug}`}
+    >
+      <div class="em__panel">
+
+        <!-- Topbar minima: solo close -->
+        <div class="em__topbar">
+          <button class="em__close" aria-label="Chiudi" data-em-close>✕</button>
+        </div>
+
+        <div class="em__layout">
+
+          <!-- Colonna data (dark) -->
+          <div class="em__datecol">
+            <span class="em__dc-month">{fMon(ev.data)}</span>
+            <span class="em__dc-day">{fDay(ev.data)}</span>
+            <span class="em__dc-year">{fYear(ev.data)}</span>
+            <div class="em__dc-sep" aria-hidden="true"></div>
+            <span
+              class={`em__dc-cat em__dc-cat--${ev.categoria.toLowerCase()}`}
+              aria-hidden="true"
+            >{ev.categoria}</span>
+          </div>
+
+          <!-- Contenuto (light) -->
+          <div class="em__content">
+            <div class="em__scroll">
+              {ev.luogo && <p class="em__luogo">{ev.luogo}</p>}
+              <h2 class="em__title" id={`em-title-${slug}`}>{ev.titolo}</h2>
+              <p class="em__desc">{ev.descrizione}</p>
+              <div class="em__prose">
+                <Content />
+              </div>
+            </div>
+
+            <div class="em__foot">
+              <div class="em__foot-actions">
+                {ev.iscrizioniHref && (
+                  <a class="btn btn-red" href={ev.iscrizioniHref}>Iscriviti ora</a>
+                )}
+              </div>
+              <a class="em__foot-link" href={p(`/eventi/${slug}`)}>
+                Pagina completa →
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </dialog>
+  );
+})}
+
+<style>
+  /* ══════════════════════════════════════════
+     SEZIONE HOME EVENTI
+  ══════════════════════════════════════════ */
+  .eventi-home {
+    padding: 7vh var(--pad-x);
+    background: #ffffff;
+  }
+
+  .eventi-home__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .eventi-home__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 4vh;
+    padding-bottom: 2.5vh;
+    border-bottom: 2px solid var(--color-text);
+  }
+
+  .eventi-home__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4.5vw, 5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.9;
+    margin-top: 0.4rem;
+  }
+
+  .eventi-home__title em {
+    color: var(--color-accent);
+    font-style: normal;
+  }
+
+  .eventi-home__all {
+    font-family: var(--font-display);
+    font-size: clamp(12px, 1vw, 14px);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-bottom: 0.3rem;
+    transition: letter-spacing 0.2s;
+  }
+
+  .eventi-home__all:hover { letter-spacing: 0.14em; }
+
+  /* ── List ── */
+  .eventi-list { list-style: none; }
+
+  .event-item {
+    display: grid;
+    grid-template-columns: 7rem 1fr auto;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 2.5vh 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background 0.18s;
+  }
+
+  .event-item:last-child { border-bottom: none; }
+
+  .event-item:hover { background: var(--color-off-white); }
+
+  .event-item:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
+  }
+
+  /* Date */
+  .event-item__date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .event-item__month {
+    font-family: var(--font-display);
+    font-size: clamp(10px, 0.8vw, 12px);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    text-transform: uppercase;
+  }
+
+  .event-item__day {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 0.88;
+    margin: 0.08em 0 0.16em;
+  }
+
+  .event-item__year {
+    font-family: var(--font-body);
+    font-size: clamp(10px, 0.7vw, 11px);
+    font-weight: 300;
+    color: rgba(26, 26, 26, 0.28);
+    letter-spacing: 0.08em;
+  }
+
+  /* Body */
+  .event-item__body { min-width: 0; }
+
+  .event-item__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .event-item__cat {
+    font-family: var(--font-display);
+    font-size: clamp(9px, 0.7vw, 11px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.28em 0.7em;
+    border-radius: 2px;
+  }
+
+  .event-item__cat--torneo  { background: rgba(139,26,26,.09); color: var(--color-accent); }
+  .event-item__cat--clinic  { background: rgba(26,90,139,.09); color: #1a5a8b; }
+  .event-item__cat--evento  { background: rgba(26,26,26,.07);  color: var(--color-text);   }
+  .event-item__cat--camp    { background: rgba(26,139,74,.09); color: #1a7a44; }
+
+  .event-item__luogo {
+    font-family: var(--font-body);
+    font-size: clamp(11px, 0.8vw, 13px);
+    font-weight: 300;
+    color: rgba(26,26,26,.42);
+  }
+
+  .event-item__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2vw, 2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 1;
+    color: var(--color-text);
+    margin-bottom: 0.45rem;
+  }
+
+  .event-item__desc {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.9vw, 15px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    max-width: 62ch;
+  }
+
+  /* Open hint */
+  .event-item__open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+  }
+
+  .event-item__open-label {
+    font-family: var(--font-display);
+    font-size: clamp(9px, 0.7vw, 11px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(26,26,26,.35);
+  }
+
+  .event-item__open-arrow {
+    font-size: 1.2rem;
+    color: var(--color-accent);
+    transform: rotate(-45deg);
+    display: block;
+    transition: transform 0.2s;
+  }
+
+  .event-item:hover .event-item__open-arrow { transform: rotate(-45deg) scale(1.2); }
+
+  /* ══════════════════════════════════════════
+     EVENT MODAL
+  ══════════════════════════════════════════ */
+  .em {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: min(95vw, 760px);
+    width: 100%;
+    margin: auto;
+    max-height: 92vh;
+  }
+
+  .em::backdrop {
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+  }
+
+  /* Panel */
+  .em__panel {
+    background: #ffffff;
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    max-height: 92vh;
+    overflow: hidden;
+  }
+
+  /* Topbar: solo close, allineato a destra */
+  .em__topbar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.9rem 1.2rem 0;
+    flex-shrink: 0;
+  }
+
+  .em__close {
+    background: none;
+    border: 1px solid var(--color-border);
+    color: rgba(26, 26, 26, .45);
+    font-size: .95rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color .18s, color .18s;
+    flex-shrink: 0;
+  }
+
+  .em__close:hover { border-color: #1a1a1a; color: #1a1a1a; }
+
+  /* Layout: date col + content */
+  .em__layout {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── Date column (dark) ── */
+  .em__datecol {
+    background: #0f1013;
+    padding: 2rem 0.75rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .em__dc-month {
+    font-family: var(--font-display);
+    font-size: clamp(9px, 0.72vw, 11px);
+    font-weight: 700;
+    letter-spacing: .16em;
+    color: var(--color-accent);
+    text-transform: uppercase;
+  }
+
+  .em__dc-day {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5.5vw, 5rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: .85;
+    margin: .15em 0 .2em;
+  }
+
+  .em__dc-year {
+    font-family: var(--font-body);
+    font-size: clamp(9px, 0.7vw, 11px);
+    font-weight: 300;
+    color: rgba(255, 255, 255, .28);
+    letter-spacing: .06em;
+  }
+
+  .em__dc-sep {
+    width: 20px;
+    height: 1px;
+    background: rgba(255, 255, 255, .12);
+    margin: 1.4rem 0 1.2rem;
+    flex-shrink: 0;
+  }
+
+  /* Category label vertical */
+  .em__dc-cat {
+    font-family: var(--font-display);
+    font-size: clamp(8px, 0.64vw, 10px);
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    color: rgba(255, 255, 255, .3);
+  }
+
+  .em__dc-cat--torneo { color: rgba(224, 96, 96, .7); }
+  .em__dc-cat--clinic { color: rgba(106, 170, 212, .7); }
+  .em__dc-cat--camp   { color: rgba(93, 186, 133, .7); }
+
+  /* ── Content (white) ── */
+  .em__content {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .em__scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem 2rem 1rem;
+  }
+
+  .em__luogo {
+    font-family: var(--font-body);
+    font-size: clamp(10px, .78vw, 12px);
+    font-weight: 400;
+    color: rgba(26, 26, 26, .38);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: .6rem;
+  }
+
+  .em__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.2vw, 2.8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -.01em;
+    line-height: .92;
+    color: var(--color-text);
+    margin-bottom: 1.4rem;
+  }
+
+  .em__desc {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1vw, 16px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    margin-bottom: 1.4rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .em__prose {
+    font-family: var(--font-body);
+    font-size: clamp(13px, .88vw, 14px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(26, 26, 26, .5);
+  }
+
+  .em__prose p { margin-bottom: .75em; }
+
+  /* Footer */
+  .em__foot {
+    padding: 1.2rem 2rem;
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-shrink: 0;
+    background: var(--color-off-white);
+  }
+
+  .em__foot-actions { display: flex; gap: .75rem; }
+
+  .em__foot-link {
+    font-family: var(--font-display);
+    font-size: clamp(10px, .78vw, 12px);
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(26, 26, 26, .38);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color .18s;
+  }
+
+  .em__foot-link:hover { color: var(--color-accent); }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .eventi-home__head { flex-direction: column; align-items: flex-start; }
+
+    .event-item {
+      grid-template-columns: 4.5rem 1fr;
+      grid-template-rows: auto auto;
+      gap: 0.75rem 1rem;
+    }
+
+    .event-item__open { grid-column: 2; flex-direction: row; justify-content: flex-start; }
+    .event-item__open-arrow { transform: none; }
+    .event-item:hover .event-item__open-arrow { transform: translateX(4px); }
+    .event-item__day { font-size: clamp(2.2rem, 9vw, 3rem); }
+
+    .em__layout { grid-template-columns: 76px 1fr; }
+    .em__scroll { padding: 1.5rem 1.25rem 1rem; }
+    .em__foot { padding: 1rem 1.25rem; }
+    .em__dc-day { font-size: clamp(2rem, 8vw, 3rem); }
+    .em__dc-cat { display: none; }
+  }
+</style>
+
+<script>
+  // ── Apri event modal ──────────────────────────────────────────────────────
+  document.querySelectorAll<HTMLElement>('[data-open-event]').forEach((item) => {
+    const open = () => {
+      const slug = item.dataset.openEvent!;
+      const dialog = document.getElementById(`ev-${slug}`) as HTMLDialogElement | null;
+      dialog?.showModal();
+    };
+    item.addEventListener('click', open);
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+    });
+  });
+
+  // ── Chiudi event modal ────────────────────────────────────────────────────
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as Element).closest('[data-em-close]');
+    if (btn) {
+      (btn.closest('dialog') as HTMLDialogElement | null)?.close();
+    }
+  });
+
+  // Chiudi cliccando sul backdrop
+  document.querySelectorAll<HTMLDialogElement>('.em').forEach((dialog) => {
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  });
+</script>

@@ -1,54 +1,122 @@
 ---
+import { getLocalePath, publicUrl, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'it' } = Astro.props;
+const p = (path: string) => getLocalePath(lang, path);
 ---
 
 <section class="torneo">
+  <div class="torneo__bg">
+    <img
+      src={publicUrl('/11d7e052-18b5-4f27-9737-e84bbe2b3736_FRA_0127.avif')}
+      alt="Torneo Avvenire — un momento in campo al Tennis Club Ambrosiano"
+      class="torneo__img"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="torneo__grad"></div>
+
   <div class="torneo__inner">
-    <div class="torneo__text">
-      <span class="eyebrow">Dal 1965</span>
+    <div class="torneo__content">
+      <span class="eyebrow eyebrow--light">Il nostro torneo</span>
       <h2 class="torneo__title">
-        La gara che immagina<br><em>il futuro del tennis.</em>
+        Torneo<br><em>Avvenire</em>
       </h2>
       <p class="torneo__body">
-        Nato dall'iniziativa di alcuni soci con una parola in mente — avvenire —
-        il nostro torneo giovanile è diventato un appuntamento internazionale e
-        un trampolino per generazioni di campioni. È il cuore della nostra
-        identità: la prova che il talento, qui, trova terreno fertile.
+        Nato nel 1965 con una parola in mente — avvenire — il nostro torneo giovanile
+        è diventato uno degli appuntamenti internazionali più attesi del circuito under 16.
+        Un trampolino per generazioni di campioni.
       </p>
-      <a class="torneo__cta" href="/torneo-avvenire">
-        Scopri la storia del Torneo Avvenire →
-      </a>
+      <a class="btn btn-red" href={p('/torneo-avvenire')}>Scopri il Torneo →</a>
     </div>
 
-    <div class="torneo__media">
-      {/* TODO: sostituire con la foto reale quando disponibile */}
-      <span class="img-placeholder torneo__placeholder" data-name="torneo/torneo-avvenire.jpg"></span>
+    <div class="torneo__stats">
+      <div class="torneo__stat">
+        <span class="stat__num">60+</span>
+        <span class="stat__label">Edizioni</span>
+      </div>
+      <div class="torneo__stat">
+        <span class="stat__num">20+</span>
+        <span class="stat__label">Paesi</span>
+      </div>
+      <div class="torneo__stat">
+        <span class="stat__num">U16</span>
+        <span class="stat__label">Categoria</span>
+      </div>
+      <div class="torneo__stat">
+        <span class="stat__num">ITF</span>
+        <span class="stat__label">Circuito</span>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .torneo {
-    padding: 7vh var(--pad-x);
-    background: var(--color-off-white);
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #0f1013;
+  }
+
+  .torneo__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .torneo__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  .torneo__grad {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      rgba(10, 10, 13, 0.93) 35%,
+      rgba(139, 26, 26, 0.22) 72%,
+      rgba(10, 10, 13, 0.55)
+    );
   }
 
   .torneo__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
     max-width: var(--max-width);
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 5rem;
+    padding: 9vh var(--pad-x);
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+  }
+
+  .torneo__content {
+    max-width: 52ch;
   }
 
   .torneo__title {
     font-family: var(--font-display);
-    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-size: clamp(3rem, 6.5vw, 7.5rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
-    line-height: 0.95;
-    margin-bottom: 2rem;
+    line-height: 0.9;
+    color: #ffffff;
+    margin-top: 0.5rem;
+    margin-bottom: 2.5vh;
   }
 
   .torneo__title em {
@@ -58,33 +126,50 @@
 
   .torneo__body {
     font-family: var(--font-body);
-    font-size: clamp(14px, 1.05vw, 17px);
+    font-size: clamp(14px, 1.1vw, 17px);
     font-weight: 300;
     line-height: 1.8;
-    color: var(--color-text-light);
-    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.68);
+    margin-bottom: 3.5vh;
   }
 
-  .torneo__cta {
+  /* Stats bar */
+  .torneo__stats {
+    display: flex;
+    gap: clamp(2rem, 5vw, 5rem);
+    flex-wrap: wrap;
+    align-items: flex-end;
+    padding-top: 2.5vh;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .torneo__stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .stat__num {
     font-family: var(--font-display);
-    font-size: clamp(12px, 1.1vw, 15px);
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-size: clamp(2rem, 4vw, 4.5rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
     text-transform: uppercase;
-    color: var(--color-accent);
-    transition: letter-spacing 0.2s ease;
   }
 
-  .torneo__cta:hover { letter-spacing: 0.14em; }
-
-  .torneo__placeholder {
-    aspect-ratio: 4 / 3;
-    height: 100%;
-    border: 1px solid var(--color-border);
+  .stat__label {
+    font-family: var(--font-body);
+    font-size: clamp(10px, 0.75vw, 12px);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.38);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
   }
 
-  @media (max-width: 860px) {
-    .torneo__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .torneo__media { order: -1; }
+  @media (max-width: 768px) {
+    .torneo__title { font-size: clamp(2.8rem, 10vw, 4.5rem); }
+    .torneo__stats { gap: 1.5rem 3rem; }
+    .stat__num { font-size: clamp(1.8rem, 8vw, 3rem); }
   }
 </style>
