@@ -156,44 +156,8 @@ const navItems = [
     right: 0;
     z-index: 500;
     height: var(--header-h);
-    background: rgba(255, 255, 255, 0.96);
+    background: #ffffff;
     border-bottom: 1px solid var(--color-border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: background 0.35s, border-color 0.35s;
-  }
-
-  .navbar.is-dark {
-    background: rgba(18, 18, 20, 0.92);
-    border-bottom-color: rgba(255, 255, 255, 0.08);
-  }
-
-  .navbar.is-dark .navbar__link,
-  .navbar.is-dark .navbar__link--btn {
-    color: rgba(255, 255, 255, 0.75);
-  }
-
-  .navbar.is-dark .navbar__link:hover,
-  .navbar.is-dark .navbar__link--btn:hover {
-    color: #fff;
-  }
-
-  .navbar.is-dark .navbar__dropdown {
-    background: #1a1a1e;
-    border-color: rgba(255, 255, 255, 0.08);
-  }
-
-  .navbar.is-dark .navbar__dropdown-link {
-    color: rgba(255, 255, 255, 0.65);
-  }
-
-  .navbar.is-dark .navbar__dropdown-link:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .navbar.is-dark .burger-bar {
-    background: rgba(255, 255, 255, 0.85);
   }
 
   .navbar__inner {
@@ -212,17 +176,14 @@ const navItems = [
     display: block;
     flex-shrink: 0;
     line-height: 0;
-    background: #fff;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background 0.35s;
   }
 
   .navbar__logo-img {
-    height: calc(var(--header-h) - 24px);
+    height: calc(var(--header-h) - 16px);
     width: auto;
     object-fit: contain;
     display: block;
+    mix-blend-mode: multiply;
   }
 
   /* ---- Desktop nav ---- */
@@ -498,19 +459,8 @@ const navItems = [
 </style>
 
 <script>
-  const navbar = document.getElementById('navbar') as HTMLElement | null;
   const menu   = document.getElementById('g-menu') as HTMLElement | null;
   const burger = document.getElementById('burger-btn') as HTMLButtonElement | null;
-
-  // Dark mode: attivo quando il cursore è sull'hero
-  const hero = document.querySelector('.hero');
-  if (hero) {
-    const obs = new IntersectionObserver(
-      ([e]) => navbar?.classList.toggle('is-dark', e.isIntersecting),
-      { threshold: 0.01 }
-    );
-    obs.observe(hero);
-  }
 
   // Apri/chiudi menu burger
   burger?.addEventListener('click', () => {
