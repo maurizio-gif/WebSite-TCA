@@ -606,12 +606,19 @@ const navItems = [
     border: 1.5px solid var(--color-border);
     padding: 6px 14px; white-space: nowrap;
     cursor: pointer;
-    transition: border-color 0.18s, color 0.18s;
+    box-shadow: 0 3px 0 0 rgba(0,0,0,0.15);
+    transition: border-color 0.18s, color 0.18s, transform 0.1s ease, box-shadow 0.1s ease;
     display: inline-flex; align-items: center;
   }
   .navbar__accedi:hover {
     color: var(--color-accent);
     border-color: var(--color-accent);
+    transform: translateY(1px);
+    box-shadow: 0 2px 0 0 rgba(139,26,26,0.25);
+  }
+  .navbar__accedi:active {
+    transform: translateY(3px);
+    box-shadow: none;
   }
 
   /* ── Burger ── */
@@ -654,12 +661,19 @@ const navItems = [
       background: var(--color-accent);
       border: 1.5px solid var(--color-accent);
       padding: 6px 14px; white-space: nowrap;
-      transition: background 0.18s, border-color 0.18s;
+      box-shadow: 0 3px 0 0 var(--color-accent-dark);
+      transition: background 0.18s, border-color 0.18s, transform 0.1s ease, box-shadow 0.1s ease;
       cursor: pointer;
     }
     .navbar__mobile-contact:hover {
       background: var(--color-accent-dark);
       border-color: var(--color-accent-dark);
+      transform: translateY(1px);
+      box-shadow: 0 2px 0 0 var(--color-accent-dark);
+    }
+    .navbar__mobile-contact:active {
+      transform: translateY(3px);
+      box-shadow: none;
     }
 
   }
