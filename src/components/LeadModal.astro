@@ -613,6 +613,11 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     color: rgba(255,255,255,0.5);
   }
 
+  /* Fix: display:flex non deve sovrascrivere [hidden] */
+  .lm__body[hidden] { display: none !important; }
+  .lm__loader[hidden] { display: none !important; }
+  .lm__error[hidden]  { display: none !important; }
+
   /* ── Mobile ── */
   @media (max-width: 560px) {
     .lm__head  { padding: 1.4rem 1.2rem 1.2rem; }
@@ -623,56 +628,56 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
   }
 </style>
 
-<script define:vars={{ WEBHOOK_CHECK, WEBHOOK_LEAD }}>
+<script>
+  // ─── Costanti webhook (TODO: sostituire con URL reali) ────────────────────
+  const WEBHOOK_CHECK = '';  // POST {email} → {exists: bool}
+  const WEBHOOK_LEAD  = '';  // POST dati utente
+
   // ─── State ────────────────────────────────────────────────────────────────
   let collectedData = {
-    email: '',
-    nome: '', cognome: '', cellulare: '',
-    attivita: [] as string[],
-    privacy: false, marketing: false,
-    isNewUser: true,
+    email: '', nome: '', cognome: '', cellulare: '',
+    attivita: [], privacy: false, marketing: false, isNewUser: true,
   };
 
   // ─── Helpers ──────────────────────────────────────────────────────────────
-  const modal     = document.getElementById('modal-contatti') as HTMLDialogElement;
-  const stepDots  = modal.querySelectorAll<HTMLElement>('[data-step-dot]');
+  const modal    = document.getElementById('modal-contatti');
+  const stepDots = modal.querySelectorAll('[data-step-dot]');
 
-  function getStep(n: string | number): HTMLElement | null {
-    return modal.querySelector(`[data-step="${n}"]`);
+  function getStep(n) {
+    return modal.querySelector('[data-step="' + n + '"]');
   }
 
-  function showStep(n: string | number, activeDot?: number) {
-    modal.querySelectorAll<HTMLElement>('[data-step]').forEach(el => {
+  function showStep(n, activeDot) {
+    modal.querySelectorAll('[data-step]').forEach(function(el) {
       el.hidden = el.dataset.step !== String(n);
     });
-    // Aggiorna i pallini 1-2-3
     if (activeDot !== undefined) {
-      stepDots.forEach(dot => {
-        const d = parseInt(dot.dataset.stepDot!);
+      stepDots.forEach(function(dot) {
+        const d = parseInt(dot.dataset.stepDot);
         dot.classList.toggle('is-active', d === activeDot);
         dot.classList.toggle('is-done',   d <  activeDot);
       });
     }
-    const stepsBar = modal.querySelector<HTMLElement>('.lm__steps');
+    const stepsBar = modal.querySelector('.lm__steps');
     if (stepsBar) stepsBar.hidden = (n === 'success');
   }
 
-  function showError(stepEl: HTMLElement, msg: string) {
-    const err = stepEl.querySelector<HTMLElement>('.lm__error');
+  function showError(stepEl, msg) {
+    const err = stepEl.querySelector('.lm__error');
     if (!err) return;
     err.textContent = msg;
     err.hidden = false;
   }
 
-  function clearError(stepEl: HTMLElement) {
-    const err = stepEl.querySelector<HTMLElement>('.lm__error');
+  function clearError(stepEl) {
+    const err = stepEl.querySelector('.lm__error');
     if (err) err.hidden = true;
   }
 
   // ─── Open modal ───────────────────────────────────────────────────────────
-  document.addEventListener('click', (e) => {
-    const trigger = (e.target as Element).closest('[data-open-modal]') as HTMLElement | null;
-    if (trigger?.dataset.openModal === 'modal-contatti') {
+  document.addEventListener('click', function(e) {
+    const trigger = e.target.closest('[data-open-modal]');
+    if (trigger && trigger.dataset.openModal === 'modal-contatti') {
       modal.showModal();
       showStep(1, 1);
     }
@@ -682,38 +687,37 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
   function closeAndReset() {
     modal.close();
     collectedData = { email:'', nome:'', cognome:'', cellulare:'', attivita:[], privacy:false, marketing:false, isNewUser:true };
-    (modal.querySelector('#lm-email') as HTMLInputElement).value = '';
-    (modal.querySelector('#lm-nome') as HTMLInputElement).value = '';
-    (modal.querySelector('#lm-cognome') as HTMLInputElement).value = '';
-    (modal.querySelector('#lm-cell') as HTMLInputElement).value = '';
-    (modal.querySelector('#lm-msg') as HTMLTextAreaElement).value = '';
-    modal.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach(c => c.checked = false);
+    ['#lm-email','#lm-nome','#lm-cognome','#lm-cell','#lm-msg'].forEach(function(sel) {
+      const el = modal.querySelector(sel);
+      if (el) el.value = '';
+    });
+    modal.querySelectorAll('input[type="checkbox"]').forEach(function(c) { c.checked = false; });
     showStep(1, 1);
   }
 
-  document.addEventListener('click', (e) => {
-    if ((e.target as Element).closest('[data-lm-close]')) closeAndReset();
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('[data-lm-close]')) closeAndReset();
   });
 
-  modal.addEventListener('click', (e) => {
+  modal.addEventListener('click', function(e) {
     if (e.target === modal) closeAndReset();
   });
 
-  // ─── Step back (generico) ─────────────────────────────────────────────────
-  modal.addEventListener('click', (e) => {
-    const btn = (e.target as Element).closest<HTMLElement>('[data-step-back]');
+  // ─── Step back generico ───────────────────────────────────────────────────
+  modal.addEventListener('click', function(e) {
+    const btn = e.target.closest('[data-step-back]');
     if (!btn) return;
-    const target = btn.dataset.stepBack!;
+    const target = btn.dataset.stepBack;
     const dot = target === '3' ? 3 : 2;
     showStep(target, dot);
   });
 
   // ─── STEP 1 → verifica email ──────────────────────────────────────────────
-  modal.querySelector('#lm-step1-next')?.addEventListener('click', async () => {
-    const step1 = getStep(1)!;
-    const emailInput = modal.querySelector<HTMLInputElement>('#lm-email')!;
-    const loader = step1.querySelector<HTMLElement>('.lm__loader')!;
-    const nextBtn = step1.querySelector<HTMLButtonElement>('#lm-step1-next')!;
+  modal.querySelector('#lm-step1-next').addEventListener('click', async function() {
+    const step1     = getStep(1);
+    const emailInput = modal.querySelector('#lm-email');
+    const loader    = step1.querySelector('.lm__loader');
+    const nextBtn   = step1.querySelector('#lm-step1-next');
 
     clearError(step1);
     if (!emailInput.validity.valid || !emailInput.value.trim()) {
@@ -723,16 +727,13 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     }
 
     collectedData.email = emailInput.value.trim();
-
-    // Mostra loader
     nextBtn.disabled = true;
     loader.hidden = false;
 
     try {
       let isExisting = false;
-
-      if (WEBHOOK_CHECK && WEBHOOK_CHECK !== '#TODO-WEBHOOK-CHECK') {
-        const res = await fetch(WEBHOOK_CHECK, {
+      if (WEBHOOK_CHECK) {
+        const res  = await fetch(WEBHOOK_CHECK, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: collectedData.email }),
@@ -740,99 +741,85 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
         const data = await res.json();
         isExisting = !!data.exists;
       }
-      // Se webhook non configurato → tratta sempre come nuovo utente
-
       collectedData.isNewUser = !isExisting;
       loader.hidden = true;
       nextBtn.disabled = false;
-
-      if (isExisting) {
-        showStep(3, 3);
-      } else {
-        showStep(2, 2);
-      }
-    } catch {
+      showStep(isExisting ? 3 : 2, isExisting ? 3 : 2);
+    } catch(err) {
       loader.hidden = true;
       nextBtn.disabled = false;
-      // Fallback: tratta come nuovo
       collectedData.isNewUser = true;
       showStep(2, 2);
     }
   });
 
   // ─── STEP 2 back ──────────────────────────────────────────────────────────
-  modal.querySelector('#lm-step2-back')?.addEventListener('click', () => showStep(1, 1));
+  modal.querySelector('#lm-step2-back').addEventListener('click', function() { showStep(1, 1); });
 
   // ─── STEP 2 → raccolta dati ───────────────────────────────────────────────
-  modal.querySelector('#lm-step2-next')?.addEventListener('click', async () => {
-    const step2 = getStep(2)!;
+  modal.querySelector('#lm-step2-next').addEventListener('click', async function() {
+    const step2   = getStep(2);
     clearError(step2);
 
-    const nome     = (modal.querySelector<HTMLInputElement>('#lm-nome'))!;
-    const cognome  = (modal.querySelector<HTMLInputElement>('#lm-cognome'))!;
-    const cell     = (modal.querySelector<HTMLInputElement>('#lm-cell'))!;
-    const privacy  = (modal.querySelector<HTMLInputElement>('#lm-privacy'))!;
+    const nome    = modal.querySelector('#lm-nome');
+    const cognome = modal.querySelector('#lm-cognome');
+    const cell    = modal.querySelector('#lm-cell');
+    const privacy = modal.querySelector('#lm-privacy');
 
     if (!nome.value.trim())    { showError(step2, 'Inserisci il tuo nome.'); nome.focus(); return; }
     if (!cognome.value.trim()) { showError(step2, 'Inserisci il tuo cognome.'); cognome.focus(); return; }
-    if (!cell.value.trim())    { showError(step2, 'Inserisci il tuo numero di cellulare.'); cell.focus(); return; }
+    if (!cell.value.trim())    { showError(step2, 'Inserisci il numero di cellulare.'); cell.focus(); return; }
     if (!privacy.checked)      { showError(step2, 'Il consenso alla Privacy Policy è obbligatorio.'); return; }
 
     collectedData.nome      = nome.value.trim();
     collectedData.cognome   = cognome.value.trim();
     collectedData.cellulare = cell.value.trim();
     collectedData.privacy   = privacy.checked;
-    collectedData.marketing = (modal.querySelector<HTMLInputElement>('#lm-marketing'))!.checked;
-    collectedData.attivita  = Array.from(
-      modal.querySelectorAll<HTMLInputElement>('input[name="attivita"]:checked')
-    ).map(c => c.value);
+    collectedData.marketing = modal.querySelector('#lm-marketing').checked;
+    collectedData.attivita  = Array.from(modal.querySelectorAll('input[name="attivita"]:checked')).map(function(c) { return c.value; });
 
-    // Invia i dati al webhook se configurato
-    if (WEBHOOK_LEAD && WEBHOOK_LEAD !== '#TODO-WEBHOOK-LEAD') {
+    if (WEBHOOK_LEAD) {
       try {
         await fetch(WEBHOOK_LEAD, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(collectedData),
         });
-      } catch { /* non bloccare il flusso */ }
+      } catch(e) { /* non bloccare il flusso */ }
     }
 
     showStep(3, 3);
   });
 
   // ─── STEP 3 → scelta canale ───────────────────────────────────────────────
-  modal.querySelectorAll<HTMLButtonElement>('.lm__channel-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
+  modal.querySelectorAll('.lm__channel-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
       const ch = btn.dataset.channel;
-      if (ch === 'phone')     showStep('4-phone');
-      if (ch === 'email')     showStep('4-email');
-      if (ch === 'whatsapp')  showStep('4-whatsapp');
-      // Nascondi step indicator allo step 4
-      const stepsBar = modal.querySelector<HTMLElement>('.lm__steps');
+      const stepsBar = modal.querySelector('.lm__steps');
       if (stepsBar) stepsBar.hidden = true;
+      if (ch === 'phone')    showStep('4-phone');
+      if (ch === 'email')    showStep('4-email');
+      if (ch === 'whatsapp') showStep('4-whatsapp');
     });
   });
 
   // ─── STEP 4b → invia email ────────────────────────────────────────────────
-  modal.querySelector('#lm-step4e-send')?.addEventListener('click', async () => {
-    const step4e = getStep('4-email')!;
+  modal.querySelector('#lm-step4e-send').addEventListener('click', async function() {
+    const step4e = getStep('4-email');
     clearError(step4e);
-    const msg = (modal.querySelector<HTMLTextAreaElement>('#lm-msg'))!;
+    const msg = modal.querySelector('#lm-msg');
     if (!msg.value.trim()) { showError(step4e, 'Scrivi un messaggio prima di inviare.'); msg.focus(); return; }
 
-    const payload = { ...collectedData, messaggio: msg.value.trim() };
-
-    if (WEBHOOK_LEAD && WEBHOOK_LEAD !== '#TODO-WEBHOOK-LEAD') {
+    const payload = Object.assign({}, collectedData, { messaggio: msg.value.trim() });
+    if (WEBHOOK_LEAD) {
       try {
         await fetch(WEBHOOK_LEAD, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         });
-      } catch { /* mostra success comunque */ }
+      } catch(e) { /* mostra success comunque */ }
     }
-
     showStep('success');
   });
 </script>
