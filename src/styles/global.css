@@ -247,6 +247,37 @@ body.menu-open { overflow: hidden; }
   transform: none;
 }
 
+/* ── Minimum font size mobile — 11px in assoluto ──────────────────────────
+   Regola di sicurezza: su mobile nessun elemento di testo può scendere
+   sotto 11px. Copre label, eyebrow, meta, nav footer e qualsiasi testo
+   che non fosse già gestito via clamp().
+   Specificità bassa (:where) per non interferire con override espliciti.
+*/
+@media (max-width: 768px) {
+  :where(
+    p, span, a, button, label, input, select, textarea,
+    li, td, th, caption, figcaption, blockquote, cite,
+    small, time, address, abbr, code, pre,
+    .eyebrow,
+    [class$="__label"],
+    [class*="__label"],
+    [class$="__meta"],
+    [class*="__meta"],
+    [class$="__sub"],
+    [class*="__sub"],
+    [class$="__desc"],
+    [class*="__desc"],
+    [class$="__link"],
+    [class*="__link"],
+    [class$="__footer"],
+    [class*="__footer"],
+    [class$="__value"],
+    [class*="__value"]
+  ) {
+    font-size: max(11px, 1em);
+  }
+}
+
 /* Rispetta le preferenze di accessibilità */
 @media (prefers-reduced-motion: reduce) {
   [data-anim],
