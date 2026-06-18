@@ -1,4 +1,6 @@
 ---
+import { publicUrl } from '../i18n/utils';
+
 interface Props {
   eyebrow?: string;
   title: string;
@@ -27,7 +29,7 @@ const {
 <section class="page-hero">
   <div class="page-hero__bg">
     <img
-      src={image}
+      src={publicUrl(image)}
       alt={imageAlt}
       class="page-hero__img"
       style={`object-position: ${imagePosition};`}

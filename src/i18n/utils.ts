@@ -5,11 +5,13 @@ export type Lang = 'it' | 'en';
 
 const translations = { it, en } as const;
 
+/** Base URL senza trailing slash (es. '/WebSite-TCA' su GitHub Pages, '' su Netlify). */
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+
 /** Rileva la lingua dall'URL (pathname). */
 export function getLangFromUrl(url: URL): Lang {
   const segments = url.pathname.split('/').filter(Boolean);
-  // Con GitHub Pages base '/WebSite-TCA', il primo segmento può essere 'WebSite-TCA'
-  // quindi controlliamo sia il primo che il secondo
+  // Con base '/WebSite-TCA' il segmento 0 è 'WebSite-TCA', il lang è al posto 1
   if (segments[0] === 'en' || segments[1] === 'en') return 'en';
   return 'it';
 }
@@ -20,24 +22,31 @@ export function useTranslations(lang: Lang) {
 }
 
 /**
- * Restituisce il path localizzato.
- * IT  → path invariato  (es. '/tennis')
- * EN  → '/en' + path    (es. '/en/tennis')
+ * Restituisce il path localizzato CON base prefix (pronto per href).
+ * IT + '/'        → '/WebSite-TCA/'   (o '/' su Netlify)
+ * IT + '/tennis'  → '/WebSite-TCA/tennis'
+ * EN + '/tennis'  → '/WebSite-TCA/en/tennis'
  */
 export function getLocalePath(lang: Lang, path: string): string {
-  if (lang === 'it') return path;
-  const clean = path === '/' ? '' : path;
-  return `/en${clean}`;
+  const localePath = lang === 'it' ? path : `/en${path === '/' ? '' : path}`;
+  if (localePath === '/') return base ? `${base}/` : '/';
+  return `${base}${localePath}`;
 }
 
 /**
- * Dato il pathname corrente (senza base), calcola i path
- * per lo switcher IT ↔ EN.
+ * Prepende il base path a un path di public/ (immagini, loghi…).
+ * '/logos/tca-logo.png' → '/WebSite-TCA/logos/tca-logo.png'
+ */
+export function publicUrl(path: string): string {
+  return `${base}${path}`;
+}
+
+/**
+ * Dato il pathname PULITO (senza base), restituisce i path
+ * alternativi IT e EN (anch'essi senza base) per lo switcher.
  */
 export function getAlternatePath(pathname: string): { it: string; en: string } {
-  // Normalizza: rimuovi eventuale trailing slash (tranne root)
   const p = pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname;
-
   if (p.startsWith('/en')) {
     const itPath = p.slice(3) || '/';
     return { it: itPath, en: p };
