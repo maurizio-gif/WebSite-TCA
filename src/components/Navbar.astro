@@ -69,6 +69,7 @@ const navItems = [
     <div class="navbar__right">
       <!-- TODO: collegare link esterno PerfectGym -->
       <a class="navbar__cta btn btn-red" href="#">Diventa Socio</a>
+      <a class="navbar__mobile-contact" href="/contatti">Contattaci</a>
 
       <button
         class="navbar__burger"
@@ -93,7 +94,6 @@ const navItems = [
       <!-- Adulti accordion -->
       <li class="g-menu__item g-menu__item--accordion">
         <button class="g-menu__link g-menu__accordion-btn" aria-expanded="false">
-          <em>01</em>
           Adulti
           <svg class="g-menu__acc-icon" width="16" height="10" viewBox="0 0 16 10" fill="none">
             <path d="M1 1L8 9L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -109,7 +109,6 @@ const navItems = [
       <!-- Junior accordion -->
       <li class="g-menu__item g-menu__item--accordion">
         <button class="g-menu__link g-menu__accordion-btn" aria-expanded="false">
-          <em>02</em>
           Junior
           <svg class="g-menu__acc-icon" width="16" height="10" viewBox="0 0 16 10" fill="none">
             <path d="M1 1L8 9L15 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -123,23 +122,22 @@ const navItems = [
       </li>
 
       <li class="g-menu__item">
-        <a class="g-menu__link" href="/torneo-avvenire">
-          <em>03</em>Torneo Avvenire
-        </a>
+        <a class="g-menu__link" href="/torneo-avvenire">Torneo Avvenire</a>
       </li>
 
       <li class="g-menu__item">
-        <a class="g-menu__link" href="/storia">
-          <em>04</em>Storia
-        </a>
+        <a class="g-menu__link" href="/storia">Storia</a>
       </li>
 
       <li class="g-menu__item">
-        <a class="g-menu__link" href="/eventi">
-          <em>05</em>Eventi
-        </a>
+        <a class="g-menu__link" href="/eventi">Eventi</a>
       </li>
     </ul>
+
+    <div class="g-menu__ctas">
+      <a class="g-menu__cta-btn g-menu__cta-btn--red btn btn-red" href="#">Diventa Socio</a>
+      <a class="g-menu__cta-btn g-menu__cta-btn--outline" href="/contatti">Contattaci</a>
+    </div>
 
     <div class="g-menu__footer">
       Tennis Club Ambrosiano &mdash; Via Feltre 33, Milano
@@ -201,7 +199,7 @@ const navItems = [
   .navbar__link,
   .navbar__link--btn {
     font-family: var(--font-display);
-    font-size: clamp(11px, 0.85vw, 13px);
+    font-size: clamp(11px, 0.94vw, 13.5px);
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -288,7 +286,7 @@ const navItems = [
   }
 
   .navbar__cta {
-    font-size: clamp(11px, 0.9vw, 13px);
+    font-size: clamp(12px, 1vw, 14px);
     padding: 7px 18px;
   }
 
@@ -322,6 +320,11 @@ const navItems = [
   body.menu-open .b2 { opacity: 0; transform: scaleX(0); }
   body.menu-open .b3 { transform: translateY(-7px) rotate(-45deg); }
 
+  /* ---- Mobile contact button (header) — nascosto su desktop ---- */
+  .navbar__mobile-contact {
+    display: none;
+  }
+
   /* ---- Mobile ---- */
   @media (max-width: 1023px) {
     .navbar__nav { display: none; }
@@ -330,6 +333,31 @@ const navItems = [
 
   @media (max-width: 640px) {
     .navbar__cta { display: none; }
+
+    .navbar__logo-img {
+      height: calc((var(--header-h) - 16px) * 1.3);
+    }
+
+    .navbar__mobile-contact {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text);
+      text-decoration: none;
+      border: 1.5px solid var(--color-border);
+      padding: 6px 14px;
+      white-space: nowrap;
+      transition: border-color 0.18s, color 0.18s;
+    }
+
+    .navbar__mobile-contact:hover {
+      color: var(--color-accent);
+      border-color: var(--color-accent);
+    }
   }
 
   /* ---- Menu fullscreen ---- */
@@ -371,7 +399,7 @@ const navItems = [
 
   .g-menu__link {
     font-family: var(--font-display);
-    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-size: clamp(28px, 5vw, 3.5rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
@@ -390,18 +418,12 @@ const navItems = [
     text-align: left;
   }
 
-  .g-menu__link em {
-    font-style: normal;
-    font-size: 0.38em;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.18);
-    min-width: 2.8em;
-    transition: color 0.18s;
+  .g-menu__accordion-btn {
+    font-size: 34px;
+    color: var(--color-accent);
   }
 
   .g-menu__link:hover { color: #fff; }
-  .g-menu__link:hover em { color: var(--color-accent); }
 
   /* Accordion icon */
   .g-menu__acc-icon {
@@ -412,7 +434,6 @@ const navItems = [
   }
 
   .g-menu__accordion-btn[aria-expanded="true"] { color: #fff; }
-  .g-menu__accordion-btn[aria-expanded="true"] em { color: var(--color-accent); }
   .g-menu__accordion-btn[aria-expanded="true"] .g-menu__acc-icon {
     transform: rotate(180deg);
     color: var(--color-accent);
@@ -432,18 +453,61 @@ const navItems = [
 
   .g-menu__sub-link {
     font-family: var(--font-body);
-    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    font-size: clamp(16px, 2.5vw, 1.2rem);
     font-weight: 300;
     color: rgba(255, 255, 255, 0.5);
     text-decoration: none;
     display: block;
-    padding: 0.65vh 0 0.65vh calc(0.55em + 2.8em + 0.55em);
-    transition: color 0.15s, padding-left 0.18s;
+    padding: 0.65vh 0;
+    transition: color 0.15s;
   }
 
   .g-menu__sub-link:hover {
     color: rgba(255, 255, 255, 0.9);
-    padding-left: calc(0.55em + 2.8em + 0.55em + 6px);
+  }
+
+  /* ---- CTA pulsanti in fondo al menu mobile ---- */
+  .g-menu__ctas {
+    display: flex;
+    gap: 1rem;
+    padding: 3vh 0 2vh;
+    flex-wrap: wrap;
+  }
+
+  .g-menu__cta-btn {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    padding: 12px 28px;
+    border: 2px solid transparent;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+  }
+
+  .g-menu__cta-btn--red {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  .g-menu__cta-btn--red:hover {
+    background: var(--color-accent-dark);
+    border-color: var(--color-accent-dark);
+  }
+
+  .g-menu__cta-btn--outline {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .g-menu__cta-btn--outline:hover {
+    border-color: #fff;
+    color: #fff;
   }
 
   .g-menu__footer {
