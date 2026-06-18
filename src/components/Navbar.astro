@@ -29,11 +29,11 @@ const navItems = [
     <!-- Logo -->
     <a class="navbar__logo" href="/" aria-label="Tennis Club Ambrosiano — home">
       <img
-        src="/logos/tca-logo-orizzontale.avif"
+        src="/logos/tca-logo.png"
         alt="Tennis Club Ambrosiano"
         class="navbar__logo-img"
-        width="120"
-        height="38"
+        width="80"
+        height="54"
       />
     </a>
 
@@ -208,13 +208,21 @@ const navItems = [
   }
 
   /* ---- Logo ---- */
-  .navbar__logo { display: block; flex-shrink: 0; line-height: 0; }
+  .navbar__logo {
+    display: block;
+    flex-shrink: 0;
+    line-height: 0;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background 0.35s;
+  }
 
   .navbar__logo-img {
-    height: calc(var(--header-h) - 20px);
+    height: calc(var(--header-h) - 24px);
     width: auto;
     object-fit: contain;
-    object-position: left center;
+    display: block;
   }
 
   /* ---- Desktop nav ---- */
