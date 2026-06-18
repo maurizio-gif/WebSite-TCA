@@ -61,5 +61,53 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
     </main>
     <Footer lang={lang} />
     <LeadModal />
+
+    <script>
+      // ── Scroll animations ──────────────────────────────────────────────────
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const delay = el.dataset.animDelay ? parseInt(el.dataset.animDelay) : 0;
+            setTimeout(() => el.classList.add('is-visible'), delay);
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+      // Auto-applica data-anim agli elementi chiave fuori dall'hero
+      document.querySelectorAll<HTMLElement>(
+        'section:not(.hero) .eyebrow, ' +
+        'section:not(.hero) h2, ' +
+        'section:not(.hero) h3, ' +
+        '.manifesto__text, ' +
+        '.manifesto__values, ' +
+        '.panel__head, ' +
+        '.torneo__content, ' +
+        '.torneo__stats, ' +
+        '.eventi-home__head, ' +
+        '.conversion__card, ' +
+        '.info__grid, ' +
+        '.info__actions'
+      ).forEach((el, i) => {
+        if (!el.hasAttribute('data-anim')) {
+          el.setAttribute('data-anim', 'true');
+        }
+        // stagger leggero tra elementi nello stesso parent
+        const siblings = el.parentElement
+          ? Array.from(el.parentElement.querySelectorAll('[data-anim]'))
+          : [];
+        const idx = siblings.indexOf(el);
+        if (idx > 0 && !el.dataset.animDelay) {
+          el.dataset.animDelay = String(idx * 80);
+        }
+        observer.observe(el);
+      });
+
+      // Osserva anche gli elementi con data-anim già presenti nel markup
+      document.querySelectorAll<HTMLElement>('[data-anim]').forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
   </body>
 </html>

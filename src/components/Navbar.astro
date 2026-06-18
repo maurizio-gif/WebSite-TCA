@@ -87,9 +87,8 @@ const navItems = [
     </nav>
 
     <div class="navbar__right">
-      <!-- TODO: collegare link esterno PerfectGym -->
-      <a class="navbar__cta btn btn-red" href="#">{t.nav.diventaSocio}</a>
-      <a class="navbar__mobile-contact" href={p('/contatti')}>{t.nav.contattaci}</a>
+      <button class="navbar__cta btn btn-red" data-open-modal="modal-contatti">{t.nav.contattaci}</button>
+      <a class="navbar__mobile-contact" data-open-modal="modal-contatti">{t.nav.contattaci}</a>
 
       <!-- Switcher lingua (desktop) -->
       <div class="lang-switcher" aria-label="Seleziona lingua / Select language">
@@ -152,8 +151,8 @@ const navItems = [
     </ul>
 
     <div class="g-menu__ctas">
-      <a class="g-menu__cta-btn g-menu__cta-btn--red btn btn-red" href="#">{t.nav.diventaSocio}</a>
-      <a class="g-menu__cta-btn g-menu__cta-btn--outline" href={p('/contatti')}>{t.nav.contattaci}</a>
+      <button class="g-menu__cta-btn g-menu__cta-btn--red btn btn-red" data-open-modal="modal-contatti">{t.nav.contattaci}</button>
+      <button class="g-menu__cta-btn g-menu__cta-btn--outline" data-open-modal="modal-contatti">{t.nav.contattaci}</button>
     </div>
 
     <div class="g-menu__footer">
