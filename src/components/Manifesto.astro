@@ -92,7 +92,17 @@ const p = (path: string) => getLocalePath(lang, path);
   }
 
   @media (max-width: 860px) {
-    .manifesto__inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .manifesto__quote { grid-column: 1; }
+    .manifesto__inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .manifesto__quote {
+      grid-column: 1;
+      font-size: clamp(2.1rem, 9vw, 3rem);
+      border-top: 3px solid var(--color-accent);
+      padding-top: 2rem;
+      margin-top: 0.5rem;
+    }
   }
 </style>
