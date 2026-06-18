@@ -25,6 +25,67 @@ export default defineConfig({
 
   schema: {
     collections: [
+      // ─── EVENTI ────────────────────────────────────────────────────────────
+      // Il marketing può aggiungere eventi da qui: https://app.tina.io
+      // Ogni evento è un file .md in src/content/eventi/
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: 'eventi',
+        label: 'Eventi',
+        path: 'src/content/eventi',
+        format: 'md',
+        fields: [
+          {
+            type: 'string',
+            name: 'titolo',
+            label: 'Titolo evento',
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: 'datetime',
+            name: 'data',
+            label: 'Data',
+            required: true,
+            ui: { dateFormat: 'DD/MM/YYYY' },
+          },
+          {
+            type: 'string',
+            name: 'categoria',
+            label: 'Categoria',
+            required: true,
+            options: ['Torneo', 'Clinic', 'Evento', 'Camp'],
+          },
+          {
+            type: 'string',
+            name: 'descrizione',
+            label: 'Descrizione breve',
+            required: true,
+            ui: { component: 'textarea' },
+          },
+          {
+            type: 'string',
+            name: 'luogo',
+            label: 'Luogo (es. Campo 3, Club House)',
+          },
+          {
+            type: 'string',
+            name: 'iscrizioniHref',
+            label: 'Link iscrizioni (URL)',
+          },
+          {
+            type: 'boolean',
+            name: 'pubblicato',
+            label: 'Pubblicato',
+          },
+          {
+            type: 'rich-text',
+            name: 'body',
+            label: 'Dettagli evento',
+            isBody: true,
+          },
+        ],
+      },
       {
         name: 'pagine',
         label: 'Pagine',

@@ -31,8 +31,7 @@ const p = (path: string) => getLocalePath(lang, path);
     <div class="hero__actions">
       {/* TODO: collegare link esterno PerfectGym */}
       <a class="btn btn-red" href="#">{t.hero.cta1}</a>
-      {/* TODO: aprire modal form lead */}
-      <a class="btn btn-outline" href={`${p('/')}#lead`}>{t.hero.cta2}</a>
+      <button class="btn btn-outline" data-open-modal="modal-contatti">{t.hero.cta2}</button>
     </div>
   </div>
 </section>

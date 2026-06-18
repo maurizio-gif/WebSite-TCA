@@ -2,21 +2,27 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import Manifesto from "../components/Manifesto.astro";
-import DisciplineGrid from "../components/DisciplineGrid.astro";
+import AttivitaSplit from "../components/AttivitaSplit.astro";
 import Reassurance from "../components/Reassurance.astro";
 import TorneoAvvenire from "../components/TorneoAvvenire.astro";
+import EventiHome from "../components/EventiHome.astro";
 import ConversionBlock from "../components/ConversionBlock.astro";
-import LeadFormPlaceholder from "../components/LeadFormPlaceholder.astro";
 import InfoPratiche from "../components/InfoPratiche.astro";
+import { getLangFromUrl, type Lang } from "../i18n/utils";
+
+const lang: Lang = getLangFromUrl(Astro.url);
 ---
 
-<BaseLayout title="Tennis Club Ambrosiano | Tennis, Sport e Famiglia a Milano">
-  <Hero />
+<BaseLayout
+  lang={lang}
+  title="Tennis Club Ambrosiano | Tennis, Sport e Famiglia a Milano"
+>
+  <Hero lang={lang} />
   <Manifesto />
-  <DisciplineGrid />
+  <AttivitaSplit lang={lang} />
   <Reassurance />
-  <TorneoAvvenire />
+  <TorneoAvvenire lang={lang} />
+  <EventiHome lang={lang} />
   <ConversionBlock />
-  <LeadFormPlaceholder />
   <InfoPratiche />
 </BaseLayout>

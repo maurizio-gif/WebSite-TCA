@@ -1,0 +1,344 @@
+---
+import { getLocalePath, publicUrl, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'it' } = Astro.props;
+const p = (path: string) => getLocalePath(lang, path);
+
+const adulti = [
+  {
+    num: '01',
+    name: 'Tennis',
+    desc: 'Sedici campi, istruttori federali e tornei interni per tutti i livelli.',
+    href: p('/tennis'),
+    img: publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif'),
+  },
+  {
+    num: '02',
+    name: 'Padel e Pickleball',
+    desc: 'Gli sport di racchetta più amati del momento. Campi coperti e aperti, lezioni e tornei.',
+    href: p('/padel'),
+    img: publicUrl('/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif'),
+  },
+  {
+    num: '03',
+    name: 'Preparazione Atletica',
+    desc: 'Forza, mobilità e condizionamento. Allenati per dare il meglio in campo.',
+    href: p('/preparazione-atletica'),
+    img: publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'),
+  },
+];
+
+const junior = [
+  {
+    num: '01',
+    name: 'Scuola Tennis',
+    desc: 'Istruttori certificati, piccoli gruppi e metodo collaudato. Dai 4 anni in su.',
+    href: p('/scuola-tennis'),
+    img: publicUrl('/ajAJSI1P9HI4UhOS_tenniskidsTCA.avif'),
+  },
+  {
+    num: '02',
+    name: 'Summer Camps',
+    desc: "Sport, divertimento e nuove amicizie. Programmi intensivi estate.",
+    href: p('/summer-camps'),
+    img: publicUrl('/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif'),
+  },
+  {
+    num: '03',
+    name: 'Agonistica',
+    desc: 'Squadre federate, tornei nazionali e internazionali. Per chi vuole competere.',
+    href: p('/agonistica'),
+    img: publicUrl('/0cd25eb6-cb2a-48cf-a65e-2a7107787fba_Web_Square-1PA_1811.avif'),
+  },
+];
+---
+
+<section class="attivita">
+  <div class="attivita__panels">
+
+    <!-- ADULTI -->
+    <div class="attivita__panel">
+      <span class="panel__watermark" aria-hidden="true">Adulti</span>
+      <div class="panel__head">
+        <span class="eyebrow eyebrow--light">Le nostre discipline</span>
+        <h2 class="panel__title">Adulti</h2>
+        <p class="panel__sub">Tennis · Padel · Preparazione Atletica</p>
+      </div>
+      <div class="panel__rows">
+        {adulti.map((item) => (
+          <a
+            class="act-row"
+            href={item.href}
+            style={`--bg: url('${item.img}')`}
+          >
+            <div class="act-row__inner">
+              <span class="act-row__num">{item.num}</span>
+              <div class="act-row__content">
+                <strong class="act-row__name">{item.name}</strong>
+                <p class="act-row__desc">{item.desc}</p>
+              </div>
+              <span class="act-row__arrow" aria-hidden="true">→</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="attivita__divider" aria-hidden="true"></div>
+
+    <!-- JUNIOR -->
+    <div class="attivita__panel">
+      <span class="panel__watermark" aria-hidden="true">Junior</span>
+      <div class="panel__head">
+        <span class="eyebrow eyebrow--light">Per i più giovani</span>
+        <h2 class="panel__title">Junior</h2>
+        <p class="panel__sub">Scuola Tennis · Summer Camps · Agonistica</p>
+      </div>
+      <div class="panel__rows">
+        {junior.map((item) => (
+          <a
+            class="act-row"
+            href={item.href}
+            style={`--bg: url('${item.img}')`}
+          >
+            <div class="act-row__inner">
+              <span class="act-row__num">{item.num}</span>
+              <div class="act-row__content">
+                <strong class="act-row__name">{item.name}</strong>
+                <p class="act-row__desc">{item.desc}</p>
+              </div>
+              <span class="act-row__arrow" aria-hidden="true">→</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .attivita {
+    background: #0f1013;
+    color: #ffffff;
+  }
+
+  .attivita__panels {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+  }
+
+  .attivita__divider {
+    background: var(--color-accent);
+    width: 1px;
+    min-height: 100%;
+  }
+
+  /* ── Panel ── */
+  .attivita__panel {
+    position: relative;
+    padding: 6vh var(--pad-x);
+    overflow: hidden;
+  }
+
+  /* Ghosted watermark */
+  .panel__watermark {
+    position: absolute;
+    top: -0.08em;
+    left: 0;
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 14vw, 18rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.025);
+    line-height: 0.85;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    z-index: 0;
+  }
+
+  /* Panel header */
+  .panel__head {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 3vh;
+    padding-bottom: 2.5vh;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .panel__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 4.5vw, 5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.9;
+    margin-top: 0.4rem;
+    margin-bottom: 0.6rem;
+    color: #ffffff;
+  }
+
+  .panel__sub {
+    font-family: var(--font-body);
+    font-size: clamp(11px, 0.85vw, 13px);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.32);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* ── Activity rows ── */
+  .panel__rows {
+    position: relative;
+    z-index: 1;
+  }
+
+  .act-row {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 1.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .act-row:last-child {
+    border-bottom: none;
+  }
+
+  /* Photo reveal on hover */
+  .act-row::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--bg);
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.07);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  /* Darkening overlay over photo */
+  .act-row::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 8, 10, 0.68);
+    opacity: 0;
+    transition: opacity 0.55s ease;
+  }
+
+  .act-row:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .act-row:hover::after {
+    opacity: 1;
+  }
+
+  /* Row content */
+  .act-row__inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    transition: transform 0.3s ease;
+  }
+
+  .act-row:hover .act-row__inner {
+    transform: translateX(8px);
+  }
+
+  .act-row__num {
+    font-family: var(--font-display);
+    font-size: clamp(10px, 0.85vw, 12px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    flex-shrink: 0;
+    width: 1.6rem;
+  }
+
+  .act-row__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .act-row__name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.6vw, 2.8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: #ffffff;
+  }
+
+  .act-row__desc {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 14px);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.5;
+    margin-top: 0.35rem;
+    transition: color 0.25s;
+  }
+
+  .act-row:hover .act-row__desc {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .act-row__arrow {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 1.8vw, 1.8rem);
+    color: var(--color-accent);
+    flex-shrink: 0;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .act-row:hover .act-row__arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .attivita__panels {
+      grid-template-columns: 1fr;
+    }
+
+    .attivita__divider {
+      width: 100%;
+      height: 1px;
+    }
+
+    .attivita__panel {
+      padding: 5vh 20px;
+    }
+
+    .panel__watermark {
+      font-size: clamp(5rem, 22vw, 8rem);
+    }
+
+    .act-row__name {
+      font-size: clamp(1.4rem, 6.5vw, 2rem);
+    }
+
+    /* On mobile always show arrow (no hover state) */
+    .act-row__arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+</style>

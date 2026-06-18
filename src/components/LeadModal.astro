@@ -1,0 +1,352 @@
+---
+// TODO Fase 2: connettere al webhook n8n
+// action="https://n8n.tcambrosiano.com/webhook/lead"
+// method="POST"
+
+const interessi = [
+  "Tennis",
+  "Padel / Pickleball",
+  "Preparazione Atletica",
+  "Scuola Tennis (bambini)",
+  "Summer Camps",
+  "Membership Club",
+  "Informazioni generali",
+];
+---
+
+<dialog id="modal-contatti" class="lm" aria-labelledby="lm-title">
+  <div class="lm__panel">
+
+    <div class="lm__head">
+      <div>
+        <span class="eyebrow eyebrow--light">Contattaci</span>
+        <h2 class="lm__title" id="lm-title">Parliamone.<br><em>Ti ricontattiamo noi.</em></h2>
+      </div>
+      <button class="lm__close" aria-label="Chiudi" data-lm-close>✕</button>
+    </div>
+
+    <div class="lm__body">
+      <p class="lm__sub">
+        Lascia i tuoi dati e raccontaci cosa cerchi: ti risponderemo con tutte
+        le informazioni su orari, disponibilità e la soluzione più adatta a te.
+      </p>
+
+      <form class="lm__form" id="form-contatti" novalidate>
+        <div class="lm__field">
+          <label for="lm-nome">Nome e cognome <span aria-hidden="true">*</span></label>
+          <input id="lm-nome" name="nome" type="text" autocomplete="name" required />
+        </div>
+
+        <div class="lm__field">
+          <label for="lm-email">Email <span aria-hidden="true">*</span></label>
+          <input id="lm-email" name="email" type="email" autocomplete="email" required />
+        </div>
+
+        <div class="lm__field">
+          <label for="lm-telefono">Telefono</label>
+          <input id="lm-telefono" name="telefono" type="tel" autocomplete="tel" />
+        </div>
+
+        <div class="lm__field">
+          <label for="lm-interesse">Sono interessato a</label>
+          <select id="lm-interesse" name="interesse">
+            <option value="" selected disabled>Seleziona…</option>
+            {interessi.map((i) => <option value={i}>{i}</option>)}
+          </select>
+        </div>
+
+        <div class="lm__field lm__field--full">
+          <label for="lm-messaggio">Messaggio</label>
+          <textarea id="lm-messaggio" name="messaggio" rows="3"></textarea>
+        </div>
+
+        <div class="lm__field lm__field--full lm__privacy">
+          <input id="lm-privacy" name="privacy" type="checkbox" required />
+          <label for="lm-privacy">
+            Ho letto e accetto la <a href="/privacy-policy">Privacy Policy</a> e
+            acconsento al trattamento dei miei dati. <span aria-hidden="true">*</span>
+          </label>
+        </div>
+
+        <div class="lm__field--full">
+          <button class="btn btn-red lm__submit" type="submit">Invia richiesta</button>
+        </div>
+      </form>
+
+      <div class="lm__success" hidden aria-live="polite">
+        <div class="lm__success-icon" aria-hidden="true">✓</div>
+        <h3 class="lm__success-title">Messaggio inviato!</h3>
+        <p class="lm__success-text">Ti risponderemo entro 24 ore.<br>A presto al TCA.</p>
+        <button class="btn btn-red" data-lm-close>Chiudi</button>
+      </div>
+    </div>
+
+  </div>
+</dialog>
+
+<style>
+  /* ── Dialog container ── */
+  .lm {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: min(94vw, 680px);
+    width: 100%;
+    margin: auto;
+  }
+
+  .lm::backdrop {
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+
+  /* ── Panel ── */
+  .lm__panel {
+    background: #0f1013;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .lm__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 2.5rem 2.5rem 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .lm__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
+    margin-top: 0.4rem;
+    color: #ffffff;
+  }
+
+  .lm__title em {
+    color: var(--color-accent);
+    font-style: normal;
+  }
+
+  .lm__close {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 1.1rem;
+    line-height: 1;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: border-color 0.18s, color 0.18s;
+  }
+
+  .lm__close:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+  }
+
+  .lm__body {
+    padding: 2rem 2.5rem 2.5rem;
+  }
+
+  .lm__sub {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.9vw, 15px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1.8rem;
+  }
+
+  /* ── Form ── */
+  .lm__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .lm__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .lm__field--full {
+    grid-column: 1 / -1;
+  }
+
+  .lm__field label {
+    font-family: var(--font-display);
+    font-size: clamp(9px, 0.75vw, 11px);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.38);
+  }
+
+  .lm__field label span { color: var(--color-accent); }
+
+  .lm__field input,
+  .lm__field select,
+  .lm__field textarea {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 300;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: #ffffff;
+    width: 100%;
+    transition: border-color 0.18s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .lm__field input:focus,
+  .lm__field select:focus,
+  .lm__field textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .lm__field select option { background: #1a1a1a; color: #fff; }
+  .lm__field textarea { resize: vertical; min-height: 80px; }
+
+  .lm__privacy {
+    flex-direction: row !important;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .lm__privacy input[type="checkbox"] {
+    width: auto;
+    flex-shrink: 0;
+    margin-top: 0.15em;
+    accent-color: var(--color-accent);
+  }
+
+  .lm__privacy label {
+    font-family: var(--font-body) !important;
+    font-size: clamp(11px, 0.82vw, 13px) !important;
+    font-weight: 300 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    color: rgba(255, 255, 255, 0.45) !important;
+    line-height: 1.55;
+  }
+
+  .lm__privacy a {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .lm__submit {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* ── Success state ── */
+  .lm__success {
+    text-align: center;
+    padding: 3rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .lm__success-icon {
+    font-size: 2.5rem;
+    color: var(--color-accent);
+    width: 4rem;
+    height: 4rem;
+    border: 2px solid var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lm__success-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #ffffff;
+  }
+
+  .lm__success-text {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 16px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 560px) {
+    .lm__head { padding: 1.8rem 1.5rem 1.5rem; }
+    .lm__body { padding: 1.5rem 1.5rem 2rem; }
+    .lm__form { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // ── Open modal from any [data-open-modal] button ──────────────────────────
+  document.addEventListener('click', (e) => {
+    const trigger = (e.target as Element).closest('[data-open-modal]') as HTMLElement | null;
+    if (trigger) {
+      const id = trigger.dataset.openModal;
+      const dialog = document.getElementById(id!) as HTMLDialogElement | null;
+      dialog?.showModal();
+    }
+  });
+
+  // ── Close on [data-lm-close] or backdrop click ───────────────────────────
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as Element).closest('[data-lm-close]');
+    if (btn) {
+      const dialog = btn.closest('dialog') as HTMLDialogElement | null;
+      dialog?.close();
+      // Reset form & show form again
+      const form = dialog?.querySelector('form') as HTMLFormElement | null;
+      const success = dialog?.querySelector('.lm__success') as HTMLElement | null;
+      form?.reset();
+      if (form) form.hidden = false;
+      if (success) success.hidden = true;
+    }
+  });
+
+  // Close on backdrop click
+  document.addEventListener('click', (e) => {
+    const dialog = e.target as HTMLDialogElement;
+    if (dialog.tagName === 'DIALOG' && dialog.id === 'modal-contatti') {
+      dialog.close();
+      const form = dialog.querySelector('form') as HTMLFormElement | null;
+      const success = dialog.querySelector('.lm__success') as HTMLElement | null;
+      form?.reset();
+      if (form) form.hidden = false;
+      if (success) success.hidden = true;
+    }
+  });
+
+  // ── Form submit — show success (no real POST yet) ─────────────────────────
+  document.getElementById('form-contatti')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    const success = form.closest('.lm__body')?.querySelector('.lm__success') as HTMLElement | null;
+    form.hidden = true;
+    if (success) success.hidden = false;
+    // TODO Fase 2: fetch('/webhook/...', { method:'POST', body: new FormData(form) })
+  });
+</script>
