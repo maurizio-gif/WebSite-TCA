@@ -68,11 +68,11 @@ const secondaryItems = [
   { label: t.nav.eventi,         href: p('/eventi') },
 ];
 
-// navItems per il mobile menu (invariato)
+// navItems per il mobile menu — children con img/desc/num per il look scenico
 const navItems = [
   { label: t.nav.adulti,  href: null, secondary: false, children: adultiItems },
   { label: t.nav.junior,  href: null, secondary: false, children: juniorItems },
-  ...secondaryItems.map(i => ({ ...i, secondary: true, children: [] })),
+  ...secondaryItems.map(i => ({ ...i, secondary: true, children: [] as typeof adultiItems })),
 ];
 ---
 
@@ -220,7 +220,16 @@ const navItems = [
             </button>
             <ul class="g-menu__sub">
               {item.children.map((child) => (
-                <li><a class="g-menu__sub-link" href={child.href}>{child.label}</a></li>
+                <li>
+                  <a class="g-menu__sub-link" href={child.href}>
+                    <span class="g-menu__sub-num">{child.num}</span>
+                    <div class="g-menu__sub-body">
+                      <strong class="g-menu__sub-name">{child.label}</strong>
+                      <span class="g-menu__sub-desc">{child.desc}</span>
+                    </div>
+                    <div class="g-menu__sub-thumb" style={`background-image: url('${child.img}')`}></div>
+                  </a>
+                </li>
               ))}
             </ul>
           </li>
@@ -233,8 +242,8 @@ const navItems = [
     </ul>
 
     <div class="g-menu__ctas">
-      <button class="g-menu__cta-btn g-menu__cta-btn--red btn btn-red" data-open-modal="modal-contatti">{t.nav.contattaci}</button>
-      <button class="g-menu__cta-btn g-menu__cta-btn--outline" data-open-modal="modal-contatti">{t.nav.contattaci}</button>
+      <a class="g-menu__cta-btn g-menu__cta-btn--red btn btn-red" href="#">INIZIA ORA</a>
+      <button class="g-menu__cta-btn g-menu__cta-btn--outline" data-open-modal="modal-contatti">RICHIEDI LA PROVA</button>
     </div>
 
     <div class="g-menu__footer">
@@ -295,7 +304,7 @@ const navItems = [
   .navbar__link,
   .navbar__link--btn {
     font-family: var(--font-display);
-    font-size: clamp(11px, 0.88vw, 13px);
+    font-size: clamp(14px, 1.14vw, 17px);
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -343,7 +352,7 @@ const navItems = [
   .navbar__link--secondary {
     font-weight: 600;
     color: var(--color-text-light);
-    font-size: clamp(11px, 0.78vw, 12px);
+    font-size: clamp(14px, 1.02vw, 16px);
     letter-spacing: 0.1em;
   }
   .navbar__link--secondary:hover { color: var(--color-accent); }
@@ -655,18 +664,73 @@ const navItems = [
 
   .g-menu__sub {
     list-style: none; max-height: 0; overflow: hidden;
-    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  .g-menu__sub.is-expanded { max-height: 300px; }
+  .g-menu__sub.is-expanded { max-height: 600px; }
 
+  /* Sub-link scenico: num + nome+desc + thumbnail */
   .g-menu__sub-link {
-    font-family: var(--font-body);
-    font-size: clamp(16px, 2.5vw, 1.2rem);
-    font-weight: 300; color: rgba(255,255,255,0.5);
-    text-decoration: none; display: block;
-    padding: 0.65vh 0; transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.25vh 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.15s;
+    position: relative;
+    overflow: hidden;
   }
-  .g-menu__sub-link:hover { color: rgba(255,255,255,0.9); }
+  .g-menu__sub-link:last-child { border-bottom: none; }
+
+  .g-menu__sub-num {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--color-accent);
+    flex-shrink: 0; width: 1.4rem;
+    opacity: 0.7;
+  }
+
+  .g-menu__sub-body {
+    flex: 1; min-width: 0;
+  }
+
+  .g-menu__sub-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(18px, 4.5vw, 1.7rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: -0.01em; line-height: 1;
+    color: rgba(255,255,255,0.75);
+    transition: color 0.18s;
+    white-space: nowrap;
+  }
+
+  .g-menu__sub-desc {
+    display: block;
+    font-family: var(--font-body);
+    font-size: clamp(11px, 2.5vw, 13px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.3);
+    margin-top: 0.2rem;
+    transition: color 0.18s;
+    line-height: 1.35;
+  }
+
+  .g-menu__sub-thumb {
+    width: 56px; height: 46px;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.35;
+    border-radius: 2px;
+    transition: opacity 0.25s;
+  }
+
+  .g-menu__sub-link:hover .g-menu__sub-name { color: #fff; }
+  .g-menu__sub-link:hover .g-menu__sub-desc { color: rgba(255,255,255,0.55); }
+  .g-menu__sub-link:hover .g-menu__sub-thumb { opacity: 0.7; }
 
   /* Voci secondarie nel menu mobile */
   .g-menu__item--secondary { border-bottom: none; }

@@ -23,104 +23,308 @@ const reasons = [
 ];
 ---
 
-<section class="reassurance">
-  <div class="reassurance__inner">
-    <span class="eyebrow">Perché sceglierci</span>
-    <h2 class="reassurance__title">
-      Quattro buone ragioni<br><em>per varcare il cancello.</em>
-    </h2>
+<section class="why">
+  <div class="why__inner">
 
-    <ul class="reassurance__list">
-      {reasons.map((r) => (
-        <li class="reassurance__item">
-          <span class="reassurance__num">{r.number}</span>
-          <div class="reassurance__body">
-            <h3 class="reassurance__item-title">{r.title}</h3>
-            <p class="reassurance__text">{r.text}</p>
-          </div>
-        </li>
+    <!-- Sidebar: lista tab con progress bar -->
+    <div class="why__sidebar">
+      <div class="why__head">
+        <span class="eyebrow eyebrow--light">Perché sceglierci</span>
+        <h2 class="why__heading">Quattro buone<br>ragioni.</h2>
+      </div>
+
+      <ul class="why__tabs" role="tablist">
+        {reasons.map((r, i) => (
+          <li class={`why__tab${i === 0 ? ' is-active' : ''}`} role="presentation">
+            <button
+              class="why__tab-btn"
+              role="tab"
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-controls={`why-panel-${i}`}
+              data-tab={i}
+            >
+              <span class="why__tab-num">{r.number}</span>
+              <span class="why__tab-title">{r.title}</span>
+              <span class="why__tab-bar" aria-hidden="true"></span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Display panel: uno alla volta -->
+    <div class="why__stage">
+      {reasons.map((r, i) => (
+        <div
+          class={`why__panel${i === 0 ? ' is-active' : ''}`}
+          id={`why-panel-${i}`}
+          role="tabpanel"
+          aria-hidden={i === 0 ? 'false' : 'true'}
+        >
+          <span class="why__ghost" aria-hidden="true">{r.number}</span>
+          <h3 class="why__panel-title">{r.title}</h3>
+          <p class="why__panel-text">{r.text}</p>
+        </div>
       ))}
-    </ul>
+    </div>
+
   </div>
 </section>
 
 <style>
-  .reassurance {
-    padding: 7vh var(--pad-x);
+  /* ── Sezione ── */
+  .why {
+    background: #0f1013;
+    color: #fff;
+    overflow: hidden;
   }
 
-  .reassurance__inner {
+  .why__inner {
+    display: grid;
+    grid-template-columns: 44% 56%;
     max-width: var(--max-width);
     margin: 0 auto;
+    min-height: 480px;
   }
 
-  .reassurance__title {
+  /* ── Sidebar ── */
+  .why__sidebar {
+    padding: 6vh var(--pad-x);
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+    justify-content: center;
+  }
+
+  .why__heading {
     font-family: var(--font-display);
-    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-size: clamp(2rem, 3.5vw, 3.8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    color: #fff;
+    margin-top: 0.6rem;
+  }
+
+  .why__tabs { list-style: none; }
+
+  .why__tab {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .why__tab-btn {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 1.5vh 0;
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .why__tab-num {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--color-accent);
+    opacity: 0.4;
+    grid-row: 1;
+    grid-column: 1;
+    padding-top: 0.15em;
+    transition: opacity 0.3s;
+  }
+
+  .why__tab-title {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.4vw, 1.55rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
-    line-height: 0.95;
-    margin-bottom: 4vh;
+    line-height: 1.1;
+    color: rgba(255, 255, 255, 0.22);
+    grid-row: 1;
+    grid-column: 2;
+    transition: color 0.35s ease;
   }
 
-  .reassurance__title em {
-    color: var(--color-accent);
-    font-style: normal;
+  /* Progress bar */
+  .why__tab-bar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 2px;
+    background: var(--color-accent);
+    width: 0%;
+    display: block;
+    margin-top: 1vh;
+    opacity: 0;
+    transition: opacity 0.2s;
   }
 
-  .reassurance__list {
-    list-style: none;
-    border: 1px solid var(--color-border);
+  /* Stato attivo */
+  .why__tab.is-active .why__tab-num   { opacity: 1; }
+  .why__tab.is-active .why__tab-title { color: #ffffff; }
+  .why__tab.is-active .why__tab-bar   {
+    opacity: 1;
+    animation: why-bar var(--why-duration, 4500ms) linear forwards;
   }
 
-  .reassurance__item {
-    display: flex;
-    gap: 2rem;
-    align-items: baseline;
-    padding: 24px var(--pad-x);
-    border-bottom: 1px solid var(--color-border);
-    transition: background 0.15s;
+  @keyframes why-bar {
+    from { width: 0%; }
+    to   { width: 100%; }
   }
 
-  .reassurance__item:last-child { border-bottom: none; }
-  .reassurance__item:hover { background: var(--color-off-white); }
+  /* ── Stage / pannelli ── */
+  .why__stage {
+    display: grid;
+    padding: 0 var(--pad-x);
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
 
-  .reassurance__num {
+  .why__panel {
+    grid-area: 1 / 1;
+    padding: 6vh 0;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s cubic-bezier(0.22, 0.68, 0, 1.1),
+                transform 0.55s cubic-bezier(0.22, 0.68, 0, 1.1);
+    pointer-events: none;
+    position: relative;
+  }
+
+  .why__panel.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+
+  /* Numero fantasma in background */
+  .why__ghost {
+    position: absolute;
+    top: 50%;
+    right: -0.05em;
+    transform: translateY(-50%);
     font-family: var(--font-display);
-    font-size: clamp(2rem, 3vw, 3.2rem);
+    font-size: clamp(8rem, 18vw, 22rem);
     font-weight: 800;
-    color: var(--color-accent);
-    min-width: 2.5ch;
     line-height: 1;
-    flex-shrink: 0;
+    color: rgba(255, 255, 255, 0.03);
+    letter-spacing: -0.04em;
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  .reassurance__body {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .reassurance__item-title {
+  .why__panel-title {
     font-family: var(--font-display);
-    font-size: clamp(1.1rem, 1.5vw, 1.5rem);
-    font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 6rem);
+    font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    line-height: 1.2;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    color: #fff;
+    max-width: 14ch;
+    margin-bottom: 2.5vh;
+    position: relative;
+    z-index: 1;
   }
 
-  .reassurance__text {
+  .why__panel-text {
     font-family: var(--font-body);
-    font-size: clamp(13px, 0.98vw, 16px);
+    font-size: clamp(14px, 1.1vw, 18px);
     font-weight: 300;
-    line-height: 1.65;
-    color: var(--color-text-light);
-    max-width: 80ch;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 42ch;
+    position: relative;
+    z-index: 1;
   }
 
-  @media (max-width: 600px) {
-    .reassurance__item { flex-direction: column; gap: 0.5rem; padding: 20px; }
+  /* ── Mobile ── */
+  @media (max-width: 900px) {
+    .why__inner {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .why__sidebar {
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 3vh;
+      gap: 2.5vh;
+    }
+
+    .why__stage {
+      padding: 0 var(--pad-x);
+    }
+
+    .why__panel { padding: 4vh 0; }
+
+    .why__panel-title { font-size: clamp(1.8rem, 8vw, 3rem); }
+
+    .why__ghost { font-size: clamp(5rem, 22vw, 10rem); }
   }
 </style>
+
+<script>
+  const DURATION = 4500;
+
+  const tabs   = Array.from(document.querySelectorAll<HTMLElement>('.why__tab'));
+  const panels = Array.from(document.querySelectorAll<HTMLElement>('.why__panel'));
+  let current  = 0;
+  let timer: ReturnType<typeof setInterval>;
+
+  function activate(idx: number) {
+    // disattiva corrente
+    tabs[current].classList.remove('is-active');
+    tabs[current].querySelector<HTMLButtonElement>('.why__tab-btn')?.setAttribute('aria-selected', 'false');
+    panels[current].classList.remove('is-active');
+    panels[current].setAttribute('aria-hidden', 'true');
+
+    current = ((idx % tabs.length) + tabs.length) % tabs.length;
+
+    // attiva nuovo
+    tabs[current].classList.add('is-active');
+    tabs[current].querySelector<HTMLButtonElement>('.why__tab-btn')?.setAttribute('aria-selected', 'true');
+    panels[current].classList.add('is-active');
+    panels[current].setAttribute('aria-hidden', 'false');
+
+    // riavvia animazione barra
+    const bar = tabs[current].querySelector<HTMLElement>('.why__tab-bar');
+    if (bar) {
+      bar.style.animation = 'none';
+      void bar.offsetWidth; // reflow
+      bar.style.animation = '';
+    }
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => activate(current + 1), DURATION);
+  }
+
+  // Click sui tab
+  tabs.forEach((tab, i) => {
+    tab.querySelector('.why__tab-btn')?.addEventListener('click', () => {
+      activate(i);
+      startTimer();
+    });
+  });
+
+  // Pausa su hover
+  const section = document.querySelector<HTMLElement>('.why');
+  section?.addEventListener('mouseenter', () => clearInterval(timer));
+  section?.addEventListener('mouseleave', startTimer);
+
+  // Avvio
+  startTimer();
+</script>
