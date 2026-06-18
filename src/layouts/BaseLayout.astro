@@ -64,49 +64,69 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
 
     <script>
       // ── Scroll animations ──────────────────────────────────────────────────
-      const observer = new IntersectionObserver((entries) => {
+      const NOT_HERO = 'section:not(.hero)';
+
+      const obs = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement;
-            const delay = el.dataset.animDelay ? parseInt(el.dataset.animDelay) : 0;
-            setTimeout(() => el.classList.add('is-visible'), delay);
-            observer.unobserve(el);
-          }
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          const delay = el.dataset.animDelay ? parseInt(el.dataset.animDelay, 10) : 0;
+          setTimeout(() => el.classList.add('is-visible'), delay);
+          obs.unobserve(el);
         });
-      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-      // Auto-applica data-anim agli elementi chiave fuori dall'hero
-      document.querySelectorAll<HTMLElement>(
-        'section:not(.hero) .eyebrow, ' +
-        'section:not(.hero) h2, ' +
-        'section:not(.hero) h3, ' +
-        '.manifesto__text, ' +
-        '.manifesto__values, ' +
-        '.panel__head, ' +
-        '.torneo__content, ' +
-        '.torneo__stats, ' +
-        '.eventi-home__head, ' +
-        '.conversion__card, ' +
-        '.info__grid, ' +
-        '.info__actions'
-      ).forEach((el, i) => {
-        if (!el.hasAttribute('data-anim')) {
-          el.setAttribute('data-anim', 'true');
-        }
-        // stagger leggero tra elementi nello stesso parent
-        const siblings = el.parentElement
-          ? Array.from(el.parentElement.querySelectorAll('[data-anim]'))
-          : [];
-        const idx = siblings.indexOf(el);
-        if (idx > 0 && !el.dataset.animDelay) {
-          el.dataset.animDelay = String(idx * 80);
-        }
-        observer.observe(el);
-      });
+      /**
+       * Assegna data-anim e registra l'elemento.
+       * type:  "reveal" | "from-left" | "scale" | "true" (slide-up)
+       * group: se true, calcola lo stagger tra fratelli con data-anim
+       */
+      function register(
+        selector: string,
+        type: string,
+        baseDelay = 0,
+        stagger = 0
+      ) {
+        document.querySelectorAll<HTMLElement>(selector).forEach((el, i) => {
+          if (el.closest('.hero')) return;           // mai sull'hero
+          if (!el.hasAttribute('data-anim')) el.setAttribute('data-anim', type);
+          if (!el.dataset.animDelay && (baseDelay + stagger * i) > 0) {
+            el.dataset.animDelay = String(baseDelay + stagger * i);
+          }
+          obs.observe(el);
+        });
+      }
 
-      // Osserva anche gli elementi con data-anim già presenti nel markup
+      // ── Titoli: wipe sinistra→destra ──
+      register(`${NOT_HERO} h2`,             'reveal', 0,   0);
+      register(`${NOT_HERO} h3`,             'reveal', 60,  0);
+
+      // ── Eyebrow: slide da sinistra (anticipa il titolo) ──
+      register(`${NOT_HERO} .eyebrow`,       'from-left', 0, 0);
+
+      // ── Testi / body copy ──
+      register('.manifesto__body p',         'from-left', 120, 100);
+      register('.manifesto__quote',          'reveal',    180, 0);
+      register('.torneo__desc',              'from-left', 100, 0);
+      register('.torneo__cta',               'from-left', 200, 0);
+
+      // ── Stats Torneo: scale-in in sequenza ──
+      register('.torneo__stat',              'scale',  150, 90);
+
+      // ── Sezioni card/blocchi: slide-up con stagger ──
+      register('.conversion__card',          'true',   0,   120);
+      register('.info__item',                'true',   0,    80);
+      register('.info__actions',             'true',   240,   0);
+      register('.reassurance__item',         'true',   0,    90);
+      register('.eventi-home__head',         'from-left', 0, 0);
+      register('.ev-item',                   'true',   0,   100);
+
+      // ── Mappa ──
+      register('.info__map',                 'scale',  80,   0);
+
+      // ── Elementi già marcati nel markup ──
       document.querySelectorAll<HTMLElement>('[data-anim]').forEach((el) => {
-        observer.observe(el);
+        if (!el.classList.contains('is-visible')) obs.observe(el);
       });
     </script>
   </body>

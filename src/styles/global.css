@@ -173,33 +173,90 @@ body.menu-open { overflow: hidden; }
 }
 
 /* ---------- Scroll animations ----------
-   Uso: aggiungere data-anim o data-anim="fade" all'elemento.
-   JS in BaseLayout aggiunge .is-visible quando entra nel viewport.
+   Tipi disponibili via data-anim="<tipo>":
+   • (default / "true") → slide-up + fade
+   • "reveal"           → clip-path wipe sinistra→destra (titoli)
+   • "from-left"        → slide orizzontale + fade (paragrafi, eyebrow)
+   • "scale"            → scale-in + fade (immagini, card foto)
+   • "fade"             → solo opacity
+   JS in BaseLayout assegna il tipo corretto e osserva ogni elemento.
    Usa data-anim-delay="200" per ritardare (ms).
 */
+
+/* Base — slide-up + fade */
 [data-anim] {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.65s cubic-bezier(.22,.68,0,1.2),
-              transform 0.65s cubic-bezier(.22,.68,0,1.2);
+  transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(.22,.68,0,1.15),
+              transform 0.7s cubic-bezier(.22,.68,0,1.15);
   will-change: opacity, transform;
 }
-
-[data-anim="fade"] {
-  transform: none;
-  transition: opacity 0.7s ease;
-}
-
 [data-anim].is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
+/* Wipe sinistra→destra — per h2, h3 */
+[data-anim="reveal"] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 102% 0 0);
+  transition: clip-path 0.85s cubic-bezier(0.77, 0, 0.175, 1);
+  will-change: clip-path;
+}
+[data-anim="reveal"].is-visible {
+  clip-path: inset(0 0% 0 0);
+  opacity: 1;
+  transform: none;
+}
+
+/* Slide da sinistra — per eyebrow, paragrafi */
+[data-anim="from-left"] {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity 0.72s ease,
+              transform 0.72s cubic-bezier(0.22, 0.68, 0, 1.1);
+  will-change: opacity, transform;
+}
+[data-anim="from-left"].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale-in — per card foto, stats */
+[data-anim="scale"] {
+  opacity: 0;
+  transform: scale(0.93);
+  transition: opacity 0.75s ease,
+              transform 0.75s cubic-bezier(0.22, 0.68, 0, 1.1);
+  will-change: opacity, transform;
+}
+[data-anim="scale"].is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Solo fade */
+[data-anim="fade"] {
+  opacity: 0;
+  transform: none;
+  transition: opacity 0.75s ease;
+}
+[data-anim="fade"].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 /* Rispetta le preferenze di accessibilità */
 @media (prefers-reduced-motion: reduce) {
-  [data-anim] {
+  [data-anim],
+  [data-anim="reveal"],
+  [data-anim="from-left"],
+  [data-anim="scale"],
+  [data-anim="fade"] {
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
+    clip-path: none !important;
   }
 }
