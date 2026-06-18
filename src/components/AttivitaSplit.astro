@@ -168,7 +168,7 @@ const junior = [
     z-index: 1;
     margin-bottom: 3vh;
     padding-bottom: 2.5vh;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .panel__title {
@@ -184,9 +184,9 @@ const junior = [
 
   .panel__sub {
     font-family: var(--font-body);
-    font-size: clamp(11px, 0.85vw, 13px);
+    font-size: clamp(12px, 0.9vw, 14px);
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.32);
+    color: rgba(255, 255, 255, 0.5);
     letter-spacing: 0.06em;
     text-transform: uppercase;
   }
@@ -201,8 +201,8 @@ const junior = [
     position: relative;
     display: block;
     overflow: hidden;
-    padding: 1.8rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2.2rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     text-decoration: none;
     color: inherit;
   }
@@ -259,12 +259,12 @@ const junior = [
 
   .act-row__num {
     font-family: var(--font-display);
-    font-size: clamp(10px, 0.85vw, 12px);
+    font-size: clamp(11px, 0.9vw, 13px);
     font-weight: 700;
     letter-spacing: 0.1em;
     color: var(--color-accent);
     flex-shrink: 0;
-    width: 1.6rem;
+    width: 1.8rem;
   }
 
   .act-row__content {
@@ -275,7 +275,7 @@ const junior = [
   .act-row__name {
     display: block;
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 2.6vw, 2.8rem);
+    font-size: clamp(2rem, 3.8vw, 4.2rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
@@ -285,31 +285,30 @@ const junior = [
 
   .act-row__desc {
     font-family: var(--font-body);
-    font-size: clamp(12px, 0.85vw, 14px);
+    font-size: clamp(13px, 1vw, 16px);
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.65);
     line-height: 1.5;
-    margin-top: 0.35rem;
+    margin-top: 0.5rem;
     transition: color 0.25s;
   }
 
   .act-row:hover .act-row__desc {
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.85);
   }
 
   .act-row__arrow {
     font-family: var(--font-display);
-    font-size: clamp(1.1rem, 1.8vw, 1.8rem);
+    font-size: clamp(1.4rem, 2.2vw, 2.2rem);
     color: var(--color-accent);
     flex-shrink: 0;
-    opacity: 0;
-    transform: translateX(-8px);
+    opacity: 0.45;
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
   .act-row:hover .act-row__arrow {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(6px);
   }
 
   /* ── Mobile ── */
