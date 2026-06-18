@@ -182,7 +182,7 @@ const navItems = [
     <div class="navbar__right">
       <button class="navbar__cta btn btn-red" data-open-modal="modal-contatti">{t.nav.contattaci}</button>
       <a class="navbar__mobile-contact" data-open-modal="modal-contatti">{t.nav.contattaci}</a>
-      <button class="navbar__mobile-accedi" id="btn-accedi" type="button">ACCEDI</button>
+      <button class="navbar__accedi" id="btn-accedi" type="button">ACCEDI</button>
 
       <div class="lang-switcher" aria-label="Seleziona lingua / Select language">
         <a class={`lang-switcher__link${lang === 'it' ? ' is-active' : ''}`} href={itPath} hreflang="it" aria-label="Italiano">IT</a>
@@ -590,7 +590,24 @@ const navItems = [
   .lang-switcher__sep { font-size: 10px; color: var(--color-border); }
 
   .navbar__mobile-contact { display: none; }
-  .navbar__mobile-accedi  { display: none; }
+
+  /* ACCEDI — visibile sempre, stile outline sottile */
+  .navbar__accedi {
+    font-family: var(--font-display);
+    font-size: clamp(12px, 0.9vw, 13px); font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-text);
+    background: none;
+    border: 1.5px solid var(--color-border);
+    padding: 6px 14px; white-space: nowrap;
+    cursor: pointer;
+    transition: border-color 0.18s, color 0.18s;
+    display: inline-flex; align-items: center;
+  }
+  .navbar__accedi:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
 
   /* ── Burger ── */
   .navbar__burger {
@@ -638,22 +655,6 @@ const navItems = [
       border-color: var(--color-accent-dark);
     }
 
-    .navbar__mobile-accedi {
-      display: inline-flex; align-items: center;
-      font-family: var(--font-display);
-      font-size: 13px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--color-text);
-      background: none;
-      border: 1.5px solid var(--color-border);
-      padding: 6px 14px; white-space: nowrap;
-      transition: border-color 0.18s, color 0.18s;
-      cursor: pointer;
-    }
-    .navbar__mobile-accedi:hover {
-      color: var(--color-accent);
-      border-color: var(--color-accent);
-    }
   }
 
   /* ════════════════════════════════════════════
