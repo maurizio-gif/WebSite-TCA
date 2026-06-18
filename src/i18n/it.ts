@@ -3,7 +3,7 @@ export const it = {
     adulti:         'Adulti',
     junior:         'Junior',
     torneoAvvenire: 'Torneo Avvenire',
-    storia:         'Storia',
+    storia:         'La Nostra Storia',
     eventi:         'Eventi',
     tennis:         'Tennis',
     padel:          'Padel',

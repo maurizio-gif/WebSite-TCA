@@ -5,7 +5,7 @@ export const en: UI = {
     adulti:         'Adults',
     junior:         'Juniors',
     torneoAvvenire: 'Avvenire Tournament',
-    storia:         'History',
+    storia:         'Our History',
     eventi:         'Events',
     tennis:         'Tennis',
     padel:          'Padel',
