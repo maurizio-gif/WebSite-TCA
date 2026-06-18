@@ -29,7 +29,7 @@ const reasons = [
     <!-- Sidebar: lista tab con progress bar -->
     <div class="why__sidebar">
       <div class="why__head">
-        <span class="eyebrow eyebrow--light">Perché sceglierci</span>
+        <span class="eyebrow">Perché sceglierci</span>
         <h2 class="why__heading">Quattro buone<br>ragioni.</h2>
       </div>
 
@@ -74,9 +74,11 @@ const reasons = [
 <style>
   /* ── Sezione ── */
   .why {
-    background: #0f1013;
-    color: #fff;
+    background: var(--color-bg);
+    color: var(--color-text);
     overflow: hidden;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .why__inner {
@@ -90,7 +92,7 @@ const reasons = [
   /* ── Sidebar ── */
   .why__sidebar {
     padding: 6vh var(--pad-x);
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    border-right: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
     gap: 4vh;
@@ -104,14 +106,14 @@ const reasons = [
     text-transform: uppercase;
     letter-spacing: -0.02em;
     line-height: 0.95;
-    color: #fff;
+    color: var(--color-text);
     margin-top: 0.6rem;
   }
 
   .why__tabs { list-style: none; }
 
   .why__tab {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .why__tab-btn {
@@ -149,7 +151,7 @@ const reasons = [
     text-transform: uppercase;
     letter-spacing: -0.01em;
     line-height: 1.1;
-    color: rgba(255, 255, 255, 0.22);
+    color: rgba(0, 0, 0, 0.2);
     grid-row: 1;
     grid-column: 2;
     transition: color 0.35s ease;
@@ -170,7 +172,7 @@ const reasons = [
 
   /* Stato attivo */
   .why__tab.is-active .why__tab-num   { opacity: 1; }
-  .why__tab.is-active .why__tab-title { color: #ffffff; }
+  .why__tab.is-active .why__tab-title { color: var(--color-text); }
   .why__tab.is-active .why__tab-bar   {
     opacity: 1;
     animation: why-bar var(--why-duration, 4500ms) linear forwards;
@@ -188,6 +190,7 @@ const reasons = [
     align-items: center;
     position: relative;
     overflow: hidden;
+    background: var(--color-off-white);
   }
 
   .why__panel {
@@ -217,7 +220,7 @@ const reasons = [
     font-size: clamp(8rem, 18vw, 22rem);
     font-weight: 800;
     line-height: 1;
-    color: rgba(255, 255, 255, 0.03);
+    color: rgba(0, 0, 0, 0.04);
     letter-spacing: -0.04em;
     user-select: none;
     pointer-events: none;
@@ -231,7 +234,7 @@ const reasons = [
     text-transform: uppercase;
     letter-spacing: -0.02em;
     line-height: 0.9;
-    color: #fff;
+    color: var(--color-text);
     max-width: 14ch;
     margin-bottom: 2.5vh;
     position: relative;
@@ -243,7 +246,7 @@ const reasons = [
     font-size: clamp(14px, 1.1vw, 18px);
     font-weight: 300;
     line-height: 1.75;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--color-text-light);
     max-width: 42ch;
     position: relative;
     z-index: 1;
@@ -258,7 +261,7 @@ const reasons = [
 
     .why__sidebar {
       border-right: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid var(--color-border);
       padding-bottom: 3vh;
       gap: 2.5vh;
     }
