@@ -8,8 +8,10 @@ fonte di verità per stack, flusso di lavoro, struttura e regole.
 ## Stack
 - **Astro** — framework, output statico
 - **CSS puro / CSS custom properties** — nessun framework CSS, nessuna libreria UI
+- **TinaCMS** — CMS headless (scaffold pronto; attivare con credenziali TinaCloud)
 - **GitHub** — versioning (`origin` → github.com/maurizio-gif/WebSite-TCA.git)
-- **Netlify** — deploy (build: `npm run build`, publish: `dist`)
+- **Netlify** — deploy produzione (build: `npm run build`, publish: `dist`)
+- **GitHub Pages** — deploy preview (`maurizio-gif.github.io/WebSite-TCA/`)
 
 ---
 
@@ -24,19 +26,26 @@ fonte di verità per stack, flusso di lavoro, struttura e regole.
 
 ## Struttura directory
 ```
-src/components/   → componenti riutilizzabili (PascalCase)
-src/layouts/      → layout di pagina (BaseLayout, ecc.)
-src/pages/        → pagine principali (routing file-based)
+src/components/        → componenti riutilizzabili (PascalCase)
+src/layouts/           → layout di pagina (BaseLayout, ecc.)
+src/pages/             → pagine principali (routing file-based)
+src/content/
+  config.ts            → schema Astro Content Collections
+  pagine/              → un .md per pagina (frontmatter + body)
 src/assets/
   images/
-    hero/         → foto hero (full-screen, con overlay)
-    disciplines/  → foto tennis, padel, famiglia, ecc.
-    torneo/       → foto Torneo Avvenire
-    club/         → foto generiche struttura
+    hero/              → foto hero (full-screen, con overlay)
+    disciplines/       → foto tennis, padel, famiglia, ecc.
+    torneo/            → foto Torneo Avvenire
+    club/              → foto generiche struttura
   logos/
-    partners/     → loghi sponsor e partner
-src/styles/       → CSS globale e variabili CSS custom
-public/           → file statici (favicon, ecc.)
+    partners/          → loghi sponsor e partner
+src/styles/            → CSS globale e variabili CSS custom
+public/                → file statici (favicon, immagini CMS, admin/)
+tina/
+  config.ts            → schema TinaCMS (mappa src/content/pagine/)
+docs/                  → brief, note e documentazione interna
+.github/workflows/     → CI/CD GitHub Pages
 ```
 
 ---

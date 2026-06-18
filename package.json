@@ -5,12 +5,18 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "tina:dev": "tinacms dev -c \"astro dev\"",
     "start": "astro dev",
     "build": "astro build",
+    "tina:build": "tinacms build && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.0.0"
+    "astro": "^5.0.0",
+    "tinacms": "^2.0.0"
+  },
+  "devDependencies": {
+    "@tinacms/cli": "^1.6.0"
   }
 }
