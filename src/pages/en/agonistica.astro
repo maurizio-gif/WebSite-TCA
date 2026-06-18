@@ -1,0 +1,28 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import LeadFormPlaceholder from "../../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../../components/InfoPratiche.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Competitive Tennis | Tennis Club Ambrosiano Milan"
+  description="Competitive tennis programme at Tennis Club Ambrosiano. Training for junior players aiming at official FIT tournaments and national rankings."
+>
+  <PageHero
+    eyebrow="Juniors · Competitive"
+    title="Competitive"
+    titleAccent="Tennis"
+    sub="A structured programme for young players aiming high. Technical, tactical and physical training tailored to competition requirements."
+    image="/ajADmY1P9HI4UhI2_235804_lifestyle_tennis_junior_coco_range_action-6-.avif"
+    imageAlt="Competitive junior tennis at Tennis Club Ambrosiano"
+    ctaLabel="Request Information"
+  />
+  {/* TODO: translate content sections to English */}
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>

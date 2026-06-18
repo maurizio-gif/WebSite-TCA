@@ -1,0 +1,28 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import LeadFormPlaceholder from "../../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../../components/InfoPratiche.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Tennis | Tennis Club Ambrosiano Milan"
+  description="16 tennis courts, qualified FIT coaches, adult courses for all levels. Discover tennis at Tennis Club Ambrosiano in Milan."
+>
+  <PageHero
+    eyebrow="Adults · Tennis"
+    title="Tennis"
+    titleAccent="at TCA"
+    sub="Sixteen courts, qualified FIT coaches and a tradition that started in 1965. Whether you want to improve your game or start from scratch, we have the right course for you."
+    image="/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif"
+    imageAlt="Tennis courts at Tennis Club Ambrosiano"
+    ctaLabel="Request Information"
+  />
+  {/* TODO: translate content sections to English */}
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>

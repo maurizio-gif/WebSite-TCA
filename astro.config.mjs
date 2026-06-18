@@ -8,4 +8,11 @@ export default defineConfig({
     ? 'https://maurizio-gif.github.io'
     : 'https://www.tcambrosiano.com',
   base: isGitHubPages ? '/WebSite-TCA' : undefined,
+  i18n: {
+    defaultLocale: 'it',
+    locales: ['it', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
 });

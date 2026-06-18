@@ -1,0 +1,57 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import LeadFormPlaceholder from "../../components/LeadFormPlaceholder.astro";
+import InfoPratiche from "../../components/InfoPratiche.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Contact | Tennis Club Ambrosiano Milan"
+  description="Contact Tennis Club Ambrosiano: address, phone, email and how to find us. Via Feltre 33, Milan — Udine metro station (M2)."
+>
+  <div class="page-header">
+    <div class="page-header__inner">
+      <span class="eyebrow">We're in Milan</span>
+      <h1 class="page-header__title">Contact</h1>
+      <p class="page-header__sub">Come and visit us, write or call. We're here to answer you.</p>
+    </div>
+  </div>
+
+  <LeadFormPlaceholder />
+  <InfoPratiche />
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: calc(var(--header-h) + 6vh) var(--pad-x) 5vh;
+    background: var(--color-off-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-header__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .page-header__title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 7rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
+    margin-bottom: 1.5vh;
+  }
+
+  .page-header__sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 18px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    max-width: 55ch;
+  }
+</style>

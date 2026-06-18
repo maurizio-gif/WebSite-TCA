@@ -1,0 +1,25 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import LeadFormPlaceholder from "../../components/LeadFormPlaceholder.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Events | Tennis Club Ambrosiano Milan"
+  description="Events at Tennis Club Ambrosiano: internal tournaments, social evenings, aperitivo nights, exhibitions and everything that brings the TCA community together throughout the year."
+>
+  <PageHero
+    eyebrow="Community · Events"
+    title="Events"
+    titleAccent="& Community"
+    sub="Internal tournaments, social evenings, aperitivo nights and much more. Life at TCA goes well beyond the court — it's a community that comes together all year round."
+    image="/2515b443-fe23-4723-a3cd-450d4dcf2114_TCA+Home+4.avif"
+    imageAlt="Events at Tennis Club Ambrosiano"
+  />
+  {/* TODO: translate content sections to English */}
+  <LeadFormPlaceholder />
+</BaseLayout>

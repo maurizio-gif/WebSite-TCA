@@ -1,4 +1,13 @@
 ---
+import { useTranslations, getLocalePath, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'it' } = Astro.props;
+const t = useTranslations(lang);
+const p = (path: string) => getLocalePath(lang, path);
 ---
 
 <section class="hero">
@@ -15,15 +24,15 @@
   <div class="hero__grad"></div>
 
   <div class="hero__content">
-    <span class="eyebrow eyebrow--light">Dal 1965, il tennis a Milano</span>
+    <span class="eyebrow eyebrow--light">{t.hero.eyebrow}</span>
     <h1 class="hero__title">Tennis Club<br><em>Ambrosiano</em></h1>
     <p class="hero__sub">Tennis, Padel, Training and Community</p>
 
     <div class="hero__actions">
       {/* TODO: collegare link esterno PerfectGym */}
-      <a class="btn btn-red" href="#">Diventa Socio</a>
+      <a class="btn btn-red" href="#">{t.hero.cta1}</a>
       {/* TODO: aprire modal form lead */}
-      <a class="btn btn-outline" href="#lead">Richiedi informazioni</a>
+      <a class="btn btn-outline" href={`${p('/')}#lead`}>{t.hero.cta2}</a>
     </div>
   </div>
 </section>

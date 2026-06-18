@@ -1,0 +1,16 @@
+---
+// EN stub — translate content when copy is ready
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Hero from "../../components/Hero.astro";
+
+const lang = 'en' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title="Tennis Club Ambrosiano Milan | Tennis, Padel & Athletic Training"
+  description="Since 1965, Milan's home of tennis. 16 courts, tennis school, padel, athletic training and community events. Close to Udine metro station."
+>
+  <Hero lang={lang} />
+  {/* TODO: translate home sections to English */}
+</BaseLayout>

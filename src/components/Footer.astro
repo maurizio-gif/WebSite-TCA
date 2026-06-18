@@ -1,29 +1,38 @@
 ---
+import { useTranslations, getLocalePath, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'it' } = Astro.props;
+const t = useTranslations(lang);
+const p = (path: string) => getLocalePath(lang, path);
+
 const columns = [
   {
-    heading: "Adulti",
+    heading: t.footer.adulti,
     links: [
-      { label: "Tennis",                href: "/tennis" },
-      { label: "Padel e Pickleball",    href: "/padel" },
-      { label: "Preparazione Atletica", href: "/preparazione-atletica" },
+      { label: t.nav.tennis,       href: p('/tennis') },
+      { label: t.nav.padel,        href: p('/padel') },
+      { label: t.nav.prepAtletica, href: p('/preparazione-atletica') },
     ],
   },
   {
-    heading: "Junior",
+    heading: t.footer.junior,
     links: [
-      { label: "Scuola Tennis",  href: "/scuola-tennis" },
-      { label: "Summer Camps",   href: "/summer-camps" },
-      { label: "Agonistica",     href: "/agonistica" },
+      { label: t.nav.scuolaTennis, href: p('/scuola-tennis') },
+      { label: t.nav.summerCamps,  href: p('/summer-camps') },
+      { label: t.nav.agonistica,   href: p('/agonistica') },
     ],
   },
   {
-    heading: "Il Club",
+    heading: t.footer.ilClub,
     links: [
-      { label: "Torneo Avvenire", href: "/torneo-avvenire" },
-      { label: "Storia",          href: "/storia" },
-      { label: "Eventi",          href: "/eventi" },
-      // TODO: collegare link esterno PerfectGym
-      { label: "Diventa Socio",   href: "#" },
+      { label: t.nav.torneoAvvenire, href: p('/torneo-avvenire') },
+      { label: t.nav.storia,         href: p('/storia') },
+      { label: t.nav.eventi,         href: p('/eventi') },
+      { label: t.footer.diventaSocio, href: '#' }, // TODO: PerfectGym
     ],
   },
 ];
@@ -39,7 +48,7 @@ const columns = [
         width="100"
         height="68"
       />
-      <p class="footer__tagline">Dal 1965, il tennis a Milano.</p>
+      <p class="footer__tagline">{t.footer.tagline}</p>
     </div>
 
     {columns.map((col) => (
@@ -54,16 +63,16 @@ const columns = [
     ))}
 
     <div class="footer__col">
-      <h3 class="footer__heading">Contatti</h3>
+      <h3 class="footer__heading">{t.footer.contatti}</h3>
       <ul class="footer__list">
-        <li><span class="footer__text">Via Feltre 33, Milano</span></li>
-        <li><a class="footer__link" href="tel:+390226414392">+39 02 2641 4392</a></li>
-        <li><a class="footer__link" href="mailto:info@tcambrosiano.com">info@tcambrosiano.com</a></li>
+        <li><span class="footer__text">{t.footer.address}</span></li>
+        <li><a class="footer__link" href="tel:+390226414392">{t.footer.phone}</a></li>
+        <li><a class="footer__link" href={`mailto:${t.footer.email}`}>{t.footer.email}</a></li>
       </ul>
     </div>
 
     <div class="footer__col">
-      <h3 class="footer__heading">Social</h3>
+      <h3 class="footer__heading">{t.footer.social}</h3>
       <ul class="footer__list">
         <li>
           <a class="footer__link" href="https://www.instagram.com/clubambrosiano" target="_blank" rel="noopener">
@@ -82,10 +91,10 @@ const columns = [
   <div class="footer__bottom">
     <div class="footer__bottom-inner">
       <div class="footer__legal">
-        <a class="footer__link" href="/privacy-policy">Privacy Policy</a>
-        <a class="footer__link" href="/terms-conditions">Termini e Condizioni</a>
+        <a class="footer__link" href={p('/privacy-policy')}>{t.footer.privacy}</a>
+        <a class="footer__link" href={p('/terms-conditions')}>{t.footer.terms}</a>
       </div>
-      <p class="footer__sign">Tennis Club Ambrosiano &mdash; Dal 1965</p>
+      <p class="footer__sign">{t.footer.sign}</p>
     </div>
   </div>
 </footer>
@@ -116,7 +125,6 @@ const columns = [
     width: auto;
     object-fit: contain;
     object-position: left center;
-    /* Il logo è scuro — invertiamo per il footer dark */
     filter: brightness(0) invert(1);
     opacity: 0.9;
   }
@@ -136,7 +144,6 @@ const columns = [
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.35);
     margin-bottom: 1.25rem;
-    /* Override h3 global uppercase (è già uppercase) */
     line-height: 1.4;
   }
 
@@ -156,6 +163,7 @@ const columns = [
     transition: color 0.18s;
   }
 
+  .footer__link { text-decoration: none; }
   .footer__link:hover { color: #fff; }
 
   .footer__bottom {
