@@ -184,10 +184,25 @@ const navItems = [
       <a class="navbar__mobile-contact" data-open-modal="modal-contatti">{t.nav.contattaci}</a>
       <button class="navbar__accedi" id="btn-accedi" type="button">ACCEDI</button>
 
-      <div class="lang-switcher" aria-label="Seleziona lingua / Select language">
-        <a class={`lang-switcher__link${lang === 'it' ? ' is-active' : ''}`} href={itPath} hreflang="it" aria-label="Italiano">IT</a>
-        <span class="lang-switcher__sep" aria-hidden="true">|</span>
-        <a class={`lang-switcher__link${lang === 'en' ? ' is-active' : ''}`} href={enPath} hreflang="en" aria-label="English">EN</a>
+      <div class="lang-switcher" id="lang-switcher" aria-label="Seleziona lingua / Select language">
+        <button class="lang-switcher__toggle" id="lang-toggle" aria-haspopup="listbox" aria-expanded="false">
+          {lang.toUpperCase()}
+          <svg class="lang-switcher__chevron" width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true">
+            <path d="M1 1L4 4L7 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <ul class="lang-switcher__dropdown" role="listbox" aria-label="Seleziona lingua">
+          <li role="option" aria-selected={lang === 'it'}>
+            <a class={`lang-switcher__option${lang === 'it' ? ' is-active' : ''}`} href={itPath} hreflang="it">
+              IT <span class="lang-switcher__option-label">Italiano</span>
+            </a>
+          </li>
+          <li role="option" aria-selected={lang === 'en'}>
+            <a class={`lang-switcher__option${lang === 'en' ? ' is-active' : ''}`} href={enPath} hreflang="en">
+              EN <span class="lang-switcher__option-label">English</span>
+            </a>
+          </li>
+        </ul>
       </div>
 
       <button
@@ -581,18 +596,77 @@ const navItems = [
   }
 
   .lang-switcher {
-    display: flex; align-items: center; gap: 4px; flex-shrink: 0;
+    position: relative;
+    flex-shrink: 0;
   }
-  .lang-switcher__link {
+
+  .lang-switcher__toggle {
+    display: flex; align-items: center; gap: 4px;
+    font-family: var(--font-display);
+    font-size: clamp(12px, 0.9vw, 13px); font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--color-text-light);
+    background: none; border: none; cursor: pointer;
+    padding: 4px 2px;
+    transition: color 0.18s;
+  }
+  .lang-switcher__toggle:hover { color: var(--color-text); }
+  .lang-switcher.is-open .lang-switcher__toggle { color: var(--color-accent); }
+
+  .lang-switcher__chevron {
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+  .lang-switcher.is-open .lang-switcher__chevron { transform: rotate(180deg); }
+
+  .lang-switcher__dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    list-style: none;
+    min-width: 130px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+    z-index: 510;
+  }
+  .lang-switcher.is-open .lang-switcher__dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .lang-switcher__option {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
     font-family: var(--font-display);
     font-size: 11px; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--color-text-light); text-decoration: none;
-    transition: color 0.18s;
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
   }
-  .lang-switcher__link:hover { color: var(--color-text); }
-  .lang-switcher__link.is-active { color: var(--color-accent); pointer-events: none; }
-  .lang-switcher__sep { font-size: 10px; color: var(--color-border); }
+  .lang-switcher__option:hover {
+    background: var(--color-off-white);
+    color: var(--color-text);
+  }
+  .lang-switcher__option.is-active {
+    color: var(--color-accent);
+    pointer-events: none;
+  }
+  .lang-switcher__option-label {
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    font-family: var(--font-body);
+    color: inherit;
+    opacity: 0.7;
+  }
 
   .navbar__mobile-contact { display: none; }
 
@@ -650,7 +724,7 @@ const navItems = [
     .navbar__cta { display: none; }
     .navbar__logo-img { height: calc((var(--header-h) - 16px) * 1.3); }
     .navbar__right { gap: 0.45rem; }
-    .lang-switcher__link { font-size: 10px; }
+    .lang-switcher__toggle { font-size: 10px; }
     .navbar__accedi { font-size: 11px; padding: 5px 10px; }
     .navbar__mobile-contact {
       display: inline-flex; align-items: center;
@@ -947,6 +1021,23 @@ const navItems = [
 </style>
 
 <script>
+  // ── Language dropdown ──
+  const langSwitcher = document.getElementById('lang-switcher') as HTMLElement | null;
+  const langToggle   = document.getElementById('lang-toggle')   as HTMLButtonElement | null;
+
+  langToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = langSwitcher?.classList.toggle('is-open');
+    langToggle.setAttribute('aria-expanded', String(!!open));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!langSwitcher?.contains(e.target as Node)) {
+      langSwitcher?.classList.remove('is-open');
+      langToggle?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
   // ── Modal Accedi ──
   const accediModal = document.getElementById('modal-accedi') as HTMLDialogElement | null;
   document.getElementById('btn-accedi')?.addEventListener('click', () => accediModal?.showModal());
