@@ -3,6 +3,65 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import LeadFormPlaceholder from "../components/LeadFormPlaceholder.astro";
 import InfoPratiche from "../components/InfoPratiche.astro";
+
+interface Course {
+  name: string;
+  duration: string;
+  intensity: 1 | 2 | 3;
+  level: string;
+  desc: string;
+}
+
+interface Category {
+  id: string;
+  label: string;
+  color: string;
+  courses: Course[];
+}
+
+const categories: Category[] = [
+  {
+    id: 'endurance',
+    label: 'Endurance',
+    color: '#B83A00',
+    courses: [
+      { name: 'Dance', duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Coreografie su musica pop e latina. Cardio coinvolgente e coordinazione ritmica.' },
+      { name: 'Zumba', duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Mix di danza latino-americana e fitness. Brucia calorie con il sorriso.' },
+      { name: 'Cycling', duration: '45 min', intensity: 3, level: 'Tutti i livelli', desc: 'Allenamento su bike al ritmo della musica. Massima resa cardiovascolare.' },
+      { name: 'Aeroboxe', duration: '60 min', intensity: 3, level: 'Intermedio', desc: 'Combinazione di arti marziali e aerobica. Potenza, riflessi e resistenza.' },
+      { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step rivisitato con movimenti funzionali. Tonifica e migliora la resistenza.' },
+      { name: 'Step & Tone', duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step cardio abbinato a tonificazione. Allenamento a corpo completo.' },
+    ]
+  },
+  {
+    id: 'strength',
+    label: 'Strength',
+    color: '#1A1A1A',
+    courses: [
+      { name: 'Funracket', duration: '60 min', intensity: 3, level: 'Intermedio', desc: 'Sport-specific per tennisti e padellisti. Forza esplosiva, reattività e agilità.' },
+      { name: 'Tribal-x', duration: '45 min', intensity: 3, level: 'Intermedio', desc: 'Circuito ad alta intensità con carichi liberi. Forza e potenza muscolare.' },
+      { name: 'Functional', duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Allenamento col peso corporeo. Forza funzionale e stabilità articolare.' },
+      { name: 'Active Pump', duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Barbell workout con bilanciere. Tonificazione totale su musica.' },
+      { name: 'Total Body', duration: '60 min', intensity: 3, level: 'Tutti i livelli', desc: 'Lavoro su tutti i distretti muscolari. Forza, resistenza e postura.' },
+      { name: 'Circuit', duration: '45 min', intensity: 3, level: 'Intermedio', desc: 'Stazioni cardio e forza in sequenza. Metabolismo alle stelle.' },
+      { name: 'Suspension Training', duration: '60 min', intensity: 3, level: 'Intermedio', desc: 'TRX e sling training. Core, stabilità e forza funzionale in sospensione.' },
+    ]
+  },
+  {
+    id: 'balance',
+    label: 'Balance',
+    color: '#1E4D3A',
+    courses: [
+      { name: 'Pilates Funzionale', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pilates applicato al movimento quotidiano. Core, postura e consapevolezza corporea.' },
+      { name: 'Flexability', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Flessibilità e mobilità articolare. Previene infortuni e libera le tensioni.' },
+      { name: 'Hatha Yoga', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pratica yogica classica. Equilibrio corpo-mente attraverso asana e respiro.' },
+      { name: 'Pilates', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Metodo originale di controllo e precisione. Rinforza il centro, migliora la postura.' },
+      { name: 'Postural', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Rieducazione posturale attiva. Corregge le tensioni e riequilibra il corpo.' },
+      { name: 'Power Yoga', duration: '60 min', intensity: 2, level: 'Intermedio', desc: 'Yoga dinamico e intenso. Forza, flessibilità e concentrazione unite.' },
+      { name: 'Ginnastica Dolce', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Mobilità dolce per tutti. Ideale per over 50 e recupero attivo.' },
+    ]
+  }
+];
 ---
 
 <BaseLayout
@@ -62,54 +121,75 @@ import InfoPratiche from "../components/InfoPratiche.astro";
     <div class="corsi-section__inner">
       <span class="eyebrow">Corsi di Gruppo</span>
       <h2 class="section-title">Allenati in<br><em>gruppo.</em></h2>
-      <p class="corsi-sub">Ogni settimana sessioni guidate da istruttori certificati. Scegli il corso adatto al tuo obiettivo — forza, flessibilità, resistenza — e prenota il tuo posto direttamente dal calendario.</p>
+      <p class="corsi-sub">Ogni settimana sessioni guidate da istruttori certificati. Scegli il corso adatto al tuo obiettivo e prenota il tuo posto direttamente su PerfectGym.</p>
 
-      <div class="corsi-categories">
-        <div class="corsi-cat">
-          <span class="corsi-cat__label">Endurance</span>
-          <ul class="corsi-list">
-            <li>Dance</li>
-            <li>Zumba</li>
-            <li>Cycling</li>
-            <li>Aeroboxe</li>
-            <li>Functional Step</li>
-            <li>Step &amp; Tone</li>
-          </ul>
+      {categories.map((cat) => (
+        <div class="cat-block">
+          <div class="cat-block__head" style={`--cat-color: ${cat.color}`}>
+            <span class="cat-block__label">{cat.label}</span>
+            <div class="cat-block__line"></div>
+            <span class="cat-block__count">{cat.courses.length} corsi</span>
+          </div>
+          <div class="courses-grid">
+            {cat.courses.map((course) => (
+              <div class="course-card" style={`--cat-color: ${cat.color}`}>
+                <div class="course-card__media">
+                  <div class="img-placeholder" data-name={`${course.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}.avif`} style="min-height:180px"></div>
+                </div>
+                <div class="course-card__body">
+                  <span class="course-card__cat">{cat.label}</span>
+                  <h3 class="course-card__name">{course.name}</h3>
+                  <p class="course-card__desc">{course.desc}</p>
+                  <div class="course-card__params">
+                    <div class="param-item">
+                      <span class="param-item__label">Intensità</span>
+                      <span class="param-item__dots" aria-label={course.intensity === 3 ? 'Alta' : course.intensity === 2 ? 'Media' : 'Bassa'}>
+                        {[1,2,3].map(n => (
+                          <span class={`dot${n <= course.intensity ? ' dot--on' : ''}`}></span>
+                        ))}
+                      </span>
+                    </div>
+                    <div class="param-item">
+                      <span class="param-item__label">Durata</span>
+                      <span class="param-item__value">{course.duration}</span>
+                    </div>
+                    <div class="param-item">
+                      <span class="param-item__label">Livello</span>
+                      <span class="param-item__value">{course.level}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div class="corsi-cat">
-          <span class="corsi-cat__label">Strength</span>
-          <ul class="corsi-list">
-            <li>Funracket</li>
-            <li>Tribal-x</li>
-            <li>Functional</li>
-            <li>Active Pump</li>
-            <li>Total Body</li>
-            <li>Circuit</li>
-            <li>Suspension Training</li>
-          </ul>
-        </div>
-        <div class="corsi-cat">
-          <span class="corsi-cat__label">Balance</span>
-          <ul class="corsi-list">
-            <li>Pilates Funzionale</li>
-            <li>Flexability</li>
-            <li>Hatha Yoga</li>
-            <li>Pilates</li>
-            <li>Postural</li>
-            <li>Power Yoga</li>
-            <li>Ginnastica Dolce</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="corsi-calendar-wrap">
-        <div id="pg-calendar" class="pg-embed"></div>
-      </div>
+      ))}
     </div>
   </section>
 
-  <LeadFormPlaceholder />
-  <InfoPratiche />
+  <!-- ── Calendario corsi ── -->
+  <section class="calendar-section">
+    <div class="calendar-section__inner">
+      <span class="eyebrow">Calendario</span>
+      <h2 class="section-title">Prenota il tuo<br><em>corso.</em></h2>
+      <p class="corsi-sub">Controlla il calendario settimanale e riserva il tuo posto direttamente su PerfectGym.</p>
+
+      <div class="calendar-wrap" id="calendar-wrap">
+        <div id="pg-calendar" class="pg-embed"></div>
+        <div class="calendar-fallback" id="pg-fallback" style="display:none">
+          <p class="calendar-fallback__msg">Accedi al calendario dal portale PerfectGym.</p>
+          <a
+            href="https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-red"
+          >
+            Vedi il Calendario
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- PerfectGym Calendar Embed -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@perfectgym/client-portal@latest/dist/ClientPortal.css" />
@@ -118,7 +198,14 @@ import InfoPratiche from "../components/InfoPratiche.astro";
   <script is:inline>
     window.addEventListener('load', function () {
       var el = document.getElementById('pg-calendar');
-      if (!el || typeof window.PerfectGym === 'undefined') return;
+      var fallback = document.getElementById('pg-fallback');
+      if (!el || typeof window.PerfectGym === 'undefined') {
+        if (fallback) fallback.style.display = 'flex';
+        return;
+      }
+
+      var connected = false;
+
       new window.PerfectGym.ClientPortal(el, {
         url: 'https://tcambrosiano.perfectgym.com/clientportal2/',
         language: 'it',
@@ -127,10 +214,23 @@ import InfoPratiche from "../components/InfoPratiche.astro";
         calendarPage: {
           hideBookingIfNotLogged: true,
           disableCourseEnrollment: true
+        },
+        onConnect: function () {
+          connected = true;
         }
       });
+
+      setTimeout(function () {
+        if (!connected) {
+          el.style.display = 'none';
+          if (fallback) fallback.style.display = 'flex';
+        }
+      }, 5000);
     });
   </script>
+
+  <LeadFormPlaceholder />
+  <InfoPratiche />
 </BaseLayout>
 
 <style>
@@ -216,52 +316,194 @@ import InfoPratiche from "../components/InfoPratiche.astro";
     line-height: 1.75;
     color: var(--color-text-light);
     max-width: 64ch;
-    margin-bottom: 4vh;
-  }
-
-  .corsi-categories {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
     margin-bottom: 6vh;
   }
 
-  .corsi-cat__label {
-    display: block;
+  /* ── Category block ── */
+  .cat-block {
+    margin-bottom: 6vh;
+  }
+
+  .cat-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .cat-block__head {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+
+  .cat-block__label {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.6vw, 1.4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--cat-color);
+    white-space: nowrap;
+  }
+
+  .cat-block__line {
+    flex: 1;
+    height: 1px;
+    background: var(--cat-color);
+    opacity: 0.25;
+  }
+
+  .cat-block__count {
     font-family: var(--font-display);
     font-size: clamp(10px, 0.75vw, 12px);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    white-space: nowrap;
+  }
+
+  /* ── Course grid ── */
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* ── Course card ── */
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .course-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+
+  .course-card__media {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: #E5E7EB;
+  }
+
+  .course-card__media .img-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: unset !important;
+  }
+
+  .course-card__body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+
+  .course-card__cat {
+    font-family: var(--font-display);
+    font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: 0.8rem;
+    color: var(--cat-color);
   }
 
-  .corsi-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .corsi-list li {
+  .course-card__name {
     font-family: var(--font-display);
-    font-size: clamp(11px, 0.85vw, 13px);
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    color: var(--color-text);
+    margin-top: 0.1rem;
+  }
+
+  .course-card__desc {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13.5px);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-text-light);
+    margin: 0.3rem 0 0.6rem;
+    flex: 1;
+  }
+
+  /* ── Parameters ── */
+  .course-card__params {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    margin-top: auto;
+  }
+
+  .param-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .param-item__label {
+    font-family: var(--font-display);
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    padding: 8px 18px;
-    border: 1.5px solid var(--color-border);
-    background: #fff;
-    color: var(--color-text);
+    color: var(--color-text-light);
+    flex-shrink: 0;
   }
 
-  .corsi-calendar-wrap {
+  .param-item__dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-border);
+    display: inline-block;
+  }
+
+  .dot--on {
+    background: var(--cat-color);
+  }
+
+  .param-item__value {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    text-align: right;
+  }
+
+  /* ── Calendar section ── */
+  .calendar-section {
+    padding: 7vh var(--pad-x);
+  }
+
+  .calendar-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .calendar-wrap {
     border: 1px solid var(--color-border);
     background: #fff;
     overflow: hidden;
+    min-height: 200px;
   }
 
   .pg-embed {
@@ -269,14 +511,40 @@ import InfoPratiche from "../components/InfoPratiche.astro";
     width: 100%;
   }
 
+  .calendar-fallback {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 4rem 2rem;
+    background: var(--color-off-white);
+  }
+
+  .calendar-fallback__msg {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 16px);
+    font-weight: 300;
+    color: var(--color-text-light);
+  }
+
   /* ── Responsive ── */
+  @media (max-width: 1100px) {
+    .courses-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
   @media (max-width: 860px) {
     .prog-grid { grid-template-columns: 1fr 1fr; }
-    .corsi-categories { grid-template-columns: 1fr 1fr; }
+    .courses-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 560px) {
     .prog-grid { grid-template-columns: 1fr; }
-    .corsi-categories { grid-template-columns: 1fr; }
+    .courses-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 400px) {
+    .courses-grid { grid-template-columns: 1fr; }
   }
 </style>
