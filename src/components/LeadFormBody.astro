@@ -174,16 +174,10 @@ const attivita = [
 
 <!-- ─── STEP 4a · RICHIAMAMI ──────────────────────────────────────── -->
 <div class="lm__body" data-step="4-callback" hidden>
-  <p class="lm__sub">Raccontaci come possiamo aiutarti e scegli quando richiamarti.</p>
-
-  <div class="lm__field">
-    <label for={`${prefix}-cb-reason`}>Motivo della chiamata <span aria-hidden="true">*</span></label>
-    <textarea id={`${prefix}-cb-reason`} name="cb-reason" rows="3"
-              placeholder="Es. vorrei informazioni sull'abbonamento, ho già giocato e voglio riprendere…"></textarea>
-  </div>
+  <p class="lm__sub">Scegli giorno e orario, poi raccontaci il motivo della chiamata.</p>
 
   <div class="lm__cal">
-    <p class="lm__label-group">Scegli il giorno</p>
+    <p class="lm__label-group">Scegli il giorno <span aria-hidden="true">*</span></p>
     <div class="lm__cal-month-wrap" id={`${prefix}-cal-cb`}></div>
     <div class="lm__slots-wrap" id={`${prefix}-slots-wrap-cb`} hidden>
       <p class="lm__slots-wrap-title">Orari disponibili</p>
@@ -191,9 +185,15 @@ const attivita = [
     </div>
   </div>
 
+  <div class="lm__field">
+    <label for={`${prefix}-cb-reason`}>Motivo della chiamata <span aria-hidden="true">*</span></label>
+    <textarea id={`${prefix}-cb-reason`} name="cb-reason" rows="3"
+              placeholder="Es. vorrei informazioni sull'abbonamento, ho già giocato e voglio riprendere…"></textarea>
+  </div>
+
   <div class="lm__actions">
     <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
-    <button class="btn btn-red" id={`${prefix}-cb-confirm`} type="button" disabled>
+    <button class="btn btn-red" id={`${prefix}-cb-confirm`} type="button">
       Conferma <span class="lm__arrow">→</span>
     </button>
   </div>
@@ -202,16 +202,10 @@ const attivita = [
 
 <!-- ─── STEP 4b · PRENOTA VISITA ──────────────────────────────────── -->
 <div class="lm__body" data-step="4-visit" hidden>
-  <p class="lm__sub">Descrivici il motivo della visita e scegli giorno e orario di arrivo.</p>
-
-  <div class="lm__field">
-    <label for={`${prefix}-visit-reason`}>Motivo della visita <span aria-hidden="true">*</span></label>
-    <textarea id={`${prefix}-visit-reason`} name="visit-reason" rows="3"
-              placeholder="Es. voglio visitare la struttura, mi interessa iscrivermi al padel…"></textarea>
-  </div>
+  <p class="lm__sub">Scegli giorno e orario di arrivo, poi raccontaci il motivo della visita.</p>
 
   <div class="lm__cal">
-    <p class="lm__label-group">Scegli il giorno</p>
+    <p class="lm__label-group">Scegli il giorno <span aria-hidden="true">*</span></p>
     <div class="lm__cal-month-wrap" id={`${prefix}-cal-visit`}></div>
     <div class="lm__slots-wrap" id={`${prefix}-slots-wrap-visit`} hidden>
       <p class="lm__slots-wrap-title">Orari disponibili</p>
@@ -219,9 +213,15 @@ const attivita = [
     </div>
   </div>
 
+  <div class="lm__field">
+    <label for={`${prefix}-visit-reason`}>Motivo della visita <span aria-hidden="true">*</span></label>
+    <textarea id={`${prefix}-visit-reason`} name="visit-reason" rows="3"
+              placeholder="Es. voglio visitare la struttura, mi interessa iscrivermi al padel…"></textarea>
+  </div>
+
   <div class="lm__actions">
     <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
-    <button class="btn btn-red" id={`${prefix}-visit-confirm`} type="button" disabled>
+    <button class="btn btn-red" id={`${prefix}-visit-confirm`} type="button">
       Conferma visita <span class="lm__arrow">→</span>
     </button>
   </div>
