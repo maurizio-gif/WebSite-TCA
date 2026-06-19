@@ -84,7 +84,7 @@ const navItems = [
         src={publicUrl('/logos/tca-logo.png')}
         alt="Tennis Club Ambrosiano"
         class="navbar__logo-img"
-        width="80" height="54"
+        width="225" height="224"
       />
     </a>
 
@@ -761,8 +761,8 @@ const navItems = [
 
   @media (max-width: 640px) {
     .navbar__cta { display: none; }
-    :root { --header-h: 80px; }
-    .navbar__logo-img { height: calc(var(--header-h) - 6px); } /* 74px — +30% dal desktop */
+    :root { --header-h: 52px; }
+    .navbar__logo-img { height: calc(var(--header-h) - 4px); width: auto; }
     .navbar__right { gap: 0.5rem; }
 
     /* Lang: solo bandierina su mobile */

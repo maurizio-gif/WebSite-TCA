@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import MembershipSection from "../components/MembershipSection.astro";
-import LeadFormPlaceholder from "../components/LeadFormPlaceholder.astro";
+import WeeklySchedule from "../components/WeeklySchedule.astro";
 import InfoPratiche from "../components/InfoPratiche.astro";
 
 interface Course {
@@ -19,6 +19,12 @@ interface Category {
   color: string;
   courses: Course[];
 }
+
+const catImages: Record<string, string> = {
+  endurance: '/fitness-treadmill-watch.jpg',
+  strength:  '/fitness-rowing-trainer.jpg',
+  balance:   '/fitness-kettlebell.jpg',
+};
 
 const categories: Category[] = [
   {
@@ -107,7 +113,11 @@ const categories: Category[] = [
           </div>
         </div>
         <div class="prog-card">
-          <div class="img-placeholder" data-name="sport-specific.avif" style="min-height:200px"></div>
+          <img
+            src="/fitness-rowing-group.jpg"
+            alt="Sport specific per tennisti TCA"
+            class="prog-card__img"
+          />
           <div class="prog-card__body">
             <h3>Sport Specific per Tennisti</h3>
             <p>Programmi dedicati al tennis: esplosività, agilità laterale, core stability e prevenzione infortuni.</p>
@@ -144,7 +154,12 @@ const categories: Category[] = [
               {cat.courses.map((course) => (
                 <div class="course-card" style={`--cat-color: ${cat.color}`}>
                   <div class="course-card__media">
-                    <div class="img-placeholder" data-name={`${course.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}.avif`} style="min-height:180px"></div>
+                    <img
+                      src={catImages[cat.id]}
+                      alt={course.name}
+                      class="course-card__media-img"
+                      loading="lazy"
+                    />
                   </div>
                   <div class="course-card__body">
                     <span class="course-card__cat">{cat.label}</span>
@@ -185,68 +200,11 @@ const categories: Category[] = [
       <h2 class="section-title">Prenota il tuo<br><em>corso.</em></h2>
       <p class="corsi-sub">Controlla il calendario settimanale e riserva il tuo posto direttamente su PerfectGym.</p>
 
-      <div class="calendar-wrap">
-        <div id="pg-client-portal-calendar" class="pg-embed"></div>
-        <div class="calendar-fallback" id="pg-fallback" style="display:none">
-          <p class="calendar-fallback__msg">Accedi al calendario dal portale PerfectGym.</p>
-          <a
-            href="https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn btn-red"
-          >
-            Vedi il Calendario
-          </a>
-        </div>
-      </div>
+      <WeeklySchedule />
     </div>
   </section>
 
-  <!-- PerfectGym Calendar Embed -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@perfectgym/client-portal@latest/dist/ClientPortal.css" />
-  <script is:inline src="https://cdn.jsdelivr.net/npm/@iframe-resizer/parent@5.5.7/index.umd.min.js"></script>
-  <script is:inline src="https://cdn.jsdelivr.net/npm/@perfectgym/client-portal@latest/dist/ClientPortal.min.js"></script>
-  <script is:inline>
-    (function () {
-      var el = document.getElementById('pg-client-portal-calendar');
-      var fallback = document.getElementById('pg-fallback');
-
-      if (!el || typeof PerfectGym === 'undefined') {
-        if (fallback) fallback.style.display = 'flex';
-        return;
-      }
-
-      var connected = false;
-
-      var options = {
-        url: 'https://tcambrosiano.perfectgym.com/clientportal2/',
-        language: 'it',
-        minHeight: '1020',
-        defaultState: PerfectGym.ClientPortal.State.Classes,
-        calendarPage: {
-          hideBookingIfNotLogged: true
-        },
-        navigation: {
-          hide: true
-        },
-        onConnect: function () {
-          connected = true;
-        }
-      };
-
-      new PerfectGym.ClientPortal(el, options);
-
-      setTimeout(function () {
-        if (!connected) {
-          el.style.display = 'none';
-          if (fallback) fallback.style.display = 'flex';
-        }
-      }, 5000);
-    })();
-  </script>
-
   <MembershipSection />
-  <LeadFormPlaceholder />
   <InfoPratiche />
 
   <script>
@@ -301,6 +259,7 @@ const categories: Category[] = [
 </BaseLayout>
 
 <style>
+  /* ── Programmi ── */
   .content-section {
     padding: 7vh var(--pad-x);
   }
@@ -500,10 +459,13 @@ const categories: Category[] = [
     background: #E5E7EB;
   }
 
-  .course-card__media .img-placeholder {
+  .course-card__media .img-placeholder,
+  .course-card__media-img {
     width: 100%;
     height: 100%;
     min-height: unset !important;
+    object-fit: cover;
+    display: block;
   }
 
   .course-card__body {
@@ -608,35 +570,7 @@ const categories: Category[] = [
     margin: 0 auto;
   }
 
-  .calendar-wrap {
-    border: 1px solid var(--color-border);
-    background: #fff;
-    overflow: hidden;
-    min-height: 200px;
-  }
-
-  .pg-embed {
-    min-height: 1020px;
-    width: 100%;
-  }
-
-  .calendar-fallback {
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    padding: 4rem 2rem;
-    background: var(--color-off-white);
-  }
-
-  .calendar-fallback__msg {
-    font-family: var(--font-body);
-    font-size: clamp(14px, 1.1vw, 16px);
-    font-weight: 300;
-    color: var(--color-text-light);
-  }
+  /* Calendar weekly schedule → WeeklySchedule.astro */
 
   /* ── Responsive ── */
   @media (max-width: 860px) {

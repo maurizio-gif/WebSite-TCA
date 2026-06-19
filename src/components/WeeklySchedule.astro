@@ -1,0 +1,384 @@
+---
+type Cat = 'S' | 'B' | 'E';
+interface Lesson { t: string; c: Cat; n: string; }
+
+const CAT: Record<Cat, { label: string }> = {
+  S: { label: 'Strength'  },
+  B: { label: 'Balance'   },
+  E: { label: 'Endurance' },
+};
+
+const DAYS: Array<{ full: string; short: string; lessons: Lesson[] }> = [
+  { full: 'Lunedì', short: 'LUN', lessons: [
+    { t: '09:15', c: 'S', n: 'Total Body' },
+    { t: '10:00', c: 'B', n: 'Pilates' },
+    { t: '10:30', c: 'E', n: 'Zumba' },
+    { t: '11:00', c: 'B', n: 'Flexability' },
+    { t: '11:35', c: 'B', n: 'Postural' },
+    { t: '13:00', c: 'S', n: 'Functional' },
+    { t: '13:00', c: 'B', n: 'Pilates' },
+    { t: '17:00', c: 'S', n: 'Total Body' },
+    { t: '18:00', c: 'S', n: 'Circuit' },
+    { t: '18:00', c: 'B', n: 'Pilates Funzionale' },
+    { t: '19:00', c: 'S', n: 'Functional' },
+    { t: '19:00', c: 'B', n: 'Hatha Yoga' },
+    { t: '19:00', c: 'S', n: 'Tribal-x' },
+    { t: '20:00', c: 'B', n: 'Hatha Yoga' },
+    { t: '20:05', c: 'E', n: 'Dance' },
+  ]},
+  { full: 'Martedì', short: 'MAR', lessons: [
+    { t: '07:00', c: 'S', n: 'Functional' },
+    { t: '09:00', c: 'S', n: 'Circuit' },
+    { t: '09:15', c: 'B', n: 'Postural' },
+    { t: '10:00', c: 'E', n: 'Dance' },
+    { t: '10:00', c: 'B', n: 'Ginnastica Dolce' },
+    { t: '11:00', c: 'S', n: 'Total Body' },
+    { t: '11:00', c: 'B', n: 'Postural' },
+    { t: '13:00', c: 'S', n: 'Active Pump' },
+    { t: '13:00', c: 'B', n: 'Power Yoga' },
+    { t: '17:15', c: 'S', n: 'Suspension Training' },
+    { t: '18:00', c: 'E', n: 'Step & Tone' },
+    { t: '18:00', c: 'S', n: 'Circuit' },
+    { t: '18:30', c: 'B', n: 'Pilates' },
+    { t: '19:00', c: 'S', n: 'Funracket' },
+    { t: '19:15', c: 'B', n: 'Flexability' },
+    { t: '19:45', c: 'B', n: 'Pilates' },
+    { t: '19:55', c: 'E', n: 'Cycling' },
+    { t: '20:00', c: 'S', n: 'Circuit' },
+  ]},
+  { full: 'Mercoledì', short: 'MER', lessons: [
+    { t: '07:00', c: 'S', n: 'Functional' },
+    { t: '10:00', c: 'S', n: 'Total Body' },
+    { t: '10:00', c: 'B', n: 'Flexability' },
+    { t: '11:00', c: 'B', n: 'Core Ball' },
+    { t: '11:00', c: 'B', n: 'Pilates' },
+    { t: '13:00', c: 'S', n: 'Functional' },
+    { t: '13:00', c: 'B', n: 'Pilates' },
+    { t: '18:00', c: 'B', n: 'Pilates' },
+    { t: '19:00', c: 'B', n: 'Power Yoga' },
+    { t: '19:05', c: 'S', n: 'Funracket' },
+    { t: '20:00', c: 'B', n: 'Power Yoga' },
+    { t: '20:15', c: 'E', n: 'Cycling' },
+  ]},
+  { full: 'Giovedì', short: 'GIO', lessons: [
+    { t: '07:00', c: 'S', n: 'Functional' },
+    { t: '09:00', c: 'B', n: 'Ginnastica Dolce' },
+    { t: '10:00', c: 'B', n: 'Pilates' },
+    { t: '10:30', c: 'B', n: 'Postural' },
+    { t: '11:45', c: 'B', n: 'Pilates Gym' },
+    { t: '13:00', c: 'S', n: 'Functional' },
+    { t: '13:00', c: 'B', n: 'Hatha Yoga' },
+    { t: '17:45', c: 'B', n: 'Core Ball' },
+    { t: '18:30', c: 'S', n: 'Functional' },
+    { t: '18:45', c: 'B', n: 'Pilates' },
+    { t: '19:05', c: 'S', n: 'Circuit' },
+    { t: '19:30', c: 'S', n: 'Functional' },
+    { t: '19:45', c: 'B', n: 'Pilates' },
+  ]},
+  { full: 'Venerdì', short: 'VEN', lessons: [
+    { t: '07:00', c: 'S', n: 'Interval Suspension' },
+    { t: '08:15', c: 'B', n: 'Pilates Circle' },
+    { t: '09:00', c: 'B', n: 'Postural' },
+    { t: '10:00', c: 'E', n: 'Dance' },
+    { t: '11:00', c: 'B', n: 'Pilates Funzionale' },
+    { t: '12:00', c: 'E', n: 'Zumba' },
+    { t: '13:00', c: 'S', n: 'Funracket' },
+    { t: '13:00', c: 'B', n: 'Flexability' },
+    { t: '17:45', c: 'E', n: 'Functional Step' },
+    { t: '18:30', c: 'E', n: 'Zumba' },
+    { t: '18:30', c: 'S', n: 'Tribal-x' },
+    { t: '19:30', c: 'E', n: 'Zumba' },
+    { t: '19:30', c: 'B', n: 'Hatha Yoga' },
+    { t: '19:35', c: 'S', n: 'Functional' },
+  ]},
+  { full: 'Sabato', short: 'SAB', lessons: [
+    { t: '08:15', c: 'E', n: 'Cycling' },
+    { t: '09:30', c: 'S', n: 'Active Pump' },
+    { t: '10:30', c: 'E', n: 'Aeroboxe' },
+    { t: '11:30', c: 'S', n: 'Functional' },
+    { t: '12:30', c: 'S', n: 'Functional' },
+  ]},
+  { full: 'Domenica', short: 'DOM', lessons: [] },
+];
+
+const PG_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar';
+---
+
+<div class="ws">
+  <!-- Legenda categorie -->
+  <div class="ws__legend">
+    <span class="ws__leg ws__leg--s">Strength</span>
+    <span class="ws__leg ws__leg--b">Balance</span>
+    <span class="ws__leg ws__leg--e">Endurance</span>
+  </div>
+
+  <div class="ws__scroll-wrap">
+    <div class="ws__grid">
+      {DAYS.map(day => (
+        <div class="ws__col">
+          <!-- Intestazione giorno -->
+          <div class="ws__day-head">
+            <span class="ws__day-abbr">{day.short}</span>
+            <span class="ws__day-name">{day.full}</span>
+          </div>
+
+          <!-- Lista corsi -->
+          <div class="ws__cards">
+            {day.lessons.length === 0
+              ? <div class="ws__rest">Giornata di riposo</div>
+              : day.lessons.map(l => (
+                  <a
+                    class={`ws__card ws__card--${l.c.toLowerCase()}`}
+                    href={PG_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={`${CAT[l.c].label} · ${l.n} — ${l.t}`}
+                  >
+                    <span class="ws__card-time">{l.t}</span>
+                    <span class="ws__card-body">
+                      <span class="ws__card-cat">{CAT[l.c].label}</span>
+                      <span class="ws__card-name">{l.n}</span>
+                    </span>
+                  </a>
+                ))
+            }
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- CTA footer -->
+  <p class="ws__cta-note">
+    Planning indicativo, soggetto a variazioni settimanali. &nbsp;
+    <a class="ws__cta-link" href={PG_URL} target="_blank" rel="noopener noreferrer">
+      Prenota il tuo posto su PerfectGym
+      <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </p>
+</div>
+
+<style>
+  /* ── Wrapper ── */
+  .ws {
+    margin-top: 3rem;
+  }
+
+  /* ── Legenda ── */
+  .ws__legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .ws__leg {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .ws__leg::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .ws__leg--s { color: #1A1A1A; }
+  .ws__leg--s::before { background: #1A1A1A; }
+  .ws__leg--b { color: #1E4D3A; }
+  .ws__leg--b::before { background: #1E4D3A; }
+  .ws__leg--e { color: #B83A00; }
+  .ws__leg--e::before { background: #B83A00; }
+
+  /* ── Scroll wrapper ── */
+  .ws__scroll-wrap {
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 0 calc(-1 * var(--pad-x));
+    padding: 0 var(--pad-x) 2px;
+  }
+
+  .ws__scroll-wrap::-webkit-scrollbar { display: none; }
+
+  /* ── Grid 7 colonne ── */
+  .ws__grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(148px, 1fr));
+    min-width: 900px;
+    border: 1px solid var(--color-border);
+  }
+
+  /* ── Colonna giorno ── */
+  .ws__col {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--color-border);
+    background: #fff;
+  }
+
+  .ws__col:last-child { border-right: none; }
+
+  /* ── Intestazione giorno ── */
+  .ws__day-head {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 10px 10px 8px;
+    border-bottom: 2px solid var(--color-border);
+    background: var(--color-off-white);
+  }
+
+  .ws__day-abbr {
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+  }
+
+  .ws__day-name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--color-text);
+    line-height: 1;
+  }
+
+  /* ── Lista cards ── */
+  .ws__cards {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  /* ── Singola card corso ── */
+  .ws__card {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 7px 8px 7px 11px;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    transition: background 0.12s;
+    cursor: pointer;
+  }
+
+  .ws__card:last-child { border-bottom: none; }
+  .ws__card:hover { background: var(--color-off-white); }
+
+  /* Linea colorata sinistra */
+  .ws__card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+  }
+
+  .ws__card--s::before { background: #1A1A1A; }
+  .ws__card--b::before { background: #1E4D3A; }
+  .ws__card--e::before { background: #B83A00; }
+
+  /* Orario */
+  .ws__card-time {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-text-light);
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding-top: 1px;
+    min-width: 34px;
+  }
+
+  .ws__card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  .ws__card-cat {
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .ws__card--s .ws__card-cat { color: #1A1A1A; }
+  .ws__card--b .ws__card-cat { color: #1E4D3A; }
+  .ws__card--e .ws__card-cat { color: #B83A00; }
+
+  .ws__card-name {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-text);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ── Giorno vuoto ── */
+  .ws__rest {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0.75rem;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--color-text-light);
+    font-style: italic;
+    text-align: center;
+  }
+
+  /* ── Nota / CTA footer ── */
+  .ws__cta-note {
+    margin-top: 1.25rem;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+
+  .ws__cta-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 400;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ws__cta-link:hover { text-decoration: underline; }
+
+  /* ── Mobile: nascondi giorno-full, abbr già visibile ── */
+  @media (max-width: 600px) {
+    .ws__day-name { font-size: 12px; }
+    .ws__card-time { font-size: 10px; min-width: 28px; }
+    .ws__card-name { font-size: 11px; }
+  }
+</style>
