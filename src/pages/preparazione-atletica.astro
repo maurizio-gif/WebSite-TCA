@@ -89,7 +89,10 @@ const categories: Category[] = [
     sub="Sala attrezzi professionale, personal trainer certificati e oltre 20 corsi di gruppo a settimana. Due anime, un unico obiettivo: il tuo."
     image="/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif"
     imageAlt="Sala attrezzi professionale TCA"
-    ctaLabel="Richiedi informazioni"
+    ctas={[
+      { label: "I nostri abbonamenti", href: "#membership" },
+      { label: "Il nostro planning",   href: "#corsi", outline: true },
+    ]}
   />
 
   <!-- ── Sala Attrezzi ── -->
@@ -156,7 +159,7 @@ const categories: Category[] = [
   </section>
 
   <!-- ── Corsi di Gruppo ── -->
-  <section class="corsi-section">
+  <section class="corsi-section" id="corsi">
     <div class="corsi-section__inner">
       <span class="eyebrow">Corsi di Gruppo</span>
       <h2 class="section-title">Allenati in<br><em>gruppo.</em></h2>
@@ -237,7 +240,9 @@ const categories: Category[] = [
     </div>
   </section>
 
-  <MembershipSection />
+  <div id="membership" class="anchor-target">
+    <MembershipSection />
+  </div>
   <LeadFormInline />
   <InfoPratiche />
 
@@ -293,6 +298,12 @@ const categories: Category[] = [
 </BaseLayout>
 
 <style>
+  /* ── Anchor offset per navbar fissa ── */
+  .anchor-target,
+  #corsi {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+
   /* ── Sala Attrezzi ── */
   .sala-section {
     padding: 7vh var(--pad-x);
