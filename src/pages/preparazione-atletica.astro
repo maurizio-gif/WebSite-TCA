@@ -11,6 +11,7 @@ interface Course {
   intensity: 1 | 2 | 3;
   level: string;
   desc: string;
+  img: string;
 }
 
 interface Category {
@@ -20,11 +21,12 @@ interface Category {
   courses: Course[];
 }
 
-const catImages: Record<string, string> = {
-  endurance: '/fitness-treadmill-watch.jpg',
-  strength:  '/fitness-rowing-trainer.jpg',
-  balance:   '/fitness-kettlebell.jpg',
-};
+const pex = (id: string) =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop`;
+
+const YOGA   = '/b9c52423-5bff-496a-8686-bffe1b123195_Aspria_Milano_Outdoor_Yoga+1.avif';
+const GYM    = '/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif';
+const RACKET = '/aXCJ_AIvOtkhBw2j_Lifestyle_232026SpeedMP_DXT56509.avif';
 
 const categories: Category[] = [
   {
@@ -32,12 +34,12 @@ const categories: Category[] = [
     label: 'Endurance',
     color: '#B83A00',
     courses: [
-      { name: 'Dance', duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Coreografie su musica pop e latina. Cardio coinvolgente e coordinazione ritmica.' },
-      { name: 'Zumba', duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Mix di danza latino-americana e fitness. Brucia calorie con il sorriso.' },
-      { name: 'Cycling', duration: '45 min', intensity: 3, level: 'Tutti i livelli', desc: 'Allenamento su bike al ritmo della musica. Massima resa cardiovascolare.' },
-      { name: 'Aeroboxe', duration: '60 min', intensity: 3, level: 'Intermedio', desc: 'Combinazione di arti marziali e aerobica. Potenza, riflessi e resistenza.' },
-      { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step rivisitato con movimenti funzionali. Tonifica e migliora la resistenza.' },
-      { name: 'Step & Tone', duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step cardio abbinato a tonificazione. Allenamento a corpo completo.' },
+      { name: 'Dance',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Coreografie su musica pop e latina. Cardio coinvolgente e coordinazione ritmica.',    img: pex('4090012') },
+      { name: 'Zumba',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Mix di danza latino-americana e fitness. Brucia calorie con il sorriso.',             img: pex('4090009') },
+      { name: 'Cycling',         duration: '45 min', intensity: 3, level: 'Tutti i livelli', desc: 'Allenamento su bike al ritmo della musica. Massima resa cardiovascolare.',            img: pex('8766368') },
+      { name: 'Aeroboxe',        duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Combinazione di arti marziali e aerobica. Potenza, riflessi e resistenza.',          img: pex('32321639') },
+      { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step rivisitato con movimenti funzionali. Tonifica e migliora la resistenza.',       img: pex('6285220') },
+      { name: 'Step & Tone',     duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step cardio abbinato a tonificazione. Allenamento a corpo completo.',                img: pex('6285206') },
     ]
   },
   {
@@ -45,13 +47,13 @@ const categories: Category[] = [
     label: 'Strength',
     color: '#1A1A1A',
     courses: [
-      { name: 'Funracket', duration: '60 min', intensity: 3, level: 'Intermedio', desc: 'Sport-specific per tennisti e padellisti. Forza esplosiva, reattività e agilità.' },
-      { name: 'Tribal-x', duration: '45 min', intensity: 3, level: 'Intermedio', desc: 'Circuito ad alta intensità con carichi liberi. Forza e potenza muscolare.' },
-      { name: 'Functional', duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Allenamento col peso corporeo. Forza funzionale e stabilità articolare.' },
-      { name: 'Active Pump', duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Barbell workout con bilanciere. Tonificazione totale su musica.' },
-      { name: 'Total Body', duration: '60 min', intensity: 3, level: 'Tutti i livelli', desc: 'Lavoro su tutti i distretti muscolari. Forza, resistenza e postura.' },
-      { name: 'Circuit', duration: '45 min', intensity: 3, level: 'Intermedio', desc: 'Stazioni cardio e forza in sequenza. Metabolismo alle stelle.' },
-      { name: 'Suspension Training', duration: '60 min', intensity: 3, level: 'Intermedio', desc: 'TRX e sling training. Core, stabilità e forza funzionale in sospensione.' },
+      { name: 'Funracket',            duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Sport-specific per tennisti e padellisti. Forza esplosiva, reattività e agilità.',    img: RACKET },
+      { name: 'Tribal-x',             duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Circuito ad alta intensità con carichi liberi. Forza e potenza muscolare.',           img: pex('4720807') },
+      { name: 'Functional',           duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Allenamento col peso corporeo. Forza funzionale e stabilità articolare.',            img: GYM },
+      { name: 'Active Pump',          duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Barbell workout con bilanciere. Tonificazione totale su musica.',                    img: pex('703012') },
+      { name: 'Total Body',           duration: '60 min', intensity: 3, level: 'Tutti i livelli', desc: 'Lavoro su tutti i distretti muscolari. Forza, resistenza e postura.',               img: GYM },
+      { name: 'Circuit',              duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Stazioni cardio e forza in sequenza. Metabolismo alle stelle.',                     img: pex('4720291') },
+      { name: 'Suspension Training',  duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'TRX e sling training. Core, stabilità e forza funzionale in sospensione.',          img: pex('5480481') },
     ]
   },
   {
@@ -59,70 +61,91 @@ const categories: Category[] = [
     label: 'Balance',
     color: '#1E4D3A',
     courses: [
-      { name: 'Pilates Funzionale', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pilates applicato al movimento quotidiano. Core, postura e consapevolezza corporea.' },
-      { name: 'Flexability', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Flessibilità e mobilità articolare. Previene infortuni e libera le tensioni.' },
-      { name: 'Hatha Yoga', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pratica yogica classica. Equilibrio corpo-mente attraverso asana e respiro.' },
-      { name: 'Pilates', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Metodo originale di controllo e precisione. Rinforza il centro, migliora la postura.' },
-      { name: 'Postural', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Rieducazione posturale attiva. Corregge le tensioni e riequilibra il corpo.' },
-      { name: 'Power Yoga', duration: '60 min', intensity: 2, level: 'Intermedio', desc: 'Yoga dinamico e intenso. Forza, flessibilità e concentrazione unite.' },
-      { name: 'Ginnastica Dolce', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Mobilità dolce per tutti. Ideale per over 50 e recupero attivo.' },
+      { name: 'Pilates Funzionale', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pilates applicato al movimento quotidiano. Core, postura e consapevolezza corporea.', img: pex('25596884') },
+      { name: 'Flexability',        duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Flessibilità e mobilità articolare. Previene infortuni e libera le tensioni.',        img: pex('2424257') },
+      { name: 'Hatha Yoga',         duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pratica yogica classica. Equilibrio corpo-mente attraverso asana e respiro.',        img: YOGA },
+      { name: 'Pilates',            duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Metodo originale di controllo e precisione. Rinforza il centro, migliora la postura.', img: pex('25596885') },
+      { name: 'Postural',           duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Rieducazione posturale attiva. Corregge le tensioni e riequilibra il corpo.',        img: pex('7992044') },
+      { name: 'Power Yoga',         duration: '60 min', intensity: 2, level: 'Intermedio',      desc: 'Yoga dinamico e intenso. Forza, flessibilità e concentrazione unite.',               img: YOGA },
+      { name: 'Ginnastica Dolce',   duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Mobilità dolce per tutti. Ideale per over 50 e recupero attivo.',                   img: pex('11674389') },
     ]
   }
 ];
 ---
 
 <BaseLayout
-  title="Preparazione Atletica | Tennis Club Ambrosiano"
-  description="Preparazione atletica al Tennis Club Ambrosiano: personal training, sala pesi, corsi funzionali e programmi sport-specific per tennisti e atleti di ogni livello."
+  title="Sala Attrezzi e Corsi di Gruppo | Tennis Club Ambrosiano Milano"
+  description="Sala pesi professionale, personal trainer certificati e oltre 20 corsi di gruppo settimanali al Tennis Club Ambrosiano di Milano. Allenati con metodo e raggiungi i tuoi obiettivi."
 >
   <PageHero
     eyebrow="Adulti · Preparazione Atletica"
-    title="Preparazione"
-    titleAccent="Atletica"
-    sub="Programmi di allenamento sport-specific, personal training e sala attrezzi professionale. Migliora le tue performance in campo e fuori."
+    title="Allenamento"
+    titleAccent="& Benessere"
+    sub="Sala attrezzi professionale, personal trainer certificati e oltre 20 corsi di gruppo a settimana. Due anime, un unico obiettivo: il tuo."
     image="/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif"
-    imageAlt="Sala di preparazione atletica TCA"
+    imageAlt="Sala attrezzi professionale TCA"
     ctaLabel="Richiedi informazioni"
   />
 
-  <section class="content-section">
-    <div class="content-section__inner">
-      <span class="eyebrow">Programmi</span>
-      <h2 class="section-title">Il tuo<br><em>allenamento.</em></h2>
-      <div class="prog-grid">
-        <div class="prog-card">
+  <!-- ── Sala Attrezzi ── -->
+  <section class="sala-section">
+    <div class="sala-section__inner">
+      <div class="sala-split">
+
+        <div class="sala-split__media">
           <img
             src="/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif"
-            alt="Personal training TCA"
-            class="prog-card__img"
+            alt="Sala attrezzi professionale Tennis Club Ambrosiano"
+            class="sala-split__img"
           />
-          <div class="prog-card__body">
-            <h3>Personal Training</h3>
-            <p>Sedute individuali con preparatori atletici certificati. Obiettivi personalizzati, progressi misurabili.</p>
-          </div>
         </div>
-        <div class="prog-card">
-          <img
-            src="/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif"
-            alt="Allenamento funzionale TCA"
-            class="prog-card__img"
-          />
-          <div class="prog-card__body">
-            <h3>Allenamento Funzionale</h3>
-            <p>Corsi in piccoli gruppi focalizzati su forza, mobilità e condizione fisica generale.</p>
-          </div>
+
+        <div class="sala-split__content">
+          <span class="eyebrow">Sala Attrezzi</span>
+          <h2 class="section-title">Potenziamento<br><em>su misura.</em></h2>
+          <p class="sala-body">
+            Una sala attrezzi completa riservata ai soci, con macchinari professionali, area cardio e spazio per l'allenamento funzionale. Che tu voglia aumentare la forza, migliorare la resistenza o semplicemente mantenerti in forma, qui hai tutto il necessario — e i professionisti giusti per guidarti.
+          </p>
+
+          <ul class="sala-features">
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h2m14 0h2M5 12a7 7 0 1 0 14 0 7 7 0 0 0-14 0zm4 0h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div>
+                <strong>Macchine Cardio</strong>
+                <span>Tapis roulant, ellittiche, rowing machine, bike</span>
+              </div>
+            </li>
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="11" width="4" height="2" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="18" y="11" width="4" height="2" rx="1" stroke="currentColor" stroke-width="1.8"/><path d="M6 12h12M6 9v6M18 9v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div>
+                <strong>Pesi Liberi</strong>
+                <span>Manubri 1–40 kg, bilancieri, cavi multifunzione</span>
+              </div>
+            </li>
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div>
+                <strong>Area Funzionale</strong>
+                <span>TRX, kettlebell, slam ball, battle rope</span>
+              </div>
+            </li>
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div>
+                <strong>Accesso Riservato</strong>
+                <span>Sala esclusiva, disponibile tutti i giorni per i soci</span>
+              </div>
+            </li>
+          </ul>
+
+          <a href="/personal-trainer" class="btn btn-red sala-cta">
+            Scopri i nostri Personal Trainer
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
         </div>
-        <div class="prog-card">
-          <img
-            src="/fitness-rowing-group.jpg"
-            alt="Sport specific per tennisti TCA"
-            class="prog-card__img"
-          />
-          <div class="prog-card__body">
-            <h3>Sport Specific per Tennisti</h3>
-            <p>Programmi dedicati al tennis: esplosività, agilità laterale, core stability e prevenzione infortuni.</p>
-          </div>
-        </div>
+
       </div>
     </div>
   </section>
@@ -155,7 +178,7 @@ const categories: Category[] = [
                 <div class="course-card" style={`--cat-color: ${cat.color}`}>
                   <div class="course-card__media">
                     <img
-                      src={catImages[cat.id]}
+                      src={course.img}
                       alt={course.name}
                       class="course-card__media-img"
                       loading="lazy"
@@ -259,14 +282,39 @@ const categories: Category[] = [
 </BaseLayout>
 
 <style>
-  /* ── Programmi ── */
-  .content-section {
+  /* ── Sala Attrezzi ── */
+  .sala-section {
     padding: 7vh var(--pad-x);
   }
 
-  .content-section__inner {
+  .sala-section__inner {
     max-width: var(--max-width);
     margin: 0 auto;
+  }
+
+  .sala-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+  }
+
+  .sala-split__media {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sala-split__img {
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    display: block;
+  }
+
+  .sala-split__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
   }
 
   .section-title {
@@ -276,52 +324,77 @@ const categories: Category[] = [
     text-transform: uppercase;
     letter-spacing: -0.01em;
     line-height: 0.95;
-    margin-bottom: 4vh;
+    margin: 0;
   }
 
   .section-title em { color: var(--color-accent); font-style: normal; }
 
-  .prog-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .prog-card {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--color-border);
-    overflow: hidden;
-  }
-
-  .prog-card__img {
-    width: 100%;
-    aspect-ratio: 3/2;
-    object-fit: cover;
-    display: block;
-  }
-
-  .prog-card__body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .prog-card h3 {
-    font-family: var(--font-display);
-    font-size: clamp(1rem, 1.4vw, 1.3rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .prog-card p {
+  .sala-body {
     font-family: var(--font-body);
-    font-size: clamp(13px, 0.95vw, 15px);
+    font-size: clamp(14px, 1.1vw, 17px);
     font-weight: 300;
-    line-height: 1.7;
+    line-height: 1.75;
     color: var(--color-text-light);
+    max-width: 52ch;
+  }
+
+  .sala-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+  }
+
+  .sala-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+  }
+
+  .sala-feat__icon {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    margin-top: 2px;
+  }
+
+  .sala-feat strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(12px, 0.9vw, 14px);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 2px;
+  }
+
+  .sala-feat span {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13.5px);
+    font-weight: 300;
+    color: var(--color-text-light);
+    line-height: 1.4;
+  }
+
+  .sala-cta {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 860px) {
+    .sala-split {
+      grid-template-columns: 1fr;
+    }
+    .sala-split__img {
+      aspect-ratio: 16/9;
+    }
   }
 
   /* ── Corsi di Gruppo ── */
@@ -574,12 +647,10 @@ const categories: Category[] = [
 
   /* ── Responsive ── */
   @media (max-width: 860px) {
-    .prog-grid { grid-template-columns: 1fr 1fr; }
     .course-card { flex: 0 0 calc((100% - 1.25rem) / 2); }
   }
 
   @media (max-width: 640px) {
-    .prog-grid { grid-template-columns: 1fr; }
     .course-card { flex: 0 0 calc(78vw); }
   }
 </style>

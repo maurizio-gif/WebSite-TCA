@@ -1,0 +1,565 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import MembershipSection from "../components/MembershipSection.astro";
+import InfoPratiche from "../components/InfoPratiche.astro";
+
+const pex = (id: string) =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=600&h=700&fit=crop`;
+
+interface Trainer {
+  name: string;
+  role: string;
+  specializations: string[];
+  bio: string;
+  img: string;
+}
+
+const trainers: Trainer[] = [
+  {
+    name: 'Marco R.',
+    role: 'Personal Trainer & Preparatore Atletico',
+    specializations: ['Forza & Potenza', 'Sport Specific Tennis', 'Riabilitazione Funzionale'],
+    bio: 'Laurea in Scienze Motorie e certificazione NSCA-CSCS. Specializzato nella preparazione atletica per tennisti agonisti e amatori, con focus su forza esplosiva e prevenzione infortuni.',
+    img: pex('6456138'),
+  },
+  {
+    name: 'Giulia T.',
+    role: 'Personal Trainer & Istruttrice Corsi',
+    specializations: ['Dimagrimento & Composizione Corporea', 'Pilates Funzionale', 'Allenamento Femminile'],
+    bio: 'Master in Scienze dello Sport e certificazione ACSM. Accompagna le sue allieve verso obiettivi concreti con programmi personalizzati che integrano allenamento e stile di vita.',
+    img: pex('4498362'),
+  },
+  {
+    name: 'Luca M.',
+    role: 'Strength & Conditioning Coach',
+    specializations: ['Powerlifting & Kettlebell', 'Allenamento Over 50', 'Mobilità & Postura'],
+    bio: 'Certificato FIF e StrongFirst. Esperto di allenamento con sovraccarichi e programmi di condizionamento per ogni fascia d\'età. Approccio tecnico, progressivo e orientato ai risultati.',
+    img: pex('1681010'),
+  },
+];
+---
+
+<BaseLayout
+  title="Personal Trainer | Tennis Club Ambrosiano Milano"
+  description="I personal trainer del Tennis Club Ambrosiano: professionisti certificati per programmi di allenamento su misura, potenziamento muscolare e preparazione atletica a Milano."
+>
+  <PageHero
+    eyebrow="Adulti · Preparazione Atletica"
+    title="Personal"
+    titleAccent="Trainer"
+    sub="Professionisti certificati che costruiscono il tuo programma di allenamento partendo dal tuo obiettivo. Nessun protocollo standard: solo lavoro su misura."
+    image="/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif"
+    imageAlt="Personal trainer TCA"
+    ctaLabel="Prenota una sessione"
+  />
+
+  <!-- ── Intro ── -->
+  <section class="intro-section">
+    <div class="intro-section__inner">
+      <div class="intro-split">
+        <div class="intro-split__text">
+          <span class="eyebrow">Il tuo allenamento</span>
+          <h2 class="pt-title">Allenarti bene<br><em>è una scienza.</em></h2>
+          <p>
+            Ogni persona è diversa: storia clinica, obiettivi, tempi di recupero, motivazioni. I nostri personal trainer partono da un assessment iniziale approfondito per costruire un programma che ti porti risultati reali, senza sprecare energia né tempo.
+          </p>
+          <p>
+            Che tu voglia perdere peso, aumentare la forza, prepararti per una gara di tennis o semplicemente muoverti meglio, lavorerai sempre con qualcuno che sa dove vuole portarti.
+          </p>
+        </div>
+        <div class="intro-split__stats">
+          <div class="stat-item">
+            <span class="stat-num">3</span>
+            <span class="stat-label">Personal Trainer<br>certificati</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">1:1</span>
+            <span class="stat-label">Sedute individuali<br>o in coppia</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">60'</span>
+            <span class="stat-label">Durata standard<br>per sessione</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">∞</span>
+            <span class="stat-label">Obiettivi<br>raggiungibili</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Team ── -->
+  <section class="team-section">
+    <div class="team-section__inner">
+      <div class="team-head">
+        <div>
+          <span class="eyebrow">Il Team</span>
+          <h2 class="pt-title">Conosci i tuoi<br><em>trainer.</em></h2>
+        </div>
+        <div class="trainer-nav">
+          <button class="courses-btn" data-dir="-1" data-track="trainers" aria-label="Precedente">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="courses-btn" data-dir="1" data-track="trainers" aria-label="Successivo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="trainer-track-wrap">
+        <div class="trainer-track" data-carousel-id="trainers">
+          {trainers.map((trainer) => (
+            <article class="trainer-card">
+              <div class="trainer-card__media">
+                <img
+                  src={trainer.img}
+                  alt={trainer.name}
+                  class="trainer-card__img"
+                  loading="lazy"
+                />
+              </div>
+              <div class="trainer-card__body">
+                <h3 class="trainer-card__name">{trainer.name}</h3>
+                <p class="trainer-card__role">{trainer.role}</p>
+                <ul class="trainer-card__specs">
+                  {trainer.specializations.map(s => (
+                    <li><span class="spec-tag">{s}</span></li>
+                  ))}
+                </ul>
+                <p class="trainer-card__bio">{trainer.bio}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Come funziona ── -->
+  <section class="flow-section">
+    <div class="flow-section__inner">
+      <span class="eyebrow">Come funziona</span>
+      <h2 class="pt-title">Dal primo giorno<br><em>al tuo obiettivo.</em></h2>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <span class="flow-step__num">01</span>
+          <h3>Assessment iniziale</h3>
+          <p>Incontro gratuito con il trainer per valutare postura, mobilità, forza e definire gli obiettivi.</p>
+        </div>
+        <div class="flow-step">
+          <span class="flow-step__num">02</span>
+          <h3>Programma su misura</h3>
+          <p>Il trainer costruisce un piano periodizzato settimana per settimana, adattato ai tuoi tempi e alla tua condizione.</p>
+        </div>
+        <div class="flow-step">
+          <span class="flow-step__num">03</span>
+          <h3>Allenamento & monitoraggio</h3>
+          <p>Sessioni guidate in sala attrezzi con feedback continuo e aggiornamenti progressivi del programma.</p>
+        </div>
+        <div class="flow-step">
+          <span class="flow-step__num">04</span>
+          <h3>Risultati misurabili</h3>
+          <p>Rivalutazione periodica per tracciare i progressi e aggiustare la rotta. Ogni dato conta.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA contatto ── -->
+  <section class="pt-cta-section">
+    <div class="pt-cta-section__inner">
+      <h2 class="pt-cta-title">Pronto a iniziare?</h2>
+      <p class="pt-cta-sub">Prenota una sessione di assessment gratuita con uno dei nostri trainer. Nessun impegno: solo un'ora per capire come allenarti meglio.</p>
+      <a href="/contatti" class="btn btn-red">Prenota il tuo assessment gratuito</a>
+    </div>
+  </section>
+
+  <MembershipSection />
+  <InfoPratiche />
+</BaseLayout>
+
+<style>
+  /* ── Intro ── */
+  .intro-section {
+    padding: 7vh var(--pad-x);
+  }
+
+  .intro-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .intro-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 6vw, 8rem);
+    align-items: start;
+  }
+
+  .intro-split__text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .intro-split__text p {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-text-light);
+  }
+
+  .pt-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin: 0;
+  }
+
+  .pt-title em { color: var(--color-accent); font-style: normal; }
+
+  .intro-split__stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    align-self: start;
+  }
+
+  .stat-item {
+    background: var(--color-off-white);
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 0.8vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    line-height: 1.4;
+  }
+
+  /* ── Team ── */
+  .team-section {
+    padding: 7vh 0 7vh var(--pad-x);
+    background: var(--color-off-white);
+    overflow: hidden;
+  }
+
+  .team-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .team-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-right: var(--pad-x);
+    margin-bottom: 4vh;
+  }
+
+  .trainer-nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .courses-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--color-border);
+    background: #fff;
+    cursor: pointer;
+    color: var(--color-text);
+    transition: border-color 0.18s, background 0.18s;
+  }
+
+  .courses-btn:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  /* Carousel */
+  .trainer-track-wrap {
+    overflow: hidden;
+  }
+
+  .trainer-track {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-right: var(--pad-x);
+  }
+
+  .trainer-track::-webkit-scrollbar { display: none; }
+
+  .trainer-card {
+    flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+    min-width: 280px;
+    scroll-snap-align: start;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .trainer-card__media {
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: #E5E7EB;
+  }
+
+  .trainer-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .trainer-card:hover .trainer-card__img {
+    transform: scale(1.03);
+  }
+
+  .trainer-card__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+
+  .trainer-card__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text);
+  }
+
+  .trainer-card__role {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13px);
+    font-weight: 400;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .trainer-card__specs {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    margin: 0.25rem 0;
+  }
+
+  .spec-tag {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--color-off-white);
+    color: var(--color-text);
+    padding: 3px 8px;
+  }
+
+  .trainer-card__bio {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13.5px);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-text-light);
+    flex: 1;
+  }
+
+  /* ── Come funziona ── */
+  .flow-section {
+    padding: 7vh var(--pad-x);
+  }
+
+  .flow-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .flow-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 4vh;
+    border: 1px solid var(--color-border);
+  }
+
+  .flow-step {
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    border-right: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .flow-step:last-child { border-right: none; }
+
+  .flow-step__num {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3.5rem);
+    font-weight: 800;
+    color: var(--color-accent);
+    opacity: 0.25;
+    line-height: 1;
+  }
+
+  .flow-step h3 {
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 1.2vw, 1.15rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text);
+  }
+
+  .flow-step p {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13.5px);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-text-light);
+  }
+
+  /* ── CTA ── */
+  .pt-cta-section {
+    padding: 7vh var(--pad-x);
+    background: var(--color-text);
+    text-align: center;
+  }
+
+  .pt-cta-section__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .pt-cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: #fff;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .pt-cta-sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.65);
+    max-width: 52ch;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .trainer-card { flex: 0 0 calc((100% - 1.25rem) / 2); }
+    .flow-steps {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .flow-step:nth-child(2) { border-right: none; }
+    .flow-step:nth-child(1),
+    .flow-step:nth-child(2) {
+      border-bottom: 1px solid var(--color-border);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .intro-split { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .trainer-card { flex: 0 0 calc(100% - 3rem); }
+    .intro-split__stats { grid-template-columns: 1fr 1fr; }
+    .flow-steps { grid-template-columns: 1fr; }
+    .flow-step { border-right: none; border-bottom: 1px solid var(--color-border); }
+    .flow-step:last-child { border-bottom: none; }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll<HTMLButtonElement>('[data-dir][data-track]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const trackId = btn.dataset.track!;
+        const dir = parseInt(btn.dataset.dir!, 10);
+        const track = document.querySelector<HTMLElement>(`[data-carousel-id="${trackId}"]`);
+        if (!track) return;
+        const card = track.querySelector<HTMLElement>('.trainer-card');
+        if (!card) return;
+        const gap = 1.25 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+        const cardW = card.offsetWidth + gap;
+        track.scrollBy({ left: dir * cardW, behavior: 'smooth' });
+      });
+    });
+
+    /* auto-scroll */
+    document.querySelectorAll<HTMLElement>('[data-carousel-id="trainers"]').forEach(track => {
+      let timer: ReturnType<typeof setInterval>;
+      const step = () => {
+        const card = track.querySelector<HTMLElement>('.trainer-card');
+        if (!card) return;
+        const gap = 1.25 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+        const cardW = card.offsetWidth + gap;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        if (track.scrollLeft + cardW >= maxScroll - 1) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          track.scrollBy({ left: cardW, behavior: 'smooth' });
+        }
+      };
+      const start = () => { timer = setInterval(step, 4000); };
+      const stop  = () => clearInterval(timer);
+      track.addEventListener('mouseenter', stop);
+      track.addEventListener('mouseleave', start);
+      track.addEventListener('touchstart', stop, { passive: true });
+      start();
+    });
+  });
+</script>
