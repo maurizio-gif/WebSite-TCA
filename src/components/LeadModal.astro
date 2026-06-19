@@ -1,9 +1,9 @@
 ---
 // Webhook URL per verifica utente esistente (n8n Fase 2)
 // POST { email } → { exists: boolean }
-const WEBHOOK_CHECK = '#TODO-WEBHOOK-CHECK';
-// Webhook submit dati nuovo utente
-const WEBHOOK_LEAD  = '#TODO-WEBHOOK-LEAD';
+const WEBHOOK_CHECK = '';
+// Webhook submit dati / richiesta
+const WEBHOOK_LEAD  = '';
 
 const attivita = [
   { id: 'tennis',     label: 'Tennis' },
@@ -14,17 +14,12 @@ const attivita = [
   { id: 'camps',      label: 'Summer Camps' },
   { id: 'membership', label: 'Membership / Abbonamento' },
 ];
-
-const PHONE     = '+39 02 2641 4392';
-const PHONE_TEL = 'tel:+390226414392';
-const WA_URL    = 'https://wa.me/390226414392'; // TODO: aggiorna numero WA
-const EMAIL_TO  = 'info@tcambrosiano.com';
 ---
 
 <dialog id="modal-contatti" class="lm" aria-labelledby="lm-title">
   <div class="lm__panel">
 
-    <!-- Header fisso -->
+    <!-- ── Header fisso ─────────────────────────────────────────── -->
     <div class="lm__head">
       <div>
         <span class="eyebrow eyebrow--light">Contattaci</span>
@@ -37,7 +32,7 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
       </button>
     </div>
 
-    <!-- Step indicator -->
+    <!-- ── Step indicator ────────────────────────────────────────── -->
     <div class="lm__steps" aria-hidden="true">
       <span class="lm__step is-active" data-step-dot="1">1</span>
       <span class="lm__step-line"></span>
@@ -46,14 +41,28 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
       <span class="lm__step" data-step-dot="3">3</span>
     </div>
 
-    <!-- ─── STEP 1: EMAIL ─────────────────────────────── -->
+    <!-- ─── STEP 1 · Email + attività di interesse ───────────────── -->
     <div class="lm__body" data-step="1">
-      <p class="lm__sub">Inizia con il tuo indirizzo email.</p>
+      <p class="lm__sub">Inserisci la tua email e dicci cosa ti interessa.</p>
+
       <div class="lm__field">
         <label for="lm-email">Email <span aria-hidden="true">*</span></label>
         <input id="lm-email" name="email" type="email" autocomplete="email"
                placeholder="nome@esempio.com" required />
       </div>
+
+      <div>
+        <p class="lm__label-group">Attività di interesse</p>
+        <div class="lm__checks">
+          {attivita.map((a) => (
+            <label class="lm__check-item">
+              <input type="checkbox" name="attivita" value={a.id} />
+              <span>{a.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
       <div class="lm__actions">
         <button class="btn btn-red lm__next" id="lm-step1-next" type="button">
           Continua <span class="lm__arrow">→</span>
@@ -65,7 +74,7 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
       <p class="lm__error" hidden role="alert"></p>
     </div>
 
-    <!-- ─── STEP 2: DATI NUOVO UTENTE ────────────────── -->
+    <!-- ─── STEP 2 · Dati nuovo utente ──────────────────────────── -->
     <div class="lm__body" data-step="2" hidden>
       <p class="lm__sub">Piacere di conoscerti! Aggiungi i tuoi dati per procedere.</p>
 
@@ -102,16 +111,6 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
         </div>
       </div>
 
-      <p class="lm__label-group">Attività di interesse</p>
-      <div class="lm__checks">
-        {attivita.map((a) => (
-          <label class="lm__check-item">
-            <input type="checkbox" name="attivita" value={a.id} />
-            <span>{a.label}</span>
-          </label>
-        ))}
-      </div>
-
       <!-- Doppio consenso -->
       <div class="lm__consent">
         <label class="lm__consent-item">
@@ -141,125 +140,219 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
       <p class="lm__error" hidden role="alert"></p>
     </div>
 
-    <!-- ─── STEP 3: CANALE DI CONTATTO ───────────────── -->
+    <!-- ─── STEP 3 · Scelta azione (= step 2b per utenti esistenti) ─ -->
     <div class="lm__body" data-step="3" hidden>
-      <p class="lm__sub">Come preferisci contattarci?</p>
-      <div class="lm__channels">
-        <button class="lm__channel-btn" data-channel="phone" type="button">
-          <svg class="lm__channel-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M6.6 10.8C7.8 13.2 9.8 15.2 12.2 16.4L14.2 14.4C14.5 14.1 14.9 14 15.3 14.2C16.5 14.6 17.8 14.8 19 14.8C19.6 14.8 20 15.2 20 15.8V19C20 19.6 19.6 20 19 20C10.2 20 3 12.8 3 4C3 3.4 3.4 3 4 3H7.5C8.1 3 8.5 3.4 8.5 4C8.5 5.3 8.7 6.5 9.1 7.7C9.2 8.1 9.1 8.5 8.8 8.8L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-          <span class="lm__channel-label">TELEFONO</span>
-          <span class="lm__channel-sub">{PHONE}</span>
+      <p class="lm__sub">Come possiamo aiutarti?</p>
+
+      <div class="lm__action-choice">
+
+        <button class="lm__action-btn" data-action="callback" type="button">
+          <span class="lm__action-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M6.6 10.8C7.8 13.2 9.8 15.2 12.2 16.4L14.2 14.4C14.5 14.1 14.9 14 15.3 14.2C16.5 14.6 17.8 14.8 19 14.8C19.6 14.8 20 15.2 20 15.8V19C20 19.6 19.6 20 19 20C10.2 20 3 12.8 3 4C3 3.4 3.4 3 4 3H7.5C8.1 3 8.5 3.4 8.5 4C8.5 5.3 8.7 6.5 9.1 7.7C9.2 8.1 9.1 8.5 8.8 8.8L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="lm__action-texts">
+            <span class="lm__action-label">RICHIAMAMI</span>
+            <span class="lm__action-sub">Scegli giorno e orario — ti chiamiamo noi</span>
+          </span>
+          <span class="lm__action-arr">→</span>
         </button>
 
-        <button class="lm__channel-btn" data-channel="email" type="button">
-          <svg class="lm__channel-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="1.6"/>
-            <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-          <span class="lm__channel-label">EMAIL</span>
-          <span class="lm__channel-sub">{EMAIL_TO}</span>
+        <button class="lm__action-btn" data-action="visit" type="button">
+          <span class="lm__action-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+          </span>
+          <span class="lm__action-texts">
+            <span class="lm__action-label">PRENOTA UNA VISITA IN SEDE</span>
+            <span class="lm__action-sub">Vieni a trovarci al Club — ti mostriamo tutto</span>
+          </span>
+          <span class="lm__action-arr">→</span>
         </button>
 
-        <button class="lm__channel-btn" data-channel="whatsapp" type="button">
-          <svg class="lm__channel-icon" width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0034 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.9C9.87812 3.30493 11.1801 2.99659 12.5 3H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="lm__channel-label">WHATSAPP</span>
-          <span class="lm__channel-sub">Risposta rapida</span>
+        <button class="lm__action-btn" data-action="message" type="button">
+          <span class="lm__action-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="lm__action-texts">
+            <span class="lm__action-label">SCRIVI UN MESSAGGIO</span>
+            <span class="lm__action-sub">Ti risponderemo via email al più presto</span>
+          </span>
+          <span class="lm__action-arr">→</span>
         </button>
+
       </div>
+
+      <button class="lm__back lm__back--center" id="lm-step3-back" type="button">← Indietro</button>
     </div>
 
-    <!-- ─── STEP 4a: TELEFONO ─────────────────────────── -->
-    <div class="lm__body" data-step="4-phone" hidden>
-      <p class="lm__sub">Siamo disponibili dal lunedì al venerdì, 9:00–19:00.</p>
-      <a class="btn btn-red lm__cta-big" href={PHONE_TEL}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M6.6 10.8C7.8 13.2 9.8 15.2 12.2 16.4L14.2 14.4C14.5 14.1 14.9 14 15.3 14.2C16.5 14.6 17.8 14.8 19 14.8C19.6 14.8 20 15.2 20 15.8V19C20 19.6 19.6 20 19 20C10.2 20 3 12.8 3 4C3 3.4 3.4 3 4 3H7.5C8.1 3 8.5 3.4 8.5 4C8.5 5.3 8.7 6.5 9.1 7.7C9.2 8.1 9.1 8.5 8.8 8.8L6.6 10.8Z" stroke="currentColor" stroke-width="1.8"/>
-        </svg>
-        Chiama ora — {PHONE}
-      </a>
-      <button class="lm__back lm__back--center" data-step-back="3" type="button">← Scegli altro canale</button>
-    </div>
+    <!-- ─── STEP 4a · RICHIAMAMI ─────────────────────────────────── -->
+    <div class="lm__body" data-step="4-callback" hidden>
+      <p class="lm__sub">Raccontaci come possiamo aiutarti e scegli quando richiamarti.</p>
 
-    <!-- ─── STEP 4b: EMAIL ────────────────────────────── -->
-    <div class="lm__body" data-step="4-email" hidden>
-      <p class="lm__sub">Scrivi il tuo messaggio e ti risponderemo entro 24 ore.</p>
       <div class="lm__field">
-        <label for="lm-msg">Messaggio <span aria-hidden="true">*</span></label>
-        <textarea id="lm-msg" name="messaggio" rows="5"
-                  placeholder="Raccontaci cosa cerchi…" required></textarea>
+        <label for="lm-cb-reason">Motivo della chiamata <span aria-hidden="true">*</span></label>
+        <textarea id="lm-cb-reason" name="cb-reason" rows="4"
+                  placeholder="Es. vorrei informazioni sull'abbonamento, ho già giocato e voglio riprendere, mi interessa la scuola tennis per mio figlio…"></textarea>
       </div>
+
+      <div class="lm__cal">
+        <p class="lm__label-group">Scegli il giorno</p>
+        <div class="lm__cal-dates" id="lm-cal-dates-cb"></div>
+        <p class="lm__label-group lm__label-group--slots" id="lm-slots-label-cb" hidden>Scegli l'orario</p>
+        <div class="lm__cal-slots" id="lm-cal-slots-cb"></div>
+      </div>
+
       <div class="lm__actions">
         <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
-        <button class="btn btn-red lm__next" id="lm-step4e-send" type="button">
-          Invia messaggio <span class="lm__arrow">→</span>
+        <button class="btn btn-red" id="lm-cb-confirm" type="button" disabled>
+          Conferma <span class="lm__arrow">→</span>
         </button>
       </div>
       <p class="lm__error" hidden role="alert"></p>
     </div>
 
-    <!-- ─── STEP 4c: WHATSAPP ─────────────────────────── -->
-    <div class="lm__body" data-step="4-whatsapp" hidden>
-      <p class="lm__sub">Apriremo una conversazione WhatsApp. Rispondiamo di solito entro pochi minuti.</p>
-      <a class="btn lm__cta-big lm__cta-wa" href={WA_URL} target="_blank" rel="noopener">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-          <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0034 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.9C9.87812 3.30493 11.1801 2.99659 12.5 3H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-        </svg>
-        Apri WhatsApp
-      </a>
-      <button class="lm__back lm__back--center" data-step-back="3" type="button">← Scegli altro canale</button>
+    <!-- ─── STEP 4b · PRENOTA VISITA IN SEDE ────────────────────── -->
+    <div class="lm__body" data-step="4-visit" hidden>
+      <p class="lm__sub">Descrivici il motivo della visita e scegli giorno e orario di arrivo.</p>
+
+      <div class="lm__field">
+        <label for="lm-visit-reason">Motivo della visita <span aria-hidden="true">*</span></label>
+        <textarea id="lm-visit-reason" name="visit-reason" rows="4"
+                  placeholder="Es. voglio visitare la struttura, mi interessa iscrivermi al padel, vorrei parlare della membership famiglia…"></textarea>
+      </div>
+
+      <div class="lm__cal">
+        <p class="lm__label-group">Scegli il giorno</p>
+        <div class="lm__cal-dates" id="lm-cal-dates-visit"></div>
+        <p class="lm__label-group lm__label-group--slots" id="lm-slots-label-visit" hidden>Scegli l'orario</p>
+        <div class="lm__cal-slots" id="lm-cal-slots-visit"></div>
+      </div>
+
+      <div class="lm__actions">
+        <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
+        <button class="btn btn-red" id="lm-visit-confirm" type="button" disabled>
+          Conferma visita <span class="lm__arrow">→</span>
+        </button>
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
     </div>
 
-    <!-- ─── SUCCESS ───────────────────────────────────── -->
-    <div class="lm__body lm__success" data-step="success" hidden aria-live="polite">
-      <div class="lm__success-icon" aria-hidden="true">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <path d="M5 14L11 20L23 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- ─── STEP 4c · SCRIVI UN MESSAGGIO ───────────────────────── -->
+    <div class="lm__body" data-step="4-message" hidden>
+      <p class="lm__sub">Scrivici la tua richiesta: ti risponderemo nel più breve tempo possibile.</p>
+
+      <div class="lm__field">
+        <label for="lm-msg-text">La tua richiesta <span aria-hidden="true">*</span></label>
+        <textarea id="lm-msg-text" name="message" rows="6"
+                  placeholder="Raccontaci cosa cerchi, cosa ti interessa o qualsiasi domanda sul Club, sulle attività o sulle tariffe…"></textarea>
+      </div>
+
+      <div class="lm__actions">
+        <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
+        <button class="btn btn-red" id="lm-msg-send" type="button">
+          Invia richiesta <span class="lm__arrow">→</span>
+        </button>
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+    </div>
+
+    <!-- ─── CONFERMA · RICHIAMAMI ─────────────────────────────────── -->
+    <div class="lm__body lm__confirm" data-step="confirm-callback" hidden aria-live="polite">
+      <div class="lm__confirm-check" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
-      <h3 class="lm__success-title">Messaggio inviato!</h3>
-      <p class="lm__success-text">Ti risponderemo entro 24 ore.<br>A presto al TCA.</p>
-      <button class="btn btn-red" data-lm-close>Chiudi</button>
+      <h3 class="lm__confirm-title">Perfetto!<br><em>Ti richiamiamo noi.</em></h3>
+      <div class="lm__confirm-when" id="lm-cb-when"><!-- popolato via JS --></div>
+      <div class="lm__confirm-summary" id="lm-cb-summary"><!-- popolato via JS --></div>
+      <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
     </div>
 
-  </div>
+    <!-- ─── CONFERMA · VISITA IN SEDE ────────────────────────────── -->
+    <div class="lm__body lm__confirm" data-step="confirm-visit" hidden aria-live="polite">
+      <div class="lm__confirm-check" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 class="lm__confirm-title">Ti aspettiamo<br><em>al Club!</em></h3>
+      <div class="lm__confirm-when" id="lm-visit-when"><!-- popolato via JS --></div>
+      <div class="lm__confirm-summary" id="lm-visit-summary"><!-- popolato via JS --></div>
+      <div class="lm__confirm-dir">
+        <p class="lm__confirm-dir-title">Come raggiungerci</p>
+        <ul class="lm__confirm-dir-list">
+          <li><strong>Tennis Club Ambrosiano — Via Feltre 33, 20134 Milano</strong></li>
+          <li>🚇 Metro Udine (Linea 2 Verde) — pochi minuti a piedi dall'uscita</li>
+          <li>🚗 Ampio parcheggio gratuito disponibile in struttura</li>
+          <li>🚌 Bus linee 62 e 66 — fermata Via Feltre</li>
+        </ul>
+        <div class="lm__confirm-dir-contacts">
+          <a href="tel:+390226414392">📞 +39 02 2641 4392</a>
+          <a href="mailto:info@tcambrosiano.com">✉️ info@tcambrosiano.com</a>
+        </div>
+        <a class="btn btn-outline--dark lm__confirm-map-btn"
+           href="https://maps.google.com/?q=Via+Feltre+33,+20134+Milano"
+           target="_blank" rel="noopener">Apri in Google Maps →</a>
+      </div>
+      <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
+    </div>
+
+    <!-- ─── CONFERMA · MESSAGGIO ─────────────────────────────────── -->
+    <div class="lm__body lm__confirm" data-step="confirm-message" hidden aria-live="polite">
+      <div class="lm__confirm-check" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 class="lm__confirm-title">Messaggio<br><em>ricevuto!</em></h3>
+      <div class="lm__confirm-summary" id="lm-msg-summary"><!-- popolato via JS --></div>
+      <p class="lm__confirm-note">
+        Ti risponderemo all'indirizzo indicato nel più breve tempo possibile.<br>A presto al TCA!
+      </p>
+      <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
+    </div>
+
+  </div><!-- /.lm__panel -->
 </dialog>
 
 <style>
-  /* ── Palette sabbiata ──────────────────────────────────────────
-     sfondo caldo: bianco con sfumatura rossastra molto leggera
-  ────────────────────────────────────────────────────────────── */
+  /* ── Palette locale ───────────────────────────────────────────── */
   :root {
-    --lm-bg:        #F4EDE8;   /* sabbia calda con nota rossastra */
-    --lm-bg-head:   #EDE4DE;   /* header leggermente più scuro */
-    --lm-border:    rgba(139,26,26,0.12); /* rosso TCA trasparente */
-    --lm-text:      #1A1A1A;
-    --lm-text-sub:  #6B5C57;
-    --lm-text-dim:  rgba(90,60,55,0.5);
-    --lm-input-bg:  #FBF7F5;
-    --lm-input-bd:  rgba(139,26,26,0.18);
+    --lm-bg:       #F4EDE8;
+    --lm-bg-head:  #EDE4DE;
+    --lm-border:   rgba(139,26,26,0.12);
+    --lm-text:     #1A1A1A;
+    --lm-text-sub: #6B5C57;
+    --lm-text-dim: rgba(90,60,55,0.5);
+    --lm-input-bg: #FBF7F5;
+    --lm-input-bd: rgba(139,26,26,0.18);
   }
 
-  /* ── Dialog container ── */
+  /* ── Dialog ──────────────────────────────────────────────────── */
   .lm {
     border: none;
     padding: 0;
     background: transparent;
-    max-width: min(94vw, 620px);
+    max-width: min(96vw, 660px);
     width: 100%;
     margin: auto;
   }
 
   .lm::backdrop {
-    background: rgba(0, 0, 0, 0.65);
+    background: rgba(0,0,0,0.65);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
   }
 
-  /* ── Panel ── */
+  /* ── Panel ───────────────────────────────────────────────────── */
   .lm__panel {
     background: var(--lm-bg);
     color: var(--lm-text);
@@ -269,7 +362,7 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     overflow-y: auto;
   }
 
-  /* ── Header ── */
+  /* ── Header ──────────────────────────────────────────────────── */
   .lm__head {
     display: flex;
     align-items: flex-start;
@@ -309,7 +402,7 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
   }
   .lm__close:hover { border-color: var(--color-accent); color: var(--color-accent); }
 
-  /* ── Step indicator ── */
+  /* ── Step indicator ──────────────────────────────────────────── */
   .lm__steps {
     display: flex;
     align-items: center;
@@ -349,7 +442,7 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     margin: 0 6px;
   }
 
-  /* ── Body steps ── */
+  /* ── Body step ───────────────────────────────────────────────── */
   .lm__body {
     padding: 1.8rem 2rem 2rem;
     display: flex;
@@ -366,19 +459,14 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     margin: 0;
   }
 
-  /* ── Form fields ── */
+  /* ── Campi form ──────────────────────────────────────────────── */
   .lm__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
 
-  .lm__field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
+  .lm__field { display: flex; flex-direction: column; gap: 6px; }
   .lm__field--full { grid-column: 1 / -1; }
 
   .lm__field label,
@@ -389,6 +477,8 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     color: var(--lm-text-sub);
     margin: 0;
   }
+
+  .lm__label-group--slots { margin-top: 0.5rem; }
 
   .lm__field label span { color: var(--color-accent); }
 
@@ -418,13 +508,10 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     background: #fff5f5 !important;
   }
 
-  .lm__field textarea { resize: vertical; min-height: 110px; }
+  .lm__field textarea { resize: vertical; min-height: 100px; }
 
-  /* ── Tel con prefisso ── */
-  .lm__tel-wrap {
-    display: flex;
-    gap: 0;
-  }
+  /* ── Telefono con prefisso ───────────────────────────────────── */
+  .lm__tel-wrap { display: flex; }
 
   .lm__tel-prefix {
     font-family: var(--font-body);
@@ -436,7 +523,6 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     background: var(--lm-input-bg);
     color: var(--lm-text);
     flex-shrink: 0;
-    width: auto;
     min-width: 90px;
     cursor: pointer;
     -webkit-appearance: none; appearance: none;
@@ -446,30 +532,13 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     padding-right: 22px;
     transition: border-color 0.18s;
   }
-
-  .lm__tel-prefix:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    z-index: 1;
-  }
-
-  .lm__tel-wrap input[type="tel"] {
-    flex: 1;
-    min-width: 0;
-    border-left: 1px solid var(--lm-input-bd) !important;
-  }
-
+  .lm__tel-prefix:focus { outline: none; border-color: var(--color-accent); z-index: 1; }
+  .lm__tel-wrap input[type="tel"] { flex: 1; min-width: 0; border-left: 1px solid var(--lm-input-bd) !important; }
   .lm__tel-wrap:focus-within .lm__tel-prefix,
-  .lm__tel-wrap:focus-within input[type="tel"] {
-    border-color: var(--color-accent);
-  }
+  .lm__tel-wrap:focus-within input[type="tel"] { border-color: var(--color-accent); }
 
-  /* ── Attività checkboxes ── */
-  .lm__checks {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+  /* ── Checkboxes attività ─────────────────────────────────────── */
+  .lm__checks { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
   .lm__check-item {
     display: flex;
@@ -487,19 +556,14 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
   }
 
   .lm__check-item:hover { border-color: var(--color-accent); color: var(--lm-text); }
-
-  .lm__check-item input[type="checkbox"] {
-    accent-color: var(--color-accent);
-    flex-shrink: 0;
-  }
-
+  .lm__check-item input[type="checkbox"] { accent-color: var(--color-accent); flex-shrink: 0; }
   .lm__check-item:has(input:checked) {
     border-color: var(--color-accent);
     background: rgba(139,26,26,0.06);
     color: var(--color-accent);
   }
 
-  /* ── Consensi ── */
+  /* ── Consensi ────────────────────────────────────────────────── */
   .lm__consent {
     display: flex;
     flex-direction: column;
@@ -533,7 +597,7 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
   .lm__consent-item span strong { color: var(--lm-text-sub); font-weight: 500; }
   .lm__consent-item span em { color: var(--lm-text-dim); font-style: normal; }
 
-  /* ── Actions / navigation ── */
+  /* ── Actions row (navigazione) ───────────────────────────────── */
   .lm__actions {
     display: flex;
     align-items: center;
@@ -553,13 +617,14 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     transition: color 0.18s;
   }
   .lm__back:hover { color: var(--lm-text); }
-  .lm__back--center { align-self: center; margin-top: 0.5rem; }
+  .lm__back--center { align-self: center; }
 
   .lm__next { gap: 0.4rem; }
   .lm__arrow { display: inline-block; transition: transform 0.18s; }
-  .lm__next:hover .lm__arrow { transform: translateX(4px); }
+  .lm__next:hover .lm__arrow,
+  .btn:hover .lm__arrow { transform: translateX(4px); }
 
-  /* ── Loader ── */
+  /* ── Loader ──────────────────────────────────────────────────── */
   .lm__loader {
     display: flex;
     align-items: center;
@@ -588,18 +653,14 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     margin: 0;
   }
 
-  /* ── Canali ── */
-  .lm__channels {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
+  /* ── Pulsanti scelta azione (step 3) ─────────────────────────── */
+  .lm__action-choice { display: flex; flex-direction: column; gap: 2px; }
 
-  .lm__channel-btn {
+  .lm__action-btn {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1.1rem 1rem;
+    padding: 1.15rem 1rem;
     background: var(--lm-input-bg);
     border: 1px solid var(--lm-input-bd);
     color: var(--lm-text);
@@ -607,9 +668,10 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     text-align: left;
     transition: background 0.18s, border-color 0.18s;
     position: relative;
+    width: 100%;
   }
 
-  .lm__channel-btn::before {
+  .lm__action-btn::before {
     content: '';
     position: absolute;
     left: 0; top: 0; bottom: 0;
@@ -619,166 +681,431 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     transition: transform 0.22s cubic-bezier(0.22, 0.68, 0, 1.1);
   }
 
-  .lm__channel-btn:hover {
-    background: #fff;
-    border-color: rgba(139,26,26,0.3);
-  }
+  .lm__action-btn:hover { background: #fff; border-color: rgba(139,26,26,0.3); }
+  .lm__action-btn:hover::before { transform: scaleY(1); }
 
-  .lm__channel-btn:hover::before { transform: scaleY(1); }
-
-  .lm__channel-icon {
+  .lm__action-icon {
     flex-shrink: 0;
     color: var(--color-accent);
-    opacity: 0.7;
+    opacity: 0.75;
+    display: flex;
+    align-items: center;
   }
 
-  .lm__channel-label {
+  .lm__action-texts { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+
+  .lm__action-label {
     font-family: var(--font-display);
-    font-size: clamp(1rem, 2vw, 1.35rem);
+    font-size: clamp(0.95rem, 1.8vw, 1.2rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
-    flex: 1;
     color: var(--lm-text);
+    line-height: 1;
   }
 
-  .lm__channel-sub {
+  .lm__action-sub {
     font-family: var(--font-body);
     font-size: 12px;
     font-weight: 300;
     color: var(--lm-text-dim);
-    white-space: nowrap;
+    line-height: 1.4;
   }
 
-  /* ── CTA grande (phone / wa) ── */
-  .lm__cta-big {
-    display: inline-flex;
+  .lm__action-arr {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0;
+    transition: opacity 0.18s, transform 0.18s;
+    flex-shrink: 0;
+  }
+
+  .lm__action-btn:hover .lm__action-arr { opacity: 1; transform: translateX(3px); }
+
+  /* ── Calendario ──────────────────────────────────────────────── */
+  .lm__cal { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .lm__cal-dates {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--lm-input-bd) transparent;
+  }
+
+  .lm__cal-dates::-webkit-scrollbar { height: 4px; }
+  .lm__cal-dates::-webkit-scrollbar-track { background: transparent; }
+  .lm__cal-dates::-webkit-scrollbar-thumb { background: var(--lm-input-bd); border-radius: 2px; }
+
+  .lm__cal-date-btn {
+    flex-shrink: 0;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    width: 100%;
-    padding: 1rem 1.5rem;
-    font-size: clamp(13px, 1vw, 15px);
+    gap: 2px;
+    padding: 10px 4px;
+    background: var(--lm-input-bg);
+    border: 1px solid var(--lm-input-bd);
+    cursor: pointer;
+    color: var(--lm-text);
+    transition: border-color 0.15s, background 0.15s;
   }
 
-  .lm__cta-wa {
-    background: #25D366;
-    border-color: #25D366;
-    color: #fff;
-  }
-  .lm__cta-wa:hover { background: #1fba59; border-color: #1fba59; }
+  .lm__cal-date-btn:hover { border-color: var(--color-accent); background: #fff; }
+  .lm__cal-date-btn.is-active { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
 
-  /* ── Success ── */
-  .lm__success {
-    align-items: center;
+  .lm__cal-date-day {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7;
+  }
+
+  .lm__cal-date-num {
+    font-family: var(--font-display);
+    font-size: 1.45rem; font-weight: 800; line-height: 1;
+  }
+
+  .lm__cal-date-month {
+    font-family: var(--font-body);
+    font-size: 10px; font-weight: 300; opacity: 0.7;
+  }
+
+  .lm__cal-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-height: 176px;
+    overflow-y: auto;
+    padding: 2px 0 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--lm-input-bd) transparent;
+  }
+
+  .lm__cal-slots::-webkit-scrollbar { width: 4px; }
+  .lm__cal-slots::-webkit-scrollbar-track { background: transparent; }
+  .lm__cal-slots::-webkit-scrollbar-thumb { background: var(--lm-input-bd); border-radius: 2px; }
+
+  .lm__cal-slot-btn {
+    font-family: var(--font-body);
+    font-size: 12px; font-weight: 400;
+    padding: 6px 10px;
+    background: var(--lm-input-bg);
+    border: 1px solid var(--lm-input-bd);
+    cursor: pointer;
+    color: var(--lm-text);
+    transition: border-color 0.12s, background 0.12s, color 0.12s;
+    min-width: 60px;
     text-align: center;
-    padding: 3rem 2rem;
   }
 
-  .lm__success-icon {
-    width: 4rem; height: 4rem;
+  .lm__cal-slot-btn:hover { border-color: var(--color-accent); background: #fff; }
+  .lm__cal-slot-btn.is-active { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+
+  /* ── Schermate di conferma ───────────────────────────────────── */
+  .lm__confirm { align-items: stretch; gap: 1.4rem; }
+
+  .lm__confirm-check {
+    width: 3.5rem; height: 3.5rem;
     border: 2px solid var(--color-accent);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     color: var(--color-accent);
+    align-self: flex-start;
   }
 
-  .lm__success-title {
+  .lm__confirm-title {
     font-family: var(--font-display);
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    font-weight: 800; text-transform: uppercase;
-    color: var(--lm-text); margin: 0;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
+    color: var(--lm-text);
+    margin: 0;
   }
 
-  .lm__success-text {
+  .lm__confirm-title em { color: var(--color-accent); font-style: normal; }
+
+  /* Riquadro data/ora in evidenza */
+  .lm__confirm-when {
+    background: rgba(139,26,26,0.06);
+    border: 1px solid rgba(139,26,26,0.18);
+    border-left: 3px solid var(--color-accent);
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .lm__confirm-when-row { display: flex; flex-direction: column; gap: 2px; }
+
+  .lm__confirm-when-label {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .lm__confirm-when-val {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--lm-text);
+    line-height: 1.1;
+  }
+
+  /* Tabella riepilogo dati */
+  .lm__confirm-summary {
+    border: 1px solid var(--lm-border);
+    background: var(--lm-input-bg);
+  }
+
+  .lm__confirm-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--lm-border);
+    font-family: var(--font-body);
+    font-size: 13px;
+    align-items: start;
+  }
+
+  .lm__confirm-row:last-child { border-bottom: none; }
+
+  .lm__confirm-row > span:first-child {
+    font-weight: 700;
+    color: var(--lm-text-sub);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding-top: 1px;
+  }
+
+  .lm__confirm-row > span:last-child {
+    font-weight: 300;
+    color: var(--lm-text);
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
+  /* Indicazioni sede */
+  .lm__confirm-dir {
+    border: 1px solid var(--lm-border);
+    background: var(--lm-input-bg);
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .lm__confirm-dir-title {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0;
+  }
+
+  .lm__confirm-dir-list {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.9vw, 13px);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--lm-text);
+    padding: 0; margin: 0;
+    list-style: none;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+
+  .lm__confirm-dir-contacts {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .lm__confirm-dir-contacts a {
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 400;
+    color: var(--lm-text);
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+  .lm__confirm-dir-contacts a:hover { color: var(--color-accent); }
+
+  .lm__confirm-map-btn {
+    align-self: flex-start;
+    font-size: 12px;
+    padding: 0.5rem 1rem;
+  }
+
+  .lm__confirm-note {
     font-family: var(--font-body);
     font-size: clamp(13px, 0.95vw, 15px);
-    font-weight: 300; line-height: 1.7;
+    font-weight: 300;
+    line-height: 1.7;
     color: var(--lm-text-sub);
+    margin: 0;
   }
 
-  /* Fix: display:flex non deve sovrascrivere [hidden] */
-  .lm__body[hidden]   { display: none !important; }
-  .lm__loader[hidden] { display: none !important; }
-  .lm__error[hidden]  { display: none !important; }
+  .lm__confirm-cta { width: 100%; justify-content: center; }
 
-  /* ── Mobile ── */
+  /* ── Fix: [hidden] non deve essere sovrascritto da display:flex ─ */
+  .lm__body[hidden]         { display: none !important; }
+  .lm__loader[hidden]       { display: none !important; }
+  .lm__error[hidden]        { display: none !important; }
+  .lm__label-group[hidden]  { display: none !important; }
+
+  /* ── Mobile ──────────────────────────────────────────────────── */
   @media (max-width: 560px) {
     .lm__head  { padding: 1.4rem 1.2rem 1.2rem; }
     .lm__body  { padding: 1.4rem 1.2rem 1.6rem; }
     .lm__steps { padding: 0.75rem 1.2rem; }
     .lm__grid  { grid-template-columns: 1fr; }
-    .lm__channel-sub { display: none; }
+    .lm__action-sub { display: none; }
+    .lm__confirm-row { grid-template-columns: 90px 1fr; }
   }
 </style>
 
 <script>
-  // ─── Costanti webhook (TODO: sostituire con URL reali) ────────────────────
-  const WEBHOOK_CHECK = '';  // POST {email} → {exists: bool}
-  const WEBHOOK_LEAD  = '';  // POST dati utente
+  // ── Costanti webhook (TODO: sostituire con URL reali) ────────────
+  var WEBHOOK_CHECK = '';
+  var WEBHOOK_LEAD  = '';
 
-  // ─── State ────────────────────────────────────────────────────────────────
-  let collectedData = {
-    email: '', nome: '', cognome: '', cellulare: '',
-    attivita: [], privacy: false, marketing: false, isNewUser: true,
+  // ── Lookup label attività ────────────────────────────────────────
+  var ATTIVITA_LABELS = {
+    tennis:     'Tennis',
+    padel:      'Padel / Pickleball',
+    prep:       'Preparazione Atletica',
+    scuola:     'Scuola Tennis (bambini)',
+    agonistica: 'Agonistica Tennis',
+    camps:      'Summer Camps',
+    membership: 'Membership / Abbonamento',
   };
 
-  // ─── Helpers ──────────────────────────────────────────────────────────────
-  const modal    = document.getElementById('modal-contatti');
-  const stepDots = modal.querySelectorAll('[data-step-dot]');
+  // ── Localizzazione ───────────────────────────────────────────────
+  var DAYS_SHORT   = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+  var DAYS_LONG    = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+  var MONTHS_SHORT = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+  var MONTHS_LONG  = ['gennaio','febbraio','marzo','aprile','maggio','giugno',
+                      'luglio','agosto','settembre','ottobre','novembre','dicembre'];
+
+  function fmtDateLong(d) {
+    return DAYS_LONG[d.getDay()] + ' ' + d.getDate() + ' ' +
+           MONTHS_LONG[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  // ── Stato globale ────────────────────────────────────────────────
+  var state = {
+    email: '', nome: '', cognome: '', cellulare: '',
+    attivita: [], privacy: false, marketing: false, isNewUser: true,
+    callbackDate: null, callbackTime: null, callbackReason: '',
+    visitDate: null,    visitTime: null,    visitReason: '',
+    messageText: '',
+  };
+
+  // ── Riferimenti DOM ──────────────────────────────────────────────
+  var modal    = document.getElementById('modal-contatti');
+  var stepsBar = modal.querySelector('.lm__steps');
+  var stepDots = modal.querySelectorAll('[data-step-dot]');
+
+  // ── Navigazione step ─────────────────────────────────────────────
+  function showStep(n, activeDot) {
+    var key = String(n);
+    modal.querySelectorAll('[data-step]').forEach(function(el) {
+      el.hidden = (el.dataset.step !== key);
+    });
+
+    var isMain = (key === '1' || key === '2' || key === '3');
+    stepsBar.hidden = !isMain;
+
+    if (isMain && activeDot !== undefined) {
+      stepDots.forEach(function(dot) {
+        var d = parseInt(dot.dataset.stepDot, 10);
+        dot.classList.toggle('is-active', d === activeDot);
+        dot.classList.toggle('is-done',   d < activeDot);
+        if (d >= activeDot) dot.classList.remove('is-done');
+        if (d !== activeDot) dot.classList.remove('is-active');
+      });
+    }
+  }
 
   function getStep(n) {
     return modal.querySelector('[data-step="' + n + '"]');
   }
 
-  function showStep(n, activeDot) {
-    modal.querySelectorAll('[data-step]').forEach(function(el) {
-      el.hidden = el.dataset.step !== String(n);
-    });
-    if (activeDot !== undefined) {
-      stepDots.forEach(function(dot) {
-        const d = parseInt(dot.dataset.stepDot);
-        dot.classList.toggle('is-active', d === activeDot);
-        dot.classList.toggle('is-done',   d <  activeDot);
-      });
-    }
-    const stepsBar = modal.querySelector('.lm__steps');
-    if (stepsBar) stepsBar.hidden = (n === 'success');
-  }
-
   function showError(stepEl, msg) {
-    const err = stepEl.querySelector('.lm__error');
+    var err = stepEl.querySelector('.lm__error');
     if (!err) return;
     err.textContent = msg;
     err.hidden = false;
   }
 
   function clearError(stepEl) {
-    const err = stepEl.querySelector('.lm__error');
+    var err = stepEl.querySelector('.lm__error');
     if (err) err.hidden = true;
   }
 
-  // ─── Open modal ───────────────────────────────────────────────────────────
+  function isValidEmail(v) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Reset / chiusura ─────────────────────────────────────────────
+  function closeAndReset() {
+    modal.close();
+    state = {
+      email:'', nome:'', cognome:'', cellulare:'',
+      attivita:[], privacy:false, marketing:false, isNewUser:true,
+      callbackDate:null, callbackTime:null, callbackReason:'',
+      visitDate:null, visitTime:null, visitReason:'', messageText:'',
+    };
+
+    // Svuota campi testo
+    ['#lm-email','#lm-nome','#lm-cognome','#lm-cell',
+     '#lm-cb-reason','#lm-visit-reason','#lm-msg-text'].forEach(function(sel) {
+      var el = modal.querySelector(sel);
+      if (el) el.value = '';
+    });
+    modal.querySelectorAll('input[type="checkbox"]').forEach(function(c) { c.checked = false; });
+
+    // Svuota calendari
+    ['lm-cal-dates-cb','lm-cal-slots-cb','lm-cal-dates-visit','lm-cal-slots-visit']
+      .forEach(function(id) { var el = document.getElementById(id); if (el) el.innerHTML = ''; });
+    ['lm-slots-label-cb','lm-slots-label-visit']
+      .forEach(function(id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+
+    var cbBtn = document.getElementById('lm-cb-confirm');
+    if (cbBtn) cbBtn.disabled = true;
+    var vBtn = document.getElementById('lm-visit-confirm');
+    if (vBtn) vBtn.disabled = true;
+
+    showStep(1, 1);
+  }
+
+  // ── Apertura ─────────────────────────────────────────────────────
   document.addEventListener('click', function(e) {
-    const trigger = e.target.closest('[data-open-modal]');
+    var trigger = e.target.closest('[data-open-modal]');
     if (trigger && trigger.dataset.openModal === 'modal-contatti') {
       modal.showModal();
       showStep(1, 1);
     }
   });
 
-  // ─── Close ────────────────────────────────────────────────────────────────
-  function closeAndReset() {
-    modal.close();
-    collectedData = { email:'', nome:'', cognome:'', cellulare:'', attivita:[], privacy:false, marketing:false, isNewUser:true };
-    ['#lm-email','#lm-nome','#lm-cognome','#lm-cell','#lm-msg'].forEach(function(sel) {
-      const el = modal.querySelector(sel);
-      if (el) el.value = '';
-    });
-    modal.querySelectorAll('input[type="checkbox"]').forEach(function(c) { c.checked = false; });
-    showStep(1, 1);
-  }
-
+  // ── Chiusura ─────────────────────────────────────────────────────
   document.addEventListener('click', function(e) {
     if (e.target.closest('[data-lm-close]')) closeAndReset();
   });
@@ -787,42 +1114,36 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     if (e.target === modal) closeAndReset();
   });
 
-  // ─── Step back generico ───────────────────────────────────────────────────
+  // ── Back generico via data-step-back ─────────────────────────────
   modal.addEventListener('click', function(e) {
-    const btn = e.target.closest('[data-step-back]');
+    var btn = e.target.closest('[data-step-back]');
     if (!btn) return;
-    const target = btn.dataset.stepBack;
-    const dot = target === '3' ? 3 : 2;
+    var target = btn.dataset.stepBack;
+    var dot = parseInt(target, 10) || 3;
     showStep(target, dot);
   });
 
-  // ─── STEP 1 → verifica email ──────────────────────────────────────────────
-  // Regex RFC-5322 semplificata: verifica presenza di @, dominio e TLD
-  function isValidEmail(v) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
-  }
-
-  // Feedback inline sull'input email mentre si digita
+  // ═══════════════════════════════════════════════════════════════
+  // STEP 1 — Email + attività
+  // ═══════════════════════════════════════════════════════════════
   var emailInput = modal.querySelector('#lm-email');
+
   emailInput.addEventListener('blur', function() {
-    if (emailInput.value && !isValidEmail(emailInput.value)) {
+    if (emailInput.value && !isValidEmail(emailInput.value))
       emailInput.classList.add('lm__input--error');
-    } else {
+    else
       emailInput.classList.remove('lm__input--error');
-    }
   });
+
   emailInput.addEventListener('input', function() {
-    if (emailInput.classList.contains('lm__input--error') && isValidEmail(emailInput.value)) {
+    if (emailInput.classList.contains('lm__input--error') && isValidEmail(emailInput.value))
       emailInput.classList.remove('lm__input--error');
-    }
   });
 
   modal.querySelector('#lm-step1-next').addEventListener('click', async function() {
-    const step1     = getStep(1);
-    const emailInput = modal.querySelector('#lm-email');
-    const loader    = step1.querySelector('.lm__loader');
-    const nextBtn   = step1.querySelector('#lm-step1-next');
-
+    var step1   = getStep(1);
+    var loader  = step1.querySelector('.lm__loader');
+    var nextBtn = step1.querySelector('#lm-step1-next');
     clearError(step1);
     emailInput.classList.remove('lm__input--error');
 
@@ -833,45 +1154,52 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
       return;
     }
 
-    collectedData.email = emailInput.value.trim();
+    state.email    = emailInput.value.trim();
+    state.attivita = Array.from(modal.querySelectorAll('input[name="attivita"]:checked'))
+                         .map(function(c) { return c.value; });
+
     nextBtn.disabled = true;
-    loader.hidden = false;
+    loader.hidden    = false;
 
     try {
-      let isExisting = false;
+      var isExisting = false;
       if (WEBHOOK_CHECK) {
-        const res  = await fetch(WEBHOOK_CHECK, {
+        var res  = await fetch(WEBHOOK_CHECK, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: collectedData.email }),
+          body: JSON.stringify({ email: state.email }),
         });
-        const data = await res.json();
+        var data = await res.json();
         isExisting = !!data.exists;
       }
-      collectedData.isNewUser = !isExisting;
-      loader.hidden = true;
+      state.isNewUser  = !isExisting;
+      loader.hidden    = true;
       nextBtn.disabled = false;
+      // Utente esistente → salta step 2 (dati) e va diretto alla scelta azione
       showStep(isExisting ? 3 : 2, isExisting ? 3 : 2);
     } catch(err) {
-      loader.hidden = true;
+      loader.hidden    = true;
       nextBtn.disabled = false;
-      collectedData.isNewUser = true;
+      state.isNewUser  = true;
       showStep(2, 2);
     }
   });
 
-  // ─── STEP 2 back ──────────────────────────────────────────────────────────
-  modal.querySelector('#lm-step2-back').addEventListener('click', function() { showStep(1, 1); });
+  // ═══════════════════════════════════════════════════════════════
+  // STEP 2 — Dati nuovo utente
+  // ═══════════════════════════════════════════════════════════════
+  modal.querySelector('#lm-step2-back').addEventListener('click', function() {
+    showStep(1, 1);
+  });
 
-  // ─── STEP 2 → raccolta dati ───────────────────────────────────────────────
   modal.querySelector('#lm-step2-next').addEventListener('click', async function() {
-    const step2   = getStep(2);
+    var step2   = getStep(2);
     clearError(step2);
 
-    const nome    = modal.querySelector('#lm-nome');
-    const cognome = modal.querySelector('#lm-cognome');
-    const cell    = modal.querySelector('#lm-cell');
-    const privacy = modal.querySelector('#lm-privacy');
+    var nome    = modal.querySelector('#lm-nome');
+    var cognome = modal.querySelector('#lm-cognome');
+    var cell    = modal.querySelector('#lm-cell');
+    var privacy = modal.querySelector('#lm-privacy');
 
     if (!nome.value.trim())    { showError(step2, 'Inserisci il tuo nome.'); nome.focus(); return; }
     if (!cognome.value.trim()) { showError(step2, 'Inserisci il tuo cognome.'); cognome.focus(); return; }
@@ -879,19 +1207,18 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     if (!privacy.checked)      { showError(step2, 'Il consenso alla Privacy Policy è obbligatorio.'); return; }
 
     var prefix = modal.querySelector('#lm-prefix');
-    collectedData.nome      = nome.value.trim();
-    collectedData.cognome   = cognome.value.trim();
-    collectedData.cellulare = (prefix ? prefix.value : '+39') + ' ' + cell.value.trim();
-    collectedData.privacy   = privacy.checked;
-    collectedData.marketing = modal.querySelector('#lm-marketing').checked;
-    collectedData.attivita  = Array.from(modal.querySelectorAll('input[name="attivita"]:checked')).map(function(c) { return c.value; });
+    state.nome      = nome.value.trim();
+    state.cognome   = cognome.value.trim();
+    state.cellulare = (prefix ? prefix.value : '+39') + ' ' + cell.value.trim();
+    state.privacy   = true;
+    state.marketing = modal.querySelector('#lm-marketing').checked;
 
     if (WEBHOOK_LEAD) {
       try {
         await fetch(WEBHOOK_LEAD, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(collectedData),
+          body: JSON.stringify(Object.assign({}, state, { tipo: 'lead-nuovo' })),
         });
       } catch(e) { /* non bloccare il flusso */ }
     }
@@ -899,35 +1226,262 @@ const EMAIL_TO  = 'info@tcambrosiano.com';
     showStep(3, 3);
   });
 
-  // ─── STEP 3 → scelta canale ───────────────────────────────────────────────
-  modal.querySelectorAll('.lm__channel-btn').forEach(function(btn) {
+  // ═══════════════════════════════════════════════════════════════
+  // STEP 3 — Scelta azione
+  // ═══════════════════════════════════════════════════════════════
+  modal.querySelector('#lm-step3-back').addEventListener('click', function() {
+    showStep(state.isNewUser ? 2 : 1, state.isNewUser ? 2 : 1);
+  });
+
+  modal.querySelectorAll('.lm__action-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      const ch = btn.dataset.channel;
-      const stepsBar = modal.querySelector('.lm__steps');
-      if (stepsBar) stepsBar.hidden = true;
-      if (ch === 'phone')    showStep('4-phone');
-      if (ch === 'email')    showStep('4-email');
-      if (ch === 'whatsapp') showStep('4-whatsapp');
+      var action = btn.dataset.action;
+      if (action === 'callback') { buildCalendar('cb');    showStep('4-callback'); }
+      else if (action === 'visit')    { buildCalendar('visit'); showStep('4-visit'); }
+      else if (action === 'message')  { showStep('4-message'); }
     });
   });
 
-  // ─── STEP 4b → invia email ────────────────────────────────────────────────
-  modal.querySelector('#lm-step4e-send').addEventListener('click', async function() {
-    const step4e = getStep('4-email');
-    clearError(step4e);
-    const msg = modal.querySelector('#lm-msg');
-    if (!msg.value.trim()) { showError(step4e, 'Scrivi un messaggio prima di inviare.'); msg.focus(); return; }
+  // ═══════════════════════════════════════════════════════════════
+  // CALENDARIO — costruzione dinamica
+  // ═══════════════════════════════════════════════════════════════
 
-    const payload = Object.assign({}, collectedData, { messaggio: msg.value.trim() });
+  // Slot per RICHIAMAMI: Lun–Ven 9:00–19:50 (ogni 10 min), Sab–Dom 9:00–18:50
+  function slotsCallback(date) {
+    var day = date.getDay();
+    var isWE = (day === 0 || day === 6);
+    var endH = isWE ? 19 : 20;
+    var slots = [];
+    for (var h = 9; h < endH; h++) {
+      for (var m = 0; m < 60; m += 10) { slots.push(pad2(h) + ':' + pad2(m)); }
+    }
+    return slots;
+  }
+
+  // Slot per VISITA: Lun–Ven 9:00–12:40 e 15:00–19:40 (ogni 20 min), Sab–Dom 9:00–18:40
+  function slotsVisit(date) {
+    var day = date.getDay();
+    var isWE = (day === 0 || day === 6);
+    var slots = [];
+    if (isWE) {
+      for (var h = 9; h < 19; h++) {
+        for (var m = 0; m < 60; m += 20) { slots.push(pad2(h) + ':' + pad2(m)); }
+      }
+    } else {
+      // Mattina 9–13
+      for (var h = 9; h < 13; h++) {
+        for (var m = 0; m < 60; m += 20) { slots.push(pad2(h) + ':' + pad2(m)); }
+      }
+      // Pomeriggio 15–20
+      for (var h = 15; h < 20; h++) {
+        for (var m = 0; m < 60; m += 20) { slots.push(pad2(h) + ':' + pad2(m)); }
+      }
+    }
+    return slots;
+  }
+
+  function buildCalendar(type) {
+    var numDays        = type === 'cb' ? 7 : 14;
+    var slotsFn        = type === 'cb' ? slotsCallback : slotsVisit;
+    var datesEl        = document.getElementById('lm-cal-dates-' + type);
+    var slotsEl        = document.getElementById('lm-cal-slots-' + type);
+    var slotLabelEl    = document.getElementById('lm-slots-label-' + type);
+    var confirmBtnEl   = document.getElementById('lm-' + type + '-confirm');
+    var reasonEl       = document.getElementById(type === 'cb' ? 'lm-cb-reason' : 'lm-visit-reason');
+
+    // Reset
+    datesEl.innerHTML = '';
+    slotsEl.innerHTML = '';
+    if (slotLabelEl) slotLabelEl.hidden = true;
+    if (confirmBtnEl) confirmBtnEl.disabled = true;
+
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+    var selDate     = null;
+    var selTime     = null;
+    var activeDateB = null;
+    var activeSlotB = null;
+
+    function checkConfirm() {
+      var hasReason = reasonEl && reasonEl.value.trim().length > 0;
+      if (confirmBtnEl) confirmBtnEl.disabled = !(hasReason && selDate && selTime);
+    }
+
+    if (reasonEl) reasonEl.addEventListener('input', checkConfirm);
+
+    for (var i = 0; i < numDays; i++) {
+      (function(offset) {
+        var d = new Date(today);
+        d.setDate(today.getDate() + offset);
+
+        var dateBtn = document.createElement('button');
+        dateBtn.type = 'button';
+        dateBtn.className = 'lm__cal-date-btn';
+        dateBtn.innerHTML =
+          '<span class="lm__cal-date-day">'   + DAYS_SHORT[d.getDay()]    + '</span>' +
+          '<span class="lm__cal-date-num">'   + d.getDate()               + '</span>' +
+          '<span class="lm__cal-date-month">' + MONTHS_SHORT[d.getMonth()]+ '</span>';
+
+        var snap = new Date(d);
+
+        dateBtn.addEventListener('click', function() {
+          if (activeDateB) activeDateB.classList.remove('is-active');
+          dateBtn.classList.add('is-active');
+          activeDateB = dateBtn;
+          selDate = snap;
+          selTime = null;
+          activeSlotB = null;
+
+          // Costruisce slot per il giorno selezionato
+          slotsEl.innerHTML = '';
+          if (slotLabelEl) slotLabelEl.hidden = false;
+          checkConfirm();
+
+          slotsFn(snap).forEach(function(time) {
+            var sb = document.createElement('button');
+            sb.type = 'button';
+            sb.className = 'lm__cal-slot-btn';
+            sb.textContent = time;
+            sb.addEventListener('click', function() {
+              if (activeSlotB) activeSlotB.classList.remove('is-active');
+              sb.classList.add('is-active');
+              activeSlotB = sb;
+              selTime = time;
+              if (type === 'cb') {
+                state.callbackDate = selDate;
+                state.callbackTime = selTime;
+              } else {
+                state.visitDate = selDate;
+                state.visitTime = selTime;
+              }
+              checkConfirm();
+            });
+            slotsEl.appendChild(sb);
+          });
+
+          // Scroll verso gli slot
+          slotLabelEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        datesEl.appendChild(dateBtn);
+      })(i);
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // STEP 4a — Conferma richiamata
+  // ═══════════════════════════════════════════════════════════════
+  document.getElementById('lm-cb-confirm').addEventListener('click', function() {
+    var step = getStep('4-callback');
+    clearError(step);
+
+    var reason = modal.querySelector('#lm-cb-reason');
+    if (!reason.value.trim()) {
+      showError(step, 'Descrivi il motivo della chiamata.'); reason.focus(); return;
+    }
+    if (!state.callbackDate || !state.callbackTime) {
+      showError(step, 'Seleziona giorno e orario per la chiamata.'); return;
+    }
+
+    state.callbackReason = reason.value.trim();
+
+    var attiLabs = state.attivita.map(function(id) { return ATTIVITA_LABELS[id] || id; }).join(', ') || '—';
+
+    document.getElementById('lm-cb-when').innerHTML =
+      '<div class="lm__confirm-when-row">' +
+        '<span class="lm__confirm-when-label">Ti richiamiamo il</span>' +
+        '<span class="lm__confirm-when-val">' + fmtDateLong(state.callbackDate) + '</span>' +
+      '</div>' +
+      '<div class="lm__confirm-when-row">' +
+        '<span class="lm__confirm-when-label">Alle ore</span>' +
+        '<span class="lm__confirm-when-val">' + state.callbackTime + '</span>' +
+      '</div>' +
+      (state.cellulare ?
+        '<div class="lm__confirm-when-row">' +
+          '<span class="lm__confirm-when-label">Al numero</span>' +
+          '<span class="lm__confirm-when-val">' + esc(state.cellulare) + '</span>' +
+        '</div>' : '');
+
+    document.getElementById('lm-cb-summary').innerHTML =
+      '<div class="lm__confirm-row"><span>Email</span><span>' + esc(state.email) + '</span></div>' +
+      (state.nome ? '<div class="lm__confirm-row"><span>Nome</span><span>' + esc(state.nome + ' ' + state.cognome) + '</span></div>' : '') +
+      (attiLabs !== '—' ? '<div class="lm__confirm-row"><span>Attività</span><span>' + esc(attiLabs) + '</span></div>' : '') +
+      '<div class="lm__confirm-row"><span>Motivo</span><span>' + esc(state.callbackReason) + '</span></div>';
+
+    showStep('confirm-callback');
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // STEP 4b — Conferma visita in sede
+  // ═══════════════════════════════════════════════════════════════
+  document.getElementById('lm-visit-confirm').addEventListener('click', function() {
+    var step = getStep('4-visit');
+    clearError(step);
+
+    var reason = modal.querySelector('#lm-visit-reason');
+    if (!reason.value.trim()) {
+      showError(step, 'Descrivi il motivo della visita.'); reason.focus(); return;
+    }
+    if (!state.visitDate || !state.visitTime) {
+      showError(step, 'Seleziona giorno e orario per la visita.'); return;
+    }
+
+    state.visitReason = reason.value.trim();
+
+    var attiLabs = state.attivita.map(function(id) { return ATTIVITA_LABELS[id] || id; }).join(', ') || '—';
+
+    document.getElementById('lm-visit-when').innerHTML =
+      '<div class="lm__confirm-when-row">' +
+        '<span class="lm__confirm-when-label">Ci vediamo il</span>' +
+        '<span class="lm__confirm-when-val">' + fmtDateLong(state.visitDate) + '</span>' +
+      '</div>' +
+      '<div class="lm__confirm-when-row">' +
+        '<span class="lm__confirm-when-label">Alle ore</span>' +
+        '<span class="lm__confirm-when-val">' + state.visitTime + '</span>' +
+      '</div>';
+
+    document.getElementById('lm-visit-summary').innerHTML =
+      '<div class="lm__confirm-row"><span>Email</span><span>' + esc(state.email) + '</span></div>' +
+      (state.nome ? '<div class="lm__confirm-row"><span>Nome</span><span>' + esc(state.nome + ' ' + state.cognome) + '</span></div>' : '') +
+      (state.cellulare ? '<div class="lm__confirm-row"><span>Cellulare</span><span>' + esc(state.cellulare) + '</span></div>' : '') +
+      (attiLabs !== '—' ? '<div class="lm__confirm-row"><span>Attività</span><span>' + esc(attiLabs) + '</span></div>' : '') +
+      '<div class="lm__confirm-row"><span>Motivo</span><span>' + esc(state.visitReason) + '</span></div>';
+
+    showStep('confirm-visit');
+  });
+
+  // ═══════════════════════════════════════════════════════════════
+  // STEP 4c — Invia messaggio + conferma
+  // ═══════════════════════════════════════════════════════════════
+  document.getElementById('lm-msg-send').addEventListener('click', async function() {
+    var step = getStep('4-message');
+    clearError(step);
+
+    var msgEl = modal.querySelector('#lm-msg-text');
+    if (!msgEl.value.trim()) {
+      showError(step, 'Scrivi la tua richiesta prima di inviare.'); msgEl.focus(); return;
+    }
+
+    state.messageText = msgEl.value.trim();
+
     if (WEBHOOK_LEAD) {
       try {
         await fetch(WEBHOOK_LEAD, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
+          body: JSON.stringify(Object.assign({}, state, { tipo: 'messaggio' })),
         });
-      } catch(e) { /* mostra success comunque */ }
+      } catch(e) { /* mostra conferma comunque */ }
     }
-    showStep('success');
+
+    var attiLabs = state.attivita.map(function(id) { return ATTIVITA_LABELS[id] || id; }).join(', ') || '—';
+
+    document.getElementById('lm-msg-summary').innerHTML =
+      '<div class="lm__confirm-row"><span>Email</span><span>' + esc(state.email) + '</span></div>' +
+      (state.nome ? '<div class="lm__confirm-row"><span>Nome</span><span>' + esc(state.nome + ' ' + state.cognome) + '</span></div>' : '') +
+      (attiLabs !== '—' ? '<div class="lm__confirm-row"><span>Attività</span><span>' + esc(attiLabs) + '</span></div>' : '') +
+      '<div class="lm__confirm-row"><span>Richiesta</span><span>' + esc(state.messageText) + '</span></div>';
+
+    showStep('confirm-message');
   });
 </script>
