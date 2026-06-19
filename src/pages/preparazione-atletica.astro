@@ -249,19 +249,50 @@ const categories: Category[] = [
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const GAP = 20; // 1.25rem
+
+      // ── Manual navigation ──
       document.querySelectorAll<HTMLButtonElement>('.courses-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
           const dir = Number(btn.dataset.dir);
-          const trackId = btn.dataset.track;
           const track = document.querySelector<HTMLElement>(
-            `[data-carousel-id="${trackId}"]`
+            `[data-carousel-id="${btn.dataset.track}"]`
           );
           if (!track) return;
           const card = track.querySelector<HTMLElement>('.course-card');
           if (!card) return;
-          const gap = 20; // 1.25rem at 16px
-          track.scrollBy({ left: dir * (card.offsetWidth + gap), behavior: 'smooth' });
+          track.scrollBy({ left: dir * (card.offsetWidth + GAP), behavior: 'smooth' });
         });
+      });
+
+      // ── Auto-scroll ──
+      document.querySelectorAll<HTMLElement>('.courses-track').forEach((track) => {
+        let paused = false;
+
+        const advance = () => {
+          if (paused) return;
+          const card = track.querySelector<HTMLElement>('.course-card');
+          if (!card) return;
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          if (track.scrollLeft >= maxScroll - 4) {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            track.scrollBy({ left: card.offsetWidth + GAP, behavior: 'smooth' });
+          }
+        };
+
+        const interval = setInterval(advance, 3500);
+
+        // Pause on hover / touch
+        track.addEventListener('mouseenter', () => { paused = true; });
+        track.addEventListener('mouseleave', () => { paused = false; });
+        track.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+        track.addEventListener('touchend',   () => {
+          setTimeout(() => { paused = false; }, 4000);
+        }, { passive: true });
+
+        // Clean up on page unload
+        window.addEventListener('pagehide', () => clearInterval(interval), { once: true });
       });
     });
   </script>
