@@ -129,6 +129,29 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
       register('.event-item',                  'true',        0, 100);
       register('.info__map',                   'scale',      80,   0);
 
+      // ── Card disciplina (tennis / padel / scuola / agonistica) ──
+      register('.content-card',                'true',        0, 100);
+      register('.age-card',                    'true',        0,  90);
+      register('.step',                        'true',        0, 100);
+      register('.feature',                     'true',        0,  90);
+      register('.timeline__item',              'true',        0,  80);
+      register('.stat-item',                   'scale',     100,  80);
+      register('.stat',                        'scale',     100,  80);
+
+      // ── Immagini e media ──
+      register('.two-col__image',              'scale',      60,   0);
+      register('.rounded-img',                 'scale',      60,   0);
+      register('.gallery__img',                'scale',       0,  80);
+      register('.camp-img',                    'scale',       0,  90);
+      register('.sala-split__media',           'scale',      60,   0);
+
+      // ── Testo body su pagine di disciplina ──
+      register(`${NH} .body-text`,             'from-left',  80,   0);
+      register(`${NH} .sala-body`,             'from-left',  80,   0);
+      register(`${NH} .sala-feat`,             'from-left',  80,  60);
+      register(`${NH} .cat-block__desc`,       'from-left',  80,   0);
+      register(`${NH} .lfi__sub`,              'from-left',  80,   0);
+
       // ── Elementi già marcati nel markup ──
       document.querySelectorAll<HTMLElement>('[data-anim]').forEach((el) => {
         if (!el.classList.contains('is-visible')) obs.observe(el);
