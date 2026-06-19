@@ -57,8 +57,52 @@ import InfoPratiche from "../components/InfoPratiche.astro";
     </div>
   </section>
 
+  <!-- ── Corsi di Gruppo ── -->
+  <section class="corsi-section">
+    <div class="corsi-section__inner">
+      <span class="eyebrow">Corsi di Gruppo</span>
+      <h2 class="section-title">Allenati in<br><em>gruppo.</em></h2>
+      <p class="corsi-sub">Ogni settimana sessioni guidate da istruttori certificati. Scegli il corso adatto al tuo obiettivo — forza, flessibilità, resistenza — e prenota il tuo posto direttamente dal calendario.</p>
+
+      <ul class="corsi-list">
+        <li>Yoga</li>
+        <li>Pilates</li>
+        <li>Body Pump</li>
+        <li>Spinning</li>
+        <li>HIIT</li>
+        <li>Functional Training</li>
+        <li>Stretching &amp; Mobilità</li>
+      </ul>
+
+      <div class="corsi-calendar-wrap">
+        <div id="pg-calendar" class="pg-embed"></div>
+      </div>
+    </div>
+  </section>
+
   <LeadFormPlaceholder />
   <InfoPratiche />
+
+  <!-- PerfectGym Calendar Embed -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@perfectgym/client-portal@latest/dist/ClientPortal.css" />
+  <script is:inline src="https://cdn.jsdelivr.net/npm/@iframe-resizer/parent@5.5.7/index.umd.min.js"></script>
+  <script is:inline src="https://cdn.jsdelivr.net/npm/@perfectgym/client-portal@latest/dist/ClientPortal.min.js"></script>
+  <script is:inline>
+    window.addEventListener('load', function () {
+      var el = document.getElementById('pg-calendar');
+      if (!el || typeof window.PerfectGym === 'undefined') return;
+      new window.PerfectGym.ClientPortal(el, {
+        url: 'https://tcambrosiano.perfectgym.com/clientportal2/',
+        language: 'it',
+        forceUrl: 'https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar',
+        navigation: { hide: true },
+        calendarPage: {
+          hideBookingIfNotLogged: true,
+          disableCourseEnrollment: true
+        }
+      });
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -126,6 +170,60 @@ import InfoPratiche from "../components/InfoPratiche.astro";
     color: var(--color-text-light);
   }
 
+  /* ── Corsi di Gruppo ── */
+  .corsi-section {
+    padding: 7vh var(--pad-x);
+    background: var(--color-off-white);
+  }
+
+  .corsi-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .corsi-sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-text-light);
+    max-width: 64ch;
+    margin-bottom: 4vh;
+  }
+
+  .corsi-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 6vh;
+  }
+
+  .corsi-list li {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 0.85vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border: 1.5px solid var(--color-border);
+    background: #fff;
+    color: var(--color-text);
+  }
+
+  .corsi-calendar-wrap {
+    border: 1px solid var(--color-border);
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .pg-embed {
+    min-height: 640px;
+    width: 100%;
+  }
+
+  /* ── Responsive ── */
   @media (max-width: 860px) {
     .prog-grid { grid-template-columns: 1fr 1fr; }
   }
