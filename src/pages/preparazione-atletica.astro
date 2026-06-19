@@ -64,15 +64,43 @@ import InfoPratiche from "../components/InfoPratiche.astro";
       <h2 class="section-title">Allenati in<br><em>gruppo.</em></h2>
       <p class="corsi-sub">Ogni settimana sessioni guidate da istruttori certificati. Scegli il corso adatto al tuo obiettivo — forza, flessibilità, resistenza — e prenota il tuo posto direttamente dal calendario.</p>
 
-      <ul class="corsi-list">
-        <li>Yoga</li>
-        <li>Pilates</li>
-        <li>Body Pump</li>
-        <li>Spinning</li>
-        <li>HIIT</li>
-        <li>Functional Training</li>
-        <li>Stretching &amp; Mobilità</li>
-      </ul>
+      <div class="corsi-categories">
+        <div class="corsi-cat">
+          <span class="corsi-cat__label">Endurance</span>
+          <ul class="corsi-list">
+            <li>Dance</li>
+            <li>Zumba</li>
+            <li>Cycling</li>
+            <li>Aeroboxe</li>
+            <li>Functional Step</li>
+            <li>Step &amp; Tone</li>
+          </ul>
+        </div>
+        <div class="corsi-cat">
+          <span class="corsi-cat__label">Strength</span>
+          <ul class="corsi-list">
+            <li>Funracket</li>
+            <li>Tribal-x</li>
+            <li>Functional</li>
+            <li>Active Pump</li>
+            <li>Total Body</li>
+            <li>Circuit</li>
+            <li>Suspension Training</li>
+          </ul>
+        </div>
+        <div class="corsi-cat">
+          <span class="corsi-cat__label">Balance</span>
+          <ul class="corsi-list">
+            <li>Pilates Funzionale</li>
+            <li>Flexability</li>
+            <li>Hatha Yoga</li>
+            <li>Pilates</li>
+            <li>Postural</li>
+            <li>Power Yoga</li>
+            <li>Ginnastica Dolce</li>
+          </ul>
+        </div>
+      </div>
 
       <div class="corsi-calendar-wrap">
         <div id="pg-calendar" class="pg-embed"></div>
@@ -191,13 +219,31 @@ import InfoPratiche from "../components/InfoPratiche.astro";
     margin-bottom: 4vh;
   }
 
+  .corsi-categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 6vh;
+  }
+
+  .corsi-cat__label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(10px, 0.75vw, 12px);
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.8rem;
+  }
+
   .corsi-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    gap: 0.5rem;
     list-style: none;
     padding: 0;
-    margin: 0 0 6vh;
+    margin: 0;
   }
 
   .corsi-list li {
@@ -226,9 +272,11 @@ import InfoPratiche from "../components/InfoPratiche.astro";
   /* ── Responsive ── */
   @media (max-width: 860px) {
     .prog-grid { grid-template-columns: 1fr 1fr; }
+    .corsi-categories { grid-template-columns: 1fr 1fr; }
   }
 
   @media (max-width: 560px) {
     .prog-grid { grid-template-columns: 1fr; }
+    .corsi-categories { grid-template-columns: 1fr; }
   }
 </style>
