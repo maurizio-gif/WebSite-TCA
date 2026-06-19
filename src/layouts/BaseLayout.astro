@@ -64,10 +64,10 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
     <main class="site-main">
       <slot />
     </main>
-    <LeadFormInline />
-    <InfoPratiche />
+    <LeadFormInline lang={lang} />
+    <InfoPratiche lang={lang} />
     <Footer lang={lang} />
-    <LeadModal />
+    <LeadModal lang={lang} />
 
     <!-- ── Back to top ── -->
     <button id="back-to-top" aria-label="Torna in cima" hidden>

@@ -5,13 +5,13 @@ const { lang = 'it' } = Astro.props;
 const p = (path: string) => getLocalePath(lang, path);
 
 const copy = lang === 'en' ? {
-  title:  <>A club built on tradition,<br />made for today.</>,
+  title:  'A club built on tradition,<br>made for today.',
   p1:     'Tennis Club Ambrosiano is home to the Avvenire Tournament, the competition that since 1965 has discovered the next generation of tennis talent. From that same calling — the future training every day — everything we do today was born.',
   p2:     "Here you'll find some of the finest facilities in east Milan: tennis courts, padel, athletic training spaces and an activity calendar for every age. Whether you want to get back on court, raise a child through sport, or simply take care of yourself, the Club makes it easy.",
   cta:    'Discover our history →',
   quote:  "You're home. All you need is a racket.",
 } : {
-  title:  <>Un club fondato<br />sulla tradizione,<br /><em>costruito per il presente.</em></>,
+  title:  'Un club fondato<br>sulla tradizione,<br><em>costruito per il presente.</em>',
   p1:     'Il Tennis Club Ambrosiano è la casa del Torneo Avvenire, la gara che dal 1965 scopre i talenti del tennis di domani. Da quella stessa vocazione — il futuro che si allena ogni giorno — nasce tutto ciò che facciamo oggi.',
   p2:     'Qui trovi alcuni dei migliori impianti della zona est di Milano: campi da tennis, padel, spazi per la preparazione atletica e un calendario di attività che accompagna ogni età. Che tu voglia tornare a giocare, far crescere un figlio nello sport o semplicemente prenderti cura di te, il Club è pensato per renderlo semplice.',
   cta:    'Scopri la nostra storia →',
@@ -21,12 +21,7 @@ const copy = lang === 'en' ? {
 
 <section class="manifesto">
   <div class="manifesto__inner">
-    <h2 class="manifesto__title" data-anim="reveal">
-      {lang === 'en'
-        ? <>{copy.title}</>
-        : <>Un club fondato<br />sulla tradizione,<br /><em>costruito per il presente.</em></>
-      }
-    </h2>
+    <h2 class="manifesto__title" data-anim="reveal" set:html={copy.title} />
 
     <div class="manifesto__right">
       <div class="manifesto__body" data-anim="from-left" data-anim-delay="150">

@@ -1,11 +1,38 @@
 ---
+import type { Lang } from '../i18n/utils';
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+
+const t = lang === 'en' ? {
+  eyebrow:        'How to find us',
+  title:          'Visit us.',
+  labelAddress:   'Address',
+  labelHow:       'Getting here',
+  howText:        "Metro Udine (line M2), a few minutes' walk.<br>Ample parking available.",
+  labelHours:     'Club Hours',
+  hoursText:      'Mon–Fri 7:00–24:00<br>Sat–Sun 8:00–21:00',
+  labelReception: 'Reception',
+  btnDirections:  'Directions',
+  btnContact:     'Contact us',
+} : {
+  eyebrow:        'Come trovarci',
+  title:          'Vieni a trovarci.',
+  labelAddress:   'Indirizzo',
+  labelHow:       'Come arrivare',
+  howText:        'Metro Udine (linea M2), a pochi minuti a piedi.<br>Ampio parcheggio disponibile.',
+  labelHours:     'Orari Club',
+  hoursText:      'Lun–Ven 7:00–24:00<br>Sab–Dom 8:00–21:00',
+  labelReception: 'Reception',
+  btnDirections:  'Indicazioni',
+  btnContact:     'Contattaci',
+};
 ---
 
 <section class="info">
   <div class="info__inner">
     <div class="info__head">
-      <span class="eyebrow">Come trovarci</span>
-      <h2 class="info__title">Vieni a trovarci.</h2>
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h2 class="info__title">{t.title}</h2>
     </div>
 
     <!-- Google Maps embed — protagonista -->
@@ -24,25 +51,22 @@
     <div class="info__bottom">
       <div class="info__grid">
         <div class="info__item">
-          <span class="info__label">Indirizzo</span>
+          <span class="info__label">{t.labelAddress}</span>
           <p class="info__value">Via Feltre 33, 20134 Milano</p>
         </div>
 
         <div class="info__item">
-          <span class="info__label">Come arrivare</span>
-          <p class="info__value">
-            Metro Udine (linea M2), a pochi minuti a piedi.<br>
-            Ampio parcheggio disponibile.
-          </p>
+          <span class="info__label">{t.labelHow}</span>
+          <p class="info__value" set:html={t.howText} />
         </div>
 
         <div class="info__item">
-          <span class="info__label">Orari Club</span>
-          <p class="info__value">Lun–Ven 7:00–24:00<br>Sab–Dom 8:00–21:00</p>
+          <span class="info__label">{t.labelHours}</span>
+          <p class="info__value" set:html={t.hoursText} />
         </div>
 
         <div class="info__item">
-          <span class="info__label">Reception</span>
+          <span class="info__label">{t.labelReception}</span>
           <p class="info__value">
             <a href="tel:+390226414392">+39 02 2641 4392</a><br>
             <a href="mailto:info@tcambrosiano.com">info@tcambrosiano.com</a>
@@ -51,8 +75,8 @@
       </div>
 
       <div class="info__actions">
-        <a class="btn btn-outline--dark" href="https://maps.google.com/?q=Via+Feltre+33,+20134+Milano" target="_blank" rel="noopener">Indicazioni</a>
-        <button class="btn btn-red" data-open-modal="modal-contatti">Contattaci</button>
+        <a class="btn btn-outline--dark" href="https://maps.google.com/?q=Via+Feltre+33,+20134+Milano" target="_blank" rel="noopener">{t.btnDirections}</a>
+        <button class="btn btn-red" data-open-modal="modal-contatti">{t.btnContact}</button>
       </div>
     </div>
 
