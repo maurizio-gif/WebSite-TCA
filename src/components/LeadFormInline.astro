@@ -1,8 +1,22 @@
 ---
 import LeadFormBody from "./LeadFormBody.astro";
+import type { Lang } from '../i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
 
 const WEBHOOK_CHECK = '';
 const WEBHOOK_LEAD  = '';
+
+const lfi = lang === 'en' ? {
+  eyebrow: 'Contact us',
+  title:   "Let's talk.<br><em>We're here for you.</em>",
+  sub:     "Do you have questions about membership, courses or the gym? Write to us, request a call back or book a visit to the Club. We'll get back to you as soon as possible.",
+} : {
+  eyebrow: 'Contattaci',
+  title:   'Parliamone.<br><em>Siamo qui per te.</em>',
+  sub:     "Hai domande sull'abbonamento, sui corsi o sulla sala attrezzi? Scrivici, richiedici una chiamata o prenota una visita al Club. Ti risponderemo nel più breve tempo possibile.",
+};
 ---
 
 <section class="lfi">
@@ -10,18 +24,14 @@ const WEBHOOK_LEAD  = '';
 
     <!-- Left: intro -->
     <div class="lfi__intro">
-      <span class="eyebrow">Contattaci</span>
-      <h2 class="lfi__title">Parliamone.<br><em>Siamo qui per te.</em></h2>
-      <p class="lfi__sub">
-        Hai domande sull'abbonamento, sui corsi o sulla sala attrezzi?
-        Scrivici, richiedici una chiamata o prenota una visita al Club.
-        Ti risponderemo nel più breve tempo possibile.
-      </p>
+      <span class="eyebrow">{lfi.eyebrow}</span>
+      <h2 class="lfi__title" set:html={lfi.title} />
+      <p class="lfi__sub">{lfi.sub}</p>
     </div>
 
     <!-- Right: form panel -->
     <div class="lfi__panel" id="lfi-root">
-      <LeadFormBody prefix="li" />
+      <LeadFormBody prefix="li" lang={lang} />
     </div>
 
   </div>
@@ -101,21 +111,104 @@ const WEBHOOK_LEAD  = '';
 
 <script>
   (function () {
+    var LANG = document.documentElement.lang === 'en' ? 'en' : 'it';
     var WEBHOOK_CHECK = '';
     var WEBHOOK_LEAD  = '';
     var P = 'li'; // prefix for this inline form instance
 
-    var ATTIVITA_LABELS = {
+    var ATTIVITA_LABELS = LANG === 'en' ? {
+      tennis:'Tennis', padel:'Padel', prep:'Athletic Training',
+      scuola:'Tennis School (children)', agonistica:'Competitive Tennis',
+      camps:'Summer Camps', membership:'Membership',
+    } : {
       tennis:'Tennis', padel:'Padel', prep:'Preparazione Atletica',
       scuola:'Scuola Tennis (bambini)', agonistica:'Agonistica Tennis',
       camps:'Summer Camps', membership:'Membership / Abbonamento',
     };
 
-    var DAYS_LONG   = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
-    var MONTHS_LONG = ['gennaio','febbraio','marzo','aprile','maggio','giugno',
-                       'luglio','agosto','settembre','ottobre','novembre','dicembre'];
-    var MONTHS_FULL = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
-                       'Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+    var DAYS_LONG = LANG === 'en'
+      ? ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+      : ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+    var MONTHS_LONG = LANG === 'en'
+      ? ['January','February','March','April','May','June','July','August','September','October','November','December']
+      : ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+    var MONTHS_FULL = LANG === 'en'
+      ? ['January','February','March','April','May','June','July','August','September','October','November','December']
+      : ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+
+    var DOW_SHORT = LANG === 'en'
+      ? ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+      : ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
+
+    var SLOT_GROUPS = LANG === 'en'
+      ? [
+          {label:'Morning',   h1:0,  h2:13},
+          {label:'Afternoon', h1:13, h2:17},
+          {label:'Evening',   h1:17, h2:24},
+        ]
+      : [
+          {label:'Mattina',    h1:0,  h2:13},
+          {label:'Pomeriggio', h1:13, h2:17},
+          {label:'Sera',       h1:17, h2:24},
+        ];
+
+    var ERR = LANG === 'en' ? {
+      email:       'Please enter a valid email address.',
+      nome:        'Please enter your first name.',
+      cognome:     'Please enter your last name.',
+      cell:        'Please enter your mobile number.',
+      privacy:     'Consent to the Privacy Policy is required.',
+      cbDate:      'Required: please choose a day for the call.',
+      cbTime:      'Required: please select an available time.',
+      cbReason:    'Required: please describe the reason for your call.',
+      visitDate:   'Required: please choose a day for the visit.',
+      visitTime:   'Required: please select an available time.',
+      visitReason: 'Required: please describe the reason for your visit.',
+      msg:         'Please write your request before sending.',
+    } : {
+      email:       'Inserisci un indirizzo email valido.',
+      nome:        'Inserisci il tuo nome.',
+      cognome:     'Inserisci il tuo cognome.',
+      cell:        'Inserisci il numero di cellulare.',
+      privacy:     'Il consenso alla Privacy Policy è obbligatorio.',
+      cbDate:      'Campo obbligatorio: scegli un giorno per la chiamata.',
+      cbTime:      'Campo obbligatorio: seleziona un orario disponibile.',
+      cbReason:    'Campo obbligatorio: descrivi il motivo della chiamata.',
+      visitDate:   'Campo obbligatorio: scegli un giorno per la visita.',
+      visitTime:   'Campo obbligatorio: seleziona un orario disponibile.',
+      visitReason: 'Campo obbligatorio: descrivi il motivo della visita.',
+      msg:         'Scrivi la tua richiesta prima di inviare.',
+    };
+
+    var WHEN = LANG === 'en' ? {
+      cb:      "We'll call you on",
+      cbAt:    'At',
+      cbNum:   'On the number',
+      visit:   'See you on',
+      visitAt: 'At',
+    } : {
+      cb:      'Ti richiamiamo il',
+      cbAt:    'Alle ore',
+      cbNum:   'Al numero',
+      visit:   'Ci vediamo il',
+      visitAt: 'Alle ore',
+    };
+
+    var ROW_LABELS = LANG === 'en' ? {
+      email:     'Email',
+      name:      'Name',
+      activities:'Activities',
+      reason:    'Reason',
+      mobile:    'Mobile',
+      request:   'Request',
+    } : {
+      email:     'Email',
+      name:      'Nome',
+      activities:'Attività',
+      reason:    'Motivo',
+      mobile:    'Cellulare',
+      request:   'Richiesta',
+    };
 
     var root = document.getElementById('lfi-root');
     if (!root) return;
@@ -217,7 +310,7 @@ const WEBHOOK_LEAD  = '';
 
       if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
         emailInput.classList.add('lm__input--error');
-        showError(s1, 'Inserisci un indirizzo email valido.'); emailInput.focus(); return;
+        showError(s1, ERR.email); emailInput.focus(); return;
       }
 
       state.email    = emailInput.value.trim();
@@ -248,10 +341,10 @@ const WEBHOOK_LEAD  = '';
       var cell    = root.querySelector('#'+P+'-cell');
       var privacy = root.querySelector('#'+P+'-privacy');
 
-      if (!nome.value.trim())    { showError(s2,'Inserisci il tuo nome.'); nome.focus(); return; }
-      if (!cognome.value.trim()) { showError(s2,'Inserisci il tuo cognome.'); cognome.focus(); return; }
-      if (!cell.value.trim())    { showError(s2,'Inserisci il numero di cellulare.'); cell.focus(); return; }
-      if (!privacy.checked)      { showError(s2,'Il consenso alla Privacy Policy è obbligatorio.'); return; }
+      if (!nome.value.trim())    { showError(s2, ERR.nome); nome.focus(); return; }
+      if (!cognome.value.trim()) { showError(s2, ERR.cognome); cognome.focus(); return; }
+      if (!cell.value.trim())    { showError(s2, ERR.cell); cell.focus(); return; }
+      if (!privacy.checked)      { showError(s2, ERR.privacy); return; }
 
       var pfx = root.querySelector('#'+P+'-pfx');
       state.nome      = nome.value.trim();
@@ -302,7 +395,6 @@ const WEBHOOK_LEAD  = '';
       var calWrapEl   = document.getElementById(P+'-cal-'+type);
       var slotsWrapEl = document.getElementById(P+'-slots-wrap-'+type);
       var slotsBodyEl = document.getElementById(P+'-cal-slots-'+type);
-      var confirmBtn  = document.getElementById(P+'-'+type+'-confirm');
       var reasonEl    = document.getElementById(type === 'cb' ? P+'-cb-reason' : P+'-visit-reason');
 
       var today   = new Date(); today.setHours(0,0,0,0);
@@ -333,7 +425,7 @@ const WEBHOOK_LEAD  = '';
           '<button class="lm__cal-nav-btn" id="'+navId+'-next"'+ (!canNext?' disabled':'') +'>&#8250;</button>' +
         '</div><div class="lm__cal-grid">';
 
-        ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'].forEach(function(d) {
+        DOW_SHORT.forEach(function(d) {
           html += '<div class="lm__cal-dow">'+d+'</div>';
         });
         for(var i=0;i<startDOW;i++) html+='<div class="lm__cal-cell"></div>';
@@ -368,17 +460,13 @@ const WEBHOOK_LEAD  = '';
         slotsBodyEl.innerHTML='';
         if(slotsWrapEl) slotsWrapEl.hidden=false;
         var all=slotsFn(selDate);
-        var groups=[
-          {label:'Mattina',    slots:all.filter(function(s){return parseInt(s)<13;})},
-          {label:'Pomeriggio', slots:all.filter(function(s){var h=parseInt(s);return h>=13&&h<17;})},
-          {label:'Sera',       slots:all.filter(function(s){return parseInt(s)>=17;})},
-        ];
-        groups.forEach(function(g){
-          if(!g.slots.length) return;
+        SLOT_GROUPS.forEach(function(g){
+          var slots=all.filter(function(s){var h=parseInt(s);return h>=g.h1&&h<g.h2;});
+          if(!slots.length) return;
           var gDiv=document.createElement('div'); gDiv.className='lm__slots-group';
           var lbl=document.createElement('div');  lbl.className='lm__slots-group-label'; lbl.textContent=g.label;
           var row=document.createElement('div');  row.className='lm__slots-row';
-          g.slots.forEach(function(time){
+          slots.forEach(function(time){
             var sb=document.createElement('button');
             sb.type='button'; sb.className='lm__cal-slot-btn'; sb.textContent=time;
             sb.addEventListener('click',function(){
@@ -400,20 +488,20 @@ const WEBHOOK_LEAD  = '';
     document.getElementById(P+'-cb-confirm').addEventListener('click', function() {
       var s=getStep('4-callback'); clearError(s);
       var r=root.querySelector('#'+P+'-cb-reason');
-      if(!state.callbackDate){showError(s,'Campo obbligatorio: scegli un giorno per la chiamata.');return;}
-      if(!state.callbackTime){showError(s,'Campo obbligatorio: seleziona un orario disponibile.');return;}
-      if(!r.value.trim()){showError(s,'Campo obbligatorio: descrivi il motivo della chiamata.');r.focus();return;}
+      if(!state.callbackDate){showError(s, ERR.cbDate);return;}
+      if(!state.callbackTime){showError(s, ERR.cbTime);return;}
+      if(!r.value.trim()){showError(s, ERR.cbReason);r.focus();return;}
       state.callbackReason=r.value.trim();
       var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
       document.getElementById(P+'-cb-when').innerHTML=
-        whenRow('Ti richiamiamo il',fmtDateLong(state.callbackDate))+
-        whenRow('Alle ore',state.callbackTime)+
-        (state.cellulare?whenRow('Al numero',esc(state.cellulare)):'');
+        whenRow(WHEN.cb,fmtDateLong(state.callbackDate))+
+        whenRow(WHEN.cbAt,state.callbackTime)+
+        (state.cellulare?whenRow(WHEN.cbNum,esc(state.cellulare)):'');
       document.getElementById(P+'-cb-summary').innerHTML=
-        row('Email',esc(state.email))+
-        (state.nome?row('Nome',esc(state.nome+' '+state.cognome)):'')+
-        (atts!=='—'?row('Attività',esc(atts)):'')+
-        row('Motivo',esc(state.callbackReason));
+        row(ROW_LABELS.email,esc(state.email))+
+        (state.nome?row(ROW_LABELS.name,esc(state.nome+' '+state.cognome)):'')+
+        (atts!=='—'?row(ROW_LABELS.activities,esc(atts)):'')+
+        row(ROW_LABELS.reason,esc(state.callbackReason));
       showStep('confirm-callback');
     });
 
@@ -421,20 +509,20 @@ const WEBHOOK_LEAD  = '';
     document.getElementById(P+'-visit-confirm').addEventListener('click', function() {
       var s=getStep('4-visit'); clearError(s);
       var r=root.querySelector('#'+P+'-visit-reason');
-      if(!state.visitDate){showError(s,'Campo obbligatorio: scegli un giorno per la visita.');return;}
-      if(!state.visitTime){showError(s,'Campo obbligatorio: seleziona un orario disponibile.');return;}
-      if(!r.value.trim()){showError(s,'Campo obbligatorio: descrivi il motivo della visita.');r.focus();return;}
+      if(!state.visitDate){showError(s, ERR.visitDate);return;}
+      if(!state.visitTime){showError(s, ERR.visitTime);return;}
+      if(!r.value.trim()){showError(s, ERR.visitReason);r.focus();return;}
       state.visitReason=r.value.trim();
       var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
       document.getElementById(P+'-visit-when').innerHTML=
-        whenRow('Ci vediamo il',fmtDateLong(state.visitDate))+
-        whenRow('Alle ore',state.visitTime);
+        whenRow(WHEN.visit,fmtDateLong(state.visitDate))+
+        whenRow(WHEN.visitAt,state.visitTime);
       document.getElementById(P+'-visit-summary').innerHTML=
-        row('Email',esc(state.email))+
-        (state.nome?row('Nome',esc(state.nome+' '+state.cognome)):'')+
-        (state.cellulare?row('Cellulare',esc(state.cellulare)):'')+
-        (atts!=='—'?row('Attività',esc(atts)):'')+
-        row('Motivo',esc(state.visitReason));
+        row(ROW_LABELS.email,esc(state.email))+
+        (state.nome?row(ROW_LABELS.name,esc(state.nome+' '+state.cognome)):'')+
+        (state.cellulare?row(ROW_LABELS.mobile,esc(state.cellulare)):'')+
+        (atts!=='—'?row(ROW_LABELS.activities,esc(atts)):'')+
+        row(ROW_LABELS.reason,esc(state.visitReason));
       showStep('confirm-visit');
     });
 
@@ -442,17 +530,17 @@ const WEBHOOK_LEAD  = '';
     document.getElementById(P+'-msg-send').addEventListener('click', async function() {
       var s=getStep('4-message'); clearError(s);
       var msgEl=root.querySelector('#'+P+'-msg-text');
-      if(!msgEl.value.trim()){showError(s,'Scrivi la tua richiesta prima di inviare.');msgEl.focus();return;}
+      if(!msgEl.value.trim()){showError(s, ERR.msg);msgEl.focus();return;}
       state.messageText=msgEl.value.trim();
       if(WEBHOOK_LEAD){
         try{await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'messaggio'}))});}catch(e){}
       }
       var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
       document.getElementById(P+'-msg-summary').innerHTML=
-        row('Email',esc(state.email))+
-        (state.nome?row('Nome',esc(state.nome+' '+state.cognome)):'')+
-        (atts!=='—'?row('Attività',esc(atts)):'')+
-        row('Richiesta',esc(state.messageText));
+        row(ROW_LABELS.email,esc(state.email))+
+        (state.nome?row(ROW_LABELS.name,esc(state.nome+' '+state.cognome)):'')+
+        (atts!=='—'?row(ROW_LABELS.activities,esc(atts)):'')+
+        row(ROW_LABELS.request,esc(state.messageText));
       showStep('confirm-message');
     });
 

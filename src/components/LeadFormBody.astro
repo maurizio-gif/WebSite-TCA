@@ -1,10 +1,20 @@
 ---
+import type { Lang } from '../i18n/utils';
 interface Props {
   prefix: string;
+  lang?: Lang;
 }
-const { prefix } = Astro.props;
+const { prefix, lang = 'it' } = Astro.props;
 
-const attivita = [
+const attivita = lang === 'en' ? [
+  { id: 'tennis',     label: 'Tennis' },
+  { id: 'padel',      label: 'Padel' },
+  { id: 'prep',       label: 'Athletic Training' },
+  { id: 'scuola',     label: 'Tennis School (children)' },
+  { id: 'agonistica', label: 'Competitive Tennis' },
+  { id: 'camps',      label: 'Summer Camps' },
+  { id: 'membership', label: 'Membership' },
+] : [
   { id: 'tennis',     label: 'Tennis' },
   { id: 'padel',      label: 'Padel' },
   { id: 'prep',       label: 'Preparazione Atletica' },
@@ -13,6 +23,92 @@ const attivita = [
   { id: 'camps',      label: 'Summer Camps' },
   { id: 'membership', label: 'Membership / Abbonamento' },
 ];
+
+const t = lang === 'en' ? {
+  step1sub:         "Enter your email and tell us what you're interested in.",
+  activitiesLabel:  'Activities of interest',
+  continueBtn:      'Continue',
+  checking:         'Checking…',
+  step2sub:         'Nice to meet you! Please fill in your details to continue.',
+  firstName:        'First name',
+  lastName:         'Last name',
+  mobile:           'Mobile',
+  privacyText:      'I have read and accept the <a href="/privacy-policy" target="_blank">Privacy Policy</a>. I consent to the processing of my personal data to respond to this request. <strong>(required)</strong>',
+  marketingText:    'I consent to receiving commercial communications, offers and news from Tennis Club Ambrosiano by email, SMS and WhatsApp. <em>(optional)</em>',
+  backBtn:          '← Back',
+  step3sub:         'How can we help you?',
+  callbackLabel:    'CALL ME BACK',
+  callbackSub:      "Choose a day and time — we'll call you",
+  visitLabel:       'BOOK A VISIT TO THE CLUB',
+  visitSub:         "Come and visit us — we'll show you everything",
+  messageLabel:     'SEND A MESSAGE',
+  messageSub:       "We'll reply by email as soon as possible",
+  step4cbSub:       'Choose a day and time, then tell us the reason for your call.',
+  chooseDay:        'Choose a day',
+  availableTimes:   'Available times',
+  callReason:       'Reason for your call',
+  callReasonPh:     "E.g. I'd like information about membership, I've played before and want to get back into it…",
+  confirmBtn:       'Confirm',
+  step4visitSub:    'Choose your arrival day and time, then tell us the reason for your visit.',
+  visitReason:      'Reason for your visit',
+  visitReasonPh:    "E.g. I'd like to visit the facilities, I'm interested in joining for padel…",
+  confirmVisitBtn:  'Confirm visit',
+  step4msgSub:      "Write your request: we'll get back to you as soon as possible.",
+  yourRequest:      'Your request',
+  requestPh:        "Tell us what you're looking for, what you're interested in, or any questions about the Club, our activities or pricing…",
+  sendBtn:          'Send request',
+  confirmCbTitle:   "Great!<br><em>We'll call you back.</em>",
+  confirmVisitTitle:'See you<br><em>at the Club!</em>',
+  confirmMsgTitle:  'Message<br><em>received!</em>',
+  closeBtn:         'Close',
+  howToFind:        'How to find us',
+  dirLine1:         "🚇 Metro Udine (M2 Green Line) — a few minutes' walk from the exit",
+  dirLine2:         '🚌 Bus lines 62 and 66 — Via Feltre stop',
+  openMaps:         'Open in Google Maps →',
+  confirmNote:      "We'll reply to the email address you provided as soon as possible.<br>See you at TCA!",
+} : {
+  step1sub:         'Inserisci la tua email e dicci cosa ti interessa.',
+  activitiesLabel:  'Attività di interesse',
+  continueBtn:      'Continua',
+  checking:         'Verifica in corso…',
+  step2sub:         'Piacere di conoscerti! Aggiungi i tuoi dati per procedere.',
+  firstName:        'Nome',
+  lastName:         'Cognome',
+  mobile:           'Cellulare',
+  privacyText:      'Ho letto e accetto la <a href="/privacy-policy" target="_blank">Privacy Policy</a>. Acconsento al trattamento dei dati personali per rispondermi a questa richiesta. <strong>(obbligatorio)</strong>',
+  marketingText:    'Acconsento a ricevere comunicazioni commerciali, offerte e novità dal Tennis Club Ambrosiano via email, SMS e WhatsApp. <em>(facoltativo)</em>',
+  backBtn:          '← Indietro',
+  step3sub:         'Come possiamo aiutarti?',
+  callbackLabel:    'RICHIAMAMI',
+  callbackSub:      'Scegli giorno e orario — ti chiamiamo noi',
+  visitLabel:       'PRENOTA UNA VISITA IN SEDE',
+  visitSub:         'Vieni a trovarci al Club — ti mostriamo tutto',
+  messageLabel:     'SCRIVI UN MESSAGGIO',
+  messageSub:       'Ti risponderemo via email al più presto',
+  step4cbSub:       'Scegli giorno e orario, poi raccontaci il motivo della chiamata.',
+  chooseDay:        'Scegli il giorno',
+  availableTimes:   'Orari disponibili',
+  callReason:       'Motivo della chiamata',
+  callReasonPh:     "Es. vorrei informazioni sull'abbonamento, ho già giocato e voglio riprendere…",
+  confirmBtn:       'Conferma',
+  step4visitSub:    'Scegli giorno e orario di arrivo, poi raccontaci il motivo della visita.',
+  visitReason:      'Motivo della visita',
+  visitReasonPh:    'Es. voglio visitare la struttura, mi interessa iscrivermi al padel…',
+  confirmVisitBtn:  'Conferma visita',
+  step4msgSub:      'Scrivici la tua richiesta: ti risponderemo nel più breve tempo possibile.',
+  yourRequest:      'La tua richiesta',
+  requestPh:        'Raccontaci cosa cerchi, cosa ti interessa o qualsiasi domanda sul Club, sulle attività o sulle tariffe…',
+  sendBtn:          'Invia richiesta',
+  confirmCbTitle:   'Perfetto!<br><em>Ti richiamiamo noi.</em>',
+  confirmVisitTitle:'Ti aspettiamo<br><em>al Club!</em>',
+  confirmMsgTitle:  'Messaggio<br><em>ricevuto!</em>',
+  closeBtn:         'Chiudi',
+  howToFind:        'Come raggiungerci',
+  dirLine1:         "🚇 Metro Udine (Linea 2 Verde) — pochi minuti a piedi dall'uscita",
+  dirLine2:         '🚌 Bus linee 62 e 66 — fermata Via Feltre',
+  openMaps:         'Apri in Google Maps →',
+  confirmNote:      "Ti risponderemo all'indirizzo indicato nel più breve tempo possibile.<br>A presto al TCA!",
+};
 ---
 
 <!-- ── Step indicator ──────────────────────────────────────────────── -->
@@ -26,7 +122,7 @@ const attivita = [
 
 <!-- ─── STEP 1 · Email + attività ─────────────────────────────────── -->
 <div class="lm__body" data-step="1">
-  <p class="lm__sub">Inserisci la tua email e dicci cosa ti interessa.</p>
+  <p class="lm__sub">{t.step1sub}</p>
 
   <div class="lm__field">
     <label for={`${prefix}-email`}>Email <span aria-hidden="true">*</span></label>
@@ -35,7 +131,7 @@ const attivita = [
   </div>
 
   <div>
-    <p class="lm__label-group">Attività di interesse</p>
+    <p class="lm__label-group">{t.activitiesLabel}</p>
     <div class="lm__checks">
       {attivita.map((a) => (
         <label class="lm__check-item">
@@ -48,30 +144,30 @@ const attivita = [
 
   <div class="lm__actions">
     <button class="btn btn-red lm__next" id={`${prefix}-step1-next`} type="button">
-      Continua <span class="lm__arrow">→</span>
+      {t.continueBtn} <span class="lm__arrow">→</span>
     </button>
   </div>
   <div class="lm__loader" hidden aria-live="polite">
-    <span class="lm__spinner"></span> Verifica in corso…
+    <span class="lm__spinner"></span> {t.checking}
   </div>
   <p class="lm__error" hidden role="alert"></p>
 </div>
 
 <!-- ─── STEP 2 · Dati nuovo utente ────────────────────────────────── -->
 <div class="lm__body" data-step="2" hidden>
-  <p class="lm__sub">Piacere di conoscerti! Aggiungi i tuoi dati per procedere.</p>
+  <p class="lm__sub">{t.step2sub}</p>
 
   <div class="lm__grid">
     <div class="lm__field">
-      <label for={`${prefix}-nome`}>Nome <span aria-hidden="true">*</span></label>
+      <label for={`${prefix}-nome`}>{t.firstName} <span aria-hidden="true">*</span></label>
       <input id={`${prefix}-nome`} name="nome" type="text" autocomplete="given-name" required />
     </div>
     <div class="lm__field">
-      <label for={`${prefix}-cognome`}>Cognome <span aria-hidden="true">*</span></label>
+      <label for={`${prefix}-cognome`}>{t.lastName} <span aria-hidden="true">*</span></label>
       <input id={`${prefix}-cognome`} name="cognome" type="text" autocomplete="family-name" required />
     </div>
     <div class="lm__field lm__field--full">
-      <label for={`${prefix}-cell`}>Cellulare <span aria-hidden="true">*</span></label>
+      <label for={`${prefix}-cell`}>{t.mobile} <span aria-hidden="true">*</span></label>
       <div class="lm__tel-wrap">
         <select id={`${prefix}-pfx`} name="prefisso" class="lm__tel-prefix" autocomplete="tel-country-code">
           <option value="+39" selected>🇮🇹 +39</option>
@@ -97,26 +193,18 @@ const attivita = [
   <div class="lm__consent">
     <label class="lm__consent-item">
       <input id={`${prefix}-privacy`} name="privacy" type="checkbox" required />
-      <span>
-        Ho letto e accetto la <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
-        Acconsento al trattamento dei dati personali per rispondermi a questa richiesta.
-        <strong>(obbligatorio)</strong>
-      </span>
+      <span set:html={t.privacyText} />
     </label>
     <label class="lm__consent-item">
       <input id={`${prefix}-marketing`} name="marketing" type="checkbox" />
-      <span>
-        Acconsento a ricevere comunicazioni commerciali, offerte e novità dal
-        Tennis Club Ambrosiano via email, SMS e WhatsApp.
-        <em>(facoltativo)</em>
-      </span>
+      <span set:html={t.marketingText} />
     </label>
   </div>
 
   <div class="lm__actions">
-    <button class="lm__back" id={`${prefix}-step2-back`} type="button">← Indietro</button>
+    <button class="lm__back" id={`${prefix}-step2-back`} type="button">{t.backBtn}</button>
     <button class="btn btn-red lm__next" id={`${prefix}-step2-next`} type="button">
-      Continua <span class="lm__arrow">→</span>
+      {t.continueBtn} <span class="lm__arrow">→</span>
     </button>
   </div>
   <p class="lm__error" hidden role="alert"></p>
@@ -124,7 +212,7 @@ const attivita = [
 
 <!-- ─── STEP 3 · Scelta azione ────────────────────────────────────── -->
 <div class="lm__body" data-step="3" hidden>
-  <p class="lm__sub">Come possiamo aiutarti?</p>
+  <p class="lm__sub">{t.step3sub}</p>
 
   <div class="lm__action-choice">
     <button class="lm__action-btn" data-action="callback" type="button">
@@ -134,8 +222,8 @@ const attivita = [
         </svg>
       </span>
       <span class="lm__action-texts">
-        <span class="lm__action-label">RICHIAMAMI</span>
-        <span class="lm__action-sub">Scegli giorno e orario — ti chiamiamo noi</span>
+        <span class="lm__action-label">{t.callbackLabel}</span>
+        <span class="lm__action-sub">{t.callbackSub}</span>
       </span>
       <span class="lm__action-arr">→</span>
     </button>
@@ -148,8 +236,8 @@ const attivita = [
         </svg>
       </span>
       <span class="lm__action-texts">
-        <span class="lm__action-label">PRENOTA UNA VISITA IN SEDE</span>
-        <span class="lm__action-sub">Vieni a trovarci al Club — ti mostriamo tutto</span>
+        <span class="lm__action-label">{t.visitLabel}</span>
+        <span class="lm__action-sub">{t.visitSub}</span>
       </span>
       <span class="lm__action-arr">→</span>
     </button>
@@ -162,39 +250,39 @@ const attivita = [
         </svg>
       </span>
       <span class="lm__action-texts">
-        <span class="lm__action-label">SCRIVI UN MESSAGGIO</span>
-        <span class="lm__action-sub">Ti risponderemo via email al più presto</span>
+        <span class="lm__action-label">{t.messageLabel}</span>
+        <span class="lm__action-sub">{t.messageSub}</span>
       </span>
       <span class="lm__action-arr">→</span>
     </button>
   </div>
 
-  <button class="lm__back lm__back--center" id={`${prefix}-step3-back`} type="button">← Indietro</button>
+  <button class="lm__back lm__back--center" id={`${prefix}-step3-back`} type="button">{t.backBtn}</button>
 </div>
 
 <!-- ─── STEP 4a · RICHIAMAMI ──────────────────────────────────────── -->
 <div class="lm__body" data-step="4-callback" hidden>
-  <p class="lm__sub">Scegli giorno e orario, poi raccontaci il motivo della chiamata.</p>
+  <p class="lm__sub">{t.step4cbSub}</p>
 
   <div class="lm__cal">
-    <p class="lm__label-group">Scegli il giorno <span aria-hidden="true">*</span></p>
+    <p class="lm__label-group">{t.chooseDay} <span aria-hidden="true">*</span></p>
     <div class="lm__cal-month-wrap" id={`${prefix}-cal-cb`}></div>
     <div class="lm__slots-wrap" id={`${prefix}-slots-wrap-cb`} hidden>
-      <p class="lm__slots-wrap-title">Orari disponibili</p>
+      <p class="lm__slots-wrap-title">{t.availableTimes}</p>
       <div class="lm__slots-body" id={`${prefix}-cal-slots-cb`}></div>
     </div>
   </div>
 
   <div class="lm__field">
-    <label for={`${prefix}-cb-reason`}>Motivo della chiamata <span aria-hidden="true">*</span></label>
+    <label for={`${prefix}-cb-reason`}>{t.callReason} <span aria-hidden="true">*</span></label>
     <textarea id={`${prefix}-cb-reason`} name="cb-reason" rows="3"
-              placeholder="Es. vorrei informazioni sull'abbonamento, ho già giocato e voglio riprendere…"></textarea>
+              placeholder={t.callReasonPh}></textarea>
   </div>
 
   <div class="lm__actions">
-    <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
+    <button class="lm__back" data-step-back="3" type="button">{t.backBtn}</button>
     <button class="btn btn-red" id={`${prefix}-cb-confirm`} type="button">
-      Conferma <span class="lm__arrow">→</span>
+      {t.confirmBtn} <span class="lm__arrow">→</span>
     </button>
   </div>
   <p class="lm__error" hidden role="alert"></p>
@@ -202,27 +290,27 @@ const attivita = [
 
 <!-- ─── STEP 4b · PRENOTA VISITA ──────────────────────────────────── -->
 <div class="lm__body" data-step="4-visit" hidden>
-  <p class="lm__sub">Scegli giorno e orario di arrivo, poi raccontaci il motivo della visita.</p>
+  <p class="lm__sub">{t.step4visitSub}</p>
 
   <div class="lm__cal">
-    <p class="lm__label-group">Scegli il giorno <span aria-hidden="true">*</span></p>
+    <p class="lm__label-group">{t.chooseDay} <span aria-hidden="true">*</span></p>
     <div class="lm__cal-month-wrap" id={`${prefix}-cal-visit`}></div>
     <div class="lm__slots-wrap" id={`${prefix}-slots-wrap-visit`} hidden>
-      <p class="lm__slots-wrap-title">Orari disponibili</p>
+      <p class="lm__slots-wrap-title">{t.availableTimes}</p>
       <div class="lm__slots-body" id={`${prefix}-cal-slots-visit`}></div>
     </div>
   </div>
 
   <div class="lm__field">
-    <label for={`${prefix}-visit-reason`}>Motivo della visita <span aria-hidden="true">*</span></label>
+    <label for={`${prefix}-visit-reason`}>{t.visitReason} <span aria-hidden="true">*</span></label>
     <textarea id={`${prefix}-visit-reason`} name="visit-reason" rows="3"
-              placeholder="Es. voglio visitare la struttura, mi interessa iscrivermi al padel…"></textarea>
+              placeholder={t.visitReasonPh}></textarea>
   </div>
 
   <div class="lm__actions">
-    <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
+    <button class="lm__back" data-step-back="3" type="button">{t.backBtn}</button>
     <button class="btn btn-red" id={`${prefix}-visit-confirm`} type="button">
-      Conferma visita <span class="lm__arrow">→</span>
+      {t.confirmVisitBtn} <span class="lm__arrow">→</span>
     </button>
   </div>
   <p class="lm__error" hidden role="alert"></p>
@@ -230,18 +318,18 @@ const attivita = [
 
 <!-- ─── STEP 4c · SCRIVI UN MESSAGGIO ────────────────────────────── -->
 <div class="lm__body" data-step="4-message" hidden>
-  <p class="lm__sub">Scrivici la tua richiesta: ti risponderemo nel più breve tempo possibile.</p>
+  <p class="lm__sub">{t.step4msgSub}</p>
 
   <div class="lm__field">
-    <label for={`${prefix}-msg-text`}>La tua richiesta <span aria-hidden="true">*</span></label>
+    <label for={`${prefix}-msg-text`}>{t.yourRequest} <span aria-hidden="true">*</span></label>
     <textarea id={`${prefix}-msg-text`} name="message" rows="6"
-              placeholder="Raccontaci cosa cerchi, cosa ti interessa o qualsiasi domanda sul Club, sulle attività o sulle tariffe…"></textarea>
+              placeholder={t.requestPh}></textarea>
   </div>
 
   <div class="lm__actions">
-    <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
+    <button class="lm__back" data-step-back="3" type="button">{t.backBtn}</button>
     <button class="btn btn-red" id={`${prefix}-msg-send`} type="button">
-      Invia richiesta <span class="lm__arrow">→</span>
+      {t.sendBtn} <span class="lm__arrow">→</span>
     </button>
   </div>
   <p class="lm__error" hidden role="alert"></p>
@@ -254,10 +342,10 @@ const attivita = [
       <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
-  <h3 class="lm__confirm-title">Perfetto!<br><em>Ti richiamiamo noi.</em></h3>
+  <h3 class="lm__confirm-title" set:html={t.confirmCbTitle} />
   <div class="lm__confirm-when" id={`${prefix}-cb-when`}></div>
   <div class="lm__confirm-summary" id={`${prefix}-cb-summary`}></div>
-  <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
+  <button class="btn btn-red lm__confirm-cta" data-lm-close>{t.closeBtn}</button>
 </div>
 
 <!-- ─── CONFERMA · VISITA IN SEDE ────────────────────────────────── -->
@@ -267,15 +355,15 @@ const attivita = [
       <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
-  <h3 class="lm__confirm-title">Ti aspettiamo<br><em>al Club!</em></h3>
+  <h3 class="lm__confirm-title" set:html={t.confirmVisitTitle} />
   <div class="lm__confirm-when" id={`${prefix}-visit-when`}></div>
   <div class="lm__confirm-summary" id={`${prefix}-visit-summary`}></div>
   <div class="lm__confirm-dir">
-    <p class="lm__confirm-dir-title">Come raggiungerci</p>
+    <p class="lm__confirm-dir-title">{t.howToFind}</p>
     <ul class="lm__confirm-dir-list">
       <li><strong>Tennis Club Ambrosiano — Via Feltre 33, 20134 Milano</strong></li>
-      <li>🚇 Metro Udine (Linea 2 Verde) — pochi minuti a piedi dall'uscita</li>
-      <li>🚌 Bus linee 62 e 66 — fermata Via Feltre</li>
+      <li>{t.dirLine1}</li>
+      <li>{t.dirLine2}</li>
     </ul>
     <div class="lm__confirm-dir-contacts">
       <a href="tel:+390226414392">📞 +39 02 2641 4392</a>
@@ -283,9 +371,9 @@ const attivita = [
     </div>
     <a class="btn btn-outline--dark lm__confirm-map-btn"
        href="https://maps.google.com/?q=Via+Feltre+33,+20134+Milano"
-       target="_blank" rel="noopener">Apri in Google Maps →</a>
+       target="_blank" rel="noopener">{t.openMaps}</a>
   </div>
-  <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
+  <button class="btn btn-red lm__confirm-cta" data-lm-close>{t.closeBtn}</button>
 </div>
 
 <!-- ─── CONFERMA · MESSAGGIO ─────────────────────────────────────── -->
@@ -295,10 +383,8 @@ const attivita = [
       <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
-  <h3 class="lm__confirm-title">Messaggio<br><em>ricevuto!</em></h3>
+  <h3 class="lm__confirm-title" set:html={t.confirmMsgTitle} />
   <div class="lm__confirm-summary" id={`${prefix}-msg-summary`}></div>
-  <p class="lm__confirm-note">
-    Ti risponderemo all'indirizzo indicato nel più breve tempo possibile.<br>A presto al TCA!
-  </p>
-  <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
+  <p class="lm__confirm-note" set:html={t.confirmNote} />
+  <button class="btn btn-red lm__confirm-cta" data-lm-close>{t.closeBtn}</button>
 </div>
