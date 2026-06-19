@@ -429,3 +429,74 @@
     }
   }
 </style>
+
+<script>
+  (function () {
+    var BREAKPOINT = 768;
+
+    function runPeek(wrap: HTMLElement) {
+      // ~1 colonna tier in px (34vw)
+      var peek = Math.round(window.innerWidth * 0.34);
+      var fwdMs  = 900;  // andata
+      var holdMs = 550;  // pausa
+      var bckMs  = 650;  // ritorno
+
+      var start: number | null = null;
+      var phase: 'fwd' | 'hold' | 'back' = 'fwd';
+      var holdStart = 0;
+      var raf = 0;
+      var cancelled = false;
+
+      // Cancella se l'utente tocca la tabella
+      function cancel() { cancelled = true; cancelAnimationFrame(raf); }
+      wrap.addEventListener('touchstart', cancel, { once: true, passive: true });
+      wrap.addEventListener('wheel',      cancel, { once: true, passive: true });
+
+      function easeOutCubic(t: number) { return 1 - Math.pow(1 - t, 3); }
+      function easeInCubic(t: number)  { return t * t * t; }
+
+      function step(ts: number) {
+        if (cancelled) return;
+
+        if (phase === 'fwd') {
+          if (start === null) start = ts;
+          var p = Math.min((ts - start) / fwdMs, 1);
+          wrap.scrollLeft = peek * easeOutCubic(p);
+          if (p < 1) { raf = requestAnimationFrame(step); return; }
+          phase = 'hold'; holdStart = ts;
+          raf = requestAnimationFrame(step); return;
+        }
+
+        if (phase === 'hold') {
+          if (ts - holdStart < holdMs) { raf = requestAnimationFrame(step); return; }
+          phase = 'back'; start = ts;
+          raf = requestAnimationFrame(step); return;
+        }
+
+        if (phase === 'back') {
+          var p2 = Math.min((ts - (start as number)) / bckMs, 1);
+          wrap.scrollLeft = peek * (1 - easeInCubic(p2));
+          if (p2 < 1) raf = requestAnimationFrame(step);
+        }
+      }
+
+      // Piccolo delay iniziale prima di partire
+      setTimeout(() => { if (!cancelled) raf = requestAnimationFrame(step); }, 500);
+    }
+
+    var wrap = document.querySelector<HTMLElement>('.ms__table-wrap');
+    if (!wrap) return;
+
+    // Parte solo su mobile e una sola volta quando la sezione è visibile
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        observer.disconnect();
+        if (window.innerWidth <= BREAKPOINT) runPeek(wrap!);
+      });
+    }, { threshold: 0.5 });
+
+    var section = document.querySelector('.ms');
+    if (section) observer.observe(section);
+  })();
+</script>
