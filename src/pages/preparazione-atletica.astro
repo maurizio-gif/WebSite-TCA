@@ -129,38 +129,48 @@ const categories: Category[] = [
             <span class="cat-block__label">{cat.label}</span>
             <div class="cat-block__line"></div>
             <span class="cat-block__count">{cat.courses.length} corsi</span>
+            <div class="courses-nav">
+              <button class="courses-btn" data-dir="-1" data-track={`courses-${cat.id}`} aria-label="Precedente">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="courses-btn" data-dir="1" data-track={`courses-${cat.id}`} aria-label="Successivo">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
           </div>
-          <div class="courses-grid">
-            {cat.courses.map((course) => (
-              <div class="course-card" style={`--cat-color: ${cat.color}`}>
-                <div class="course-card__media">
-                  <div class="img-placeholder" data-name={`${course.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}.avif`} style="min-height:180px"></div>
-                </div>
-                <div class="course-card__body">
-                  <span class="course-card__cat">{cat.label}</span>
-                  <h3 class="course-card__name">{course.name}</h3>
-                  <p class="course-card__desc">{course.desc}</p>
-                  <div class="course-card__params">
-                    <div class="param-item">
-                      <span class="param-item__label">Intensità</span>
-                      <span class="param-item__dots" aria-label={course.intensity === 3 ? 'Alta' : course.intensity === 2 ? 'Media' : 'Bassa'}>
-                        {[1,2,3].map(n => (
-                          <span class={`dot${n <= course.intensity ? ' dot--on' : ''}`}></span>
-                        ))}
-                      </span>
-                    </div>
-                    <div class="param-item">
-                      <span class="param-item__label">Durata</span>
-                      <span class="param-item__value">{course.duration}</span>
-                    </div>
-                    <div class="param-item">
-                      <span class="param-item__label">Livello</span>
-                      <span class="param-item__value">{course.level}</span>
+          <div class="courses-track-wrap">
+            <div class="courses-track" data-carousel-id={`courses-${cat.id}`}>
+              {cat.courses.map((course) => (
+                <div class="course-card" style={`--cat-color: ${cat.color}`}>
+                  <div class="course-card__media">
+                    <div class="img-placeholder" data-name={`${course.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}.avif`} style="min-height:180px"></div>
+                  </div>
+                  <div class="course-card__body">
+                    <span class="course-card__cat">{cat.label}</span>
+                    <h3 class="course-card__name">{course.name}</h3>
+                    <p class="course-card__desc">{course.desc}</p>
+                    <div class="course-card__params">
+                      <div class="param-item">
+                        <span class="param-item__label">Intensità</span>
+                        <span class="param-item__dots" aria-label={course.intensity === 3 ? 'Alta' : course.intensity === 2 ? 'Media' : 'Bassa'}>
+                          {[1,2,3].map(n => (
+                            <span class={`dot${n <= course.intensity ? ' dot--on' : ''}`}></span>
+                          ))}
+                        </span>
+                      </div>
+                      <div class="param-item">
+                        <span class="param-item__label">Durata</span>
+                        <span class="param-item__value">{course.duration}</span>
+                      </div>
+                      <div class="param-item">
+                        <span class="param-item__label">Livello</span>
+                        <span class="param-item__value">{course.level}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       ))}
@@ -236,6 +246,25 @@ const categories: Category[] = [
 
   <LeadFormPlaceholder />
   <InfoPratiche />
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll<HTMLButtonElement>('.courses-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dir = Number(btn.dataset.dir);
+          const trackId = btn.dataset.track;
+          const track = document.querySelector<HTMLElement>(
+            `[data-carousel-id="${trackId}"]`
+          );
+          if (!track) return;
+          const card = track.querySelector<HTMLElement>('.course-card');
+          if (!card) return;
+          const gap = 20; // 1.25rem at 16px
+          track.scrollBy({ left: dir * (card.offsetWidth + gap), behavior: 'smooth' });
+        });
+      });
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -367,15 +396,57 @@ const categories: Category[] = [
     white-space: nowrap;
   }
 
-  /* ── Course grid ── */
-  .courses-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
+  /* ── Nav arrows ── */
+  .courses-nav {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
   }
+
+  .courses-btn {
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    flex-shrink: 0;
+  }
+
+  .courses-btn:hover {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: #fff;
+  }
+
+  /* ── Course carousel ── */
+  .courses-track-wrap {
+    overflow: hidden;
+    margin: 0 calc(-1 * var(--pad-x));
+  }
+
+  .courses-track {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.5rem var(--pad-x) 1.5rem;
+    scroll-padding-left: var(--pad-x);
+  }
+
+  .courses-track::-webkit-scrollbar { display: none; }
 
   /* ── Course card ── */
   .course-card {
+    flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     background: #fff;
@@ -535,21 +606,13 @@ const categories: Category[] = [
   }
 
   /* ── Responsive ── */
-  @media (max-width: 1100px) {
-    .courses-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-
   @media (max-width: 860px) {
     .prog-grid { grid-template-columns: 1fr 1fr; }
-    .courses-grid { grid-template-columns: repeat(2, 1fr); }
+    .course-card { flex: 0 0 calc((100% - 1.25rem) / 2); }
   }
 
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     .prog-grid { grid-template-columns: 1fr; }
-    .courses-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 400px) {
-    .courses-grid { grid-template-columns: 1fr; }
+    .course-card { flex: 0 0 calc(78vw); }
   }
 </style>
