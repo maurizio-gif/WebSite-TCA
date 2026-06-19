@@ -91,7 +91,7 @@ const categories: Category[] = [
     imageAlt="Sala attrezzi professionale TCA"
     ctas={[
       { label: "I nostri abbonamenti", href: "#membership" },
-      { label: "Il nostro planning",   href: "#corsi", outline: true },
+      { label: "Il nostro planning",   href: "#planning", outline: true },
     ]}
   />
 
@@ -230,7 +230,7 @@ const categories: Category[] = [
   </section>
 
   <!-- ── Calendario corsi ── -->
-  <section class="calendar-section">
+  <section class="calendar-section" id="planning">
     <div class="calendar-section__inner">
       <span class="eyebrow">Calendario</span>
       <h2 class="section-title">Prenota il tuo<br><em>corso.</em></h2>
@@ -300,7 +300,8 @@ const categories: Category[] = [
 <style>
   /* ── Anchor offset per navbar fissa ── */
   .anchor-target,
-  #corsi {
+  #corsi,
+  #planning {
     scroll-margin-top: calc(var(--header-h) + 1rem);
   }
 

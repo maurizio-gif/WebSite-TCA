@@ -65,6 +65,41 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
     <Footer lang={lang} />
     <LeadModal />
 
+    <!-- ── Back to top ── -->
+    <button id="back-to-top" aria-label="Torna in cima" hidden>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <style>
+      #back-to-top {
+        position: fixed;
+        bottom: clamp(1.2rem, 3vh, 2rem);
+        right: clamp(1rem, 3vw, 2rem);
+        z-index: 900;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 16px rgba(139,26,26,0.35);
+        opacity: 0;
+        transform: translateY(12px);
+        transition: opacity 0.25s, transform 0.25s, background 0.18s;
+        pointer-events: none;
+      }
+      #back-to-top:not([hidden]) { pointer-events: auto; }
+      #back-to-top.is-visible { opacity: 1; transform: translateY(0); }
+      #back-to-top:hover { background: var(--color-accent-dark); }
+    </style>
+
     <script>
       // ── Scroll animations ──────────────────────────────────────────────────
 
@@ -176,6 +211,19 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
           el.classList.add('is-visible');
         });
       }, 2000);
+
+      // ── Back to top ──────────────────────────────────────────────────
+      const btt = document.getElementById('back-to-top') as HTMLButtonElement | null;
+      if (btt) {
+        const THRESHOLD = 400;
+        const toggle = () => {
+          const show = window.scrollY > THRESHOLD;
+          if (show) { btt.hidden = false; requestAnimationFrame(() => btt.classList.add('is-visible')); }
+          else       { btt.classList.remove('is-visible'); }
+        };
+        window.addEventListener('scroll', toggle, { passive: true });
+        btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      }
     </script>
   </body>
 </html>
