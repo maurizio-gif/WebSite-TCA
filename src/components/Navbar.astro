@@ -182,7 +182,13 @@ const navItems = [
     <div class="navbar__right">
       <button class="navbar__cta btn btn-red" data-open-modal="modal-contatti">{t.nav.contattaci}</button>
       <a class="navbar__mobile-contact" data-open-modal="modal-contatti">{t.nav.contattaci}</a>
-      <button class="navbar__accedi" id="btn-accedi" type="button">ACCEDI</button>
+      <button class="navbar__accedi" id="btn-accedi" type="button">
+        <svg width="13" height="14" viewBox="0 0 24 26" fill="none" aria-hidden="true" style="flex-shrink:0">
+          <circle cx="12" cy="8" r="5" stroke="currentColor" stroke-width="2"/>
+          <path d="M2 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        ACCEDI
+      </button>
 
       <div class="lang-switcher" id="lang-switcher" aria-label="Seleziona lingua / Select language">
         <button class="lang-switcher__toggle" id="lang-toggle" aria-haspopup="listbox" aria-expanded="false">
@@ -237,13 +243,28 @@ const navItems = [
       </svg>
     </button>
     <p class="accedi-modal__eyebrow">Il tuo Club</p>
-    <h2 class="accedi-modal__title" id="accedi-title">Accedi al tuo Account per gestire l'abbonamento e le prenotazioni.</h2>
+    <h2 class="accedi-modal__title" id="accedi-title">
+      Il tuo club<br>a portata di click
+      <span class="accedi-modal__title-sub">Gestisci il tuo abbonamento</span>
+    </h2>
     <div class="accedi-modal__btns">
-      <a class="accedi-modal__btn accedi-modal__btn--red" href="#" target="_blank" rel="noopener">
+      <a class="accedi-modal__btn accedi-modal__btn--red" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Login" target="_blank" rel="noopener">
         ACCEDI DA WEB
       </a>
-      <a class="accedi-modal__btn accedi-modal__btn--outline" href="#" target="_blank" rel="noopener">
+      <a class="accedi-modal__btn accedi-modal__btn--outline" id="btn-app-store" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Login" target="_blank" rel="noopener">
         ACCEDI DA APP
+      </a>
+    </div>
+
+    <div class="accedi-modal__divider" aria-hidden="true"></div>
+
+    <p class="accedi-modal__eyebrow">Prenotazioni</p>
+    <div class="accedi-modal__btns">
+      <a class="accedi-modal__btn accedi-modal__btn--outline" href="https://playtomic.com/clubs/club-ambrosiano-tennis" target="_blank" rel="noopener">
+        PRENOTA UN CAMPO
+      </a>
+      <a class="accedi-modal__btn accedi-modal__btn--outline" href="https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar" target="_blank" rel="noopener">
+        PRENOTA UN CORSO
       </a>
     </div>
   </div>
@@ -979,12 +1000,27 @@ const navItems = [
     margin: 0;
   }
 
+  .accedi-modal__title-sub {
+    display: block;
+    font-family: var(--font-body);
+    font-size: clamp(0.85rem, 1.8vw, 1rem);
+    font-weight: 300;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    color: var(--color-text-light);
+    margin-top: 0.4rem;
+  }
+
+  .accedi-modal__divider {
+    height: 1px;
+    background: rgba(139,26,26,0.12);
+    margin: 0.25rem 0;
+  }
+
   .accedi-modal__btns {
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
-    padding-top: 0.5rem;
-    border-top: 1px solid rgba(139,26,26,0.12);
   }
 
   .accedi-modal__btn {
@@ -1063,6 +1099,20 @@ const navItems = [
   document.getElementById('btn-accedi')?.addEventListener('click', () => accediModal?.showModal());
   document.getElementById('accedi-close')?.addEventListener('click', () => accediModal?.close());
   accediModal?.addEventListener('click', (e) => { if (e.target === accediModal) accediModal.close(); });
+
+  // Smart app store link — iOS → App Store, Android → Play Store
+  const btnApp = document.getElementById('btn-app-store') as HTMLAnchorElement | null;
+  if (btnApp) {
+    const ua = navigator.userAgent;
+    if (/iphone|ipad|ipod/i.test(ua)) {
+      btnApp.href = 'https://apps.apple.com/it/app/club-ambrosiano/id1583896957';
+    } else if (/android/i.test(ua)) {
+      btnApp.href = 'https://play.google.com/store/apps/details?id=com.perfectgym.perfectgymgo2.ambrosiano&pcampaignid=web_share';
+    } else {
+      // Desktop: mostra entrambe le opzioni aprendo il Play Store come fallback generico
+      btnApp.href = 'https://apps.apple.com/it/app/club-ambrosiano/id1583896957';
+    }
+  }
 
   const menu   = document.getElementById('g-menu') as HTMLElement | null;
   const burger = document.getElementById('burger-btn') as HTMLButtonElement | null;
