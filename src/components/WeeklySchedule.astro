@@ -101,7 +101,9 @@ const DAYS: Array<{ full: string; short: string; lessons: Lesson[] }> = [
   { full: 'Domenica', short: 'DOM', lessons: [] },
 ];
 
-const PG_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar';
+const PG_URL      = 'https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar';
+const APPLE_URL   = 'https://apps.apple.com/it/app/club-ambrosiano/id1583896957';
+const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgym.perfectgymgo2.ambrosiano';
 ---
 
 <div class="ws">
@@ -149,15 +151,44 @@ const PG_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Clas
   </div>
 
   <!-- CTA footer -->
-  <p class="ws__cta-note">
-    Planning indicativo, soggetto a variazioni settimanali. &nbsp;
-    <a class="ws__cta-link" href={PG_URL} target="_blank" rel="noopener noreferrer">
-      Prenota il tuo posto su PerfectGym
-      <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-        <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
-  </p>
+  <div class="ws__footer">
+    <p class="ws__cta-note">
+      Planning indicativo, soggetto a variazioni settimanali. &nbsp;
+      <a class="ws__cta-link" href={PG_URL} target="_blank" rel="noopener noreferrer">
+        Prenota il tuo posto sul nostro portale web
+        <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </p>
+
+    <div class="ws__badges">
+      <!-- Apple App Store -->
+      <a class="ws__badge" href={APPLE_URL} target="_blank" rel="noopener noreferrer" aria-label="Scarica su App Store">
+        <svg class="ws__badge-logo" viewBox="0 0 814 1000" fill="currentColor" aria-hidden="true">
+          <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-42.3-148.2-105.3c-47.1-67.5-89.1-172.8-89.1-278s56.2-198.3 148.2-261.8c60.9-42.2 128.3-65.5 203.7-65.5 73 0 130.3 30.7 175.7 60.7 45.4 30 62.4 61.1 64.2 63.4zM590.6 98.5c21.5-25.3 36.7-60.6 36.7-95.9 0-4.9-.3-9.9-1-14.8-34.8 1.3-76 23.3-100.8 52.3-19.8 22.8-37.3 57.8-37.3 93.1 0 5.1.8 10.3 1.2 11.9 2.3.4 6.1.8 9.9.8 31.2 0 70-21 92.3-47.4z"/>
+        </svg>
+        <span class="ws__badge-text">
+          <span class="ws__badge-small">Scarica su</span>
+          <span class="ws__badge-big">App Store</span>
+        </span>
+      </a>
+
+      <!-- Google Play -->
+      <a class="ws__badge" href={ANDROID_URL} target="_blank" rel="noopener noreferrer" aria-label="Scarica su Google Play">
+        <svg class="ws__badge-logo ws__badge-logo--play" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3.18 23.76c.34.19.72.24 1.1.14l12.02-12.02L12.63 8.2 3.18 23.76z" fill="#EA4335"/>
+          <path d="M22.49 10.56L19.04 8.6l-3.8 3.8 3.8 3.8 3.47-2c1-.57 1-.2 1-3.32-.01-.53-.02-1.74-1.02-2.32z" fill="#FBBC05"/>
+          <path d="M4.28.1a2.03 2.03 0 0 0-.1.68v22.44c0 .24.04.46.1.68L16.32 11.9 4.28.1z" fill="#4285F4"/>
+          <path d="M16.32 11.9 4.28 23.9c.3.17.65.1.98-.08l12.02-7.22-1-4.7z" fill="#34A853"/>
+        </svg>
+        <span class="ws__badge-text">
+          <span class="ws__badge-small">Disponibile su</span>
+          <span class="ws__badge-big">Google Play</span>
+        </span>
+      </a>
+    </div>
+  </div>
 </div>
 
 <style>
@@ -374,6 +405,71 @@ const PG_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Clas
   }
 
   .ws__cta-link:hover { text-decoration: underline; }
+
+  /* ── Store badges ── */
+  .ws__footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .ws__badges {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .ws__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #000;
+    color: #fff;
+    border-radius: 8px;
+    padding: 9px 16px;
+    text-decoration: none;
+    min-width: 150px;
+    transition: opacity 0.18s;
+    border: 1.5px solid rgba(255,255,255,0.12);
+  }
+
+  .ws__badge:hover { opacity: 0.85; }
+
+  .ws__badge-logo {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    fill: #fff;
+  }
+
+  .ws__badge-logo--play {
+    fill: none;
+  }
+
+  .ws__badge-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .ws__badge-small {
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.75);
+    line-height: 1;
+  }
+
+  .ws__badge-big {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #fff;
+    line-height: 1.15;
+  }
 
   /* ── Mobile: nascondi giorno-full, abbr già visibile ── */
   @media (max-width: 600px) {
