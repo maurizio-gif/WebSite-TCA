@@ -42,7 +42,8 @@
         <tbody>
 
           <tr class="ms__cat-row">
-            <td colspan="4" class="ms__cat-label">Accesso ai campi</td>
+            <td class="ms__cat-label">Accesso ai campi</td>
+            <td class="ms__cat-fill" colspan="3"></td>
           </tr>
           <tr>
             <td class="ms__feat">Campi da tennis all'aperto</td>
@@ -64,7 +65,8 @@
           </tr>
 
           <tr class="ms__cat-row">
-            <td colspan="4" class="ms__cat-label">Preparazione Atletica</td>
+            <td class="ms__cat-label">Preparazione Atletica</td>
+            <td class="ms__cat-fill" colspan="3"></td>
           </tr>
           <tr>
             <td class="ms__feat">Sale di allenamento</td>
@@ -80,7 +82,8 @@
           </tr>
 
           <tr class="ms__cat-row">
-            <td colspan="4" class="ms__cat-label">Priorità di prenotazione</td>
+            <td class="ms__cat-label">Priorità di prenotazione</td>
+            <td class="ms__cat-fill" colspan="3"></td>
           </tr>
           <tr>
             <td class="ms__feat">Anticipo prenotazione campi</td>
@@ -102,7 +105,8 @@
           </tr>
 
           <tr class="ms__cat-row">
-            <td colspan="4" class="ms__cat-label">Vantaggi economici</td>
+            <td class="ms__cat-label">Vantaggi economici</td>
+            <td class="ms__cat-fill" colspan="3"></td>
           </tr>
           <tr>
             <td class="ms__feat">Tariffe agevolate su corsi</td>
@@ -292,6 +296,13 @@
     color: #fff;
   }
 
+  /* ── Category fill cells (le 3 colonne destra nelle righe categoria) ── */
+  .ms__cat-fill {
+    background: var(--color-off-white);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
   /* ── Category rows ── */
   .ms__cat-row .ms__cat-label {
     font-family: var(--font-display);
@@ -371,7 +382,7 @@
   .ms__foot-cell--feat { background: var(--color-bg); }
   .ms__foot-cell--platinum { background: #FBF3F3; }
 
-  /* ── MOBILE: scroll orizzontale ── */
+  /* ── MOBILE: scroll orizzontale + prima colonna sticky ── */
   @media (max-width: 768px) {
 
     /* Rimuovi padding orizzontale della sezione per far andare
@@ -392,16 +403,54 @@
     }
 
     /* Colonna feature: fissa, abbastanza larga da leggere le label */
-    .col-feat     { width: 44vw; }
-    /* Ogni colonna tier occupa ~34vw → su 375px si vede
-       feat (165px) + silver (127px) + ~83px di gold = chiaro che c'è altro */
-    .col-silver   { width: 34vw; }
-    .col-gold     { width: 34vw; }
-    .col-platinum { width: 34vw; }
+    .col-feat     { width: 42vw; }
+    /* Ogni colonna tier occupa ~36vw → su 375px si vede
+       feat (157px) + silver (135px) + ~83px di gold = chiaro che c'è altro */
+    .col-silver   { width: 36vw; }
+    .col-gold     { width: 36vw; }
+    .col-platinum { width: 36vw; }
 
     /* La tabella è più larga del viewport → scroll */
     .ms__table {
-      width: calc(44vw + 34vw * 3); /* 146vw */
+      width: calc(42vw + 36vw * 3); /* 150vw */
+    }
+
+    /* ── Sticky: prima colonna bloccata a sinistra ── */
+    .ms__th--feat,
+    .ms__feat,
+    .ms__cat-row .ms__cat-label,
+    .ms__foot-cell--feat {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      /* Ombra sottile che separa la colonna fissa da quelle scorrevoli */
+      box-shadow: 3px 0 8px -2px rgba(0,0,0,0.10);
+    }
+
+    /* Header sticky: z-index maggiore per stare sopra le celle body */
+    .ms__th--feat {
+      z-index: 3;
+      background: var(--color-off-white);
+    }
+
+    /* Celle body prima colonna: sfondo opaco per coprire il contenuto che scorre */
+    .ms__feat {
+      background: var(--color-bg);
+    }
+
+    /* Righe categoria: label sticky */
+    .ms__cat-row .ms__cat-label {
+      background: var(--color-off-white);
+    }
+
+    /* Footer prima colonna */
+    .ms__foot-cell--feat {
+      background: var(--color-bg);
+    }
+
+    /* Hover: sincronizza il colore della prima cella con il row-hover */
+    .ms__table tbody tr:not(.ms__cat-row):hover .ms__feat {
+      background: rgba(0, 0, 0, 0.018);
     }
 
     /* Header più compatto */
