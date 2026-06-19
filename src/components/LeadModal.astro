@@ -4,7 +4,7 @@ const WEBHOOK_LEAD  = '';
 
 const attivita = [
   { id: 'tennis',     label: 'Tennis' },
-  { id: 'padel',      label: 'Padel / Pickleball' },
+  { id: 'padel',      label: 'Padel' },
   { id: 'prep',       label: 'Preparazione Atletica' },
   { id: 'scuola',     label: 'Scuola Tennis (bambini)' },
   { id: 'agonistica', label: 'Agonistica Tennis' },
@@ -750,7 +750,7 @@ const attivita = [
   var WEBHOOK_LEAD  = '';
 
   var ATTIVITA_LABELS = {
-    tennis:'Tennis', padel:'Padel / Pickleball', prep:'Preparazione Atletica',
+    tennis:'Tennis', padel:'Padel', prep:'Preparazione Atletica',
     scuola:'Scuola Tennis (bambini)', agonistica:'Agonistica Tennis',
     camps:'Summer Camps', membership:'Membership / Abbonamento',
   };
@@ -946,7 +946,7 @@ const attivita = [
   // ═══════════════════════════════════════════════════════════════
   function slotsCallback(date) {
     var day=date.getDay(), isWE=(day===0||day===6), endH=isWE?19:20, slots=[];
-    for(var h=9;h<endH;h++) for(var m=0;m<60;m+=10) slots.push(pad2(h)+':'+pad2(m));
+    for(var h=9;h<endH;h++) for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m));
     return slots;
   }
 
