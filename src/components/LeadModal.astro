@@ -521,9 +521,6 @@ const WEBHOOK_LEAD  = '';
     ['lm-cal-slots-cb','lm-cal-slots-visit'].forEach(function(id) { var el = document.getElementById(id); if (el) el.innerHTML = ''; });
     ['lm-slots-wrap-cb','lm-slots-wrap-visit'].forEach(function(id) { var el = document.getElementById(id); if (el) el.hidden = true; });
 
-    var cb = document.getElementById('lm-cb-confirm');    if (cb) cb.disabled = true;
-    var vi = document.getElementById('lm-visit-confirm'); if (vi) vi.disabled = true;
-
     showStep(1, 1);
   }
 
@@ -657,16 +654,10 @@ const WEBHOOK_LEAD  = '';
     var selDate = null;
     var selTime = null;
 
-    function checkConfirm() {
-      var ok = reasonEl && reasonEl.value.trim().length > 0 && selDate && selTime;
-      if (confirmBtn) confirmBtn.disabled = !ok;
-    }
-
     if (reasonEl) {
       var newReason = reasonEl.cloneNode(true);
       reasonEl.parentNode.replaceChild(newReason, reasonEl);
       reasonEl = newReason;
-      reasonEl.addEventListener('input', checkConfirm);
     }
 
     function renderMonth() {
@@ -732,7 +723,6 @@ const WEBHOOK_LEAD  = '';
           else                  { state.visitDate    = selDate; state.visitTime    = null; }
           renderMonth();
           renderSlots();
-          checkConfirm();
         });
       });
     }
@@ -765,7 +755,6 @@ const WEBHOOK_LEAD  = '';
             selTime = time;
             if (type === 'cb') state.callbackTime = time;
             else               state.visitTime    = time;
-            checkConfirm();
           });
           row.appendChild(sb);
         });
@@ -784,8 +773,9 @@ const WEBHOOK_LEAD  = '';
   document.getElementById('lm-cb-confirm').addEventListener('click', function() {
     var s = getStep('4-callback'); clearError(s);
     var r = modal.querySelector('#lm-cb-reason');
-    if (!r.value.trim()) { showError(s,'Descrivi il motivo della chiamata.'); r.focus(); return; }
-    if (!state.callbackDate||!state.callbackTime) { showError(s,'Seleziona giorno e orario per la chiamata.'); return; }
+    if (!state.callbackDate) { showError(s,'Campo obbligatorio: scegli un giorno per la chiamata.'); return; }
+    if (!state.callbackTime) { showError(s,'Campo obbligatorio: seleziona un orario disponibile.'); return; }
+    if (!r.value.trim()) { showError(s,'Campo obbligatorio: descrivi il motivo della chiamata.'); r.focus(); return; }
     state.callbackReason = r.value.trim();
 
     var atts = state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
@@ -807,8 +797,9 @@ const WEBHOOK_LEAD  = '';
   document.getElementById('lm-visit-confirm').addEventListener('click', function() {
     var s = getStep('4-visit'); clearError(s);
     var r = modal.querySelector('#lm-visit-reason');
-    if (!r.value.trim()) { showError(s,'Descrivi il motivo della visita.'); r.focus(); return; }
-    if (!state.visitDate||!state.visitTime) { showError(s,'Seleziona giorno e orario per la visita.'); return; }
+    if (!state.visitDate) { showError(s,'Campo obbligatorio: scegli un giorno per la visita.'); return; }
+    if (!state.visitTime) { showError(s,'Campo obbligatorio: seleziona un orario disponibile.'); return; }
+    if (!r.value.trim()) { showError(s,'Campo obbligatorio: descrivi il motivo della visita.'); r.focus(); return; }
     state.visitReason = r.value.trim();
 
     var atts = state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
