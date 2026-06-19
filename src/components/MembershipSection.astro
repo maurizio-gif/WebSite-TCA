@@ -413,6 +413,24 @@
     /* La tabella è più larga del viewport → scroll */
     .ms__table {
       width: calc(42vw + 36vw * 3); /* 150vw */
+      /* border-collapse: separate è necessario per il corretto funzionamento
+         di position: sticky sulla prima colonna in Safari/Chrome */
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    /* Con separate collapse i border su <tr> non vengono renderizzati:
+       sposta i bordi orizzontali sulle singole celle */
+    .ms__table tbody tr:not(.ms__cat-row) .ms__feat,
+    .ms__table tbody tr:not(.ms__cat-row) .ms__cell {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    /* Righe categoria: il border-bottom della riga precedente già separa,
+       rimuovi border-top per evitare doppio bordo */
+    .ms__cat-row .ms__cat-label,
+    .ms__cat-row .ms__cat-fill {
+      border-top: none;
     }
 
     /* ── Sticky: prima colonna bloccata a sinistra ── */
