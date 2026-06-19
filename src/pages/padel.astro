@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import LeadFormPlaceholder from "../components/LeadFormPlaceholder.astro";
 import InfoPratiche from "../components/InfoPratiche.astro";
+import { publicUrl } from "../i18n/utils";
 ---
 
 <BaseLayout
@@ -35,7 +36,7 @@ import InfoPratiche from "../components/InfoPratiche.astro";
         </div>
         <div class="two-col__image">
           <img
-            src="/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif"
+            src={publicUrl("/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif")}
             alt="Campo da padel TCA"
             class="rounded-img"
           />
