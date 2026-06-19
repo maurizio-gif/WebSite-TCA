@@ -1,0 +1,304 @@
+---
+interface Props {
+  prefix: string;
+}
+const { prefix } = Astro.props;
+
+const attivita = [
+  { id: 'tennis',     label: 'Tennis' },
+  { id: 'padel',      label: 'Padel' },
+  { id: 'prep',       label: 'Preparazione Atletica' },
+  { id: 'scuola',     label: 'Scuola Tennis (bambini)' },
+  { id: 'agonistica', label: 'Agonistica Tennis' },
+  { id: 'camps',      label: 'Summer Camps' },
+  { id: 'membership', label: 'Membership / Abbonamento' },
+];
+---
+
+<!-- ── Step indicator ──────────────────────────────────────────────── -->
+<div class="lm__steps" aria-hidden="true">
+  <span class="lm__step is-active" data-step-dot="1">1</span>
+  <span class="lm__step-line"></span>
+  <span class="lm__step" data-step-dot="2">2</span>
+  <span class="lm__step-line"></span>
+  <span class="lm__step" data-step-dot="3">3</span>
+</div>
+
+<!-- ─── STEP 1 · Email + attività ─────────────────────────────────── -->
+<div class="lm__body" data-step="1">
+  <p class="lm__sub">Inserisci la tua email e dicci cosa ti interessa.</p>
+
+  <div class="lm__field">
+    <label for={`${prefix}-email`}>Email <span aria-hidden="true">*</span></label>
+    <input id={`${prefix}-email`} name="email" type="email" autocomplete="email"
+           placeholder="nome@esempio.com" required />
+  </div>
+
+  <div>
+    <p class="lm__label-group">Attività di interesse</p>
+    <div class="lm__checks">
+      {attivita.map((a) => (
+        <label class="lm__check-item">
+          <input type="checkbox" name="attivita" value={a.id} />
+          <span>{a.label}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+
+  <div class="lm__actions">
+    <button class="btn btn-red lm__next" id={`${prefix}-step1-next`} type="button">
+      Continua <span class="lm__arrow">→</span>
+    </button>
+  </div>
+  <div class="lm__loader" hidden aria-live="polite">
+    <span class="lm__spinner"></span> Verifica in corso…
+  </div>
+  <p class="lm__error" hidden role="alert"></p>
+</div>
+
+<!-- ─── STEP 2 · Dati nuovo utente ────────────────────────────────── -->
+<div class="lm__body" data-step="2" hidden>
+  <p class="lm__sub">Piacere di conoscerti! Aggiungi i tuoi dati per procedere.</p>
+
+  <div class="lm__grid">
+    <div class="lm__field">
+      <label for={`${prefix}-nome`}>Nome <span aria-hidden="true">*</span></label>
+      <input id={`${prefix}-nome`} name="nome" type="text" autocomplete="given-name" required />
+    </div>
+    <div class="lm__field">
+      <label for={`${prefix}-cognome`}>Cognome <span aria-hidden="true">*</span></label>
+      <input id={`${prefix}-cognome`} name="cognome" type="text" autocomplete="family-name" required />
+    </div>
+    <div class="lm__field lm__field--full">
+      <label for={`${prefix}-cell`}>Cellulare <span aria-hidden="true">*</span></label>
+      <div class="lm__tel-wrap">
+        <select id={`${prefix}-pfx`} name="prefisso" class="lm__tel-prefix" autocomplete="tel-country-code">
+          <option value="+39" selected>🇮🇹 +39</option>
+          <option value="+41">🇨🇭 +41</option>
+          <option value="+43">🇦🇹 +43</option>
+          <option value="+33">🇫🇷 +33</option>
+          <option value="+49">🇩🇪 +49</option>
+          <option value="+44">🇬🇧 +44</option>
+          <option value="+34">🇪🇸 +34</option>
+          <option value="+351">🇵🇹 +351</option>
+          <option value="+31">🇳🇱 +31</option>
+          <option value="+32">🇧🇪 +32</option>
+          <option value="+1">🇺🇸 +1</option>
+          <option value="+55">🇧🇷 +55</option>
+          <option value="+54">🇦🇷 +54</option>
+        </select>
+        <input id={`${prefix}-cell`} name="cellulare" type="tel" autocomplete="tel-national"
+               placeholder="3XX XXX XXXX" required />
+      </div>
+    </div>
+  </div>
+
+  <div class="lm__consent">
+    <label class="lm__consent-item">
+      <input id={`${prefix}-privacy`} name="privacy" type="checkbox" required />
+      <span>
+        Ho letto e accetto la <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
+        Acconsento al trattamento dei dati personali per rispondermi a questa richiesta.
+        <strong>(obbligatorio)</strong>
+      </span>
+    </label>
+    <label class="lm__consent-item">
+      <input id={`${prefix}-marketing`} name="marketing" type="checkbox" />
+      <span>
+        Acconsento a ricevere comunicazioni commerciali, offerte e novità dal
+        Tennis Club Ambrosiano via email, SMS e WhatsApp.
+        <em>(facoltativo)</em>
+      </span>
+    </label>
+  </div>
+
+  <div class="lm__actions">
+    <button class="lm__back" id={`${prefix}-step2-back`} type="button">← Indietro</button>
+    <button class="btn btn-red lm__next" id={`${prefix}-step2-next`} type="button">
+      Continua <span class="lm__arrow">→</span>
+    </button>
+  </div>
+  <p class="lm__error" hidden role="alert"></p>
+</div>
+
+<!-- ─── STEP 3 · Scelta azione ────────────────────────────────────── -->
+<div class="lm__body" data-step="3" hidden>
+  <p class="lm__sub">Come possiamo aiutarti?</p>
+
+  <div class="lm__action-choice">
+    <button class="lm__action-btn" data-action="callback" type="button">
+      <span class="lm__action-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M6.6 10.8C7.8 13.2 9.8 15.2 12.2 16.4L14.2 14.4C14.5 14.1 14.9 14 15.3 14.2C16.5 14.6 17.8 14.8 19 14.8C19.6 14.8 20 15.2 20 15.8V19C20 19.6 19.6 20 19 20C10.2 20 3 12.8 3 4C3 3.4 3.4 3 4 3H7.5C8.1 3 8.5 3.4 8.5 4C8.5 5.3 8.7 6.5 9.1 7.7C9.2 8.1 9.1 8.5 8.8 8.8L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="lm__action-texts">
+        <span class="lm__action-label">RICHIAMAMI</span>
+        <span class="lm__action-sub">Scegli giorno e orario — ti chiamiamo noi</span>
+      </span>
+      <span class="lm__action-arr">→</span>
+    </button>
+
+    <button class="lm__action-btn" data-action="visit" type="button">
+      <span class="lm__action-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+      </span>
+      <span class="lm__action-texts">
+        <span class="lm__action-label">PRENOTA UNA VISITA IN SEDE</span>
+        <span class="lm__action-sub">Vieni a trovarci al Club — ti mostriamo tutto</span>
+      </span>
+      <span class="lm__action-arr">→</span>
+    </button>
+
+    <button class="lm__action-btn" data-action="message" type="button">
+      <span class="lm__action-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="lm__action-texts">
+        <span class="lm__action-label">SCRIVI UN MESSAGGIO</span>
+        <span class="lm__action-sub">Ti risponderemo via email al più presto</span>
+      </span>
+      <span class="lm__action-arr">→</span>
+    </button>
+  </div>
+
+  <button class="lm__back lm__back--center" id={`${prefix}-step3-back`} type="button">← Indietro</button>
+</div>
+
+<!-- ─── STEP 4a · RICHIAMAMI ──────────────────────────────────────── -->
+<div class="lm__body" data-step="4-callback" hidden>
+  <p class="lm__sub">Raccontaci come possiamo aiutarti e scegli quando richiamarti.</p>
+
+  <div class="lm__field">
+    <label for={`${prefix}-cb-reason`}>Motivo della chiamata <span aria-hidden="true">*</span></label>
+    <textarea id={`${prefix}-cb-reason`} name="cb-reason" rows="3"
+              placeholder="Es. vorrei informazioni sull'abbonamento, ho già giocato e voglio riprendere…"></textarea>
+  </div>
+
+  <div class="lm__cal">
+    <p class="lm__label-group">Scegli il giorno</p>
+    <div class="lm__cal-month-wrap" id={`${prefix}-cal-cb`}></div>
+    <div class="lm__slots-wrap" id={`${prefix}-slots-wrap-cb`} hidden>
+      <p class="lm__slots-wrap-title">Orari disponibili</p>
+      <div class="lm__slots-body" id={`${prefix}-cal-slots-cb`}></div>
+    </div>
+  </div>
+
+  <div class="lm__actions">
+    <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
+    <button class="btn btn-red" id={`${prefix}-cb-confirm`} type="button" disabled>
+      Conferma <span class="lm__arrow">→</span>
+    </button>
+  </div>
+  <p class="lm__error" hidden role="alert"></p>
+</div>
+
+<!-- ─── STEP 4b · PRENOTA VISITA ──────────────────────────────────── -->
+<div class="lm__body" data-step="4-visit" hidden>
+  <p class="lm__sub">Descrivici il motivo della visita e scegli giorno e orario di arrivo.</p>
+
+  <div class="lm__field">
+    <label for={`${prefix}-visit-reason`}>Motivo della visita <span aria-hidden="true">*</span></label>
+    <textarea id={`${prefix}-visit-reason`} name="visit-reason" rows="3"
+              placeholder="Es. voglio visitare la struttura, mi interessa iscrivermi al padel…"></textarea>
+  </div>
+
+  <div class="lm__cal">
+    <p class="lm__label-group">Scegli il giorno</p>
+    <div class="lm__cal-month-wrap" id={`${prefix}-cal-visit`}></div>
+    <div class="lm__slots-wrap" id={`${prefix}-slots-wrap-visit`} hidden>
+      <p class="lm__slots-wrap-title">Orari disponibili</p>
+      <div class="lm__slots-body" id={`${prefix}-cal-slots-visit`}></div>
+    </div>
+  </div>
+
+  <div class="lm__actions">
+    <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
+    <button class="btn btn-red" id={`${prefix}-visit-confirm`} type="button" disabled>
+      Conferma visita <span class="lm__arrow">→</span>
+    </button>
+  </div>
+  <p class="lm__error" hidden role="alert"></p>
+</div>
+
+<!-- ─── STEP 4c · SCRIVI UN MESSAGGIO ────────────────────────────── -->
+<div class="lm__body" data-step="4-message" hidden>
+  <p class="lm__sub">Scrivici la tua richiesta: ti risponderemo nel più breve tempo possibile.</p>
+
+  <div class="lm__field">
+    <label for={`${prefix}-msg-text`}>La tua richiesta <span aria-hidden="true">*</span></label>
+    <textarea id={`${prefix}-msg-text`} name="message" rows="6"
+              placeholder="Raccontaci cosa cerchi, cosa ti interessa o qualsiasi domanda sul Club, sulle attività o sulle tariffe…"></textarea>
+  </div>
+
+  <div class="lm__actions">
+    <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
+    <button class="btn btn-red" id={`${prefix}-msg-send`} type="button">
+      Invia richiesta <span class="lm__arrow">→</span>
+    </button>
+  </div>
+  <p class="lm__error" hidden role="alert"></p>
+</div>
+
+<!-- ─── CONFERMA · RICHIAMAMI ──────────────────────────────────────── -->
+<div class="lm__body lm__confirm" data-step="confirm-callback" hidden aria-live="polite">
+  <div class="lm__confirm-check" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h3 class="lm__confirm-title">Perfetto!<br><em>Ti richiamiamo noi.</em></h3>
+  <div class="lm__confirm-when" id={`${prefix}-cb-when`}></div>
+  <div class="lm__confirm-summary" id={`${prefix}-cb-summary`}></div>
+  <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
+</div>
+
+<!-- ─── CONFERMA · VISITA IN SEDE ────────────────────────────────── -->
+<div class="lm__body lm__confirm" data-step="confirm-visit" hidden aria-live="polite">
+  <div class="lm__confirm-check" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h3 class="lm__confirm-title">Ti aspettiamo<br><em>al Club!</em></h3>
+  <div class="lm__confirm-when" id={`${prefix}-visit-when`}></div>
+  <div class="lm__confirm-summary" id={`${prefix}-visit-summary`}></div>
+  <div class="lm__confirm-dir">
+    <p class="lm__confirm-dir-title">Come raggiungerci</p>
+    <ul class="lm__confirm-dir-list">
+      <li><strong>Tennis Club Ambrosiano — Via Feltre 33, 20134 Milano</strong></li>
+      <li>🚇 Metro Udine (Linea 2 Verde) — pochi minuti a piedi dall'uscita</li>
+      <li>🚌 Bus linee 62 e 66 — fermata Via Feltre</li>
+    </ul>
+    <div class="lm__confirm-dir-contacts">
+      <a href="tel:+390226414392">📞 +39 02 2641 4392</a>
+      <a href="mailto:info@tcambrosiano.com">✉️ info@tcambrosiano.com</a>
+    </div>
+    <a class="btn btn-outline--dark lm__confirm-map-btn"
+       href="https://maps.google.com/?q=Via+Feltre+33,+20134+Milano"
+       target="_blank" rel="noopener">Apri in Google Maps →</a>
+  </div>
+  <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
+</div>
+
+<!-- ─── CONFERMA · MESSAGGIO ─────────────────────────────────────── -->
+<div class="lm__body lm__confirm" data-step="confirm-message" hidden aria-live="polite">
+  <div class="lm__confirm-check" aria-hidden="true">
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h3 class="lm__confirm-title">Messaggio<br><em>ricevuto!</em></h3>
+  <div class="lm__confirm-summary" id={`${prefix}-msg-summary`}></div>
+  <p class="lm__confirm-note">
+    Ti risponderemo all'indirizzo indicato nel più breve tempo possibile.<br>A presto al TCA!
+  </p>
+  <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
+</div>

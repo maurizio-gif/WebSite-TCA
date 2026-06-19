@@ -1,16 +1,8 @@
 ---
+import LeadFormBody from "./LeadFormBody.astro";
+
 const WEBHOOK_CHECK = '';
 const WEBHOOK_LEAD  = '';
-
-const attivita = [
-  { id: 'tennis',     label: 'Tennis' },
-  { id: 'padel',      label: 'Padel' },
-  { id: 'prep',       label: 'Preparazione Atletica' },
-  { id: 'scuola',     label: 'Scuola Tennis (bambini)' },
-  { id: 'agonistica', label: 'Agonistica Tennis' },
-  { id: 'camps',      label: 'Summer Camps' },
-  { id: 'membership', label: 'Membership / Abbonamento' },
-];
 ---
 
 <dialog id="modal-contatti" class="lm" aria-labelledby="lm-title">
@@ -29,296 +21,7 @@ const attivita = [
       </button>
     </div>
 
-    <!-- ── Step indicator ────────────────────────────────────────── -->
-    <div class="lm__steps" aria-hidden="true">
-      <span class="lm__step is-active" data-step-dot="1">1</span>
-      <span class="lm__step-line"></span>
-      <span class="lm__step" data-step-dot="2">2</span>
-      <span class="lm__step-line"></span>
-      <span class="lm__step" data-step-dot="3">3</span>
-    </div>
-
-    <!-- ─── STEP 1 · Email + attività ───────────────────────────── -->
-    <div class="lm__body" data-step="1">
-      <p class="lm__sub">Inserisci la tua email e dicci cosa ti interessa.</p>
-
-      <div class="lm__field">
-        <label for="lm-email">Email <span aria-hidden="true">*</span></label>
-        <input id="lm-email" name="email" type="email" autocomplete="email"
-               placeholder="nome@esempio.com" required />
-      </div>
-
-      <div>
-        <p class="lm__label-group">Attività di interesse</p>
-        <div class="lm__checks">
-          {attivita.map((a) => (
-            <label class="lm__check-item">
-              <input type="checkbox" name="attivita" value={a.id} />
-              <span>{a.label}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      <div class="lm__actions">
-        <button class="btn btn-red lm__next" id="lm-step1-next" type="button">
-          Continua <span class="lm__arrow">→</span>
-        </button>
-      </div>
-      <div class="lm__loader" hidden aria-live="polite">
-        <span class="lm__spinner"></span> Verifica in corso…
-      </div>
-      <p class="lm__error" hidden role="alert"></p>
-    </div>
-
-    <!-- ─── STEP 2 · Dati nuovo utente ──────────────────────────── -->
-    <div class="lm__body" data-step="2" hidden>
-      <p class="lm__sub">Piacere di conoscerti! Aggiungi i tuoi dati per procedere.</p>
-
-      <div class="lm__grid">
-        <div class="lm__field">
-          <label for="lm-nome">Nome <span aria-hidden="true">*</span></label>
-          <input id="lm-nome" name="nome" type="text" autocomplete="given-name" required />
-        </div>
-        <div class="lm__field">
-          <label for="lm-cognome">Cognome <span aria-hidden="true">*</span></label>
-          <input id="lm-cognome" name="cognome" type="text" autocomplete="family-name" required />
-        </div>
-        <div class="lm__field lm__field--full">
-          <label for="lm-cell">Cellulare <span aria-hidden="true">*</span></label>
-          <div class="lm__tel-wrap">
-            <select id="lm-prefix" name="prefisso" class="lm__tel-prefix" autocomplete="tel-country-code">
-              <option value="+39" selected>🇮🇹 +39</option>
-              <option value="+41">🇨🇭 +41</option>
-              <option value="+43">🇦🇹 +43</option>
-              <option value="+33">🇫🇷 +33</option>
-              <option value="+49">🇩🇪 +49</option>
-              <option value="+44">🇬🇧 +44</option>
-              <option value="+34">🇪🇸 +34</option>
-              <option value="+351">🇵🇹 +351</option>
-              <option value="+31">🇳🇱 +31</option>
-              <option value="+32">🇧🇪 +32</option>
-              <option value="+1">🇺🇸 +1</option>
-              <option value="+55">🇧🇷 +55</option>
-              <option value="+54">🇦🇷 +54</option>
-            </select>
-            <input id="lm-cell" name="cellulare" type="tel" autocomplete="tel-national"
-                   placeholder="3XX XXX XXXX" required />
-          </div>
-        </div>
-      </div>
-
-      <div class="lm__consent">
-        <label class="lm__consent-item">
-          <input id="lm-privacy" name="privacy" type="checkbox" required />
-          <span>
-            Ho letto e accetto la <a href="/privacy-policy" target="_blank">Privacy Policy</a>.
-            Acconsento al trattamento dei dati personali per rispondermi a questa richiesta.
-            <strong>(obbligatorio)</strong>
-          </span>
-        </label>
-        <label class="lm__consent-item">
-          <input id="lm-marketing" name="marketing" type="checkbox" />
-          <span>
-            Acconsento a ricevere comunicazioni commerciali, offerte e novità dal
-            Tennis Club Ambrosiano via email, SMS e WhatsApp.
-            <em>(facoltativo)</em>
-          </span>
-        </label>
-      </div>
-
-      <div class="lm__actions">
-        <button class="lm__back" id="lm-step2-back" type="button">← Indietro</button>
-        <button class="btn btn-red lm__next" id="lm-step2-next" type="button">
-          Continua <span class="lm__arrow">→</span>
-        </button>
-      </div>
-      <p class="lm__error" hidden role="alert"></p>
-    </div>
-
-    <!-- ─── STEP 3 · Scelta azione ───────────────────────────────── -->
-    <div class="lm__body" data-step="3" hidden>
-      <p class="lm__sub">Come possiamo aiutarti?</p>
-
-      <div class="lm__action-choice">
-        <button class="lm__action-btn" data-action="callback" type="button">
-          <span class="lm__action-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M6.6 10.8C7.8 13.2 9.8 15.2 12.2 16.4L14.2 14.4C14.5 14.1 14.9 14 15.3 14.2C16.5 14.6 17.8 14.8 19 14.8C19.6 14.8 20 15.2 20 15.8V19C20 19.6 19.6 20 19 20C10.2 20 3 12.8 3 4C3 3.4 3.4 3 4 3H7.5C8.1 3 8.5 3.4 8.5 4C8.5 5.3 8.7 6.5 9.1 7.7C9.2 8.1 9.1 8.5 8.8 8.8L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="lm__action-texts">
-            <span class="lm__action-label">RICHIAMAMI</span>
-            <span class="lm__action-sub">Scegli giorno e orario — ti chiamiamo noi</span>
-          </span>
-          <span class="lm__action-arr">→</span>
-        </button>
-
-        <button class="lm__action-btn" data-action="visit" type="button">
-          <span class="lm__action-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6"/>
-            </svg>
-          </span>
-          <span class="lm__action-texts">
-            <span class="lm__action-label">PRENOTA UNA VISITA IN SEDE</span>
-            <span class="lm__action-sub">Vieni a trovarci al Club — ti mostriamo tutto</span>
-          </span>
-          <span class="lm__action-arr">→</span>
-        </button>
-
-        <button class="lm__action-btn" data-action="message" type="button">
-          <span class="lm__action-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
-              <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="lm__action-texts">
-            <span class="lm__action-label">SCRIVI UN MESSAGGIO</span>
-            <span class="lm__action-sub">Ti risponderemo via email al più presto</span>
-          </span>
-          <span class="lm__action-arr">→</span>
-        </button>
-      </div>
-
-      <button class="lm__back lm__back--center" id="lm-step3-back" type="button">← Indietro</button>
-    </div>
-
-    <!-- ─── STEP 4a · RICHIAMAMI ─────────────────────────────────── -->
-    <div class="lm__body" data-step="4-callback" hidden>
-      <p class="lm__sub">Raccontaci come possiamo aiutarti e scegli quando richiamarti.</p>
-
-      <div class="lm__field">
-        <label for="lm-cb-reason">Motivo della chiamata <span aria-hidden="true">*</span></label>
-        <textarea id="lm-cb-reason" name="cb-reason" rows="3"
-                  placeholder="Es. vorrei informazioni sull'abbonamento, ho già giocato e voglio riprendere…"></textarea>
-      </div>
-
-      <!-- Calendario mensile -->
-      <div class="lm__cal">
-        <p class="lm__label-group">Scegli il giorno</p>
-        <div class="lm__cal-month-wrap" id="lm-cal-cb"></div>
-        <div class="lm__slots-wrap" id="lm-slots-wrap-cb" hidden>
-          <p class="lm__slots-wrap-title">Orari disponibili</p>
-          <div class="lm__slots-body" id="lm-cal-slots-cb"></div>
-        </div>
-      </div>
-
-      <div class="lm__actions">
-        <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
-        <button class="btn btn-red" id="lm-cb-confirm" type="button" disabled>
-          Conferma <span class="lm__arrow">→</span>
-        </button>
-      </div>
-      <p class="lm__error" hidden role="alert"></p>
-    </div>
-
-    <!-- ─── STEP 4b · PRENOTA VISITA ─────────────────────────────── -->
-    <div class="lm__body" data-step="4-visit" hidden>
-      <p class="lm__sub">Descrivici il motivo della visita e scegli giorno e orario di arrivo.</p>
-
-      <div class="lm__field">
-        <label for="lm-visit-reason">Motivo della visita <span aria-hidden="true">*</span></label>
-        <textarea id="lm-visit-reason" name="visit-reason" rows="3"
-                  placeholder="Es. voglio visitare la struttura, mi interessa iscrivermi al padel…"></textarea>
-      </div>
-
-      <!-- Calendario mensile -->
-      <div class="lm__cal">
-        <p class="lm__label-group">Scegli il giorno</p>
-        <div class="lm__cal-month-wrap" id="lm-cal-visit"></div>
-        <div class="lm__slots-wrap" id="lm-slots-wrap-visit" hidden>
-          <p class="lm__slots-wrap-title">Orari disponibili</p>
-          <div class="lm__slots-body" id="lm-cal-slots-visit"></div>
-        </div>
-      </div>
-
-      <div class="lm__actions">
-        <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
-        <button class="btn btn-red" id="lm-visit-confirm" type="button" disabled>
-          Conferma visita <span class="lm__arrow">→</span>
-        </button>
-      </div>
-      <p class="lm__error" hidden role="alert"></p>
-    </div>
-
-    <!-- ─── STEP 4c · SCRIVI UN MESSAGGIO ───────────────────────── -->
-    <div class="lm__body" data-step="4-message" hidden>
-      <p class="lm__sub">Scrivici la tua richiesta: ti risponderemo nel più breve tempo possibile.</p>
-
-      <div class="lm__field">
-        <label for="lm-msg-text">La tua richiesta <span aria-hidden="true">*</span></label>
-        <textarea id="lm-msg-text" name="message" rows="6"
-                  placeholder="Raccontaci cosa cerchi, cosa ti interessa o qualsiasi domanda sul Club, sulle attività o sulle tariffe…"></textarea>
-      </div>
-
-      <div class="lm__actions">
-        <button class="lm__back" data-step-back="3" type="button">← Indietro</button>
-        <button class="btn btn-red" id="lm-msg-send" type="button">
-          Invia richiesta <span class="lm__arrow">→</span>
-        </button>
-      </div>
-      <p class="lm__error" hidden role="alert"></p>
-    </div>
-
-    <!-- ─── CONFERMA · RICHIAMAMI ─────────────────────────────────── -->
-    <div class="lm__body lm__confirm" data-step="confirm-callback" hidden aria-live="polite">
-      <div class="lm__confirm-check" aria-hidden="true">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-          <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <h3 class="lm__confirm-title">Perfetto!<br><em>Ti richiamiamo noi.</em></h3>
-      <div class="lm__confirm-when" id="lm-cb-when"></div>
-      <div class="lm__confirm-summary" id="lm-cb-summary"></div>
-      <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
-    </div>
-
-    <!-- ─── CONFERMA · VISITA IN SEDE ────────────────────────────── -->
-    <div class="lm__body lm__confirm" data-step="confirm-visit" hidden aria-live="polite">
-      <div class="lm__confirm-check" aria-hidden="true">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-          <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <h3 class="lm__confirm-title">Ti aspettiamo<br><em>al Club!</em></h3>
-      <div class="lm__confirm-when" id="lm-visit-when"></div>
-      <div class="lm__confirm-summary" id="lm-visit-summary"></div>
-      <div class="lm__confirm-dir">
-        <p class="lm__confirm-dir-title">Come raggiungerci</p>
-        <ul class="lm__confirm-dir-list">
-          <li><strong>Tennis Club Ambrosiano — Via Feltre 33, 20134 Milano</strong></li>
-          <li>🚇 Metro Udine (Linea 2 Verde) — pochi minuti a piedi dall'uscita</li>
-
-          <li>🚌 Bus linee 62 e 66 — fermata Via Feltre</li>
-        </ul>
-        <div class="lm__confirm-dir-contacts">
-          <a href="tel:+390226414392">📞 +39 02 2641 4392</a>
-          <a href="mailto:info@tcambrosiano.com">✉️ info@tcambrosiano.com</a>
-        </div>
-        <a class="btn btn-outline--dark lm__confirm-map-btn"
-           href="https://maps.google.com/?q=Via+Feltre+33,+20134+Milano"
-           target="_blank" rel="noopener">Apri in Google Maps →</a>
-      </div>
-      <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
-    </div>
-
-    <!-- ─── CONFERMA · MESSAGGIO ─────────────────────────────────── -->
-    <div class="lm__body lm__confirm" data-step="confirm-message" hidden aria-live="polite">
-      <div class="lm__confirm-check" aria-hidden="true">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-          <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <h3 class="lm__confirm-title">Messaggio<br><em>ricevuto!</em></h3>
-      <div class="lm__confirm-summary" id="lm-msg-summary"></div>
-      <p class="lm__confirm-note">
-        Ti risponderemo all'indirizzo indicato nel più breve tempo possibile.<br>A presto al TCA!
-      </p>
-      <button class="btn btn-red lm__confirm-cta" data-lm-close>Chiudi</button>
-    </div>
+    <LeadFormBody prefix="lm" />
 
   </div>
 </dialog>
@@ -537,7 +240,6 @@ const attivita = [
   ══════════════════════════════════════════════════════════════ */
   .lm__cal { display: flex; flex-direction: column; gap: 1rem; }
 
-  /* Wrapper del mese */
   .lm__cal-month-wrap {
     border: 1px solid var(--lm-border);
     background: var(--lm-input-bg);
@@ -545,7 +247,6 @@ const attivita = [
     user-select: none;
   }
 
-  /* Navigazione mese */
   .lm__cal-nav {
     display: flex; align-items: center; justify-content: space-between;
     margin-bottom: 1rem;
@@ -569,21 +270,18 @@ const attivita = [
   .lm__cal-nav-btn:hover:not(:disabled) { border-color: var(--color-accent); color: var(--color-accent); background: rgba(139,26,26,0.04); }
   .lm__cal-nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
 
-  /* Griglia giorni */
   .lm__cal-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 2px;
   }
 
-  /* Intestazioni giorni della settimana */
   .lm__cal-dow {
     font-family: var(--font-display); font-size: 10px; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--lm-text-dim);
     text-align: center; padding: 2px 0 8px;
   }
 
-  /* Celle giorno */
   .lm__cal-cell {
     height: 40px;
     display: flex; align-items: center; justify-content: center;
@@ -593,7 +291,6 @@ const attivita = [
     color: var(--lm-text);
   }
 
-  /* Giorno disponibile */
   .lm__cal-day--avail {
     cursor: pointer;
     background: #fff;
@@ -606,7 +303,6 @@ const attivita = [
     font-weight: 600;
   }
 
-  /* Giorno non disponibile (passato o fuori range) */
   .lm__cal-day--off {
     color: var(--lm-text-dim);
     cursor: not-allowed;
@@ -614,7 +310,6 @@ const attivita = [
     font-weight: 300;
   }
 
-  /* Oggi — puntino rosso sotto il numero */
   .lm__cal-day--today::after {
     content: '';
     position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%);
@@ -623,7 +318,6 @@ const attivita = [
   }
   .lm__cal-day--sel.lm__cal-day--today::after { background: rgba(255,255,255,0.6); }
 
-  /* Giorno selezionato */
   .lm__cal-day--sel {
     background: var(--color-accent) !important;
     color: #fff !important;
@@ -648,8 +342,6 @@ const attivita = [
   }
 
   .lm__slots-body { display: flex; flex-direction: column; gap: 1rem; }
-
-  /* Gruppo (Mattina / Pomeriggio / Sera) */
   .lm__slots-group { display: flex; flex-direction: column; gap: 0.5rem; }
 
   .lm__slots-group-label {
@@ -660,7 +352,6 @@ const attivita = [
 
   .lm__slots-row { display: flex; flex-wrap: wrap; gap: 6px; }
 
-  /* Singolo slot */
   .lm__cal-slot-btn {
     font-family: var(--font-body); font-size: 13px; font-weight: 400;
     padding: 9px 14px; min-width: 70px; text-align: center;
@@ -755,9 +446,7 @@ const attivita = [
     camps:'Summer Camps', membership:'Membership / Abbonamento',
   };
 
-  var DAYS_SHORT    = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
   var DAYS_LONG     = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
-  var MONTHS_SHORT  = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
   var MONTHS_LONG   = ['gennaio','febbraio','marzo','aprile','maggio','giugno',
                        'luglio','agosto','settembre','ottobre','novembre','dicembre'];
   var MONTHS_FULL   = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
@@ -775,7 +464,6 @@ const attivita = [
                       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  // ── Stato ────────────────────────────────────────────────────────
   var state = {
     email:'', nome:'', cognome:'', cellulare:'',
     attivita:[], privacy:false, marketing:false, isNewUser:true,
@@ -787,7 +475,6 @@ const attivita = [
   var stepsBar = modal.querySelector('.lm__steps');
   var stepDots = modal.querySelectorAll('[data-step-dot]');
 
-  // ── Navigazione ──────────────────────────────────────────────────
   function showStep(n, activeDot) {
     var key = String(n);
     modal.querySelectorAll('[data-step]').forEach(function(el) {
@@ -820,7 +507,6 @@ const attivita = [
 
   function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
 
-  // ── Reset ────────────────────────────────────────────────────────
   function closeAndReset() {
     modal.close();
     state = { email:'',nome:'',cognome:'',cellulare:'',attivita:[],privacy:false,marketing:false,isNewUser:true,
@@ -841,15 +527,17 @@ const attivita = [
     showStep(1, 1);
   }
 
-  // ── Apertura / Chiusura ──────────────────────────────────────────
+  // Apertura
   document.addEventListener('click', function(e) {
     var t = e.target.closest('[data-open-modal]');
     if (t && t.dataset.openModal === 'modal-contatti') { modal.showModal(); showStep(1,1); }
   });
-  document.addEventListener('click', function(e) { if (e.target.closest('[data-lm-close]')) closeAndReset(); });
-  modal.addEventListener('click', function(e) { if (e.target === modal) closeAndReset(); });
+  // Chiusura — scoped al modal per non intercettare il form inline
+  modal.addEventListener('click', function(e) {
+    if (e.target.closest('[data-lm-close]') || e.target === modal) closeAndReset();
+  });
 
-  // ── Back generico ─────────────────────────────────────────────────
+  // Back generico
   modal.addEventListener('click', function(e) {
     var btn = e.target.closest('[data-step-back]');
     if (!btn) return;
@@ -857,9 +545,7 @@ const attivita = [
     showStep(t, parseInt(t,10) || 3);
   });
 
-  // ═══════════════════════════════════════════════════════════════
   // STEP 1
-  // ═══════════════════════════════════════════════════════════════
   var emailInput = modal.querySelector('#lm-email');
   emailInput.addEventListener('blur', function() {
     emailInput.classList.toggle('lm__input--error', !!emailInput.value && !isValidEmail(emailInput.value));
@@ -897,9 +583,7 @@ const attivita = [
     }
   });
 
-  // ═══════════════════════════════════════════════════════════════
   // STEP 2
-  // ═══════════════════════════════════════════════════════════════
   modal.querySelector('#lm-step2-back').addEventListener('click', function(){ showStep(1,1); });
 
   modal.querySelector('#lm-step2-next').addEventListener('click', async function() {
@@ -912,7 +596,7 @@ const attivita = [
     if (!cell.value.trim())    { showError(s2,'Inserisci il numero di cellulare.'); cell.focus(); return; }
     if (!privacy.checked)      { showError(s2,'Il consenso alla Privacy Policy è obbligatorio.'); return; }
 
-    var prefix = modal.querySelector('#lm-prefix');
+    var prefix = modal.querySelector('#lm-pfx');
     state.nome      = nome.value.trim();
     state.cognome   = cognome.value.trim();
     state.cellulare = (prefix ? prefix.value : '+39') + ' ' + cell.value.trim();
@@ -925,9 +609,7 @@ const attivita = [
     showStep(3,3);
   });
 
-  // ═══════════════════════════════════════════════════════════════
   // STEP 3
-  // ═══════════════════════════════════════════════════════════════
   modal.querySelector('#lm-step3-back').addEventListener('click', function() {
     showStep(state.isNewUser ? 2 : 1, state.isNewUser ? 2 : 1);
   });
@@ -941,9 +623,7 @@ const attivita = [
     });
   });
 
-  // ═══════════════════════════════════════════════════════════════
   // GENERAZIONE SLOT
-  // ═══════════════════════════════════════════════════════════════
   function slotsCallback(date) {
     var day=date.getDay(), isWE=(day===0||day===6), endH=isWE?19:20, slots=[];
     for(var h=9;h<endH;h++) for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m));
@@ -960,19 +640,16 @@ const attivita = [
     return slots;
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // CALENDARIO MENSILE
-  // ═══════════════════════════════════════════════════════════════
   function buildCalendar(type) {
+    var P = 'lm';
     var numDays     = type === 'cb' ? 7 : 14;
     var slotsFn     = type === 'cb' ? slotsCallback : slotsVisit;
-    var calWrapEl   = document.getElementById('lm-cal-' + type);
-    var slotsWrapEl = document.getElementById('lm-slots-wrap-' + type);
-    var slotsBodyEl = document.getElementById('lm-cal-slots-' + type);
-    var confirmBtn  = document.getElementById('lm-' + type + '-confirm');
-    var reasonEl    = document.getElementById(type === 'cb' ? 'lm-cb-reason' : 'lm-visit-reason');
+    var calWrapEl   = document.getElementById(P+'-cal-'+type);
+    var slotsWrapEl = document.getElementById(P+'-slots-wrap-'+type);
+    var slotsBodyEl = document.getElementById(P+'-cal-slots-'+type);
+    var confirmBtn  = document.getElementById(P+'-'+type+'-confirm');
+    var reasonEl    = document.getElementById(type === 'cb' ? P+'-cb-reason' : P+'-visit-reason');
 
-    // Stato calendario
     var today   = new Date(); today.setHours(0,0,0,0);
     var endDate = new Date(today); endDate.setDate(today.getDate() + numDays - 1);
     var viewY   = today.getFullYear();
@@ -986,20 +663,17 @@ const attivita = [
     }
 
     if (reasonEl) {
-      // Rimuovi vecchi listener clonando il nodo
       var newReason = reasonEl.cloneNode(true);
       reasonEl.parentNode.replaceChild(newReason, reasonEl);
       reasonEl = newReason;
       reasonEl.addEventListener('input', checkConfirm);
     }
 
-    // ── Render griglia mensile ────────────────────────────────────
     function renderMonth() {
       var firstDay  = new Date(viewY, viewM, 1);
       var lastDay   = new Date(viewY, viewM + 1, 0);
-      var startDOW  = (firstDay.getDay() + 6) % 7; // Lun=0 … Dom=6
+      var startDOW  = (firstDay.getDay() + 6) % 7;
 
-      // Navigazione prev/next
       var canPrev = viewY > today.getFullYear() || (viewY === today.getFullYear() && viewM > today.getMonth());
       var nextM1  = new Date(viewY, viewM + 1, 1);
       var canNext = endDate >= nextM1;
@@ -1011,15 +685,12 @@ const attivita = [
       '</div>' +
       '<div class="lm__cal-grid">';
 
-      // Intestazioni Lun … Dom
       ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'].forEach(function(d) {
         html += '<div class="lm__cal-dow">' + d + '</div>';
       });
 
-      // Celle vuote prima del 1°
       for (var i = 0; i < startDOW; i++) html += '<div class="lm__cal-cell"></div>';
 
-      // Giorni del mese
       for (var day = 1; day <= lastDay.getDate(); day++) {
         var d    = new Date(viewY, viewM, day);
         var past = d < today;
@@ -1037,10 +708,9 @@ const attivita = [
         html += '<div class="' + cls + '"' + attr + '>' + day + '</div>';
       }
 
-      html += '</div>'; // .lm__cal-grid
+      html += '</div>';
       calWrapEl.innerHTML = html;
 
-      // Nav click
       var prevBtn = document.getElementById('lm-nav-prev-' + type);
       var nextBtn = document.getElementById('lm-nav-next-' + type);
       if (prevBtn && canPrev) {
@@ -1054,21 +724,19 @@ const attivita = [
         });
       }
 
-      // Click su giorno disponibile
       calWrapEl.querySelectorAll('.lm__cal-day--avail').forEach(function(cell) {
         cell.addEventListener('click', function() {
           selDate = new Date(cell.dataset.calD);
           selTime = null;
           if (type === 'cb')   { state.callbackDate = selDate; state.callbackTime = null; }
           else                  { state.visitDate    = selDate; state.visitTime    = null; }
-          renderMonth();   // aggiorna selezione visiva
+          renderMonth();
           renderSlots();
           checkConfirm();
         });
       });
     }
 
-    // ── Render slot orari ─────────────────────────────────────────
     function renderSlots() {
       if (!selDate) return;
       slotsBodyEl.innerHTML = '';
@@ -1076,7 +744,6 @@ const attivita = [
 
       var all = slotsFn(selDate);
 
-      // Gruppi per fascia oraria
       var groups = [
         { label: 'Mattina',    slots: all.filter(function(s){ return parseInt(s)<13; }) },
         { label: 'Pomeriggio', slots: all.filter(function(s){ var h=parseInt(s); return h>=13&&h<17; }) },
@@ -1107,16 +774,13 @@ const attivita = [
         slotsBodyEl.appendChild(gDiv);
       });
 
-      // Scroll verso gli slot
       slotsWrapEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
     renderMonth();
   }
 
-  // ═══════════════════════════════════════════════════════════════
-  // STEP 4a · Conferma richiamata
-  // ═══════════════════════════════════════════════════════════════
+  // STEP 4a
   document.getElementById('lm-cb-confirm').addEventListener('click', function() {
     var s = getStep('4-callback'); clearError(s);
     var r = modal.querySelector('#lm-cb-reason');
@@ -1139,9 +803,7 @@ const attivita = [
     showStep('confirm-callback');
   });
 
-  // ═══════════════════════════════════════════════════════════════
-  // STEP 4b · Conferma visita
-  // ═══════════════════════════════════════════════════════════════
+  // STEP 4b
   document.getElementById('lm-visit-confirm').addEventListener('click', function() {
     var s = getStep('4-visit'); clearError(s);
     var r = modal.querySelector('#lm-visit-reason');
@@ -1164,9 +826,7 @@ const attivita = [
     showStep('confirm-visit');
   });
 
-  // ═══════════════════════════════════════════════════════════════
-  // STEP 4c · Messaggio
-  // ═══════════════════════════════════════════════════════════════
+  // STEP 4c
   document.getElementById('lm-msg-send').addEventListener('click', async function() {
     var s = getStep('4-message'); clearError(s);
     var msgEl = modal.querySelector('#lm-msg-text');
@@ -1187,7 +847,6 @@ const attivita = [
     showStep('confirm-message');
   });
 
-  // ── Template helpers ─────────────────────────────────────────────
   function whenRow(label, val) {
     return '<div class="lm__confirm-when-row">' +
       '<span class="lm__confirm-when-label">'+label+'</span>' +
