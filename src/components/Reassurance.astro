@@ -1,26 +1,23 @@
 ---
-const reasons = [
-  {
-    number: "01",
-    title: "Una storia che continua",
-    text: "Sessant'anni di tennis, il Torneo Avvenire e una hall of fame di campioni che hanno iniziato qui. Entri in una tradizione viva.",
-  },
-  {
-    number: "02",
-    title: "Eccellenza accessibile",
-    text: "Maestri qualificati, l'Academy di Renato Vavassori e impianti di livello, in un ambiente accogliente e senza formalismi.",
-  },
-  {
-    number: "03",
-    title: "Tutto in un unico luogo",
-    text: "Oltre 30.000 mq: tennis, padel, preparazione atletica, attività per i più piccoli e spazi per ritrovarsi. Il tuo tempo libero, in un solo indirizzo.",
-  },
-  {
-    number: "04",
-    title: "A due passi da casa",
-    text: "Metro Udine a pochi minuti e ampio parcheggio. Aperto tutti i giorni, dalle prime ore del mattino a tarda sera.",
-  },
+import type { Lang } from '../i18n/utils';
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+
+const itReasons = [
+  { number: "01", title: "Una storia che continua",   text: "Sessant'anni di tennis, il Torneo Avvenire e una hall of fame di campioni che hanno iniziato qui. Entri in una tradizione viva." },
+  { number: "02", title: "Eccellenza accessibile",     text: "Maestri qualificati, l'Academy di Renato Vavassori e impianti di livello, in un ambiente accogliente e senza formalismi." },
+  { number: "03", title: "Tutto in un unico luogo",    text: "Oltre 30.000 mq: tennis, padel, preparazione atletica, attività per i più piccoli e spazi per ritrovarsi. Il tuo tempo libero, in un solo indirizzo." },
+  { number: "04", title: "A due passi da casa",        text: "Metro Udine a pochi minuti e ampio parcheggio. Aperto tutti i giorni, dalle prime ore del mattino a tarda sera." },
 ];
+const enReasons = [
+  { number: "01", title: "A history still being made",       text: "Sixty years of tennis, the Avvenire Tournament and a hall of fame of champions who started right here. You're joining a living tradition." },
+  { number: "02", title: "Excellence, made accessible",      text: "Qualified coaches, the Renato Vavassori Academy and world-class facilities, in a welcoming, unpretentious environment." },
+  { number: "03", title: "Everything in one place",          text: "Over 30,000 m²: tennis, padel, athletic training, activities for children and spaces to meet. Your free time, at a single address." },
+  { number: "04", title: "Right on your doorstep",           text: "Udine metro a few minutes away and ample parking. Open every day, from early morning to late evening." },
+];
+const reasons = lang === 'en' ? enReasons : itReasons;
+const eyebrow  = lang === 'en' ? 'Why choose us'       : 'Perché sceglierci';
+const heading  = lang === 'en' ? 'Four good\nreasons.' : 'Quattro buone\nragioni.';
 ---
 
 <section class="why">
@@ -29,8 +26,8 @@ const reasons = [
     <!-- Sidebar: lista tab con progress bar -->
     <div class="why__sidebar">
       <div class="why__head">
-        <span class="eyebrow">Perché sceglierci</span>
-        <h2 class="why__heading">Quattro buone<br>ragioni.</h2>
+        <span class="eyebrow">{eyebrow}</span>
+        <h2 class="why__heading" set:html={heading.replace('\n', '<br>')}></h2>
       </div>
 
       <ul class="why__tabs" role="tablist">

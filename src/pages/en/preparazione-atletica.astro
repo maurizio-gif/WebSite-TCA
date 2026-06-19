@@ -1,24 +1,547 @@
 ---
-// EN stub — translate content when copy is ready
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import MembershipSection from "../../components/MembershipSection.astro";
+import WeeklySchedule from "../../components/WeeklySchedule.astro";
+import { publicUrl } from "../../i18n/utils";
 
 const lang = 'en' as const;
+
+interface Course {
+  name: string;
+  duration: string;
+  intensity: 1 | 2 | 3;
+  level: string;
+  desc: string;
+  img: string;
+}
+
+interface Category {
+  id: string;
+  label: string;
+  desc: string;
+  color: string;
+  courses: Course[];
+}
+
+const pex = (id: string) =>
+  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop`;
+
+const YOGA   = '/b9c52423-5bff-496a-8686-bffe1b123195_Aspria_Milano_Outdoor_Yoga+1.avif';
+const GYM    = '/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif';
+const RACKET = '/aXCJ_AIvOtkhBw2j_Lifestyle_232026SpeedMP_DXT56509.avif';
+
+const categories: Category[] = [
+  {
+    id: 'endurance',
+    label: 'Endurance',
+    desc: 'Train your cardiovascular system, burn calories and improve endurance and rhythm with dynamic, energising classes.',
+    color: '#B83A00',
+    courses: [
+      { name: 'Dance',           duration: '60 min', intensity: 2, level: 'All levels',    desc: 'Pop and Latin choreography. Engaging cardio and rhythmic coordination.',           img: pex('4090012') },
+      { name: 'Zumba',           duration: '60 min', intensity: 2, level: 'All levels',    desc: 'Latin dance and fitness mix. Burn calories with a smile.',                         img: pex('4090009') },
+      { name: 'Cycling',         duration: '45 min', intensity: 3, level: 'All levels',    desc: 'Bike workout to the beat of the music. Maximum cardiovascular output.',             img: pex('8766368') },
+      { name: 'Aeroboxe',        duration: '60 min', intensity: 3, level: 'Intermediate',  desc: 'Martial arts meets aerobics. Power, reflexes and stamina.',                        img: pex('32321639') },
+      { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'All levels',    desc: 'Reimagined step with functional movements. Tones and improves endurance.',         img: pex('6285220') },
+      { name: 'Step & Tone',     duration: '60 min', intensity: 2, level: 'All levels',    desc: 'Cardio step combined with toning. Full-body workout.',                             img: pex('6285206') },
+    ]
+  },
+  {
+    id: 'strength',
+    label: 'Strength',
+    desc: 'Build muscle strength, power and stability. Free weights, loaded exercises and bodyweight training for a solid, functional physique.',
+    color: '#1A1A1A',
+    courses: [
+      { name: 'Funracket',           duration: '60 min', intensity: 3, level: 'Intermediate', desc: 'Sport-specific for tennis and padel players. Explosive power, reactivity and agility.',  img: RACKET },
+      { name: 'Tribal-x',            duration: '45 min', intensity: 3, level: 'Intermediate', desc: 'High-intensity circuit with free weights. Strength and muscle power.',                   img: pex('4720807') },
+      { name: 'Functional',          duration: '45 min', intensity: 2, level: 'All levels',   desc: 'Bodyweight training. Functional strength and joint stability.',                          img: GYM },
+      { name: 'Active Pump',         duration: '60 min', intensity: 2, level: 'All levels',   desc: 'Barbell workout. Total-body toning to music.',                                          img: pex('703012') },
+      { name: 'Total Body',          duration: '60 min', intensity: 3, level: 'All levels',   desc: 'Work every muscle group. Strength, endurance and posture.',                            img: GYM },
+      { name: 'Circuit',             duration: '45 min', intensity: 3, level: 'Intermediate', desc: 'Cardio and strength stations in sequence. Metabolism through the roof.',               img: pex('4720291') },
+      { name: 'Suspension Training', duration: '60 min', intensity: 3, level: 'Intermediate', desc: 'TRX and sling training. Core, stability and functional strength in suspension.',       img: pex('5480481') },
+    ]
+  },
+  {
+    id: 'balance',
+    label: 'Balance',
+    desc: 'Balance, flexibility and mind-body wellbeing. Improve posture, mobility and body awareness with gentle and dynamic practices.',
+    color: '#1E4D3A',
+    courses: [
+      { name: 'Functional Pilates', duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Pilates applied to everyday movement. Core, posture and body awareness.',              img: pex('25596884') },
+      { name: 'Flexability',        duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Flexibility and joint mobility. Prevents injuries and releases tension.',               img: pex('2424257') },
+      { name: 'Hatha Yoga',         duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Classic yoga practice. Mind-body balance through asanas and breath.',                  img: YOGA },
+      { name: 'Pilates',            duration: '60 min', intensity: 1, level: 'All levels',   desc: 'The original method of control and precision. Strengthens the centre, improves posture.', img: pex('25596885') },
+      { name: 'Postural',           duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Active postural re-education. Corrects tension and rebalances the body.',              img: pex('7992044') },
+      { name: 'Power Yoga',         duration: '60 min', intensity: 2, level: 'Intermediate', desc: 'Dynamic, intense yoga. Strength, flexibility and focus combined.',                    img: YOGA },
+      { name: 'Gentle Exercise',    duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Gentle mobility for everyone. Ideal for over-50s and active recovery.',               img: pex('11674389') },
+    ]
+  }
+];
 ---
 
 <BaseLayout
   lang={lang}
-  title="Athletic Training | Tennis Club Ambrosiano Milan"
-  description="Athletic training at Tennis Club Ambrosiano. Personal training, functional training and sport-specific conditioning for tennis and padel players."
+  title="Gym & Group Classes | Tennis Club Ambrosiano Milan"
+  description="Professional gym, certified personal trainers and over 20 weekly group classes at Tennis Club Ambrosiano in Milan. Train with method and reach your goals."
 >
   <PageHero
     eyebrow="Adults · Athletic Training"
-    title="Athletic"
-    titleAccent="Training"
-    sub="Certified athletic trainers, personalised programmes and a state-of-the-art gym. Performance improvement for players at every level."
+    title="Training &"
+    titleAccent="Wellness"
+    sub="Professional gym, certified personal trainers and over 20 group classes a week. Two worlds, one goal: yours."
     image="/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif"
-    imageAlt="Athletic training at Tennis Club Ambrosiano"
-    ctaLabel="Request Information"
+    imageAlt="Professional gym at Tennis Club Ambrosiano"
+    ctas={[
+      { label: "Our Memberships", href: "#membership" },
+      { label: "Our Schedule",    href: "#planning", outline: true },
+    ]}
   />
-  {/* TODO: translate content sections to English */}
+
+  <!-- ── Gym ── -->
+  <section class="sala-section">
+    <div class="sala-section__inner">
+      <div class="sala-split">
+
+        <div class="sala-split__media">
+          <img
+            src={publicUrl('/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif')}
+            alt="Professional gym at Tennis Club Ambrosiano"
+            class="sala-split__img"
+          />
+        </div>
+
+        <div class="sala-split__content">
+          <span class="eyebrow">Gym</span>
+          <h2 class="section-title">Strength training,<br><em>on your terms.</em></h2>
+          <p class="sala-body">
+            A fully equipped members-only gym with professional machines, a cardio area and a functional training space. Whether you want to build strength, improve endurance or simply stay in shape, everything you need is right here — along with the right professionals to guide you.
+          </p>
+
+          <ul class="sala-features">
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h2m14 0h2M5 12a7 7 0 1 0 14 0 7 7 0 0 0-14 0zm4 0h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div>
+                <strong>Cardio Machines</strong>
+                <span>Treadmills, ellipticals, rowing machines, bikes</span>
+              </div>
+            </li>
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="11" width="4" height="2" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="18" y="11" width="4" height="2" rx="1" stroke="currentColor" stroke-width="1.8"/><path d="M6 12h12M6 9v6M18 9v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div>
+                <strong>Free Weights</strong>
+                <span>Dumbbells 1–40 kg, barbells, cable machines</span>
+              </div>
+            </li>
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div>
+                <strong>Functional Area</strong>
+                <span>TRX, kettlebells, slam balls, battle ropes</span>
+              </div>
+            </li>
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <div>
+                <strong>Members-Only Access</strong>
+                <span>Exclusive gym, available every day for members</span>
+              </div>
+            </li>
+          </ul>
+
+          <a href="/en/personal-trainer" class="btn btn-red sala-cta">
+            Meet our Personal Trainers
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Group Classes ── -->
+  <section class="corsi-section" id="corsi">
+    <div class="corsi-section__inner">
+      <span class="eyebrow">Group Classes</span>
+      <h2 class="section-title">Train with<br><em>others.</em></h2>
+      <p class="corsi-sub">Every week, sessions led by certified instructors. Choose the class that fits your goal and book your spot directly on PerfectGym.</p>
+
+      {categories.map((cat) => (
+        <div class="cat-block">
+          <div class="cat-block__head" style={`--cat-color: ${cat.color}`}>
+            <div class="cat-block__title-row">
+              <span class="cat-block__label">{cat.label}</span>
+              <div class="courses-nav">
+                <button class="courses-btn" data-dir="-1" data-track={`courses-${cat.id}`} aria-label="Previous">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <button class="courses-btn" data-dir="1" data-track={`courses-${cat.id}`} aria-label="Next">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="cat-block__meta">
+              <p class="cat-block__desc">{cat.desc}</p>
+              <div class="cat-block__line"></div>
+              <span class="cat-block__count">{cat.courses.length} classes</span>
+            </div>
+          </div>
+          <div class="courses-track-wrap">
+            <div class="courses-track" data-carousel-id={`courses-${cat.id}`}>
+              {cat.courses.map((course) => (
+                <div class="course-card" style={`--cat-color: ${cat.color}`}>
+                  <div class="course-card__media">
+                    <img
+                      src={course.img}
+                      alt={course.name}
+                      class="course-card__media-img"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="course-card__body">
+                    <span class="course-card__cat">{cat.label}</span>
+                    <h3 class="course-card__name">{course.name}</h3>
+                    <p class="course-card__desc">{course.desc}</p>
+                    <div class="course-card__params">
+                      <div class="param-item">
+                        <span class="param-item__label">Intensity</span>
+                        <span class="param-item__dots" aria-label={course.intensity === 3 ? 'High' : course.intensity === 2 ? 'Medium' : 'Low'}>
+                          {[1,2,3].map(n => (
+                            <span class={`dot${n <= course.intensity ? ' dot--on' : ''}`}></span>
+                          ))}
+                        </span>
+                      </div>
+                      <div class="param-item">
+                        <span class="param-item__label">Duration</span>
+                        <span class="param-item__value">{course.duration}</span>
+                      </div>
+                      <div class="param-item">
+                        <span class="param-item__label">Level</span>
+                        <span class="param-item__value">{course.level}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ── Weekly Schedule ── -->
+  <section class="calendar-section" id="planning">
+    <div class="calendar-section__inner">
+      <span class="eyebrow">Schedule</span>
+      <h2 class="section-title">Book your<br><em>class.</em></h2>
+      <p class="corsi-sub">Check the weekly schedule and reserve your spot directly on PerfectGym.</p>
+
+      <WeeklySchedule />
+    </div>
+  </section>
+
+  <div id="membership" class="anchor-target">
+    <MembershipSection />
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const GAP = 20;
+
+      document.querySelectorAll<HTMLButtonElement>('.courses-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const dir = Number(btn.dataset.dir);
+          const track = document.querySelector<HTMLElement>(
+            `[data-carousel-id="${btn.dataset.track}"]`
+          );
+          if (!track) return;
+          const card = track.querySelector<HTMLElement>('.course-card');
+          if (!card) return;
+          track.scrollBy({ left: dir * (card.offsetWidth + GAP), behavior: 'smooth' });
+        });
+      });
+
+      document.querySelectorAll<HTMLElement>('.courses-track').forEach((track) => {
+        let paused = false;
+
+        const advance = () => {
+          if (paused) return;
+          const card = track.querySelector<HTMLElement>('.course-card');
+          if (!card) return;
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          if (track.scrollLeft >= maxScroll - 4) {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            track.scrollBy({ left: card.offsetWidth + GAP, behavior: 'smooth' });
+          }
+        };
+
+        const interval = setInterval(advance, 3500);
+
+        track.addEventListener('mouseenter', () => { paused = true; });
+        track.addEventListener('mouseleave', () => { paused = false; });
+        track.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+        track.addEventListener('touchend',   () => {
+          setTimeout(() => { paused = false; }, 4000);
+        }, { passive: true });
+
+        window.addEventListener('pagehide', () => clearInterval(interval), { once: true });
+      });
+    });
+  </script>
 </BaseLayout>
+
+<style>
+  .anchor-target,
+  #corsi,
+  #planning {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+
+  .sala-section { padding: 7vh var(--pad-x); }
+  .sala-section__inner { max-width: var(--max-width); margin: 0 auto; }
+
+  .sala-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 6rem);
+    align-items: center;
+  }
+
+  .sala-split__media { position: relative; overflow: hidden; }
+  .sala-split__img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+
+  .sala-split__content { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin: 0;
+  }
+  .section-title em { color: var(--color-accent); font-style: normal; }
+
+  .sala-body {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-text-light);
+    max-width: 52ch;
+  }
+
+  .sala-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+  }
+
+  .sala-feat { display: flex; align-items: flex-start; gap: 0.875rem; }
+  .sala-feat__icon { flex-shrink: 0; color: var(--color-accent); margin-top: 2px; }
+  .sala-feat strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(12px, 0.9vw, 14px);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 2px;
+  }
+  .sala-feat span {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13.5px);
+    font-weight: 300;
+    color: var(--color-text-light);
+    line-height: 1.4;
+  }
+
+  .sala-cta { align-self: flex-start; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
+
+  @media (max-width: 860px) {
+    .sala-split { grid-template-columns: 1fr; }
+    .sala-split__img { aspect-ratio: 16/9; }
+  }
+
+  .corsi-section { padding: 7vh var(--pad-x); background: var(--color-off-white); }
+  .corsi-section__inner { max-width: var(--max-width); margin: 0 auto; }
+
+  .corsi-sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-text-light);
+    max-width: 64ch;
+    margin-bottom: 6vh;
+  }
+
+  .cat-block { margin-bottom: 7vh; }
+  .cat-block:last-child { margin-bottom: 0; }
+
+  .cat-block__head { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+
+  .cat-block__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .cat-block__label {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 5vw, 6rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    color: var(--cat-color);
+  }
+
+  .cat-block__meta { display: flex; align-items: center; gap: 1.2rem; }
+
+  .cat-block__desc {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-text-light);
+    margin: 0;
+    max-width: 52ch;
+    flex-shrink: 0;
+  }
+
+  .cat-block__line { flex: 1; height: 1px; background: var(--cat-color); opacity: 0.2; }
+
+  .cat-block__count {
+    font-family: var(--font-display);
+    font-size: clamp(10px, 0.75vw, 12px);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    white-space: nowrap;
+  }
+
+  .courses-nav { display: flex; gap: 6px; flex-shrink: 0; }
+
+  .courses-btn {
+    width: 34px; height: 34px;
+    border: 1.5px solid var(--color-border);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-text);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    flex-shrink: 0;
+  }
+  .courses-btn:hover { background: var(--color-text); border-color: var(--color-text); color: #fff; }
+
+  .courses-track-wrap { overflow: hidden; margin: 0 calc(-1 * var(--pad-x)); }
+
+  .courses-track {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.5rem var(--pad-x) 1.5rem;
+    scroll-padding-left: var(--pad-x);
+  }
+  .courses-track::-webkit-scrollbar { display: none; }
+
+  .course-card {
+    flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .course-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
+
+  .course-card__media { width: 100%; aspect-ratio: 4/3; overflow: hidden; background: #E5E7EB; }
+  .course-card__media-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .course-card__body { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+
+  .course-card__cat {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cat-color);
+  }
+
+  .course-card__name {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.04em; line-height: 1.1;
+    color: var(--color-text); margin-top: 0.1rem;
+  }
+
+  .course-card__desc {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13.5px);
+    font-weight: 300; line-height: 1.65;
+    color: var(--color-text-light);
+    margin: 0.3rem 0 0.6rem; flex: 1;
+  }
+
+  .course-card__params {
+    display: flex; flex-direction: column; gap: 0.45rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-border);
+    margin-top: auto;
+  }
+
+  .param-item { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+
+  .param-item__label {
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--color-text-light); flex-shrink: 0;
+  }
+
+  .param-item__dots { display: flex; gap: 4px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-border); display: inline-block; }
+  .dot--on { background: var(--cat-color); }
+
+  .param-item__value {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--color-text); text-align: right;
+  }
+
+  .calendar-section { padding: 7vh var(--pad-x); }
+  .calendar-section__inner { max-width: var(--max-width); margin: 0 auto; }
+
+  @media (max-width: 860px) {
+    .course-card { flex: 0 0 calc((100% - 1.25rem) / 2); }
+    .cat-block__meta { flex-wrap: wrap; }
+    .cat-block__desc { max-width: 100%; flex-shrink: 1; }
+  }
+
+  @media (max-width: 640px) {
+    .course-card { flex: 0 0 calc(78vw); }
+    .cat-block__label { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+    .cat-block__line { display: none; }
+    .cat-block__count { display: none; }
+  }
+</style>

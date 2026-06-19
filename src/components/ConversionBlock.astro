@@ -1,32 +1,49 @@
 ---
+import type { Lang } from '../i18n/utils';
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+
+const c = lang === 'en' ? {
+  eyebrow: 'Get started',
+  title:   'Ready to begin?',
+  sub:     'Choose your starting point.',
+  card1title: 'Become a Member',
+  card1text:  'Access all Club facilities and make the most of them every day. Choose the membership that suits you and your family and sign up online in minutes.',
+  card1cta:   'Join Now',
+  card2title: 'Want to try the Club?',
+  card2text:  'Click below to request a trial of your favourite activity: Athletic Training, Tennis School, Tennis and Padel.',
+  card2cta:   'Request a Trial',
+} : {
+  eyebrow: 'Inizia ora',
+  title:   'Pronto a iniziare?',
+  sub:     'Scegli il tuo punto di partenza.',
+  card1title: 'Diventa Socio',
+  card1text:  'Accedi a tutti gli impianti del Club e vivilo ogni giorno. Scegli la membership più adatta a te e alla tua famiglia e iscriviti online in pochi minuti.',
+  card1cta:   'Inizia Ora',
+  card2title: 'Vuoi provare il Club?',
+  card2text:  'Clicca qui sotto per richiedere la prova della tua attività preferita: Preparazione Atletica, Scuola Tennis, Tennis e Padel.',
+  card2cta:   'Richiedi la Prova',
+};
 ---
 
 <section class="conversion">
   <div class="conversion__inner">
-    <span class="eyebrow eyebrow--grey">Inizia ora</span>
+    <span class="eyebrow eyebrow--grey">{c.eyebrow}</span>
     <h2 class="conversion__title">
-      Pronto a iniziare?<br><em>Scegli il tuo punto di partenza.</em>
+      {c.title}<br /><em>{c.sub}</em>
     </h2>
 
     <div class="conversion__grid">
       <div class="conversion__card conversion__card--light">
-        <h3 class="conversion__card-title">Diventa Socio</h3>
-        <p class="conversion__card-text">
-          Accedi a tutti gli impianti del Club e vivilo ogni giorno. Scegli la
-          membership più adatta a te e alla tua famiglia e iscriviti online in
-          pochi minuti.
-        </p>
-        {/* TODO: collegare link esterno PerfectGym */}
-        <a class="btn btn-red" href="#">Inizia Ora</a>
+        <h3 class="conversion__card-title">{c.card1title}</h3>
+        <p class="conversion__card-text">{c.card1text}</p>
+        <a class="btn btn-red" href="#">{c.card1cta}</a>
       </div>
 
       <div class="conversion__card conversion__card--dark">
-        <h3 class="conversion__card-title">Vuoi provare il Club?</h3>
-        <p class="conversion__card-text">
-          Clicca qui sotto per richiedere la prova della tua attività preferita:
-          Preparazione Atletica, Scuola Tennis, Tennis e Padel.
-        </p>
-        <button class="btn btn-outline" data-open-modal="modal-contatti">Richiedi la Prova</button>
+        <h3 class="conversion__card-title">{c.card2title}</h3>
+        <p class="conversion__card-text">{c.card2text}</p>
+        <button class="btn btn-outline" data-open-modal="modal-contatti">{c.card2cta}</button>
       </div>
     </div>
   </div>

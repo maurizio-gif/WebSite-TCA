@@ -1,7 +1,12 @@
 ---
-// EN stub — translate content when copy is ready
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Hero from "../../components/Hero.astro";
+import Manifesto from "../../components/Manifesto.astro";
+import AttivitaSplit from "../../components/AttivitaSplit.astro";
+import Reassurance from "../../components/Reassurance.astro";
+import TorneoAvvenire from "../../components/TorneoAvvenire.astro";
+import EventiHome from "../../components/EventiHome.astro";
+import ConversionBlock from "../../components/ConversionBlock.astro";
 
 const lang = 'en' as const;
 ---
@@ -12,5 +17,10 @@ const lang = 'en' as const;
   description="Since 1965, Milan's home of tennis. 16 courts, tennis school, padel, athletic training and community events. Close to Udine metro station."
 >
   <Hero lang={lang} />
-  {/* TODO: translate home sections to English */}
+  <Manifesto lang={lang} />
+  <AttivitaSplit lang={lang} />
+  <Reassurance lang={lang} />
+  <TorneoAvvenire lang={lang} />
+  <EventiHome lang={lang} />
+  <ConversionBlock lang={lang} />
 </BaseLayout>
