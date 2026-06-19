@@ -3,6 +3,8 @@ import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import LeadModal from "../components/LeadModal.astro";
+import LeadFormInline from "../components/LeadFormInline.astro";
+import InfoPratiche from "../components/InfoPratiche.astro";
 import { getLangFromUrl, useTranslations, getAlternatePath, getLocalePath, type Lang } from "../i18n/utils";
 
 interface Props {
@@ -62,6 +64,8 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
     <main class="site-main">
       <slot />
     </main>
+    <LeadFormInline />
+    <InfoPratiche />
     <Footer lang={lang} />
     <LeadModal />
 

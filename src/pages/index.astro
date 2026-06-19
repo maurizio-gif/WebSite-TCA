@@ -7,7 +7,6 @@ import Reassurance from "../components/Reassurance.astro";
 import TorneoAvvenire from "../components/TorneoAvvenire.astro";
 import EventiHome from "../components/EventiHome.astro";
 import ConversionBlock from "../components/ConversionBlock.astro";
-import InfoPratiche from "../components/InfoPratiche.astro";
 import { getLangFromUrl, type Lang } from "../i18n/utils";
 
 const lang: Lang = getLangFromUrl(Astro.url);
@@ -24,5 +23,4 @@ const lang: Lang = getLangFromUrl(Astro.url);
   <TorneoAvvenire lang={lang} />
   <EventiHome lang={lang} />
   <ConversionBlock />
-  <InfoPratiche />
 </BaseLayout>

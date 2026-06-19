@@ -3,8 +3,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import MembershipSection from "../components/MembershipSection.astro";
 import WeeklySchedule from "../components/WeeklySchedule.astro";
-import LeadFormInline from "../components/LeadFormInline.astro";
-import InfoPratiche from "../components/InfoPratiche.astro";
 
 interface Course {
   name: string;
@@ -243,8 +241,6 @@ const categories: Category[] = [
   <div id="membership" class="anchor-target">
     <MembershipSection />
   </div>
-  <LeadFormInline />
-  <InfoPratiche />
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
