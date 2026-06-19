@@ -1017,19 +1017,19 @@ const navItems = [
   .accedi-modal__btns {
     display: flex;
     gap: 0.75rem;
-    flex-wrap: wrap;
   }
 
   .accedi-modal__btn {
+    flex: 1 1 0;
     font-family: var(--font-display);
     font-size: 13px; font-weight: 700;
     letter-spacing: 0.12em; text-transform: uppercase;
     text-decoration: none;
-    display: inline-flex; align-items: center;
-    padding: 12px 22px;
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 12px 16px;
     border: 2px solid transparent;
     transition: background 0.18s, border-color 0.18s, color 0.18s;
-    white-space: nowrap;
+    text-align: center;
   }
 
   .accedi-modal__btn--red {
