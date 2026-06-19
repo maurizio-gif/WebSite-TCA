@@ -1,6 +1,12 @@
 ---
 import { publicUrl } from '../i18n/utils';
 
+interface Cta {
+  label: string;
+  href: string;
+  outline?: boolean;
+}
+
 interface Props {
   eyebrow?: string;
   title: string;
@@ -11,6 +17,7 @@ interface Props {
   imagePosition?: string;
   ctaLabel?: string;
   ctaHref?: string;
+  ctas?: Cta[];
 }
 
 const {
@@ -23,7 +30,14 @@ const {
   imagePosition = "center center",
   ctaLabel,
   ctaHref = "#lead",
+  ctas,
 } = Astro.props;
+
+const buttons: Cta[] = ctas?.length
+  ? ctas
+  : ctaLabel
+    ? [{ label: ctaLabel, href: ctaHref }]
+    : [];
 ---
 
 <section class="page-hero">
@@ -46,9 +60,11 @@ const {
       {title}{titleAccent && <><br /><em>{titleAccent}</em></>}
     </h1>
     {sub && <p class="page-hero__sub">{sub}</p>}
-    {ctaLabel && (
+    {buttons.length > 0 && (
       <div class="page-hero__actions">
-        <a class="btn btn-red" href={ctaHref}>{ctaLabel}</a>
+        {buttons.map((btn) => (
+          <a class={`btn ${btn.outline ? 'btn-outline' : 'btn-red'}`} href={btn.href}>{btn.label}</a>
+        ))}
       </div>
     )}
   </div>
