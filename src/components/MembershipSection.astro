@@ -27,18 +27,15 @@
 
             <th class="ms__th ms__th--silver">
               <span class="ms__tier-name">Silver</span>
-              <button class="ms__discover" data-open-modal="modal-contatti">Scopri di più</button>
             </th>
 
             <th class="ms__th ms__th--gold">
               <span class="ms__tier-name">Gold</span>
-              <button class="ms__discover" data-open-modal="modal-contatti">Scopri di più</button>
             </th>
 
             <th class="ms__th ms__th--platinum">
               <span class="ms__plat-badge">Più completo</span>
               <span class="ms__tier-name">Platinum</span>
-              <button class="ms__discover ms__discover--plat" data-open-modal="modal-contatti">Scopri di più</button>
             </th>
           </tr>
         </thead>
@@ -133,6 +130,20 @@
           </tr>
 
         </tbody>
+        <tfoot>
+          <tr class="ms__foot-row">
+            <td class="ms__foot-cell ms__foot-cell--feat"></td>
+            <td class="ms__foot-cell ms__foot-cell--silver">
+              <button class="ms__discover" data-open-modal="modal-contatti">Scopri di più</button>
+            </td>
+            <td class="ms__foot-cell ms__foot-cell--gold">
+              <button class="ms__discover" data-open-modal="modal-contatti">Scopri di più</button>
+            </td>
+            <td class="ms__foot-cell ms__foot-cell--platinum">
+              <button class="ms__discover ms__discover--plat" data-open-modal="modal-contatti">Scopri di più</button>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </div>
 
@@ -346,6 +357,19 @@
   }
 
   .ms__cell--plat { background: rgba(139, 26, 26, 0.04); }
+
+  /* ── Footer row (Scopri di più) ── */
+  .ms__foot-row { border-top: 1px solid var(--color-border); }
+
+  .ms__foot-cell {
+    padding: 20px 20px;
+    text-align: center;
+    background: var(--color-off-white);
+    vertical-align: middle;
+  }
+
+  .ms__foot-cell--feat { background: var(--color-bg); }
+  .ms__foot-cell--platinum { background: #FBF3F3; }
 
   /* ── MOBILE: scroll orizzontale ── */
   @media (max-width: 768px) {

@@ -1,0 +1,519 @@
+---
+import LeadFormBody from "./LeadFormBody.astro";
+
+const WEBHOOK_CHECK = '';
+const WEBHOOK_LEAD  = '';
+---
+
+<section class="lfi">
+  <div class="lfi__inner">
+
+    <!-- Left: intro -->
+    <div class="lfi__intro">
+      <span class="eyebrow">Contattaci</span>
+      <h2 class="lfi__title">Parliamone.<br><em>Siamo qui per te.</em></h2>
+      <p class="lfi__sub">
+        Hai domande sull'abbonamento, sui corsi o sulla sala attrezzi?
+        Scrivici, richiedici una chiamata o prenota una visita al Club.
+        Ti risponderemo nel più breve tempo possibile.
+      </p>
+      <ul class="lfi__contacts">
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6.6 10.8C7.8 13.2 9.8 15.2 12.2 16.4L14.2 14.4C14.5 14.1 14.9 14 15.3 14.2C16.5 14.6 17.8 14.8 19 14.8C19.6 14.8 20 15.2 20 15.8V19C20 19.6 19.6 20 19 20C10.2 20 3 12.8 3 4C3 3.4 3.4 3 4 3H7.5C8.1 3 8.5 3.4 8.5 4C8.5 5.3 8.7 6.5 9.1 7.7C9.2 8.1 9.1 8.5 8.8 8.8L6.6 10.8Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <a href="tel:+390226414392">+39 02 2641 4392</a>
+        </li>
+        <li>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <a href="mailto:info@tcambrosiano.com">info@tcambrosiano.com</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right: form panel -->
+    <div class="lfi__panel" id="lfi-root">
+      <LeadFormBody prefix="li" />
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .lfi {
+    padding: 7vh var(--pad-x) 8vh;
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .lfi__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: clamp(3rem, 6vw, 8rem);
+    align-items: start;
+  }
+
+  .lfi__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+  }
+
+  .lfi__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin: 0;
+  }
+  .lfi__title em { color: var(--color-accent); font-style: normal; }
+
+  .lfi__sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.05vw, 16px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    max-width: 44ch;
+    margin: 0;
+  }
+
+  .lfi__contacts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .lfi__contacts li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--color-text-light);
+  }
+
+  .lfi__contacts li svg { flex-shrink: 0; color: var(--color-accent); }
+
+  .lfi__contacts a {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.9vw, 15px);
+    font-weight: 400;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+  .lfi__contacts a:hover { color: var(--color-accent); }
+
+  /* Panel form */
+  .lfi__panel {
+    background: var(--lm-bg);
+    color: var(--lm-text);
+    border: 1px solid var(--lm-border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Override step bar styling for inline context */
+  .lfi__panel .lm__steps {
+    background: var(--lm-bg-head);
+    border-bottom: 1px solid var(--lm-border);
+    border-top: 1px solid var(--lm-border);
+  }
+
+  @media (max-width: 900px) {
+    .lfi__inner {
+      grid-template-columns: 1fr;
+    }
+    .lfi__intro {
+      position: static;
+    }
+    .lfi__sub { max-width: 100%; }
+  }
+</style>
+
+<script>
+  (function () {
+    var WEBHOOK_CHECK = '';
+    var WEBHOOK_LEAD  = '';
+    var P = 'li'; // prefix for this inline form instance
+
+    var ATTIVITA_LABELS = {
+      tennis:'Tennis', padel:'Padel', prep:'Preparazione Atletica',
+      scuola:'Scuola Tennis (bambini)', agonistica:'Agonistica Tennis',
+      camps:'Summer Camps', membership:'Membership / Abbonamento',
+    };
+
+    var DAYS_LONG   = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+    var MONTHS_LONG = ['gennaio','febbraio','marzo','aprile','maggio','giugno',
+                       'luglio','agosto','settembre','ottobre','novembre','dicembre'];
+    var MONTHS_FULL = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
+                       'Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+
+    var root = document.getElementById('lfi-root');
+    if (!root) return;
+
+    var stepsBar = root.querySelector('.lm__steps');
+    var stepDots = root.querySelectorAll('[data-step-dot]');
+
+    function fmtDateLong(d) {
+      return DAYS_LONG[d.getDay()] + ' ' + d.getDate() + ' ' +
+             MONTHS_LONG[d.getMonth()] + ' ' + d.getFullYear();
+    }
+    function pad2(n) { return String(n).padStart(2,'0'); }
+    function esc(str) {
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    var state = {
+      email:'', nome:'', cognome:'', cellulare:'',
+      attivita:[], privacy:false, marketing:false, isNewUser:true,
+      callbackDate:null, callbackTime:null, callbackReason:'',
+      visitDate:null, visitTime:null, visitReason:'', messageText:'',
+    };
+
+    function showStep(n, activeDot) {
+      var key = String(n);
+      root.querySelectorAll('[data-step]').forEach(function(el) {
+        el.hidden = (el.dataset.step !== key);
+      });
+      var isMain = (key === '1' || key === '2' || key === '3');
+      if (stepsBar) stepsBar.hidden = !isMain;
+      if (isMain && activeDot !== undefined) {
+        stepDots.forEach(function(dot) {
+          var d = parseInt(dot.dataset.stepDot, 10);
+          dot.classList.toggle('is-active', d === activeDot);
+          dot.classList.toggle('is-done', d < activeDot);
+          if (d >= activeDot) dot.classList.remove('is-done');
+          if (d !== activeDot) dot.classList.remove('is-active');
+        });
+      }
+    }
+
+    function getStep(n) { return root.querySelector('[data-step="' + n + '"]'); }
+
+    function showError(el, msg) {
+      var err = el.querySelector('.lm__error');
+      if (err) { err.textContent = msg; err.hidden = false; }
+    }
+    function clearError(el) {
+      var err = el.querySelector('.lm__error');
+      if (err) err.hidden = true;
+    }
+    function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+
+    function resetForm() {
+      state = { email:'',nome:'',cognome:'',cellulare:'',attivita:[],privacy:false,marketing:false,isNewUser:true,
+                callbackDate:null,callbackTime:null,callbackReason:'',
+                visitDate:null,visitTime:null,visitReason:'',messageText:'' };
+
+      ['#'+P+'-email','#'+P+'-nome','#'+P+'-cognome','#'+P+'-cell',
+       '#'+P+'-cb-reason','#'+P+'-visit-reason','#'+P+'-msg-text']
+        .forEach(function(s) { var el = root.querySelector(s); if (el) el.value = ''; });
+      root.querySelectorAll('input[type="checkbox"]').forEach(function(c) { c.checked = false; });
+
+      [P+'-cal-cb',P+'-cal-visit'].forEach(function(id) { var el = document.getElementById(id); if (el) el.innerHTML = ''; });
+      [P+'-cal-slots-cb',P+'-cal-slots-visit'].forEach(function(id) { var el = document.getElementById(id); if (el) el.innerHTML = ''; });
+      [P+'-slots-wrap-cb',P+'-slots-wrap-visit'].forEach(function(id) { var el = document.getElementById(id); if (el) el.hidden = true; });
+
+      var cb = document.getElementById(P+'-cb-confirm');    if (cb) cb.disabled = true;
+      var vi = document.getElementById(P+'-visit-confirm'); if (vi) vi.disabled = true;
+
+      showStep(1, 1);
+    }
+
+    // [data-lm-close] inside inline form → reset to step 1
+    root.addEventListener('click', function(e) {
+      if (e.target.closest('[data-lm-close]')) resetForm();
+    });
+
+    // Back generico
+    root.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-step-back]');
+      if (!btn) return;
+      var t = btn.dataset.stepBack;
+      showStep(t, parseInt(t, 10) || 3);
+    });
+
+    // STEP 1
+    var emailInput = root.querySelector('#'+P+'-email');
+    emailInput.addEventListener('blur', function() {
+      emailInput.classList.toggle('lm__input--error', !!emailInput.value && !isValidEmail(emailInput.value));
+    });
+    emailInput.addEventListener('input', function() {
+      if (isValidEmail(emailInput.value)) emailInput.classList.remove('lm__input--error');
+    });
+
+    root.querySelector('#'+P+'-step1-next').addEventListener('click', async function() {
+      var s1     = getStep(1);
+      var loader = s1.querySelector('.lm__loader');
+      var btn    = s1.querySelector('#'+P+'-step1-next');
+      clearError(s1); emailInput.classList.remove('lm__input--error');
+
+      if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
+        emailInput.classList.add('lm__input--error');
+        showError(s1, 'Inserisci un indirizzo email valido.'); emailInput.focus(); return;
+      }
+
+      state.email    = emailInput.value.trim();
+      state.attivita = Array.from(root.querySelectorAll('input[name="attivita"]:checked')).map(function(c){return c.value;});
+      btn.disabled   = true; loader.hidden = false;
+
+      try {
+        var isExisting = false;
+        if (WEBHOOK_CHECK) {
+          var r = await fetch(WEBHOOK_CHECK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:state.email})});
+          isExisting = !!(await r.json()).exists;
+        }
+        state.isNewUser = !isExisting;
+        loader.hidden = true; btn.disabled = false;
+        showStep(isExisting ? 3 : 2, isExisting ? 3 : 2);
+      } catch(e) {
+        loader.hidden = true; btn.disabled = false; state.isNewUser = true; showStep(2,2);
+      }
+    });
+
+    // STEP 2
+    root.querySelector('#'+P+'-step2-back').addEventListener('click', function(){ showStep(1,1); });
+
+    root.querySelector('#'+P+'-step2-next').addEventListener('click', async function() {
+      var s2 = getStep(2); clearError(s2);
+      var nome    = root.querySelector('#'+P+'-nome');
+      var cognome = root.querySelector('#'+P+'-cognome');
+      var cell    = root.querySelector('#'+P+'-cell');
+      var privacy = root.querySelector('#'+P+'-privacy');
+
+      if (!nome.value.trim())    { showError(s2,'Inserisci il tuo nome.'); nome.focus(); return; }
+      if (!cognome.value.trim()) { showError(s2,'Inserisci il tuo cognome.'); cognome.focus(); return; }
+      if (!cell.value.trim())    { showError(s2,'Inserisci il numero di cellulare.'); cell.focus(); return; }
+      if (!privacy.checked)      { showError(s2,'Il consenso alla Privacy Policy è obbligatorio.'); return; }
+
+      var pfx = root.querySelector('#'+P+'-pfx');
+      state.nome      = nome.value.trim();
+      state.cognome   = cognome.value.trim();
+      state.cellulare = (pfx ? pfx.value : '+39') + ' ' + cell.value.trim();
+      state.privacy   = true;
+      state.marketing = root.querySelector('#'+P+'-marketing').checked;
+
+      if (WEBHOOK_LEAD) {
+        try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'lead-nuovo'}))}); } catch(e){}
+      }
+      showStep(3,3);
+    });
+
+    // STEP 3
+    root.querySelector('#'+P+'-step3-back').addEventListener('click', function() {
+      showStep(state.isNewUser ? 2 : 1, state.isNewUser ? 2 : 1);
+    });
+
+    root.querySelectorAll('.lm__action-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var a = btn.dataset.action;
+        if      (a === 'callback') { buildCalendar('cb');    showStep('4-callback'); }
+        else if (a === 'visit')    { buildCalendar('visit'); showStep('4-visit'); }
+        else if (a === 'message')  { showStep('4-message'); }
+      });
+    });
+
+    // SLOT generation
+    function slotsCallback(date) {
+      var day=date.getDay(), isWE=(day===0||day===6), endH=isWE?19:20, slots=[];
+      for(var h=9;h<endH;h++) for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m));
+      return slots;
+    }
+    function slotsVisit(date) {
+      var day=date.getDay(), isWE=(day===0||day===6), slots=[];
+      if(isWE){ for(var h=9;h<19;h++) for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m)); }
+      else {
+        for(var h=9;h<13;h++)  for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m));
+        for(var h=15;h<20;h++) for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m));
+      }
+      return slots;
+    }
+
+    function buildCalendar(type) {
+      var numDays     = type === 'cb' ? 7 : 14;
+      var slotsFn     = type === 'cb' ? slotsCallback : slotsVisit;
+      var calWrapEl   = document.getElementById(P+'-cal-'+type);
+      var slotsWrapEl = document.getElementById(P+'-slots-wrap-'+type);
+      var slotsBodyEl = document.getElementById(P+'-cal-slots-'+type);
+      var confirmBtn  = document.getElementById(P+'-'+type+'-confirm');
+      var reasonEl    = document.getElementById(type === 'cb' ? P+'-cb-reason' : P+'-visit-reason');
+
+      var today   = new Date(); today.setHours(0,0,0,0);
+      var endDate = new Date(today); endDate.setDate(today.getDate() + numDays - 1);
+      var viewY   = today.getFullYear();
+      var viewM   = today.getMonth();
+      var selDate = null;
+      var selTime = null;
+
+      function checkConfirm() {
+        var ok = reasonEl && reasonEl.value.trim().length > 0 && selDate && selTime;
+        if (confirmBtn) confirmBtn.disabled = !ok;
+      }
+
+      if (reasonEl) {
+        var newReason = reasonEl.cloneNode(true);
+        reasonEl.parentNode.replaceChild(newReason, reasonEl);
+        reasonEl = newReason;
+        reasonEl.addEventListener('input', checkConfirm);
+      }
+
+      function renderMonth() {
+        var firstDay = new Date(viewY, viewM, 1);
+        var lastDay  = new Date(viewY, viewM + 1, 0);
+        var startDOW = (firstDay.getDay() + 6) % 7;
+        var canPrev  = viewY > today.getFullYear() || (viewY === today.getFullYear() && viewM > today.getMonth());
+        var nextM1   = new Date(viewY, viewM + 1, 1);
+        var canNext  = endDate >= nextM1;
+        var navId    = P+'-nav-'+type;
+
+        var html = '<div class="lm__cal-nav">' +
+          '<button class="lm__cal-nav-btn" id="'+navId+'-prev"'+ (!canPrev?' disabled':'') +'>&#8249;</button>' +
+          '<span class="lm__cal-month-name">' + MONTHS_FULL[viewM] + ' ' + viewY + '</span>' +
+          '<button class="lm__cal-nav-btn" id="'+navId+'-next"'+ (!canNext?' disabled':'') +'>&#8250;</button>' +
+        '</div><div class="lm__cal-grid">';
+
+        ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'].forEach(function(d) {
+          html += '<div class="lm__cal-dow">'+d+'</div>';
+        });
+        for(var i=0;i<startDOW;i++) html+='<div class="lm__cal-cell"></div>';
+        for(var day=1;day<=lastDay.getDate();day++){
+          var d=new Date(viewY,viewM,day);
+          var avail=!( d<today || d>endDate );
+          var isTod=d.getTime()===today.getTime();
+          var isSel=selDate&&d.getTime()===selDate.getTime();
+          var cls='lm__cal-cell lm__cal-day'+(avail?' lm__cal-day--avail':' lm__cal-day--off')+(isTod?' lm__cal-day--today':'')+(isSel?' lm__cal-day--sel':'');
+          html+='<div class="'+cls+'"'+(avail?' data-cal-d="'+d.toISOString()+'"':'')+'>'+day+'</div>';
+        }
+        html+='</div>';
+        calWrapEl.innerHTML=html;
+
+        var prevBtn=document.getElementById(navId+'-prev');
+        var nextBtn=document.getElementById(navId+'-next');
+        if(prevBtn&&canPrev) prevBtn.addEventListener('click',function(){viewM--;if(viewM<0){viewM=11;viewY--;}renderMonth();});
+        if(nextBtn&&canNext) nextBtn.addEventListener('click',function(){viewM++;if(viewM>11){viewM=0;viewY++;}renderMonth();});
+
+        calWrapEl.querySelectorAll('.lm__cal-day--avail').forEach(function(cell){
+          cell.addEventListener('click',function(){
+            selDate=new Date(cell.dataset.calD); selTime=null;
+            if(type==='cb'){state.callbackDate=selDate;state.callbackTime=null;}
+            else{state.visitDate=selDate;state.visitTime=null;}
+            renderMonth(); renderSlots(); checkConfirm();
+          });
+        });
+      }
+
+      function renderSlots() {
+        if(!selDate) return;
+        slotsBodyEl.innerHTML='';
+        if(slotsWrapEl) slotsWrapEl.hidden=false;
+        var all=slotsFn(selDate);
+        var groups=[
+          {label:'Mattina',    slots:all.filter(function(s){return parseInt(s)<13;})},
+          {label:'Pomeriggio', slots:all.filter(function(s){var h=parseInt(s);return h>=13&&h<17;})},
+          {label:'Sera',       slots:all.filter(function(s){return parseInt(s)>=17;})},
+        ];
+        groups.forEach(function(g){
+          if(!g.slots.length) return;
+          var gDiv=document.createElement('div'); gDiv.className='lm__slots-group';
+          var lbl=document.createElement('div');  lbl.className='lm__slots-group-label'; lbl.textContent=g.label;
+          var row=document.createElement('div');  row.className='lm__slots-row';
+          g.slots.forEach(function(time){
+            var sb=document.createElement('button');
+            sb.type='button'; sb.className='lm__cal-slot-btn'; sb.textContent=time;
+            sb.addEventListener('click',function(){
+              slotsBodyEl.querySelectorAll('.lm__cal-slot-btn').forEach(function(b){b.classList.remove('is-active');});
+              sb.classList.add('is-active'); selTime=time;
+              if(type==='cb') state.callbackTime=time; else state.visitTime=time;
+              checkConfirm();
+            });
+            row.appendChild(sb);
+          });
+          gDiv.appendChild(lbl); gDiv.appendChild(row); slotsBodyEl.appendChild(gDiv);
+        });
+        slotsWrapEl.scrollIntoView({behavior:'smooth',block:'nearest'});
+      }
+
+      renderMonth();
+    }
+
+    // STEP 4a
+    document.getElementById(P+'-cb-confirm').addEventListener('click', function() {
+      var s=getStep('4-callback'); clearError(s);
+      var r=root.querySelector('#'+P+'-cb-reason');
+      if(!r.value.trim()){showError(s,'Descrivi il motivo della chiamata.');r.focus();return;}
+      if(!state.callbackDate||!state.callbackTime){showError(s,'Seleziona giorno e orario per la chiamata.');return;}
+      state.callbackReason=r.value.trim();
+      var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
+      document.getElementById(P+'-cb-when').innerHTML=
+        whenRow('Ti richiamiamo il',fmtDateLong(state.callbackDate))+
+        whenRow('Alle ore',state.callbackTime)+
+        (state.cellulare?whenRow('Al numero',esc(state.cellulare)):'');
+      document.getElementById(P+'-cb-summary').innerHTML=
+        row('Email',esc(state.email))+
+        (state.nome?row('Nome',esc(state.nome+' '+state.cognome)):'')+
+        (atts!=='—'?row('Attività',esc(atts)):'')+
+        row('Motivo',esc(state.callbackReason));
+      showStep('confirm-callback');
+    });
+
+    // STEP 4b
+    document.getElementById(P+'-visit-confirm').addEventListener('click', function() {
+      var s=getStep('4-visit'); clearError(s);
+      var r=root.querySelector('#'+P+'-visit-reason');
+      if(!r.value.trim()){showError(s,'Descrivi il motivo della visita.');r.focus();return;}
+      if(!state.visitDate||!state.visitTime){showError(s,'Seleziona giorno e orario per la visita.');return;}
+      state.visitReason=r.value.trim();
+      var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
+      document.getElementById(P+'-visit-when').innerHTML=
+        whenRow('Ci vediamo il',fmtDateLong(state.visitDate))+
+        whenRow('Alle ore',state.visitTime);
+      document.getElementById(P+'-visit-summary').innerHTML=
+        row('Email',esc(state.email))+
+        (state.nome?row('Nome',esc(state.nome+' '+state.cognome)):'')+
+        (state.cellulare?row('Cellulare',esc(state.cellulare)):'')+
+        (atts!=='—'?row('Attività',esc(atts)):'')+
+        row('Motivo',esc(state.visitReason));
+      showStep('confirm-visit');
+    });
+
+    // STEP 4c
+    document.getElementById(P+'-msg-send').addEventListener('click', async function() {
+      var s=getStep('4-message'); clearError(s);
+      var msgEl=root.querySelector('#'+P+'-msg-text');
+      if(!msgEl.value.trim()){showError(s,'Scrivi la tua richiesta prima di inviare.');msgEl.focus();return;}
+      state.messageText=msgEl.value.trim();
+      if(WEBHOOK_LEAD){
+        try{await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'messaggio'}))});}catch(e){}
+      }
+      var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
+      document.getElementById(P+'-msg-summary').innerHTML=
+        row('Email',esc(state.email))+
+        (state.nome?row('Nome',esc(state.nome+' '+state.cognome)):'')+
+        (atts!=='—'?row('Attività',esc(atts)):'')+
+        row('Richiesta',esc(state.messageText));
+      showStep('confirm-message');
+    });
+
+    function whenRow(label,val){
+      return '<div class="lm__confirm-when-row"><span class="lm__confirm-when-label">'+label+'</span><span class="lm__confirm-when-val">'+val+'</span></div>';
+    }
+    function row(label,val){
+      return '<div class="lm__confirm-row"><span>'+label+'</span><span>'+val+'</span></div>';
+    }
+  })();
+</script>
