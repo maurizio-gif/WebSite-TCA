@@ -39,6 +39,12 @@ const p = (path: string) => getLocalePath(lang, path);
       {/* TODO: collegare link esterno PerfectGym */}
       <a class="btn btn-red" href="#">{t.hero.cta1}</a>
       <button class="btn btn-outline" data-open-modal="modal-contatti">{t.hero.cta2}</button>
+      <button class="hero__accedi-btn" id="btn-accedi-hero" type="button" aria-label="Accedi al tuo account">
+        <svg width="17" height="17" viewBox="0 0 24 26" fill="none" aria-hidden="true">
+          <circle cx="12" cy="8" r="5" stroke="currentColor" stroke-width="2"/>
+          <path d="M2 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
   </div>
 </section>
@@ -192,4 +198,30 @@ const p = (path: string) => getLocalePath(lang, path);
       animation: none;
     }
   }
+
+  .hero__accedi-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px;
+    background: var(--color-accent);
+    border: none; border-radius: 50%;
+    color: #fff; cursor: pointer; flex-shrink: 0;
+    box-shadow: 0 2px 0 0 var(--color-accent-dark);
+    transition: background 0.18s, transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  .hero__accedi-btn:hover {
+    background: var(--color-accent-dark);
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 0 var(--color-accent-dark);
+  }
+  .hero__accedi-btn:active {
+    transform: translateY(2px);
+    box-shadow: none;
+  }
 </style>
+
+<script>
+  document.getElementById('btn-accedi-hero')?.addEventListener('click', () => {
+    const modal = document.getElementById('modal-accedi') as HTMLDialogElement | null;
+    modal?.showModal();
+  });
+</script>
