@@ -4,67 +4,36 @@
 <section class="ms">
   <div class="ms__inner">
 
-    <!-- ── Intestazione sezione ── -->
     <div class="ms__head">
       <span class="eyebrow">Membership</span>
       <h2 class="ms__title">Scegli il tuo<br><em>abbonamento.</em></h2>
       <p class="ms__sub">
-        Tre livelli pensati per esigenze diverse. Tutti i soci accedono alle strutture del Club,
-        alle agevolazioni e all'atmosfera unica dell'Ambrosiano.
+        Tre livelli pensati per esigenze diverse. Tutti i soci accedono alle strutture
+        del Club, alle agevolazioni e all'atmosfera unica dell'Ambrosiano.
       </p>
     </div>
 
-    <!-- ── Card intestazione tier ── -->
-    <div class="ms__tiers">
-
-      <div class="ms__tier ms__tier--silver">
-        <span class="ms__tier-name">Silver</span>
-        <p class="ms__tier-tag">Il tuo ingresso nel Club</p>
-        <p class="ms__tier-desc">
-          Accesso alle strutture principali e a una selezione di corsi di gruppo.
-          Ideale per chi vuole allenarsi con i vantaggi del Club.
-        </p>
-        <button class="btn btn-outline--dark ms__tier-cta" data-open-modal="modal-contatti">
-          Richiedi informazioni
-        </button>
-      </div>
-
-      <div class="ms__tier ms__tier--gold">
-        <span class="ms__tier-name">Gold</span>
-        <p class="ms__tier-tag">Il più scelto dai soci</p>
-        <p class="ms__tier-desc">
-          Campi da tennis all'aperto e sale di allenamento inclusi, tutti i corsi
-          e sette giorni di prenotazione anticipata.
-        </p>
-        <button class="btn btn-outline--dark ms__tier-cta" data-open-modal="modal-contatti">
-          Richiedi informazioni
-        </button>
-      </div>
-
-      <div class="ms__tier ms__tier--platinum">
-        <span class="ms__tier-featured-label">Più completo</span>
-        <span class="ms__tier-name">Platinum</span>
-        <p class="ms__tier-tag">L'esperienza completa</p>
-        <p class="ms__tier-desc">
-          Accesso totale a tutti i campi — coperti, all'aperto e padel inclusi —
-          con la massima priorità di prenotazione e ogni corso compreso.
-        </p>
-        <button class="btn btn-red ms__tier-cta" data-open-modal="modal-contatti">
-          Richiedi informazioni
-        </button>
-      </div>
-
-    </div>
-
-    <!-- ── Tabella comparativa ── -->
     <div class="ms__table-wrap">
       <table class="ms__table">
         <thead>
           <tr class="ms__head-row">
             <th class="ms__th ms__th--feat"></th>
-            <th class="ms__th ms__th--silver">Silver</th>
-            <th class="ms__th ms__th--gold">Gold</th>
-            <th class="ms__th ms__th--platinum">Platinum</th>
+
+            <th class="ms__th ms__th--silver">
+              <span class="ms__tier-name">Silver</span>
+              <button class="ms__discover" data-open-modal="modal-contatti">Scopri di più</button>
+            </th>
+
+            <th class="ms__th ms__th--gold">
+              <span class="ms__tier-name">Gold</span>
+              <button class="ms__discover" data-open-modal="modal-contatti">Scopri di più</button>
+            </th>
+
+            <th class="ms__th ms__th--platinum">
+              <span class="ms__plat-badge">Più completo</span>
+              <span class="ms__tier-name">Platinum</span>
+              <button class="ms__discover ms__discover--plat" data-open-modal="modal-contatti">Scopri di più</button>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -121,15 +90,15 @@
           </tr>
           <tr>
             <td class="ms__feat">Prenotazioni anticipate tennis</td>
-            <td class="ms__cell ms__cell--value">2 / settimana</td>
-            <td class="ms__cell ms__cell--value">3 / settimana</td>
-            <td class="ms__cell ms__cell--value ms__cell--plat">4 / settimana</td>
+            <td class="ms__cell ms__cell--value">2 / sett.</td>
+            <td class="ms__cell ms__cell--value">3 / sett.</td>
+            <td class="ms__cell ms__cell--value ms__cell--plat">4 / sett.</td>
           </tr>
           <tr>
             <td class="ms__feat">Prenotazioni anticipate padel</td>
-            <td class="ms__cell ms__cell--value">1 / settimana</td>
-            <td class="ms__cell ms__cell--value">2 / settimana</td>
-            <td class="ms__cell ms__cell--value ms__cell--plat">2 / settimana</td>
+            <td class="ms__cell ms__cell--value">1 / sett.</td>
+            <td class="ms__cell ms__cell--value">2 / sett.</td>
+            <td class="ms__cell ms__cell--value ms__cell--plat">2 / sett.</td>
           </tr>
 
           <!-- Vantaggi economici -->
@@ -139,25 +108,25 @@
           <tr>
             <td class="ms__feat">Tariffe agevolate su corsi</td>
             <td class="ms__cell ms__cell--check">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Sì"><circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/><path d="M4.5 8.25l2.25 2.25 4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/><path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </td>
             <td class="ms__cell ms__cell--check">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Sì"><circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/><path d="M4.5 8.25l2.25 2.25 4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/><path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </td>
             <td class="ms__cell ms__cell--check ms__cell--plat">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Sì"><circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/><path d="M4.5 8.25l2.25 2.25 4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/><path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </td>
           </tr>
           <tr>
             <td class="ms__feat">Sconto su lezioni individuali</td>
             <td class="ms__cell ms__cell--check">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Sì"><circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/><path d="M4.5 8.25l2.25 2.25 4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/><path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </td>
             <td class="ms__cell ms__cell--check">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Sì"><circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/><path d="M4.5 8.25l2.25 2.25 4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/><path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </td>
             <td class="ms__cell ms__cell--check ms__cell--plat">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-label="Sì"><circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-opacity=".25"/><path d="M4.5 8.25l2.25 2.25 4.5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/><path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </td>
           </tr>
 
@@ -165,18 +134,10 @@
       </table>
     </div>
 
-    <!-- ── Nota a piè di sezione ── -->
-    <p class="ms__note">
-      Vuoi confrontare le opzioni o avere tutti i dettagli?
-      <button class="ms__note-link" data-open-modal="modal-contatti">Contattaci</button>
-      — il nostro team ti guiderà nella scelta giusta.
-    </p>
-
   </div>
 </section>
 
 <style>
-  /* ── Sezione ── */
   .ms {
     padding: 7vh var(--pad-x) 8vh;
     background: var(--color-bg);
@@ -190,7 +151,7 @@
 
   /* ── Head ── */
   .ms__head {
-    margin-bottom: 5vh;
+    margin-bottom: 4vh;
   }
 
   .ms__title {
@@ -204,10 +165,7 @@
     margin-bottom: 1.25rem;
   }
 
-  .ms__title em {
-    color: var(--color-accent);
-    font-style: normal;
-  }
+  .ms__title em { color: var(--color-accent); font-style: normal; }
 
   .ms__sub {
     font-family: var(--font-body);
@@ -218,85 +176,7 @@
     max-width: 58ch;
   }
 
-  /* ── Tier cards ── */
-  .ms__tiers {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--color-border);
-    border: 1px solid var(--color-border);
-    margin-bottom: 1px;
-  }
-
-  .ms__tier {
-    background: var(--color-bg);
-    padding: 2rem 2rem 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    position: relative;
-    border-top: 3px solid transparent;
-  }
-
-  .ms__tier--silver { border-top-color: #6B7280; }
-  .ms__tier--gold   { border-top-color: #A07B10; }
-  .ms__tier--platinum {
-    border-top-color: var(--color-accent);
-    background: #FDF7F7;
-  }
-
-  .ms__tier-featured-label {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    background: rgba(139, 26, 26, 0.08);
-    padding: 3px 10px;
-    align-self: flex-start;
-    margin-bottom: -0.25rem;
-  }
-
-  .ms__tier-name {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 2.2vw, 2rem);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    line-height: 1;
-    color: var(--color-text);
-  }
-
-  .ms__tier--silver .ms__tier-name { color: #4B5563; }
-  .ms__tier--gold   .ms__tier-name { color: #7A5E0A; }
-  .ms__tier--platinum .ms__tier-name { color: var(--color-accent); }
-
-  .ms__tier-tag {
-    font-family: var(--font-display);
-    font-size: clamp(0.85rem, 1vw, 0.95rem);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-text-light);
-  }
-
-  .ms__tier-desc {
-    font-family: var(--font-body);
-    font-size: clamp(13px, 0.9vw, 14.5px);
-    font-weight: 300;
-    line-height: 1.7;
-    color: var(--color-text-light);
-    flex: 1;
-  }
-
-  .ms__tier-cta {
-    align-self: flex-start;
-    margin-top: 0.5rem;
-  }
-
-  /* ── Tabella ── */
+  /* ── Table wrapper ── */
   .ms__table-wrap {
     border: 1px solid var(--color-border);
     overflow-x: auto;
@@ -309,41 +189,100 @@
     table-layout: fixed;
   }
 
-  /* Colonne */
-  .ms__th--feat    { width: 42%; }
-  .ms__th--silver  { width: 19%; }
-  .ms__th--gold    { width: 19%; }
+  /* Column widths */
+  .ms__th--feat     { width: 40%; }
+  .ms__th--silver   { width: 20%; }
+  .ms__th--gold     { width: 20%; }
   .ms__th--platinum { width: 20%; }
 
-  /* Head row */
-  .ms__head-row .ms__th {
-    font-family: var(--font-display);
-    font-size: clamp(0.75rem, 0.85vw, 0.9rem);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 14px 20px;
+  /* ── Header row ── */
+  .ms__th {
+    padding: 28px 20px 24px;
     text-align: center;
+    vertical-align: bottom;
     background: var(--color-off-white);
     border-bottom: 1px solid var(--color-border);
-    color: var(--color-text-light);
   }
 
   .ms__th--feat { text-align: left; }
-  .ms__th--silver  { color: #4B5563; border-top: 3px solid #6B7280; }
-  .ms__th--gold    { color: #7A5E0A; border-top: 3px solid #A07B10; }
+
+  .ms__th--silver   { border-top: 4px solid #6B7280; }
+  .ms__th--gold     { border-top: 4px solid #A07B10; }
   .ms__th--platinum {
-    color: var(--color-accent);
-    border-top: 3px solid var(--color-accent);
-    background: #FDF7F7;
+    border-top: 4px solid var(--color-accent);
+    background: #FBF3F3;
   }
 
-  /* Category rows */
-  .ms__cat-row .ms__cat-label {
+  /* Tier name — big & visible */
+  .ms__tier-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.4vw, 2.4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .ms__th--silver   .ms__tier-name { color: #4B5563; }
+  .ms__th--gold     .ms__tier-name { color: #7A5E0A; }
+  .ms__th--platinum .ms__tier-name { color: var(--color-accent); }
+
+  /* "Più completo" badge */
+  .ms__plat-badge {
+    display: inline-block;
     font-family: var(--font-display);
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    background: rgba(139, 26, 26, 0.1);
+    padding: 3px 10px;
+    margin-bottom: 8px;
+  }
+
+  /* "Scopri di più" button */
+  .ms__discover {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: clamp(10px, 0.75vw, 11px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    background: none;
+    border: 1px solid var(--color-border);
+    padding: 7px 14px;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+    white-space: nowrap;
+  }
+
+  .ms__discover:hover {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: #fff;
+  }
+
+  .ms__discover--plat {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .ms__discover--plat:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  /* ── Category rows ── */
+  .ms__cat-row .ms__cat-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--color-text-light);
     padding: 10px 20px 8px;
@@ -352,7 +291,7 @@
     border-bottom: 1px solid var(--color-border);
   }
 
-  /* Feature rows */
+  /* ── Feature rows ── */
   .ms__table tbody tr:not(.ms__cat-row) {
     border-bottom: 1px solid var(--color-border);
   }
@@ -367,24 +306,22 @@
 
   .ms__feat {
     font-family: var(--font-body);
-    font-size: clamp(12.5px, 0.9vw, 14px);
+    font-size: clamp(13px, 0.9vw, 14.5px);
     font-weight: 400;
     color: var(--color-text);
-    padding: 14px 20px;
+    padding: 15px 20px;
     vertical-align: middle;
   }
 
-  /* Data cells */
+  /* ── Data cells ── */
   .ms__cell {
     font-family: var(--font-body);
-    font-size: clamp(12px, 0.85vw, 13.5px);
-    font-weight: 400;
+    font-size: clamp(12.5px, 0.88vw, 14px);
     text-align: center;
-    padding: 14px 12px;
+    padding: 15px 12px;
     vertical-align: middle;
   }
 
-  /* ── Cell variants ── */
   .ms__cell--yes {
     color: #1A6636;
     font-weight: 600;
@@ -397,10 +334,10 @@
 
   .ms__cell--value {
     color: var(--color-text);
-    font-weight: 600;
+    font-weight: 700;
     font-family: var(--font-display);
-    font-size: clamp(11.5px, 0.85vw, 13px);
-    letter-spacing: 0.04em;
+    font-size: clamp(12px, 0.88vw, 13.5px);
+    letter-spacing: 0.05em;
     text-transform: uppercase;
   }
 
@@ -413,59 +350,24 @@
     vertical-align: middle;
   }
 
-  /* Colonna Platinum — sfondo tinto */
+  /* Platinum column tint */
+  .ms__cell--plat,
+  .ms__th--platinum {
+    /* already handled above for th */
+  }
+
   .ms__cell--plat {
     background: rgba(139, 26, 26, 0.04);
   }
 
-  /* ── Nota ── */
-  .ms__note {
-    font-family: var(--font-body);
-    font-size: clamp(13px, 0.9vw, 14.5px);
-    font-weight: 300;
-    color: var(--color-text-light);
-    line-height: 1.7;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-border);
-    margin-top: 2.5rem;
-  }
-
-  .ms__note-link {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    color: var(--color-accent);
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .ms__note-link:hover {
-    color: var(--color-accent-dark);
-  }
-
   /* ── Responsive ── */
-  @media (max-width: 900px) {
-    .ms__tiers {
-      grid-template-columns: 1fr;
-    }
-
-    .ms__tier--platinum {
-      order: -1;
-    }
-
-    .ms__table-wrap {
-      overflow-x: scroll;
-    }
-
-    .ms__table {
-      min-width: 560px;
-    }
+  @media (max-width: 860px) {
+    .ms__table-wrap { overflow-x: scroll; }
+    .ms__table { min-width: 560px; }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 560px) {
     .ms__table { min-width: 480px; }
-    .ms__th--feat { width: 38%; }
+    .ms__th--feat { width: 34%; }
   }
 </style>
