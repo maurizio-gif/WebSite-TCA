@@ -1,5 +1,5 @@
 ---
-import { getLocalePath, publicUrl, type Lang } from '../i18n/utils';
+import { getLocalePath, useTranslations, publicUrl, type Lang } from '../i18n/utils';
 
 interface Props {
   lang?: Lang;
@@ -7,13 +7,14 @@ interface Props {
 
 const { lang = 'it' } = Astro.props;
 const p = (path: string) => getLocalePath(lang, path);
+const t = useTranslations(lang);
 ---
 
 <section class="torneo">
   <div class="torneo__bg">
     <img
       src={publicUrl('/11d7e052-18b5-4f27-9737-e84bbe2b3736_FRA_0127.avif')}
-      alt="Torneo Avvenire — un momento in campo al Tennis Club Ambrosiano"
+      alt={t.torneo.imgAlt}
       class="torneo__img"
       loading="lazy"
       decoding="async"
@@ -23,34 +24,32 @@ const p = (path: string) => getLocalePath(lang, path);
 
   <div class="torneo__inner">
     <div class="torneo__content">
-      <span class="eyebrow eyebrow--light" data-anim="from-left">Il nostro torneo</span>
+      <span class="eyebrow eyebrow--light" data-anim="from-left">{t.torneo.eyebrow}</span>
       <h2 class="torneo__title">
-        Torneo<br><em>Avvenire</em>
+        {t.torneo.titleA}<br><em>{t.torneo.titleB}</em>
       </h2>
       <p class="torneo__body">
-        Nato nel 1965 con una parola in mente — avvenire — il nostro torneo giovanile
-        è diventato uno degli appuntamenti internazionali più attesi del circuito under 16.
-        Un trampolino per generazioni di campioni.
+        {t.torneo.body}
       </p>
-      <a class="btn btn-red" href={p('/torneo-avvenire')} data-anim="from-left" data-anim-delay="200">Scopri il Torneo →</a>
+      <a class="btn btn-red" href={p('/torneo-avvenire')} data-anim="from-left" data-anim-delay="200">{t.torneo.cta}</a>
     </div>
 
     <div class="torneo__stats">
       <div class="torneo__stat">
         <span class="stat__num">60+</span>
-        <span class="stat__label">Edizioni</span>
+        <span class="stat__label">{t.torneo.statEdizioni}</span>
       </div>
       <div class="torneo__stat">
         <span class="stat__num">20+</span>
-        <span class="stat__label">Paesi</span>
+        <span class="stat__label">{t.torneo.statPaesi}</span>
       </div>
       <div class="torneo__stat">
         <span class="stat__num">U16</span>
-        <span class="stat__label">Categoria</span>
+        <span class="stat__label">{t.torneo.statCategoria}</span>
       </div>
       <div class="torneo__stat">
         <span class="stat__num">ITF</span>
-        <span class="stat__label">Circuito</span>
+        <span class="stat__label">{t.torneo.statCircuito}</span>
       </div>
     </div>
   </div>
