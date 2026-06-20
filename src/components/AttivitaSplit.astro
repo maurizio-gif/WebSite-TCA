@@ -1,5 +1,5 @@
 ---
-import { getLocalePath, publicUrl, type Lang } from '../i18n/utils';
+import { getLocalePath, useTranslations, publicUrl, type Lang } from '../i18n/utils';
 
 interface Props {
   lang?: Lang;
@@ -7,26 +7,27 @@ interface Props {
 
 const { lang = 'it' } = Astro.props;
 const p = (path: string) => getLocalePath(lang, path);
+const t = useTranslations(lang);
 
 const adulti = [
   {
     num: '01',
-    name: 'Preparazione Atletica',
-    desc: 'Allenamento in Sala Pesi e Corsi di Gruppo.',
+    name: t.attivita.prepAtleticaName,
+    desc: t.attivita.prepAtleticaDesc,
     href: p('/preparazione-atletica'),
     img: publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'),
   },
   {
     num: '02',
-    name: 'Tennis',
-    desc: 'Sedici campi, istruttori federali e tornei interni per tutti i livelli.',
+    name: t.attivita.tennisName,
+    desc: t.attivita.tennisDesc,
     href: p('/tennis'),
     img: publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif'),
   },
   {
     num: '03',
-    name: 'Padel',
-    desc: 'Campi coperti e aperti, lezioni con istruttori certificati e tornei.',
+    name: t.attivita.padelName,
+    desc: t.attivita.padelDesc,
     href: p('/padel'),
     img: publicUrl('/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif'),
   },
@@ -35,22 +36,22 @@ const adulti = [
 const junior = [
   {
     num: '01',
-    name: 'Scuola Tennis',
-    desc: 'Istruttori certificati, piccoli gruppi e metodo collaudato. Dai 4 anni in su.',
+    name: t.attivita.scuolaName,
+    desc: t.attivita.scuolaDesc,
     href: p('/scuola-tennis'),
     img: publicUrl('/ajAJSI1P9HI4UhOS_tenniskidsTCA.avif'),
   },
   {
     num: '02',
-    name: 'Agonistica Tennis',
-    desc: 'Squadre federate, tornei nazionali e internazionali. Per chi vuole competere.',
+    name: t.attivita.agonisticaName,
+    desc: t.attivita.agonisticaDesc,
     href: p('/agonistica'),
     img: publicUrl('/ajADmY1P9HI4UhI2_235804_lifestyle_tennis_junior_coco_range_action-6-.avif'),
   },
   {
     num: '03',
-    name: 'Summer Camps',
-    desc: 'Sport, divertimento e nuove amicizie. Programmi intensivi estate.',
+    name: t.attivita.summerName,
+    desc: t.attivita.summerDesc,
     href: p('/summer-camps'),
     img: publicUrl('/ZhlJNzjCgu4jzybm_shutterstock_409391734_kidsrunfunoutdoor.avif'),
   },
@@ -62,18 +63,18 @@ const junior = [
 
     <!-- ADULTI -->
     <div class="attivita__panel">
-      <span class="panel__watermark" aria-hidden="true">Adulti</span>
+      <span class="panel__watermark" aria-hidden="true">{t.attivita.titleAdulti}</span>
       <div class="panel__head">
         <div class="panel__head-text">
-          <span class="eyebrow eyebrow--light">Le nostre discipline</span>
-          <h2 class="panel__title">Adulti</h2>
-          <p class="panel__sub">Preparazione Atletica · Tennis · Padel</p>
+          <span class="eyebrow eyebrow--light">{t.attivita.eyebrowAdulti}</span>
+          <h2 class="panel__title">{t.attivita.titleAdulti}</h2>
+          <p class="panel__sub">{t.attivita.subAdulti}</p>
         </div>
-        <div class="carousel-nav" aria-label="Naviga attività adulti">
-          <button class="carousel-btn" data-dir="-1" data-track="adulti" aria-label="Precedente">
+        <div class="carousel-nav" aria-label={t.attivita.navAdulti}>
+          <button class="carousel-btn" data-dir="-1" data-track="adulti" aria-label={t.attivita.prev}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <button class="carousel-btn" data-dir="1" data-track="adulti" aria-label="Successivo">
+          <button class="carousel-btn" data-dir="1" data-track="adulti" aria-label={t.attivita.next}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
@@ -122,18 +123,18 @@ const junior = [
 
     <!-- JUNIOR -->
     <div class="attivita__panel">
-      <span class="panel__watermark" aria-hidden="true">Junior</span>
+      <span class="panel__watermark" aria-hidden="true">{t.attivita.titleJunior}</span>
       <div class="panel__head">
         <div class="panel__head-text">
-          <span class="eyebrow eyebrow--light">Per i più giovani</span>
-          <h2 class="panel__title">Junior</h2>
-          <p class="panel__sub">Scuola Tennis · Summer Camps · Agonistica</p>
+          <span class="eyebrow eyebrow--light">{t.attivita.eyebrowJunior}</span>
+          <h2 class="panel__title">{t.attivita.titleJunior}</h2>
+          <p class="panel__sub">{t.attivita.subJunior}</p>
         </div>
-        <div class="carousel-nav" aria-label="Naviga attività junior">
-          <button class="carousel-btn" data-dir="-1" data-track="junior" aria-label="Precedente">
+        <div class="carousel-nav" aria-label={t.attivita.navJunior}>
+          <button class="carousel-btn" data-dir="-1" data-track="junior" aria-label={t.attivita.prev}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <button class="carousel-btn" data-dir="1" data-track="junior" aria-label="Successivo">
+          <button class="carousel-btn" data-dir="1" data-track="junior" aria-label={t.attivita.next}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>

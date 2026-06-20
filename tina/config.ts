@@ -79,9 +79,31 @@ export default defineConfig({
             label: 'Pubblicato',
           },
           {
+            type: 'string',
+            name: 'titolo_en',
+            label: '🇬🇧 Titolo (inglese)',
+          },
+          {
+            type: 'string',
+            name: 'descrizione_en',
+            label: '🇬🇧 Descrizione breve (inglese)',
+            ui: { component: 'textarea' },
+          },
+          {
+            type: 'string',
+            name: 'luogo_en',
+            label: '🇬🇧 Luogo (inglese)',
+          },
+          {
+            type: 'string',
+            name: 'corpo_en',
+            label: '🇬🇧 Dettagli evento (inglese)',
+            ui: { component: 'textarea' },
+          },
+          {
             type: 'rich-text',
             name: 'body',
-            label: 'Dettagli evento',
+            label: 'Dettagli evento (italiano)',
             isBody: true,
           },
         ],
