@@ -90,13 +90,9 @@ const columns = [
 
   <div class="footer__bottom">
     <div class="footer__bottom-inner">
-      <nav class="footer__legal" aria-label="Link legali">
-        <a class="footer__link" href={p('/terms-conditions')}>{t.footer.terms}</a>
-        <a class="footer__link" href={p('/privacy-policy')}>{t.footer.privacy}</a>
-        <a class="footer__link" href={p('/modello-di-condotta')}>{t.footer.modelloCondotta}</a>
-        <a class="footer__link" href={p('/modello-organizzativo')}>{t.footer.modelloOrganizzativo}</a>
-        <a class="footer__link" href={p('/nomina-safeguarding')}>{t.footer.nominaSafeguarding}</a>
-      </nav>
+      {/* Link legali rimossi finché le relative pagine non sono pronte
+          (Privacy Policy, Termini, Modello di Condotta/Organizzativo,
+          Nomina Safeguarding). Le traduzioni restano in i18n per il ripristino. */}
       <p class="footer__sign">{t.footer.sign}</p>
     </div>
   </div>

@@ -8,13 +8,18 @@ import TorneoAvvenire from "../components/TorneoAvvenire.astro";
 import EventiHome from "../components/EventiHome.astro";
 import ConversionBlock from "../components/ConversionBlock.astro";
 import { getLangFromUrl, type Lang } from "../i18n/utils";
+import { getEntry } from "astro:content";
 
 const lang: Lang = getLangFromUrl(Astro.url);
+
+// SEO gestibile da TinaCMS → src/content/pagine/home.md
+const d = (await getEntry("pagine", "home"))!.data;
 ---
 
 <BaseLayout
   lang={lang}
-  title="Tennis Club Ambrosiano | Tennis, Sport e Famiglia a Milano"
+  title={d.title}
+  description={d.description}
 >
   <Hero lang={lang} />
   <Manifesto lang={lang} />

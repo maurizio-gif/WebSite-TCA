@@ -1,19 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import { getEntry } from "astro:content";
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/padel.md
+const d = (await getEntry("pagine", "padel"))!.data;
 ---
 
 <BaseLayout
-  title="Padel e Pickleball | Tennis Club Ambrosiano"
-  description="Padel e Pickleball al Tennis Club Ambrosiano. Campi coperti e scoperti, corsi per tutti i livelli, ambiente dinamico e community attiva a Milano."
+  title={d.title}
+  description={d.description}
 >
   <PageHero
-    eyebrow="Adulti · Padel e Pickleball"
-    title="Padel"
-    titleAccent="e Pickleball"
-    sub="Due sport, un'unica community. Campi coperti e scoperti per il padel e nuovi spazi per il pickleball, lo sport in più rapida crescita d'Italia."
-    image="/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif"
-    imageAlt="Campo da padel del Tennis Club Ambrosiano"
+    eyebrow={d.hero_eyebrow}
+    title={d.hero_titolo!}
+    titleAccent={d.hero_titolo_accent}
+    sub={d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt!}
     ctaLabel="Richiedi informazioni"
   />
 

@@ -4,6 +4,10 @@ import PageHero from "../components/PageHero.astro";
 import MembershipSection from "../components/MembershipSection.astro";
 import WeeklySchedule from "../components/WeeklySchedule.astro";
 import { publicUrl } from "../i18n/utils";
+import { getEntry } from "astro:content";
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/preparazione-atletica.md
+const d = (await getEntry("pagine", "preparazione-atletica"))!.data;
 
 interface Course {
   name: string;
@@ -84,16 +88,16 @@ const categories: Category[] = [
 ---
 
 <BaseLayout
-  title="Sala Attrezzi e Corsi di Gruppo | Tennis Club Ambrosiano Milano"
-  description="Sala pesi professionale, personal trainer certificati e oltre 20 corsi di gruppo settimanali al Tennis Club Ambrosiano di Milano. Allenati con metodo e raggiungi i tuoi obiettivi."
+  title={d.title}
+  description={d.description}
 >
   <PageHero
-    eyebrow="Adulti · Preparazione Atletica"
-    title="Allenamento"
-    titleAccent="& Benessere"
-    sub="Sala attrezzi professionale, personal trainer certificati e oltre 20 corsi di gruppo a settimana. Due anime, un unico obiettivo: il tuo."
-    image="/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif"
-    imageAlt="Sala attrezzi professionale TCA"
+    eyebrow={d.hero_eyebrow}
+    title={d.hero_titolo!}
+    titleAccent={d.hero_titolo_accent}
+    sub={d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt!}
     ctas={[
       { label: "I nostri abbonamenti", href: "#membership" },
       { label: "Il nostro planning",   href: "#planning", outline: true },

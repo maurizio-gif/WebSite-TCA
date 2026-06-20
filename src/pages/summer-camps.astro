@@ -1,19 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import { getEntry } from "astro:content";
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/summer-camps.md
+const d = (await getEntry("pagine", "summer-camps"))!.data;
 ---
 
 <BaseLayout
-  title="Summer Camps | Tennis Club Ambrosiano"
-  description="Summer Camps TCA: tennis, sport e divertimento per bambini e ragazzi durante l'estate. Settimane intensive, animazione e tanto sole a Milano."
+  title={d.title}
+  description={d.description}
 >
   <PageHero
-    eyebrow="Junior · Summer Camps"
-    title="Summer"
-    titleAccent="Camps 2026"
-    sub="L'estate più attiva di Milano. Tennis, sport, amicizie e divertimento per bambini e ragazzi da giugno a settembre. Settimane intensive con maestri e animatori dedicati."
-    image="/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif"
-    imageAlt="Summer Camps TCA 2026"
+    eyebrow={d.hero_eyebrow}
+    title={d.hero_titolo!}
+    titleAccent={d.hero_titolo_accent}
+    sub={d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt!}
     ctaLabel="Prenota il tuo posto"
   />
 
