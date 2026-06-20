@@ -27,6 +27,18 @@ export const en: UI = {
     agonistica:   'Federated squads, national and international tournaments.',
     summerCamps:  'Sport, fun and new friendships. Intensive summer programmes.',
   },
+  accediModal: {
+    eyebrow:         'Your Club',
+    titleA:          'Your club',
+    titleB:          'a click away',
+    subtitle:        'Manage your membership',
+    webBtn:          'Web login',
+    appBtn:          'App login',
+    bookingsEyebrow: 'Bookings',
+    bookCourt:       'Book a court',
+    bookCourse:      'Book a class',
+    close:           'Close',
+  },
   footer: {
     adulti:       'Adults',
     junior:       'Juniors',
