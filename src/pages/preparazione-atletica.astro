@@ -21,12 +21,18 @@ interface Category {
   courses: Course[];
 }
 
-const pex = (id: string) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop`;
-
-const YOGA   = '/b9c52423-5bff-496a-8686-bffe1b123195_Aspria_Milano_Outdoor_Yoga+1.avif';
-const GYM    = '/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif';
-const RACKET = '/aXCJ_AIvOtkhBw2j_Lifestyle_232026SpeedMP_DXT56509.avif';
+const YOGA      = '/b9c52423-5bff-496a-8686-bffe1b123195_Aspria_Milano_Outdoor_Yoga+1.avif';
+const GYM       = '/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif';
+const FITNESS5  = '/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif';
+const RACKET    = '/aXCJ_AIvOtkhBw2j_Lifestyle_232026SpeedMP_DXT56509.avif';
+const STOCK1    = '/4af14e95-b254-472b-8b91-a0bfb9815ceb_shutterstock_564025705.avif';
+const STOCK2    = '/8c8025f5-5f38-4174-b0a7-cdf165520c8d_shutterstock_638562895.avif';
+const ISTOCK    = '/ZxjUdYF3NbkBX5qL_iStock-1578799359.avif';
+const ASPRESSO  = '/ZxjX3IF3NbkBX5sH_ASPRESSO_STOCK_IMAGERY_SEPT2024-1-.avif';
+const OUTDOOR   = '/ZxjZnIF3NbkBX5tN_pexels-oliver-sjöström-1103829.avif';
+const CLUB      = '/aLVimGGNHVfTOey3_Z8T_0650_2.avif';
+const LANDSCAPE = '/c0fbb171-c501-4040-81bf-867eb27bb1b3_TCA+Landscape.avif';
+const WEB_SQ    = '/0cd25eb6-cb2a-48cf-a65e-2a7107787fba_Web_Square-1PA_1811.avif';
 
 const categories: Category[] = [
   {
@@ -35,12 +41,12 @@ const categories: Category[] = [
     desc: 'Allena il sistema cardiovascolare, brucia calorie e migliora la resistenza e la coordinazione ritmica con corsi dinamici e coinvolgenti.',
     color: '#B83A00',
     courses: [
-      { name: 'Dance',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Coreografie su musica pop e latina. Cardio coinvolgente e coordinazione ritmica.',    img: pex('4090012') },
-      { name: 'Zumba',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Mix di danza latino-americana e fitness. Brucia calorie con il sorriso.',             img: pex('4090009') },
-      { name: 'Cycling',         duration: '45 min', intensity: 3, level: 'Tutti i livelli', desc: 'Allenamento su bike al ritmo della musica. Massima resa cardiovascolare.',            img: pex('8766368') },
-      { name: 'Aeroboxe',        duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Combinazione di arti marziali e aerobica. Potenza, riflessi e resistenza.',          img: pex('32321639') },
-      { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step rivisitato con movimenti funzionali. Tonifica e migliora la resistenza.',       img: pex('6285220') },
-      { name: 'Step & Tone',     duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step cardio abbinato a tonificazione. Allenamento a corpo completo.',                img: pex('6285206') },
+      { name: 'Dance',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Coreografie su musica pop e latina. Cardio coinvolgente e coordinazione ritmica.',    img: ASPRESSO },
+      { name: 'Zumba',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Mix di danza latino-americana e fitness. Brucia calorie con il sorriso.',             img: STOCK1 },
+      { name: 'Cycling',         duration: '45 min', intensity: 3, level: 'Tutti i livelli', desc: 'Allenamento su bike al ritmo della musica. Massima resa cardiovascolare.',            img: ISTOCK },
+      { name: 'Aeroboxe',        duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Combinazione di arti marziali e aerobica. Potenza, riflessi e resistenza.',          img: STOCK2 },
+      { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step rivisitato con movimenti funzionali. Tonifica e migliora la resistenza.',       img: FITNESS5 },
+      { name: 'Step & Tone',     duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step cardio abbinato a tonificazione. Allenamento a corpo completo.',                img: CLUB },
     ]
   },
   {
@@ -50,12 +56,12 @@ const categories: Category[] = [
     color: '#1A1A1A',
     courses: [
       { name: 'Funracket',            duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Sport-specific per tennisti e padellisti. Forza esplosiva, reattività e agilità.',    img: RACKET },
-      { name: 'Tribal-x',             duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Circuito ad alta intensità con carichi liberi. Forza e potenza muscolare.',           img: pex('4720807') },
+      { name: 'Tribal-x',             duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Circuito ad alta intensità con carichi liberi. Forza e potenza muscolare.',           img: FITNESS5 },
       { name: 'Functional',           duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Allenamento col peso corporeo. Forza funzionale e stabilità articolare.',            img: GYM },
-      { name: 'Active Pump',          duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Barbell workout con bilanciere. Tonificazione totale su musica.',                    img: pex('703012') },
-      { name: 'Total Body',           duration: '60 min', intensity: 3, level: 'Tutti i livelli', desc: 'Lavoro su tutti i distretti muscolari. Forza, resistenza e postura.',               img: GYM },
-      { name: 'Circuit',              duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Stazioni cardio e forza in sequenza. Metabolismo alle stelle.',                     img: pex('4720291') },
-      { name: 'Suspension Training',  duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'TRX e sling training. Core, stabilità e forza funzionale in sospensione.',          img: pex('5480481') },
+      { name: 'Active Pump',          duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Barbell workout con bilanciere. Tonificazione totale su musica.',                    img: STOCK1 },
+      { name: 'Total Body',           duration: '60 min', intensity: 3, level: 'Tutti i livelli', desc: 'Lavoro su tutti i distretti muscolari. Forza, resistenza e postura.',               img: ASPRESSO },
+      { name: 'Circuit',              duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Stazioni cardio e forza in sequenza. Metabolismo alle stelle.',                     img: STOCK2 },
+      { name: 'Suspension Training',  duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'TRX e sling training. Core, stabilità e forza funzionale in sospensione.',          img: WEB_SQ },
     ]
   },
   {
@@ -64,13 +70,13 @@ const categories: Category[] = [
     desc: 'Equilibrio, flessibilità e benessere corpo-mente. Migliora postura, mobilità e consapevolezza corporea con pratiche dolci e dinamiche.',
     color: '#1E4D3A',
     courses: [
-      { name: 'Pilates Funzionale', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pilates applicato al movimento quotidiano. Core, postura e consapevolezza corporea.', img: pex('25596884') },
-      { name: 'Flexability',        duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Flessibilità e mobilità articolare. Previene infortuni e libera le tensioni.',        img: pex('2424257') },
+      { name: 'Pilates Funzionale', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pilates applicato al movimento quotidiano. Core, postura e consapevolezza corporea.', img: YOGA },
+      { name: 'Flexability',        duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Flessibilità e mobilità articolare. Previene infortuni e libera le tensioni.',        img: OUTDOOR },
       { name: 'Hatha Yoga',         duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pratica yogica classica. Equilibrio corpo-mente attraverso asana e respiro.',        img: YOGA },
-      { name: 'Pilates',            duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Metodo originale di controllo e precisione. Rinforza il centro, migliora la postura.', img: pex('25596885') },
-      { name: 'Postural',           duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Rieducazione posturale attiva. Corregge le tensioni e riequilibra il corpo.',        img: pex('7992044') },
+      { name: 'Pilates',            duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Metodo originale di controllo e precisione. Rinforza il centro, migliora la postura.', img: LANDSCAPE },
+      { name: 'Postural',           duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Rieducazione posturale attiva. Corregge le tensioni e riequilibra il corpo.',        img: CLUB },
       { name: 'Power Yoga',         duration: '60 min', intensity: 2, level: 'Intermedio',      desc: 'Yoga dinamico e intenso. Forza, flessibilità e concentrazione unite.',               img: YOGA },
-      { name: 'Ginnastica Dolce',   duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Mobilità dolce per tutti. Ideale per over 50 e recupero attivo.',                   img: pex('11674389') },
+      { name: 'Ginnastica Dolce',   duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Mobilità dolce per tutti. Ideale per over 50 e recupero attivo.',                   img: WEB_SQ },
     ]
   }
 ];
