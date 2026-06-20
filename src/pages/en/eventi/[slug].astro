@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getLocalePath, getLangFromUrl, type Lang } from '../../i18n/utils';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getLocalePath } from '../../../i18n/utils';
 
 export async function getStaticPaths() {
   const eventi = await getCollection('eventi');
@@ -15,15 +15,15 @@ const { entry } = Astro.props;
 const { Content } = await entry.render();
 const ev = entry.data;
 
-const lang: Lang = getLangFromUrl(Astro.url);
+const lang = 'en' as const;
 const p = (path: string) => getLocalePath(lang, path);
 
-const MESI_FULL = [
-  'gennaio','febbraio','marzo','aprile','maggio','giugno',
-  'luglio','agosto','settembre','ottobre','novembre','dicembre',
+const MONTHS_FULL = [
+  'January','February','March','April','May','June',
+  'July','August','September','October','November','December',
 ];
 const dataFormattata =
-  `${ev.data.getDate()} ${MESI_FULL[ev.data.getMonth()]} ${ev.data.getFullYear()}`;
+  `${MONTHS_FULL[ev.data.getMonth()]} ${ev.data.getDate()}, ${ev.data.getFullYear()}`;
 
 const catColor: Record<string, string> = {
   Torneo: '#8B1A1A',
@@ -39,11 +39,11 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
   title={`${ev.titolo} — Tennis Club Ambrosiano`}
   description={ev.descrizione}
 >
-  <!-- Hero evento -->
+  <!-- Event hero -->
   <section class="ev-hero" style={`--ev-accent: ${accent};`}>
     <div class="ev-hero__inner">
       <nav class="ev-hero__breadcrumb" aria-label="Breadcrumb">
-        <a href={p('/eventi')}>← Tutti gli eventi</a>
+        <a href={p('/eventi')}>← All events</a>
       </nav>
 
       <div class="ev-hero__meta">
@@ -64,13 +64,13 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
 
       {ev.iscrizioniHref && (
         <div class="ev-hero__actions">
-          <a class="btn btn-red" href={ev.iscrizioniHref}>Iscriviti ora</a>
+          <a class="btn btn-red" href={ev.iscrizioniHref}>Register now</a>
         </div>
       )}
     </div>
   </section>
 
-  <!-- Contenuto evento -->
+  <!-- Event content -->
   <section class="ev-body">
     <div class="ev-body__inner">
       <div class="ev-body__content prose">
@@ -79,32 +79,32 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
 
       <aside class="ev-body__sidebar">
         <div class="ev-sidebar__block">
-          <h2 class="ev-sidebar__label">Data</h2>
+          <h2 class="ev-sidebar__label">Date</h2>
           <p class="ev-sidebar__value">{dataFormattata}</p>
         </div>
 
         {ev.luogo && (
           <div class="ev-sidebar__block">
-            <h2 class="ev-sidebar__label">Luogo</h2>
+            <h2 class="ev-sidebar__label">Location</h2>
             <p class="ev-sidebar__value">{ev.luogo}</p>
           </div>
         )}
 
         <div class="ev-sidebar__block">
-          <h2 class="ev-sidebar__label">Categoria</h2>
+          <h2 class="ev-sidebar__label">Category</h2>
           <p class="ev-sidebar__value">{ev.categoria}</p>
         </div>
 
         {ev.iscrizioniHref && (
           <div class="ev-sidebar__cta">
             <a class="btn btn-red" href={ev.iscrizioniHref} style="width:100%;text-align:center;">
-              Iscriviti ora
+              Register now
             </a>
           </div>
         )}
 
         <div class="ev-sidebar__back">
-          <a href={p('/eventi')}>← Tutti gli eventi</a>
+          <a href={p('/eventi')}>← All events</a>
         </div>
       </aside>
     </div>
@@ -177,7 +177,6 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
     color: rgba(255,255,255,.4);
     letter-spacing: 0.06em;
     margin-bottom: 1rem;
-    text-transform: lowercase;
   }
 
   .ev-hero__title {

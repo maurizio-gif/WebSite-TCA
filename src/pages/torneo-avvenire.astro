@@ -1,19 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import { getEntry } from "astro:content";
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/torneo-avvenire.md
+const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
 ---
 
 <BaseLayout
-  title="Torneo Avvenire | Tennis Club Ambrosiano"
-  description="Il Torneo Avvenire è il più importante torneo giovanile di tennis in Italia, ospitato dal Tennis Club Ambrosiano di Milano dal 1960."
+  title={d.title}
+  description={d.description}
 >
   <PageHero
-    eyebrow="Il Torneo"
-    title="Torneo"
-    titleAccent="Avvenire"
-    sub="Il più importante torneo giovanile di tennis in Italia. Dal 1960, il TCA ospita una delle competizioni più prestigiose al mondo per under 14. Campioni nati qui."
-    image="/aLVimGGNHVfTOey3_Z8T_0650_2.avif"
-    imageAlt="Torneo Avvenire Tennis Club Ambrosiano"
+    eyebrow={d.hero_eyebrow}
+    title={d.hero_titolo!}
+    titleAccent={d.hero_titolo_accent}
+    sub={d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt!}
     ctaLabel="Scopri il torneo"
   />
 

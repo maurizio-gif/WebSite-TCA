@@ -1,19 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import { getEntry } from "astro:content";
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/tennis.md
+const d = (await getEntry("pagine", "tennis"))!.data;
 ---
 
 <BaseLayout
-  title="Tennis | Tennis Club Ambrosiano"
-  description="Sedici campi da tennis, maestri FIT qualificati, corsi per adulti di tutti i livelli. Scopri il tennis al Tennis Club Ambrosiano di Milano."
+  title={d.title}
+  description={d.description}
 >
   <PageHero
-    eyebrow="Adulti · Tennis"
-    title="Il Tennis"
-    titleAccent="al TCA"
-    sub="Sedici campi, maestri FIT qualificati e una tradizione che inizia nel 1965. Che tu voglia migliorare il tuo gioco o iniziare da zero, abbiamo il corso giusto per te."
-    image="/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif"
-    imageAlt="Campi da tennis del Tennis Club Ambrosiano"
+    eyebrow={d.hero_eyebrow}
+    title={d.hero_titolo!}
+    titleAccent={d.hero_titolo_accent}
+    sub={d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt!}
     ctaLabel="Richiedi informazioni"
   />
 

@@ -17,6 +17,14 @@ export const it = {
     closeMenu:      'Chiudi menu',
     menuFooter:     'Tennis Club Ambrosiano — Via Feltre 33, Milano',
   },
+  navDesc: {
+    prepAtletica: 'Allenamento in Sala Pesi e Corsi di Gruppo.',
+    tennis:       'Sedici campi, istruttori federali e tornei per tutti i livelli.',
+    padel:        'Campi coperti e aperti, lezioni con istruttori certificati.',
+    scuolaTennis: 'Istruttori certificati, piccoli gruppi. Dai 4 anni in su.',
+    agonistica:   'Squadre federate, tornei nazionali e internazionali.',
+    summerCamps:  'Sport, divertimento e nuove amicizie. Programmi intensivi estate.',
+  },
   footer: {
     adulti:       'Adulti',
     junior:       'Junior',
@@ -29,6 +37,9 @@ export const it = {
     email:        'info@tcambrosiano.com',
     privacy:      'Privacy Policy',
     terms:        'Termini e Condizioni',
+    modelloCondotta:     'Modello di Condotta',
+    modelloOrganizzativo:'Modello Organizzativo',
+    nominaSafeguarding:  'Nomina Safeguarding',
     sign:         'Tennis Club Ambrosiano — Dal 1965',
     diventaSocio: 'Inizia Ora',
   },
@@ -52,6 +63,6 @@ export const it = {
     switchLang:      'EN',
     switchLangLabel: 'Switch to English',
   },
-} as const;
+};
 
 export type UI = typeof it;

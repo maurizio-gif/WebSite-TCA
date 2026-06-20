@@ -4,7 +4,6 @@ description: "Dal 1965 il club del Torneo Avvenire. 16 campi, scuola tennis, pad
 hero_eyebrow: "Dal 1965, il tennis a Milano"
 hero_titolo: "Il club dove la tradizione incontra il tuo prossimo dritto."
 hero_sottotitolo: "Sedici campi, una scuola tennis tra le più storiche della città, e oltre 30.000 mq dedicati allo sport e alla famiglia. A pochi passi dalla metro Udine."
-hero_cta_primario: "Iscriviti ora"
-hero_cta_secondario: "Prenota una visita"
-hero_immagine: "hero-home.jpg"
+hero_immagine: "/aYswMN0YXLCxVpoG_TCA_CopertinaSito_2026.avif"
+hero_immagine_alt: "Tennis Club Ambrosiano"
 ---

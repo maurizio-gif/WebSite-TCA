@@ -1,10 +1,10 @@
 ---
-title: "Tennis | Tennis Club Ambrosiano Milano"
-description: "Sedici campi, la Vavassori Tennis Academy e corsi per tutti i livelli. Scopri il tennis al TCA: adulti, bambini, agonismo e lezioni individuali."
-hero_eyebrow: "Dal 1965"
-hero_titolo: "Sedici campi. Una tradizione che parla da sé."
-hero_sottotitolo: "Corsi per adulti e bambini, lezioni individuali e la Vavassori Tennis Academy per chi punta all'agonismo. Il tuo gioco inizia qui."
-hero_cta_primario: "Iscriviti ora"
-hero_cta_secondario: "Prenota una lezione"
-hero_immagine: "hero-tennis.jpg"
+title: "Tennis | Tennis Club Ambrosiano"
+description: "Sedici campi da tennis, maestri FIT qualificati, corsi per adulti di tutti i livelli. Scopri il tennis al Tennis Club Ambrosiano di Milano."
+hero_eyebrow: "Adulti · Tennis"
+hero_titolo: "Il Tennis"
+hero_titolo_accent: "al TCA"
+hero_sottotitolo: "Sedici campi, maestri FIT qualificati e una tradizione che inizia nel 1965. Che tu voglia migliorare il tuo gioco o iniziare da zero, abbiamo il corso giusto per te."
+hero_immagine: "/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif"
+hero_immagine_alt: "Campi da tennis del Tennis Club Ambrosiano"
 ---

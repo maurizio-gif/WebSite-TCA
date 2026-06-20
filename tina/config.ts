@@ -118,24 +118,24 @@ export default defineConfig({
           },
           {
             type: 'string',
+            name: 'hero_titolo_accent',
+            label: 'Hero — titolo (parte evidenziata in rosso)',
+          },
+          {
+            type: 'string',
             name: 'hero_sottotitolo',
             label: 'Hero — sottotitolo',
             ui: { component: 'textarea' },
           },
           {
             type: 'string',
-            name: 'hero_cta_primario',
-            label: 'Hero — CTA primario',
-          },
-          {
-            type: 'string',
-            name: 'hero_cta_secondario',
-            label: 'Hero — CTA secondario',
-          },
-          {
-            type: 'string',
             name: 'hero_immagine',
-            label: 'Hero — nome file immagine',
+            label: 'Hero — percorso immagine (es. /nome-file.avif in public/)',
+          },
+          {
+            type: 'string',
+            name: 'hero_immagine_alt',
+            label: 'Hero — testo alternativo immagine',
           },
           {
             type: 'rich-text',

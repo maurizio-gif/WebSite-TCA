@@ -1,10 +1,10 @@
 ---
-title: "Summer Camps | Tennis Club Ambrosiano Milano"
-description: "Summer Camp estivi per bambini e ragazzi al Tennis Club Ambrosiano di Milano. Tennis, sport e divertimento in un ambiente sicuro e professionale."
-hero_eyebrow: "Estate al Club"
-hero_titolo: "Il campo è aperto. L'estate può cominciare."
-hero_sottotitolo: "Summer Camp per bambini e ragazzi: tennis, sport e tanto divertimento in un ambiente sicuro, guidato da istruttori professionisti."
-hero_cta_primario: "Iscriviti al Camp"
-hero_cta_secondario: "Scopri il programma"
-hero_immagine: "hero-summer-camps.jpg"
+title: "Summer Camps | Tennis Club Ambrosiano"
+description: "Summer Camps TCA: tennis, sport e divertimento per bambini e ragazzi durante l'estate. Settimane intensive, animazione e tanto sole a Milano."
+hero_eyebrow: "Junior · Summer Camps"
+hero_titolo: "Summer"
+hero_titolo_accent: "Camps 2026"
+hero_sottotitolo: "L'estate più attiva di Milano. Tennis, sport, amicizie e divertimento per bambini e ragazzi da giugno a settembre. Settimane intensive con maestri e animatori dedicati."
+hero_immagine: "/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif"
+hero_immagine_alt: "Summer Camps TCA 2026"
 ---

@@ -1,10 +1,10 @@
 ---
-title: "Torneo Avvenire | Tennis Club Ambrosiano Milano"
-description: "Dal 1965 il Torneo Avvenire scopre i talenti del tennis di domani. Un appuntamento internazionale e un trampolino per generazioni di campioni."
-hero_eyebrow: "Dal 1965"
-hero_titolo: "La gara che immagina il futuro del tennis."
-hero_sottotitolo: "Nato dall'iniziativa di alcuni soci con una parola in mente — avvenire — il nostro torneo giovanile è diventato un appuntamento internazionale e un trampolino per generazioni di campioni."
-hero_cta_primario: "Scopri il Torneo"
-hero_cta_secondario: "Iscriviti"
-hero_immagine: "hero-torneo-avvenire.jpg"
+title: "Torneo Avvenire | Tennis Club Ambrosiano"
+description: "Il Torneo Avvenire è il più importante torneo giovanile di tennis in Italia, ospitato dal Tennis Club Ambrosiano di Milano dal 1960."
+hero_eyebrow: "Il Torneo"
+hero_titolo: "Torneo"
+hero_titolo_accent: "Avvenire"
+hero_sottotitolo: "Il più importante torneo giovanile di tennis in Italia. Dal 1960, il TCA ospita una delle competizioni più prestigiose al mondo per under 14. Campioni nati qui."
+hero_immagine: "/aLVimGGNHVfTOey3_Z8T_0650_2.avif"
+hero_immagine_alt: "Torneo Avvenire Tennis Club Ambrosiano"
 ---
