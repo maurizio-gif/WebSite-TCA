@@ -328,33 +328,34 @@ const t = lang === 'en' ? {
   .ms__discover {
     display: inline-block;
     font-family: var(--font-display);
-    font-size: clamp(10px, 0.75vw, 11px);
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-size: clamp(12px, 1vw, 14px);
+    font-weight: 800;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-text-light);
-    background: none;
-    border: 1px solid var(--color-border);
-    padding: 7px 14px;
+    color: #fff;
+    background: var(--color-text);
+    border: 2px solid var(--color-text);
+    padding: 13px 32px;
     cursor: pointer;
     transition: background 0.18s, border-color 0.18s, color 0.18s;
     white-space: nowrap;
   }
 
   .ms__discover:hover {
-    background: var(--color-text);
-    border-color: var(--color-text);
+    background: #333;
+    border-color: #333;
     color: #fff;
   }
 
   .ms__discover--plat {
+    background: var(--color-accent);
     border-color: var(--color-accent);
-    color: var(--color-accent);
+    color: #fff;
   }
 
   .ms__discover--plat:hover {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
+    background: var(--color-accent-dark);
+    border-color: var(--color-accent-dark);
     color: #fff;
   }
 
@@ -560,8 +561,11 @@ const t = lang === 'en' ? {
     }
 
     .ms__discover {
-      font-size: 10px;
-      padding: 6px 10px;
+      font-size: 12px;
+      padding: 12px 20px;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
     }
 
     .ms__feat {
