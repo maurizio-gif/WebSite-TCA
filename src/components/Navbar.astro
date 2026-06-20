@@ -237,34 +237,34 @@ const navItems = [
 <!-- Modal Accedi -->
 <dialog class="accedi-modal" id="modal-accedi" aria-labelledby="accedi-title">
   <div class="accedi-modal__inner">
-    <button class="accedi-modal__close" id="accedi-close" aria-label="Chiudi">
+    <button class="accedi-modal__close" id="accedi-close" aria-label={t.accediModal.close}>
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
         <path d="M1 1L17 17M17 1L1 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </button>
-    <p class="accedi-modal__eyebrow">Il tuo Club</p>
+    <p class="accedi-modal__eyebrow">{t.accediModal.eyebrow}</p>
     <h2 class="accedi-modal__title" id="accedi-title">
-      Il tuo club<br>a portata di click
-      <span class="accedi-modal__title-sub">Gestisci il tuo abbonamento</span>
+      {t.accediModal.titleA}<br>{t.accediModal.titleB}
+      <span class="accedi-modal__title-sub">{t.accediModal.subtitle}</span>
     </h2>
     <div class="accedi-modal__btns">
       <a class="accedi-modal__btn accedi-modal__btn--red" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Login" target="_blank" rel="noopener">
-        ACCEDI DA WEB
+        {t.accediModal.webBtn}
       </a>
       <a class="accedi-modal__btn accedi-modal__btn--outline" id="btn-app-store" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Login" target="_blank" rel="noopener">
-        ACCEDI DA APP
+        {t.accediModal.appBtn}
       </a>
     </div>
 
     <div class="accedi-modal__divider" aria-hidden="true"></div>
 
-    <p class="accedi-modal__eyebrow">Prenotazioni</p>
+    <p class="accedi-modal__eyebrow">{t.accediModal.bookingsEyebrow}</p>
     <div class="accedi-modal__btns">
       <a class="accedi-modal__btn accedi-modal__btn--outline" href="https://playtomic.com/clubs/club-ambrosiano-tennis" target="_blank" rel="noopener">
-        PRENOTA UN CAMPO
+        {t.accediModal.bookCourt}
       </a>
-      <a class="accedi-modal__btn accedi-modal__btn--outline" href="https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar" target="_blank" rel="noopener">
-        PRENOTA UN CORSO
+      <a class="accedi-modal__btn accedi-modal__btn--outline" href={`https://tcambrosiano.perfectgym.com/clientportal2/?lang=${lang}#/Classes/1/Calendar`} target="_blank" rel="noopener">
+        {t.accediModal.bookCourse}
       </a>
     </div>
   </div>

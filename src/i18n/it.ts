@@ -25,6 +25,18 @@ export const it = {
     agonistica:   'Squadre federate, tornei nazionali e internazionali.',
     summerCamps:  'Sport, divertimento e nuove amicizie. Programmi intensivi estate.',
   },
+  accediModal: {
+    eyebrow:         'Il tuo Club',
+    titleA:          'Il tuo club',
+    titleB:          'a portata di click',
+    subtitle:        'Gestisci il tuo abbonamento',
+    webBtn:          'Accedi da web',
+    appBtn:          'Accedi da app',
+    bookingsEyebrow: 'Prenotazioni',
+    bookCourt:       'Prenota un campo',
+    bookCourse:      'Prenota un corso',
+    close:           'Chiudi',
+  },
   footer: {
     adulti:       'Adulti',
     junior:       'Junior',
