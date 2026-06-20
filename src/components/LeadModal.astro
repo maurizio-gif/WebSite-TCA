@@ -736,6 +736,22 @@ const lm = lang === 'en' ? {
     return slots;
   }
 
+  // Ora corrente a Milano (Europe/Rome), indipendente dal fuso del browser
+  function milanParts(d) {
+    var parts = {};
+    new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Rome',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: false
+    }).formatToParts(d).forEach(function(p){ parts[p.type] = p.value; });
+    return {
+      y: parseInt(parts.year, 10),
+      m: parseInt(parts.month, 10),
+      d: parseInt(parts.day, 10),
+      minutes: (parseInt(parts.hour, 10) % 24) * 60 + parseInt(parts.minute, 10)
+    };
+  }
+
   function buildCalendar(type) {
     var P = 'lm';
     var numDays     = type === 'cb' ? 7 : 14;
@@ -745,6 +761,19 @@ const lm = lang === 'en' ? {
     var slotsBodyEl = document.getElementById(P+'-cal-slots-'+type);
     var confirmBtn  = document.getElementById(P+'-'+type+'-confirm');
     var reasonEl    = document.getElementById(type === 'cb' ? P+'-cb-reason' : P+'-visit-reason');
+
+    // Primo orario disponibile: almeno 2 ore dall'ora attuale di Milano (solo per oggi)
+    function availFor(date) {
+      var slots = slotsFn(date);
+      var now = milanParts(new Date());
+      if (date.getFullYear() === now.y && (date.getMonth()+1) === now.m && date.getDate() === now.d) {
+        var cutoff = now.minutes + 120;
+        slots = slots.filter(function(s){
+          return (parseInt(s.slice(0,2),10) * 60 + parseInt(s.slice(3,5),10)) >= cutoff;
+        });
+      }
+      return slots;
+    }
 
     var today   = new Date(); today.setHours(0,0,0,0);
     var endDate = new Date(today); endDate.setDate(today.getDate() + numDays - 1);
@@ -789,6 +818,8 @@ const lm = lang === 'en' ? {
         var isTod = d.getTime() === today.getTime();
         var isSel = selDate && d.getTime() === selDate.getTime();
 
+        if (avail && isTod && availFor(d).length === 0) avail = false;
+
         var cls = 'lm__cal-cell lm__cal-day';
         cls += avail ? ' lm__cal-day--avail' : ' lm__cal-day--off';
         if (isTod) cls += ' lm__cal-day--today';
@@ -831,7 +862,7 @@ const lm = lang === 'en' ? {
       slotsBodyEl.innerHTML = '';
       if (slotsWrapEl) slotsWrapEl.hidden = false;
 
-      var all = slotsFn(selDate);
+      var all = availFor(selDate);
 
       SLOT_GROUPS.forEach(function(g) {
         var slots = all.filter(function(s){ var h=parseInt(s); return h>=g.h1&&h<g.h2; });
