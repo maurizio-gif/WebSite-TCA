@@ -92,10 +92,8 @@ const lfi = lang === 'en' ? {
   }
 
   /* Override step bar styling for inline context */
-  .lfi__panel .lm__steps {
-    background: var(--lm-bg-head);
-    border-bottom: 1px solid var(--lm-border);
-    border-top: 1px solid var(--lm-border);
+  .lfi__panel :global(.lm__steps) {
+    display: none;
   }
 
   @media (max-width: 900px) {
