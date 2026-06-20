@@ -23,6 +23,9 @@ const catLabel = (cat: string) => ({
   Camp:   t.eventiHome.catCamp,
 }[cat] ?? cat);
 
+// Sceglie il campo nella lingua corrente, con fallback all'italiano
+const tx = (itVal: string, enVal?: string) => (lang === 'en' && enVal) ? enVal : itVal;
+
 // Carica gli eventi dalla Content Collection, ordina per data, mostra i 3 prossimi
 const allEventi = await getCollection('eventi', ({ data }) => data.pubblicato);
 const sorted    = allEventi.sort((a, b) => a.data.data.getTime() - b.data.data.getTime());
@@ -60,7 +63,7 @@ const rendered  = await Promise.all(
             role="button"
             tabindex="0"
             data-open-event={slug}
-            aria-label={`${t.eventiHome.apri} ${ev.titolo}`}
+            aria-label={`${t.eventiHome.apri} ${tx(ev.titolo, ev.titolo_en)}`}
           >
             <div class="event-item__date">
               <span class="event-item__month">{fMon(ev.data)}</span>
@@ -74,11 +77,11 @@ const rendered  = await Promise.all(
                   {catLabel(ev.categoria)}
                 </span>
                 {ev.luogo && (
-                  <span class="event-item__luogo">{ev.luogo}</span>
+                  <span class="event-item__luogo">{tx(ev.luogo, ev.luogo_en)}</span>
                 )}
               </div>
-              <h3 class="event-item__title">{ev.titolo}</h3>
-              <p class="event-item__desc">{ev.descrizione}</p>
+              <h3 class="event-item__title">{tx(ev.titolo, ev.titolo_en)}</h3>
+              <p class="event-item__desc">{tx(ev.descrizione, ev.descrizione_en)}</p>
             </div>
 
             <span class="event-item__open" aria-hidden="true">
@@ -127,11 +130,13 @@ const rendered  = await Promise.all(
           <!-- Contenuto (light) -->
           <div class="em__content">
             <div class="em__scroll">
-              {ev.luogo && <p class="em__luogo">{ev.luogo}</p>}
-              <h2 class="em__title" id={`em-title-${slug}`}>{ev.titolo}</h2>
-              <p class="em__desc">{ev.descrizione}</p>
+              {ev.luogo && <p class="em__luogo">{tx(ev.luogo, ev.luogo_en)}</p>}
+              <h2 class="em__title" id={`em-title-${slug}`}>{tx(ev.titolo, ev.titolo_en)}</h2>
+              <p class="em__desc">{tx(ev.descrizione, ev.descrizione_en)}</p>
               <div class="em__prose">
-                <Content />
+                {lang === 'en' && ev.corpo_en
+                  ? ev.corpo_en.split('\n').filter((r) => r.trim()).map((r) => <p>{r}</p>)
+                  : <Content />}
               </div>
             </div>
 

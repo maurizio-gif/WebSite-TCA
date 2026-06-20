@@ -6,6 +6,12 @@ descrizione: "Il classico torneo estivo. Iscrizioni aperte a tutti i soci. Monte
 luogo: "Campi Centrali"
 iscrizioniHref: "#"
 pubblicato: true
+titolo_en: "Men's Open Tournament — 4th category"
+descrizione_en: "The classic summer tournament. Open to all members. Prizes in technical gear."
+luogo_en: "Centre Courts"
+corpo_en: |
+  Single-elimination tournament with a main draw and a consolation draw.
+  Reserved for FITP 4th-category players. Entries by 5 July.
 ---
 
 Torneo a eliminazione diretta con tabellone principale e consolazione.

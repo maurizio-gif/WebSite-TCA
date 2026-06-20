@@ -18,6 +18,20 @@ const ev = entry.data;
 const lang = 'en' as const;
 const p = (path: string) => getLocalePath(lang, path);
 
+// Campi localizzati con fallback all'italiano
+const titolo      = ev.titolo_en      ?? ev.titolo;
+const descrizione = ev.descrizione_en ?? ev.descrizione;
+const luogo       = ev.luogo_en       ?? ev.luogo;
+const corpoEn     = ev.corpo_en;
+
+const catLabel: Record<string, string> = {
+  Torneo: 'Tournament',
+  Clinic: 'Clinic',
+  Evento: 'Event',
+  Camp:   'Camp',
+};
+const categoria = catLabel[ev.categoria] ?? ev.categoria;
+
 const MONTHS_FULL = [
   'January','February','March','April','May','June',
   'July','August','September','October','November','December',
@@ -36,8 +50,8 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
 
 <BaseLayout
   lang={lang}
-  title={`${ev.titolo} — Tennis Club Ambrosiano`}
-  description={ev.descrizione}
+  title={`${titolo} — Tennis Club Ambrosiano`}
+  description={descrizione}
 >
   <!-- Event hero -->
   <section class="ev-hero" style={`--ev-accent: ${accent};`}>
@@ -47,8 +61,8 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
       </nav>
 
       <div class="ev-hero__meta">
-        <span class="ev-hero__cat">{ev.categoria}</span>
-        {ev.luogo && <span class="ev-hero__luogo">{ev.luogo}</span>}
+        <span class="ev-hero__cat">{categoria}</span>
+        {luogo && <span class="ev-hero__luogo">{luogo}</span>}
       </div>
 
       <time
@@ -58,9 +72,9 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
         {dataFormattata}
       </time>
 
-      <h1 class="ev-hero__title">{ev.titolo}</h1>
+      <h1 class="ev-hero__title">{titolo}</h1>
 
-      <p class="ev-hero__desc">{ev.descrizione}</p>
+      <p class="ev-hero__desc">{descrizione}</p>
 
       {ev.iscrizioniHref && (
         <div class="ev-hero__actions">
@@ -74,7 +88,9 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
   <section class="ev-body">
     <div class="ev-body__inner">
       <div class="ev-body__content prose">
-        <Content />
+        {corpoEn
+          ? corpoEn.split('\n').filter((r) => r.trim()).map((r) => <p>{r}</p>)
+          : <Content />}
       </div>
 
       <aside class="ev-body__sidebar">
@@ -83,16 +99,16 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
           <p class="ev-sidebar__value">{dataFormattata}</p>
         </div>
 
-        {ev.luogo && (
+        {luogo && (
           <div class="ev-sidebar__block">
             <h2 class="ev-sidebar__label">Location</h2>
-            <p class="ev-sidebar__value">{ev.luogo}</p>
+            <p class="ev-sidebar__value">{luogo}</p>
           </div>
         )}
 
         <div class="ev-sidebar__block">
           <h2 class="ev-sidebar__label">Category</h2>
-          <p class="ev-sidebar__value">{ev.categoria}</p>
+          <p class="ev-sidebar__value">{categoria}</p>
         </div>
 
         {ev.iscrizioniHref && (

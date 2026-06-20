@@ -32,6 +32,11 @@ const eventi = defineCollection({
     luogo: z.string().optional(),
     iscrizioniHref: z.string().optional(),
     pubblicato: z.boolean().default(true),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    titolo_en: z.string().optional(),
+    descrizione_en: z.string().optional(),
+    luogo_en: z.string().optional(),
+    corpo_en: z.string().optional(),
   }),
 });
 
