@@ -188,6 +188,9 @@ const prefissi: { flag: string; dial: string }[] = [
   { flag: '🇿🇼', dial: '+263' }, // Zimbabwe
 ];
 
+// Ordine progressivo per prefisso (numerico crescente). L'Italia resta selezionata di default.
+prefissi.sort((a, b) => parseInt(a.dial.slice(1), 10) - parseInt(b.dial.slice(1), 10));
+
 const attivita = lang === 'en' ? [
   { id: 'tennis',     label: 'Tennis' },
   { id: 'padel',      label: 'Padel' },
@@ -352,8 +355,8 @@ const t = lang === 'en' ? {
       <label for={`${prefix}-cell`}>{t.mobile} <span aria-hidden="true">*</span></label>
       <div class="lm__tel-wrap">
         <select id={`${prefix}-pfx`} name="prefisso" class="lm__tel-prefix" autocomplete="tel-country-code">
-          {prefissi.map((pf, i) => (
-            <option value={pf.dial} selected={i === 0}>{pf.flag} {pf.dial}</option>
+          {prefissi.map((pf) => (
+            <option value={pf.dial} selected={pf.dial === '+39'}>{pf.flag} {pf.dial}</option>
           ))}
         </select>
         <input id={`${prefix}-cell`} name="cellulare" type="tel" autocomplete="tel-national"
