@@ -1,5 +1,4 @@
 ---
-// EN stub — translate content when copy is ready
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 
@@ -9,7 +8,7 @@ const lang = 'en' as const;
 <BaseLayout
   lang={lang}
   title="Tennis | Tennis Club Ambrosiano Milan"
-  description="16 tennis courts, qualified FIT coaches, adult courses for all levels. Discover tennis at Tennis Club Ambrosiano in Milan."
+  description="Sixteen tennis courts, qualified FIT coaches, adult courses for all levels. Discover tennis at Tennis Club Ambrosiano in Milan."
 >
   <PageHero
     eyebrow="Adults · Tennis"
@@ -20,5 +19,133 @@ const lang = 'en' as const;
     imageAlt="Tennis courts at Tennis Club Ambrosiano"
     ctaLabel="Request Information"
   />
-  {/* TODO: translate content sections to English */}
+
+  <section class="content-section">
+    <div class="content-section__inner">
+      <span class="eyebrow">Our courts</span>
+      <h2 class="section-title">16 Courts.<br><em>Every surface.</em></h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <div class="img-placeholder" data-name="campi-terra.avif" style="min-height:220px"></div>
+          <h3>Clay</h3>
+          <p>FIT-certified courts, perfect for classic play and competitive training.</p>
+        </div>
+        <div class="content-card">
+          <div class="img-placeholder" data-name="campi-indoor.avif" style="min-height:220px"></div>
+          <h3>Indoor Courts</h3>
+          <p>Covered facility to play all year round, with professional lighting.</p>
+        </div>
+        <div class="content-card">
+          <div class="img-placeholder" data-name="campi-rapida.avif" style="min-height:220px"></div>
+          <h3>Hard Court</h3>
+          <p>Synthetic surface suited to fast play and the needs of every level.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section content-section--alt">
+    <div class="content-section__inner">
+      <span class="eyebrow">Adult courses</span>
+      <h2 class="section-title">Find your<br><em>level.</em></h2>
+      <div class="content-grid content-grid--4">
+        <div class="content-card content-card--simple">
+          <strong>Beginners</strong>
+          <p>For those starting from scratch. Small groups, patient coaches, a gradual approach.</p>
+        </div>
+        <div class="content-card content-card--simple">
+          <strong>Intermediate</strong>
+          <p>Consolidate your technique and improve consistency and tactics in your game.</p>
+        </div>
+        <div class="content-card content-card--simple">
+          <strong>Advanced</strong>
+          <p>Match play, video analysis and stroke-specific work for competitive players.</p>
+        </div>
+        <div class="content-card content-card--simple">
+          <strong>Private Lessons</strong>
+          <p>One-to-one work with the coach. Maximum intensity, rapid progress.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<style>
+  .content-section {
+    padding: 7vh var(--pad-x);
+  }
+
+  .content-section--alt {
+    background: var(--color-off-white);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .content-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 4vh;
+  }
+
+  .section-title em {
+    color: var(--color-accent);
+    font-style: normal;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .content-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+  .content-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .content-card h3,
+  .content-card strong {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text);
+  }
+
+  .content-card--simple {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 1.5rem;
+  }
+
+  .content-card p {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 1vw, 16px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+  }
+
+  @media (max-width: 1024px) {
+    .content-grid { grid-template-columns: repeat(2, 1fr); }
+    .content-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .content-grid,
+    .content-grid--4 { grid-template-columns: 1fr; }
+  }
+</style>

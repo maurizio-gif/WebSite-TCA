@@ -1,5 +1,4 @@
 ---
-// EN stub — translate content when copy is ready
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 
@@ -9,16 +8,152 @@ const lang = 'en' as const;
 <BaseLayout
   lang={lang}
   title="Avvenire Tournament | Tennis Club Ambrosiano Milan"
-  description="The Avvenire Tournament, since 1961. One of the world's most prestigious junior tennis tournaments, held every September at Tennis Club Ambrosiano in Milan."
+  description="The Avvenire Tournament is the most important junior tennis tournament in Italy, hosted by Tennis Club Ambrosiano in Milan since 1960."
 >
   <PageHero
-    eyebrow="The Club · Avvenire Tournament"
+    eyebrow="The Tournament"
     title="Avvenire"
     titleAccent="Tournament"
-    sub="Since 1961, the most prestigious junior tennis tournament in the world. Every September, the best under-14 players gather at TCA for a legendary event."
+    sub="The most important junior tennis tournament in Italy. Since 1960, TCA has hosted one of the most prestigious under-14 competitions in the world. Champions were born here."
     image="/aLVimGGNHVfTOey3_Z8T_0650_2.avif"
     imageAlt="Avvenire Tournament at Tennis Club Ambrosiano"
-    ctaLabel="Learn More"
+    ctaLabel="Discover the tournament"
   />
-  {/* TODO: translate content sections to English */}
+
+  <section class="content-section">
+    <div class="content-section__inner">
+      <span class="eyebrow">The history</span>
+      <h2 class="section-title">A legendary<br><em>tournament.</em></h2>
+      <div class="torneo-intro">
+        <p class="body-text">
+          The Avvenire Tournament is one of the most important junior tennis events in the world.
+          Since 1960, every year TCA hosts the best under-14 talents from across the globe.
+          Champions such as Boris Becker, Stefan Edberg and many other stars of world tennis
+          have emerged from the courts of the Avvenire Tournament.
+        </p>
+        <p class="body-text">
+          A tradition that Tennis Club Ambrosiano carries forward with pride,
+          year after year, in the name of excellence and respect for the sport.
+        </p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat__n">60+</span>
+          <span class="stat__label">Years of history</span>
+        </div>
+        <div class="stat">
+          <span class="stat__n">40+</span>
+          <span class="stat__label">Countries represented</span>
+        </div>
+        <div class="stat">
+          <span class="stat__n">Under 14</span>
+          <span class="stat__label">Category</span>
+        </div>
+        <div class="stat">
+          <span class="stat__n">Top 10</span>
+          <span class="stat__label">Former players in the ATP rankings</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section content-section--dark">
+    <div class="content-section__inner">
+      <span class="eyebrow eyebrow--grey">Next edition</span>
+      <h2 class="section-title section-title--light">2026<br><em>edition.</em></h2>
+      <p class="body-text body-text--light">
+        Registration for the 2026 edition will be available soon.
+        Stay updated by following our official channels.
+      </p>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<style>
+  .content-section {
+    padding: 7vh var(--pad-x);
+  }
+
+  .content-section--dark {
+    background: #0f1013;
+    color: #fff;
+    padding: 7vh var(--pad-x);
+  }
+
+  .content-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 3vh;
+  }
+
+  .section-title em { color: var(--color-accent); font-style: normal; }
+  .section-title--light { color: #fff; }
+
+  .torneo-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 72ch;
+    margin-bottom: 5vh;
+  }
+
+  .body-text {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 18px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-text-light);
+  }
+
+  .body-text--light { color: rgba(255, 255, 255, 0.65); max-width: 60ch; }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+  }
+
+  .stat {
+    background: var(--color-bg);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .stat__n {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 4rem);
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .stat__label {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.9vw, 14px);
+    font-weight: 300;
+    color: var(--color-text-light);
+  }
+
+  @media (max-width: 860px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: 1fr; }
+  }
+</style>
