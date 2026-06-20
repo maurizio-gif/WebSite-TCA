@@ -388,8 +388,13 @@ const t = lang === 'en' ? {
     border-bottom: none;
   }
 
-  .ms__table tbody tr:not(.ms__cat-row):hover {
-    background: rgba(0, 0, 0, 0.018);
+  /* Solo su dispositivi con puntatore preciso (mouse): su touch lo stato
+     :hover resta agganciato all'ultima riga toccata, lasciando una riga
+     grigia "bloccata" durante lo scorrimento orizzontale. */
+  @media (hover: hover) and (pointer: fine) {
+    .ms__table tbody tr:not(.ms__cat-row):hover {
+      background: rgba(0, 0, 0, 0.018);
+    }
   }
 
   .ms__feat {
@@ -528,9 +533,14 @@ const t = lang === 'en' ? {
       background: var(--color-bg);
     }
 
-    /* Hover: sincronizza il colore della prima cella con il row-hover */
-    .ms__table tbody tr:not(.ms__cat-row):hover .ms__feat {
-      background: rgba(0, 0, 0, 0.018);
+    /* Hover prima cella: solo su mouse (vedi nota sopra). Colore OPACO
+       (#FAFAFA = rgba(0,0,0,0.018) su bianco) così, anche se :hover si
+       agganciasse, le celle dei valori che scorrono sotto non traspaiono
+       mai attraverso la colonna sticky. */
+    @media (hover: hover) and (pointer: fine) {
+      .ms__table tbody tr:not(.ms__cat-row):hover .ms__feat {
+        background: #FAFAFA;
+      }
     }
 
     /* Header più compatto */
