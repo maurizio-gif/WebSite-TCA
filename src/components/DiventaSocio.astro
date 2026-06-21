@@ -1,0 +1,232 @@
+---
+import { getLocalePath, publicUrl, type Lang } from '../i18n/utils';
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+const p = (path: string) => getLocalePath(lang, path);
+
+const t = lang === 'en' ? {
+  eyebrow:  'Membership',
+  title:    'Become a member<br><em>of the Ambrosiano.</em>',
+  lead:     'One membership to live the Club every day. Train in the gym and our group classes, play tennis and padel on our courts: everything in one place, just a few minutes from home.',
+  benefits: [
+    { name: 'Gym & group classes',          desc: 'Strength training and a full weekly schedule of classes led by our coaches.' },
+    { name: 'Tennis, indoor & outdoor',     desc: 'Play all year round on our courts, whatever the weather.' },
+    { name: 'Padel & Pickleball',           desc: 'Dedicated courts for the sports everyone is talking about.' },
+  ],
+  cta:      'Discover our memberships',
+  note:     'Three tiers designed for every need — for you and your family.',
+} : {
+  eyebrow:  'Membership',
+  title:    'Diventa socio<br><em>dell’Ambrosiano.</em>',
+  lead:     'Un’unica membership per vivere il Club ogni giorno. Allenati in sala pesi e nei nostri corsi di gruppo, gioca a tennis e a padel sui nostri campi: tutto in un solo luogo, a pochi minuti da casa.',
+  benefits: [
+    { name: 'Sala pesi e corsi di gruppo',  desc: 'Allenamento con i pesi e un calendario settimanale di corsi seguiti dai nostri tecnici.' },
+    { name: 'Tennis, indoor e outdoor',     desc: 'Gioca tutto l’anno sui nostri campi, con qualsiasi tempo.' },
+    { name: 'Padel e Pickleball',           desc: 'Campi dedicati per gli sport del momento.' },
+  ],
+  cta:      'Scopri le nostre membership',
+  note:     'Tre livelli pensati per ogni esigenza, per te e per la tua famiglia.',
+};
+
+const img = publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif');
+---
+
+<section class="socio">
+  <div class="socio__inner">
+
+    <!-- Media -->
+    <div class="socio__media" data-anim="reveal">
+      <div class="socio__media-img" style={`background-image: url('${img}')`}></div>
+      <span class="socio__badge" aria-hidden="true">
+        <strong>1</strong> Club, <strong>3</strong> sport
+      </span>
+    </div>
+
+    <!-- Content -->
+    <div class="socio__content">
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h2 class="socio__title" set:html={t.title} />
+      <p class="socio__lead">{t.lead}</p>
+
+      <ul class="socio__benefits">
+        {t.benefits.map((b, i) => (
+          <li class="socio__benefit" data-anim="from-left" data-anim-delay={String(i * 110)}>
+            <span class="socio__benefit-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M4 10.5l3.5 3.5L16 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span class="socio__benefit-text">
+              <strong class="socio__benefit-name">{b.name}</strong>
+              <span class="socio__benefit-desc">{b.desc}</span>
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="socio__cta-wrap">
+        <a class="btn btn-red socio__cta" href={p('/membership')}>{t.cta} &rarr;</a>
+        <p class="socio__note">{t.note}</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .socio {
+    background: var(--color-off-white);
+    padding: 8vh var(--pad-x);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .socio__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  /* ── Media ── */
+  .socio__media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+  }
+
+  .socio__media-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.02);
+    transition: transform 0.8s ease;
+  }
+
+  .socio__media:hover .socio__media-img {
+    transform: scale(1.06);
+  }
+
+  .socio__badge {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    font-family: var(--font-display);
+    font-size: clamp(13px, 1.2vw, 16px);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--color-accent);
+    padding: 14px 22px;
+  }
+
+  .socio__badge strong { font-weight: 800; }
+
+  /* ── Content ── */
+  .socio__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin: 0.5rem 0 1.25rem;
+  }
+  .socio__title em { color: var(--color-accent); font-style: normal; }
+
+  .socio__lead {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.05vw, 17px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-text-light);
+    max-width: 54ch;
+    margin-bottom: 3vh;
+  }
+
+  /* ── Benefits ── */
+  .socio__benefits {
+    list-style: none;
+    margin: 0 0 3.5vh;
+    padding: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .socio__benefit {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .socio__benefit-icon {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    background: rgba(139, 26, 26, 0.08);
+    border-radius: 50%;
+    margin-top: 2px;
+  }
+
+  .socio__benefit-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .socio__benefit-name {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.5vw, 1.4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 1.05;
+    color: var(--color-text);
+  }
+
+  .socio__benefit-desc {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--color-text-light);
+  }
+
+  /* ── CTA ── */
+  .socio__cta-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.75rem;
+  }
+
+  .socio__note {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13.5px);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--color-text-light);
+    max-width: 30ch;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 860px) {
+    .socio__inner {
+      grid-template-columns: 1fr;
+      gap: 3vh;
+    }
+
+    .socio__media {
+      aspect-ratio: 16 / 10;
+      order: -1;
+    }
+  }
+</style>
