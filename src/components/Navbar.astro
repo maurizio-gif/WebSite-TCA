@@ -75,10 +75,10 @@ const secondaryItems = [
     <!-- Logo -->
     <a class="navbar__logo" href={p('/')} aria-label="Tennis Club Ambrosiano — home">
       <img
-        src={publicUrl('/logos/tca-logo.png')}
+        src={publicUrl('/logos/tca-logo-trim.png')}
         alt="Tennis Club Ambrosiano"
         class="navbar__logo-img"
-        width="225" height="224"
+        width="205" height="85"
       />
     </a>
 
@@ -369,14 +369,16 @@ const secondaryItems = [
     justify-content: center;
     flex-shrink: 0;
     line-height: 0;
-    padding: 2px 8px;
+    padding: 4px 9px;
     border: 1.5px solid var(--color-text);
   }
+  /* Logo scontornato (PNG ritagliato, fondo trasparente): la cornice
+     abbraccia esattamente la scritta "TCA", come nel portale PerfectGym. */
   .navbar__logo-img {
-    height: calc(var(--header-h) - 12px);
-    width: auto; object-fit: contain;
+    height: calc(var(--header-h) - 26px);
+    width: auto;
+    object-fit: contain;
     display: block;
-    mix-blend-mode: multiply;
   }
 
   /* ── Desktop nav ── */
@@ -782,8 +784,8 @@ const secondaryItems = [
   @media (max-width: 640px) {
     .navbar__cta { display: none; }
     :root { --header-h: 64px; }
-    .navbar__logo { padding: 2px 7px; }
-    .navbar__logo-img { height: calc(var(--header-h) - 14px); width: auto; }
+    .navbar__logo { padding: 3px 8px; }
+    .navbar__logo-img { height: calc(var(--header-h) - 30px); width: auto; }
     .navbar__right { gap: 0.5rem; }
 
     /* Lang: solo bandierina su mobile */
