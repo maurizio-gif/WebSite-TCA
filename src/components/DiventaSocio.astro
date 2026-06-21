@@ -1,8 +1,7 @@
 ---
-import { getLocalePath, publicUrl, type Lang } from '../i18n/utils';
+import { publicUrl, type Lang } from '../i18n/utils';
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
-const p = (path: string) => getLocalePath(lang, path);
 
 const t = lang === 'en' ? {
   eyebrow:  'Membership',
@@ -11,7 +10,7 @@ const t = lang === 'en' ? {
   benefits: [
     { name: 'Gym & group classes',          desc: 'Strength training and a full weekly schedule of classes led by our coaches.' },
     { name: 'Tennis, indoor & outdoor',     desc: 'Play all year round on our courts, whatever the weather.' },
-    { name: 'Padel & Pickleball',           desc: 'Dedicated courts for the sports everyone is talking about.' },
+    { name: 'Padel',                         desc: 'Dedicated courts for the sport everyone is talking about.' },
   ],
   cta:      'Discover our memberships',
   note:     'Three tiers designed for every need — for you and your family.',
@@ -22,7 +21,7 @@ const t = lang === 'en' ? {
   benefits: [
     { name: 'Sala pesi e corsi di gruppo',  desc: 'Allenamento con i pesi e un calendario settimanale di corsi seguiti dai nostri tecnici.' },
     { name: 'Tennis, indoor e outdoor',     desc: 'Gioca tutto l’anno sui nostri campi, con qualsiasi tempo.' },
-    { name: 'Padel e Pickleball',           desc: 'Campi dedicati per gli sport del momento.' },
+    { name: 'Padel',                         desc: 'Campi dedicati per lo sport del momento.' },
   ],
   cta:      'Scopri le nostre membership',
   note:     'Tre livelli pensati per ogni esigenza, per te e per la tua famiglia.',
@@ -65,7 +64,7 @@ const img = publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'
       </ul>
 
       <div class="socio__cta-wrap">
-        <a class="btn btn-red socio__cta" href={p('/membership')}>{t.cta} &rarr;</a>
+        <a class="btn btn-red socio__cta" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Registration" target="_blank" rel="noopener noreferrer">{t.cta} &rarr;</a>
         <p class="socio__note">{t.note}</p>
       </div>
     </div>
