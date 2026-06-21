@@ -55,7 +55,7 @@ export const en: UI = {
     modelloOrganizzativo:'Organisational Model',
     nominaSafeguarding:  'Safeguarding Officer',
     sign:         'Tennis Club Ambrosiano — Since 1965',
-    diventaSocio: 'Get Started',
+    diventaSocio: 'Sign Up Online',
   },
   hero: {
     eyebrow: 'Since 1965, tennis in Milan',
@@ -63,10 +63,10 @@ export const en: UI = {
     cta2:    'Request a Trial',
   },
   common: {
-    diventaSocio:  'Get Started',
+    diventaSocio:  'Sign Up Online',
     richiediInfo:  'Request Information',
     richiediProva: 'Request a Trial',
-    iscrivitiOra:  'Get Started',
+    iscrivitiOra:  'Sign Up Online',
     googleMaps:    'Google Maps Directions',
     whatsapp:      'WhatsApp',
     chiama:        'Call',

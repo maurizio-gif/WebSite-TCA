@@ -53,7 +53,7 @@ export const it = {
     modelloOrganizzativo:'Modello Organizzativo',
     nominaSafeguarding:  'Nomina Safeguarding',
     sign:         'Tennis Club Ambrosiano — Dal 1965',
-    diventaSocio: 'Inizia Ora',
+    diventaSocio: 'Iscriviti Online',
   },
   hero: {
     eyebrow: 'Dal 1965, il tennis a Milano',
@@ -61,10 +61,10 @@ export const it = {
     cta2:    'Richiedi la Prova',
   },
   common: {
-    diventaSocio: 'Inizia Ora',
+    diventaSocio: 'Iscriviti Online',
     richiediInfo: 'Richiedi informazioni',
     richiediProva:'Richiedi la Prova',
-    iscrivitiOra: 'Inizia Ora',
+    iscrivitiOra: 'Iscriviti Online',
     googleMaps:   'Indicazioni Google Maps',
     whatsapp:     'WhatsApp',
     chiama:       'Chiama',
