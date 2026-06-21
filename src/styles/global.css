@@ -194,14 +194,14 @@ body.menu-open { overflow: hidden; }
 /* Easing condivisi: --ease-out forte (decelerazione netta),
    --ease-back con leggero overshoot (accento "pop"). */
 
-/* Base — slide-up deciso + fade + sfocatura in entrata */
+/* Base — slide-up + fade + leggera sfocatura in entrata */
 [data-anim] {
   opacity: 0;
-  transform: translateY(52px);
-  filter: blur(8px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.7s ease;
+  transform: translateY(34px);
+  filter: blur(4px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.6s ease;
   will-change: opacity, transform, filter;
 }
 [data-anim].is-visible {
@@ -210,14 +210,14 @@ body.menu-open { overflow: hidden; }
   filter: blur(0);
 }
 
-/* Titoli (h2/h3) — slancio da sinistra + sfocatura, easing con micro-overshoot */
+/* Titoli (h2/h3) — slancio da sinistra + leggera sfocatura, easing con micro-overshoot */
 [data-anim="reveal"] {
   opacity: 0;
-  transform: translateX(-46px) translateY(10px);
-  filter: blur(6px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.95s cubic-bezier(0.18, 0.9, 0.2, 1.08),
-              filter 0.7s ease;
+  transform: translateX(-32px) translateY(6px);
+  filter: blur(3px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.2, 0.85, 0.25, 1.05),
+              filter 0.6s ease;
   will-change: opacity, transform, filter;
 }
 [data-anim="reveal"].is-visible {
@@ -226,14 +226,14 @@ body.menu-open { overflow: hidden; }
   filter: blur(0);
 }
 
-/* Testi / eyebrow / paragrafi — slide orizzontale più ampio + sfocatura */
+/* Testi / eyebrow / paragrafi — slide orizzontale + leggera sfocatura */
 [data-anim="from-left"] {
   opacity: 0;
-  transform: translateX(-54px);
-  filter: blur(6px);
-  transition: opacity 0.8s ease,
-              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.7s ease;
+  transform: translateX(-38px);
+  filter: blur(3px);
+  transition: opacity 0.72s ease,
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.6s ease;
   will-change: opacity, transform, filter;
 }
 [data-anim="from-left"].is-visible {
@@ -242,14 +242,14 @@ body.menu-open { overflow: hidden; }
   filter: blur(0);
 }
 
-/* Foto / card / stats — scale-in più marcato + risalita + sfocatura */
+/* Foto / card / stats — scale-in + risalita + leggera sfocatura */
 [data-anim="scale"] {
   opacity: 0;
-  transform: scale(0.88) translateY(30px);
-  filter: blur(10px);
-  transition: opacity 0.85s ease,
-              transform 1s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.8s ease;
+  transform: scale(0.92) translateY(20px);
+  filter: blur(5px);
+  transition: opacity 0.78s ease,
+              transform 0.88s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.65s ease;
   will-change: opacity, transform, filter;
 }
 [data-anim="scale"].is-visible {
@@ -258,12 +258,12 @@ body.menu-open { overflow: hidden; }
   filter: blur(0);
 }
 
-/* Pulsanti — "pop" con rimbalzo per dare accento alle CTA */
+/* Pulsanti — "pop" con rimbalzo contenuto per dare accento alle CTA */
 [data-anim="pop"] {
   opacity: 0;
-  transform: translateY(22px) scale(0.86);
+  transform: translateY(16px) scale(0.92);
   transition: opacity 0.5s ease,
-              transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+              transform 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
   will-change: opacity, transform;
 }
 [data-anim="pop"].is-visible {
