@@ -39,6 +39,14 @@ const CLUB      = '/aLVimGGNHVfTOey3_Z8T_0650_2.avif';
 const LANDSCAPE = '/c0fbb171-c501-4040-81bf-867eb27bb1b3_TCA+Landscape.avif';
 const WEB_SQ    = '/0cd25eb6-cb2a-48cf-a65e-2a7107787fba_Web_Square-1PA_1811.avif';
 
+// Slideshow sala attrezzi — solo foto
+const salaImgs = [
+  { src: GYM,      alt: 'Sala attrezzi del Tennis Club Ambrosiano' },
+  { src: FITNESS5, alt: 'Area pesi liberi e macchinari professionali' },
+  { src: WEB_SQ,   alt: 'Allenamento funzionale nella sala attrezzi' },
+  { src: STOCK1,   alt: 'Zona cardio della sala attrezzi' },
+];
+
 const categories: Category[] = [
   {
     id: 'endurance',
@@ -109,19 +117,41 @@ const categories: Category[] = [
     <div class="sala-section__inner">
       <div class="sala-split">
 
-        <div class="sala-split__media">
-          <img
-            src={publicUrl("/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif")}
-            alt="Sala attrezzi professionale Tennis Club Ambrosiano"
-            class="sala-split__img"
-          />
+        <div class="sala-split__media" data-anim="scale">
+          <div class="sala-slider" data-sala-slider>
+            <div class="sala-slider__track">
+              {salaImgs.map((img, i) => (
+                <div class="sala-slider__slide">
+                  <img
+                    src={publicUrl(img.src)}
+                    alt={img.alt}
+                    class="sala-slider__img"
+                    loading={i === 0 ? "eager" : "lazy"}
+                  />
+                </div>
+              ))}
+            </div>
+            <div class="sala-slider__dots">
+              {salaImgs.map((_, i) => (
+                <button
+                  class={`sala-slider__dot${i === 0 ? " is-active" : ""}`}
+                  data-sala-dot={i}
+                  type="button"
+                  aria-label={`Vai alla foto ${i + 1}`}
+                ></button>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div class="sala-split__content">
           <span class="eyebrow">Sala Attrezzi</span>
           <h2 class="section-title">Potenziamento<br><em>su misura.</em></h2>
           <p class="sala-body">
-            Una sala attrezzi completa riservata ai soci, con macchinari professionali, area cardio e spazio per l'allenamento funzionale. Che tu voglia aumentare la forza, migliorare la resistenza o semplicemente mantenerti in forma, qui hai tutto il necessario — e i professionisti giusti per guidarti.
+            Uno spazio ampio e luminoso, riservato ai soci, con macchinari isotonici di ultima generazione, un'area cardio completa e una zona funzionale per il lavoro a corpo libero. Ogni postazione è pensata per accompagnarti in tutte le fasi dell'allenamento, dal riscaldamento al defaticamento.
+          </p>
+          <p class="sala-body">
+            Che il tuo obiettivo sia aumentare la forza, migliorare la resistenza, preparare la stagione agonistica o semplicemente mantenerti in forma, qui trovi tutto il necessario — affiancato da personal trainer qualificati pronti a costruire con te un programma su misura.
           </p>
 
           <ul class="sala-features">
@@ -151,6 +181,13 @@ const categories: Category[] = [
               <div>
                 <strong>Accesso Riservato</strong>
                 <span>Sala esclusiva, disponibile tutti i giorni per i soci</span>
+              </div>
+            </li>
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4M4 10h16M4 10v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M9 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <strong>Spogliatoi e Servizi</strong>
+                <span>Docce, armadietti e area relax a disposizione</span>
               </div>
             </li>
           </ul>
@@ -302,6 +339,51 @@ const categories: Category[] = [
       });
     });
   </script>
+
+  <!-- ── Slideshow Sala Attrezzi ── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slider = document.querySelector<HTMLElement>('[data-sala-slider]');
+      if (!slider) return;
+      const track = slider.querySelector<HTMLElement>('.sala-slider__track');
+      const slides = slider.querySelectorAll('.sala-slider__slide');
+      const dots = Array.from(slider.querySelectorAll<HTMLButtonElement>('[data-sala-dot]'));
+      if (!track || slides.length < 2) return;
+
+      const total = slides.length;
+      const DELAY = 4000;
+      let idx = 0;
+      let timer: ReturnType<typeof setInterval> | undefined;
+
+      function go(n: number) {
+        idx = ((n % total) + total) % total;
+        track!.style.transform = `translateX(-${idx * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+      }
+      function start() { stop(); timer = setInterval(() => go(idx + 1), DELAY); }
+      function stop() { if (timer) clearInterval(timer); }
+
+      dots.forEach((d, i) => d.addEventListener('click', () => { go(i); start(); }));
+
+      // Pausa su hover (desktop)
+      slider.addEventListener('mouseenter', stop);
+      slider.addEventListener('mouseleave', start);
+
+      // Swipe su touch
+      let x0: number | null = null;
+      slider.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; stop(); }, { passive: true });
+      slider.addEventListener('touchend', (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1));
+        x0 = null;
+        start();
+      }, { passive: true });
+
+      start();
+      window.addEventListener('pagehide', stop, { once: true });
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -334,11 +416,57 @@ const categories: Category[] = [
     overflow: hidden;
   }
 
-  .sala-split__img {
+  /* ── Slideshow sala (solo foto) ── */
+  .sala-slider {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sala-slider__track {
+    display: flex;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+
+  .sala-slider__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  .sala-slider__img {
     width: 100%;
     aspect-ratio: 4/5;
     object-fit: cover;
     display: block;
+  }
+
+  .sala-slider__dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    z-index: 2;
+  }
+
+  .sala-slider__dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background 0.25s, transform 0.25s;
+  }
+
+  .sala-slider__dot:hover { background: rgba(255, 255, 255, 0.8); }
+
+  .sala-slider__dot.is-active {
+    background: #fff;
+    transform: scale(1.35);
   }
 
   .sala-split__content {
@@ -422,7 +550,7 @@ const categories: Category[] = [
     .sala-split {
       grid-template-columns: 1fr;
     }
-    .sala-split__img {
+    .sala-slider__img {
       aspect-ratio: 16/9;
     }
   }

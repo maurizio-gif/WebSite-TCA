@@ -31,6 +31,14 @@ const YOGA   = '/b9c52423-5bff-496a-8686-bffe1b123195_Aspria_Milano_Outdoor_Yoga
 const GYM    = '/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif';
 const RACKET = '/aXCJ_AIvOtkhBw2j_Lifestyle_232026SpeedMP_DXT56509.avif';
 
+// Gym slideshow — photos only
+const salaImgs = [
+  { src: GYM,                                                          alt: 'Gym at Tennis Club Ambrosiano' },
+  { src: '/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif',   alt: 'Free weights and professional machines' },
+  { src: '/0cd25eb6-cb2a-48cf-a65e-2a7107787fba_Web_Square-1PA_1811.avif', alt: 'Functional training in the gym' },
+  { src: '/4af14e95-b254-472b-8b91-a0bfb9815ceb_shutterstock_564025705.avif', alt: 'Cardio area of the gym' },
+];
+
 const categories: Category[] = [
   {
     id: 'endurance',
@@ -102,19 +110,41 @@ const categories: Category[] = [
     <div class="sala-section__inner">
       <div class="sala-split">
 
-        <div class="sala-split__media">
-          <img
-            src={publicUrl('/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif')}
-            alt="Professional gym at Tennis Club Ambrosiano"
-            class="sala-split__img"
-          />
+        <div class="sala-split__media" data-anim="scale">
+          <div class="sala-slider" data-sala-slider>
+            <div class="sala-slider__track">
+              {salaImgs.map((img, i) => (
+                <div class="sala-slider__slide">
+                  <img
+                    src={publicUrl(img.src)}
+                    alt={img.alt}
+                    class="sala-slider__img"
+                    loading={i === 0 ? "eager" : "lazy"}
+                  />
+                </div>
+              ))}
+            </div>
+            <div class="sala-slider__dots">
+              {salaImgs.map((_, i) => (
+                <button
+                  class={`sala-slider__dot${i === 0 ? " is-active" : ""}`}
+                  data-sala-dot={i}
+                  type="button"
+                  aria-label={`Go to photo ${i + 1}`}
+                ></button>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div class="sala-split__content">
           <span class="eyebrow">Gym</span>
           <h2 class="section-title">Strength training,<br><em>on your terms.</em></h2>
           <p class="sala-body">
-            A fully equipped members-only gym with professional machines, a cardio area and a functional training space. Whether you want to build strength, improve endurance or simply stay in shape, everything you need is right here — along with the right professionals to guide you.
+            A spacious, bright members-only space with the latest resistance machines, a complete cardio area and a functional zone for bodyweight work. Every station is designed to support you through each phase of your workout, from warm-up to cool-down.
+          </p>
+          <p class="sala-body">
+            Whether your goal is to build strength, improve endurance, prepare for the competitive season or simply stay in shape, everything you need is right here — alongside qualified personal trainers ready to build a tailored programme with you.
           </p>
 
           <ul class="sala-features">
@@ -144,6 +174,13 @@ const categories: Category[] = [
               <div>
                 <strong>Members-Only Access</strong>
                 <span>Exclusive gym, available every day for members</span>
+              </div>
+            </li>
+            <li class="sala-feat">
+              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4M4 10h16M4 10v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M9 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <div>
+                <strong>Changing Rooms &amp; Facilities</strong>
+                <span>Showers, lockers and a relaxation area available</span>
               </div>
             </li>
           </ul>
@@ -291,6 +328,49 @@ const categories: Category[] = [
       });
     });
   </script>
+
+  <!-- ── Gym slideshow ── -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const slider = document.querySelector<HTMLElement>('[data-sala-slider]');
+      if (!slider) return;
+      const track = slider.querySelector<HTMLElement>('.sala-slider__track');
+      const slides = slider.querySelectorAll('.sala-slider__slide');
+      const dots = Array.from(slider.querySelectorAll<HTMLButtonElement>('[data-sala-dot]'));
+      if (!track || slides.length < 2) return;
+
+      const total = slides.length;
+      const DELAY = 4000;
+      let idx = 0;
+      let timer: ReturnType<typeof setInterval> | undefined;
+
+      function go(n: number) {
+        idx = ((n % total) + total) % total;
+        track!.style.transform = `translateX(-${idx * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+      }
+      function start() { stop(); timer = setInterval(() => go(idx + 1), DELAY); }
+      function stop() { if (timer) clearInterval(timer); }
+
+      dots.forEach((d, i) => d.addEventListener('click', () => { go(i); start(); }));
+
+      slider.addEventListener('mouseenter', stop);
+      slider.addEventListener('mouseleave', start);
+
+      let x0: number | null = null;
+      slider.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; stop(); }, { passive: true });
+      slider.addEventListener('touchend', (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) go(idx + (dx < 0 ? 1 : -1));
+        x0 = null;
+        start();
+      }, { passive: true });
+
+      start();
+      window.addEventListener('pagehide', stop, { once: true });
+    });
+  </script>
 </BaseLayout>
 
 <style>
@@ -311,7 +391,31 @@ const categories: Category[] = [
   }
 
   .sala-split__media { position: relative; overflow: hidden; }
-  .sala-split__img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+
+  /* ── Gym slideshow (photos only) ── */
+  .sala-slider { position: relative; overflow: hidden; }
+  .sala-slider__track {
+    display: flex;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+  .sala-slider__slide { flex: 0 0 100%; min-width: 0; }
+  .sala-slider__img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+  .sala-slider__dots {
+    position: absolute;
+    left: 0; right: 0; bottom: 16px;
+    display: flex; justify-content: center; gap: 9px;
+    z-index: 2;
+  }
+  .sala-slider__dot {
+    width: 8px; height: 8px; padding: 0;
+    border: none; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background 0.25s, transform 0.25s;
+  }
+  .sala-slider__dot:hover { background: rgba(255, 255, 255, 0.8); }
+  .sala-slider__dot.is-active { background: #fff; transform: scale(1.35); }
 
   .sala-split__content { display: flex; flex-direction: column; gap: 1.5rem; }
 
@@ -370,7 +474,7 @@ const categories: Category[] = [
 
   @media (max-width: 860px) {
     .sala-split { grid-template-columns: 1fr; }
-    .sala-split__img { aspect-ratio: 16/9; }
+    .sala-slider__img { aspect-ratio: 16/9; }
   }
 
   .corsi-section { padding: 7vh var(--pad-x); background: var(--color-off-white); }
