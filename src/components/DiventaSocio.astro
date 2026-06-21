@@ -1,8 +1,7 @@
 ---
-import { getLocalePath, publicUrl, type Lang } from '../i18n/utils';
+import { publicUrl, type Lang } from '../i18n/utils';
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
-const p = (path: string) => getLocalePath(lang, path);
 
 const t = lang === 'en' ? {
   eyebrow:  'Membership',
@@ -65,7 +64,7 @@ const img = publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'
       </ul>
 
       <div class="socio__cta-wrap">
-        <a class="btn btn-red socio__cta" href={p('/membership')}>{t.cta} &rarr;</a>
+        <a class="btn btn-red socio__cta" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Registration" target="_blank" rel="noopener noreferrer">{t.cta} &rarr;</a>
         <p class="socio__note">{t.note}</p>
       </div>
     </div>
