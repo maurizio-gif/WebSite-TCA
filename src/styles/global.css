@@ -191,63 +191,91 @@ body.menu-open { overflow: hidden; }
    Usa data-anim-delay="200" per ritardare (ms).
 */
 
-/* Base — slide-up + fade */
+/* Easing condivisi: --ease-out forte (decelerazione netta),
+   --ease-back con leggero overshoot (accento "pop"). */
+
+/* Base — slide-up deciso + fade + sfocatura in entrata */
 [data-anim] {
   opacity: 0;
-  transform: translateY(26px);
-  transition: opacity 0.7s cubic-bezier(.22,.68,0,1.15),
-              transform 0.7s cubic-bezier(.22,.68,0,1.15);
-  will-change: opacity, transform;
+  transform: translateY(52px);
+  filter: blur(8px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.7s ease;
+  will-change: opacity, transform, filter;
 }
 [data-anim].is-visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 
-/* Slide da sinistra + fade — per h2, h3 (effetto "scrittura da sx") */
+/* Titoli (h2/h3) — slancio da sinistra + sfocatura, easing con micro-overshoot */
 [data-anim="reveal"] {
   opacity: 0;
-  transform: translateX(-28px);
-  transition: opacity 0.75s cubic-bezier(0.22, 0.68, 0, 1.1),
-              transform 0.75s cubic-bezier(0.22, 0.68, 0, 1.1);
-  will-change: opacity, transform;
+  transform: translateX(-46px) translateY(10px);
+  filter: blur(6px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.95s cubic-bezier(0.18, 0.9, 0.2, 1.08),
+              filter 0.7s ease;
+  will-change: opacity, transform, filter;
 }
 [data-anim="reveal"].is-visible {
   opacity: 1;
-  transform: translateX(0);
+  transform: none;
+  filter: blur(0);
 }
 
-/* Slide da sinistra — per eyebrow, paragrafi */
+/* Testi / eyebrow / paragrafi — slide orizzontale più ampio + sfocatura */
 [data-anim="from-left"] {
   opacity: 0;
-  transform: translateX(-32px);
-  transition: opacity 0.72s ease,
-              transform 0.72s cubic-bezier(0.22, 0.68, 0, 1.1);
-  will-change: opacity, transform;
+  transform: translateX(-54px);
+  filter: blur(6px);
+  transition: opacity 0.8s ease,
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.7s ease;
+  will-change: opacity, transform, filter;
 }
 [data-anim="from-left"].is-visible {
   opacity: 1;
   transform: translateX(0);
+  filter: blur(0);
 }
 
-/* Scale-in — per card foto, stats */
+/* Foto / card / stats — scale-in più marcato + risalita + sfocatura */
 [data-anim="scale"] {
   opacity: 0;
-  transform: scale(0.93);
-  transition: opacity 0.75s ease,
-              transform 0.75s cubic-bezier(0.22, 0.68, 0, 1.1);
-  will-change: opacity, transform;
+  transform: scale(0.88) translateY(30px);
+  filter: blur(10px);
+  transition: opacity 0.85s ease,
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.8s ease;
+  will-change: opacity, transform, filter;
 }
 [data-anim="scale"].is-visible {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+}
+
+/* Pulsanti — "pop" con rimbalzo per dare accento alle CTA */
+[data-anim="pop"] {
+  opacity: 0;
+  transform: translateY(22px) scale(0.86);
+  transition: opacity 0.5s ease,
+              transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: opacity, transform;
+}
+[data-anim="pop"].is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 /* Solo fade */
 [data-anim="fade"] {
   opacity: 0;
   transform: none;
-  transition: opacity 0.75s ease;
+  transition: opacity 0.8s ease;
 }
 [data-anim="fade"].is-visible {
   opacity: 1;
@@ -291,10 +319,12 @@ body.menu-open { overflow: hidden; }
   [data-anim="reveal"],
   [data-anim="from-left"],
   [data-anim="scale"],
+  [data-anim="pop"],
   [data-anim="fade"] {
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
     clip-path: none !important;
   }
 }
