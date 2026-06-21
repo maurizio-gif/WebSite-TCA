@@ -349,6 +349,8 @@ const secondaryItems = [
     height: var(--header-h);
     background: #ffffff;
     border-bottom: 1px solid var(--color-border);
+    /* Header leggermente in rilievo, come nel portale PerfectGym */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
   }
 
   .navbar__inner {
@@ -363,19 +365,10 @@ const secondaryItems = [
   }
 
   /* ── Logo ── */
-  .navbar__logo {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    line-height: 0;
-    padding: 4px 9px;
-    border: 1.5px solid var(--color-text);
-  }
-  /* Logo scontornato (PNG ritagliato, fondo trasparente): la cornice
-     abbraccia esattamente la scritta "TCA", come nel portale PerfectGym. */
+  .navbar__logo { display: block; flex-shrink: 0; line-height: 0; }
+  /* Logo scontornato (PNG ritagliato, fondo trasparente), senza cornice */
   .navbar__logo-img {
-    height: calc(var(--header-h) - 26px);
+    height: calc(var(--header-h) - 28px);
     width: auto;
     object-fit: contain;
     display: block;
@@ -784,8 +777,7 @@ const secondaryItems = [
   @media (max-width: 640px) {
     .navbar__cta { display: none; }
     :root { --header-h: 64px; }
-    .navbar__logo { padding: 3px 8px; }
-    .navbar__logo-img { height: calc(var(--header-h) - 30px); width: auto; }
+    .navbar__logo-img { height: calc(var(--header-h) - 32px); width: auto; }
     .navbar__right { gap: 0.5rem; }
 
     /* Lang: solo bandierina su mobile */
