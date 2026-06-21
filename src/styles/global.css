@@ -56,6 +56,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Impedisce l'overflow orizzontale (es. animazioni translateX in ingresso
+   che sporgono oltre il bordo) senza creare un contenitore di scroll:
+   'clip' preserva le position: sticky annidate (tabella membership, eventi). */
+html,
+body {
+  overflow-x: clip;
+}
+
 /* ---------- Tipografia ---------- */
 h1,
 h2,
