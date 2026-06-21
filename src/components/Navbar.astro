@@ -351,6 +351,15 @@ const secondaryItems = [
     border-bottom: 1px solid var(--color-border);
     /* Header leggermente in rilievo, come nel portale PerfectGym */
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+    transition: background 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+  }
+
+  /* Scrollando verso il basso: layer bianco translucido + sfocatura */
+  .navbar.is-scrolled {
+    background: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(12px) saturate(1.25);
+    backdrop-filter: blur(12px) saturate(1.25);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   }
 
   .navbar__inner {
@@ -1092,6 +1101,17 @@ const secondaryItems = [
 </style>
 
 <script>
+  // ── Header translucido allo scroll ──
+  const navbarEl = document.getElementById('navbar');
+  if (navbarEl) {
+    const THRESHOLD = 24;
+    const onScroll = () => {
+      navbarEl.classList.toggle('is-scrolled', window.scrollY > THRESHOLD);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
   // ── Language dropdown ──
   const langSwitcher = document.getElementById('lang-switcher') as HTMLElement | null;
   const langToggle   = document.getElementById('lang-toggle')   as HTMLButtonElement | null;
