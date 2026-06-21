@@ -368,7 +368,7 @@ const secondaryItems = [
   .navbar__logo { display: block; flex-shrink: 0; line-height: 0; }
   /* Logo scontornato (PNG ritagliato, fondo trasparente), senza cornice */
   .navbar__logo-img {
-    height: calc(var(--header-h) - 28px);
+    height: calc((var(--header-h) - 28px) * 0.9);
     width: auto;
     object-fit: contain;
     display: block;
@@ -777,7 +777,7 @@ const secondaryItems = [
   @media (max-width: 640px) {
     .navbar__cta { display: none; }
     :root { --header-h: 64px; }
-    .navbar__logo-img { height: calc(var(--header-h) - 32px); width: auto; }
+    .navbar__logo-img { height: calc((var(--header-h) - 32px) * 0.9); width: auto; }
     .navbar__right { gap: 0.5rem; }
 
     /* Lang: solo bandierina su mobile */
