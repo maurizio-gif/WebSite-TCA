@@ -212,12 +212,14 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
         });
       });
 
-      // ── Failsafe: dopo 2s sblocca qualsiasi elemento ancora nascosto ──
-      setTimeout(() => {
+      // ── Failsafe solo se IntersectionObserver non è supportato ──
+      // (browser molto vecchi): in tal caso rivela tutto, altrimenti
+      // l'animazione resta legata allo scroll tramite l'observer.
+      if (!('IntersectionObserver' in window)) {
         document.querySelectorAll<HTMLElement>('[data-anim]').forEach((el) => {
           el.classList.add('is-visible');
         });
-      }, 2000);
+      }
 
       // ── Back to top ──────────────────────────────────────────────────
       const btt = document.getElementById('back-to-top') as HTMLButtonElement | null;
