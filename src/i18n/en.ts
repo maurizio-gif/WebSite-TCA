@@ -59,7 +59,7 @@ export const en: UI = {
   },
   hero: {
     eyebrow: 'Since 1965, tennis in Milan',
-    cta1:    'Get Started',
+    cta1:    'Sign Up Online',
     cta2:    'Request a Trial',
   },
   common: {

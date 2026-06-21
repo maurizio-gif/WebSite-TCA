@@ -57,7 +57,7 @@ export const it = {
   },
   hero: {
     eyebrow: 'Dal 1965, il tennis a Milano',
-    cta1:    'Inizia Ora',
+    cta1:    'Iscriviti Online',
     cta2:    'Richiedi la Prova',
   },
   common: {
