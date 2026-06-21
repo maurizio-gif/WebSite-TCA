@@ -11,7 +11,7 @@ export const it = {
     scuolaTennis:   'Scuola Tennis',
     summerCamps:    'Summer Camps',
     agonistica:     'Agonistica',
-    diventaSocio:   'Inizia Ora',
+    diventaSocio:   'Iscriviti Online',
     contattaci:     'Contattaci',
     openMenu:       'Apri menu',
     closeMenu:      'Chiudi menu',

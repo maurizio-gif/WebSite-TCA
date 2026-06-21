@@ -13,7 +13,7 @@ export const en: UI = {
     scuolaTennis:   'Tennis School',
     summerCamps:    'Summer Camps',
     agonistica:     'Competitive',
-    diventaSocio:   'Get Started',
+    diventaSocio:   'Sign Up Online',
     contattaci:     'Contact Us',
     openMenu:       'Open menu',
     closeMenu:      'Close menu',
