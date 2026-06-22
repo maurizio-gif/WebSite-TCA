@@ -233,7 +233,7 @@ const categories: Category[] = [
                 <div class="course-card" style={`--cat-color: ${cat.color}`}>
                   <div class="course-card__media">
                     <img
-                      src={course.img}
+                      src={course.img.startsWith("http") ? course.img : publicUrl(course.img)}
                       alt={course.name}
                       class="course-card__media-img"
                       loading="lazy"

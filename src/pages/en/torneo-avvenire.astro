@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import { publicUrl } from "../../i18n/utils";
 
 const lang = 'en' as const;
 ---
@@ -68,31 +69,31 @@ const lang = 'en' as const;
       </p>
       <div class="champions-grid">
         <figure class="champion-fig">
-          <img src="/Avvenire%20Lendl.avif" alt="Ivan Lendl at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <img src={publicUrl("/Avvenire%20Lendl.avif")} alt="Ivan Lendl at the Avvenire Tournament" loading="lazy" class="champion-img" />
           <figcaption class="champion-cap">Ivan Lendl</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src="/Avvenire%20Ivanisevic.avif" alt="Goran Ivanisevic at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <img src={publicUrl("/Avvenire%20Ivanisevic.avif")} alt="Goran Ivanisevic at the Avvenire Tournament" loading="lazy" class="champion-img" />
           <figcaption class="champion-cap">Goran Ivanisevic</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src="/Avvenire%20Hingis.avif" alt="Martina Hingis at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <img src={publicUrl("/Avvenire%20Hingis.avif")} alt="Martina Hingis at the Avvenire Tournament" loading="lazy" class="champion-img" />
           <figcaption class="champion-cap">Martina Hingis</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src="/Avvenire%20Sharapova.avif" alt="Maria Sharapova at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <img src={publicUrl("/Avvenire%20Sharapova.avif")} alt="Maria Sharapova at the Avvenire Tournament" loading="lazy" class="champion-img" />
           <figcaption class="champion-cap">Maria Sharapova</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src="/Avvenire%20Pennetta.avif" alt="Flavia Pennetta at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <img src={publicUrl("/Avvenire%20Pennetta.avif")} alt="Flavia Pennetta at the Avvenire Tournament" loading="lazy" class="champion-img" />
           <figcaption class="champion-cap">Flavia Pennetta</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src="/Avvenire%20Giorgi.avif" alt="Camila Giorgi at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <img src={publicUrl("/Avvenire%20Giorgi.avif")} alt="Camila Giorgi at the Avvenire Tournament" loading="lazy" class="champion-img" />
           <figcaption class="champion-cap">Camila Giorgi</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src="/Avvenire%20Zabaleta.avif" alt="Pablo Zabaleta at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <img src={publicUrl("/Avvenire%20Zabaleta.avif")} alt="Pablo Zabaleta at the Avvenire Tournament" loading="lazy" class="champion-img" />
           <figcaption class="champion-cap">Pablo Zabaleta</figcaption>
         </figure>
       </div>
@@ -105,10 +106,10 @@ const lang = 'en' as const;
       <span class="eyebrow">Gallery</span>
       <h2 class="section-title">The tournament<br><em>in pictures.</em></h2>
       <div class="gallery-grid">
-        <img src="/TCA_foto%20torneo%20Avvenire%202025.avif" alt="Avvenire Tournament 2025" loading="lazy" class="gallery-img gallery-img--wide" />
-        <img src="/TCA_foto%20torneo%20Avvenire%202024.avif" alt="Avvenire Tournament 2024" loading="lazy" class="gallery-img" />
-        <img src="/TCA_Avvenire_2025%201.avif" alt="Avvenire Tournament 2025 - match moment" loading="lazy" class="gallery-img" />
-        <img src="/TCA_Avvenire_2025%206.avif" alt="Avvenire Tournament 2025 - atmosphere" loading="lazy" class="gallery-img gallery-img--wide" />
+        <img src={publicUrl("/TCA_foto%20torneo%20Avvenire%202025.avif")} alt="Avvenire Tournament 2025" loading="lazy" class="gallery-img gallery-img--wide" />
+        <img src={publicUrl("/TCA_foto%20torneo%20Avvenire%202024.avif")} alt="Avvenire Tournament 2024" loading="lazy" class="gallery-img" />
+        <img src={publicUrl("/TCA_Avvenire_2025%201.avif")} alt="Avvenire Tournament 2025 - match moment" loading="lazy" class="gallery-img" />
+        <img src={publicUrl("/TCA_Avvenire_2025%206.avif")} alt="Avvenire Tournament 2025 - atmosphere" loading="lazy" class="gallery-img gallery-img--wide" />
       </div>
     </div>
   </section>
