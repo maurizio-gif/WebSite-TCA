@@ -5,6 +5,6 @@ hero_eyebrow: "Per tutta la famiglia"
 hero_titolo: "Un luogo dove"
 hero_titolo_accent: "crescere insieme."
 hero_sottotitolo: "Attività junior, corsi kids, feste di compleanno e uno spazio dove ogni età trova il proprio sport. Perché il Club è fatto per essere vissuto in famiglia."
-hero_immagine: "/f63c9cb8-d82d-4c6f-9dd8-e49e46edee25_TCA+Family+6.avif"
+hero_immagine: "/Scuola%20Tennis.avif"
 hero_immagine_alt: "Famiglia al Tennis Club Ambrosiano"
 ---
