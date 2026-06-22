@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import { publicUrl } from "../i18n/utils";
 ---
 
 <BaseLayout
@@ -53,10 +54,10 @@ import PageHero from "../components/PageHero.astro";
           </p>
         </div>
         <div class="gallery">
-          <img src="/e61f532a-43c0-476e-9cb0-5da3ecadbadd_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0476.avif" alt="Club TCA" class="gallery__img" />
-          <img src="/ac3d4514-51a9-4cab-8cdc-256e61621885_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO1162.avif" alt="Club TCA" class="gallery__img" />
-          <img src="/6363d330-2506-4091-b2cc-6fbfc4a66256_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO1169.avif" alt="Club TCA" class="gallery__img" />
-          <img src="/a46fcf94-e41a-460d-b6c9-0af53fdc34a9_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0685.avif" alt="Club TCA" class="gallery__img" />
+          <img src={publicUrl("/e61f532a-43c0-476e-9cb0-5da3ecadbadd_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0476.avif")} alt="Club TCA" class="gallery__img" />
+          <img src={publicUrl("/ac3d4514-51a9-4cab-8cdc-256e61621885_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO1162.avif")} alt="Club TCA" class="gallery__img" />
+          <img src={publicUrl("/6363d330-2506-4091-b2cc-6fbfc4a66256_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO1169.avif")} alt="Club TCA" class="gallery__img" />
+          <img src={publicUrl("/a46fcf94-e41a-460d-b6c9-0af53fdc34a9_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0685.avif")} alt="Club TCA" class="gallery__img" />
         </div>
       </div>
     </div>
