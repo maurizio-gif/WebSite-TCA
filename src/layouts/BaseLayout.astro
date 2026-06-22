@@ -169,7 +169,10 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
       // .reassurance__item rimosso — sezione why ha logica cycling propria
       register('.eventi-home__head',           'from-left',   0,   0);
       register('.event-item',                  'true',        0, 100);
-      register('.info__map',                   'scale',      80,   0);
+      // NB: la mappa (.info__map) NON viene animata: applicare
+      // transform/filter/will-change a un contenitore che avvolge un iframe
+      // cross-origin (Google Maps) provoca un bug di compositing in Chromium
+      // per cui l'iframe resta vuoto o non si carica. La mappa è quindi statica.
 
       // ── Card disciplina (tennis / padel / scuola / agonistica) ──
       register('.content-card',                'true',        0, 100);
