@@ -15,7 +15,7 @@ const lang = 'en' as const;
     title="Avvenire"
     titleAccent="Tournament"
     sub="The most important junior tennis tournament in Italy. Since 1960, TCA has hosted one of the most prestigious under-14 competitions in the world. Champions were born here."
-    image="/aLVimGGNHVfTOey3_Z8T_0650_2.avif"
+    image="/TCA_foto%20torneo%20Avvenire%202025.jpg"
     imageAlt="Avvenire Tournament at Tennis Club Ambrosiano"
     ctaLabel="Discover the tournament"
   />
@@ -54,6 +54,61 @@ const lang = 'en' as const;
           <span class="stat__n">Top 10</span>
           <span class="stat__label">Former players in the ATP rankings</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Champions who played the Avvenire ── -->
+  <section class="content-section content-section--grey">
+    <div class="content-section__inner">
+      <span class="eyebrow">Distinguished alumni</span>
+      <h2 class="section-title">Champions born<br><em>here.</em></h2>
+      <p class="body-text" style="max-width:64ch; margin-bottom:4vh;">
+        Some of the greatest names in world tennis took their first steps on TCA's courts, competing in the Avvenire Tournament as juniors.
+      </p>
+      <div class="champions-grid">
+        <figure class="champion-fig">
+          <img src="/Avvenire%20Lendl.jpg" alt="Ivan Lendl at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <figcaption class="champion-cap">Ivan Lendl</figcaption>
+        </figure>
+        <figure class="champion-fig">
+          <img src="/Avvenire%20Ivanisevic.jpg" alt="Goran Ivanisevic at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <figcaption class="champion-cap">Goran Ivanisevic</figcaption>
+        </figure>
+        <figure class="champion-fig">
+          <img src="/Avvenire%20Hingis.jpg" alt="Martina Hingis at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <figcaption class="champion-cap">Martina Hingis</figcaption>
+        </figure>
+        <figure class="champion-fig">
+          <img src="/Avvenire%20Sharapova.jpg" alt="Maria Sharapova at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <figcaption class="champion-cap">Maria Sharapova</figcaption>
+        </figure>
+        <figure class="champion-fig">
+          <img src="/Avvenire%20Pennetta.jpg" alt="Flavia Pennetta at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <figcaption class="champion-cap">Flavia Pennetta</figcaption>
+        </figure>
+        <figure class="champion-fig">
+          <img src="/Avvenire%20Giorgi.jpg" alt="Camila Giorgi at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <figcaption class="champion-cap">Camila Giorgi</figcaption>
+        </figure>
+        <figure class="champion-fig">
+          <img src="/Avvenire%20Zabaleta.jpg" alt="Pablo Zabaleta at the Avvenire Tournament" loading="lazy" class="champion-img" />
+          <figcaption class="champion-cap">Pablo Zabaleta</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Recent editions gallery ── -->
+  <section class="content-section">
+    <div class="content-section__inner">
+      <span class="eyebrow">Gallery</span>
+      <h2 class="section-title">The tournament<br><em>in pictures.</em></h2>
+      <div class="gallery-grid">
+        <img src="/TCA_foto%20torneo%20Avvenire%202025.jpg" alt="Avvenire Tournament 2025" loading="lazy" class="gallery-img gallery-img--wide" />
+        <img src="/TCA_foto%20torneo%20Avvenire%202024.jpg" alt="Avvenire Tournament 2024" loading="lazy" class="gallery-img" />
+        <img src="/TCA_Avvenire_2025%201.jpg" alt="Avvenire Tournament 2025 - match moment" loading="lazy" class="gallery-img" />
+        <img src="/TCA_Avvenire_2025%206.jpg" alt="Avvenire Tournament 2025 - atmosphere" loading="lazy" class="gallery-img gallery-img--wide" />
       </div>
     </div>
   </section>
@@ -155,5 +210,72 @@ const lang = 'en' as const;
 
   @media (max-width: 480px) {
     .stats-row { grid-template-columns: 1fr; }
+  }
+
+  .content-section--grey {
+    background: var(--color-off-white);
+    padding: 7vh var(--pad-x);
+  }
+
+  .champions-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .champion-fig {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .champion-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+
+  .champion-cap {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 0.85vw, 13px);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+  }
+
+  @media (max-width: 860px) {
+    .champions-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 540px) {
+    .champions-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 0.75rem;
+  }
+
+  .gallery-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-img--wide {
+    grid-column: span 2;
+    aspect-ratio: 16/9;
+  }
+
+  @media (max-width: 640px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-img--wide { grid-column: span 1; aspect-ratio: 4/3; }
   }
 </style>

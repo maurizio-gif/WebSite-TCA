@@ -5,6 +5,6 @@ hero_eyebrow: "Adulti · Preparazione Atletica"
 hero_titolo: "Allenamento"
 hero_titolo_accent: "& Benessere"
 hero_sottotitolo: "Sala attrezzi professionale, personal trainer certificati e oltre 20 corsi di gruppo a settimana. Due anime, un unico obiettivo: il tuo."
-hero_immagine: "/ef9e517a-0ca4-473f-a6fc-a46a18263aa3_TCA+Fitness+3.avif"
+hero_immagine: "/TCA_Gym%2012.jpg"
 hero_immagine_alt: "Sala attrezzi professionale TCA"
 ---
