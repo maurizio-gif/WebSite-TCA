@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import { publicUrl } from "../../i18n/utils";
 
 const lang = 'en' as const;
 ---
@@ -49,12 +50,12 @@ const lang = 'en' as const;
 
       <div class="camp-img-row">
         <img
-          src="/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif"
+          src={publicUrl("/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif")}
           alt="TCA tennis summer camps"
           class="camp-img"
         />
         <img
-          src="/ZhlJNzjCgu4jzybm_shutterstock_409391734_kidsrunfunoutdoor.avif"
+          src={publicUrl("/ZhlJNzjCgu4jzybm_shutterstock_409391734_kidsrunfunoutdoor.avif")}
           alt="Children running outdoors"
           class="camp-img"
         />

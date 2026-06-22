@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import { publicUrl } from "../../i18n/utils";
 
 const lang = 'en' as const;
 ---
@@ -62,7 +63,7 @@ const lang = 'en' as const;
       </div>
       <div class="two-col__image">
         <img
-          src="/ajADiI1P9HI4UhIx_girl-with-tennis-racket-ball.avif"
+          src={publicUrl("/ajADiI1P9HI4UhIx_girl-with-tennis-racket-ball.avif")}
           alt="Girl at TCA tennis school"
           class="full-img"
         />
