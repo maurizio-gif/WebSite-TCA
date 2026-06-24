@@ -11,8 +11,8 @@ descrizione_en: "Two intensive hours on the most important shot in tennis. Max 8
 luogo_en: "Court 3"
 corpo_en: |
   Hands-on session dedicated to the serve: mechanics, variations (flat, slice, kick) and tactics.
-  FIT-certified coaches. Open to players ranked 3rd category and above.
+  FITP-certified coaches. Open to players ranked 3rd category and above.
 ---
 
 Sessione pratica dedicata al servizio: meccanica, variazioni (piatto, slice, kick) e tattica.
-Istruttori certificati FIT. Aperto a giocatori da 3ª categoria in su.
+Istruttori certificati FITP. Aperto a giocatori da 3ª categoria in su.
