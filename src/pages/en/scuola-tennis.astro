@@ -1,21 +1,71 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
-import { publicUrl } from "../../i18n/utils";
+import { publicUrl, getLocalePath } from "../../i18n/utils";
 
 const lang = 'en' as const;
+const p = (path: string) => getLocalePath(lang, path);
+
+const levels = [
+  {
+    dot: 'rosso',
+    name: 'Red',
+    tag: 'Mini Tennis',
+    range: 'Around ages 4 – 6',
+    text: 'The first approach to tennis, with a low-bounce red ball on a reduced court. One hour of play, once or twice a week, in groups grouped by age.',
+  },
+  {
+    dot: 'arancio',
+    name: 'Orange',
+    tag: 'Tennis School',
+    range: 'By level · roughly ages 7 – 9',
+    text: 'The tennis school proper begins: an orange ball on a reduced court. Each session combines 30 minutes of athletic preparation and one hour of tennis, from once to three times a week.',
+  },
+  {
+    dot: 'verde',
+    name: 'Green',
+    tag: 'Tennis School',
+    range: 'By level',
+    text: 'A green ball, with racket and court closer to traditional tennis. A session of an hour and a half, from once to three times a week, with more structured technical and tactical work.',
+  },
+  {
+    dot: 'giallo',
+    name: 'Yellow',
+    tag: 'Tennis School',
+    range: 'By level',
+    text: 'A standard ball on a full court: the last level before competition. A session of an hour and a half, from once to three times a week.',
+  },
+];
+
+const tournaments = [
+  {
+    when: 'December',
+    name: 'Christmas Tournament',
+    text: 'The first event of the year, open to all categories, from Mini Tennis to the most advanced levels.',
+  },
+  {
+    when: 'February',
+    name: 'Carnival Tournament',
+    text: 'A day of play and celebration to put into practice everything learned in the first part of the season.',
+  },
+  {
+    when: 'End of course',
+    name: 'End-of-course Tournament',
+    text: 'The close of the season: everyone plays together to celebrate the journey made during the year.',
+  },
+];
 ---
 
 <BaseLayout
   lang={lang}
   title="Tennis School | Tennis Club Ambrosiano Milan"
-  description="Tennis school for children and teenagers at TCA. Mini tennis, beginner courses, competition and FIT pathways. Milan's most historic tennis school."
+  description="Tennis school for children and teenagers at TCA. Mini tennis and red, orange, green and yellow levels with the FIT method. Milan's most historic tennis school."
 >
   <PageHero
     eyebrow="Junior · Tennis School"
     title="Tennis"
     titleAccent="School"
-    sub="Mini tennis, courses for children and teenagers, FIT pathways and competitive preparation. Milan's most historic tennis school since 1965."
+    sub="Mini tennis and level-based pathways — red, orange, green and yellow — through to competitive preparation. Milan's most historic tennis school since 1965."
     image="/ajAJSI1P9HI4UhOS_tenniskidsTCA.avif"
     imageAlt="Children at TCA tennis school"
     ctaLabel="Enrol at the school"
@@ -24,41 +74,46 @@ const lang = 'en' as const;
   <section class="content-section">
     <div class="content-section__inner">
       <span class="eyebrow">Pathways</span>
-      <h2 class="section-title">A programme<br><em>for every age.</em></h2>
+      <h2 class="section-title">A pathway<br><em>for every level.</em></h2>
+      <p class="section-lead body-text">
+        Mini Tennis is organised by age; from the next level onwards groups
+        follow the level of play, according to the colour progression of the
+        Italian Tennis Federation. The ages shown are purely indicative.
+      </p>
       <div class="age-grid">
-        <div class="age-card">
-          <span class="age-card__range">Ages 3 – 5</span>
-          <h3>Mini Tennis</h3>
-          <p>First experiences with the racket: coordination, fun and movement in a safe and stimulating environment.</p>
-        </div>
-        <div class="age-card">
-          <span class="age-card__range">Ages 6 – 9</span>
-          <h3>Foundation</h3>
-          <p>Technical learning with the FIT method: fundamentals, rules and reduced play on a short court.</p>
-        </div>
-        <div class="age-card">
-          <span class="age-card__range">Ages 10 – 13</span>
-          <h3>Development</h3>
-          <p>Technical and tactical consolidation, first competitions and building a personal game.</p>
-        </div>
-        <div class="age-card">
-          <span class="age-card__range">Ages 14 +</span>
-          <h3>Advanced</h3>
-          <p>Programmes for advanced players, tournament preparation and support along the competitive pathway.</p>
-        </div>
+        {levels.map((l) => (
+          <div class="age-card">
+            <span class={`level-dot level-dot--${l.dot}`} aria-hidden="true"></span>
+            <span class="age-card__range">{l.range}</span>
+            <h3>{l.name}</h3>
+            <span class="level-tag">{l.tag}</span>
+            <p>{l.text}</p>
+          </div>
+        ))}
       </div>
+      <p class="level-after body-text">
+        After the yellow level, players move into the competitive squad.
+        <a href={p('/agonistica')}>Discover competition →</a>
+      </p>
     </div>
   </section>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner two-col">
       <div class="two-col__text">
-        <span class="eyebrow">Our approach</span>
+        <span class="eyebrow">Our method</span>
         <h2 class="section-title">FIT coaches.<br><em>The TCA method.</em></h2>
         <p class="body-text">
-          All our coaches are certified by the Italian Tennis Federation.
-          The TCA method combines technique, play and the values of sport to shape
-          not only tennis players, but people.
+          Groups are built by age and by level, as homogeneous as possible.
+          Every training session combines athletic preparation and tennis, with
+          a frequency of once, twice or three times a week.
+        </p>
+        <p class="body-text">
+          The progression follows the FIT methodology: as the level rises the
+          ball becomes faster and the court lengthens, up to the full court of
+          the yellow level. All our coaches are certified by the Italian Tennis
+          Federation: the TCA method combines technique, play and the values of
+          sport to shape not only tennis players, but people.
         </p>
       </div>
       <div class="two-col__image">
@@ -68,6 +123,28 @@ const lang = 'en' as const;
           class="full-img"
         />
       </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="content-section__inner">
+      <span class="eyebrow">Throughout the year</span>
+      <h2 class="section-title">Play happens,<br><em>all year round.</em></h2>
+      <div class="tornei-grid">
+        {tournaments.map((t) => (
+          <div class="torneo-card">
+            <span class="torneo-card__when">{t.when}</span>
+            <h3>{t.name}</h3>
+            <p>{t.text}</p>
+          </div>
+        ))}
+      </div>
+      <p class="level-after body-text">
+        Selected pupils are also offered the <strong>FIT Junior Program</strong>,
+        the non-competitive activity of the federal circuit: a series of
+        tournament stages, from November into spring, for those who want to start
+        testing themselves in matches.
+      </p>
     </div>
   </section>
 
@@ -108,6 +185,11 @@ const lang = 'en' as const;
     color: var(--color-text-light);
   }
 
+  .section-lead {
+    max-width: 70ch;
+    margin-bottom: 3vh;
+  }
+
   .age-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -123,6 +205,18 @@ const lang = 'en' as const;
     flex-direction: column;
     gap: 0.5rem;
   }
+
+  .level-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-bottom: 0.4rem;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
+  }
+  .level-dot--rosso   { background: #E53935; }
+  .level-dot--arancio { background: #FB8C00; }
+  .level-dot--verde   { background: #43A047; }
+  .level-dot--giallo  { background: #FDD835; }
 
   .age-card__range {
     font-family: var(--font-display);
@@ -143,7 +237,70 @@ const lang = 'en' as const;
     color: var(--color-text);
   }
 
+  .level-tag {
+    font-family: var(--font-body);
+    font-size: clamp(11px, 0.8vw, 12px);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+  }
+
   .age-card p {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.9vw, 15px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    margin-top: 0.25rem;
+  }
+
+  .level-after {
+    margin-top: 2.5vh;
+  }
+  .level-after a {
+    color: var(--color-accent);
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .level-after a:hover { color: var(--color-accent-dark); }
+
+  .tornei-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+  }
+
+  .torneo-card {
+    background: var(--color-bg);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .torneo-card__when {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 0.75vw, 11px);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .torneo-card h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--color-text);
+  }
+
+  .torneo-card p {
     font-family: var(--font-body);
     font-size: clamp(13px, 0.9vw, 15px);
     font-weight: 300;
@@ -178,6 +335,7 @@ const lang = 'en' as const;
   @media (max-width: 860px) {
     .two-col { grid-template-columns: 1fr; }
     .two-col__image { order: -1; }
+    .tornei-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 600px) {
