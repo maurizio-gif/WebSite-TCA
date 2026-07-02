@@ -24,12 +24,19 @@ interface Category {
   courses: Course[];
 }
 
-const pex = (id: string) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop`;
-
-const YOGA   = '/b9c52423-5bff-496a-8686-bffe1b123195_Aspria_Milano_Outdoor_Yoga+1.avif';
-const GYM    = '/Sala%20Attrezzi%202.avif';
-const RACKET = '/aXCJ_AIvOtkhBw2j_Lifestyle_232026SpeedMP_DXT56509.avif';
+const YOGA      = '/b9c52423-5bff-496a-8686-bffe1b123195_Aspria_Milano_Outdoor_Yoga+1.avif';
+const GYM       = '/Sala%20Attrezzi%202.avif';
+const RACKET    = '/aXCJ_AIvOtkhBw2j_Lifestyle_232026SpeedMP_DXT56509.avif';
+const CARDIO    = '/4af14e95-b254-472b-8b91-a0bfb9815ceb_shutterstock_564025705.avif';
+const YOGA2     = '/Yoga.avif';
+const CYCLING   = '/Cycling.avif';
+const DAVANZO   = '/EricDavanzo0475.avif';
+const KETTLE    = '/a46fcf94-e41a-460d-b6c9-0af53fdc34a9_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0685.avif';
+const AIRBIKE   = '/Sala%20Attrezzi%206.jpg';
+const ISOTONICA = '/Sala%20Attrezzi%207.jpg';
+const TAPIS     = '/Sala%20Attrezzi%201.avif';
+const TREADMILL = '/Sala%20Attrezzi.avif';
+const FUNCTIONAL = '/Functional.jpg';
 
 // Gym slideshow — photos only
 const salaImgs = [
@@ -37,9 +44,10 @@ const salaImgs = [
   { src: '/Sala%20Attrezzi%203.avif', alt: 'Free weights and professional machines' },
   { src: '/Sala%20Attrezzi%204.avif', alt: 'Cardio area of the gym' },
   { src: '/Sala%20Attrezzi%205.avif', alt: 'Functional training in the gym' },
-  { src: '/Sala%20Attrezzi%206.avif', alt: 'Functional area and TRX' },
-  { src: '/Sala%20Attrezzi%207.avif', alt: 'Resistance machines in the gym' },
-  { src: '/TCA_Gym%2012.avif',        alt: 'TCA gym - general view' },
+  { src: '/Sala%20Attrezzi%206.jpg', alt: 'Functional area and TRX' },
+  { src: '/Sala%20Attrezzi%207.jpg', alt: 'Resistance machines in the gym' },
+  { src: '/Sala%20Attrezzi%201.avif', alt: 'Cardio area with treadmills' },
+  { src: '/TCA_Gym%2012.jpg',        alt: 'TCA gym - general view' },
 ];
 
 const categories: Category[] = [
@@ -49,12 +57,12 @@ const categories: Category[] = [
     desc: 'Train your cardiovascular system, burn calories and improve endurance and rhythm with dynamic, energising classes.',
     color: '#B83A00',
     courses: [
-      { name: 'Dance',           duration: '60 min', intensity: 2, level: 'All levels',    desc: 'Pop and Latin choreography. Engaging cardio and rhythmic coordination.',           img: pex('4090012') },
-      { name: 'Zumba',           duration: '60 min', intensity: 2, level: 'All levels',    desc: 'Latin dance and fitness mix. Burn calories with a smile.',                         img: pex('4090009') },
-      { name: 'Cycling',         duration: '45 min', intensity: 3, level: 'All levels',    desc: 'Bike workout to the beat of the music. Maximum cardiovascular output.',             img: pex('8766368') },
-      { name: 'Aeroboxe',        duration: '60 min', intensity: 3, level: 'Intermediate',  desc: 'Martial arts meets aerobics. Power, reflexes and stamina.',                        img: pex('32321639') },
-      { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'All levels',    desc: 'Reimagined step with functional movements. Tones and improves endurance.',         img: pex('6285220') },
-      { name: 'Step & Tone',     duration: '60 min', intensity: 2, level: 'All levels',    desc: 'Cardio step combined with toning. Full-body workout.',                             img: pex('6285206') },
+      { name: 'Dance',           duration: '60 min', intensity: 2, level: 'All levels',    desc: 'Pop and Latin choreography. Engaging cardio and rhythmic coordination.',           img: CARDIO },
+      { name: 'Zumba',           duration: '60 min', intensity: 2, level: 'All levels',    desc: 'Latin dance and fitness mix. Burn calories with a smile.',                         img: DAVANZO },
+      { name: 'Cycling',         duration: '45 min', intensity: 3, level: 'All levels',    desc: 'Bike workout to the beat of the music. Maximum cardiovascular output.',             img: CYCLING },
+      { name: 'Aeroboxe',        duration: '60 min', intensity: 3, level: 'Intermediate',  desc: 'Martial arts meets aerobics. Power, reflexes and stamina.',                        img: AIRBIKE },
+      { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'All levels',    desc: 'Reimagined step with functional movements. Tones and improves endurance.',         img: GYM },
+      { name: 'Step & Tone',     duration: '60 min', intensity: 2, level: 'All levels',    desc: 'Cardio step combined with toning. Full-body workout.',                             img: TREADMILL },
     ]
   },
   {
@@ -64,12 +72,12 @@ const categories: Category[] = [
     color: '#1E3A8A',
     courses: [
       { name: 'Funracket',           duration: '60 min', intensity: 3, level: 'Intermediate', desc: 'Sport-specific for tennis and padel players. Explosive power, reactivity and agility.',  img: RACKET },
-      { name: 'Tribal-x',            duration: '45 min', intensity: 3, level: 'Intermediate', desc: 'High-intensity circuit with free weights. Strength and muscle power.',                   img: pex('4720807') },
-      { name: 'Functional',          duration: '45 min', intensity: 2, level: 'All levels',   desc: 'Bodyweight training. Functional strength and joint stability.',                          img: '/Functional.avif' },
-      { name: 'Active Pump',         duration: '60 min', intensity: 2, level: 'All levels',   desc: 'Barbell workout. Total-body toning to music.',                                          img: pex('703012') },
-      { name: 'Total Body',          duration: '60 min', intensity: 3, level: 'All levels',   desc: 'Work every muscle group. Strength, endurance and posture.',                            img: GYM },
-      { name: 'Circuit',             duration: '45 min', intensity: 3, level: 'Intermediate', desc: 'Cardio and strength stations in sequence. Metabolism through the roof.',               img: '/Strenght%20Circuit.avif' },
-      { name: 'Suspension Training', duration: '60 min', intensity: 3, level: 'Intermediate', desc: 'TRX and sling training. Core, stability and functional strength in suspension.',       img: pex('5480481') },
+      { name: 'Tribal-x',            duration: '45 min', intensity: 3, level: 'Intermediate', desc: 'High-intensity circuit with free weights. Strength and muscle power.',                   img: KETTLE },
+      { name: 'Functional',          duration: '45 min', intensity: 2, level: 'All levels',   desc: 'Bodyweight training. Functional strength and joint stability.',                          img: '/Functional.jpg' },
+      { name: 'Active Pump',         duration: '60 min', intensity: 2, level: 'All levels',   desc: 'Barbell workout. Total-body toning to music.',                                          img: ISOTONICA },
+      { name: 'Total Body',          duration: '60 min', intensity: 3, level: 'All levels',   desc: 'Work every muscle group. Strength, endurance and posture.',                            img: TAPIS },
+      { name: 'Circuit',             duration: '45 min', intensity: 3, level: 'Intermediate', desc: 'Cardio and strength stations in sequence. Metabolism through the roof.',               img: '/Strenght%20Circuit.jpg' },
+      { name: 'Suspension Training', duration: '60 min', intensity: 3, level: 'Intermediate', desc: 'TRX and sling training. Core, stability and functional strength in suspension.',       img: FUNCTIONAL },
     ]
   },
   {
@@ -78,13 +86,13 @@ const categories: Category[] = [
     desc: 'Balance, flexibility and mind-body wellbeing. Improve posture, mobility and body awareness with gentle and dynamic practices.',
     color: '#0F7B5A',
     courses: [
-      { name: 'Functional Pilates', duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Pilates applied to everyday movement. Core, posture and body awareness.',              img: pex('25596884') },
-      { name: 'Flexability',        duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Flexibility and joint mobility. Prevents injuries and releases tension.',               img: pex('2424257') },
-      { name: 'Hatha Yoga',         duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Classic yoga practice. Mind-body balance through asanas and breath.',                  img: YOGA },
-      { name: 'Pilates',            duration: '60 min', intensity: 1, level: 'All levels',   desc: 'The original method of control and precision. Strengthens the centre, improves posture.', img: pex('25596885') },
-      { name: 'Postural',           duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Active postural re-education. Corrects tension and rebalances the body.',              img: pex('7992044') },
+      { name: 'Functional Pilates', duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Pilates applied to everyday movement. Core, posture and body awareness.',              img: YOGA },
+      { name: 'Flexability',        duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Flexibility and joint mobility. Prevents injuries and releases tension.',               img: YOGA },
+      { name: 'Hatha Yoga',         duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Classic yoga practice. Mind-body balance through asanas and breath.',                  img: YOGA2 },
+      { name: 'Pilates',            duration: '60 min', intensity: 1, level: 'All levels',   desc: 'The original method of control and precision. Strengthens the centre, improves posture.', img: YOGA2 },
+      { name: 'Postural',           duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Active postural re-education. Corrects tension and rebalances the body.',              img: YOGA },
       { name: 'Power Yoga',         duration: '60 min', intensity: 2, level: 'Intermediate', desc: 'Dynamic, intense yoga. Strength, flexibility and focus combined.',                    img: YOGA },
-      { name: 'Gentle Exercise',    duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Gentle mobility for everyone. Ideal for over-50s and active recovery.',               img: pex('11674389') },
+      { name: 'Gentle Exercise',    duration: '60 min', intensity: 1, level: 'All levels',   desc: 'Gentle mobility for everyone. Ideal for over-50s and active recovery.',               img: DAVANZO },
     ]
   }
 ];

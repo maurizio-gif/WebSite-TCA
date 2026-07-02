@@ -60,7 +60,7 @@ export const en: UI = {
   hero: {
     eyebrow: 'Since 1965, tennis in Milan',
     cta1:    'Sign Up Online',
-    cta2:    'Request a Trial',
+    cta2:    'Request Information',
   },
   common: {
     diventaSocio:  'Sign Up Online',
