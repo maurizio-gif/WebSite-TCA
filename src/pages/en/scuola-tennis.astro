@@ -66,9 +66,10 @@ const tournaments = [
     title="Tennis"
     titleAccent="School"
     sub="Mini tennis and level-based pathways — red, orange, green and yellow — through to competitive preparation. Milan's most historic tennis school since 1965."
-    image="/ajAJSI1P9HI4UhOS_tenniskidsTCA.avif"
+    image="/SCUOLA%20TENNIS%205.avif"
     imageAlt="Children at TCA tennis school"
-    ctaLabel="Enrol at the school"
+    imagePosition="center top"
+    ctas={[{ label: "Request Your Trial", openModal: true }]}
   />
 
   <section class="content-section">
@@ -99,6 +100,28 @@ const tournaments = [
   </section>
 
   <section class="content-section content-section--alt">
+    <div class="content-section__inner">
+      <span class="eyebrow">Enrolment details</span>
+      <h2 class="section-title">Courses and<br><em>frequency.</em></h2>
+      <div class="iscrizione-grid">
+        <div class="iscrizione-card">
+          <h3>Mini-Tennis School</h3>
+          <span class="iscrizione-card__tag">Born in 2020 and 2021</span>
+          <p>60-minute lessons, tennis only.<br>Frequency: 1 or 2 times a week.</p>
+        </div>
+        <div class="iscrizione-card">
+          <h3>Tennis School</h3>
+          <span class="iscrizione-card__tag">Born in 2019 and earlier</span>
+          <p>60 minutes of tennis + 30 minutes of athletic training.<br>Frequency: 1, 2 or 3 times a week.</p>
+        </div>
+      </div>
+      <div class="section-cta">
+        <button class="btn btn-red" data-open-modal="modal-contatti">Request Your Trial</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
     <div class="content-section__inner two-col">
       <div class="two-col__text">
         <span class="eyebrow">Our method</span>
@@ -126,7 +149,7 @@ const tournaments = [
     </div>
   </section>
 
-  <section class="content-section">
+  <section class="content-section content-section--alt">
     <div class="content-section__inner">
       <span class="eyebrow">Throughout the year</span>
       <h2 class="section-title">Play happens,<br><em>all year round.</em></h2>
@@ -188,6 +211,10 @@ const tournaments = [
   .section-lead {
     max-width: 70ch;
     margin-bottom: 3vh;
+  }
+
+  .section-cta {
+    margin-top: 4vh;
   }
 
   .age-grid {
@@ -265,6 +292,50 @@ const tournaments = [
   }
   .level-after a:hover { color: var(--color-accent-dark); }
 
+  .iscrizione-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+  }
+
+  .iscrizione-card {
+    background: var(--color-bg);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .iscrizione-card h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 1.6vw, 1.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--color-text);
+  }
+
+  .iscrizione-card__tag {
+    font-family: var(--font-body);
+    font-size: clamp(11px, 0.8vw, 12px);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .iscrizione-card p {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.9vw, 15px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    margin-top: 0.25rem;
+  }
+
   .tornei-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -336,6 +407,7 @@ const tournaments = [
     .two-col { grid-template-columns: 1fr; }
     .two-col__image { order: -1; }
     .tornei-grid { grid-template-columns: 1fr; }
+    .iscrizione-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 600px) {

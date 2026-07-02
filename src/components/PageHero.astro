@@ -3,9 +3,10 @@ import { publicUrl } from '../i18n/utils';
 
 interface Cta {
   label: string;
-  href: string;
+  href?: string;
   outline?: boolean;
   external?: boolean;
+  openModal?: boolean;
 }
 
 interface Props {
@@ -64,12 +65,19 @@ const buttons: Cta[] = ctas?.length
     {buttons.length > 0 && (
       <div class="page-hero__actions">
         {buttons.map((btn) => (
-          <a
-            class={`btn ${btn.outline ? 'btn-outline' : 'btn-red'}`}
-            href={btn.href}
-            target={btn.external ? '_blank' : undefined}
-            rel={btn.external ? 'noopener noreferrer' : undefined}
-          >{btn.label}</a>
+          btn.openModal ? (
+            <button
+              class={`btn ${btn.outline ? 'btn-outline' : 'btn-red'}`}
+              data-open-modal="modal-contatti"
+            >{btn.label}</button>
+          ) : (
+            <a
+              class={`btn ${btn.outline ? 'btn-outline' : 'btn-red'}`}
+              href={btn.href}
+              target={btn.external ? '_blank' : undefined}
+              rel={btn.external ? 'noopener noreferrer' : undefined}
+            >{btn.label}</a>
+          )
         ))}
       </div>
     )}
