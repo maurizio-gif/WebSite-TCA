@@ -4,9 +4,12 @@ import { getLocalePath, useTranslations, type Lang } from '../i18n/utils';
 
 interface Props {
   lang?: Lang;
+  limit?: number;
+  showAllLink?: boolean;
+  linkToDetail?: boolean;
 }
 
-const { lang = 'it' } = Astro.props;
+const { lang = 'it', limit = 3, showAllLink = true, linkToDetail = false } = Astro.props;
 const p = (path: string) => getLocalePath(lang, path);
 const t = useTranslations(lang);
 
@@ -29,11 +32,11 @@ const tx = (itVal: string, enVal?: string) => (lang === 'en' && enVal) ? enVal :
 // Carica gli eventi dalla Content Collection, ordina per data, mostra i 3 prossimi
 const allEventi = await getCollection('eventi', ({ data }) => data.pubblicato);
 const sorted    = allEventi.sort((a, b) => a.data.data.getTime() - b.data.data.getTime());
-const eventi3   = sorted.slice(0, 3);
+const eventiN   = sorted.slice(0, limit);
 
 // Pre-render il body di ogni evento (per i dialog inline)
 const rendered  = await Promise.all(
-  eventi3.map(async (entry) => {
+  eventiN.map(async (entry) => {
     const { Content } = await entry.render();
     return { entry, Content };
   })
@@ -48,23 +51,20 @@ const rendered  = await Promise.all(
         <span class="eyebrow">{t.eventiHome.eyebrow}</span>
         <h2 class="eventi-home__title">{t.eventiHome.titleA}<br><em>{t.eventiHome.titleB}</em></h2>
       </div>
-      <a class="eventi-home__all" href={p('/eventi')}>
-        {t.eventiHome.all} <span aria-hidden="true">→</span>
-      </a>
+      {showAllLink && (
+        <a class="eventi-home__all" href={p('/eventi')}>
+          {t.eventiHome.all} <span aria-hidden="true">→</span>
+        </a>
+      )}
     </div>
 
     <ul class="eventi-list" role="list">
       {rendered.map(({ entry }) => {
-        const ev   = entry.data;
-        const slug = entry.slug;
-        return (
-          <li
-            class="event-item"
-            role="button"
-            tabindex="0"
-            data-open-event={slug}
-            aria-label={`${t.eventiHome.apri} ${tx(ev.titolo, ev.titolo_en)}`}
-          >
+        const ev    = entry.data;
+        const slug  = entry.slug;
+        const label = `${t.eventiHome.apri} ${tx(ev.titolo, ev.titolo_en)}`;
+        const inner = (
+          <>
             <div class="event-item__date">
               <span class="event-item__month">{fMon(ev.data)}</span>
               <span class="event-item__day">{fDay(ev.data)}</span>
@@ -88,6 +88,24 @@ const rendered  = await Promise.all(
               <span class="event-item__open-label">{t.eventiHome.dettagli}</span>
               <span class="event-item__open-arrow">→</span>
             </span>
+          </>
+        );
+
+        return linkToDetail ? (
+          <li>
+            <a class="event-item" href={p(`/eventi/${slug}`)} aria-label={label}>
+              {inner}
+            </a>
+          </li>
+        ) : (
+          <li
+            class="event-item"
+            role="button"
+            tabindex="0"
+            data-open-event={slug}
+            aria-label={label}
+          >
+            {inner}
           </li>
         );
       })}
@@ -97,7 +115,7 @@ const rendered  = await Promise.all(
 </section>
 
 <!-- ── Event modals (uno per evento) ─────────────────────────────────────── -->
-{rendered.map(({ entry, Content }) => {
+{!linkToDetail && rendered.map(({ entry, Content }) => {
   const ev   = entry.data;
   const slug = entry.slug;
   return (
@@ -225,9 +243,15 @@ const rendered  = await Promise.all(
     border-bottom: 1px solid var(--color-border);
     cursor: pointer;
     transition: background 0.18s;
+    color: inherit;
+    text-decoration: none;
   }
 
   .event-item:last-child { border-bottom: none; }
+  /* Quando .event-item è un <a> avvolto da <li> (linkToDetail), :last-child
+     sopra matcherebbe ogni item (unico figlio del suo <li>): la regola
+     seguente individua invece correttamente l'ultimo <li> della lista. */
+  .eventi-list > li:last-child > .event-item { border-bottom: none; }
 
   .event-item:hover { background: var(--color-off-white); }
 
