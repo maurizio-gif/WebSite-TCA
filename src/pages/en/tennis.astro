@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import MembershipSection from "../../components/MembershipSection.astro";
+import ConversionBlock from "../../components/ConversionBlock.astro";
 import { publicUrl } from "../../i18n/utils";
 
 const lang = 'en' as const;
@@ -11,6 +12,7 @@ const lang = 'en' as const;
   lang={lang}
   title="Tennis | Tennis Club Ambrosiano Milan"
   description="Sixteen tennis courts, qualified FIT coaches, adult courses for all levels. Discover tennis at Tennis Club Ambrosiano in Milan."
+  hideLeadFormInline
 >
   <PageHero
     eyebrow="Adults · Tennis"
@@ -20,7 +22,7 @@ const lang = 'en' as const;
     image="/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif"
     imageAlt="Tennis courts at Tennis Club Ambrosiano"
     ctas={[
-      { label: "Sign Up Now", href: "https://tcambrosiano.perfectgym.com/clientportal2/#/Registration", external: true },
+      { label: "Become a Member", href: "#membership" },
       { label: "Book a Court", href: "https://playtomic.io/tennis-club-ambrosiano/5440b3ab-1500-4d62-8c9b-6a8b96949501?q=TENNIS~2022-12-08~~~", external: true, outline: true },
     ]}
   />
@@ -89,6 +91,8 @@ const lang = 'en' as const;
       </div>
     </div>
   </section>
+
+  <ConversionBlock lang={lang} />
 
 </BaseLayout>
 

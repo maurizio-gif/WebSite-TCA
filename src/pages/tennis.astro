@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import MembershipSection from "../components/MembershipSection.astro";
+import ConversionBlock from "../components/ConversionBlock.astro";
 import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
@@ -12,6 +13,7 @@ const d = (await getEntry("pagine", "tennis"))!.data;
 <BaseLayout
   title={d.title}
   description={d.description}
+  hideLeadFormInline
 >
   <PageHero
     eyebrow={d.hero_eyebrow}
@@ -21,7 +23,7 @@ const d = (await getEntry("pagine", "tennis"))!.data;
     image={d.hero_immagine!}
     imageAlt={d.hero_immagine_alt!}
     ctas={[
-      { label: "Iscriviti Ora", href: "https://tcambrosiano.perfectgym.com/clientportal2/#/Registration", external: true },
+      { label: "Diventa Socio", href: "#membership" },
       { label: "Prenota un Campo", href: "https://playtomic.io/tennis-club-ambrosiano/5440b3ab-1500-4d62-8c9b-6a8b96949501?q=TENNIS~2022-12-08~~~", external: true, outline: true },
     ]}
   />
@@ -90,6 +92,8 @@ const d = (await getEntry("pagine", "tennis"))!.data;
       </div>
     </div>
   </section>
+
+  <ConversionBlock />
 
 </BaseLayout>
 
