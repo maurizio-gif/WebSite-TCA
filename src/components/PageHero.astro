@@ -5,6 +5,7 @@ interface Cta {
   label: string;
   href: string;
   outline?: boolean;
+  external?: boolean;
 }
 
 interface Props {
@@ -63,7 +64,12 @@ const buttons: Cta[] = ctas?.length
     {buttons.length > 0 && (
       <div class="page-hero__actions">
         {buttons.map((btn) => (
-          <a class={`btn ${btn.outline ? 'btn-outline' : 'btn-red'}`} href={btn.href}>{btn.label}</a>
+          <a
+            class={`btn ${btn.outline ? 'btn-outline' : 'btn-red'}`}
+            href={btn.href}
+            target={btn.external ? '_blank' : undefined}
+            rel={btn.external ? 'noopener noreferrer' : undefined}
+          >{btn.label}</a>
         ))}
       </div>
     )}

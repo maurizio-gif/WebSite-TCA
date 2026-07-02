@@ -15,14 +15,14 @@ const adulti = [
     name: t.attivita.prepAtleticaName,
     desc: t.attivita.prepAtleticaDesc,
     href: p('/preparazione-atletica'),
-    img: publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'),
+    img: publicUrl('/Sala%20Attrezzi%206.jpg'),
   },
   {
     num: '02',
     name: t.attivita.tennisName,
     desc: t.attivita.tennisDesc,
     href: p('/tennis'),
-    img: publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif'),
+    img: publicUrl('/Tennis%20Adulti.avif'),
   },
   {
     num: '03',
@@ -46,14 +46,14 @@ const junior = [
     name: t.attivita.agonisticaName,
     desc: t.attivita.agonisticaDesc,
     href: p('/agonistica'),
-    img: publicUrl('/Summer%20Camp.avif'),
+    img: publicUrl('/Tennis%20Agonistica.jpg'),
   },
   {
     num: '03',
     name: t.attivita.summerName,
     desc: t.attivita.summerDesc,
     href: p('/summer-camps'),
-    img: publicUrl('/ZhlJNzjCgu4jzybm_shutterstock_409391734_kidsrunfunoutdoor.avif'),
+    img: publicUrl('/Summer%20Camp.avif'),
   },
 ];
 ---
@@ -80,29 +80,7 @@ const junior = [
         </div>
       </div>
 
-      <!-- Desktop rows -->
-      <div class="panel__rows">
-        {adulti.map((item, i) => (
-          <a
-            class="act-row"
-            href={item.href}
-            style={`--bg: url('${item.img}')`}
-            data-anim="from-left"
-            data-anim-delay={String(i * 110)}
-          >
-            <div class="act-row__inner">
-              <span class="act-row__num">{item.num}</span>
-              <div class="act-row__content">
-                <strong class="act-row__name">{item.name}</strong>
-                <p class="act-row__desc">{item.desc}</p>
-              </div>
-              <span class="act-row__arrow" aria-hidden="true">→</span>
-            </div>
-          </a>
-        ))}
-      </div>
-
-      <!-- Mobile carousel -->
+      <!-- Carousel -->
       <div class="act-carousel">
         <div class="act-carousel__track" data-carousel-id="adulti">
           {adulti.map((item) => (
@@ -140,29 +118,7 @@ const junior = [
         </div>
       </div>
 
-      <!-- Desktop rows -->
-      <div class="panel__rows">
-        {junior.map((item, i) => (
-          <a
-            class="act-row"
-            href={item.href}
-            style={`--bg: url('${item.img}')`}
-            data-anim="from-left"
-            data-anim-delay={String(i * 110)}
-          >
-            <div class="act-row__inner">
-              <span class="act-row__num">{item.num}</span>
-              <div class="act-row__content">
-                <strong class="act-row__name">{item.name}</strong>
-                <p class="act-row__desc">{item.desc}</p>
-              </div>
-              <span class="act-row__arrow" aria-hidden="true">→</span>
-            </div>
-          </a>
-        ))}
-      </div>
-
-      <!-- Mobile carousel -->
+      <!-- Carousel -->
       <div class="act-carousel">
         <div class="act-carousel__track" data-carousel-id="junior">
           {junior.map((item) => (
@@ -190,13 +146,13 @@ const junior = [
 
   .attivita__panels {
     display: grid;
-    grid-template-columns: 1fr 1px 1fr;
+    grid-template-columns: 1fr;
   }
 
   .attivita__divider {
     background: var(--color-accent);
-    width: 1px;
-    min-height: 100%;
+    width: 100%;
+    height: 1px;
   }
 
   /* ── Panel ── */
@@ -223,13 +179,22 @@ const junior = [
     z-index: 0;
   }
 
-  /* Panel header */
+  /* Panel header: title on left, nav arrows on right */
   .panel__head {
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
     margin-bottom: 3vh;
     padding-bottom: 2.5vh;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .panel__head-text {
+    flex: 1;
+    min-width: 0;
   }
 
   .panel__title {
@@ -252,9 +217,13 @@ const junior = [
     text-transform: uppercase;
   }
 
-  /* ── Carousel nav arrows — hidden on desktop ── */
+  /* ── Carousel nav arrows ── */
   .carousel-nav {
-    display: none;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-bottom: 2px;
+    flex-shrink: 0;
   }
 
   .carousel-btn {
@@ -272,147 +241,90 @@ const junior = [
     flex-shrink: 0;
   }
 
+  .carousel-btn:hover,
   .carousel-btn:active {
     background: var(--color-accent);
     border-color: var(--color-accent);
   }
 
-  /* ── Activity rows ── */
-  .panel__rows {
+  /* ── Carousel ── */
+  .act-carousel {
     position: relative;
     z-index: 1;
+    margin: 0 calc(var(--pad-x) * -1);
+    overflow: hidden;
   }
 
-  .act-row {
-    position: relative;
-    display: block;
+  .act-carousel__track {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.5rem var(--pad-x) 1.5rem;
+    scroll-padding-left: var(--pad-x);
+  }
+
+  .act-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Card */
+  .act-card {
+    flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
+    scroll-snap-align: start;
+    border-radius: 6px;
     overflow: hidden;
-    min-height: 150px;
-    padding: 3rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     text-decoration: none;
     color: inherit;
-    cursor: pointer;
+    display: block;
+    background: var(--color-off-white);
   }
 
-  .act-row:last-child {
-    border-bottom: none;
-  }
-
-  .act-row::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: var(--bg);
+  .act-card__img {
+    width: 100%;
+    aspect-ratio: 4/3;
     background-size: cover;
     background-position: center;
-    opacity: 0.18;
-    transform: scale(1.04);
-    transition: opacity 0.6s ease, transform 0.6s ease;
   }
 
-  .act-row::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(8, 8, 10, 0.72);
-    opacity: 0;
-    transition: opacity 0.6s ease;
+  .act-card__body {
+    padding: 1.25rem;
   }
 
-  .act-row:hover::before {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .act-row:hover::after {
-    opacity: 1;
-  }
-
-  .act-row__inner {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    transition: transform 0.3s ease;
-  }
-
-  .act-row:hover .act-row__inner {
-    transform: translateX(8px);
-  }
-
-  .act-row__num {
-    font-family: var(--font-display);
-    font-size: clamp(11px, 0.9vw, 13px);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--color-accent);
-    flex-shrink: 0;
-    width: 1.8rem;
-  }
-
-  .act-row__content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .act-row__name {
+  .act-card__num {
     display: block;
     font-family: var(--font-display);
-    font-size: clamp(1.6rem, 2.8vw, 3.2rem);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--color-accent);
+    margin-bottom: 6px;
+  }
+
+  .act-card__name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2vw, 1.9rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
     line-height: 1;
-    color: #ffffff;
-    white-space: nowrap;
+    color: var(--color-text);
+    margin-bottom: 8px;
   }
 
-  .act-row__desc {
+  .act-card__desc {
     font-family: var(--font-body);
-    font-size: clamp(13px, 1vw, 16px);
+    font-size: 16px;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--color-text-light);
     line-height: 1.5;
-    margin-top: 0.5rem;
-    transition: color 0.25s;
-  }
-
-  .act-row:hover .act-row__desc {
-    color: rgba(255, 255, 255, 0.85);
-  }
-
-  .act-row__arrow {
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2.2vw, 2.2rem);
-    color: var(--color-accent);
-    flex-shrink: 0;
-    opacity: 0.45;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .act-row:hover .act-row__arrow {
-    opacity: 1;
-    transform: translateX(6px);
-  }
-
-  /* ── Mobile carousel — hidden on desktop ── */
-  .act-carousel {
-    display: none;
   }
 
   /* ── Mobile ── */
   @media (max-width: 768px) {
-    .attivita__panels {
-      grid-template-columns: 1fr;
-    }
-
-    .attivita__divider {
-      width: 100%;
-      height: 1px;
-    }
-
     .attivita__panel {
       padding: 5vh 20px;
       overflow: visible;
@@ -422,111 +334,20 @@ const junior = [
       font-size: clamp(5rem, 22vw, 8rem);
     }
 
-    /* Header: title on left, arrows on right */
-    .panel__head {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 12px;
+    .act-card__name {
+      font-size: clamp(1.4rem, 6vw, 1.9rem);
     }
+  }
 
-    .panel__head-text {
-      flex: 1;
-      min-width: 0;
+  @media (max-width: 860px) {
+    .act-card {
+      flex: 0 0 calc((100% - 1.25rem) / 2);
     }
+  }
 
-    /* Show nav arrows on mobile */
-    .carousel-nav {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      padding-bottom: 2px;
-      flex-shrink: 0;
-    }
-
-    /* Hide desktop rows on mobile */
-    .panel__rows {
-      display: none;
-    }
-
-    /* Show carousel on mobile */
-    .act-carousel {
-      display: block;
-      margin: 0 -20px;
-      overflow: hidden;
-    }
-
-    .act-carousel__track {
-      display: flex;
-      gap: 12px;
-      overflow-x: scroll;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      padding: 0 20px 20px;
-      scroll-padding-left: 20px;
-    }
-
-    .act-carousel__track::-webkit-scrollbar {
-      display: none;
-    }
-
-    /* Card */
+  @media (max-width: 640px) {
     .act-card {
       flex: 0 0 calc(78vw);
-      scroll-snap-align: start;
-      border-radius: 6px;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      display: block;
-      background: var(--color-off-white);
-    }
-
-    .act-card__img {
-      height: 210px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .act-card__body {
-      padding: 14px 16px 18px;
-    }
-
-    .act-card__num {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--color-accent);
-      margin-bottom: 6px;
-    }
-
-    .act-card__name {
-      display: block;
-      font-family: var(--font-display);
-      font-size: clamp(1.4rem, 6vw, 1.9rem);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: -0.01em;
-      line-height: 1;
-      color: var(--color-text);
-      margin-bottom: 8px;
-    }
-
-    .act-card__desc {
-      font-family: var(--font-body);
-      font-size: 16px;
-      font-weight: 300;
-      color: var(--color-text-light);
-      line-height: 1.5;
-    }
-
-    /* On mobile always show arrow (no hover state) */
-    .act-row__arrow {
-      opacity: 1;
-      transform: translateX(0);
     }
   }
 </style>

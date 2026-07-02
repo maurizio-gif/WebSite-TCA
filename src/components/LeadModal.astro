@@ -25,7 +25,7 @@ const lm = lang === 'en' ? {
     <!-- ── Header fisso ─────────────────────────────────────────── -->
     <div class="lm__head">
       <div>
-        <span class="eyebrow eyebrow--light">{lm.eyebrow}</span>
+        <span class="eyebrow lm__eyebrow">{lm.eyebrow}</span>
         <h2 class="lm__title" id="lm-title" set:html={lm.title} />
       </div>
       <button class="lm__close" aria-label={lm.closeLabel} data-lm-close>
@@ -81,6 +81,8 @@ const lm = lang === 'en' ? {
     position: sticky; top: 0;
     background: var(--lm-bg-head); z-index: 2;
   }
+
+  .lm__eyebrow { color: var(--lm-text-sub); }
 
   .lm__title {
     font-family: var(--font-display);

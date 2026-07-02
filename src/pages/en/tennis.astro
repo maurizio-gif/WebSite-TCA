@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import { publicUrl } from "../../i18n/utils";
 
 const lang = 'en' as const;
 ---
@@ -17,7 +18,10 @@ const lang = 'en' as const;
     sub="Sixteen courts, qualified FIT coaches and a tradition that started in 1965. Whether you want to improve your game or start from scratch, we have the right course for you."
     image="/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif"
     imageAlt="Tennis courts at Tennis Club Ambrosiano"
-    ctaLabel="Request Information"
+    ctas={[
+      { label: "Sign Up Now", href: "https://tcambrosiano.perfectgym.com/clientportal2/#/Registration", external: true },
+      { label: "Book a Court", href: "https://playtomic.io/tennis-club-ambrosiano/5440b3ab-1500-4d62-8c9b-6a8b96949501?q=TENNIS~2022-12-08~~~", external: true, outline: true },
+    ]}
   />
 
   <section class="content-section">
@@ -26,7 +30,7 @@ const lang = 'en' as const;
       <h2 class="section-title">16 Courts.<br><em>Every surface.</em></h2>
       <div class="content-grid">
         <div class="content-card">
-          <div class="img-placeholder" data-name="campi-terra.avif" style="min-height:220px"></div>
+          <img src={publicUrl('/0b28cd5a-d9a8-4ffb-b8de-e5c6e675fbd2_TCA+Tennis+4.avif')} alt="Clay court seen from above during a lesson" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
           <h3>Clay</h3>
           <p>FIT-certified courts, perfect for classic play and competitive training.</p>
         </div>
@@ -36,7 +40,7 @@ const lang = 'en' as const;
           <p>Covered facility to play all year round, with professional lighting.</p>
         </div>
         <div class="content-card">
-          <div class="img-placeholder" data-name="campi-rapida.avif" style="min-height:220px"></div>
+          <img src={publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif')} alt="Player in action on a hard court" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
           <h3>Hard Court</h3>
           <p>Synthetic surface suited to fast play and the needs of every level.</p>
         </div>

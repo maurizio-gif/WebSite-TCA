@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/tennis.md
@@ -18,7 +19,10 @@ const d = (await getEntry("pagine", "tennis"))!.data;
     sub={d.hero_sottotitolo}
     image={d.hero_immagine!}
     imageAlt={d.hero_immagine_alt!}
-    ctaLabel="Richiedi informazioni"
+    ctas={[
+      { label: "Iscriviti Ora", href: "https://tcambrosiano.perfectgym.com/clientportal2/#/Registration", external: true },
+      { label: "Prenota un Campo", href: "https://playtomic.io/tennis-club-ambrosiano/5440b3ab-1500-4d62-8c9b-6a8b96949501?q=TENNIS~2022-12-08~~~", external: true, outline: true },
+    ]}
   />
 
   <section class="content-section">
@@ -27,7 +31,7 @@ const d = (await getEntry("pagine", "tennis"))!.data;
       <h2 class="section-title">16 Campi.<br><em>Tutte le superfici.</em></h2>
       <div class="content-grid">
         <div class="content-card">
-          <div class="img-placeholder" data-name="campi-terra.avif" style="min-height:220px"></div>
+          <img src={publicUrl('/0b28cd5a-d9a8-4ffb-b8de-e5c6e675fbd2_TCA+Tennis+4.avif')} alt="Campo in terra rossa visto dall'alto durante una lezione" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
           <h3>Terra Rossa</h3>
           <p>Campi certificati FIT, perfetti per il gioco classico e la preparazione agonistica.</p>
         </div>
@@ -37,7 +41,7 @@ const d = (await getEntry("pagine", "tennis"))!.data;
           <p>Struttura coperta per giocare tutto l'anno, con illuminazione professionale.</p>
         </div>
         <div class="content-card">
-          <div class="img-placeholder" data-name="campi-rapida.avif" style="min-height:220px"></div>
+          <img src={publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif')} alt="Giocatrice in azione su superficie rapida" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
           <h3>Rapida</h3>
           <p>Superficie sintetica adatta al gioco veloce e alle esigenze di tutti i livelli.</p>
         </div>
