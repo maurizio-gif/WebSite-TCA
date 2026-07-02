@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import MembershipSection from "../../components/MembershipSection.astro";
 import { publicUrl } from "../../i18n/utils";
 
 const lang = 'en' as const;
@@ -50,8 +51,21 @@ const lang = 'en' as const;
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
+      <span class="eyebrow">For our members</span>
+      <h2 class="section-title">Sixteen courts.<br><em>Always at your service.</em></h2>
+      <p class="section-lead">Become a member of Tennis Club Ambrosiano and play all year round on our sixteen courts, outdoor and indoor. Every membership includes a different level of booking priority: choose the one that best suits the way you play.</p>
+    </div>
+  </section>
+
+  <div id="membership" class="anchor-target">
+    <MembershipSection lang={lang} />
+  </div>
+
+  <section class="content-section content-section--alt">
+    <div class="content-section__inner">
       <span class="eyebrow">Adult courses</span>
-      <h2 class="section-title">Find your<br><em>level.</em></h2>
+      <h2 class="section-title">Want to learn or refine<br><em>your technique?</em></h2>
+      <p class="section-lead">It's never too early, or too late, to learn tennis or take your game to the next level. At Tennis Club Ambrosiano we run adult courses for every age and experience level, with weekly, twice-weekly or three-times-weekly frequency depending on the time you want to dedicate to the court and the goals you want to reach. Lessons in small groups or one-to-one, led by our FIT-certified coaches. Request information: we'll help you find the solution that suits you best.</p>
       <div class="content-grid content-grid--4">
         <div class="content-card content-card--simple">
           <strong>Beginners</strong>
@@ -69,6 +83,9 @@ const lang = 'en' as const;
           <strong>Private Lessons</strong>
           <p>One-to-one work with the coach. Maximum intensity, rapid progress.</p>
         </div>
+      </div>
+      <div class="section-cta">
+        <button class="btn btn-red" data-open-modal="modal-contatti">Request Information</button>
       </div>
     </div>
   </section>
@@ -103,6 +120,20 @@ const lang = 'en' as const;
   .section-title em {
     color: var(--color-accent);
     font-style: normal;
+  }
+
+  .section-lead {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-text-light);
+    max-width: 64ch;
+    margin-bottom: 4vh;
+  }
+
+  .section-cta {
+    margin-top: 4vh;
   }
 
   .content-grid {
@@ -151,5 +182,10 @@ const lang = 'en' as const;
   @media (max-width: 640px) {
     .content-grid,
     .content-grid--4 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Anchor offset per navbar fissa ── */
+  .anchor-target {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
   }
 </style>
