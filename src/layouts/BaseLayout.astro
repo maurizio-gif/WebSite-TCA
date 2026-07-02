@@ -11,9 +11,10 @@ interface Props {
   title: string;
   description?: string;
   lang?: Lang;
+  hideLeadFormInline?: boolean;
 }
 
-const { title, description, lang: langProp } = Astro.props;
+const { title, description, lang: langProp, hideLeadFormInline = false } = Astro.props;
 
 const lang: Lang = langProp ?? getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -64,7 +65,7 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
     <main class="site-main">
       <slot />
     </main>
-    <LeadFormInline lang={lang} />
+    {!hideLeadFormInline && <LeadFormInline lang={lang} />}
     <InfoPratiche lang={lang} />
     <Footer lang={lang} />
     <LeadModal lang={lang} />

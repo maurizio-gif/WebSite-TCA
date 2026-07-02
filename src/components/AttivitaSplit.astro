@@ -40,6 +40,7 @@ const junior = [
     desc: t.attivita.scuolaDesc,
     href: p('/scuola-tennis'),
     img: publicUrl('/ajAJSI1P9HI4UhOS_tenniskidsTCA.avif'),
+    imgPosition: 'center top',
   },
   {
     num: '02',
@@ -85,7 +86,7 @@ const junior = [
         <div class="act-carousel__track" data-carousel-id="adulti">
           {adulti.map((item) => (
             <a class="act-card" href={item.href}>
-              <div class="act-card__img" style={`background-image: url('${item.img}')`}></div>
+              <div class="act-card__img" style={`background-image: url('${item.img}'); background-position: ${item.imgPosition ?? 'center'};`}></div>
               <div class="act-card__body">
                 <span class="act-card__num">{item.num}</span>
                 <strong class="act-card__name">{item.name}</strong>
@@ -123,7 +124,7 @@ const junior = [
         <div class="act-carousel__track" data-carousel-id="junior">
           {junior.map((item) => (
             <a class="act-card" href={item.href}>
-              <div class="act-card__img" style={`background-image: url('${item.img}')`}></div>
+              <div class="act-card__img" style={`background-image: url('${item.img}'); background-position: ${item.imgPosition ?? 'center'};`}></div>
               <div class="act-card__body">
                 <span class="act-card__num">{item.num}</span>
                 <strong class="act-card__name">{item.name}</strong>

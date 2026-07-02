@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import MembershipSection from "../components/MembershipSection.astro";
+import ConversionBlock from "../components/ConversionBlock.astro";
 import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
@@ -11,6 +13,7 @@ const d = (await getEntry("pagine", "tennis"))!.data;
 <BaseLayout
   title={d.title}
   description={d.description}
+  hideLeadFormInline
 >
   <PageHero
     eyebrow={d.hero_eyebrow}
@@ -20,7 +23,7 @@ const d = (await getEntry("pagine", "tennis"))!.data;
     image={d.hero_immagine!}
     imageAlt={d.hero_immagine_alt!}
     ctas={[
-      { label: "Iscriviti Ora", href: "https://tcambrosiano.perfectgym.com/clientportal2/#/Registration", external: true },
+      { label: "Diventa Socio", href: "#membership" },
       { label: "Prenota un Campo", href: "https://playtomic.io/tennis-club-ambrosiano/5440b3ab-1500-4d62-8c9b-6a8b96949501?q=TENNIS~2022-12-08~~~", external: true, outline: true },
     ]}
   />
@@ -51,8 +54,21 @@ const d = (await getEntry("pagine", "tennis"))!.data;
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
+      <span class="eyebrow">Per i nostri soci</span>
+      <h2 class="section-title">Sedici campi.<br><em>Sempre a tua disposizione.</em></h2>
+      <p class="section-lead">Diventa socio del Tennis Club Ambrosiano e gioca tutto l'anno sui nostri sedici campi, outdoor e indoor. Ogni membership include un diverso livello di priorità nella prenotazione: scegli quella più adatta al tuo modo di giocare.</p>
+    </div>
+  </section>
+
+  <div id="membership" class="anchor-target">
+    <MembershipSection />
+  </div>
+
+  <section class="content-section content-section--alt">
+    <div class="content-section__inner">
       <span class="eyebrow">Corsi adulti</span>
-      <h2 class="section-title">Trova il tuo<br><em>livello.</em></h2>
+      <h2 class="section-title">Vuoi imparare o perfezionare<br><em>la tua tecnica?</em></h2>
+      <p class="section-lead">Non è mai troppo presto, né troppo tardi, per imparare il tennis o portare il tuo gioco al livello successivo. Al Tennis Club Ambrosiano organizziamo corsi per adulti di ogni età ed esperienza, con frequenza monosettimanale, bisettimanale o trisettimanale in base al tempo che vuoi dedicare al campo e agli obiettivi che vuoi raggiungere. Lezioni in piccoli gruppi o individuali, seguite dai nostri maestri federali FIT. Richiedi informazioni: ti aiutiamo a individuare la soluzione più adatta a te.</p>
       <div class="content-grid content-grid--4">
         <div class="content-card content-card--simple">
           <strong>Principianti</strong>
@@ -71,8 +87,13 @@ const d = (await getEntry("pagine", "tennis"))!.data;
           <p>Lavoro one-to-one con il maestro. Intensità massima, progressi rapidi.</p>
         </div>
       </div>
+      <div class="section-cta">
+        <button class="btn btn-red" data-open-modal="modal-contatti">Richiedi Informazioni</button>
+      </div>
     </div>
   </section>
+
+  <ConversionBlock />
 
 </BaseLayout>
 
@@ -104,6 +125,20 @@ const d = (await getEntry("pagine", "tennis"))!.data;
   .section-title em {
     color: var(--color-accent);
     font-style: normal;
+  }
+
+  .section-lead {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-text-light);
+    max-width: 64ch;
+    margin-bottom: 4vh;
+  }
+
+  .section-cta {
+    margin-top: 4vh;
   }
 
   .content-grid {
@@ -152,5 +187,10 @@ const d = (await getEntry("pagine", "tennis"))!.data;
   @media (max-width: 640px) {
     .content-grid,
     .content-grid--4 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Anchor offset per navbar fissa ── */
+  .anchor-target {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
   }
 </style>
