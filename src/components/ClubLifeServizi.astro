@@ -1,11 +1,12 @@
 ---
-import { useTranslations, type Lang } from '../i18n/utils';
+import { useTranslations, getLocalePath, type Lang } from '../i18n/utils';
 import { serviziItems } from '../data/clubLifeServizi';
 
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
 const t = useTranslations(lang);
 const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
+const p = (path: string) => getLocalePath(lang, path);
 ---
 
 <section class="cl-servizi" id="servizi">
@@ -20,6 +21,7 @@ const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
           class="cl-servizio"
           data-title={tx(s.titolo, s.titolo_en)}
           data-desc={tx(s.desc, s.desc_en)}
+          data-href={s.href ? p(s.href) : undefined}
         >
           <span class="cl-servizio__icon" aria-hidden="true">
             {s.icon === 'coach' && (
@@ -61,7 +63,10 @@ const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
     <span class="cl-servizio-modal__icon" id="cl-servizio-modal-icon"></span>
     <h3 class="cl-servizio-modal__title" id="cl-servizio-modal-title"></h3>
     <p class="cl-servizio-modal__desc" id="cl-servizio-modal-desc"></p>
-    <button class="btn btn-red" data-open-modal="modal-contatti" id="cl-servizio-modal-cta">{t.common.richiediInfo}</button>
+    <div class="cl-servizio-modal__actions">
+      <a class="btn btn-outline--dark" id="cl-servizio-modal-link" href="#" hidden>{t.clubLife.serviziDettagli}</a>
+      <button class="btn btn-red" data-open-modal="modal-contatti" id="cl-servizio-modal-cta">{t.common.richiediInfo}</button>
+    </div>
   </div>
 </dialog>
 
@@ -70,6 +75,7 @@ const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
   const titleEl = document.getElementById('cl-servizio-modal-title');
   const descEl = document.getElementById('cl-servizio-modal-desc');
   const iconEl = document.getElementById('cl-servizio-modal-icon');
+  const linkEl = document.getElementById('cl-servizio-modal-link') as HTMLAnchorElement | null;
 
   document.querySelectorAll<HTMLButtonElement>('.cl-servizio').forEach((card) => {
     card.addEventListener('click', () => {
@@ -77,6 +83,14 @@ const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
       if (descEl) descEl.textContent = card.dataset.desc || '';
       const icon = card.querySelector('.cl-servizio__icon');
       if (iconEl) iconEl.innerHTML = icon ? icon.innerHTML : '';
+      if (linkEl) {
+        if (card.dataset.href) {
+          linkEl.href = card.dataset.href;
+          linkEl.hidden = false;
+        } else {
+          linkEl.hidden = true;
+        }
+      }
       modal?.showModal();
     });
   });
@@ -261,5 +275,16 @@ const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
     margin: 0;
   }
 
-  .cl-servizio-modal__inner .btn { align-self: flex-start; }
+  .cl-servizio-modal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  /* .btn imposta display: la specificità pareggia quella di [hidden] dello
+     UA stylesheet, quindi senza questa regola il link resterebbe visibile
+     anche quando l'attributo hidden è impostato via JS. */
+  .cl-servizio-modal__actions .btn[hidden] {
+    display: none;
+  }
 </style>

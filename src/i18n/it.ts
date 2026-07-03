@@ -141,9 +141,6 @@ export const it = {
     inviteTitle:   'Porta un amico al TCA',
     inviteText:    'Invita chi vuoi a scoprire il Club: campi, corsi e community.',
     inviteCta:     'Invita un Amico',
-    inviteShareTitle: 'Tennis Club Ambrosiano',
-    inviteShareText:  'Vieni a scoprire il Tennis Club Ambrosiano!',
-    inviteCopied:  'Link copiato!',
 
     eventiEyebrow: 'In calendario',
     eventiTitle:   'Prossimi appuntamenti',

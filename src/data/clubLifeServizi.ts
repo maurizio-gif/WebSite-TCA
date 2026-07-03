@@ -9,6 +9,8 @@ export interface ServizioItem {
   titolo_en: string;
   desc: string;
   desc_en: string;
+  /** Path (senza lingua) verso una pagina di approfondimento, es. '/personal-trainer'. */
+  href?: string;
 }
 
 export const serviziItems: ServizioItem[] = [
@@ -18,6 +20,7 @@ export const serviziItems: ServizioItem[] = [
     titolo_en: 'Athletic trainers',
     desc: 'Percorsi personalizzati con il nostro team di Preparazione Atletica, in campo e in sala pesi.',
     desc_en: 'Personalised training paths with our Athletic Training team, on court and in the gym.',
+    href: '/personal-trainer',
   },
   {
     icon: 'ballmachine',

@@ -1,0 +1,239 @@
+---
+import type { Lang } from '../i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+
+const t = lang === 'en' ? {
+  eyebrow: 'Word of mouth',
+  title: 'Invite a<br><em>Friend.</em>',
+  closeLabel: 'Close',
+  step1Sub: "Write here the email address you're registered with on our APP.",
+  step1Label: 'Your email',
+  step1Next: 'Continue',
+  step2Sub: "Now your friend's details: we'll get in touch to introduce them to the Club.",
+  friendName: "Friend's first name",
+  friendSurname: "Friend's last name",
+  friendEmail: "Friend's email",
+  friendPhone: "Friend's mobile",
+  disclaimer: 'I declare that I am authorised by my friend to share their personal data with Tennis Club Ambrosiano for the purposes of this request, and that I have informed them, pursuant to Art. 14 of Regulation (EU) 2016/679 (GDPR), about the processing of their personal data by the Club.',
+  back: 'Back',
+  send: 'Send invite',
+  confirmTitle: 'Invite<br><em>sent!</em>',
+  confirmNote: "Thank you! We'll be in touch with your friend soon to introduce them to Tennis Club Ambrosiano.",
+  confirmClose: 'Close',
+  errEmail: 'Please enter a valid email address.',
+  errNome: "Please enter your friend's first name.",
+  errCognome: "Please enter your friend's last name.",
+  errFriendEmail: "Please enter your friend's email address.",
+  errCell: "Please enter your friend's mobile number.",
+  errConsent: 'You must confirm you are authorised to share this data.',
+} : {
+  eyebrow: 'Passaparola',
+  title: 'Invita un<br><em>Amico.</em>',
+  closeLabel: 'Chiudi',
+  step1Sub: "Scrivi qui l'indirizzo email con il quale sei registrato alla nostra APP.",
+  step1Label: 'Il tuo indirizzo email',
+  step1Next: 'Continua',
+  step2Sub: 'Ora i dati del tuo amico: lo contatteremo per presentargli il Club.',
+  friendName: 'Nome amico',
+  friendSurname: 'Cognome amico',
+  friendEmail: 'Email amico',
+  friendPhone: 'Cellulare amico',
+  disclaimer: "Dichiaro di essere autorizzato dal mio amico a comunicare i suoi dati personali al Tennis Club Ambrosiano ai fini di questa richiesta, e di averlo informato, ai sensi dell'art. 14 del Regolamento (UE) 2016/679 (GDPR), in merito al trattamento dei suoi dati personali da parte del Club.",
+  back: 'Indietro',
+  send: "Invia l'invito",
+  confirmTitle: 'Invito<br><em>inviato!</em>',
+  confirmNote: 'Grazie! Contatteremo presto il tuo amico per presentargli il Tennis Club Ambrosiano.',
+  confirmClose: 'Chiudi',
+  errEmail: 'Inserisci un indirizzo email valido.',
+  errNome: 'Inserisci il nome del tuo amico.',
+  errCognome: 'Inserisci il cognome del tuo amico.',
+  errFriendEmail: "Inserisci l'email del tuo amico.",
+  errCell: 'Inserisci il numero di cellulare del tuo amico.',
+  errConsent: 'Devi confermare di essere autorizzato a comunicare questi dati.',
+};
+---
+
+<dialog id="modal-invita-amico" class="lm" aria-labelledby="ia-title">
+  <div class="lm__panel">
+
+    <div class="lm__head">
+      <div>
+        <span class="eyebrow lm__eyebrow">{t.eyebrow}</span>
+        <h2 class="lm__title" id="ia-title" set:html={t.title} />
+      </div>
+      <button class="lm__close" aria-label={t.closeLabel} data-ia-close>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="lm__steps">
+      <span class="lm__step" data-ia-dot="1">1</span>
+      <span class="lm__step-line"></span>
+      <span class="lm__step" data-ia-dot="2">2</span>
+    </div>
+
+    <!-- STEP 1 — la tua email -->
+    <div class="lm__body" data-ia-step="1">
+      <p class="lm__sub">{t.step1Sub}</p>
+      <div class="lm__field">
+        <label for="ia-email">{t.step1Label} <span aria-hidden="true">*</span></label>
+        <input id="ia-email" type="email" autocomplete="email" placeholder="nome@esempio.com" required />
+      </div>
+      <p class="lm__error" hidden></p>
+      <div class="lm__actions">
+        <button type="button" class="btn btn-red lm__next" id="ia-step1-next">
+          {t.step1Next} <span class="lm__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2 — dati dell'amico -->
+    <div class="lm__body" data-ia-step="2" hidden>
+      <p class="lm__sub">{t.step2Sub}</p>
+      <div class="lm__grid">
+        <div class="lm__field">
+          <label for="ia-friend-nome">{t.friendName} <span aria-hidden="true">*</span></label>
+          <input id="ia-friend-nome" type="text" autocomplete="off" required />
+        </div>
+        <div class="lm__field">
+          <label for="ia-friend-cognome">{t.friendSurname} <span aria-hidden="true">*</span></label>
+          <input id="ia-friend-cognome" type="text" autocomplete="off" required />
+        </div>
+        <div class="lm__field">
+          <label for="ia-friend-email">{t.friendEmail} <span aria-hidden="true">*</span></label>
+          <input id="ia-friend-email" type="email" autocomplete="off" placeholder="nome@esempio.com" required />
+        </div>
+        <div class="lm__field">
+          <label for="ia-friend-cell">{t.friendPhone} <span aria-hidden="true">*</span></label>
+          <input id="ia-friend-cell" type="tel" autocomplete="off" placeholder="3XX XXX XXXX" required />
+        </div>
+      </div>
+
+      <div class="lm__consent">
+        <label class="lm__consent-item">
+          <input type="checkbox" id="ia-consent" required />
+          <span>{t.disclaimer}</span>
+        </label>
+      </div>
+
+      <p class="lm__error" hidden></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-ia-back="1">← {t.back}</button>
+        <button type="button" class="btn btn-red lm__next" id="ia-step2-send">
+          {t.send} <span class="lm__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3 — conferma -->
+    <div class="lm__body lm__confirm" data-ia-step="3" hidden>
+      <div class="lm__confirm-check">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 12.5l5 5L20 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 class="lm__confirm-title" set:html={t.confirmTitle} />
+      <p class="lm__confirm-note">{t.confirmNote}</p>
+      <button type="button" class="btn btn-red lm__confirm-cta" data-ia-close>{t.confirmClose}</button>
+    </div>
+
+  </div>
+</dialog>
+
+<script define:vars={{ ERR: {
+  email: t.errEmail,
+  nome: t.errNome,
+  cognome: t.errCognome,
+  friendEmail: t.errFriendEmail,
+  cell: t.errCell,
+  consent: t.errConsent,
+} }}>
+  const modal = document.getElementById('modal-invita-amico');
+  const dots = modal.querySelectorAll('[data-ia-dot]');
+
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+
+  function showStep(n) {
+    modal.querySelectorAll('[data-ia-step]').forEach((el) => {
+      el.hidden = el.dataset.iaStep !== String(n);
+    });
+    const isMain = n === 1 || n === 2;
+    modal.querySelector('.lm__steps').hidden = !isMain;
+    dots.forEach((dot) => {
+      const d = parseInt(dot.dataset.iaDot, 10);
+      dot.classList.toggle('is-active', d === n);
+      dot.classList.toggle('is-done', d < n);
+    });
+  }
+
+  function showError(step, msg) {
+    const err = modal.querySelector(`[data-ia-step="${step}"] .lm__error`);
+    if (err) { err.textContent = msg; err.hidden = false; }
+  }
+
+  function clearError(step) {
+    const err = modal.querySelector(`[data-ia-step="${step}"] .lm__error`);
+    if (err) err.hidden = true;
+  }
+
+  function resetForm() {
+    modal.querySelectorAll('input[type="email"], input[type="text"], input[type="tel"]').forEach((el) => { el.value = ''; el.classList.remove('lm__input--error'); });
+    modal.querySelectorAll('input[type="checkbox"]').forEach((el) => { el.checked = false; });
+    showStep(1);
+  }
+
+  function closeAndReset() {
+    modal.close();
+    resetForm();
+  }
+
+  // Apertura tramite data-open-modal="modal-invita-amico"
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-open-modal]');
+    if (t && t.dataset.openModal === 'modal-invita-amico') { modal.showModal(); showStep(1); }
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target.closest('[data-ia-close]') || e.target === modal) closeAndReset();
+  });
+
+  modal.querySelectorAll('[data-ia-back]').forEach((btn) => {
+    btn.addEventListener('click', () => showStep(parseInt(btn.dataset.iaBack, 10)));
+  });
+
+  // STEP 1
+  const emailInput = document.getElementById('ia-email');
+  document.getElementById('ia-step1-next').addEventListener('click', () => {
+    clearError(1);
+    emailInput.classList.remove('lm__input--error');
+    if (!emailInput.value.trim() || !isValidEmail(emailInput.value)) {
+      emailInput.classList.add('lm__input--error');
+      showError(1, ERR.email);
+      emailInput.focus();
+      return;
+    }
+    showStep(2);
+  });
+
+  // STEP 2
+  document.getElementById('ia-step2-send').addEventListener('click', () => {
+    clearError(2);
+    const nome = document.getElementById('ia-friend-nome');
+    const cognome = document.getElementById('ia-friend-cognome');
+    const friendEmail = document.getElementById('ia-friend-email');
+    const cell = document.getElementById('ia-friend-cell');
+    const consent = document.getElementById('ia-consent');
+
+    if (!nome.value.trim()) { showError(2, ERR.nome); nome.focus(); return; }
+    if (!cognome.value.trim()) { showError(2, ERR.cognome); cognome.focus(); return; }
+    if (!friendEmail.value.trim() || !isValidEmail(friendEmail.value)) { showError(2, ERR.friendEmail); friendEmail.focus(); return; }
+    if (!cell.value.trim()) { showError(2, ERR.cell); cell.focus(); return; }
+    if (!consent.checked) { showError(2, ERR.consent); return; }
+
+    showStep(3);
+  });
+</script>

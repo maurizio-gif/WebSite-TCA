@@ -143,9 +143,6 @@ export const en: UI = {
     inviteTitle:      'Bring a friend to TCA',
     inviteText:       'Invite anyone to discover the Club: courts, classes and community.',
     inviteCta:        'Invite a Friend',
-    inviteShareTitle: 'Tennis Club Ambrosiano',
-    inviteShareText:  'Come discover Tennis Club Ambrosiano!',
-    inviteCopied:     'Link copied!',
 
     featuredEyebrow: 'Featured',
     featuredTitle:   "What's happening at the Club",

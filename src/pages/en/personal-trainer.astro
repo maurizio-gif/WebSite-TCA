@@ -2,43 +2,51 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import MembershipSection from "../../components/MembershipSection.astro";
-import { getLocalePath } from "../../i18n/utils";
 
 const lang = 'en' as const;
-const p = (path: string) => getLocalePath(lang, path);
-
-const pex = (id: string) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=600&h=700&fit=crop`;
 
 interface Trainer {
   name: string;
-  role: string;
-  specializations: string[];
-  bio: string;
-  img: string;
+  specializzazioni: string[];
+  qualifiche: string[];
+  lingue?: string[];
+  imgName: string;
 }
 
 const trainers: Trainer[] = [
   {
-    name: 'Marco R.',
-    role: 'Personal Trainer & Athletic Coach',
-    specializations: ['Strength & Power', 'Tennis Sport Specific', 'Functional Rehabilitation'],
-    bio: 'Degree in Sport Science and NSCA-CSCS certification. Specialised in athletic preparation for competitive and recreational tennis players, with a focus on explosive strength and injury prevention.',
-    img: pex('6456138'),
+    name: 'Alessio Andolina',
+    specializzazioni: ['Combat sports, Boxing, Kickboxing', 'Crossfit and High Intensity Training', 'Sport-specific athletic training'],
+    qualifiche: ['Professional combat sports athlete', 'Kickboxing master instructor', 'Kettlebell instructor'],
+    lingue: ['Italian'],
+    imgName: 'Alessio Andolina.jpg',
   },
   {
-    name: 'Giulia T.',
-    role: 'Personal Trainer & Class Instructor',
-    specializations: ['Weight Loss & Body Composition', 'Functional Pilates', "Women's Training"],
-    bio: 'Master’s in Sport Science and ACSM certification. She guides her clients towards concrete goals with personalised programmes that combine training and lifestyle.',
-    img: pex('4498362'),
+    name: 'Federico Tronconi',
+    specializzazioni: ['Functional training and Kettlebell', 'Strength training', 'Combat sports (boxing, kickboxing, K-1)'],
+    qualifiche: ['Certified personal trainer', 'Combat sports athletic coach'],
+    lingue: ['Italian', 'French'],
+    imgName: 'Federico Tronconi.jpg',
   },
   {
-    name: 'Luca M.',
-    role: 'Strength & Conditioning Coach',
-    specializations: ['Powerlifting & Kettlebell', 'Over-50 Training', 'Mobility & Posture'],
-    bio: 'FIF and StrongFirst certified. An expert in resistance training and conditioning programmes for every age group. A technical, progressive and results-oriented approach.',
-    img: pex('1681010'),
+    name: 'Giusi De Rosa',
+    specializzazioni: ['Body Building', 'Functional training', "Women's training", 'Body recomposition', 'Small-group training'],
+    qualifiche: ['Certified personal trainer and A.I.F. instructor', 'Functional training specialist'],
+    lingue: ['Italian', 'English'],
+    imgName: 'Giusi De Rosa.jpg',
+  },
+  {
+    name: 'Matteo Sandri',
+    specializzazioni: ['Strength training', 'Sport-specific preparation', 'Post-surgery recovery', 'Posture'],
+    qualifiche: ['Degree in Sport Science', 'Corrective exercise', 'Therapeutic exercise for joint conditions'],
+    lingue: ['Italian'],
+    imgName: 'Matteo Sandri.jpg',
+  },
+  {
+    name: 'Elisa Borgo',
+    specializzazioni: ['Post-injury recovery', 'Pregnancy and postpartum fitness', 'Posture'],
+    qualifiche: ['Degree in Sport Science', 'Level 1 Pilates instructor certification (Reformer and Mat)', 'ISSA Personal Trainer certification'],
+    imgName: 'Elisa Borgo.jpg',
   },
 ];
 ---
@@ -55,7 +63,7 @@ const trainers: Trainer[] = [
     sub="Certified professionals who build your training programme around your goal. No standard protocol: only tailored work."
     image="/Sala%20Attrezzi%202.avif"
     imageAlt="TCA personal trainer"
-    ctaLabel="Book a session"
+    ctas={[{ label: "Book a session", openModal: true }]}
   />
 
   <!-- ── Intro ── -->
@@ -74,7 +82,7 @@ const trainers: Trainer[] = [
         </div>
         <div class="intro-split__stats">
           <div class="stat-item">
-            <span class="stat-num">3</span>
+            <span class="stat-num">5</span>
             <span class="stat-label">Certified<br>personal trainers</span>
           </div>
           <div class="stat-item">
@@ -117,22 +125,24 @@ const trainers: Trainer[] = [
           {trainers.map((trainer) => (
             <article class="trainer-card">
               <div class="trainer-card__media">
-                <img
-                  src={trainer.img}
-                  alt={trainer.name}
-                  class="trainer-card__img"
-                  loading="lazy"
-                />
+                <div class="img-placeholder" data-name={trainer.imgName}></div>
               </div>
               <div class="trainer-card__body">
                 <h3 class="trainer-card__name">{trainer.name}</h3>
-                <p class="trainer-card__role">{trainer.role}</p>
                 <ul class="trainer-card__specs">
-                  {trainer.specializations.map(s => (
+                  {trainer.specializzazioni.map(s => (
                     <li><span class="spec-tag">{s}</span></li>
                   ))}
                 </ul>
-                <p class="trainer-card__bio">{trainer.bio}</p>
+                <div class="trainer-card__quals">
+                  <strong>Qualifications & certifications</strong>
+                  <ul>
+                    {trainer.qualifiche.map(q => <li>{q}</li>)}
+                  </ul>
+                </div>
+                {trainer.lingue && (
+                  <p class="trainer-card__langs"><strong>Languages:</strong> {trainer.lingue.join(', ')}</p>
+                )}
               </div>
             </article>
           ))}
@@ -177,7 +187,7 @@ const trainers: Trainer[] = [
     <div class="pt-cta-section__inner">
       <h2 class="pt-cta-title">Ready to start?</h2>
       <p class="pt-cta-sub">Book a free assessment session with one of our trainers. No commitment: just one hour to understand how to train better.</p>
-      <a href={p('/contatti')} class="btn btn-red">Book your free assessment</a>
+      <button type="button" class="btn btn-red" data-open-modal="modal-contatti">Book your free assessment</button>
     </div>
   </section>
 
@@ -340,17 +350,10 @@ const trainers: Trainer[] = [
     background: #E5E7EB;
   }
 
-  .trainer-card__img {
+  .trainer-card__media .img-placeholder {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    display: block;
-    transition: transform 0.4s ease;
-  }
-
-  .trainer-card:hover .trainer-card__img {
-    transform: scale(1.03);
+    min-height: unset;
   }
 
   .trainer-card__body {
@@ -363,28 +366,19 @@ const trainers: Trainer[] = [
 
   .trainer-card__name {
     font-family: var(--font-display);
-    font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+    font-size: clamp(1.4rem, 1.9vw, 1.85rem);
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
     color: var(--color-text);
-  }
-
-  .trainer-card__role {
-    font-family: var(--font-body);
-    font-size: clamp(12px, 0.85vw, 13px);
-    font-weight: 400;
-    color: var(--color-accent);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
   }
 
   .trainer-card__specs {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    padding: 0.5rem 0;
+    gap: 8px;
+    padding: 0.65rem 0;
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
     margin: 0.25rem 0;
@@ -392,22 +386,71 @@ const trainers: Trainer[] = [
 
   .spec-tag {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: 12.5px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     background: var(--color-off-white);
     color: var(--color-text);
-    padding: 3px 8px;
+    padding: 5px 11px;
   }
 
-  .trainer-card__bio {
+  .trainer-card__quals {
     font-family: var(--font-body);
-    font-size: clamp(12px, 0.85vw, 13.5px);
+    font-size: clamp(14.5px, 1.05vw, 16px);
     font-weight: 300;
-    line-height: 1.65;
+    line-height: 1.6;
     color: var(--color-text-light);
     flex: 1;
+  }
+
+  .trainer-card__quals strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: 0.4rem;
+  }
+
+  .trainer-card__quals ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .trainer-card__quals li {
+    padding-left: 0.9rem;
+    position: relative;
+  }
+
+  .trainer-card__quals li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+
+  .trainer-card__langs {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 14.5px);
+    font-weight: 300;
+    color: var(--color-text-light);
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .trainer-card__langs strong {
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-right: 0.3rem;
   }
 
   /* ── How it works ── */
