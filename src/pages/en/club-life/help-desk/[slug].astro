@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import ClubLifeAssistBtn from '../../../../components/ClubLifeAssistBtn.astro';
+import ClubLifeLangSwitch from '../../../../components/ClubLifeLangSwitch.astro';
 import { getLocalePath, useTranslations, type Lang } from '../../../../i18n/utils';
 import { helpDeskArticles, helpDeskCategories } from '../../../../data/helpDesk';
 
@@ -30,6 +31,7 @@ const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria &
   description={entry.sintesi_en}
   hideChrome
 >
+  <ClubLifeLangSwitch lang={lang} />
   <ClubLifeAssistBtn lang={lang} href={`${p('/club-life')}#contatti`} />
 
   <section class="hd-hero">
