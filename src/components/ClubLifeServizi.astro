@@ -1,0 +1,265 @@
+---
+import { useTranslations, type Lang } from '../i18n/utils';
+import { serviziItems } from '../data/clubLifeServizi';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+const t = useTranslations(lang);
+const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
+---
+
+<section class="cl-servizi" id="servizi">
+  <div class="cl-servizi__inner">
+    <span class="eyebrow">{t.clubLife.serviziEyebrow}</span>
+    <h2 class="cl-servizi__title">{t.clubLife.serviziTitle}</h2>
+
+    <div class="cl-servizi__grid">
+      {serviziItems.map((s) => (
+        <button
+          type="button"
+          class="cl-servizio"
+          data-title={tx(s.titolo, s.titolo_en)}
+          data-desc={tx(s.desc, s.desc_en)}
+        >
+          <span class="cl-servizio__icon" aria-hidden="true">
+            {s.icon === 'coach' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M4 20c0-3.9 3.6-6 8-6s8 2.1 8 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            )}
+            {s.icon === 'ballmachine' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="4" y="8" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.6"/><circle cx="19" cy="7" r="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 8V6a2 2 0 0 1 2-2h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            )}
+            {s.icon === 'pickleball' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.6"/><circle cx="7.5" cy="7.5" r="0.9" fill="currentColor"/><circle cx="11" cy="7" r="0.9" fill="currentColor"/><circle cx="13" cy="10" r="0.9" fill="currentColor"/><circle cx="9" cy="12.5" fill="currentColor" r="0.9"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            )}
+            {s.icon === 'birthday' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 21V11a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10" stroke="currentColor" stroke-width="1.6"/><path d="M5 16h14" stroke="currentColor" stroke-width="1.6"/><path d="M12 9V5M9 5c0-1.1.9-2 2-2M15 5c0-1.1-.9-2-2-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            )}
+            {s.icon === 'locker' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="7" height="18" rx="1" stroke="currentColor" stroke-width="1.6"/><rect x="13" y="3" width="7" height="18" rx="1" stroke="currentColor" stroke-width="1.6"/><circle cx="8.5" cy="12" r="0.8" fill="currentColor"/><circle cx="17.5" cy="12" r="0.8" fill="currentColor"/></svg>
+            )}
+            {s.icon === 'shop' && (
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 8l1.5-4h13L20 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 8v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V8" stroke="currentColor" stroke-width="1.6"/><path d="M9 12a3 3 0 0 0 6 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            )}
+          </span>
+          <h3 class="cl-servizio__title">{tx(s.titolo, s.titolo_en)}</h3>
+          <p class="cl-servizio__desc">{tx(s.desc, s.desc_en)}</p>
+          <span class="cl-servizio__more">{t.clubLife.serviziDettagli} →</span>
+        </button>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Modal di dettaglio, popolato via JS dai data-attribute del pulsante cliccato -->
+<dialog class="cl-servizio-modal" id="cl-servizio-modal" aria-labelledby="cl-servizio-modal-title">
+  <div class="cl-servizio-modal__inner">
+    <button class="cl-servizio-modal__close" id="cl-servizio-modal-close" aria-label={t.clubLife.newsClose}>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path d="M1 1L17 17M17 1L1 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <span class="cl-servizio-modal__icon" id="cl-servizio-modal-icon"></span>
+    <h3 class="cl-servizio-modal__title" id="cl-servizio-modal-title"></h3>
+    <p class="cl-servizio-modal__desc" id="cl-servizio-modal-desc"></p>
+    <button class="btn btn-red" data-open-modal="modal-contatti" id="cl-servizio-modal-cta">{t.common.richiediInfo}</button>
+  </div>
+</dialog>
+
+<script>
+  const modal = document.getElementById('cl-servizio-modal') as HTMLDialogElement | null;
+  const titleEl = document.getElementById('cl-servizio-modal-title');
+  const descEl = document.getElementById('cl-servizio-modal-desc');
+  const iconEl = document.getElementById('cl-servizio-modal-icon');
+
+  document.querySelectorAll<HTMLButtonElement>('.cl-servizio').forEach((card) => {
+    card.addEventListener('click', () => {
+      if (titleEl) titleEl.textContent = card.dataset.title || '';
+      if (descEl) descEl.textContent = card.dataset.desc || '';
+      const icon = card.querySelector('.cl-servizio__icon');
+      if (iconEl) iconEl.innerHTML = icon ? icon.innerHTML : '';
+      modal?.showModal();
+    });
+  });
+
+  document.getElementById('cl-servizio-modal-close')?.addEventListener('click', () => modal?.close());
+  document.getElementById('cl-servizio-modal-cta')?.addEventListener('click', () => modal?.close());
+  modal?.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
+</script>
+
+<style>
+  .cl-servizi {
+    padding: 7vh var(--pad-x);
+    background: var(--color-bg);
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+
+  .cl-servizi__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .cl-servizi__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-top: 0.4rem;
+    margin-bottom: 4vh;
+  }
+
+  .cl-servizi__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+  }
+
+  .cl-servizio {
+    background: var(--color-bg);
+    padding: 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    width: 100%;
+    border: none;
+    text-align: left;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.18s;
+  }
+
+  .cl-servizio:hover { background: var(--color-off-white); }
+  .cl-servizio:hover .cl-servizio__more { opacity: 1; transform: translateX(0); }
+
+  .cl-servizio__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(139, 26, 26, 0.08);
+    color: var(--color-accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .cl-servizio__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 1.1;
+    color: var(--color-text);
+  }
+
+  .cl-servizio__desc {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.92vw, 14.5px);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-text-light);
+  }
+
+  .cl-servizio__more {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-top: 0.2rem;
+    transition: opacity 0.18s, transform 0.18s;
+  }
+
+  /* Su dispositivi senza hover reale (touch) il link "Dettagli" resta sempre visibile */
+  @media (hover: hover) {
+    .cl-servizio__more { opacity: 0; transform: translateX(-6px); }
+  }
+
+  @media (max-width: 860px) {
+    .cl-servizi__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    .cl-servizi__grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Modal di dettaglio servizio ── */
+  .cl-servizio-modal {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    width: min(92vw, 480px);
+    max-height: 90vh;
+    background: #ffffff;
+    border: none;
+    padding: 0;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+    z-index: 600;
+  }
+
+  .cl-servizio-modal::backdrop {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+  }
+
+  .cl-servizio-modal__inner {
+    padding: 2.8rem 2.4rem 2.4rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .cl-servizio-modal__close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    color: var(--color-text-light);
+    transition: color 0.18s;
+  }
+
+  .cl-servizio-modal__close:hover { color: var(--color-accent); }
+
+  .cl-servizio-modal__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(139, 26, 26, 0.08);
+    color: var(--color-accent);
+  }
+
+  .cl-servizio-modal__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 3vw, 1.7rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .cl-servizio-modal__desc {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.6vw, 15.5px);
+    font-weight: 300;
+    line-height: 1.65;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+
+  .cl-servizio-modal__inner .btn { align-self: flex-start; }
+</style>

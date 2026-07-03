@@ -32,6 +32,21 @@
   :root { --header-h: 52px; }
 }
 
+/* ---------- Embed in-app (?app=1) ----------
+   Usato da pagine aperte dentro l'app dei soci (es. Club Life): nasconde
+   header, mappa/footer e il pulsante "torna in cima", e azzera l'altezza
+   riservata all'header così il contenuto parte dal bordo superiore. */
+html.is-app-embed {
+  --header-h: 0px;
+}
+
+html.is-app-embed .navbar,
+html.is-app-embed .info,
+html.is-app-embed .footer,
+html.is-app-embed #back-to-top {
+  display: none !important;
+}
+
 /* ---------- Reset essenziale ---------- */
 *,
 *::before,

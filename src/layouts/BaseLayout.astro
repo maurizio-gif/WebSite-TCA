@@ -12,9 +12,10 @@ interface Props {
   description?: string;
   lang?: Lang;
   hideLeadFormInline?: boolean;
+  hideChrome?: boolean;
 }
 
-const { title, description, lang: langProp, hideLeadFormInline = false } = Astro.props;
+const { title, description, lang: langProp, hideLeadFormInline = false, hideChrome = false } = Astro.props;
 
 const lang: Lang = langProp ?? getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -34,7 +35,7 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={lang} class={hideChrome ? 'is-app-embed' : undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -59,15 +60,25 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
       rel="stylesheet"
     />
     <slot name="head" />
+
+    <!-- Rilevamento embed in-app (?app=1): nasconde header/footer prima del
+         primo paint, per evitare un flash del sito completo. Il sito resta
+         completamente statico: nessuna logica lato server, solo una classe
+         sull'<html> letta dal CSS globale. -->
+    <script is:inline>
+      if (new URLSearchParams(location.search).get('app') === '1') {
+        document.documentElement.classList.add('is-app-embed');
+      }
+    </script>
   </head>
   <body>
-    <Navbar lang={lang} />
+    {!hideChrome && <Navbar lang={lang} />}
     <main class="site-main">
       <slot />
     </main>
     {!hideLeadFormInline && <LeadFormInline lang={lang} />}
-    <InfoPratiche lang={lang} />
-    <Footer lang={lang} />
+    {!hideChrome && <InfoPratiche lang={lang} />}
+    {!hideChrome && <Footer lang={lang} />}
     <LeadModal lang={lang} />
 
     <!-- ── Back to top ── -->

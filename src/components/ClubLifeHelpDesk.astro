@@ -1,0 +1,462 @@
+---
+import { getLocalePath, useTranslations, type Lang } from '../i18n/utils';
+import { helpDeskArticles, helpDeskCategories } from '../data/helpDesk';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+const t = useTranslations(lang);
+const p = (path: string) => getLocalePath(lang, path);
+const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
+const catLabel = (id: string) => {
+  const cat = helpDeskCategories.find((c) => c.id === id);
+  return cat ? tx(cat.label, cat.label_en) : id;
+};
+---
+
+<section class="cl-help" id="help-desk">
+  <div class="cl-help__inner">
+    <span class="eyebrow eyebrow--light">{t.clubLife.helpDeskEyebrow}</span>
+    <h2 class="cl-help__title">{t.clubLife.helpDeskTitle}</h2>
+    <p class="cl-help__sub">{t.clubLife.helpDeskSub}</p>
+
+    <div class="cl-help__controls">
+      <div class="cl-help__search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/>
+          <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <input
+          type="search"
+          id="cl-help-search"
+          class="cl-help__search-input"
+          placeholder={t.clubLife.helpDeskSearchPlaceholder}
+          aria-label={t.clubLife.helpDeskSearchPlaceholder}
+        />
+      </div>
+
+      <div class="cl-help__tabs" role="tablist" id="cl-help-tabs">
+        <button class="cl-help__tab is-active" type="button" data-cat="all" role="tab" aria-selected="true">
+          {t.clubLife.helpDeskAll} <span class="cl-help__tab-count">{helpDeskArticles.length}</span>
+        </button>
+        {helpDeskCategories.map((cat) => {
+          const count = helpDeskArticles.filter((a) => a.categoria === cat.id).length;
+          return (
+            <button class="cl-help__tab" type="button" data-cat={cat.id} role="tab" aria-selected="false">
+              {tx(cat.label, cat.label_en)} <span class="cl-help__tab-count">{count}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+
+    <div class="cl-help__grid" id="cl-help-grid">
+      {helpDeskArticles.map((art) => {
+        const searchBlob = `${tx(art.titolo, art.titolo_en)} ${tx(art.sintesi, art.sintesi_en)} ${(lang === 'en' ? art.tags_en : art.tags).join(' ')}`.toLowerCase();
+        return (
+          <button
+            class="cl-help-card"
+            type="button"
+            data-open-help={art.slug}
+            data-cat={art.categoria}
+            data-search={searchBlob}
+          >
+            <span class="cl-help-card__cat">{catLabel(art.categoria)}</span>
+            <h3 class="cl-help-card__title">{tx(art.titolo, art.titolo_en)}</h3>
+            <p class="cl-help-card__desc">{tx(art.sintesi, art.sintesi_en)}</p>
+            <div class="cl-help-card__tags">
+              {(lang === 'en' ? art.tags_en : art.tags).slice(0, 3).map((tag) => (
+                <span class="cl-help-card__tag">{tag}</span>
+              ))}
+            </div>
+            <span class="cl-help-card__arrow" aria-hidden="true">→</span>
+          </button>
+        );
+      })}
+    </div>
+
+    <p class="cl-help__empty" id="cl-help-empty" hidden>{t.clubLife.helpDeskNoResults}</p>
+  </div>
+</section>
+
+<!-- Modali preview (una per guida) -->
+{helpDeskArticles.map((art) => (
+  <dialog id={`help-${art.slug}`} class="cl-help-modal" aria-labelledby={`help-title-${art.slug}`}>
+    <div class="cl-help-modal__panel">
+      <button class="cl-help-modal__close" data-help-close aria-label={t.clubLife.newsClose}>✕</button>
+      <span class="cl-help-modal__cat">{catLabel(art.categoria)}</span>
+      <h2 class="cl-help-modal__title" id={`help-title-${art.slug}`}>{tx(art.titolo, art.titolo_en)}</h2>
+      <div class="cl-help-modal__prose">
+        {(lang === 'en' ? art.corpo_en : art.corpo).slice(0, 2).map((par) => <p>{par}</p>)}
+      </div>
+      <a class="cl-help-modal__full" href={p(`/club-life/help-desk/${art.slug}`)}>
+        {t.clubLife.helpDeskReadFull}
+      </a>
+    </div>
+  </dialog>
+))}
+
+<style>
+  .cl-help {
+    padding: 8vh var(--pad-x);
+    background: #0f1013;
+    color: #ffffff;
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+
+  .cl-help__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .cl-help__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-top: 0.4rem;
+    margin-bottom: 1.4rem;
+    color: #ffffff;
+  }
+
+  .cl-help__sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.05vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 62ch;
+    margin-bottom: 5vh;
+  }
+
+  /* ── Controls ── */
+  .cl-help__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 4vh;
+  }
+
+  .cl-help__search {
+    position: relative;
+    max-width: 480px;
+  }
+
+  .cl-help__search svg {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+  }
+
+  .cl-help__search-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 0.85rem 1rem 0.85rem 2.6rem;
+    box-sizing: border-box;
+    transition: border-color 0.18s, background 0.18s;
+  }
+
+  .cl-help__search-input::placeholder { color: rgba(255, 255, 255, 0.35); }
+  .cl-help__search-input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.09);
+  }
+
+  .cl-help__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .cl-help__tab {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 0.55em 1em;
+    cursor: pointer;
+    transition: border-color 0.18s, color 0.18s, background 0.18s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  .cl-help__tab:hover { border-color: rgba(255, 255, 255, 0.4); color: #ffffff; }
+
+  .cl-help__tab.is-active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #ffffff;
+  }
+
+  .cl-help__tab-count {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .cl-help__tab.is-active .cl-help__tab-count { color: rgba(255, 255, 255, 0.75); }
+
+  /* ── Grid ── */
+  .cl-help__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .cl-help-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    background: #16171b;
+    padding: 1.6rem;
+    gap: 0.6rem;
+    cursor: pointer;
+    border: none;
+    font: inherit;
+    color: inherit;
+    position: relative;
+    transition: background 0.18s;
+  }
+
+  .cl-help-card:hover { background: #1c1e24; }
+
+  .cl-help-card[hidden] { display: none; }
+
+  .cl-help-card__cat {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .cl-help-card__title {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+    color: #ffffff;
+    padding-right: 1.5rem;
+  }
+
+  .cl-help-card__desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .cl-help-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.2rem;
+  }
+
+  .cl-help-card__tag {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 0.2em 0.6em;
+    border-radius: 2px;
+  }
+
+  .cl-help-card__arrow {
+    position: absolute;
+    top: 1.6rem;
+    right: 1.4rem;
+    color: var(--color-accent);
+    font-size: 1.1rem;
+    transform: rotate(-45deg);
+    transition: transform 0.18s;
+  }
+
+  .cl-help-card:hover .cl-help-card__arrow { transform: rotate(-45deg) scale(1.2); }
+
+  .cl-help__empty {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  @media (max-width: 1024px) {
+    .cl-help__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .cl-help__grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Modal ── */
+  .cl-help-modal {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: min(95vw, 640px);
+    width: 100%;
+    margin: auto;
+    max-height: 92vh;
+  }
+
+  .cl-help-modal::backdrop {
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(7px);
+  }
+
+  .cl-help-modal__panel {
+    background: #ffffff;
+    color: var(--color-text);
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 2.2rem;
+    position: relative;
+  }
+
+  .cl-help-modal__close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    color: rgba(26, 26, 26, 0.45);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .cl-help-modal__close:hover { border-color: var(--color-text); color: var(--color-text); }
+
+  .cl-help-modal__cat {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .cl-help-modal__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    margin-bottom: 1.4rem;
+    padding-right: 1.5rem;
+  }
+
+  .cl-help-modal__prose {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--color-text-light);
+  }
+
+  .cl-help-modal__prose p { margin-bottom: 1em; }
+
+  .cl-help-modal__full {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .cl-help-modal__full:hover { color: var(--color-accent-dark); }
+
+  @media (max-width: 640px) {
+    .cl-help-modal__panel { padding: 1.5rem; }
+  }
+</style>
+
+<script>
+  (function () {
+    const search = document.getElementById('cl-help-search') as HTMLInputElement | null;
+    const tabs = document.querySelectorAll<HTMLButtonElement>('#cl-help-tabs .cl-help__tab');
+    const cards = document.querySelectorAll<HTMLButtonElement>('.cl-help-card');
+    const empty = document.getElementById('cl-help-empty');
+    let activeCat = 'all';
+
+    function applyFilters() {
+      const query = (search?.value ?? '').trim().toLowerCase();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const matchesCat = activeCat === 'all' || card.dataset.cat === activeCat;
+        const matchesQuery = !query || (card.dataset.search ?? '').includes(query);
+        const visible = matchesCat && matchesQuery;
+        card.hidden = !visible;
+        if (visible) visibleCount++;
+      });
+
+      if (empty) empty.hidden = visibleCount > 0;
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        activeCat = tab.dataset.cat ?? 'all';
+        tabs.forEach((t) => {
+          t.classList.toggle('is-active', t === tab);
+          t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+        });
+        applyFilters();
+      });
+    });
+
+    search?.addEventListener('input', applyFilters);
+
+    cards.forEach((card) => {
+      card.addEventListener('click', () => {
+        const slug = card.dataset.openHelp;
+        const dialog = document.getElementById(`help-${slug}`) as HTMLDialogElement | null;
+        dialog?.showModal();
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      const closeBtn = (e.target as Element).closest('[data-help-close]');
+      if (closeBtn) (closeBtn.closest('dialog') as HTMLDialogElement | null)?.close();
+    });
+
+    document.querySelectorAll<HTMLDialogElement>('.cl-help-modal').forEach((dialog) => {
+      dialog.addEventListener('click', (e) => {
+        if (e.target === dialog) dialog.close();
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,271 @@
+---
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+const t = useTranslations(lang);
+
+const sections = [
+  { num: '01', label: t.clubLife.shortcutEventi,   desc: t.clubLife.menuEventiDesc,   href: '#eventi' },
+  { num: '02', label: t.clubLife.shortcutNews,      desc: t.clubLife.menuNewsDesc,     href: '#news' },
+  { num: '03', label: t.clubLife.shortcutHelpDesk,  desc: t.clubLife.menuHelpDeskDesc, href: '#help-desk' },
+  { num: '04', label: t.clubLife.shortcutServizi,   desc: t.clubLife.menuServiziDesc,  href: '#servizi' },
+];
+---
+
+<!-- Menu sezioni: agganciato al bordo inferiore della hero -->
+<div class="cl-menu-wrap">
+  <nav class="cl-menu" aria-label={t.clubLife.heroTitle}>
+    <div class="cl-menu__inner">
+      {sections.map((s) => (
+        <a class="cl-menu__item" href={s.href}>
+          <span class="cl-menu__num">{s.num}</span>
+          <div class="cl-menu__body">
+            <strong class="cl-menu__name">{s.label}</strong>
+            <span class="cl-menu__desc">{s.desc}</span>
+          </div>
+          <span class="cl-menu__arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </nav>
+</div>
+
+<section class="cl-invite">
+  <div class="cl-invite__inner">
+    <div class="cl-invite__text">
+      <span class="cl-invite__eyebrow">{t.clubLife.inviteEyebrow}</span>
+      <h2 class="cl-invite__title">{t.clubLife.inviteTitle}</h2>
+      <p class="cl-invite__sub">{t.clubLife.inviteText}</p>
+    </div>
+    <button
+      type="button"
+      class="btn cl-invite__btn"
+      id="cl-invite-btn"
+      data-share-title={t.clubLife.inviteShareTitle}
+      data-share-text={t.clubLife.inviteShareText}
+      data-copied-label={t.clubLife.inviteCopied}
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M2.5 20c0-3.6 3-6.3 6.5-6.3s6.5 2.7 6.5 6.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M18 8v6M15 11h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <span class="cl-invite__btn-label" id="cl-invite-btn-label">{t.clubLife.inviteCta}</span>
+    </button>
+  </div>
+</section>
+
+<script>
+  const btn = document.getElementById('cl-invite-btn') as HTMLButtonElement | null;
+  const label = document.getElementById('cl-invite-btn-label');
+
+  function fallbackCopy(text: string): boolean {
+    const el = document.createElement('textarea');
+    el.value = text;
+    el.style.position = 'fixed';
+    el.style.opacity = '0';
+    document.body.appendChild(el);
+    el.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch { ok = false; }
+    document.body.removeChild(el);
+    return ok;
+  }
+
+  function showCopied() {
+    if (!label) return;
+    const original = label.textContent;
+    label.textContent = btn?.dataset.copiedLabel || original;
+    setTimeout(() => { label.textContent = original; }, 2200);
+  }
+
+  btn?.addEventListener('click', async () => {
+    const shareData = {
+      title: btn.dataset.shareTitle || '',
+      text: btn.dataset.shareText || '',
+      url: window.location.href,
+    };
+
+    if (navigator.share) {
+      try { await navigator.share(shareData); return; } catch { /* utente ha annullato: prova il fallback */ }
+    }
+
+    try {
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareData.url);
+        showCopied();
+        return;
+      }
+    } catch { /* clipboard non disponibile: prova il fallback legacy */ }
+
+    if (fallbackCopy(shareData.url)) {
+      showCopied();
+    } else {
+      window.prompt(shareData.title, shareData.url);
+    }
+  });
+</script>
+
+<style>
+  /* ── Menu sezioni: sovrapposto al bordo inferiore della hero ── */
+  .cl-menu-wrap {
+    position: relative;
+    z-index: 3;
+  }
+
+  .cl-menu {
+    background: rgba(15, 16, 19, 0.92);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .cl-menu__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .cl-menu__item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.5rem var(--pad-x);
+    text-decoration: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    transition: background 0.18s;
+  }
+
+  .cl-menu__item:last-child { border-right: none; }
+  .cl-menu__item:hover { background: rgba(255, 255, 255, 0.04); }
+
+  .cl-menu__num {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .cl-menu__body { min-width: 0; }
+
+  .cl-menu__name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(13px, 1vw, 15px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: #fff;
+  }
+
+  .cl-menu__desc {
+    display: block;
+    font-family: var(--font-body);
+    font-size: clamp(11.5px, 0.85vw, 13px);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 0.2rem;
+    line-height: 1.35;
+  }
+
+  .cl-menu__arrow {
+    margin-left: auto;
+    color: var(--color-accent);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity 0.18s, transform 0.18s;
+  }
+
+  .cl-menu__item:hover .cl-menu__arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Overlap con il bordo inferiore della hero solo da tablet in su */
+  @media (min-width: 1024px) {
+    .cl-menu-wrap { margin-top: -84px; }
+  }
+
+  @media (max-width: 1023px) {
+    .cl-menu__inner { grid-template-columns: repeat(2, 1fr); }
+    .cl-menu__item:nth-child(2) { border-right: none; }
+  }
+
+  @media (max-width: 560px) {
+    .cl-menu__inner { grid-template-columns: 1fr; }
+    .cl-menu__item { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+    .cl-menu__item:last-child { border-bottom: none; }
+    .cl-menu__desc { display: none; }
+  }
+
+  /* ── Banner "Invita un Amico" ── */
+  .cl-invite {
+    background: var(--color-accent);
+  }
+
+  .cl-invite__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 4vh var(--pad-x);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .cl-invite__eyebrow {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 1vw, 14px);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+    margin-bottom: 0.5vh;
+  }
+
+  .cl-invite__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    color: #fff;
+  }
+
+  .cl-invite__sub {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 1vw, 15px);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 0.5vh;
+    max-width: 52ch;
+  }
+
+  .cl-invite__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    background: #fff;
+    color: var(--color-accent);
+    border-color: #fff;
+    white-space: nowrap;
+  }
+
+  .cl-invite__btn:hover {
+    background: rgba(255, 255, 255, 0.88);
+    border-color: rgba(255, 255, 255, 0.88);
+  }
+
+  @media (max-width: 720px) {
+    .cl-invite__inner { flex-direction: column; align-items: flex-start; }
+    .cl-invite__btn { align-self: stretch; justify-content: center; }
+  }
+</style>

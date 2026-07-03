@@ -66,6 +66,7 @@ const secondaryItems = [
   { label: t.nav.torneoAvvenire, href: p('/torneo-avvenire') },
   { label: t.nav.storia,         href: p('/storia') },
   { label: t.nav.eventi,         href: p('/eventi') },
+  { label: t.nav.clubLife,       href: p('/club-life') },
 ];
 
 ---
@@ -122,7 +123,6 @@ const secondaryItems = [
                     class={`mega__feat-img mega__feat-img--${i + 1}`}
                     src={item.img}
                     alt={item.label}
-                    style={`object-position: ${item.imgPosition ?? 'center'};`}
                     loading="eager"
                   />
                 ))}
@@ -162,7 +162,6 @@ const secondaryItems = [
                     class={`mega__feat-img mega__feat-img--${i + 1}`}
                     src={item.img}
                     alt={item.label}
-                    style={`object-position: ${item.imgPosition ?? 'center'};`}
                     loading="eager"
                   />
                 ))}

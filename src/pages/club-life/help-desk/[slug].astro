@@ -1,0 +1,256 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ClubLifeAssistBtn from '../../../components/ClubLifeAssistBtn.astro';
+import { getLocalePath, useTranslations, type Lang } from '../../../i18n/utils';
+import { helpDeskArticles, helpDeskCategories } from '../../../data/helpDesk';
+
+export async function getStaticPaths() {
+  return helpDeskArticles.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: (typeof helpDeskArticles)[number];
+}
+
+const { entry } = Astro.props;
+const lang: Lang = 'it';
+const t = useTranslations(lang);
+const p = (path: string) => getLocalePath(lang, path);
+
+const categoria = helpDeskCategories.find((c) => c.id === entry.categoria);
+const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria && a.slug !== entry.slug).slice(0, 3);
+---
+
+<BaseLayout
+  lang={lang}
+  title={`${entry.titolo} — Help Desk | Tennis Club Ambrosiano`}
+  description={entry.sintesi}
+  hideChrome
+>
+  <ClubLifeAssistBtn lang={lang} href={`${p('/club-life')}#contatti`} />
+
+  <section class="hd-hero">
+    <div class="hd-hero__inner">
+      <nav class="hd-hero__breadcrumb" aria-label="Breadcrumb">
+        <a href={`${p('/club-life')}#help-desk`}>{t.clubLife.helpDeskBack}</a>
+      </nav>
+
+      <span class="hd-hero__cat">{categoria?.label ?? entry.categoria}</span>
+      <h1 class="hd-hero__title">{entry.titolo}</h1>
+      <p class="hd-hero__desc">{entry.sintesi}</p>
+
+      <div class="hd-hero__tags">
+        {entry.tags.map((tag) => <span class="hd-hero__tag">{tag}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="hd-body">
+    <div class="hd-body__inner">
+      <div class="hd-body__content prose">
+        {entry.corpo.map((par) => <p>{par}</p>)}
+      </div>
+
+      <aside class="hd-body__sidebar">
+        <div class="hd-sidebar__block">
+          <h2 class="hd-sidebar__label">{t.clubLife.helpDeskCategory}</h2>
+          <p class="hd-sidebar__value">{categoria?.label ?? entry.categoria}</p>
+        </div>
+        <div class="hd-sidebar__block">
+          <h2 class="hd-sidebar__label">{t.clubLife.helpDeskUpdated}</h2>
+          <p class="hd-sidebar__value">{entry.aggiornato}</p>
+        </div>
+
+        {related.length > 0 && (
+          <div class="hd-sidebar__block hd-sidebar__block--related">
+            <h2 class="hd-sidebar__label">{t.clubLife.helpDeskRelated}</h2>
+            <ul class="hd-sidebar__related-list">
+              {related.map((r) => (
+                <li><a href={p(`/club-life/help-desk/${r.slug}`)}>{r.titolo}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <div class="hd-sidebar__back">
+          <a href={`${p('/club-life')}#help-desk`}>{t.clubLife.helpDeskBack}</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hd-hero {
+    background: #0f1013;
+    padding: calc(var(--header-h) + 5vh) var(--pad-x) 6vh;
+    border-bottom: 3px solid var(--color-accent);
+  }
+
+  .hd-hero__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    color: #ffffff;
+  }
+
+  .hd-hero__breadcrumb { margin-bottom: 2.5vh; }
+
+  .hd-hero__breadcrumb a {
+    font-family: var(--font-display);
+    font-size: clamp(10px, 0.8vw, 12px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+
+  .hd-hero__breadcrumb a:hover { color: rgba(255, 255, 255, 0.8); }
+
+  .hd-hero__cat {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: clamp(10px, 0.75vw, 12px);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 0.3em 0.8em;
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.7);
+    border-left: 3px solid var(--color-accent);
+    margin-bottom: 1.2rem;
+  }
+
+  .hd-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4.5vw, 4.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    max-width: 28ch;
+  }
+
+  .hd-hero__desc {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 18px);
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.62);
+    max-width: 56ch;
+    margin-bottom: 1.6rem;
+  }
+
+  .hd-hero__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .hd-hero__tag {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.07);
+    padding: 0.25em 0.75em;
+    border-radius: 2px;
+  }
+
+  /* ── Body ── */
+  .hd-body {
+    padding: 6vh var(--pad-x);
+    background: var(--color-bg);
+  }
+
+  .hd-body__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .prose {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1.1vw, 18px);
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--color-text-light);
+  }
+
+  .prose p { margin-bottom: 1.2em; }
+
+  .hd-body__sidebar {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+    border: 1px solid var(--color-border);
+    padding: 1.8rem;
+    background: var(--color-off-white);
+  }
+
+  .hd-sidebar__block {
+    padding-bottom: 1.2rem;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hd-sidebar__label {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 0.72vw, 11px);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(26, 26, 26, 0.38);
+    margin-bottom: 0.35rem;
+  }
+
+  .hd-sidebar__value {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 400;
+    color: var(--color-text);
+  }
+
+  .hd-sidebar__related-list { list-style: none; }
+  .hd-sidebar__related-list li { margin-bottom: 0.6rem; }
+
+  .hd-sidebar__related-list a {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--color-text);
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  .hd-sidebar__related-list a:hover { color: var(--color-accent); }
+
+  .hd-sidebar__back { margin-top: 1.2rem; }
+
+  .hd-sidebar__back a {
+    font-family: var(--font-display);
+    font-size: clamp(10px, 0.78vw, 12px);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(26, 26, 26, 0.4);
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+
+  .hd-sidebar__back a:hover { color: var(--color-accent); }
+
+  @media (max-width: 900px) {
+    .hd-body__inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hd-body__sidebar { position: static; }
+  }
+
+  @media (max-width: 560px) {
+    .hd-hero { padding-top: calc(var(--header-h) + 3vh); }
+    .hd-hero__title { font-size: clamp(1.7rem, 8vw, 3rem); }
+  }
+</style>

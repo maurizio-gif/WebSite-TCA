@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import ClubLifeHeroMenu from "../../components/ClubLifeHeroMenu.astro";
+import ClubLifeAssistBtn from "../../components/ClubLifeAssistBtn.astro";
+import EventiHome from "../../components/EventiHome.astro";
+import ClubLifeNews from "../../components/ClubLifeNews.astro";
+import ClubLifeHelpDesk from "../../components/ClubLifeHelpDesk.astro";
+import ClubLifeServizi from "../../components/ClubLifeServizi.astro";
+import ClubLifeHelpForm from "../../components/ClubLifeHelpForm.astro";
+import { useTranslations } from "../../i18n/utils";
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+---
+
+<BaseLayout
+  lang={lang}
+  title="Club Life | Tennis Club Ambrosiano Milan"
+  description="Events, news, services and Help Desk of Tennis Club Ambrosiano: the Club's noticeboard for members and families."
+  hideLeadFormInline
+  hideChrome
+>
+  <ClubLifeAssistBtn lang={lang} />
+
+  <PageHero
+    eyebrow={t.clubLife.heroEyebrow}
+    title={t.clubLife.heroTitle}
+    sub={t.clubLife.heroSub}
+    image="/HERO.avif"
+    imageAlt="Aerial view of the Tennis Club Ambrosiano courts"
+  />
+
+  <ClubLifeHeroMenu lang={lang} />
+
+  <div id="eventi" class="cl-eventi-anchor">
+    <EventiHome lang={lang} limit={3} showAllLink={true} />
+  </div>
+
+  <ClubLifeNews lang={lang} />
+
+  <ClubLifeHelpDesk lang={lang} />
+
+  <ClubLifeServizi lang={lang} />
+
+  <ClubLifeHelpForm lang={lang} />
+
+</BaseLayout>
+
+<style>
+  .cl-eventi-anchor {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+</style>

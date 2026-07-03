@@ -9,7 +9,16 @@ const { lang = 'it' } = Astro.props;
 const p = (path: string) => getLocalePath(lang, path);
 const t = useTranslations(lang);
 
-const adulti = [
+interface ActivityItem {
+  num: string;
+  name: string;
+  desc: string;
+  href: string;
+  img: string;
+  imgPosition?: string;
+}
+
+const adulti: ActivityItem[] = [
   {
     num: '01',
     name: t.attivita.prepAtleticaName,
@@ -33,7 +42,7 @@ const adulti = [
   },
 ];
 
-const junior = [
+const junior: ActivityItem[] = [
   {
     num: '01',
     name: t.attivita.scuolaName,

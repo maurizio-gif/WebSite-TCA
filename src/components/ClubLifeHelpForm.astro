@@ -1,0 +1,234 @@
+---
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+const t = useTranslations(lang);
+
+const privacyText = lang === 'en'
+  ? 'I have read and accept the <a href="/privacy-policy" target="_blank">Privacy Policy</a>. I consent to the processing of my personal data to respond to this request. <strong>(required)</strong>'
+  : 'Ho letto e accetto la <a href="/privacy-policy" target="_blank">Privacy Policy</a>. Acconsento al trattamento dei dati personali per rispondermi a questa richiesta. <strong>(obbligatorio)</strong>';
+---
+
+<section class="cl-help-form" id="contatti">
+  <div class="cl-help-form__inner">
+    <div class="cl-help-form__intro">
+      <span class="eyebrow eyebrow--light">{t.clubLife.helpFormEyebrow}</span>
+      <h2 class="cl-help-form__title">{t.clubLife.helpFormTitle}</h2>
+      <p class="cl-help-form__sub">{t.clubLife.helpFormSub}</p>
+    </div>
+
+    <form class="cl-help-form__form" id="cl-help-form" novalidate>
+      <div class="cl-help-form__grid">
+        <div class="cl-help-form__field">
+          <label for="cl-hf-nome">{t.clubLife.helpFormName} <span aria-hidden="true">*</span></label>
+          <input id="cl-hf-nome" name="nome" type="text" autocomplete="given-name" required />
+        </div>
+        <div class="cl-help-form__field">
+          <label for="cl-hf-cognome">{t.clubLife.helpFormSurname} <span aria-hidden="true">*</span></label>
+          <input id="cl-hf-cognome" name="cognome" type="text" autocomplete="family-name" required />
+        </div>
+        <div class="cl-help-form__field">
+          <label for="cl-hf-email">{t.clubLife.helpFormEmail} <span aria-hidden="true">*</span></label>
+          <input id="cl-hf-email" name="email" type="email" autocomplete="email" placeholder="nome@esempio.com" required />
+        </div>
+        <div class="cl-help-form__field">
+          <label for="cl-hf-cell">{t.clubLife.helpFormPhone} <span aria-hidden="true">*</span></label>
+          <input id="cl-hf-cell" name="cellulare" type="tel" autocomplete="tel" placeholder="3XX XXX XXXX" required />
+        </div>
+        <div class="cl-help-form__field cl-help-form__field--full">
+          <label for="cl-hf-message">{t.clubLife.helpFormMessage} <span aria-hidden="true">*</span></label>
+          <textarea id="cl-hf-message" name="message" rows="5" placeholder={t.clubLife.helpFormMessagePh} required></textarea>
+        </div>
+      </div>
+
+      <label class="cl-help-form__consent">
+        <input id="cl-hf-privacy" name="privacy" type="checkbox" required />
+        <span set:html={privacyText} />
+      </label>
+
+      <p class="cl-help-form__error" id="cl-hf-error" hidden>{t.clubLife.helpFormRequired}</p>
+
+      <button class="btn btn-red cl-help-form__submit" type="submit">{t.clubLife.helpFormSubmit}</button>
+    </form>
+
+    <div class="cl-help-form__success" id="cl-hf-success" hidden>
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M7.5 12.5l3 3 6-6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3>{t.clubLife.helpFormSuccessTitle}</h3>
+      <p>{t.clubLife.helpFormSuccessText}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cl-help-form {
+    padding: 8vh var(--pad-x);
+    background: #0f1013;
+    color: #ffffff;
+  }
+
+  .cl-help-form__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .cl-help-form__intro { position: sticky; top: calc(var(--header-h) + 3rem); }
+
+  .cl-help-form__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-top: 0.4rem;
+    margin-bottom: 1.2rem;
+    color: #ffffff;
+  }
+
+  .cl-help-form__sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.05vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 42ch;
+  }
+
+  /* ── Form ── */
+  .cl-help-form__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cl-help-form__field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .cl-help-form__field--full { grid-column: 1 / -1; }
+
+  .cl-help-form__field label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .cl-help-form__field input,
+  .cl-help-form__field textarea {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 0.75rem 0.9rem;
+    box-sizing: border-box;
+    transition: border-color 0.18s, background 0.18s;
+    resize: vertical;
+  }
+
+  .cl-help-form__field input::placeholder,
+  .cl-help-form__field textarea::placeholder { color: rgba(255, 255, 255, 0.32); }
+
+  .cl-help-form__field input:focus,
+  .cl-help-form__field textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    background: rgba(255, 255, 255, 0.09);
+  }
+
+  .cl-help-form__field input:invalid:not(:placeholder-shown),
+  .cl-help-form__field textarea:invalid:not(:placeholder-shown) {
+    border-color: rgba(214, 87, 87, 0.6);
+  }
+
+  .cl-help-form__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+  }
+
+  .cl-help-form__consent input { margin-top: 0.2rem; flex-shrink: 0; }
+  .cl-help-form__consent a { color: rgba(255, 255, 255, 0.8); }
+  .cl-help-form__consent strong { color: rgba(255, 255, 255, 0.8); font-weight: 600; }
+
+  .cl-help-form__error {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: #e08787;
+    margin: -0.5rem 0 1rem;
+  }
+
+  .cl-help-form__submit { width: 100%; }
+
+  /* ── Success state ── */
+  .cl-help-form__success {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #ffffff;
+  }
+
+  .cl-help-form__success svg { color: #4caf7d; margin-bottom: 1rem; }
+
+  .cl-help-form__success h3 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .cl-help-form__success p {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  @media (max-width: 860px) {
+    .cl-help-form__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .cl-help-form__intro { position: static; }
+  }
+
+  @media (max-width: 560px) {
+    .cl-help-form__grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  (function () {
+    const form = document.getElementById('cl-help-form') as HTMLFormElement | null;
+    const errorEl = document.getElementById('cl-hf-error');
+    const successEl = document.getElementById('cl-hf-success');
+    if (!form) return;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        if (errorEl) errorEl.hidden = false;
+        form.reportValidity();
+        return;
+      }
+      if (errorEl) errorEl.hidden = true;
+
+      // TODO: collegare al webhook n8n (Fase 2, vedi CLAUDE.md) quando disponibile.
+      form.hidden = true;
+      if (successEl) successEl.hidden = false;
+    });
+  })();
+</script>
