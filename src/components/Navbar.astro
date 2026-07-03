@@ -24,7 +24,7 @@ const adultiItems = [
     num: '01', label: t.nav.prepAtletica,
     desc: t.navDesc.prepAtletica,
     href: p('/preparazione-atletica'),
-    img: publicUrl('/TCA_Gym%2012.jpg'),
+    img: publicUrl('/Tennis%20Adulti.avif'),
   },
   {
     num: '02', label: t.nav.tennis,
@@ -36,7 +36,7 @@ const adultiItems = [
     num: '03', label: t.nav.padel,
     desc: t.navDesc.padel,
     href: p('/padel'),
-    img: publicUrl('/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif'),
+    img: publicUrl('/Tennis%20Adulti.avif'),
   },
 ];
 
@@ -45,19 +45,19 @@ const juniorItems = [
     num: '01', label: t.nav.scuolaTennis,
     desc: t.navDesc.scuolaTennis,
     href: p('/scuola-tennis'),
-    img: publicUrl('/ajAJSI1P9HI4UhOS_tenniskidsTCA.avif'),
+    img: publicUrl('/Scuola%20Tennis%206.jpg'),
   },
   {
     num: '02', label: t.nav.agonistica,
     desc: t.navDesc.agonistica,
     href: p('/agonistica'),
-    img: publicUrl('/0cd25eb6-cb2a-48cf-a65e-2a7107787fba_Web_Square-1PA_1811.avif'),
+    img: publicUrl('/Scuola%20Tennis%206.jpg'),
   },
   {
     num: '03', label: t.nav.summerCamps,
     desc: t.navDesc.summerCamps,
     href: p('/summer-camps'),
-    img: publicUrl('/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif'),
+    img: publicUrl('/Scuola%20Tennis%206.jpg'),
   },
 ];
 
@@ -75,9 +75,15 @@ const secondaryItems = [
     <!-- Logo -->
     <a class="navbar__logo" href={p('/')} aria-label="Tennis Club Ambrosiano — home">
       <img
+        src={publicUrl('/logos/tca-logo-esteso.png')}
+        alt="Tennis Club Ambrosiano"
+        class="navbar__logo-img navbar__logo-img--esteso"
+        width="908" height="145"
+      />
+      <img
         src={publicUrl('/logos/tca-logo-trim.png')}
         alt="Tennis Club Ambrosiano"
-        class="navbar__logo-img"
+        class="navbar__logo-img navbar__logo-img--compact"
         width="205" height="85"
       />
     </a>
@@ -116,6 +122,7 @@ const secondaryItems = [
                     class={`mega__feat-img mega__feat-img--${i + 1}`}
                     src={item.img}
                     alt={item.label}
+                    style={`object-position: ${item.imgPosition ?? 'center'};`}
                     loading="eager"
                   />
                 ))}
@@ -155,6 +162,7 @@ const secondaryItems = [
                     class={`mega__feat-img mega__feat-img--${i + 1}`}
                     src={item.img}
                     alt={item.label}
+                    style={`object-position: ${item.imgPosition ?? 'center'};`}
                     loading="eager"
                   />
                 ))}
@@ -374,8 +382,13 @@ const secondaryItems = [
     display: block;
   }
 
+  /* Desktop: logo esteso (wordmark completo). Mobile: solo lo stemma compatto. */
+  .navbar__logo-img--compact { display: none; }
+
   /* ── Desktop nav ── */
-  .navbar__nav { flex: 1; display: flex; }
+  /* Centrato nello spazio flessibile: la distanza dal logo e quella
+     dai controlli a destra (lingua, ecc.) restano sempre uguali. */
+  .navbar__nav { flex: 1; display: flex; justify-content: center; }
   .navbar__list {
     list-style: none;
     display: flex;
@@ -772,6 +785,8 @@ const secondaryItems = [
   @media (max-width: 1023px) {
     .navbar__nav { display: none; }
     .navbar__burger { display: flex; }
+    .navbar__logo-img--esteso { display: none; }
+    .navbar__logo-img--compact { display: block; }
   }
 
   @media (max-width: 640px) {
