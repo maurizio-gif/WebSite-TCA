@@ -130,7 +130,7 @@ export const it = {
     shortcutEventi:   'Eventi',
     shortcutNews:     'News',
     shortcutHelpDesk: 'Help Desk',
-    shortcutServizi:  'Servizi',
+    shortcutServizi:  'Servizi e Partner',
 
     menuEventiDesc:   'Tornei, clinic e serate del Club',
     menuNewsDesc:     'Le ultime notizie e i racconti dal TCA',
@@ -162,7 +162,7 @@ export const it = {
     helpDeskCategory: 'Categoria',
     helpDeskRelated: 'Altre guide in questa categoria',
 
-    serviziEyebrow: 'Servizi del Club',
+    serviziEyebrow: 'Servizi e Partner',
     serviziTitle:   'Tutto quello che ti serve',
     serviziDettagli: 'Dettagli',
 

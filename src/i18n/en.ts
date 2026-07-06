@@ -132,7 +132,7 @@ export const en: UI = {
     shortcutEventi:   'Events',
     shortcutNews:     'News',
     shortcutHelpDesk: 'Help Desk',
-    shortcutServizi:  'Services',
+    shortcutServizi:  'Services & Partners',
 
     menuEventiDesc:   'Tournaments, clinics and Club evenings',
     menuNewsDesc:     'The latest news and stories from TCA',
@@ -171,7 +171,7 @@ export const en: UI = {
     helpDeskCategory: 'Category',
     helpDeskRelated: 'More guides in this category',
 
-    serviziEyebrow: 'Club Services',
+    serviziEyebrow: 'Services & Partners',
     serviziTitle:   'Everything you need',
     serviziDettagli: 'Details',
 
