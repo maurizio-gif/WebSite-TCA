@@ -53,7 +53,7 @@ const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria &
   <section class="hd-body">
     <div class="hd-body__inner">
       <div class="hd-body__content prose">
-        {entry.corpo.map((par) => <p>{par}</p>)}
+        {entry.corpo.map((par) => <p set:html={par} />)}
       </div>
 
       <aside class="hd-body__sidebar">

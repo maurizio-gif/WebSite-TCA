@@ -9,17 +9,21 @@ const lang = 'en' as const;
 <BaseLayout
   lang={lang}
   title="Avvenire Tournament | Tennis Club Ambrosiano Milan"
-  description="The Avvenire Tournament is the most important junior tennis tournament in Italy, hosted by Tennis Club Ambrosiano in Milan since 1960."
+  description="The Avvenire Tournament is the most important junior tennis tournament in Italy, hosted by Tennis Club Ambrosiano in Milan since 1965."
 >
   <PageHero
     eyebrow="The Tournament"
     title="Avvenire"
     titleAccent="Tournament"
-    sub="The most important junior tennis tournament in Italy. Since 1960, TCA has hosted one of the most prestigious under-14 competitions in the world. Champions were born here."
+    sub="The most important junior tennis tournament in Italy. Since 1965, TCA has hosted one of the most prestigious under-14 competitions in the world. Champions were born here."
     image="/TCA_foto%20torneo%20Avvenire%202025.jpg"
     imageAlt="Avvenire Tournament at Tennis Club Ambrosiano"
     ctaLabel="Discover the tournament"
   />
+
+  <p class="torneo-quote">
+    "The tournament that never gets a prediction wrong"<span>— Rino Tommasi</span>
+  </p>
 
   <section class="content-section">
     <div class="content-section__inner">
@@ -27,14 +31,17 @@ const lang = 'en' as const;
       <h2 class="section-title">A legendary<br><em>tournament.</em></h2>
       <div class="torneo-intro">
         <p class="body-text">
-          The Avvenire Tournament is one of the most important junior tennis events in the world.
-          Since 1960, every year TCA hosts the best under-14 talents from across the globe.
-          Champions such as Boris Becker, Stefan Edberg and many other stars of world tennis
-          have emerged from the courts of the Avvenire Tournament.
+          The Avvenire Tournament is one of the most important junior tennis events in the
+          world, igniting the dreams of young talents on the courts of Tennis Club Ambrosiano
+          since 1965. TCA has hosted the best under-16 and under-14 talents from across the
+          globe. On these clay courts, champions destined to write the history of world tennis
+          took their first steps — from <strong>Björn Borg</strong> to <strong>Roger Federer</strong>,
+          from <strong>Martina Hingis</strong> to <strong>Novak Djokovic</strong>.
         </p>
         <p class="body-text">
-          A tradition that Tennis Club Ambrosiano carries forward with pride,
-          year after year, in the name of excellence and respect for the sport.
+          Since 2025 the Avvenire Tournament has become a prestigious <strong>Under-14 Super
+          Category</strong> tournament, the highest level of international junior tennis,
+          continuing its mission of discovering and nurturing tomorrow's champions.
         </p>
       </div>
 
@@ -119,7 +126,7 @@ const lang = 'en' as const;
       <span class="eyebrow eyebrow--grey">Next edition</span>
       <h2 class="section-title section-title--light">2026<br><em>edition.</em></h2>
       <p class="body-text body-text--light">
-        Registration for the 2026 edition will be available soon.
+        Registration for the 2026 edition will be available on the Tennis Europe website.
         Stay updated by following our official channels.
       </p>
     </div>
@@ -155,6 +162,29 @@ const lang = 'en' as const;
 
   .section-title em { color: var(--color-accent); font-style: normal; }
   .section-title--light { color: #fff; }
+
+  .torneo-quote {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 5vh var(--pad-x) 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.2vw, 2rem);
+    font-style: italic;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  .torneo-quote span {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.9vw, 14px);
+    font-style: normal;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-light);
+  }
 
   .torneo-intro {
     display: flex;

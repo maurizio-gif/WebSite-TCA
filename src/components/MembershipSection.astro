@@ -17,10 +17,12 @@ const t = lang === 'en' ? {
   featGym:          'Training rooms',
   featGroup:        'Group classes',
   featAdvance:      'Court booking advance',
-  featTennisAdv:    'Advance tennis bookings',
-  featPadelAdv:     'Advance padel bookings',
+  featTennisAdv:    'Active tennis bookings',
+  featPadelAdv:     'Active padel bookings',
   featCourseDisc:   'Discounted course rates',
   featLessonDisc:   'Discount on private lessons',
+  activeBookingsTip:'Concurrent active bookings: once a session is over, you can book the next one.',
+  selectionInclTip: 'Group Cycling not included.',
   included:         'Included',
   memberDiscount:   'Member discount',
   selectionIncl:    'Selection included',
@@ -28,10 +30,10 @@ const t = lang === 'en' ? {
   days4:            '4 days',
   days7:            '7 days',
   days10:           '10 days',
-  pw1:              '1 / wk.',
-  pw2:              '2 / wk.',
-  pw3:              '3 / wk.',
-  pw4:              '4 / wk.',
+  pw1:              '1',
+  pw2:              '2',
+  pw3:              '3',
+  pw4:              '4',
   discoverMore:     'Learn more',
 } : {
   title:            'Scegli il tuo<br><em>abbonamento.</em>',
@@ -47,10 +49,12 @@ const t = lang === 'en' ? {
   featGym:          'Sale di allenamento',
   featGroup:        'Corsi di gruppo',
   featAdvance:      'Anticipo prenotazione campi',
-  featTennisAdv:    'Prenotazioni anticipate tennis',
-  featPadelAdv:     'Prenotazioni anticipate padel',
+  featTennisAdv:    'Prenotazioni attive tennis',
+  featPadelAdv:     'Prenotazioni attive padel',
   featCourseDisc:   'Tariffe agevolate su corsi',
   featLessonDisc:   'Sconto su lezioni individuali',
+  activeBookingsTip:'Prenotazioni attive in contemporanea, terminata la lezione sarà possibile prenotare la successiva.',
+  selectionInclTip: 'Escluso il Group Cycling.',
   included:         'Incluso',
   memberDiscount:   'Sconto soci',
   selectionIncl:    'Selezione inclusa',
@@ -58,10 +62,10 @@ const t = lang === 'en' ? {
   days4:            '4 giorni',
   days7:            '7 giorni',
   days10:           '10 giorni',
-  pw1:              '1 / sett.',
-  pw2:              '2 / sett.',
-  pw3:              '3 / sett.',
-  pw4:              '4 / sett.',
+  pw1:              '1',
+  pw2:              '2',
+  pw3:              '3',
+  pw4:              '4',
   discoverMore:     'Scopri di più',
 };
 ---
@@ -138,7 +142,13 @@ const t = lang === 'en' ? {
           </tr>
           <tr>
             <td class="ms__feat">{t.featGroup}</td>
-            <td class="ms__cell ms__cell--partial">{t.selectionIncl}</td>
+            <td class="ms__cell ms__cell--partial">
+              {t.selectionIncl}
+              <span class="ms__info" tabindex="0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="ms__tooltip ms__tooltip--center" role="tooltip">{t.selectionInclTip}</span>
+              </span>
+            </td>
             <td class="ms__cell ms__cell--yes">{t.allIncluded}</td>
             <td class="ms__cell ms__cell--yes ms__cell--plat">{t.allIncluded}</td>
           </tr>
@@ -154,13 +164,25 @@ const t = lang === 'en' ? {
             <td class="ms__cell ms__cell--value ms__cell--plat">{t.days10}</td>
           </tr>
           <tr>
-            <td class="ms__feat">{t.featTennisAdv}</td>
+            <td class="ms__feat">
+              {t.featTennisAdv}
+              <span class="ms__info" tabindex="0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="ms__tooltip" role="tooltip">{t.activeBookingsTip}</span>
+              </span>
+            </td>
             <td class="ms__cell ms__cell--value">{t.pw2}</td>
             <td class="ms__cell ms__cell--value">{t.pw3}</td>
             <td class="ms__cell ms__cell--value ms__cell--plat">{t.pw4}</td>
           </tr>
           <tr>
-            <td class="ms__feat">{t.featPadelAdv}</td>
+            <td class="ms__feat">
+              {t.featPadelAdv}
+              <span class="ms__info" tabindex="0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                <span class="ms__tooltip" role="tooltip">{t.activeBookingsTip}</span>
+              </span>
+            </td>
             <td class="ms__cell ms__cell--value">{t.pw1}</td>
             <td class="ms__cell ms__cell--value">{t.pw2}</td>
             <td class="ms__cell ms__cell--value ms__cell--plat">{t.pw2}</td>
@@ -405,6 +427,66 @@ const t = lang === 'en' ? {
     color: var(--color-text);
     padding: 15px 20px;
     vertical-align: middle;
+  }
+
+  /* ── Info tooltip ── */
+  .ms__info {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    color: var(--color-text-light);
+    cursor: help;
+    vertical-align: middle;
+  }
+
+  .ms__info:hover,
+  .ms__info:focus,
+  .ms__info:focus-visible {
+    color: var(--color-accent);
+    outline: none;
+  }
+
+  .ms__tooltip {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 10px);
+    z-index: 20;
+    width: max-content;
+    max-width: 260px;
+    background: var(--color-text);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    font-weight: 300;
+    line-height: 1.5;
+    padding: 10px 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+    pointer-events: none;
+  }
+
+  .ms__info:hover .ms__tooltip,
+  .ms__info:focus .ms__tooltip,
+  .ms__info:focus-visible .ms__tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .ms__tooltip--center {
+    left: 50%;
+    transform: translate(-50%, 4px);
+  }
+
+  .ms__info:hover .ms__tooltip--center,
+  .ms__info:focus .ms__tooltip--center,
+  .ms__info:focus-visible .ms__tooltip--center {
+    transform: translate(-50%, 0);
   }
 
   /* ── Data cells ── */

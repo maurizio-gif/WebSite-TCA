@@ -26,14 +26,14 @@ interface Category {
   courses: Course[];
 }
 
-const YOGA      = '/b9c52423-5bff-496a-8686-bffe1b123195_Aspria_Milano_Outdoor_Yoga+1.avif';
+const YOGA      = '/YOGA%202.avif';
 const GYM       = '/Sala%20Attrezzi%202.avif';
 const RACKET    = '/aXCJ_AIvOtkhBw2j_Lifestyle_232026SpeedMP_DXT56509.avif';
 const CARDIO    = '/4af14e95-b254-472b-8b91-a0bfb9815ceb_shutterstock_564025705.avif';
 const YOGA2     = '/Yoga.avif';
 const CYCLING   = '/Cycling.avif';
-const DAVANZO   = '/EricDavanzo0475.avif';
-const KETTLE    = '/a46fcf94-e41a-460d-b6c9-0af53fdc34a9_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0685.avif';
+const DAVANZO   = '/Total%20Body.avif';
+const KETTLE    = '/Sala%20Attrezzi%209.avif';
 const AIRBIKE   = '/Sala%20Attrezzi%206.jpg';
 const ISOTONICA = '/Sala%20Attrezzi%207.jpg';
 const TAPIS     = '/Sala%20Attrezzi%201.avif';
@@ -59,10 +59,10 @@ const categories: Category[] = [
     desc: 'Allena il sistema cardiovascolare, brucia calorie e migliora la resistenza e la coordinazione ritmica con corsi dinamici e coinvolgenti.',
     color: '#B83A00',
     courses: [
-      { name: 'Dance',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Coreografie su musica pop e latina. Cardio coinvolgente e coordinazione ritmica.',    img: CARDIO },
-      { name: 'Zumba',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Mix di danza latino-americana e fitness. Brucia calorie con il sorriso.',             img: DAVANZO },
+      { name: 'Dance',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Coreografie su musica pop e dance. Cardio coinvolgente e coordinazione ritmica.',    img: CARDIO },
+      { name: 'Zumba',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Mix di danza latino-americana e allenamento aerobico. Brucia calorie con il sorriso.', img: DAVANZO },
       { name: 'Cycling',         duration: '45 min', intensity: 3, level: 'Tutti i livelli', desc: 'Allenamento su bike al ritmo della musica. Massima resa cardiovascolare.',            img: CYCLING },
-      { name: 'Aeroboxe',        duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Combinazione di arti marziali e aerobica. Potenza, riflessi e resistenza.',          img: AIRBIKE },
+      { name: 'Aeroboxe',        duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Combinazione di boxe e aerobica. Potenza, riflessi e resistenza.',                   img: AIRBIKE },
       { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step rivisitato con movimenti funzionali. Tonifica e migliora la resistenza.',       img: GYM },
       { name: 'Step & Tone',     duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step cardio abbinato a tonificazione. Allenamento a corpo completo.',                img: TREADMILL },
     ]
@@ -75,11 +75,11 @@ const categories: Category[] = [
     courses: [
       { name: 'Funracket',            duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Sport-specific per tennisti e padellisti. Forza esplosiva, reattività e agilità.',    img: RACKET },
       { name: 'Tribal-x',             duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Circuito ad alta intensità con carichi liberi. Forza e potenza muscolare.',           img: KETTLE },
-      { name: 'Functional',           duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Allenamento col peso corporeo. Forza funzionale e stabilità articolare.',            img: '/Functional.jpg' },
+      { name: 'Functional',           duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Allenamento con attrezzi e peso corporeo. Forza funzionale, mobilità e stabilità articolare.', img: '/Functional.jpg' },
       { name: 'Active Pump',          duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Barbell workout con bilanciere. Tonificazione totale su musica.',                    img: ISOTONICA },
       { name: 'Total Body',           duration: '60 min', intensity: 3, level: 'Tutti i livelli', desc: 'Lavoro su tutti i distretti muscolari. Forza, resistenza e postura.',               img: TAPIS },
       { name: 'Circuit',              duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Stazioni cardio e forza in sequenza. Metabolismo alle stelle.',                     img: '/Strenght%20Circuit.jpg' },
-      { name: 'Suspension Training',  duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'TRX e sling training. Core, stabilità e forza funzionale in sospensione.',          img: FUNCTIONAL },
+      { name: 'Suspension Training',  duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Sling training: core, stabilità e forza funzionale in sospensione.', img: FUNCTIONAL },
     ]
   },
   {
@@ -153,10 +153,10 @@ const categories: Category[] = [
           <span class="eyebrow">Sala Attrezzi</span>
           <h2 class="section-title">Potenziamento<br><em>su misura.</em></h2>
           <p class="sala-body">
-            Uno spazio ampio e luminoso, riservato ai soci, con macchinari isotonici di ultima generazione, un'area cardio completa e una zona funzionale per il lavoro a corpo libero. Ogni postazione è pensata per accompagnarti in tutte le fasi dell'allenamento, dal riscaldamento al defaticamento.
+            Uno spazio ampio e luminoso, riservato ai soci, con <strong>macchinari isotonici di ultima generazione</strong>, un'area cardio completa e una zona funzionale per il lavoro a corpo libero. Ogni postazione è pensata per accompagnarti in tutte le fasi dell'allenamento, dal riscaldamento al defaticamento.
           </p>
           <p class="sala-body">
-            Che il tuo obiettivo sia aumentare la forza, migliorare la resistenza, preparare la stagione agonistica o semplicemente mantenerti in forma, qui trovi tutto il necessario — affiancato da personal trainer qualificati pronti a costruire con te un programma su misura.
+            Che il tuo obiettivo sia aumentare la forza, migliorare la resistenza, preparare la stagione agonistica o semplicemente mantenerti in forma, qui trovi tutto il necessario — affiancato da <strong>personal trainer qualificati</strong> pronti a costruire con te un programma su misura.
           </p>
 
           <ul class="sala-features">

@@ -59,13 +59,13 @@ const tournaments = [
 <BaseLayout
   lang={lang}
   title="Tennis School | Tennis Club Ambrosiano Milan"
-  description="Tennis school for children and teenagers at TCA. Mini tennis and red, orange, green and yellow levels with the FIT method. Milan's most historic tennis school."
+  description="Tennis school for children and teenagers at TCA. Mini tennis and red, orange, green and yellow levels with the FITP method. A historic Milan tennis school since 1965."
 >
   <PageHero
     eyebrow="Junior · Tennis School"
     title="Tennis"
     titleAccent="School"
-    sub="Mini tennis and level-based pathways — red, orange, green and yellow — through to competitive preparation. Milan's most historic tennis school since 1965."
+    sub="Mini tennis and level-based pathways — red, orange, green and yellow — through to competitive preparation. A historic Milan tennis school, active since 1965."
     image="/SCUOLA%20TENNIS%205.avif"
     imageAlt="Children at TCA tennis school"
     imagePosition="center top"
@@ -125,18 +125,24 @@ const tournaments = [
     <div class="content-section__inner two-col">
       <div class="two-col__text">
         <span class="eyebrow">Our method</span>
-        <h2 class="section-title">FIT coaches.<br><em>The TCA method.</em></h2>
+        <h2 class="section-title">FITP coaches.<br><em>The TCA method.</em></h2>
+        <span class="method-badge">Vavassori Tennis Academy · Top School, FITP's highest recognition</span>
+        <p class="body-text">
+          Through our partnership with the Vavassori Tennis Academy, TCA guides
+          your children on a tennis journey <strong>from their very first steps to
+          competing at the highest levels</strong>.
+        </p>
         <p class="body-text">
           Groups are built by age and by level, as homogeneous as possible.
           Every training session combines athletic preparation and tennis, with
           a frequency of once, twice or three times a week.
         </p>
         <p class="body-text">
-          The progression follows the FIT methodology: as the level rises the
+          The progression follows the FITP methodology: as the level rises the
           ball becomes faster and the court lengthens, up to the full court of
-          the yellow level. All our coaches are certified by the Italian Tennis
-          Federation: the TCA method combines technique, play and the values of
-          sport to shape not only tennis players, but people.
+          the yellow level, combining technique, play and the values of sport
+          <strong>to shape not only tennis players, but people</strong>. All our coaches are
+          certified by the Italian Tennis and Padel Federation.
         </p>
       </div>
       <div class="two-col__image">
@@ -163,7 +169,7 @@ const tournaments = [
         ))}
       </div>
       <p class="level-after body-text">
-        Selected pupils are also offered the <strong>FIT Junior Program</strong>,
+        Selected pupils are also offered the <strong>FITP Junior Program</strong>,
         the non-competitive activity of the federal circuit: a series of
         tournament stages, from November into spring, for those who want to start
         testing themselves in matches.
@@ -390,6 +396,15 @@ const tournaments = [
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .method-badge {
+    font-family: var(--font-body);
+    font-size: clamp(11px, 0.8vw, 12px);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-accent);
   }
 
   .full-img {

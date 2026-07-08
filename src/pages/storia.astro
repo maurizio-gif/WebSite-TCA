@@ -6,10 +6,10 @@ import { publicUrl } from "../i18n/utils";
 
 <BaseLayout
   title="La Nostra Storia | Tennis Club Ambrosiano"
-  description="La storia del Tennis Club Ambrosiano: dalla fondazione nel 1965 ai giorni nostri, sessant'anni di tennis, sport e community a Milano."
+  description="La storia del Tennis Club Ambrosiano: dalla fondazione nel 1963 ai giorni nostri, sessant'anni di tennis, sport e community a Milano."
 >
   <PageHero
-    eyebrow="Dal 1965"
+    eyebrow="Dal 1963"
     title="La nostra"
     titleAccent="Storia"
     sub="Sessant'anni di passione per il tennis e per lo sport. Una storia fatta di campioni, community, tradizione e innovazione nel cuore di Milano."
@@ -25,12 +25,15 @@ import { publicUrl } from "../i18n/utils";
 
       <div class="timeline">
         {[
-          { year: "1965", text: "Fondazione del Tennis Club Ambrosiano. I primi campi vengono aperti in Via Feltre, cuore del quartiere Feltre-Udine di Milano." },
-          { year: "1960", text: "Prima edizione del Torneo Avvenire. L'evento diventa rapidamente uno dei tornei giovanili più importanti d'Italia e del mondo." },
+          { year: "1963", text: "Fondazione del Tennis Club Ambrosiano e apertura della sede di Via Feltre, nel cuore del quartiere Feltre-Udine di Milano." },
+          { year: "1965", text: "Prima edizione del Torneo Avvenire, destinato a diventare uno dei più prestigiosi tornei giovanili internazionali." },
+          { year: "1969", text: "Il Torneo Avvenire si apre ai migliori talenti internazionali." },
           { year: "1980s", text: "Ampliamento della struttura: nuovi campi, spogliatoi e servizi per rispondere alla crescente domanda dei soci." },
           { year: "2000s", text: "Apertura dei campi da padel. Il club abbraccia il nuovo sport e lo integra nell'offerta per i soci." },
           { year: "2020s", text: "Avvio del progetto di modernizzazione digitale e ampliamento dell'offerta con il pickleball e i programmi di preparazione atletica." },
-          { year: "2026", text: "Il TCA guarda al futuro con un sito rinnovato, nuove tecnologie e un'offerta sempre più completa per adulti e famiglie." },
+          { year: "2023", text: "Introduzione della categoria Under 14 al Torneo Avvenire nel circuito Tennis Europe." },
+          { year: "2025", text: "Il Torneo Avvenire diventa ufficialmente un torneo Under 14 Super Category, il più alto livello del tennis giovanile europeo." },
+          { year: "2026", text: "Il Club continua il proprio percorso di innovazione con il rinnovamento digitale e l'ampliamento dei servizi dedicati a sport e famiglie." },
         ].map((item) => (
           <div class="timeline__item">
             <span class="timeline__year">{item.year}</span>
@@ -48,16 +51,25 @@ import { publicUrl } from "../i18n/utils";
           <span class="eyebrow">Il club oggi</span>
           <h2 class="section-title">Una community<br><em>viva.</em></h2>
           <p class="body-text">
-            Oggi il Tennis Club Ambrosiano è uno dei club sportivi più attivi di Milano.
-            Oltre 2.000 soci, 16 campi da tennis, campi da padel e pickleball, una scuola
-            tennis tra le più storiche della città e un settore agonistico di alto livello.
+            Oggi il Tennis Club Ambrosiano è uno dei più importanti punti di riferimento per
+            gli sport di racchetta a Milano. Con <strong>quasi 2.000 soci</strong>, 16 campi da
+            tennis, 2 campi da padel, 2 campi da pickleball, oltre 80 corsi settimanali, aree
+            dedicate alla preparazione atletica, una Scuola Tennis riconosciuta
+            <strong>TOP School FITP</strong> e un settore agonistico di alto livello, il Club
+            accoglie ogni giorno sportivi di tutte le età e livello.
+          </p>
+          <p class="body-text" style="margin-top:1.25rem;">
+            Ma il TCA è molto più di un centro sportivo: <strong>è una comunità</strong>. Durante
+            tutto l'anno organizza tornei, eventi sociali, clinic, feste e momenti di incontro
+            dedicati a soci, famiglie e amici, trasformando la terrazza affacciata sui campi e le
+            aree verdi in luoghi di condivisione, convivialità e amicizia.
           </p>
         </div>
         <div class="gallery">
-          <img src={publicUrl("/EricDavanzo0475.avif")} alt="Club TCA" class="gallery__img" />
-          <img src={publicUrl("/ac3d4514-51a9-4cab-8cdc-256e61621885_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO1162.avif")} alt="Club TCA" class="gallery__img" />
+          <img src={publicUrl("/aW-n8QIvOtkhBvwi_HCM_Tennis_Outdoor_July-2025.avif")} alt="Club TCA" class="gallery__img" />
+          <img src={publicUrl("/aW-n8gIvOtkhBvwl_HCM_Tennis_Outdoor_July-2025-2.avif")} alt="Club TCA" class="gallery__img" />
           <img src={publicUrl("/EricDavanzo1169.jpg")} alt="Club TCA" class="gallery__img" />
-          <img src={publicUrl("/a46fcf94-e41a-460d-b6c9-0af53fdc34a9_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0685.avif")} alt="Club TCA" class="gallery__img" />
+          <img src={publicUrl("/aW-n8wIvOtkhBvwn_HCM_Tennis_Outdoor_July-2025-3.avif")} alt="Club TCA" class="gallery__img" />
         </div>
       </div>
     </div>
