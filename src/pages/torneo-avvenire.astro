@@ -56,12 +56,12 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
           <span class="stat__label">Paesi rappresentati</span>
         </div>
         <div class="stat">
-          <span class="stat__n">Under 14</span>
-          <span class="stat__label">Categoria</span>
+          <span class="stat__n">U14</span>
+          <span class="stat__label">Super Category</span>
         </div>
         <div class="stat">
-          <span class="stat__n">Top 10</span>
-          <span class="stat__label">Ex-partecipanti in classifica ATP</span>
+          <span class="stat__n">57</span>
+          <span class="stat__label">Titoli Slam vinti dai nostri ex-partecipanti</span>
         </div>
       </div>
     </div>
@@ -103,6 +103,10 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
         <figure class="champion-fig">
           <img src={publicUrl("/Avvenire%20Zabaleta.avif")} alt="Pablo Zabaleta al Torneo Avvenire" loading="lazy" class="champion-img" />
           <figcaption class="champion-cap">Pablo Zabaleta</figcaption>
+        </figure>
+        <figure class="champion-fig">
+          <span class="img-placeholder champion-img" data-name="Avvenire Becker.avif"></span>
+          <figcaption class="champion-cap">Boris Becker</figcaption>
         </figure>
       </div>
     </div>
