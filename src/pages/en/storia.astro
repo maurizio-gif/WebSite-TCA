@@ -9,10 +9,10 @@ const lang = 'en' as const;
 <BaseLayout
   lang={lang}
   title="Our History | Tennis Club Ambrosiano Milan"
-  description="The history of Tennis Club Ambrosiano: from its foundation in 1965 to the present day, sixty years of tennis, sport and community in Milan."
+  description="The history of Tennis Club Ambrosiano: from its foundation in 1963 to the present day, sixty years of tennis, sport and community in Milan."
 >
   <PageHero
-    eyebrow="Since 1965"
+    eyebrow="Since 1963"
     title="Our"
     titleAccent="History"
     sub="Sixty years of passion for tennis and sport. A story of champions, community, tradition and innovation in the heart of Milan."
@@ -28,12 +28,15 @@ const lang = 'en' as const;
 
       <div class="timeline">
         {[
-          { year: "1965", text: "Tennis Club Ambrosiano is founded. The first courts open on Via Feltre, in the heart of Milan's Feltre-Udine district." },
-          { year: "1960s", text: "The first edition of the Avvenire Tournament. The event quickly becomes one of the most important junior tournaments in Italy and the world." },
+          { year: "1963", text: "Tennis Club Ambrosiano is founded, opening its home on Via Feltre, in the heart of Milan's Feltre-Udine district." },
+          { year: "1965", text: "First edition of the Avvenire Tournament, destined to become one of the most prestigious international junior tournaments." },
+          { year: "1969", text: "The Avvenire Tournament opens up to the best international talents." },
           { year: "1980s", text: "Expansion of the facility: new courts, changing rooms and services to meet growing demand from members." },
           { year: "2000s", text: "Padel courts open. The club embraces the new sport and integrates it into its offering for members." },
           { year: "2020s", text: "Launch of the digital modernisation project and expansion of the offering with pickleball and athletic training programmes." },
-          { year: "2026", text: "TCA looks to the future with a renewed website, new technology and an increasingly complete offering for adults and families." },
+          { year: "2023", text: "The Under-14 category joins the Avvenire Tournament within the Tennis Europe circuit." },
+          { year: "2025", text: "The Avvenire Tournament officially becomes an Under-14 Super Category tournament, the highest level of European junior tennis." },
+          { year: "2026", text: "The Club continues its path of innovation with digital renewal and an expanded range of services for sport and families." },
         ].map((item) => (
           <div class="timeline__item">
             <span class="timeline__year">{item.year}</span>
@@ -51,16 +54,25 @@ const lang = 'en' as const;
           <span class="eyebrow">The club today</span>
           <h2 class="section-title">A living<br><em>community.</em></h2>
           <p class="body-text">
-            Today Tennis Club Ambrosiano is one of Milan's most active sports clubs.
-            More than 2,000 members, 16 tennis courts, padel and pickleball courts, a tennis
-            school among the most historic in the city and a high-level competitive programme.
+            Today Tennis Club Ambrosiano is one of the most important reference points for
+            racket sports in Milan. With <strong>nearly 2,000 members</strong>, 16 tennis courts,
+            2 padel courts, 2 pickleball courts, over 80 weekly classes, areas dedicated to
+            athletic training, a Tennis School recognised as a <strong>FITP Top School</strong>
+            and a high-level competitive programme, the Club welcomes athletes of every age and
+            level every day.
+          </p>
+          <p class="body-text" style="margin-top:1.25rem;">
+            But TCA is much more than a sports centre: <strong>it's a community</strong>.
+            Throughout the year it organises tournaments, social events, clinics, parties and
+            get-togethers for members, families and friends, turning the terrace overlooking the
+            courts and the green spaces into places to share, connect and make friends.
           </p>
         </div>
         <div class="gallery">
-          <img src={publicUrl("/EricDavanzo0475.avif")} alt="TCA club" class="gallery__img" />
-          <img src={publicUrl("/ac3d4514-51a9-4cab-8cdc-256e61621885_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO1162.avif")} alt="TCA club" class="gallery__img" />
+          <img src={publicUrl("/aW-n8QIvOtkhBvwi_HCM_Tennis_Outdoor_July-2025.avif")} alt="TCA club" class="gallery__img" />
+          <img src={publicUrl("/aW-n8gIvOtkhBvwl_HCM_Tennis_Outdoor_July-2025-2.avif")} alt="TCA club" class="gallery__img" />
           <img src={publicUrl("/EricDavanzo1169.jpg")} alt="TCA club" class="gallery__img" />
-          <img src={publicUrl("/a46fcf94-e41a-460d-b6c9-0af53fdc34a9_EricDavanzo_ph_TENNIS_CLUB_AMBROSIANO0685.avif")} alt="TCA club" class="gallery__img" />
+          <img src={publicUrl("/aW-n8wIvOtkhBvwn_HCM_Tennis_Outdoor_July-2025-3.avif")} alt="TCA club" class="gallery__img" />
         </div>
       </div>
     </div>

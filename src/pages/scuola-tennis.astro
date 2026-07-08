@@ -58,13 +58,13 @@ const tornei = [
 
 <BaseLayout
   title="Scuola Tennis | Tennis Club Ambrosiano"
-  description="Scuola tennis per bambini e ragazzi al TCA. Mini tennis e livelli rosso, arancio, verde e giallo con metodo FIT. La scuola tennis più storica di Milano."
+  description="Scuola tennis per bambini e ragazzi al TCA. Mini tennis e livelli rosso, arancio, verde e giallo con metodo FITP. Storica scuola tennis di Milano dal 1965."
 >
   <PageHero
     eyebrow="Junior · Scuola Tennis"
     title="Scuola"
     titleAccent="Tennis"
-    sub="Mini tennis e percorsi a livelli — rosso, arancio, verde e giallo — fino alla preparazione agonistica. La scuola tennis più storica di Milano dal 1965."
+    sub="Mini tennis e percorsi a livelli — rosso, arancio, verde e giallo — fino alla preparazione agonistica. Una storica scuola tennis di Milano, attiva dal 1965."
     image="/SCUOLA%20TENNIS%205.avif"
     imageAlt="Bambini a scuola tennis TCA"
     imagePosition="center top"
@@ -124,18 +124,24 @@ const tornei = [
     <div class="content-section__inner two-col">
       <div class="two-col__text">
         <span class="eyebrow">Il nostro metodo</span>
-        <h2 class="section-title">Maestri FIT.<br><em>Metodo TCA.</em></h2>
+        <h2 class="section-title">Maestri FITP.<br><em>Metodo TCA.</em></h2>
+        <span class="method-badge">Vavassori Tennis Academy · Top School, massimo riconoscimento FITP</span>
+        <p class="body-text">
+          Attraverso la collaborazione con la Vavassori Tennis Academy, il TCA
+          accompagna i tuoi bambini in un percorso tennistico <strong>dai primi passi
+          fino all'agonismo ad altissimi livelli</strong>.
+        </p>
         <p class="body-text">
           I gruppi sono costruiti per età e per livello, il più omogenei
           possibile. Ogni allenamento abbina preparazione atletica e tennis,
           con una frequenza di una, due o tre volte a settimana.
         </p>
         <p class="body-text">
-          La progressione segue la metodologia FIT: salendo di livello la palla
+          La progressione segue la metodologia FITP: salendo di livello la palla
           diventa più veloce e il campo si allunga, fino al campo intero del
-          livello giallo. Tutti i nostri maestri sono certificati dalla
-          Federazione Italiana Tennis: il metodo TCA unisce tecnica, gioco e
-          valori dello sport per formare non solo tennisti, ma persone.
+          livello giallo, unendo tecnica, gioco e valori dello sport per
+          <strong>formare non solo tennisti, ma persone</strong>. Tutti i nostri maestri sono
+          certificati dalla Federazione Italiana Tennis e Padel.
         </p>
       </div>
       <div class="two-col__image">
@@ -162,7 +168,7 @@ const tornei = [
         ))}
       </div>
       <p class="level-after body-text">
-        Agli allievi selezionati viene inoltre proposto il <strong>FIT Junior
+        Agli allievi selezionati viene inoltre proposto il <strong>FITP Junior
         Program</strong>, l’attività non agonistica del circuito federale: un
         percorso di tornei a tappe, da novembre alla primavera, per chi vuole
         iniziare a confrontarsi in gara.
@@ -389,6 +395,15 @@ const tornei = [
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .method-badge {
+    font-family: var(--font-body);
+    font-size: clamp(11px, 0.8vw, 12px);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-accent);
   }
 
   .full-img {

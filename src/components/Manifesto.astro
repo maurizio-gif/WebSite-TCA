@@ -6,16 +6,16 @@ const p = (path: string) => getLocalePath(lang, path);
 
 const copy = lang === 'en' ? {
   title:  'A club built on tradition,<br>made for today.',
-  p1:     'Tennis Club Ambrosiano is home to the Avvenire Tournament, the competition that since 1965 has discovered the next generation of tennis talent. From that same calling — the future training every day — everything we do today was born.',
-  p2:     "Here you'll find some of the finest facilities in east Milan: tennis courts, padel, athletic training spaces and an activity calendar for every age. Whether you want to get back on court, raise a child through sport, or simply take care of yourself, the Club makes it easy.",
+  p1:     'Tennis Club Ambrosiano is home to the <strong>Avvenire Tournament</strong>, the competition that since 1965 has discovered the next generation of tennis talent. From that same calling — the future training every day — everything we do today was born.',
+  p2:     "Here you'll find some of the finest facilities in east Milan: <strong>tennis courts, padel, athletic training spaces</strong> and an activity calendar for every age. Whether you want to get back on court, raise a child through sport, or simply take care of yourself, the Club makes it easy.",
   cta:    'Discover our history →',
-  quote:  "You're home. All you need is a racket.",
+  quote:  'Sport and Tradition.',
 } : {
   title:  'Un club fondato<br>sulla tradizione,<br><em>costruito per il presente.</em>',
-  p1:     'Il Tennis Club Ambrosiano è la casa del Torneo Avvenire, la gara che dal 1965 scopre i talenti del tennis di domani. Da quella stessa vocazione — il futuro che si allena ogni giorno — nasce tutto ciò che facciamo oggi.',
-  p2:     'Qui trovi alcuni dei migliori impianti della zona est di Milano: campi da tennis, padel, spazi per la preparazione atletica e un calendario di attività che accompagna ogni età. Che tu voglia tornare a giocare, far crescere un figlio nello sport o semplicemente prenderti cura di te, il Club è pensato per renderlo semplice.',
+  p1:     'Il Tennis Club Ambrosiano è la casa del <strong>Torneo Avvenire</strong>, la gara che dal 1965 scopre i talenti del tennis di domani. Da quella stessa vocazione — il futuro che si allena ogni giorno — nasce tutto ciò che facciamo oggi.',
+  p2:     "Qui trovi alcuni dei migliori impianti della zona est di Milano: <strong>campi da tennis, padel, spazi per la preparazione atletica</strong> e un calendario di attività che accompagna ogni età. Che tu voglia tornare a giocare, far crescere un figlio nello sport o semplicemente prenderti cura di te, il Club è pensato per renderlo semplice.",
   cta:    'Scopri la nostra storia →',
-  quote:  'Sei a casa. Ti manca solo la racchetta.',
+  quote:  'Sport e Tradizione.',
 };
 ---
 
@@ -25,8 +25,8 @@ const copy = lang === 'en' ? {
 
     <div class="manifesto__right">
       <div class="manifesto__body" data-anim="from-left" data-anim-delay="150">
-        <p>{copy.p1}</p>
-        <p>{copy.p2}</p>
+        <p set:html={copy.p1} />
+        <p set:html={copy.p2} />
       </div>
       <a class="btn btn-red manifesto__cta" href={p('/storia')} data-anim="from-left" data-anim-delay="280">
         {copy.cta}

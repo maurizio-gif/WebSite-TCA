@@ -1,6 +1,6 @@
 ---
 title: "Sala Attrezzi e Corsi di Gruppo | Tennis Club Ambrosiano Milano"
-description: "Sala pesi professionale, personal trainer certificati e oltre 80 corsi di gruppo settimanali al Tennis Club Ambrosiano di Milano. Allenati con metodo e raggiungi i tuoi obiettivi."
+description: "Palestra professionale, personal trainer certificati e oltre 80 corsi di gruppo settimanali al Tennis Club Ambrosiano di Milano. Allenati con metodo e raggiungi i tuoi obiettivi."
 hero_eyebrow: "Adulti · Preparazione Atletica"
 hero_titolo: "Allenamento"
 hero_titolo_accent: "& Benessere"

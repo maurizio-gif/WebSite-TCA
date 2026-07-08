@@ -22,20 +22,27 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
     ctaLabel="Scopri il torneo"
   />
 
+  <p class="torneo-quote">
+    «Il Torneo che non sbaglia mai un pronostico»<span>— Rino Tommasi</span>
+  </p>
+
   <section class="content-section">
     <div class="content-section__inner">
       <span class="eyebrow">La storia</span>
       <h2 class="section-title">Un torneo<br><em>leggendario.</em></h2>
       <div class="torneo-intro">
         <p class="body-text">
-          Il Torneo Avvenire è uno degli eventi tennis giovanili più importanti al mondo.
-          Sin dal 1960, ogni anno il TCA ospita i migliori talenti under 14 da tutto il globo.
-          Dal campo del Torneo Avvenire sono emersi campioni come Boris Becker, Stefan Edberg
-          e molti altri protagonisti del tennis mondiale.
+          Il Torneo Avvenire è uno degli eventi tennis giovanili più importanti al mondo,
+          sin dal 1965 accende i sogni dei giovani talenti sui campi del Tennis Club Ambrosiano.
+          Il TCA ha ospitato i migliori talenti under 16 e 14 da tutto il globo. Tra queste
+          terre rosse hanno mosso i primi passi campioni destinati a scrivere la storia del
+          tennis mondiale, da <strong>Björn Borg</strong> a <strong>Roger Federer</strong>,
+          da <strong>Martina Hingis</strong> a <strong>Novak Djokovic</strong>.
         </p>
         <p class="body-text">
-          Una tradizione che il Tennis Club Ambrosiano porta avanti con orgoglio,
-          anno dopo anno, nel segno dell'eccellenza e del rispetto dello sport.
+          Dal 2025 il Torneo Avvenire è diventato un prestigioso <strong>torneo Under 14 Super
+          Category</strong>, il più alto livello del tennis giovanile internazionale, continuando
+          la sua missione di scoprire e valorizzare i campioni di domani.
         </p>
       </div>
 
@@ -120,7 +127,7 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
       <span class="eyebrow eyebrow--grey">Prossima edizione</span>
       <h2 class="section-title section-title--light">Edizione<br><em>2026.</em></h2>
       <p class="body-text body-text--light">
-        Le iscrizioni per l'edizione 2026 saranno presto disponibili.
+        Le iscrizioni per l'edizione 2026 saranno disponibili sul sito Tennis Europe.
         Resta aggiornato seguendo i nostri canali ufficiali.
       </p>
     </div>
@@ -156,6 +163,29 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
 
   .section-title em { color: var(--color-accent); font-style: normal; }
   .section-title--light { color: #fff; }
+
+  .torneo-quote {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 5vh var(--pad-x) 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.2vw, 2rem);
+    font-style: italic;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  .torneo-quote span {
+    display: block;
+    margin-top: 0.5rem;
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.9vw, 14px);
+    font-style: normal;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-light);
+  }
 
   .torneo-intro {
     display: flex;
