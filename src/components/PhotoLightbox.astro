@@ -25,6 +25,14 @@ const closeLabel = lang === 'en' ? 'Close' : 'Chiudi';
     max-width: 92vw;
     max-height: 92vh;
     margin: auto;
+  }
+
+  /* Il display va condizionato a [open]: un dialog chiuso è nascosto dallo
+     user-agent stylesheet (dialog:not([open]) { display:none }), ma quella
+     regola ha origine "user-agent" e viene sempre battuta da qualunque
+     regola del sito sullo stesso display — anche senza [open], altrimenti
+     il dialog (e il bottone di chiusura, position:fixed) resta visibile. */
+  .plb[open] {
     display: flex;
     flex-direction: column;
     align-items: center;
