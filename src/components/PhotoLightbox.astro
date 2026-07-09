@@ -1,0 +1,105 @@
+---
+import type { Lang } from '../i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+
+const closeLabel = lang === 'en' ? 'Close' : 'Chiudi';
+---
+
+<dialog id="photo-lightbox" class="plb" aria-label={closeLabel}>
+  <button class="plb__close" aria-label={closeLabel} data-plb-close>
+    <svg width="16" height="16" viewBox="0 0 14 14" fill="none">
+      <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <img class="plb__img" src="" alt="" />
+  <p class="plb__caption"></p>
+</dialog>
+
+<style is:global>
+  .plb {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 92vw;
+    max-height: 92vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .plb::backdrop {
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .plb__img {
+    max-width: 92vw;
+    max-height: 82vh;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .plb__caption {
+    font-family: var(--font-display);
+    font-size: clamp(12px, 1vw, 14px);
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+  }
+
+  .plb__caption:empty { display: none; }
+
+  .plb__close {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s;
+  }
+
+  .plb__close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+</style>
+
+<script>
+  const dialog = document.getElementById('photo-lightbox') as HTMLDialogElement | null;
+
+  if (dialog) {
+    const imgEl = dialog.querySelector<HTMLImageElement>('.plb__img');
+    const capEl = dialog.querySelector<HTMLElement>('.plb__caption');
+
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as Element).closest<HTMLElement>('[data-lightbox]');
+      if (!trigger || !imgEl || !capEl) return;
+      const source = trigger instanceof HTMLImageElement ? trigger : trigger.querySelector('img');
+      if (!source) return;
+      imgEl.src = source.currentSrc || source.src;
+      imgEl.alt = source.alt || '';
+      capEl.textContent = trigger.dataset.lightboxCaption || source.alt || '';
+      dialog.showModal();
+    });
+
+    // Click ovunque nel dialog (foto, didascalia o sfondo) chiude il lightbox
+    dialog.addEventListener('click', () => dialog.close());
+  }
+</script>
