@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import PhotoLightbox from "../components/PhotoLightbox.astro";
 import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
@@ -77,36 +78,60 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
       </p>
       <div class="champions-grid">
         <figure class="champion-fig">
-          <img src={publicUrl("/Avvenire%20Lendl.avif")} alt="Ivan Lendl al Torneo Avvenire" loading="lazy" class="champion-img" />
+          <div class="champion-img-wrap" data-lightbox data-lightbox-caption="Ivan Lendl">
+            <img src={publicUrl("/Avvenire%20Lendl.avif")} alt="Ivan Lendl al Torneo Avvenire" loading="lazy" class="champion-img"/>
+            <span class="champion-expand" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></span>
+          </div>
           <figcaption class="champion-cap">Ivan Lendl</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src={publicUrl("/Avvenire%20Ivanisevic.avif")} alt="Goran Ivanisevic al Torneo Avvenire" loading="lazy" class="champion-img" />
+          <div class="champion-img-wrap" data-lightbox data-lightbox-caption="Goran Ivanisevic">
+            <img src={publicUrl("/Avvenire%20Ivanisevic.avif")} alt="Goran Ivanisevic al Torneo Avvenire" loading="lazy" class="champion-img"/>
+            <span class="champion-expand" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></span>
+          </div>
           <figcaption class="champion-cap">Goran Ivanisevic</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src={publicUrl("/Avvenire%20Hingis.avif")} alt="Martina Hingis al Torneo Avvenire" loading="lazy" class="champion-img" />
+          <div class="champion-img-wrap" data-lightbox data-lightbox-caption="Martina Hingis">
+            <img src={publicUrl("/Avvenire%20Hingis.avif")} alt="Martina Hingis al Torneo Avvenire" loading="lazy" class="champion-img"/>
+            <span class="champion-expand" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></span>
+          </div>
           <figcaption class="champion-cap">Martina Hingis</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src={publicUrl("/Avvenire%20Sharapova.avif")} alt="Maria Sharapova al Torneo Avvenire" loading="lazy" class="champion-img" />
+          <div class="champion-img-wrap" data-lightbox data-lightbox-caption="Maria Sharapova">
+            <img src={publicUrl("/Avvenire%20Sharapova.avif")} alt="Maria Sharapova al Torneo Avvenire" loading="lazy" class="champion-img"/>
+            <span class="champion-expand" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></span>
+          </div>
           <figcaption class="champion-cap">Maria Sharapova</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src={publicUrl("/Avvenire%20Pennetta.avif")} alt="Flavia Pennetta al Torneo Avvenire" loading="lazy" class="champion-img" />
+          <div class="champion-img-wrap" data-lightbox data-lightbox-caption="Flavia Pennetta">
+            <img src={publicUrl("/Avvenire%20Pennetta.avif")} alt="Flavia Pennetta al Torneo Avvenire" loading="lazy" class="champion-img"/>
+            <span class="champion-expand" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></span>
+          </div>
           <figcaption class="champion-cap">Flavia Pennetta</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src={publicUrl("/Avvenire%20Giorgi.avif")} alt="Camila Giorgi al Torneo Avvenire" loading="lazy" class="champion-img" />
+          <div class="champion-img-wrap" data-lightbox data-lightbox-caption="Camila Giorgi">
+            <img src={publicUrl("/Avvenire%20Giorgi.avif")} alt="Camila Giorgi al Torneo Avvenire" loading="lazy" class="champion-img"/>
+            <span class="champion-expand" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></span>
+          </div>
           <figcaption class="champion-cap">Camila Giorgi</figcaption>
         </figure>
         <figure class="champion-fig">
-          <img src={publicUrl("/Avvenire%20Zabaleta.avif")} alt="Pablo Zabaleta al Torneo Avvenire" loading="lazy" class="champion-img" />
+          <div class="champion-img-wrap" data-lightbox data-lightbox-caption="Pablo Zabaleta">
+            <img src={publicUrl("/Avvenire%20Zabaleta.avif")} alt="Pablo Zabaleta al Torneo Avvenire" loading="lazy" class="champion-img"/>
+            <span class="champion-expand" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></span>
+          </div>
           <figcaption class="champion-cap">Pablo Zabaleta</figcaption>
         </figure>
         <figure class="champion-fig">
-          <span class="img-placeholder champion-img" data-name="Avvenire Becker.avif"></span>
-          <figcaption class="champion-cap">Boris Becker</figcaption>
+          <div class="champion-img-wrap" data-lightbox data-lightbox-caption="Jennifer Capriati">
+            <img src={publicUrl("/Avvenire%20Capriati.jpg")} alt="Jennifer Capriati al Torneo Avvenire" loading="lazy" class="champion-img"/>
+            <span class="champion-expand" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></span>
+          </div>
+          <figcaption class="champion-cap">Jennifer Capriati</figcaption>
         </figure>
       </div>
     </div>
@@ -118,13 +143,18 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
       <span class="eyebrow">Galleria</span>
       <h2 class="section-title">Il torneo<br><em>in immagini.</em></h2>
       <div class="gallery-grid">
-        <img src={publicUrl("/TCA_foto%20torneo%20Avvenire%202025.jpg")} alt="Torneo Avvenire 2025" loading="lazy" class="gallery-img gallery-img--wide" />
-        <img src={publicUrl("/TCA_foto%20torneo%20Avvenire%202024.jpg")} alt="Torneo Avvenire 2024" loading="lazy" class="gallery-img" />
-        <img src={publicUrl("/TCA_Avvenire_2025%201.jpg")} alt="Torneo Avvenire 2025 - momento di gara" loading="lazy" class="gallery-img" />
-        <img src={publicUrl("/TCA_Avvenire_2025%206.jpg")} alt="Torneo Avvenire 2025 - atmosfera" loading="lazy" class="gallery-img gallery-img--wide" />
+        <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Stretta%20di%20mano.jpg")} alt="Torneo Avvenire 2025 - stretta di mano a fine match" loading="lazy" class="gallery-img gallery-img--wide" />
+        <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Premiazione%20singolare.jpg")} alt="Torneo Avvenire 2025 - premiazione vincitrice U14" loading="lazy" class="gallery-img" />
+        <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Coppe.jpg")} alt="Torneo Avvenire 2025 - trofei della 58ª edizione" loading="lazy" class="gallery-img" />
+        <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Albo%20d%27oro.jpg")} alt="Torneo Avvenire - Albo d'Oro" loading="lazy" class="gallery-img" />
+        <img src={publicUrl("/TCA%20Avvenire%202024%20-%20Conferenza%20stampa.jpg")} alt="Torneo Avvenire 2024 - conferenza stampa" loading="lazy" class="gallery-img" />
+        <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Conferenza%20stampa.jpg")} alt="Torneo Avvenire 2025 - conferenza stampa della 58ª edizione" loading="lazy" class="gallery-img gallery-img--wide" />
+        <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Pubblico.jpg")} alt="Torneo Avvenire 2025 - pubblico in sala" loading="lazy" class="gallery-img" />
       </div>
     </div>
   </section>
+
+  <PhotoLightbox lang="it" />
 
   <section class="content-section content-section--dark">
     <div class="content-section__inner">
@@ -267,12 +297,36 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
     gap: 0.5rem;
   }
 
+  .champion-img-wrap {
+    position: relative;
+    cursor: pointer;
+  }
+
   .champion-img {
     width: 100%;
     aspect-ratio: 3/4;
     object-fit: cover;
     object-position: top;
     display: block;
+  }
+
+  .champion-expand {
+    position: absolute;
+    right: 0.6rem;
+    bottom: 0.6rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    transition: background 0.18s, transform 0.18s;
+  }
+
+  .champion-img-wrap:hover .champion-expand {
+    background: var(--color-accent);
+    transform: scale(1.08);
   }
 
   .champion-cap {
