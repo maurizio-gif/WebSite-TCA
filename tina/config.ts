@@ -1116,32 +1116,11 @@ export default defineConfig({
                 { type: 'string', name: 'torneo_prossima_testo_en', label: '🇬🇧 Sezione Prossima edizione — testo (inglese)', ui: { component: 'textarea' } },
               ],
             },
-            {
-              name: 'regolamento',
-              label: 'Regolamento del Club',
-              fields: [
-                ...heroSeoFields,
-                {
-                  type: 'string', name: 'regolamento_body', label: 'Testo regolamento (italiano)', required: true,
-                  ui: { component: 'textarea' },
-                  description: 'Usa "## " per un titolo di sezione, "### " per un sottotitolo, "- " per un elenco puntato, riga vuota per andare a capo tra paragrafi, "**testo**" per il grassetto.',
-                },
-                { type: 'string', name: 'regolamento_body_en', label: '🇬🇧 Testo regolamento (inglese)', ui: { component: 'textarea' } },
-              ],
-            },
-            {
-              name: 'privacy',
-              label: 'Privacy Policy',
-              fields: [
-                ...heroSeoFields,
-                {
-                  type: 'string', name: 'privacy_body', label: 'Testo privacy policy (italiano)', required: true,
-                  ui: { component: 'textarea' },
-                  description: 'Usa "## " per un titolo di sezione, "### " per un sottotitolo, "- " per un elenco puntato, riga vuota per andare a capo tra paragrafi, "**testo**" per il grassetto.',
-                },
-                { type: 'string', name: 'privacy_body_en', label: '🇬🇧 Testo privacy policy (inglese)', ui: { component: 'textarea' } },
-              ],
-            },
+            // NOTA: i template "regolamento" e "privacy" sono stati temporaneamente
+            // rimossi da qui per un test di diagnostica sull'indicizzazione bloccata
+            // di TinaCloud (vedi conversazione). Le pagine restano pubblicate e
+            // funzionanti sul sito (i .md usano _template: generica nel frattempo);
+            // i due template verranno reintrodotti uno alla volta.
           ],
         };
       })(),

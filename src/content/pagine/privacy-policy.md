@@ -1,5 +1,5 @@
 ---
-_template: privacy
+_template: generica
 title: "Privacy Policy | Tennis Club Ambrosiano Milano"
 description: "Informativa sul trattamento dei dati personali del Tennis Club Ambrosiano: dati raccolti, finalità, cookie, servizi di terze parti e diritti dell'interessato."
 hero_eyebrow: "Aggiornato a luglio 2026"
