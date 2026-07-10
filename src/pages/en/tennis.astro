@@ -8,10 +8,8 @@ import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
 
-// SEO + hero gestibili da TinaCMS → src/content/pagine/tennis.md (campi _en)
+// SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/tennis.md (campi _en)
 const d = (await getEntry("pagine", "tennis"))!.data;
-// Corpo pagina → src/content/corpoTennis/corpo.md
-const c = (await getEntry("corpoTennis", "corpo"))!.data;
 const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
@@ -36,23 +34,23 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.campi_eyebrow_en ?? c.campi_eyebrow}</span>
-      <h2 class="section-title">{c.campi_titolo_en ?? c.campi_titolo}<br><em>{c.campi_titolo_accent_en ?? c.campi_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.tennis_campi_eyebrow_en ?? d.tennis_campi_eyebrow}</span>
+      <h2 class="section-title">{d.tennis_campi_titolo_en ?? d.tennis_campi_titolo}<br><em>{d.tennis_campi_titolo_accent_en ?? d.tennis_campi_titolo_accent}</em></h2>
       <div class="content-grid">
         <div class="content-card">
           <img src={publicUrl('/0b28cd5a-d9a8-4ffb-b8de-e5c6e675fbd2_TCA+Tennis+4.avif')} alt="Clay court seen from above during a lesson" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>{c.campi[0].titolo_en ?? c.campi[0].titolo}</h3>
-          <p>{c.campi[0].testo_en ?? c.campi[0].testo}</p>
+          <h3>{d.tennis_campi[0].titolo_en ?? d.tennis_campi[0].titolo}</h3>
+          <p>{d.tennis_campi[0].testo_en ?? d.tennis_campi[0].testo}</p>
         </div>
         <div class="content-card">
           <img src={publicUrl('/Tennis%20court%20indoor.jpeg')} alt="Indoor tennis court at Tennis Club Ambrosiano" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>{c.campi[1].titolo_en ?? c.campi[1].titolo}</h3>
-          <p>{c.campi[1].testo_en ?? c.campi[1].testo}</p>
+          <h3>{d.tennis_campi[1].titolo_en ?? d.tennis_campi[1].titolo}</h3>
+          <p>{d.tennis_campi[1].testo_en ?? d.tennis_campi[1].testo}</p>
         </div>
         <div class="content-card">
           <img src={publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif')} alt="Player in action on a hard court" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>{c.campi[2].titolo_en ?? c.campi[2].titolo}</h3>
-          <p>{c.campi[2].testo_en ?? c.campi[2].testo}</p>
+          <h3>{d.tennis_campi[2].titolo_en ?? d.tennis_campi[2].titolo}</h3>
+          <p>{d.tennis_campi[2].testo_en ?? d.tennis_campi[2].testo}</p>
         </div>
       </div>
     </div>
@@ -60,9 +58,9 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.soci_eyebrow_en ?? c.soci_eyebrow}</span>
-      <h2 class="section-title">{c.soci_titolo_en ?? c.soci_titolo}<br><em>{c.soci_titolo_accent_en ?? c.soci_titolo_accent}</em></h2>
-      <p class="section-lead" set:html={mdBold(c.soci_testo_en ?? c.soci_testo)} />
+      <span class="eyebrow">{d.tennis_soci_eyebrow_en ?? d.tennis_soci_eyebrow}</span>
+      <h2 class="section-title">{d.tennis_soci_titolo_en ?? d.tennis_soci_titolo}<br><em>{d.tennis_soci_titolo_accent_en ?? d.tennis_soci_titolo_accent}</em></h2>
+      <p class="section-lead" set:html={mdBold(d.tennis_soci_testo_en ?? d.tennis_soci_testo)} />
     </div>
   </section>
 
@@ -72,11 +70,11 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.corsi_eyebrow_en ?? c.corsi_eyebrow}</span>
-      <h2 class="section-title">{c.corsi_titolo_en ?? c.corsi_titolo}<br><em>{c.corsi_titolo_accent_en ?? c.corsi_titolo_accent}</em></h2>
-      <p class="section-lead" set:html={mdBold(c.corsi_intro_en ?? c.corsi_intro)} />
+      <span class="eyebrow">{d.tennis_corsi_eyebrow_en ?? d.tennis_corsi_eyebrow}</span>
+      <h2 class="section-title">{d.tennis_corsi_titolo_en ?? d.tennis_corsi_titolo}<br><em>{d.tennis_corsi_titolo_accent_en ?? d.tennis_corsi_titolo_accent}</em></h2>
+      <p class="section-lead" set:html={mdBold(d.tennis_corsi_intro_en ?? d.tennis_corsi_intro)} />
       <div class="content-grid content-grid--4">
-        {c.corsi_livelli.map((l) => (
+        {d.tennis_corsi_livelli.map((l) => (
           <div class="content-card content-card--simple">
             <strong>{l.titolo_en ?? l.titolo}</strong>
             <p>{l.testo_en ?? l.testo}</p>
@@ -84,7 +82,7 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
         ))}
       </div>
       <div class="section-cta">
-        <button class="btn btn-red" data-open-modal="modal-contatti">{c.corsi_cta_label_en ?? c.corsi_cta_label}</button>
+        <button class="btn btn-red" data-open-modal="modal-contatti">{d.tennis_corsi_cta_label_en ?? d.tennis_corsi_cta_label}</button>
       </div>
     </div>
   </section>

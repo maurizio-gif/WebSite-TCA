@@ -6,11 +6,8 @@ import ConversionBlock from "../components/ConversionBlock.astro";
 import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
-// SEO + hero gestibili da TinaCMS → src/content/pagine/tennis.md
+// SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/tennis.md
 const d = (await getEntry("pagine", "tennis"))!.data;
-
-// Corpo pagina (titoli e testi; le foto restano fisse) → src/content/corpoTennis/corpo.md
-const c = (await getEntry("corpoTennis", "corpo"))!.data;
 const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
@@ -34,23 +31,23 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.campi_eyebrow}</span>
-      <h2 class="section-title">{c.campi_titolo}<br><em>{c.campi_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.tennis_campi_eyebrow}</span>
+      <h2 class="section-title">{d.tennis_campi_titolo}<br><em>{d.tennis_campi_titolo_accent}</em></h2>
       <div class="content-grid">
         <div class="content-card">
           <img src={publicUrl('/0b28cd5a-d9a8-4ffb-b8de-e5c6e675fbd2_TCA+Tennis+4.avif')} alt="Campo in terra rossa visto dall'alto durante una lezione" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>{c.campi[0].titolo}</h3>
-          <p>{c.campi[0].testo}</p>
+          <h3>{d.tennis_campi[0].titolo}</h3>
+          <p>{d.tennis_campi[0].testo}</p>
         </div>
         <div class="content-card">
           <img src={publicUrl('/Tennis%20court%20indoor.jpeg')} alt="Campo da tennis indoor del Tennis Club Ambrosiano" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>{c.campi[1].titolo}</h3>
-          <p>{c.campi[1].testo}</p>
+          <h3>{d.tennis_campi[1].titolo}</h3>
+          <p>{d.tennis_campi[1].testo}</p>
         </div>
         <div class="content-card">
           <img src={publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif')} alt="Giocatrice in azione su superficie rapida" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>{c.campi[2].titolo}</h3>
-          <p>{c.campi[2].testo}</p>
+          <h3>{d.tennis_campi[2].titolo}</h3>
+          <p>{d.tennis_campi[2].testo}</p>
         </div>
       </div>
     </div>
@@ -58,9 +55,9 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.soci_eyebrow}</span>
-      <h2 class="section-title">{c.soci_titolo}<br><em>{c.soci_titolo_accent}</em></h2>
-      <p class="section-lead" set:html={mdBold(c.soci_testo)} />
+      <span class="eyebrow">{d.tennis_soci_eyebrow}</span>
+      <h2 class="section-title">{d.tennis_soci_titolo}<br><em>{d.tennis_soci_titolo_accent}</em></h2>
+      <p class="section-lead" set:html={mdBold(d.tennis_soci_testo)} />
     </div>
   </section>
 
@@ -70,11 +67,11 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.corsi_eyebrow}</span>
-      <h2 class="section-title">{c.corsi_titolo}<br><em>{c.corsi_titolo_accent}</em></h2>
-      <p class="section-lead" set:html={mdBold(c.corsi_intro)} />
+      <span class="eyebrow">{d.tennis_corsi_eyebrow}</span>
+      <h2 class="section-title">{d.tennis_corsi_titolo}<br><em>{d.tennis_corsi_titolo_accent}</em></h2>
+      <p class="section-lead" set:html={mdBold(d.tennis_corsi_intro)} />
       <div class="content-grid content-grid--4">
-        {c.corsi_livelli.map((l) => (
+        {d.tennis_corsi_livelli.map((l) => (
           <div class="content-card content-card--simple">
             <strong>{l.titolo}</strong>
             <p>{l.testo}</p>
@@ -82,7 +79,7 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
         ))}
       </div>
       <div class="section-cta">
-        <button class="btn btn-red" data-open-modal="modal-contatti">{c.corsi_cta_label}</button>
+        <button class="btn btn-red" data-open-modal="modal-contatti">{d.tennis_corsi_cta_label}</button>
       </div>
     </div>
   </section>

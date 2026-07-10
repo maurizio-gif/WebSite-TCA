@@ -1,4 +1,5 @@
 ---
+_template: generica
 title: "Padel | Tennis Club Ambrosiano"
 description: "Padel al Tennis Club Ambrosiano. Campi coperti e scoperti, corsi per tutti i livelli, ambiente dinamico e community attiva a Milano."
 hero_eyebrow: "Adulti · Padel"

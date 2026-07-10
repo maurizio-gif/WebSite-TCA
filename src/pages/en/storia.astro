@@ -6,10 +6,8 @@ import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
 
-// SEO + hero gestibili da TinaCMS → src/content/pagine/storia.md (campi _en)
+// SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/storia.md (campi _en)
 const d = (await getEntry("pagine", "storia"))!.data;
-// Corpo pagina (timeline + "il club oggi") → src/content/corpoStoria/corpo.md
-const c = (await getEntry("corpoStoria", "corpo"))!.data;
 const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
@@ -30,11 +28,11 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.sezione1_eyebrow_en ?? c.sezione1_eyebrow}</span>
-      <h2 class="section-title">{c.sezione1_titolo_en ?? c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent_en ?? c.sezione1_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.storia_sezione1_eyebrow_en ?? d.storia_sezione1_eyebrow}</span>
+      <h2 class="section-title">{d.storia_sezione1_titolo_en ?? d.storia_sezione1_titolo}<br><em>{d.storia_sezione1_titolo_accent_en ?? d.storia_sezione1_titolo_accent}</em></h2>
 
       <div class="timeline">
-        {c.timeline.map((item) => (
+        {d.storia_timeline!.map((item) => (
           <div class="timeline__item">
             <span class="timeline__year">{item.anno}</span>
             <p class="timeline__text">{item.testo_en ?? item.testo}</p>
@@ -48,13 +46,13 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
     <div class="content-section__inner">
       <div class="two-col">
         <div>
-          <span class="eyebrow">{c.sezione2_eyebrow_en ?? c.sezione2_eyebrow}</span>
-          <h2 class="section-title">{c.sezione2_titolo_en ?? c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent_en ?? c.sezione2_titolo_accent}</em></h2>
-          <p class="body-text" set:html={mdBold(c.paragrafo1_en ?? c.paragrafo1)} />
-          <p class="body-text" style="margin-top:1.25rem;" set:html={mdBold(c.paragrafo2_en ?? c.paragrafo2)} />
+          <span class="eyebrow">{d.storia_sezione2_eyebrow_en ?? d.storia_sezione2_eyebrow}</span>
+          <h2 class="section-title">{d.storia_sezione2_titolo_en ?? d.storia_sezione2_titolo}<br><em>{d.storia_sezione2_titolo_accent_en ?? d.storia_sezione2_titolo_accent}</em></h2>
+          <p class="body-text" set:html={mdBold(d.storia_paragrafo1_en ?? d.storia_paragrafo1!)} />
+          <p class="body-text" style="margin-top:1.25rem;" set:html={mdBold(d.storia_paragrafo2_en ?? d.storia_paragrafo2!)} />
         </div>
         <div class="gallery">
-          {c.galleria.map((img) => (
+          {d.storia_galleria!.map((img) => (
             <img src={publicUrl(img.immagine)} alt={img.alt} class="gallery__img" />
           ))}
         </div>

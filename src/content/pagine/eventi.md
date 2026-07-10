@@ -1,4 +1,5 @@
 ---
+_template: generica
 title: "Eventi | Tennis Club Ambrosiano"
 description: "Gli eventi del Tennis Club Ambrosiano: tornei interni, serate sociali, aperitivi in club, esibizioni e tutto quello che anima la community TCA durante l'anno."
 hero_eyebrow: "Community"

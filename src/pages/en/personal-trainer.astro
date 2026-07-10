@@ -7,10 +7,8 @@ import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
 
-// SEO + hero gestibili da TinaCMS → src/content/pagine/personal-trainer.md (campi _en)
+// SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/personal-trainer.md
 const d = (await getEntry("pagine", "personal-trainer"))!.data;
-// Corpo pagina → src/content/corpoPersonalTrainer/corpo.md
-const c = (await getEntry("corpoPersonalTrainer", "corpo"))!.data;
 const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 ---
 
@@ -34,13 +32,13 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
     <div class="intro-section__inner">
       <div class="intro-split">
         <div class="intro-split__text">
-          <span class="eyebrow">{c.sezione1_eyebrow_en ?? c.sezione1_eyebrow}</span>
-          <h2 class="pt-title">{c.sezione1_titolo_en ?? c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent_en ?? c.sezione1_titolo_accent}</em></h2>
-          <p>{c.sezione1_paragrafo1_en ?? c.sezione1_paragrafo1}</p>
-          <p>{c.sezione1_paragrafo2_en ?? c.sezione1_paragrafo2}</p>
+          <span class="eyebrow">{d.pt_sezione1_eyebrow_en ?? d.pt_sezione1_eyebrow}</span>
+          <h2 class="pt-title">{d.pt_sezione1_titolo_en ?? d.pt_sezione1_titolo}<br><em>{d.pt_sezione1_titolo_accent_en ?? d.pt_sezione1_titolo_accent}</em></h2>
+          <p>{d.pt_sezione1_paragrafo1_en ?? d.pt_sezione1_paragrafo1}</p>
+          <p>{d.pt_sezione1_paragrafo2_en ?? d.pt_sezione1_paragrafo2}</p>
         </div>
         <div class="intro-split__stats">
-          {c.stats.map((s) => (
+          {d.pt_stats.map((s) => (
             <div class="stat-item">
               <span class="stat-num">{s.numero}</span>
               <span class="stat-label" set:html={nl2br(s.etichetta_en ?? s.etichetta)} />
@@ -56,8 +54,8 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
     <div class="team-section__inner">
       <div class="team-head">
         <div>
-          <span class="eyebrow">{c.sezione2_eyebrow_en ?? c.sezione2_eyebrow}</span>
-          <h2 class="pt-title">{c.sezione2_titolo_en ?? c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent_en ?? c.sezione2_titolo_accent}</em></h2>
+          <span class="eyebrow">{d.pt_sezione2_eyebrow_en ?? d.pt_sezione2_eyebrow}</span>
+          <h2 class="pt-title">{d.pt_sezione2_titolo_en ?? d.pt_sezione2_titolo}<br><em>{d.pt_sezione2_titolo_accent_en ?? d.pt_sezione2_titolo_accent}</em></h2>
         </div>
         <div class="trainer-nav">
           <button class="courses-btn" data-dir="-1" data-track="trainers" aria-label="Previous">
@@ -71,7 +69,7 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 
       <div class="trainer-track-wrap">
         <div class="trainer-track" data-carousel-id="trainers">
-          {c.trainers.map((trainer) => (
+          {d.pt_trainers.map((trainer) => (
             <article class="trainer-card">
               <div class="trainer-card__media">
                 {trainer.foto
@@ -105,11 +103,11 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
   <!-- ── How it works ── -->
   <section class="flow-section">
     <div class="flow-section__inner">
-      <span class="eyebrow">{c.sezione3_eyebrow_en ?? c.sezione3_eyebrow}</span>
-      <h2 class="pt-title">{c.sezione3_titolo_en ?? c.sezione3_titolo}<br><em>{c.sezione3_titolo_accent_en ?? c.sezione3_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.pt_sezione3_eyebrow_en ?? d.pt_sezione3_eyebrow}</span>
+      <h2 class="pt-title">{d.pt_sezione3_titolo_en ?? d.pt_sezione3_titolo}<br><em>{d.pt_sezione3_titolo_accent_en ?? d.pt_sezione3_titolo_accent}</em></h2>
 
       <div class="flow-steps">
-        {c.steps.map((s, i) => (
+        {d.pt_steps.map((s, i) => (
           <div class="flow-step">
             <span class="flow-step__num">{String(i + 1).padStart(2, '0')}</span>
             <h3>{s.titolo_en ?? s.titolo}</h3>
@@ -123,9 +121,9 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
   <!-- ── Contact CTA ── -->
   <section class="pt-cta-section">
     <div class="pt-cta-section__inner">
-      <h2 class="pt-cta-title">{c.sezione4_titolo_en ?? c.sezione4_titolo}</h2>
-      <p class="pt-cta-sub">{c.sezione4_sottotitolo_en ?? c.sezione4_sottotitolo}</p>
-      <button type="button" class="btn btn-red" data-open-modal="modal-contatti">{c.sezione4_cta_label_en ?? c.sezione4_cta_label}</button>
+      <h2 class="pt-cta-title">{d.pt_sezione4_titolo_en ?? d.pt_sezione4_titolo}</h2>
+      <p class="pt-cta-sub">{d.pt_sezione4_sottotitolo_en ?? d.pt_sezione4_sottotitolo}</p>
+      <button type="button" class="btn btn-red" data-open-modal="modal-contatti">{d.pt_sezione4_cta_label_en ?? d.pt_sezione4_cta_label}</button>
     </div>
   </section>
 

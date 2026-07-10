@@ -1,5 +1,12 @@
 import { defineCollection, z } from 'astro:content';
 
+// ─── PAGINE ───────────────────────────────────────────────────────────────────
+// Un file .md per pagina in src/content/pagine/. Ogni file contiene SEO + hero
+// (comuni a tutte le pagine) più, per le pagine che hanno contenuto strutturato
+// sotto l'hero, i campi specifici di quella pagina (opzionali, popolati solo
+// dove servono). In TinaCMS questo appare come UNA voce "Pagine" con un
+// template dedicato per pagina (vedi tina/config.ts).
+// ─────────────────────────────────────────────────────────────────────────────
 const pagine = defineCollection({
   type: 'content',
   schema: z.object({
@@ -19,6 +26,344 @@ const pagine = defineCollection({
     hero_titolo_accent_en: z.string().optional(),
     hero_sottotitolo_en: z.string().optional(),
     hero_immagine_alt_en: z.string().optional(),
+
+    // ── Corpo pagina: Storia ──
+    storia_sezione1_eyebrow: z.string().optional(),
+    storia_sezione1_titolo: z.string().optional(),
+    storia_sezione1_titolo_accent: z.string().optional(),
+    storia_timeline: z.array(z.object({
+      anno: z.string(),
+      testo: z.string(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    storia_sezione2_eyebrow: z.string().optional(),
+    storia_sezione2_titolo: z.string().optional(),
+    storia_sezione2_titolo_accent: z.string().optional(),
+    storia_paragrafo1: z.string().optional(),
+    storia_paragrafo2: z.string().optional(),
+    storia_galleria: z.array(z.object({
+      immagine: z.string(),
+      alt: z.string(),
+    })).optional(),
+    storia_sezione1_eyebrow_en: z.string().optional(),
+    storia_sezione1_titolo_en: z.string().optional(),
+    storia_sezione1_titolo_accent_en: z.string().optional(),
+    storia_sezione2_eyebrow_en: z.string().optional(),
+    storia_sezione2_titolo_en: z.string().optional(),
+    storia_sezione2_titolo_accent_en: z.string().optional(),
+    storia_paragrafo1_en: z.string().optional(),
+    storia_paragrafo2_en: z.string().optional(),
+
+    // ── Corpo pagina: Summer Camps ──
+    camps_sezione1_eyebrow: z.string().optional(),
+    camps_sezione1_titolo: z.string().optional(),
+    camps_sezione1_titolo_accent: z.string().optional(),
+    camps_features: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    camps_immagine1: z.string().optional(),
+    camps_immagine1_alt: z.string().optional(),
+    camps_immagine2: z.string().optional(),
+    camps_immagine2_alt: z.string().optional(),
+    camps_sezione2_eyebrow: z.string().optional(),
+    camps_sezione2_titolo: z.string().optional(),
+    camps_sezione2_titolo_accent: z.string().optional(),
+    camps_settimane: z.array(z.object({
+      settimana: z.string(),
+      date: z.string(),
+      settimana_en: z.string().optional(),
+      date_en: z.string().optional(),
+    })).optional(),
+    camps_sezione1_eyebrow_en: z.string().optional(),
+    camps_sezione1_titolo_en: z.string().optional(),
+    camps_sezione1_titolo_accent_en: z.string().optional(),
+    camps_immagine1_alt_en: z.string().optional(),
+    camps_immagine2_alt_en: z.string().optional(),
+    camps_sezione2_eyebrow_en: z.string().optional(),
+    camps_sezione2_titolo_en: z.string().optional(),
+    camps_sezione2_titolo_accent_en: z.string().optional(),
+
+    // ── Corpo pagina: Scuola Tennis ──
+    scuola_sezione1_eyebrow: z.string().optional(),
+    scuola_sezione1_titolo: z.string().optional(),
+    scuola_sezione1_titolo_accent: z.string().optional(),
+    scuola_sezione1_lead: z.string().optional(),
+    scuola_livelli: z.array(z.object({
+      dot: z.enum(['rosso', 'arancio', 'verde', 'giallo']),
+      nome: z.string(),
+      tag: z.string(),
+      range: z.string(),
+      testo: z.string(),
+      nome_en: z.string().optional(),
+      tag_en: z.string().optional(),
+      range_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    scuola_livelli_footer_testo: z.string().optional(),
+    scuola_livelli_footer_link_label: z.string().optional(),
+    scuola_sezione2_eyebrow: z.string().optional(),
+    scuola_sezione2_titolo: z.string().optional(),
+    scuola_sezione2_titolo_accent: z.string().optional(),
+    scuola_iscrizione_cards: z.array(z.object({
+      titolo: z.string(),
+      tag: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      tag_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    scuola_iscrizione_cta_label: z.string().optional(),
+    scuola_sezione3_eyebrow: z.string().optional(),
+    scuola_sezione3_titolo: z.string().optional(),
+    scuola_sezione3_titolo_accent: z.string().optional(),
+    scuola_sezione3_badge: z.string().optional(),
+    scuola_sezione3_paragrafo1: z.string().optional(),
+    scuola_sezione3_paragrafo2: z.string().optional(),
+    scuola_sezione3_paragrafo3: z.string().optional(),
+    scuola_sezione3_immagine: z.string().optional(),
+    scuola_sezione3_immagine_alt: z.string().optional(),
+    scuola_sezione4_eyebrow: z.string().optional(),
+    scuola_sezione4_titolo: z.string().optional(),
+    scuola_sezione4_titolo_accent: z.string().optional(),
+    scuola_tornei: z.array(z.object({
+      quando: z.string(),
+      nome: z.string(),
+      testo: z.string(),
+      quando_en: z.string().optional(),
+      nome_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    scuola_sezione4_footer_testo: z.string().optional(),
+    scuola_sezione1_eyebrow_en: z.string().optional(),
+    scuola_sezione1_titolo_en: z.string().optional(),
+    scuola_sezione1_titolo_accent_en: z.string().optional(),
+    scuola_sezione1_lead_en: z.string().optional(),
+    scuola_livelli_footer_testo_en: z.string().optional(),
+    scuola_livelli_footer_link_label_en: z.string().optional(),
+    scuola_sezione2_eyebrow_en: z.string().optional(),
+    scuola_sezione2_titolo_en: z.string().optional(),
+    scuola_sezione2_titolo_accent_en: z.string().optional(),
+    scuola_iscrizione_cta_label_en: z.string().optional(),
+    scuola_sezione3_eyebrow_en: z.string().optional(),
+    scuola_sezione3_titolo_en: z.string().optional(),
+    scuola_sezione3_titolo_accent_en: z.string().optional(),
+    scuola_sezione3_badge_en: z.string().optional(),
+    scuola_sezione3_paragrafo1_en: z.string().optional(),
+    scuola_sezione3_paragrafo2_en: z.string().optional(),
+    scuola_sezione3_paragrafo3_en: z.string().optional(),
+    scuola_sezione3_immagine_alt_en: z.string().optional(),
+    scuola_sezione4_eyebrow_en: z.string().optional(),
+    scuola_sezione4_titolo_en: z.string().optional(),
+    scuola_sezione4_titolo_accent_en: z.string().optional(),
+    scuola_sezione4_footer_testo_en: z.string().optional(),
+
+    // ── Corpo pagina: Personal Trainer ──
+    pt_sezione1_eyebrow: z.string().optional(),
+    pt_sezione1_titolo: z.string().optional(),
+    pt_sezione1_titolo_accent: z.string().optional(),
+    pt_sezione1_paragrafo1: z.string().optional(),
+    pt_sezione1_paragrafo2: z.string().optional(),
+    pt_stats: z.array(z.object({
+      numero: z.string(),
+      etichetta: z.string(),
+      etichetta_en: z.string().optional(),
+    })).optional(),
+    pt_sezione2_eyebrow: z.string().optional(),
+    pt_sezione2_titolo: z.string().optional(),
+    pt_sezione2_titolo_accent: z.string().optional(),
+    pt_trainers: z.array(z.object({
+      nome: z.string(),
+      foto: z.string().optional(),
+      specializzazioni: z.array(z.string()),
+      qualifiche: z.array(z.string()),
+      lingue: z.array(z.string()).optional(),
+      specializzazioni_en: z.array(z.string()).optional(),
+      qualifiche_en: z.array(z.string()).optional(),
+      lingue_en: z.array(z.string()).optional(),
+    })).optional(),
+    pt_sezione3_eyebrow: z.string().optional(),
+    pt_sezione3_titolo: z.string().optional(),
+    pt_sezione3_titolo_accent: z.string().optional(),
+    pt_steps: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    pt_sezione4_titolo: z.string().optional(),
+    pt_sezione4_sottotitolo: z.string().optional(),
+    pt_sezione4_cta_label: z.string().optional(),
+    pt_sezione1_eyebrow_en: z.string().optional(),
+    pt_sezione1_titolo_en: z.string().optional(),
+    pt_sezione1_titolo_accent_en: z.string().optional(),
+    pt_sezione1_paragrafo1_en: z.string().optional(),
+    pt_sezione1_paragrafo2_en: z.string().optional(),
+    pt_sezione2_eyebrow_en: z.string().optional(),
+    pt_sezione2_titolo_en: z.string().optional(),
+    pt_sezione2_titolo_accent_en: z.string().optional(),
+    pt_sezione3_eyebrow_en: z.string().optional(),
+    pt_sezione3_titolo_en: z.string().optional(),
+    pt_sezione3_titolo_accent_en: z.string().optional(),
+    pt_sezione4_titolo_en: z.string().optional(),
+    pt_sezione4_sottotitolo_en: z.string().optional(),
+    pt_sezione4_cta_label_en: z.string().optional(),
+
+    // ── Corpo pagina: Preparazione Atletica ──
+    prep_sala_eyebrow: z.string().optional(),
+    prep_sala_titolo: z.string().optional(),
+    prep_sala_titolo_accent: z.string().optional(),
+    prep_sala_paragrafo1: z.string().optional(),
+    prep_sala_paragrafo2: z.string().optional(),
+    prep_sala_slideshow: z.array(z.object({
+      immagine: z.string(),
+      alt: z.string(),
+      alt_en: z.string().optional(),
+    })).optional(),
+    prep_sala_features: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    prep_sala_cta_label: z.string().optional(),
+    prep_corsi_eyebrow: z.string().optional(),
+    prep_corsi_titolo: z.string().optional(),
+    prep_corsi_titolo_accent: z.string().optional(),
+    prep_corsi_sub: z.string().optional(),
+    prep_categorie: z.array(z.object({
+      id: z.enum(['endurance', 'strength', 'balance']),
+      label: z.string(),
+      desc: z.string(),
+      color: z.string(),
+      desc_en: z.string().optional(),
+      corsi: z.array(z.object({
+        nome: z.string(),
+        durata: z.string(),
+        intensita: z.number().min(1).max(3),
+        livello: z.string(),
+        desc: z.string(),
+        immagine: z.string(),
+        nome_en: z.string().optional(),
+        livello_en: z.string().optional(),
+        desc_en: z.string().optional(),
+      })),
+    })).optional(),
+    prep_calendario_eyebrow: z.string().optional(),
+    prep_calendario_titolo: z.string().optional(),
+    prep_calendario_titolo_accent: z.string().optional(),
+    prep_calendario_sub: z.string().optional(),
+    prep_sala_eyebrow_en: z.string().optional(),
+    prep_sala_titolo_en: z.string().optional(),
+    prep_sala_titolo_accent_en: z.string().optional(),
+    prep_sala_paragrafo1_en: z.string().optional(),
+    prep_sala_paragrafo2_en: z.string().optional(),
+    prep_sala_cta_label_en: z.string().optional(),
+    prep_corsi_eyebrow_en: z.string().optional(),
+    prep_corsi_titolo_en: z.string().optional(),
+    prep_corsi_titolo_accent_en: z.string().optional(),
+    prep_corsi_sub_en: z.string().optional(),
+    prep_calendario_eyebrow_en: z.string().optional(),
+    prep_calendario_titolo_en: z.string().optional(),
+    prep_calendario_titolo_accent_en: z.string().optional(),
+    prep_calendario_sub_en: z.string().optional(),
+
+    // ── Corpo pagina: Tennis ──
+    tennis_campi_eyebrow: z.string().optional(),
+    tennis_campi_titolo: z.string().optional(),
+    tennis_campi_titolo_accent: z.string().optional(),
+    tennis_campi: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    tennis_soci_eyebrow: z.string().optional(),
+    tennis_soci_titolo: z.string().optional(),
+    tennis_soci_titolo_accent: z.string().optional(),
+    tennis_soci_testo: z.string().optional(),
+    tennis_corsi_eyebrow: z.string().optional(),
+    tennis_corsi_titolo: z.string().optional(),
+    tennis_corsi_titolo_accent: z.string().optional(),
+    tennis_corsi_intro: z.string().optional(),
+    tennis_corsi_livelli: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    tennis_corsi_cta_label: z.string().optional(),
+    tennis_campi_eyebrow_en: z.string().optional(),
+    tennis_campi_titolo_en: z.string().optional(),
+    tennis_campi_titolo_accent_en: z.string().optional(),
+    tennis_soci_eyebrow_en: z.string().optional(),
+    tennis_soci_titolo_en: z.string().optional(),
+    tennis_soci_titolo_accent_en: z.string().optional(),
+    tennis_soci_testo_en: z.string().optional(),
+    tennis_corsi_eyebrow_en: z.string().optional(),
+    tennis_corsi_titolo_en: z.string().optional(),
+    tennis_corsi_titolo_accent_en: z.string().optional(),
+    tennis_corsi_intro_en: z.string().optional(),
+    tennis_corsi_cta_label_en: z.string().optional(),
+
+    // ── Corpo pagina: Agonistica ──
+    agonistica_eyebrow: z.string().optional(),
+    agonistica_titolo: z.string().optional(),
+    agonistica_titolo_accent: z.string().optional(),
+    agonistica_step: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    agonistica_eyebrow_en: z.string().optional(),
+    agonistica_titolo_en: z.string().optional(),
+    agonistica_titolo_accent_en: z.string().optional(),
+
+    // ── Corpo pagina: Torneo Avvenire ──
+    torneo_quote_testo: z.string().optional(),
+    torneo_quote_autore: z.string().optional(),
+    torneo_storia_eyebrow: z.string().optional(),
+    torneo_storia_titolo: z.string().optional(),
+    torneo_storia_titolo_accent: z.string().optional(),
+    torneo_storia_paragrafo1: z.string().optional(),
+    torneo_storia_paragrafo2: z.string().optional(),
+    torneo_stats: z.array(z.object({
+      numero: z.string(),
+      label: z.string(),
+      label_en: z.string().optional(),
+    })).optional(),
+    torneo_alumni_eyebrow: z.string().optional(),
+    torneo_alumni_titolo: z.string().optional(),
+    torneo_alumni_titolo_accent: z.string().optional(),
+    torneo_alumni_intro: z.string().optional(),
+    torneo_galleria_eyebrow: z.string().optional(),
+    torneo_galleria_titolo: z.string().optional(),
+    torneo_galleria_titolo_accent: z.string().optional(),
+    torneo_prossima_eyebrow: z.string().optional(),
+    torneo_prossima_titolo: z.string().optional(),
+    torneo_prossima_titolo_accent: z.string().optional(),
+    torneo_prossima_testo: z.string().optional(),
+    torneo_quote_testo_en: z.string().optional(),
+    torneo_quote_autore_en: z.string().optional(),
+    torneo_storia_eyebrow_en: z.string().optional(),
+    torneo_storia_titolo_en: z.string().optional(),
+    torneo_storia_titolo_accent_en: z.string().optional(),
+    torneo_storia_paragrafo1_en: z.string().optional(),
+    torneo_storia_paragrafo2_en: z.string().optional(),
+    torneo_alumni_eyebrow_en: z.string().optional(),
+    torneo_alumni_titolo_en: z.string().optional(),
+    torneo_alumni_titolo_accent_en: z.string().optional(),
+    torneo_alumni_intro_en: z.string().optional(),
+    torneo_galleria_eyebrow_en: z.string().optional(),
+    torneo_galleria_titolo_en: z.string().optional(),
+    torneo_galleria_titolo_accent_en: z.string().optional(),
+    torneo_prossima_eyebrow_en: z.string().optional(),
+    torneo_prossima_titolo_en: z.string().optional(),
+    torneo_prossima_titolo_accent_en: z.string().optional(),
+    torneo_prossima_testo_en: z.string().optional(),
   }),
 });
 
@@ -140,298 +485,6 @@ const planning = defineCollection({
   }),
 });
 
-// ─── CORPO PAGINA: STORIA ─────────────────────────────────────────────────────
-// Contenuto sotto l'hero della pagina Storia (timeline + "Il club oggi").
-// File unico, gestibile da TinaCMS → collection 'corpoStoria'.
-// ─────────────────────────────────────────────────────────────────────────────
-const corpoStoria = defineCollection({
-  type: 'content',
-  schema: z.object({
-    sezione1_eyebrow: z.string(),
-    sezione1_titolo: z.string(),
-    sezione1_titolo_accent: z.string(),
-    timeline: z.array(z.object({
-      anno: z.string(),
-      testo: z.string(),
-      testo_en: z.string().optional(),
-    })),
-    sezione2_eyebrow: z.string(),
-    sezione2_titolo: z.string(),
-    sezione2_titolo_accent: z.string(),
-    paragrafo1: z.string(),
-    paragrafo2: z.string(),
-    galleria: z.array(z.object({
-      immagine: z.string(),
-      alt: z.string(),
-    })),
-    // Versione inglese (opzionale): se assente si usa il fallback italiano
-    sezione1_eyebrow_en: z.string().optional(),
-    sezione1_titolo_en: z.string().optional(),
-    sezione1_titolo_accent_en: z.string().optional(),
-    sezione2_eyebrow_en: z.string().optional(),
-    sezione2_titolo_en: z.string().optional(),
-    sezione2_titolo_accent_en: z.string().optional(),
-    paragrafo1_en: z.string().optional(),
-    paragrafo2_en: z.string().optional(),
-  }),
-});
-
-// ─── CORPO PAGINA: SUMMER CAMPS ───────────────────────────────────────────────
-// Contenuto sotto l'hero della pagina Summer Camps (programma + date settimane).
-// File unico, gestibile da TinaCMS → collection 'corpoSummerCamps'.
-// ─────────────────────────────────────────────────────────────────────────────
-const corpoSummerCamps = defineCollection({
-  type: 'content',
-  schema: z.object({
-    sezione1_eyebrow: z.string(),
-    sezione1_titolo: z.string(),
-    sezione1_titolo_accent: z.string(),
-    features: z.array(z.object({
-      titolo: z.string(),
-      testo: z.string(),
-      titolo_en: z.string().optional(),
-      testo_en: z.string().optional(),
-    })),
-    immagine1: z.string(),
-    immagine1_alt: z.string(),
-    immagine2: z.string(),
-    immagine2_alt: z.string(),
-    sezione2_eyebrow: z.string(),
-    sezione2_titolo: z.string(),
-    sezione2_titolo_accent: z.string(),
-    settimane: z.array(z.object({
-      settimana: z.string(),
-      date: z.string(),
-      settimana_en: z.string().optional(),
-      date_en: z.string().optional(),
-    })),
-    // Versione inglese (opzionale): se assente si usa il fallback italiano
-    sezione1_eyebrow_en: z.string().optional(),
-    sezione1_titolo_en: z.string().optional(),
-    sezione1_titolo_accent_en: z.string().optional(),
-    immagine1_alt_en: z.string().optional(),
-    immagine2_alt_en: z.string().optional(),
-    sezione2_eyebrow_en: z.string().optional(),
-    sezione2_titolo_en: z.string().optional(),
-    sezione2_titolo_accent_en: z.string().optional(),
-  }),
-});
-
-// ─── CORPO PAGINA: SCUOLA TENNIS ──────────────────────────────────────────────
-// Contenuto sotto l'hero della pagina Scuola Tennis (livelli, iscrizione,
-// metodo, tornei durante l'anno).
-// File unico, gestibile da TinaCMS → collection 'corpoScuolaTennis'.
-// ─────────────────────────────────────────────────────────────────────────────
-const corpoScuolaTennis = defineCollection({
-  type: 'content',
-  schema: z.object({
-    sezione1_eyebrow: z.string(),
-    sezione1_titolo: z.string(),
-    sezione1_titolo_accent: z.string(),
-    sezione1_lead: z.string(),
-    livelli: z.array(z.object({
-      dot: z.enum(['rosso', 'arancio', 'verde', 'giallo']),
-      nome: z.string(),
-      tag: z.string(),
-      range: z.string(),
-      testo: z.string(),
-      nome_en: z.string().optional(),
-      tag_en: z.string().optional(),
-      range_en: z.string().optional(),
-      testo_en: z.string().optional(),
-    })),
-    livelli_footer_testo: z.string(),
-    livelli_footer_link_label: z.string(),
-    sezione2_eyebrow: z.string(),
-    sezione2_titolo: z.string(),
-    sezione2_titolo_accent: z.string(),
-    iscrizione_cards: z.array(z.object({
-      titolo: z.string(),
-      tag: z.string(),
-      testo: z.string(),
-      titolo_en: z.string().optional(),
-      tag_en: z.string().optional(),
-      testo_en: z.string().optional(),
-    })),
-    iscrizione_cta_label: z.string(),
-    sezione3_eyebrow: z.string(),
-    sezione3_titolo: z.string(),
-    sezione3_titolo_accent: z.string(),
-    sezione3_badge: z.string(),
-    sezione3_paragrafo1: z.string(),
-    sezione3_paragrafo2: z.string(),
-    sezione3_paragrafo3: z.string(),
-    sezione3_immagine: z.string(),
-    sezione3_immagine_alt: z.string(),
-    sezione4_eyebrow: z.string(),
-    sezione4_titolo: z.string(),
-    sezione4_titolo_accent: z.string(),
-    tornei: z.array(z.object({
-      quando: z.string(),
-      nome: z.string(),
-      testo: z.string(),
-      quando_en: z.string().optional(),
-      nome_en: z.string().optional(),
-      testo_en: z.string().optional(),
-    })),
-    sezione4_footer_testo: z.string(),
-    // Versione inglese (opzionale): se assente si usa il fallback italiano
-    sezione1_eyebrow_en: z.string().optional(),
-    sezione1_titolo_en: z.string().optional(),
-    sezione1_titolo_accent_en: z.string().optional(),
-    sezione1_lead_en: z.string().optional(),
-    livelli_footer_testo_en: z.string().optional(),
-    livelli_footer_link_label_en: z.string().optional(),
-    sezione2_eyebrow_en: z.string().optional(),
-    sezione2_titolo_en: z.string().optional(),
-    sezione2_titolo_accent_en: z.string().optional(),
-    iscrizione_cta_label_en: z.string().optional(),
-    sezione3_eyebrow_en: z.string().optional(),
-    sezione3_titolo_en: z.string().optional(),
-    sezione3_titolo_accent_en: z.string().optional(),
-    sezione3_badge_en: z.string().optional(),
-    sezione3_paragrafo1_en: z.string().optional(),
-    sezione3_paragrafo2_en: z.string().optional(),
-    sezione3_paragrafo3_en: z.string().optional(),
-    sezione3_immagine_alt_en: z.string().optional(),
-    sezione4_eyebrow_en: z.string().optional(),
-    sezione4_titolo_en: z.string().optional(),
-    sezione4_titolo_accent_en: z.string().optional(),
-    sezione4_footer_testo_en: z.string().optional(),
-  }),
-});
-
-// ─── CORPO PAGINA: PERSONAL TRAINER ───────────────────────────────────────────
-// Contenuto sotto l'hero della pagina Personal Trainer (intro, team, come
-// funziona, CTA finale).
-// File unico, gestibile da TinaCMS → collection 'corpoPersonalTrainer'.
-// ─────────────────────────────────────────────────────────────────────────────
-const corpoPersonalTrainer = defineCollection({
-  type: 'content',
-  schema: z.object({
-    sezione1_eyebrow: z.string(),
-    sezione1_titolo: z.string(),
-    sezione1_titolo_accent: z.string(),
-    sezione1_paragrafo1: z.string(),
-    sezione1_paragrafo2: z.string(),
-    stats: z.array(z.object({
-      numero: z.string(),
-      etichetta: z.string(),
-      etichetta_en: z.string().optional(),
-    })),
-    sezione2_eyebrow: z.string(),
-    sezione2_titolo: z.string(),
-    sezione2_titolo_accent: z.string(),
-    trainers: z.array(z.object({
-      nome: z.string(),
-      foto: z.string().optional(),
-      specializzazioni: z.array(z.string()),
-      qualifiche: z.array(z.string()),
-      lingue: z.array(z.string()).optional(),
-      specializzazioni_en: z.array(z.string()).optional(),
-      qualifiche_en: z.array(z.string()).optional(),
-      lingue_en: z.array(z.string()).optional(),
-    })),
-    sezione3_eyebrow: z.string(),
-    sezione3_titolo: z.string(),
-    sezione3_titolo_accent: z.string(),
-    steps: z.array(z.object({
-      titolo: z.string(),
-      testo: z.string(),
-      titolo_en: z.string().optional(),
-      testo_en: z.string().optional(),
-    })),
-    sezione4_titolo: z.string(),
-    sezione4_sottotitolo: z.string(),
-    sezione4_cta_label: z.string(),
-    // Versione inglese (opzionale): se assente si usa il fallback italiano
-    sezione1_eyebrow_en: z.string().optional(),
-    sezione1_titolo_en: z.string().optional(),
-    sezione1_titolo_accent_en: z.string().optional(),
-    sezione1_paragrafo1_en: z.string().optional(),
-    sezione1_paragrafo2_en: z.string().optional(),
-    sezione2_eyebrow_en: z.string().optional(),
-    sezione2_titolo_en: z.string().optional(),
-    sezione2_titolo_accent_en: z.string().optional(),
-    sezione3_eyebrow_en: z.string().optional(),
-    sezione3_titolo_en: z.string().optional(),
-    sezione3_titolo_accent_en: z.string().optional(),
-    sezione4_titolo_en: z.string().optional(),
-    sezione4_sottotitolo_en: z.string().optional(),
-    sezione4_cta_label_en: z.string().optional(),
-  }),
-});
-
-// ─── CORPO PAGINA: PREPARAZIONE ATLETICA ──────────────────────────────────────
-// Contenuto sotto l'hero della pagina Preparazione Atletica (sala attrezzi,
-// corsi di gruppo per categoria, intro al calendario — il calendario vero e
-// proprio è nella collection 'planning').
-// File unico, gestibile da TinaCMS → collection 'corpoPreparazioneAtletica'.
-// ─────────────────────────────────────────────────────────────────────────────
-const corpoPreparazioneAtletica = defineCollection({
-  type: 'content',
-  schema: z.object({
-    sala_eyebrow: z.string(),
-    sala_titolo: z.string(),
-    sala_titolo_accent: z.string(),
-    sala_paragrafo1: z.string(),
-    sala_paragrafo2: z.string(),
-    sala_slideshow: z.array(z.object({
-      immagine: z.string(),
-      alt: z.string(),
-      alt_en: z.string().optional(),
-    })),
-    sala_features: z.array(z.object({
-      titolo: z.string(),
-      testo: z.string(),
-      titolo_en: z.string().optional(),
-      testo_en: z.string().optional(),
-    })),
-    sala_cta_label: z.string(),
-    corsi_eyebrow: z.string(),
-    corsi_titolo: z.string(),
-    corsi_titolo_accent: z.string(),
-    corsi_sub: z.string(),
-    categorie: z.array(z.object({
-      id: z.enum(['endurance', 'strength', 'balance']),
-      label: z.string(),
-      desc: z.string(),
-      color: z.string(),
-      desc_en: z.string().optional(),
-      corsi: z.array(z.object({
-        nome: z.string(),
-        durata: z.string(),
-        intensita: z.number().min(1).max(3),
-        livello: z.string(),
-        desc: z.string(),
-        immagine: z.string(),
-        nome_en: z.string().optional(),
-        livello_en: z.string().optional(),
-        desc_en: z.string().optional(),
-      })),
-    })),
-    calendario_eyebrow: z.string(),
-    calendario_titolo: z.string(),
-    calendario_titolo_accent: z.string(),
-    calendario_sub: z.string(),
-    // Versione inglese (opzionale): se assente si usa il fallback italiano
-    sala_eyebrow_en: z.string().optional(),
-    sala_titolo_en: z.string().optional(),
-    sala_titolo_accent_en: z.string().optional(),
-    sala_paragrafo1_en: z.string().optional(),
-    sala_paragrafo2_en: z.string().optional(),
-    sala_cta_label_en: z.string().optional(),
-    corsi_eyebrow_en: z.string().optional(),
-    corsi_titolo_en: z.string().optional(),
-    corsi_titolo_accent_en: z.string().optional(),
-    corsi_sub_en: z.string().optional(),
-    calendario_eyebrow_en: z.string().optional(),
-    calendario_titolo_en: z.string().optional(),
-    calendario_titolo_accent_en: z.string().optional(),
-    calendario_sub_en: z.string().optional(),
-  }),
-});
-
 // ─── MEMBERSHIP (tabella prezzi) ──────────────────────────────────────────────
 // Tabella abbonamenti Silver/Gold/Platinum, condivisa da tennis,
 // preparazione-atletica e personal-trainer. File unico.
@@ -480,132 +533,6 @@ const membership = defineCollection({
   }),
 });
 
-// ─── CORPO PAGINA: TENNIS ──────────────────────────────────────────────────────
-// Contenuto sotto l'hero della pagina Tennis (titoli e testi soltanto — le
-// foto restano nel codice). La tabella Membership è nella collection
-// 'membership'.
-// File unico, gestibile da TinaCMS → collection 'corpoTennis'.
-// ─────────────────────────────────────────────────────────────────────────────
-const corpoTennis = defineCollection({
-  type: 'content',
-  schema: z.object({
-    campi_eyebrow: z.string(),
-    campi_titolo: z.string(),
-    campi_titolo_accent: z.string(),
-    campi: z.array(z.object({
-      titolo: z.string(),
-      testo: z.string(),
-      titolo_en: z.string().optional(),
-      testo_en: z.string().optional(),
-    })),
-    soci_eyebrow: z.string(),
-    soci_titolo: z.string(),
-    soci_titolo_accent: z.string(),
-    soci_testo: z.string(),
-    corsi_eyebrow: z.string(),
-    corsi_titolo: z.string(),
-    corsi_titolo_accent: z.string(),
-    corsi_intro: z.string(),
-    corsi_livelli: z.array(z.object({
-      titolo: z.string(),
-      testo: z.string(),
-      titolo_en: z.string().optional(),
-      testo_en: z.string().optional(),
-    })),
-    corsi_cta_label: z.string(),
-    // Versione inglese (opzionale): se assente si usa il fallback italiano
-    campi_eyebrow_en: z.string().optional(),
-    campi_titolo_en: z.string().optional(),
-    campi_titolo_accent_en: z.string().optional(),
-    soci_eyebrow_en: z.string().optional(),
-    soci_titolo_en: z.string().optional(),
-    soci_titolo_accent_en: z.string().optional(),
-    soci_testo_en: z.string().optional(),
-    corsi_eyebrow_en: z.string().optional(),
-    corsi_titolo_en: z.string().optional(),
-    corsi_titolo_accent_en: z.string().optional(),
-    corsi_intro_en: z.string().optional(),
-    corsi_cta_label_en: z.string().optional(),
-  }),
-});
-
-// ─── CORPO PAGINA: AGONISTICA ──────────────────────────────────────────────────
-// Contenuto sotto l'hero della pagina Agonistica (titoli e testi soltanto).
-// File unico, gestibile da TinaCMS → collection 'corpoAgonistica'.
-// ─────────────────────────────────────────────────────────────────────────────
-const corpoAgonistica = defineCollection({
-  type: 'content',
-  schema: z.object({
-    eyebrow: z.string(),
-    titolo: z.string(),
-    titolo_accent: z.string(),
-    step: z.array(z.object({
-      titolo: z.string(),
-      testo: z.string(),
-      titolo_en: z.string().optional(),
-      testo_en: z.string().optional(),
-    })),
-    // Versione inglese (opzionale): se assente si usa il fallback italiano
-    eyebrow_en: z.string().optional(),
-    titolo_en: z.string().optional(),
-    titolo_accent_en: z.string().optional(),
-  }),
-});
-
-// ─── CORPO PAGINA: TORNEO AVVENIRE ─────────────────────────────────────────────
-// Contenuto sotto l'hero della pagina Torneo Avvenire (titoli e testi
-// soltanto — le foto degli alumni e la galleria restano nel codice, sono
-// legate a immagini specifiche non intercambiabili).
-// File unico, gestibile da TinaCMS → collection 'corpoTorneoAvvenire'.
-// ─────────────────────────────────────────────────────────────────────────────
-const corpoTorneoAvvenire = defineCollection({
-  type: 'content',
-  schema: z.object({
-    quote_testo: z.string(),
-    quote_autore: z.string(),
-    storia_eyebrow: z.string(),
-    storia_titolo: z.string(),
-    storia_titolo_accent: z.string(),
-    storia_paragrafo1: z.string(),
-    storia_paragrafo2: z.string(),
-    stats: z.array(z.object({
-      numero: z.string(),
-      label: z.string(),
-      label_en: z.string().optional(),
-    })),
-    alumni_eyebrow: z.string(),
-    alumni_titolo: z.string(),
-    alumni_titolo_accent: z.string(),
-    alumni_intro: z.string(),
-    galleria_eyebrow: z.string(),
-    galleria_titolo: z.string(),
-    galleria_titolo_accent: z.string(),
-    prossima_eyebrow: z.string(),
-    prossima_titolo: z.string(),
-    prossima_titolo_accent: z.string(),
-    prossima_testo: z.string(),
-    // Versione inglese (opzionale): se assente si usa il fallback italiano
-    quote_testo_en: z.string().optional(),
-    quote_autore_en: z.string().optional(),
-    storia_eyebrow_en: z.string().optional(),
-    storia_titolo_en: z.string().optional(),
-    storia_titolo_accent_en: z.string().optional(),
-    storia_paragrafo1_en: z.string().optional(),
-    storia_paragrafo2_en: z.string().optional(),
-    alumni_eyebrow_en: z.string().optional(),
-    alumni_titolo_en: z.string().optional(),
-    alumni_titolo_accent_en: z.string().optional(),
-    alumni_intro_en: z.string().optional(),
-    galleria_eyebrow_en: z.string().optional(),
-    galleria_titolo_en: z.string().optional(),
-    galleria_titolo_accent_en: z.string().optional(),
-    prossima_eyebrow_en: z.string().optional(),
-    prossima_titolo_en: z.string().optional(),
-    prossima_titolo_accent_en: z.string().optional(),
-    prossima_testo_en: z.string().optional(),
-  }),
-});
-
 // ─── INFO CLUB ────────────────────────────────────────────────────────────────
 // File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
 // orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
@@ -624,4 +551,4 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, planning, corpoStoria, corpoSummerCamps, corpoScuolaTennis, corpoPersonalTrainer, corpoPreparazioneAtletica, corpoTennis, corpoAgonistica, corpoTorneoAvvenire, membership, info };
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, membership, info };

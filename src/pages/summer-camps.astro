@@ -4,11 +4,8 @@ import PageHero from "../components/PageHero.astro";
 import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
-// SEO + hero gestibili da TinaCMS → src/content/pagine/summer-camps.md
+// SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/summer-camps.md
 const d = (await getEntry("pagine", "summer-camps"))!.data;
-
-// Corpo pagina (programma + date) → src/content/corpoSummerCamps/corpo.md
-const c = (await getEntry("corpoSummerCamps", "corpo"))!.data;
 ---
 
 <BaseLayout
@@ -27,10 +24,10 @@ const c = (await getEntry("corpoSummerCamps", "corpo"))!.data;
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.sezione1_eyebrow}</span>
-      <h2 class="section-title">{c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.camps_sezione1_eyebrow}</span>
+      <h2 class="section-title">{d.camps_sezione1_titolo}<br><em>{d.camps_sezione1_titolo_accent}</em></h2>
       <div class="features-grid">
-        {c.features.map((f, i) => (
+        {d.camps_features!.map((f, i) => (
           <div class="feature">
             <span class="feature__num">{String(i + 1).padStart(2, '0')}</span>
             <h3>{f.titolo}</h3>
@@ -40,18 +37,18 @@ const c = (await getEntry("corpoSummerCamps", "corpo"))!.data;
       </div>
 
       <div class="camp-img-row">
-        <img src={publicUrl(c.immagine1)} alt={c.immagine1_alt} class="camp-img" />
-        <img src={publicUrl(c.immagine2)} alt={c.immagine2_alt} class="camp-img" />
+        <img src={publicUrl(d.camps_immagine1!)} alt={d.camps_immagine1_alt!} class="camp-img" />
+        <img src={publicUrl(d.camps_immagine2!)} alt={d.camps_immagine2_alt!} class="camp-img" />
       </div>
     </div>
   </section>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.sezione2_eyebrow}</span>
-      <h2 class="section-title">{c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.camps_sezione2_eyebrow}</span>
+      <h2 class="section-title">{d.camps_sezione2_titolo}<br><em>{d.camps_sezione2_titolo_accent}</em></h2>
       <div class="dates-grid">
-        {c.settimane.map((s) => (
+        {d.camps_settimane!.map((s) => (
           <div class="date-item">
             <span class="date-item__week">{s.settimana}</span>
             <span class="date-item__dates">{s.date}</span>

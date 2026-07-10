@@ -3,11 +3,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import { getEntry } from "astro:content";
 
-// SEO + hero gestibili da TinaCMS → src/content/pagine/agonistica.md
+// SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/agonistica.md
 const d = (await getEntry("pagine", "agonistica"))!.data;
-
-// Corpo pagina → src/content/corpoAgonistica/corpo.md
-const c = (await getEntry("corpoAgonistica", "corpo"))!.data;
 ---
 
 <BaseLayout
@@ -26,10 +23,10 @@ const c = (await getEntry("corpoAgonistica", "corpo"))!.data;
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.eyebrow}</span>
-      <h2 class="section-title">{c.titolo}<br><em>{c.titolo_accent}</em></h2>
+      <span class="eyebrow">{d.agonistica_eyebrow}</span>
+      <h2 class="section-title">{d.agonistica_titolo}<br><em>{d.agonistica_titolo_accent}</em></h2>
       <div class="steps">
-        {c.step.map((s, i) => (
+        {d.agonistica_step.map((s, i) => (
           <div class="step">
             <span class="step__n">{String(i + 1).padStart(2, '0')}</span>
             <div class="step__body">
