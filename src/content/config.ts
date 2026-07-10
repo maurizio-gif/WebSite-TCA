@@ -110,6 +110,24 @@ const servizi = defineCollection({
   }),
 });
 
+// ─── PLANNING CORSI ───────────────────────────────────────────────────────────
+// Planning settimanale dei corsi di gruppo (pagina Preparazione Atletica).
+// File unico (corsi.md) con la lista delle lezioni; il componente
+// WeeklySchedule.astro raggruppa per giorno e ordina per orario.
+// Gestibile da TinaCMS → collection 'planning'.
+// ─────────────────────────────────────────────────────────────────────────────
+const planning = defineCollection({
+  type: 'content',
+  schema: z.object({
+    lezioni: z.array(z.object({
+      giorno: z.enum(['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom']),
+      ora: z.string(),
+      categoria: z.enum(['S', 'B', 'E']),
+      nome: z.string(),
+    })),
+  }),
+});
+
 // ─── INFO CLUB ────────────────────────────────────────────────────────────────
 // File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
 // orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
@@ -128,4 +146,4 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, info };
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, info };

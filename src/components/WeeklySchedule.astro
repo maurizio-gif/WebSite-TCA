@@ -1,4 +1,6 @@
 ---
+import { getEntry } from 'astro:content';
+
 type Cat = 'S' | 'B' | 'E';
 interface Lesson { t: string; c: Cat; n: string; }
 
@@ -8,98 +10,28 @@ const CAT: Record<Cat, { label: string }> = {
   E: { label: 'Endurance' },
 };
 
-const DAYS: Array<{ full: string; short: string; lessons: Lesson[] }> = [
-  { full: 'Lunedì', short: 'LUN', lessons: [
-    { t: '09:15', c: 'S', n: 'Total Body' },
-    { t: '10:00', c: 'B', n: 'Pilates' },
-    { t: '10:30', c: 'E', n: 'Zumba' },
-    { t: '11:00', c: 'B', n: 'Flexability' },
-    { t: '11:35', c: 'B', n: 'Postural' },
-    { t: '13:00', c: 'S', n: 'Functional' },
-    { t: '13:00', c: 'B', n: 'Pilates' },
-    { t: '17:00', c: 'S', n: 'Total Body' },
-    { t: '18:00', c: 'S', n: 'Circuit' },
-    { t: '18:00', c: 'B', n: 'Pilates Funzionale' },
-    { t: '19:00', c: 'S', n: 'Functional' },
-    { t: '19:00', c: 'B', n: 'Hatha Yoga' },
-    { t: '19:00', c: 'S', n: 'Tribal-x' },
-    { t: '20:00', c: 'B', n: 'Hatha Yoga' },
-    { t: '20:05', c: 'E', n: 'Dance' },
-  ]},
-  { full: 'Martedì', short: 'MAR', lessons: [
-    { t: '07:00', c: 'S', n: 'Functional' },
-    { t: '09:00', c: 'S', n: 'Circuit' },
-    { t: '09:15', c: 'B', n: 'Postural' },
-    { t: '10:00', c: 'E', n: 'Dance' },
-    { t: '10:00', c: 'B', n: 'Ginnastica Dolce' },
-    { t: '11:00', c: 'S', n: 'Total Body' },
-    { t: '11:00', c: 'B', n: 'Postural' },
-    { t: '13:00', c: 'S', n: 'Active Pump' },
-    { t: '13:00', c: 'B', n: 'Power Yoga' },
-    { t: '17:15', c: 'S', n: 'Suspension Training' },
-    { t: '18:00', c: 'E', n: 'Step & Tone' },
-    { t: '18:00', c: 'S', n: 'Circuit' },
-    { t: '18:30', c: 'B', n: 'Pilates' },
-    { t: '19:00', c: 'S', n: 'Funracket' },
-    { t: '19:15', c: 'B', n: 'Flexability' },
-    { t: '19:45', c: 'B', n: 'Pilates' },
-    { t: '19:55', c: 'E', n: 'Cycling' },
-    { t: '20:00', c: 'S', n: 'Circuit' },
-  ]},
-  { full: 'Mercoledì', short: 'MER', lessons: [
-    { t: '07:00', c: 'S', n: 'Functional' },
-    { t: '10:00', c: 'S', n: 'Total Body' },
-    { t: '10:00', c: 'B', n: 'Flexability' },
-    { t: '11:00', c: 'B', n: 'Core Ball' },
-    { t: '11:00', c: 'B', n: 'Pilates' },
-    { t: '13:00', c: 'S', n: 'Functional' },
-    { t: '13:00', c: 'B', n: 'Pilates' },
-    { t: '18:00', c: 'B', n: 'Pilates' },
-    { t: '19:00', c: 'B', n: 'Power Yoga' },
-    { t: '19:05', c: 'S', n: 'Funracket' },
-    { t: '20:00', c: 'B', n: 'Power Yoga' },
-    { t: '20:15', c: 'E', n: 'Cycling' },
-  ]},
-  { full: 'Giovedì', short: 'GIO', lessons: [
-    { t: '07:00', c: 'S', n: 'Functional' },
-    { t: '09:00', c: 'B', n: 'Ginnastica Dolce' },
-    { t: '10:00', c: 'B', n: 'Pilates' },
-    { t: '10:30', c: 'B', n: 'Postural' },
-    { t: '11:45', c: 'B', n: 'Pilates Gym' },
-    { t: '13:00', c: 'S', n: 'Functional' },
-    { t: '13:00', c: 'B', n: 'Hatha Yoga' },
-    { t: '17:45', c: 'B', n: 'Core Ball' },
-    { t: '18:30', c: 'S', n: 'Functional' },
-    { t: '18:45', c: 'B', n: 'Pilates' },
-    { t: '19:05', c: 'S', n: 'Circuit' },
-    { t: '19:30', c: 'S', n: 'Functional' },
-    { t: '19:45', c: 'B', n: 'Pilates' },
-  ]},
-  { full: 'Venerdì', short: 'VEN', lessons: [
-    { t: '07:00', c: 'S', n: 'Interval Suspension' },
-    { t: '08:15', c: 'B', n: 'Pilates Circle' },
-    { t: '09:00', c: 'B', n: 'Postural' },
-    { t: '10:00', c: 'E', n: 'Dance' },
-    { t: '11:00', c: 'B', n: 'Pilates Funzionale' },
-    { t: '12:00', c: 'E', n: 'Zumba' },
-    { t: '13:00', c: 'S', n: 'Funracket' },
-    { t: '13:00', c: 'B', n: 'Flexability' },
-    { t: '17:45', c: 'E', n: 'Functional Step' },
-    { t: '18:30', c: 'E', n: 'Zumba' },
-    { t: '18:30', c: 'S', n: 'Tribal-x' },
-    { t: '19:30', c: 'E', n: 'Zumba' },
-    { t: '19:30', c: 'B', n: 'Hatha Yoga' },
-    { t: '19:35', c: 'S', n: 'Functional' },
-  ]},
-  { full: 'Sabato', short: 'SAB', lessons: [
-    { t: '08:15', c: 'E', n: 'Cycling' },
-    { t: '09:30', c: 'S', n: 'Active Pump' },
-    { t: '10:30', c: 'E', n: 'Aeroboxe' },
-    { t: '11:30', c: 'S', n: 'Functional' },
-    { t: '12:30', c: 'S', n: 'Functional' },
-  ]},
-  { full: 'Domenica', short: 'DOM', lessons: [] },
-];
+// Lezioni gestibili da TinaCMS → src/content/planning/corsi.md
+// Qui si raggruppa per giorno e si ordina per orario.
+const { lezioni } = (await getEntry('planning', 'corsi'))!.data;
+
+const GIORNI = [
+  { id: 'lun', full: 'Lunedì',    short: 'LUN' },
+  { id: 'mar', full: 'Martedì',   short: 'MAR' },
+  { id: 'mer', full: 'Mercoledì', short: 'MER' },
+  { id: 'gio', full: 'Giovedì',   short: 'GIO' },
+  { id: 'ven', full: 'Venerdì',   short: 'VEN' },
+  { id: 'sab', full: 'Sabato',    short: 'SAB' },
+  { id: 'dom', full: 'Domenica',  short: 'DOM' },
+] as const;
+
+const DAYS: Array<{ full: string; short: string; lessons: Lesson[] }> = GIORNI.map((g) => ({
+  full: g.full,
+  short: g.short,
+  lessons: lezioni
+    .filter((l) => l.giorno === g.id)
+    .sort((a, b) => a.ora.localeCompare(b.ora))
+    .map((l) => ({ t: l.ora, c: l.categoria, n: l.nome })),
+}));
 
 const PG_URL      = 'https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar';
 const APPLE_URL   = 'https://apps.apple.com/it/app/club-ambrosiano/id1583896957';

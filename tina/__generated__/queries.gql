@@ -108,6 +108,61 @@ query serviziConnection($before: String, $after: String, $first: Float, $last: F
   }
 }
 
+query planning($relativePath: String!) {
+  planning(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PlanningParts
+  }
+}
+
+query planningConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PlanningFilter) {
+  planningConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PlanningParts
+      }
+    }
+  }
+}
+
 query info($relativePath: String!) {
   info(relativePath: $relativePath) {
     ... on Document {
