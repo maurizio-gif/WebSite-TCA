@@ -87,6 +87,29 @@ const helpdesk = defineCollection({
   }),
 });
 
+// ─── SERVIZI CLUB LIFE ────────────────────────────────────────────────────────
+// Card della sezione "Servizi e Partner" di Club Life. Ogni file .md in
+// src/content/servizi/ è una card; `ordine` controlla la posizione in griglia,
+// `icon` sceglie una delle icone SVG definite in ClubLifeServizi.astro.
+// Grassetti nel dettaglio con **doppi asterischi**.
+// Gestibile da TinaCMS → collection 'servizi'.
+// ─────────────────────────────────────────────────────────────────────────────
+const servizi = defineCollection({
+  type: 'content',
+  schema: z.object({
+    titolo: z.string(),
+    ordine: z.number(),
+    icon: z.enum(['coach', 'ballmachine', 'birthday', 'locker', 'shop', 'medical', 'graduation', 'briefcase']),
+    desc: z.string(),
+    dettaglio: z.string(),
+    href: z.string().optional(),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    titolo_en: z.string().optional(),
+    desc_en: z.string().optional(),
+    dettaglio_en: z.string().optional(),
+  }),
+});
+
 // ─── INFO CLUB ────────────────────────────────────────────────────────────────
 // File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
 // orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
@@ -105,4 +128,4 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, info };
+export const collections = { pagine, eventi, news, helpdesk, servizi, info };

@@ -56,6 +56,8 @@ type Query {
   document(collection: String, relativePath: String): DocumentNode!
   eventi(relativePath: String): Eventi!
   eventiConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: EventiFilter): EventiConnection!
+  servizi(relativePath: String): Servizi!
+  serviziConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ServiziFilter): ServiziConnection!
   info(relativePath: String): Info!
   infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
   helpdesk(relativePath: String): Helpdesk!
@@ -68,6 +70,7 @@ type Query {
 
 input DocumentFilter {
   eventi: EventiFilter
+  servizi: ServiziFilter
   info: InfoFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
@@ -97,7 +100,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Info | Helpdesk | News | Pagine | Folder
+union DocumentNode = Eventi | Servizi | Info | Helpdesk | News | Pagine | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -167,6 +170,54 @@ type EventiConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
   edges: [EventiConnectionEdges]
+}
+
+type Servizi implements Node & Document {
+  titolo: String!
+  ordine: Float!
+  icon: String!
+  desc: String!
+  dettaglio: String!
+  href: String
+  titolo_en: String
+  desc_en: String
+  dettaglio_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
+input ServiziFilter {
+  titolo: StringFilter
+  ordine: NumberFilter
+  icon: StringFilter
+  desc: StringFilter
+  dettaglio: StringFilter
+  href: StringFilter
+  titolo_en: StringFilter
+  desc_en: StringFilter
+  dettaglio_en: StringFilter
+}
+
+type ServiziConnectionEdges {
+  cursor: String!
+  node: Servizi
+}
+
+type ServiziConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [ServiziConnectionEdges]
 }
 
 type Info implements Node & Document {
@@ -342,6 +393,8 @@ type Mutation {
   createFolder(collection: String, relativePath: String!): DocumentNode!
   updateEventi(relativePath: String!, params: EventiMutation!): Eventi!
   createEventi(relativePath: String!, params: EventiMutation!): Eventi!
+  updateServizi(relativePath: String!, params: ServiziMutation!): Servizi!
+  createServizi(relativePath: String!, params: ServiziMutation!): Servizi!
   updateInfo(relativePath: String!, params: InfoMutation!): Info!
   createInfo(relativePath: String!, params: InfoMutation!): Info!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
@@ -354,6 +407,7 @@ type Mutation {
 
 input DocumentUpdateMutation {
   eventi: EventiMutation
+  servizi: ServiziMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -363,6 +417,7 @@ input DocumentUpdateMutation {
 
 input DocumentMutation {
   eventi: EventiMutation
+  servizi: ServiziMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -382,6 +437,18 @@ input EventiMutation {
   luogo_en: String
   corpo_en: String
   body: JSON
+}
+
+input ServiziMutation {
+  titolo: String
+  ordine: Float
+  icon: String
+  desc: String
+  dettaglio: String
+  href: String
+  titolo_en: String
+  desc_en: String
+  dettaglio_en: String
 }
 
 input InfoMutation {
