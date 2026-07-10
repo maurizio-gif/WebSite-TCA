@@ -5,6 +5,9 @@ import { getEntry } from "astro:content";
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/agonistica.md
 const d = (await getEntry("pagine", "agonistica"))!.data;
+
+// Corpo pagina → src/content/corpoAgonistica/corpo.md
+const c = (await getEntry("corpoAgonistica", "corpo"))!.data;
 ---
 
 <BaseLayout
@@ -23,37 +26,18 @@ const d = (await getEntry("pagine", "agonistica"))!.data;
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">Il percorso</span>
-      <h2 class="section-title">Dalla scuola<br><em>all'agonismo.</em></h2>
+      <span class="eyebrow">{c.eyebrow}</span>
+      <h2 class="section-title">{c.titolo}<br><em>{c.titolo_accent}</em></h2>
       <div class="steps">
-        <div class="step">
-          <span class="step__n">01</span>
-          <div class="step__body">
-            <h3>Selezione e valutazione</h3>
-            <p>I maestri valutano il potenziale e indicano il percorso più adatto per ogni atleta.</p>
+        {c.step.map((s, i) => (
+          <div class="step">
+            <span class="step__n">{String(i + 1).padStart(2, '0')}</span>
+            <div class="step__body">
+              <h3>{s.titolo}</h3>
+              <p>{s.testo}</p>
+            </div>
           </div>
-        </div>
-        <div class="step">
-          <span class="step__n">02</span>
-          <div class="step__body">
-            <h3>Allenamenti tecnico-tattici</h3>
-            <p>Sedute quotidiane di alto livello con focus su colpi, tattica e match play.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step__n">03</span>
-          <div class="step__body">
-            <h3>Preparazione atletica dedicata</h3>
-            <p>Programmi sport-specific per la performance tennis: esplosività, resistenza e agilità.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step__n">04</span>
-          <div class="step__body">
-            <h3>Tornei e trasferte</h3>
-            <p>Partecipazione ai circuiti FITP regionali e nazionali con supporto tecnico completo.</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </section>

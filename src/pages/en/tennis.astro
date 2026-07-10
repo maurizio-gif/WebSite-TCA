@@ -4,23 +4,30 @@ import PageHero from "../../components/PageHero.astro";
 import MembershipSection from "../../components/MembershipSection.astro";
 import ConversionBlock from "../../components/ConversionBlock.astro";
 import { publicUrl } from "../../i18n/utils";
+import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/tennis.md (campi _en)
+const d = (await getEntry("pagine", "tennis"))!.data;
+// Corpo pagina → src/content/corpoTennis/corpo.md
+const c = (await getEntry("corpoTennis", "corpo"))!.data;
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
 <BaseLayout
   lang={lang}
-  title="Tennis | Tennis Club Ambrosiano Milan"
-  description="Sixteen tennis courts, qualified FITP coaches, adult courses for all levels. Discover tennis at Tennis Club Ambrosiano in Milan."
+  title={d.title_en ?? d.title}
+  description={d.description_en ?? d.description}
   hideLeadFormInline
 >
   <PageHero
-    eyebrow="Adults · Tennis"
-    title="Tennis"
-    titleAccent="at TCA"
-    sub="Sixteen courts, qualified FITP coaches and a tradition that started in 1963. Whether you want to improve your game or start from scratch, we have the right course for you."
-    image="/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif"
-    imageAlt="Tennis courts at Tennis Club Ambrosiano"
+    eyebrow={d.hero_eyebrow_en ?? d.hero_eyebrow}
+    title={d.hero_titolo_en ?? d.hero_titolo}
+    titleAccent={d.hero_titolo_accent_en ?? d.hero_titolo_accent}
+    sub={d.hero_sottotitolo_en ?? d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
     ctas={[
       { label: "Become a Member", href: "#membership" },
       { label: "Book a Court", href: "https://playtomic.io/tennis-club-ambrosiano/5440b3ab-1500-4d62-8c9b-6a8b96949501?q=TENNIS~2022-12-08~~~", external: true, outline: true },
@@ -29,23 +36,23 @@ const lang = 'en' as const;
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">Our courts</span>
-      <h2 class="section-title">16 Courts.<br><em>Every surface.</em></h2>
+      <span class="eyebrow">{c.campi_eyebrow_en ?? c.campi_eyebrow}</span>
+      <h2 class="section-title">{c.campi_titolo_en ?? c.campi_titolo}<br><em>{c.campi_titolo_accent_en ?? c.campi_titolo_accent}</em></h2>
       <div class="content-grid">
         <div class="content-card">
           <img src={publicUrl('/0b28cd5a-d9a8-4ffb-b8de-e5c6e675fbd2_TCA+Tennis+4.avif')} alt="Clay court seen from above during a lesson" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>Clay</h3>
-          <p>FITP-approved courts, perfect for play at every level.</p>
+          <h3>{c.campi[0].titolo_en ?? c.campi[0].titolo}</h3>
+          <p>{c.campi[0].testo_en ?? c.campi[0].testo}</p>
         </div>
         <div class="content-card">
           <img src={publicUrl('/Tennis%20court%20indoor.jpeg')} alt="Indoor tennis court at Tennis Club Ambrosiano" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>Indoor Courts</h3>
-          <p>Covered, lit and heated facilities to play all year round.</p>
+          <h3>{c.campi[1].titolo_en ?? c.campi[1].titolo}</h3>
+          <p>{c.campi[1].testo_en ?? c.campi[1].testo}</p>
         </div>
         <div class="content-card">
           <img src={publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif')} alt="Player in action on a hard court" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>Hard Court</h3>
-          <p>Synthetic surface suited to fast play and the needs of every level.</p>
+          <h3>{c.campi[2].titolo_en ?? c.campi[2].titolo}</h3>
+          <p>{c.campi[2].testo_en ?? c.campi[2].testo}</p>
         </div>
       </div>
     </div>
@@ -53,9 +60,9 @@ const lang = 'en' as const;
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">For our members</span>
-      <h2 class="section-title">Sixteen courts.<br><em>Always at your service.</em></h2>
-      <p class="section-lead">Become a member of Tennis Club Ambrosiano and <strong>play all year round on our sixteen courts</strong>, outdoor and indoor — and padel too, on our dedicated courts. Every membership includes a different level of booking priority: choose the one that best suits the way you play.</p>
+      <span class="eyebrow">{c.soci_eyebrow_en ?? c.soci_eyebrow}</span>
+      <h2 class="section-title">{c.soci_titolo_en ?? c.soci_titolo}<br><em>{c.soci_titolo_accent_en ?? c.soci_titolo_accent}</em></h2>
+      <p class="section-lead" set:html={mdBold(c.soci_testo_en ?? c.soci_testo)} />
     </div>
   </section>
 
@@ -65,29 +72,19 @@ const lang = 'en' as const;
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">Adult courses</span>
-      <h2 class="section-title">Want to learn or refine<br><em>your technique?</em></h2>
-      <p class="section-lead">It's never too early, or too late, to learn tennis or take your game to the next level. At Tennis Club Ambrosiano we run adult courses for every age and experience level, with weekly, twice-weekly or three-times-weekly frequency depending on the time you want to dedicate to the court and the goals you want to reach. <strong>Lessons in small groups or one-to-one, led by our FITP-certified coaches.</strong> We also offer padel lessons, individual or in groups. Request information: we'll help you find the solution that suits you best.</p>
+      <span class="eyebrow">{c.corsi_eyebrow_en ?? c.corsi_eyebrow}</span>
+      <h2 class="section-title">{c.corsi_titolo_en ?? c.corsi_titolo}<br><em>{c.corsi_titolo_accent_en ?? c.corsi_titolo_accent}</em></h2>
+      <p class="section-lead" set:html={mdBold(c.corsi_intro_en ?? c.corsi_intro)} />
       <div class="content-grid content-grid--4">
-        <div class="content-card content-card--simple">
-          <strong>Beginners</strong>
-          <p>For those starting from scratch. Small groups, patient coaches, a gradual approach.</p>
-        </div>
-        <div class="content-card content-card--simple">
-          <strong>Intermediate</strong>
-          <p>Consolidate your technique and improve consistency and tactics in your game.</p>
-        </div>
-        <div class="content-card content-card--simple">
-          <strong>Advanced</strong>
-          <p>Match play, video analysis and stroke-specific work for competitive players.</p>
-        </div>
-        <div class="content-card content-card--simple">
-          <strong>Private Lessons</strong>
-          <p>One-to-one work with the coach. Maximum intensity, rapid progress.</p>
-        </div>
+        {c.corsi_livelli.map((l) => (
+          <div class="content-card content-card--simple">
+            <strong>{l.titolo_en ?? l.titolo}</strong>
+            <p>{l.testo_en ?? l.testo}</p>
+          </div>
+        ))}
       </div>
       <div class="section-cta">
-        <button class="btn btn-red" data-open-modal="modal-contatti">Request Information</button>
+        <button class="btn btn-red" data-open-modal="modal-contatti">{c.corsi_cta_label_en ?? c.corsi_cta_label}</button>
       </div>
     </div>
   </section>

@@ -72,6 +72,12 @@ type Query {
   corpoPreparazioneAtleticaConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoPreparazioneAtleticaFilter): CorpoPreparazioneAtleticaConnection!
   membership(relativePath: String): Membership!
   membershipConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: MembershipFilter): MembershipConnection!
+  corpoTennis(relativePath: String): CorpoTennis!
+  corpoTennisConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoTennisFilter): CorpoTennisConnection!
+  corpoAgonistica(relativePath: String): CorpoAgonistica!
+  corpoAgonisticaConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoAgonisticaFilter): CorpoAgonisticaConnection!
+  corpoTorneoAvvenire(relativePath: String): CorpoTorneoAvvenire!
+  corpoTorneoAvvenireConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoTorneoAvvenireFilter): CorpoTorneoAvvenireConnection!
   info(relativePath: String): Info!
   infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
   helpdesk(relativePath: String): Helpdesk!
@@ -92,6 +98,9 @@ input DocumentFilter {
   corpoPersonalTrainer: CorpoPersonalTrainerFilter
   corpoPreparazioneAtletica: CorpoPreparazioneAtleticaFilter
   membership: MembershipFilter
+  corpoTennis: CorpoTennisFilter
+  corpoAgonistica: CorpoAgonisticaFilter
+  corpoTorneoAvvenire: CorpoTorneoAvvenireFilter
   info: InfoFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
@@ -121,7 +130,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | CorpoPreparazioneAtletica | Membership | Info | Helpdesk | News | Pagine | Folder
+union DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | CorpoPreparazioneAtletica | Membership | CorpoTennis | CorpoAgonistica | CorpoTorneoAvvenire | Info | Helpdesk | News | Pagine | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -998,6 +1007,260 @@ type MembershipConnection implements Connection {
   edges: [MembershipConnectionEdges]
 }
 
+type CorpoTennisCampi {
+  titolo: String!
+  testo: String!
+  titolo_en: String
+  testo_en: String
+}
+
+type CorpoTennisCorsi_livelli {
+  titolo: String!
+  testo: String!
+  titolo_en: String
+  testo_en: String
+}
+
+type CorpoTennis implements Node & Document {
+  campi_eyebrow: String!
+  campi_titolo: String!
+  campi_titolo_accent: String!
+  campi: [CorpoTennisCampi!]!
+  soci_eyebrow: String!
+  soci_titolo: String!
+  soci_titolo_accent: String!
+  soci_testo: String!
+  corsi_eyebrow: String!
+  corsi_titolo: String!
+  corsi_titolo_accent: String!
+  corsi_intro: String!
+  corsi_livelli: [CorpoTennisCorsi_livelli!]!
+  corsi_cta_label: String!
+  campi_eyebrow_en: String
+  campi_titolo_en: String
+  campi_titolo_accent_en: String
+  soci_eyebrow_en: String
+  soci_titolo_en: String
+  soci_titolo_accent_en: String
+  soci_testo_en: String
+  corsi_eyebrow_en: String
+  corsi_titolo_en: String
+  corsi_titolo_accent_en: String
+  corsi_intro_en: String
+  corsi_cta_label_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CorpoTennisCampiFilter {
+  titolo: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input CorpoTennisCorsi_livelliFilter {
+  titolo: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input CorpoTennisFilter {
+  campi_eyebrow: StringFilter
+  campi_titolo: StringFilter
+  campi_titolo_accent: StringFilter
+  campi: CorpoTennisCampiFilter
+  soci_eyebrow: StringFilter
+  soci_titolo: StringFilter
+  soci_titolo_accent: StringFilter
+  soci_testo: StringFilter
+  corsi_eyebrow: StringFilter
+  corsi_titolo: StringFilter
+  corsi_titolo_accent: StringFilter
+  corsi_intro: StringFilter
+  corsi_livelli: CorpoTennisCorsi_livelliFilter
+  corsi_cta_label: StringFilter
+  campi_eyebrow_en: StringFilter
+  campi_titolo_en: StringFilter
+  campi_titolo_accent_en: StringFilter
+  soci_eyebrow_en: StringFilter
+  soci_titolo_en: StringFilter
+  soci_titolo_accent_en: StringFilter
+  soci_testo_en: StringFilter
+  corsi_eyebrow_en: StringFilter
+  corsi_titolo_en: StringFilter
+  corsi_titolo_accent_en: StringFilter
+  corsi_intro_en: StringFilter
+  corsi_cta_label_en: StringFilter
+}
+
+type CorpoTennisConnectionEdges {
+  cursor: String!
+  node: CorpoTennis
+}
+
+type CorpoTennisConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CorpoTennisConnectionEdges]
+}
+
+type CorpoAgonisticaStep {
+  titolo: String!
+  testo: String!
+  titolo_en: String
+  testo_en: String
+}
+
+type CorpoAgonistica implements Node & Document {
+  eyebrow: String!
+  titolo: String!
+  titolo_accent: String!
+  step: [CorpoAgonisticaStep!]!
+  eyebrow_en: String
+  titolo_en: String
+  titolo_accent_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CorpoAgonisticaStepFilter {
+  titolo: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input CorpoAgonisticaFilter {
+  eyebrow: StringFilter
+  titolo: StringFilter
+  titolo_accent: StringFilter
+  step: CorpoAgonisticaStepFilter
+  eyebrow_en: StringFilter
+  titolo_en: StringFilter
+  titolo_accent_en: StringFilter
+}
+
+type CorpoAgonisticaConnectionEdges {
+  cursor: String!
+  node: CorpoAgonistica
+}
+
+type CorpoAgonisticaConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CorpoAgonisticaConnectionEdges]
+}
+
+type CorpoTorneoAvvenireStats {
+  numero: String!
+  label: String!
+  label_en: String
+}
+
+type CorpoTorneoAvvenire implements Node & Document {
+  quote_testo: String!
+  quote_autore: String!
+  storia_eyebrow: String!
+  storia_titolo: String!
+  storia_titolo_accent: String!
+  storia_paragrafo1: String!
+  storia_paragrafo2: String!
+  stats: [CorpoTorneoAvvenireStats!]!
+  alumni_eyebrow: String!
+  alumni_titolo: String!
+  alumni_titolo_accent: String!
+  alumni_intro: String!
+  galleria_eyebrow: String!
+  galleria_titolo: String!
+  galleria_titolo_accent: String!
+  prossima_eyebrow: String!
+  prossima_titolo: String!
+  prossima_titolo_accent: String!
+  prossima_testo: String!
+  quote_testo_en: String
+  quote_autore_en: String
+  storia_eyebrow_en: String
+  storia_titolo_en: String
+  storia_titolo_accent_en: String
+  storia_paragrafo1_en: String
+  storia_paragrafo2_en: String
+  alumni_eyebrow_en: String
+  alumni_titolo_en: String
+  alumni_titolo_accent_en: String
+  alumni_intro_en: String
+  galleria_eyebrow_en: String
+  galleria_titolo_en: String
+  galleria_titolo_accent_en: String
+  prossima_eyebrow_en: String
+  prossima_titolo_en: String
+  prossima_titolo_accent_en: String
+  prossima_testo_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CorpoTorneoAvvenireStatsFilter {
+  numero: StringFilter
+  label: StringFilter
+  label_en: StringFilter
+}
+
+input CorpoTorneoAvvenireFilter {
+  quote_testo: StringFilter
+  quote_autore: StringFilter
+  storia_eyebrow: StringFilter
+  storia_titolo: StringFilter
+  storia_titolo_accent: StringFilter
+  storia_paragrafo1: StringFilter
+  storia_paragrafo2: StringFilter
+  stats: CorpoTorneoAvvenireStatsFilter
+  alumni_eyebrow: StringFilter
+  alumni_titolo: StringFilter
+  alumni_titolo_accent: StringFilter
+  alumni_intro: StringFilter
+  galleria_eyebrow: StringFilter
+  galleria_titolo: StringFilter
+  galleria_titolo_accent: StringFilter
+  prossima_eyebrow: StringFilter
+  prossima_titolo: StringFilter
+  prossima_titolo_accent: StringFilter
+  prossima_testo: StringFilter
+  quote_testo_en: StringFilter
+  quote_autore_en: StringFilter
+  storia_eyebrow_en: StringFilter
+  storia_titolo_en: StringFilter
+  storia_titolo_accent_en: StringFilter
+  storia_paragrafo1_en: StringFilter
+  storia_paragrafo2_en: StringFilter
+  alumni_eyebrow_en: StringFilter
+  alumni_titolo_en: StringFilter
+  alumni_titolo_accent_en: StringFilter
+  alumni_intro_en: StringFilter
+  galleria_eyebrow_en: StringFilter
+  galleria_titolo_en: StringFilter
+  galleria_titolo_accent_en: StringFilter
+  prossima_eyebrow_en: StringFilter
+  prossima_titolo_en: StringFilter
+  prossima_titolo_accent_en: StringFilter
+  prossima_testo_en: StringFilter
+}
+
+type CorpoTorneoAvvenireConnectionEdges {
+  cursor: String!
+  node: CorpoTorneoAvvenire
+}
+
+type CorpoTorneoAvvenireConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CorpoTorneoAvvenireConnectionEdges]
+}
+
 type Info implements Node & Document {
   indirizzo: String!
   come_arrivare: String!
@@ -1200,6 +1463,12 @@ type Mutation {
   createCorpoPreparazioneAtletica(relativePath: String!, params: CorpoPreparazioneAtleticaMutation!): CorpoPreparazioneAtletica!
   updateMembership(relativePath: String!, params: MembershipMutation!): Membership!
   createMembership(relativePath: String!, params: MembershipMutation!): Membership!
+  updateCorpoTennis(relativePath: String!, params: CorpoTennisMutation!): CorpoTennis!
+  createCorpoTennis(relativePath: String!, params: CorpoTennisMutation!): CorpoTennis!
+  updateCorpoAgonistica(relativePath: String!, params: CorpoAgonisticaMutation!): CorpoAgonistica!
+  createCorpoAgonistica(relativePath: String!, params: CorpoAgonisticaMutation!): CorpoAgonistica!
+  updateCorpoTorneoAvvenire(relativePath: String!, params: CorpoTorneoAvvenireMutation!): CorpoTorneoAvvenire!
+  createCorpoTorneoAvvenire(relativePath: String!, params: CorpoTorneoAvvenireMutation!): CorpoTorneoAvvenire!
   updateInfo(relativePath: String!, params: InfoMutation!): Info!
   createInfo(relativePath: String!, params: InfoMutation!): Info!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
@@ -1220,6 +1489,9 @@ input DocumentUpdateMutation {
   corpoPersonalTrainer: CorpoPersonalTrainerMutation
   corpoPreparazioneAtletica: CorpoPreparazioneAtleticaMutation
   membership: MembershipMutation
+  corpoTennis: CorpoTennisMutation
+  corpoAgonistica: CorpoAgonisticaMutation
+  corpoTorneoAvvenire: CorpoTorneoAvvenireMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -1237,6 +1509,9 @@ input DocumentMutation {
   corpoPersonalTrainer: CorpoPersonalTrainerMutation
   corpoPreparazioneAtletica: CorpoPreparazioneAtleticaMutation
   membership: MembershipMutation
+  corpoTennis: CorpoTennisMutation
+  corpoAgonistica: CorpoAgonisticaMutation
+  corpoTorneoAvvenire: CorpoTorneoAvvenireMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -1594,6 +1869,112 @@ input MembershipMutation {
   sottotitolo_en: String
   platinum_badge_en: String
   cta_label_en: String
+}
+
+input CorpoTennisCampiMutation {
+  titolo: String
+  testo: String
+  titolo_en: String
+  testo_en: String
+}
+
+input CorpoTennisCorsi_livelliMutation {
+  titolo: String
+  testo: String
+  titolo_en: String
+  testo_en: String
+}
+
+input CorpoTennisMutation {
+  campi_eyebrow: String
+  campi_titolo: String
+  campi_titolo_accent: String
+  campi: [CorpoTennisCampiMutation]
+  soci_eyebrow: String
+  soci_titolo: String
+  soci_titolo_accent: String
+  soci_testo: String
+  corsi_eyebrow: String
+  corsi_titolo: String
+  corsi_titolo_accent: String
+  corsi_intro: String
+  corsi_livelli: [CorpoTennisCorsi_livelliMutation]
+  corsi_cta_label: String
+  campi_eyebrow_en: String
+  campi_titolo_en: String
+  campi_titolo_accent_en: String
+  soci_eyebrow_en: String
+  soci_titolo_en: String
+  soci_titolo_accent_en: String
+  soci_testo_en: String
+  corsi_eyebrow_en: String
+  corsi_titolo_en: String
+  corsi_titolo_accent_en: String
+  corsi_intro_en: String
+  corsi_cta_label_en: String
+}
+
+input CorpoAgonisticaStepMutation {
+  titolo: String
+  testo: String
+  titolo_en: String
+  testo_en: String
+}
+
+input CorpoAgonisticaMutation {
+  eyebrow: String
+  titolo: String
+  titolo_accent: String
+  step: [CorpoAgonisticaStepMutation]
+  eyebrow_en: String
+  titolo_en: String
+  titolo_accent_en: String
+}
+
+input CorpoTorneoAvvenireStatsMutation {
+  numero: String
+  label: String
+  label_en: String
+}
+
+input CorpoTorneoAvvenireMutation {
+  quote_testo: String
+  quote_autore: String
+  storia_eyebrow: String
+  storia_titolo: String
+  storia_titolo_accent: String
+  storia_paragrafo1: String
+  storia_paragrafo2: String
+  stats: [CorpoTorneoAvvenireStatsMutation]
+  alumni_eyebrow: String
+  alumni_titolo: String
+  alumni_titolo_accent: String
+  alumni_intro: String
+  galleria_eyebrow: String
+  galleria_titolo: String
+  galleria_titolo_accent: String
+  prossima_eyebrow: String
+  prossima_titolo: String
+  prossima_titolo_accent: String
+  prossima_testo: String
+  quote_testo_en: String
+  quote_autore_en: String
+  storia_eyebrow_en: String
+  storia_titolo_en: String
+  storia_titolo_accent_en: String
+  storia_paragrafo1_en: String
+  storia_paragrafo2_en: String
+  alumni_eyebrow_en: String
+  alumni_titolo_en: String
+  alumni_titolo_accent_en: String
+  alumni_intro_en: String
+  galleria_eyebrow_en: String
+  galleria_titolo_en: String
+  galleria_titolo_accent_en: String
+  prossima_eyebrow_en: String
+  prossima_titolo_en: String
+  prossima_titolo_accent_en: String
+  prossima_testo_en: String
 }
 
 input InfoMutation {

@@ -480,6 +480,132 @@ const membership = defineCollection({
   }),
 });
 
+// ─── CORPO PAGINA: TENNIS ──────────────────────────────────────────────────────
+// Contenuto sotto l'hero della pagina Tennis (titoli e testi soltanto — le
+// foto restano nel codice). La tabella Membership è nella collection
+// 'membership'.
+// File unico, gestibile da TinaCMS → collection 'corpoTennis'.
+// ─────────────────────────────────────────────────────────────────────────────
+const corpoTennis = defineCollection({
+  type: 'content',
+  schema: z.object({
+    campi_eyebrow: z.string(),
+    campi_titolo: z.string(),
+    campi_titolo_accent: z.string(),
+    campi: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })),
+    soci_eyebrow: z.string(),
+    soci_titolo: z.string(),
+    soci_titolo_accent: z.string(),
+    soci_testo: z.string(),
+    corsi_eyebrow: z.string(),
+    corsi_titolo: z.string(),
+    corsi_titolo_accent: z.string(),
+    corsi_intro: z.string(),
+    corsi_livelli: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })),
+    corsi_cta_label: z.string(),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    campi_eyebrow_en: z.string().optional(),
+    campi_titolo_en: z.string().optional(),
+    campi_titolo_accent_en: z.string().optional(),
+    soci_eyebrow_en: z.string().optional(),
+    soci_titolo_en: z.string().optional(),
+    soci_titolo_accent_en: z.string().optional(),
+    soci_testo_en: z.string().optional(),
+    corsi_eyebrow_en: z.string().optional(),
+    corsi_titolo_en: z.string().optional(),
+    corsi_titolo_accent_en: z.string().optional(),
+    corsi_intro_en: z.string().optional(),
+    corsi_cta_label_en: z.string().optional(),
+  }),
+});
+
+// ─── CORPO PAGINA: AGONISTICA ──────────────────────────────────────────────────
+// Contenuto sotto l'hero della pagina Agonistica (titoli e testi soltanto).
+// File unico, gestibile da TinaCMS → collection 'corpoAgonistica'.
+// ─────────────────────────────────────────────────────────────────────────────
+const corpoAgonistica = defineCollection({
+  type: 'content',
+  schema: z.object({
+    eyebrow: z.string(),
+    titolo: z.string(),
+    titolo_accent: z.string(),
+    step: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    eyebrow_en: z.string().optional(),
+    titolo_en: z.string().optional(),
+    titolo_accent_en: z.string().optional(),
+  }),
+});
+
+// ─── CORPO PAGINA: TORNEO AVVENIRE ─────────────────────────────────────────────
+// Contenuto sotto l'hero della pagina Torneo Avvenire (titoli e testi
+// soltanto — le foto degli alumni e la galleria restano nel codice, sono
+// legate a immagini specifiche non intercambiabili).
+// File unico, gestibile da TinaCMS → collection 'corpoTorneoAvvenire'.
+// ─────────────────────────────────────────────────────────────────────────────
+const corpoTorneoAvvenire = defineCollection({
+  type: 'content',
+  schema: z.object({
+    quote_testo: z.string(),
+    quote_autore: z.string(),
+    storia_eyebrow: z.string(),
+    storia_titolo: z.string(),
+    storia_titolo_accent: z.string(),
+    storia_paragrafo1: z.string(),
+    storia_paragrafo2: z.string(),
+    stats: z.array(z.object({
+      numero: z.string(),
+      label: z.string(),
+      label_en: z.string().optional(),
+    })),
+    alumni_eyebrow: z.string(),
+    alumni_titolo: z.string(),
+    alumni_titolo_accent: z.string(),
+    alumni_intro: z.string(),
+    galleria_eyebrow: z.string(),
+    galleria_titolo: z.string(),
+    galleria_titolo_accent: z.string(),
+    prossima_eyebrow: z.string(),
+    prossima_titolo: z.string(),
+    prossima_titolo_accent: z.string(),
+    prossima_testo: z.string(),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    quote_testo_en: z.string().optional(),
+    quote_autore_en: z.string().optional(),
+    storia_eyebrow_en: z.string().optional(),
+    storia_titolo_en: z.string().optional(),
+    storia_titolo_accent_en: z.string().optional(),
+    storia_paragrafo1_en: z.string().optional(),
+    storia_paragrafo2_en: z.string().optional(),
+    alumni_eyebrow_en: z.string().optional(),
+    alumni_titolo_en: z.string().optional(),
+    alumni_titolo_accent_en: z.string().optional(),
+    alumni_intro_en: z.string().optional(),
+    galleria_eyebrow_en: z.string().optional(),
+    galleria_titolo_en: z.string().optional(),
+    galleria_titolo_accent_en: z.string().optional(),
+    prossima_eyebrow_en: z.string().optional(),
+    prossima_titolo_en: z.string().optional(),
+    prossima_titolo_accent_en: z.string().optional(),
+    prossima_testo_en: z.string().optional(),
+  }),
+});
+
 // ─── INFO CLUB ────────────────────────────────────────────────────────────────
 // File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
 // orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
@@ -498,4 +624,4 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, planning, corpoStoria, corpoSummerCamps, corpoScuolaTennis, corpoPersonalTrainer, corpoPreparazioneAtletica, membership, info };
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, corpoStoria, corpoSummerCamps, corpoScuolaTennis, corpoPersonalTrainer, corpoPreparazioneAtletica, corpoTennis, corpoAgonistica, corpoTorneoAvvenire, membership, info };
