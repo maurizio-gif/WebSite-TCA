@@ -48,6 +48,14 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
 <!doctype html>
 <html lang={lang} class={hideChrome ? 'is-app-embed' : undefined}>
   <head>
+    <!-- Preconnect ai domini di GTM/Analytics: la connessione si apre in
+         parallelo mentre il resto della pagina carica, invece di attendere
+         che lo script GTM la richieda (risparmio stimato ~1.3s da PSI). -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
+    <link rel="preconnect" href="https://region1.analytics.google.com" />
+    <link rel="preconnect" href="https://stats.g.doubleclick.net" />
+
     <!-- Google Tag Manager -->
     <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
