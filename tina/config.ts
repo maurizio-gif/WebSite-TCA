@@ -108,6 +108,83 @@ export default defineConfig({
           },
         ],
       },
+      // ─── SERVIZI CLUB LIFE ─────────────────────────────────────────────────
+      // Card della sezione "Servizi e Partner" di Club Life.
+      // Ogni servizio è un file .md in src/content/servizi/
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: 'servizi',
+        label: 'Servizi Club Life',
+        path: 'src/content/servizi',
+        format: 'md',
+        fields: [
+          {
+            type: 'string',
+            name: 'titolo',
+            label: 'Titolo',
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: 'number',
+            name: 'ordine',
+            label: 'Ordine nella griglia (1 = primo)',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'icon',
+            label: 'Icona',
+            required: true,
+            options: [
+              { value: 'coach', label: 'Preparatore (persona)' },
+              { value: 'ballmachine', label: 'Macchina lanciapalline' },
+              { value: 'birthday', label: 'Compleanno (torta)' },
+              { value: 'locker', label: 'Armadietti' },
+              { value: 'shop', label: 'Shop (borsa)' },
+              { value: 'medical', label: 'Medico (scudo con croce)' },
+              { value: 'graduation', label: 'Studio (tocco di laurea)' },
+              { value: 'briefcase', label: 'Corporate (valigetta)' },
+            ],
+          },
+          {
+            type: 'string',
+            name: 'desc',
+            label: 'Descrizione breve (nella card)',
+            required: true,
+            ui: { component: 'textarea' },
+          },
+          {
+            type: 'string',
+            name: 'dettaglio',
+            label: 'Dettaglio (nel popup) — grassetto con **doppi asterischi**',
+            required: true,
+            ui: { component: 'textarea' },
+          },
+          {
+            type: 'string',
+            name: 'href',
+            label: 'Link di approfondimento (opzionale, es. /personal-trainer)',
+          },
+          {
+            type: 'string',
+            name: 'titolo_en',
+            label: '🇬🇧 Titolo (inglese)',
+          },
+          {
+            type: 'string',
+            name: 'desc_en',
+            label: '🇬🇧 Descrizione breve (inglese)',
+            ui: { component: 'textarea' },
+          },
+          {
+            type: 'string',
+            name: 'dettaglio_en',
+            label: '🇬🇧 Dettaglio (inglese)',
+            ui: { component: 'textarea' },
+          },
+        ],
+      },
       // ─── INFO CLUB ─────────────────────────────────────────────────────────
       // File unico con orari, indirizzo e contatti del Club.
       // Le modifiche si riflettono su tutte le pagine (sezione "Vieni a trovarci").

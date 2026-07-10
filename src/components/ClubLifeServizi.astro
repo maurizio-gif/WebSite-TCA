@@ -1,12 +1,29 @@
 ---
 import { useTranslations, getLocalePath, type Lang } from '../i18n/utils';
-import { serviziItems } from '../data/clubLifeServizi';
+import { getCollection } from 'astro:content';
 
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
 const t = useTranslations(lang);
-const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
+const tx = (itVal: string, enVal?: string) => (lang === 'en' && enVal ? enVal : itVal);
 const p = (path: string) => getLocalePath(lang, path);
+
+// Servizi gestibili da TinaCMS → src/content/servizi/ (una card per file .md)
+// Nel dettaglio il grassetto si scrive con **doppi asterischi**.
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+const serviziItems = (await getCollection('servizi'))
+  .sort((a, b) => a.data.ordine - b.data.ordine)
+  .map((entry) => ({
+    icon: entry.data.icon,
+    titolo: entry.data.titolo,
+    titolo_en: entry.data.titolo_en,
+    desc: entry.data.desc,
+    desc_en: entry.data.desc_en,
+    dettaglio: mdBold(entry.data.dettaglio),
+    dettaglio_en: entry.data.dettaglio_en ? mdBold(entry.data.dettaglio_en) : undefined,
+    href: entry.data.href,
+  }));
 ---
 
 <section class="cl-servizi" id="servizi">

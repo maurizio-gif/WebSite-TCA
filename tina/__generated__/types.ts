@@ -84,6 +84,8 @@ export type Query = {
   document: DocumentNode;
   eventi: Eventi;
   eventiConnection: EventiConnection;
+  servizi: Servizi;
+  serviziConnection: ServiziConnection;
   info: Info;
   infoConnection: InfoConnection;
   helpdesk: Helpdesk;
@@ -128,6 +130,21 @@ export type QueryEventiConnectionArgs = {
   last?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<EventiFilter>;
+};
+
+
+export type QueryServiziArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryServiziConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ServiziFilter>;
 };
 
 
@@ -192,6 +209,7 @@ export type QueryPagineConnectionArgs = {
 
 export type DocumentFilter = {
   eventi?: InputMaybe<EventiFilter>;
+  servizi?: InputMaybe<ServiziFilter>;
   info?: InputMaybe<InfoFilter>;
   helpdesk?: InputMaybe<HelpdeskFilter>;
   news?: InputMaybe<NewsFilter>;
@@ -235,7 +253,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Info | Helpdesk | News | Pagine | Folder;
+export type DocumentNode = Eventi | Servizi | Info | Helpdesk | News | Pagine | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -308,6 +326,57 @@ export type EventiConnection = Connection & {
   pageInfo: PageInfo;
   totalCount: Scalars['Float']['output'];
   edges?: Maybe<Array<Maybe<EventiConnectionEdges>>>;
+};
+
+export type Servizi = Node & Document & {
+  __typename?: 'Servizi';
+  titolo: Scalars['String']['output'];
+  ordine: Scalars['Float']['output'];
+  icon: Scalars['String']['output'];
+  desc: Scalars['String']['output'];
+  dettaglio: Scalars['String']['output'];
+  href?: Maybe<Scalars['String']['output']>;
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  desc_en?: Maybe<Scalars['String']['output']>;
+  dettaglio_en?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
+
+export type ServiziFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  ordine?: InputMaybe<NumberFilter>;
+  icon?: InputMaybe<StringFilter>;
+  desc?: InputMaybe<StringFilter>;
+  dettaglio?: InputMaybe<StringFilter>;
+  href?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  desc_en?: InputMaybe<StringFilter>;
+  dettaglio_en?: InputMaybe<StringFilter>;
+};
+
+export type ServiziConnectionEdges = {
+  __typename?: 'ServiziConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Servizi>;
+};
+
+export type ServiziConnection = Connection & {
+  __typename?: 'ServiziConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<ServiziConnectionEdges>>>;
 };
 
 export type Info = Node & Document & {
@@ -496,6 +565,8 @@ export type Mutation = {
   createFolder: DocumentNode;
   updateEventi: Eventi;
   createEventi: Eventi;
+  updateServizi: Servizi;
+  createServizi: Servizi;
   updateInfo: Info;
   createInfo: Info;
   updateHelpdesk: Helpdesk;
@@ -552,6 +623,18 @@ export type MutationCreateEventiArgs = {
 };
 
 
+export type MutationUpdateServiziArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ServiziMutation;
+};
+
+
+export type MutationCreateServiziArgs = {
+  relativePath: Scalars['String']['input'];
+  params: ServiziMutation;
+};
+
+
 export type MutationUpdateInfoArgs = {
   relativePath: Scalars['String']['input'];
   params: InfoMutation;
@@ -601,6 +684,7 @@ export type MutationCreatePagineArgs = {
 
 export type DocumentUpdateMutation = {
   eventi?: InputMaybe<EventiMutation>;
+  servizi?: InputMaybe<ServiziMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -610,6 +694,7 @@ export type DocumentUpdateMutation = {
 
 export type DocumentMutation = {
   eventi?: InputMaybe<EventiMutation>;
+  servizi?: InputMaybe<ServiziMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -629,6 +714,18 @@ export type EventiMutation = {
   luogo_en?: InputMaybe<Scalars['String']['input']>;
   corpo_en?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type ServiziMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  ordine?: InputMaybe<Scalars['Float']['input']>;
+  icon?: InputMaybe<Scalars['String']['input']>;
+  desc?: InputMaybe<Scalars['String']['input']>;
+  dettaglio?: InputMaybe<Scalars['String']['input']>;
+  href?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  desc_en?: InputMaybe<Scalars['String']['input']>;
+  dettaglio_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type InfoMutation = {
@@ -684,6 +781,8 @@ export type PagineMutation = {
 
 export type EventiPartsFragment = { __typename: 'Eventi', titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null };
 
+export type ServiziPartsFragment = { __typename: 'Servizi', titolo: string, ordine: number, icon: string, desc: string, dettaglio: string, href?: string | null, titolo_en?: string | null, desc_en?: string | null, dettaglio_en?: string | null };
+
 export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
 
 export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
@@ -710,6 +809,25 @@ export type EventiConnectionQueryVariables = Exact<{
 
 
 export type EventiConnectionQuery = { __typename?: 'Query', eventiConnection: { __typename?: 'EventiConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'EventiConnectionEdges', cursor: string, node?: { __typename: 'Eventi', id: string, titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export type ServiziQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type ServiziQuery = { __typename?: 'Query', servizi: { __typename: 'Servizi', id: string, titolo: string, ordine: number, icon: string, desc: string, dettaglio: string, href?: string | null, titolo_en?: string | null, desc_en?: string | null, dettaglio_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type ServiziConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<ServiziFilter>;
+}>;
+
+
+export type ServiziConnectionQuery = { __typename?: 'Query', serviziConnection: { __typename?: 'ServiziConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiziConnectionEdges', cursor: string, node?: { __typename: 'Servizi', id: string, titolo: string, ordine: number, icon: string, desc: string, dettaglio: string, href?: string | null, titolo_en?: string | null, desc_en?: string | null, dettaglio_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type InfoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -802,6 +920,20 @@ export const EventiPartsFragmentDoc = gql`
   luogo_en
   corpo_en
   body
+}
+    `;
+export const ServiziPartsFragmentDoc = gql`
+    fragment ServiziParts on Servizi {
+  __typename
+  titolo
+  ordine
+  icon
+  desc
+  dettaglio
+  href
+  titolo_en
+  desc_en
+  dettaglio_en
 }
     `;
 export const InfoPartsFragmentDoc = gql`
@@ -920,6 +1052,63 @@ export const EventiConnectionDocument = gql`
   }
 }
     ${EventiPartsFragmentDoc}`;
+export const ServiziDocument = gql`
+    query servizi($relativePath: String!) {
+  servizi(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...ServiziParts
+  }
+}
+    ${ServiziPartsFragmentDoc}`;
+export const ServiziConnectionDocument = gql`
+    query serviziConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: ServiziFilter) {
+  serviziConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...ServiziParts
+      }
+    }
+  }
+}
+    ${ServiziPartsFragmentDoc}`;
 export const InfoDocument = gql`
     query info($relativePath: String!) {
   info(relativePath: $relativePath) {
@@ -1156,6 +1345,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     eventiConnection(variables?: EventiConnectionQueryVariables, options?: C): Promise<{data: EventiConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EventiConnectionQueryVariables, query: string}> {
         return requester<{data: EventiConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EventiConnectionQueryVariables, query: string}, EventiConnectionQueryVariables>(EventiConnectionDocument, variables, options);
+      },
+    servizi(variables: ServiziQueryVariables, options?: C): Promise<{data: ServiziQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiziQueryVariables, query: string}> {
+        return requester<{data: ServiziQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiziQueryVariables, query: string}, ServiziQueryVariables>(ServiziDocument, variables, options);
+      },
+    serviziConnection(variables?: ServiziConnectionQueryVariables, options?: C): Promise<{data: ServiziConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiziConnectionQueryVariables, query: string}> {
+        return requester<{data: ServiziConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiziConnectionQueryVariables, query: string}, ServiziConnectionQueryVariables>(ServiziConnectionDocument, variables, options);
       },
     info(variables: InfoQueryVariables, options?: C): Promise<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}> {
         return requester<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}, InfoQueryVariables>(InfoDocument, variables, options);

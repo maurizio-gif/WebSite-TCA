@@ -14,6 +14,19 @@ fragment EventiParts on Eventi {
   body
 }
 
+fragment ServiziParts on Servizi {
+  __typename
+  titolo
+  ordine
+  icon
+  desc
+  dettaglio
+  href
+  titolo_en
+  desc_en
+  dettaglio_en
+}
+
 fragment InfoParts on Info {
   __typename
   indirizzo
