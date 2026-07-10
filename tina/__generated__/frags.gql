@@ -38,6 +38,152 @@ fragment PlanningParts on Planning {
   }
 }
 
+fragment CorpoStoriaParts on CorpoStoria {
+  __typename
+  sezione1_eyebrow
+  sezione1_titolo
+  sezione1_titolo_accent
+  timeline {
+    __typename
+    anno
+    testo
+    testo_en
+  }
+  sezione2_eyebrow
+  sezione2_titolo
+  sezione2_titolo_accent
+  paragrafo1
+  paragrafo2
+  galleria {
+    __typename
+    immagine
+    alt
+  }
+  sezione1_eyebrow_en
+  sezione1_titolo_en
+  sezione1_titolo_accent_en
+  sezione2_eyebrow_en
+  sezione2_titolo_en
+  sezione2_titolo_accent_en
+  paragrafo1_en
+  paragrafo2_en
+}
+
+fragment CorpoSummerCampsParts on CorpoSummerCamps {
+  __typename
+  sezione1_eyebrow
+  sezione1_titolo
+  sezione1_titolo_accent
+  features {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  immagine1
+  immagine1_alt
+  immagine2
+  immagine2_alt
+  sezione2_eyebrow
+  sezione2_titolo
+  sezione2_titolo_accent
+  settimane {
+    __typename
+    settimana
+    date
+    settimana_en
+    date_en
+  }
+  sezione1_eyebrow_en
+  sezione1_titolo_en
+  sezione1_titolo_accent_en
+  immagine1_alt_en
+  immagine2_alt_en
+  sezione2_eyebrow_en
+  sezione2_titolo_en
+  sezione2_titolo_accent_en
+}
+
+fragment CorpoScuolaTennisParts on CorpoScuolaTennis {
+  __typename
+  sezione1_eyebrow
+  sezione1_titolo
+  sezione1_titolo_accent
+  sezione1_lead
+  livelli {
+    __typename
+    dot
+    nome
+    tag
+    range
+    testo
+    nome_en
+    tag_en
+    range_en
+    testo_en
+  }
+  livelli_footer_testo
+  livelli_footer_link_label
+  sezione2_eyebrow
+  sezione2_titolo
+  sezione2_titolo_accent
+  iscrizione_cards {
+    __typename
+    titolo
+    tag
+    testo
+    titolo_en
+    tag_en
+    testo_en
+  }
+  iscrizione_cta_label
+  sezione3_eyebrow
+  sezione3_titolo
+  sezione3_titolo_accent
+  sezione3_badge
+  sezione3_paragrafo1
+  sezione3_paragrafo2
+  sezione3_paragrafo3
+  sezione3_immagine
+  sezione3_immagine_alt
+  sezione4_eyebrow
+  sezione4_titolo
+  sezione4_titolo_accent
+  tornei {
+    __typename
+    quando
+    nome
+    testo
+    quando_en
+    nome_en
+    testo_en
+  }
+  sezione4_footer_testo
+  sezione1_eyebrow_en
+  sezione1_titolo_en
+  sezione1_titolo_accent_en
+  sezione1_lead_en
+  livelli_footer_testo_en
+  livelli_footer_link_label_en
+  sezione2_eyebrow_en
+  sezione2_titolo_en
+  sezione2_titolo_accent_en
+  iscrizione_cta_label_en
+  sezione3_eyebrow_en
+  sezione3_titolo_en
+  sezione3_titolo_accent_en
+  sezione3_badge_en
+  sezione3_paragrafo1_en
+  sezione3_paragrafo2_en
+  sezione3_paragrafo3_en
+  sezione3_immagine_alt_en
+  sezione4_eyebrow_en
+  sezione4_titolo_en
+  sezione4_titolo_accent_en
+  sezione4_footer_testo_en
+}
+
 fragment InfoParts on Info {
   __typename
   indirizzo
@@ -93,5 +239,12 @@ fragment PagineParts on Pagine {
   hero_sottotitolo
   hero_immagine
   hero_immagine_alt
+  title_en
+  description_en
+  hero_eyebrow_en
+  hero_titolo_en
+  hero_titolo_accent_en
+  hero_sottotitolo_en
+  hero_immagine_alt_en
   body
 }

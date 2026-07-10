@@ -163,6 +163,171 @@ query planningConnection($before: String, $after: String, $first: Float, $last: 
   }
 }
 
+query corpoStoria($relativePath: String!) {
+  corpoStoria(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoStoriaParts
+  }
+}
+
+query corpoStoriaConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoStoriaFilter) {
+  corpoStoriaConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoStoriaParts
+      }
+    }
+  }
+}
+
+query corpoSummerCamps($relativePath: String!) {
+  corpoSummerCamps(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoSummerCampsParts
+  }
+}
+
+query corpoSummerCampsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoSummerCampsFilter) {
+  corpoSummerCampsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoSummerCampsParts
+      }
+    }
+  }
+}
+
+query corpoScuolaTennis($relativePath: String!) {
+  corpoScuolaTennis(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoScuolaTennisParts
+  }
+}
+
+query corpoScuolaTennisConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoScuolaTennisFilter) {
+  corpoScuolaTennisConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoScuolaTennisParts
+      }
+    }
+  }
+}
+
 query info($relativePath: String!) {
   info(relativePath: $relativePath) {
     ... on Document {

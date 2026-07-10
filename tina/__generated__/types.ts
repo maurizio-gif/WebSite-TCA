@@ -88,6 +88,12 @@ export type Query = {
   serviziConnection: ServiziConnection;
   planning: Planning;
   planningConnection: PlanningConnection;
+  corpoStoria: CorpoStoria;
+  corpoStoriaConnection: CorpoStoriaConnection;
+  corpoSummerCamps: CorpoSummerCamps;
+  corpoSummerCampsConnection: CorpoSummerCampsConnection;
+  corpoScuolaTennis: CorpoScuolaTennis;
+  corpoScuolaTennisConnection: CorpoScuolaTennisConnection;
   info: Info;
   infoConnection: InfoConnection;
   helpdesk: Helpdesk;
@@ -165,6 +171,51 @@ export type QueryPlanningConnectionArgs = {
 };
 
 
+export type QueryCorpoStoriaArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCorpoStoriaConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoStoriaFilter>;
+};
+
+
+export type QueryCorpoSummerCampsArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCorpoSummerCampsConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoSummerCampsFilter>;
+};
+
+
+export type QueryCorpoScuolaTennisArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCorpoScuolaTennisConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoScuolaTennisFilter>;
+};
+
+
 export type QueryInfoArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -228,6 +279,9 @@ export type DocumentFilter = {
   eventi?: InputMaybe<EventiFilter>;
   servizi?: InputMaybe<ServiziFilter>;
   planning?: InputMaybe<PlanningFilter>;
+  corpoStoria?: InputMaybe<CorpoStoriaFilter>;
+  corpoSummerCamps?: InputMaybe<CorpoSummerCampsFilter>;
+  corpoScuolaTennis?: InputMaybe<CorpoScuolaTennisFilter>;
   info?: InputMaybe<InfoFilter>;
   helpdesk?: InputMaybe<HelpdeskFilter>;
   news?: InputMaybe<NewsFilter>;
@@ -271,7 +325,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Servizi | Planning | Info | Helpdesk | News | Pagine | Folder;
+export type DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | Info | Helpdesk | News | Pagine | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -437,6 +491,371 @@ export type PlanningConnection = Connection & {
   edges?: Maybe<Array<Maybe<PlanningConnectionEdges>>>;
 };
 
+export type CorpoStoriaTimeline = {
+  __typename?: 'CorpoStoriaTimeline';
+  anno: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoStoriaGalleria = {
+  __typename?: 'CorpoStoriaGalleria';
+  immagine: Scalars['String']['output'];
+  alt: Scalars['String']['output'];
+};
+
+export type CorpoStoria = Node & Document & {
+  __typename?: 'CorpoStoria';
+  sezione1_eyebrow: Scalars['String']['output'];
+  sezione1_titolo: Scalars['String']['output'];
+  sezione1_titolo_accent: Scalars['String']['output'];
+  timeline: Array<CorpoStoriaTimeline>;
+  sezione2_eyebrow: Scalars['String']['output'];
+  sezione2_titolo: Scalars['String']['output'];
+  sezione2_titolo_accent: Scalars['String']['output'];
+  paragrafo1: Scalars['String']['output'];
+  paragrafo2: Scalars['String']['output'];
+  galleria: Array<CorpoStoriaGalleria>;
+  sezione1_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  sezione1_titolo_en?: Maybe<Scalars['String']['output']>;
+  sezione1_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  sezione2_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  sezione2_titolo_en?: Maybe<Scalars['String']['output']>;
+  sezione2_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  paragrafo1_en?: Maybe<Scalars['String']['output']>;
+  paragrafo2_en?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type CorpoStoriaTimelineFilter = {
+  anno?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type ImageFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type CorpoStoriaGalleriaFilter = {
+  immagine?: InputMaybe<ImageFilter>;
+  alt?: InputMaybe<StringFilter>;
+};
+
+export type CorpoStoriaFilter = {
+  sezione1_eyebrow?: InputMaybe<StringFilter>;
+  sezione1_titolo?: InputMaybe<StringFilter>;
+  sezione1_titolo_accent?: InputMaybe<StringFilter>;
+  timeline?: InputMaybe<CorpoStoriaTimelineFilter>;
+  sezione2_eyebrow?: InputMaybe<StringFilter>;
+  sezione2_titolo?: InputMaybe<StringFilter>;
+  sezione2_titolo_accent?: InputMaybe<StringFilter>;
+  paragrafo1?: InputMaybe<StringFilter>;
+  paragrafo2?: InputMaybe<StringFilter>;
+  galleria?: InputMaybe<CorpoStoriaGalleriaFilter>;
+  sezione1_eyebrow_en?: InputMaybe<StringFilter>;
+  sezione1_titolo_en?: InputMaybe<StringFilter>;
+  sezione1_titolo_accent_en?: InputMaybe<StringFilter>;
+  sezione2_eyebrow_en?: InputMaybe<StringFilter>;
+  sezione2_titolo_en?: InputMaybe<StringFilter>;
+  sezione2_titolo_accent_en?: InputMaybe<StringFilter>;
+  paragrafo1_en?: InputMaybe<StringFilter>;
+  paragrafo2_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoStoriaConnectionEdges = {
+  __typename?: 'CorpoStoriaConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<CorpoStoria>;
+};
+
+export type CorpoStoriaConnection = Connection & {
+  __typename?: 'CorpoStoriaConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<CorpoStoriaConnectionEdges>>>;
+};
+
+export type CorpoSummerCampsFeatures = {
+  __typename?: 'CorpoSummerCampsFeatures';
+  titolo: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoSummerCampsSettimane = {
+  __typename?: 'CorpoSummerCampsSettimane';
+  settimana: Scalars['String']['output'];
+  date: Scalars['String']['output'];
+  settimana_en?: Maybe<Scalars['String']['output']>;
+  date_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoSummerCamps = Node & Document & {
+  __typename?: 'CorpoSummerCamps';
+  sezione1_eyebrow: Scalars['String']['output'];
+  sezione1_titolo: Scalars['String']['output'];
+  sezione1_titolo_accent: Scalars['String']['output'];
+  features: Array<CorpoSummerCampsFeatures>;
+  immagine1: Scalars['String']['output'];
+  immagine1_alt: Scalars['String']['output'];
+  immagine2: Scalars['String']['output'];
+  immagine2_alt: Scalars['String']['output'];
+  sezione2_eyebrow: Scalars['String']['output'];
+  sezione2_titolo: Scalars['String']['output'];
+  sezione2_titolo_accent: Scalars['String']['output'];
+  settimane: Array<CorpoSummerCampsSettimane>;
+  sezione1_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  sezione1_titolo_en?: Maybe<Scalars['String']['output']>;
+  sezione1_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  immagine1_alt_en?: Maybe<Scalars['String']['output']>;
+  immagine2_alt_en?: Maybe<Scalars['String']['output']>;
+  sezione2_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  sezione2_titolo_en?: Maybe<Scalars['String']['output']>;
+  sezione2_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type CorpoSummerCampsFeaturesFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoSummerCampsSettimaneFilter = {
+  settimana?: InputMaybe<StringFilter>;
+  date?: InputMaybe<StringFilter>;
+  settimana_en?: InputMaybe<StringFilter>;
+  date_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoSummerCampsFilter = {
+  sezione1_eyebrow?: InputMaybe<StringFilter>;
+  sezione1_titolo?: InputMaybe<StringFilter>;
+  sezione1_titolo_accent?: InputMaybe<StringFilter>;
+  features?: InputMaybe<CorpoSummerCampsFeaturesFilter>;
+  immagine1?: InputMaybe<ImageFilter>;
+  immagine1_alt?: InputMaybe<StringFilter>;
+  immagine2?: InputMaybe<ImageFilter>;
+  immagine2_alt?: InputMaybe<StringFilter>;
+  sezione2_eyebrow?: InputMaybe<StringFilter>;
+  sezione2_titolo?: InputMaybe<StringFilter>;
+  sezione2_titolo_accent?: InputMaybe<StringFilter>;
+  settimane?: InputMaybe<CorpoSummerCampsSettimaneFilter>;
+  sezione1_eyebrow_en?: InputMaybe<StringFilter>;
+  sezione1_titolo_en?: InputMaybe<StringFilter>;
+  sezione1_titolo_accent_en?: InputMaybe<StringFilter>;
+  immagine1_alt_en?: InputMaybe<StringFilter>;
+  immagine2_alt_en?: InputMaybe<StringFilter>;
+  sezione2_eyebrow_en?: InputMaybe<StringFilter>;
+  sezione2_titolo_en?: InputMaybe<StringFilter>;
+  sezione2_titolo_accent_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoSummerCampsConnectionEdges = {
+  __typename?: 'CorpoSummerCampsConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<CorpoSummerCamps>;
+};
+
+export type CorpoSummerCampsConnection = Connection & {
+  __typename?: 'CorpoSummerCampsConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<CorpoSummerCampsConnectionEdges>>>;
+};
+
+export type CorpoScuolaTennisLivelli = {
+  __typename?: 'CorpoScuolaTennisLivelli';
+  dot: Scalars['String']['output'];
+  nome: Scalars['String']['output'];
+  tag: Scalars['String']['output'];
+  range: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  nome_en?: Maybe<Scalars['String']['output']>;
+  tag_en?: Maybe<Scalars['String']['output']>;
+  range_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoScuolaTennisIscrizione_Cards = {
+  __typename?: 'CorpoScuolaTennisIscrizione_cards';
+  titolo: Scalars['String']['output'];
+  tag: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  tag_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoScuolaTennisTornei = {
+  __typename?: 'CorpoScuolaTennisTornei';
+  quando: Scalars['String']['output'];
+  nome: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  quando_en?: Maybe<Scalars['String']['output']>;
+  nome_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoScuolaTennis = Node & Document & {
+  __typename?: 'CorpoScuolaTennis';
+  sezione1_eyebrow: Scalars['String']['output'];
+  sezione1_titolo: Scalars['String']['output'];
+  sezione1_titolo_accent: Scalars['String']['output'];
+  sezione1_lead: Scalars['String']['output'];
+  livelli: Array<CorpoScuolaTennisLivelli>;
+  livelli_footer_testo: Scalars['String']['output'];
+  livelli_footer_link_label: Scalars['String']['output'];
+  sezione2_eyebrow: Scalars['String']['output'];
+  sezione2_titolo: Scalars['String']['output'];
+  sezione2_titolo_accent: Scalars['String']['output'];
+  iscrizione_cards: Array<CorpoScuolaTennisIscrizione_Cards>;
+  iscrizione_cta_label: Scalars['String']['output'];
+  sezione3_eyebrow: Scalars['String']['output'];
+  sezione3_titolo: Scalars['String']['output'];
+  sezione3_titolo_accent: Scalars['String']['output'];
+  sezione3_badge: Scalars['String']['output'];
+  sezione3_paragrafo1: Scalars['String']['output'];
+  sezione3_paragrafo2: Scalars['String']['output'];
+  sezione3_paragrafo3: Scalars['String']['output'];
+  sezione3_immagine: Scalars['String']['output'];
+  sezione3_immagine_alt: Scalars['String']['output'];
+  sezione4_eyebrow: Scalars['String']['output'];
+  sezione4_titolo: Scalars['String']['output'];
+  sezione4_titolo_accent: Scalars['String']['output'];
+  tornei: Array<CorpoScuolaTennisTornei>;
+  sezione4_footer_testo: Scalars['String']['output'];
+  sezione1_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  sezione1_titolo_en?: Maybe<Scalars['String']['output']>;
+  sezione1_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  sezione1_lead_en?: Maybe<Scalars['String']['output']>;
+  livelli_footer_testo_en?: Maybe<Scalars['String']['output']>;
+  livelli_footer_link_label_en?: Maybe<Scalars['String']['output']>;
+  sezione2_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  sezione2_titolo_en?: Maybe<Scalars['String']['output']>;
+  sezione2_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  iscrizione_cta_label_en?: Maybe<Scalars['String']['output']>;
+  sezione3_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  sezione3_titolo_en?: Maybe<Scalars['String']['output']>;
+  sezione3_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  sezione3_badge_en?: Maybe<Scalars['String']['output']>;
+  sezione3_paragrafo1_en?: Maybe<Scalars['String']['output']>;
+  sezione3_paragrafo2_en?: Maybe<Scalars['String']['output']>;
+  sezione3_paragrafo3_en?: Maybe<Scalars['String']['output']>;
+  sezione3_immagine_alt_en?: Maybe<Scalars['String']['output']>;
+  sezione4_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  sezione4_titolo_en?: Maybe<Scalars['String']['output']>;
+  sezione4_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  sezione4_footer_testo_en?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type CorpoScuolaTennisLivelliFilter = {
+  dot?: InputMaybe<StringFilter>;
+  nome?: InputMaybe<StringFilter>;
+  tag?: InputMaybe<StringFilter>;
+  range?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  nome_en?: InputMaybe<StringFilter>;
+  tag_en?: InputMaybe<StringFilter>;
+  range_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoScuolaTennisIscrizione_CardsFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  tag?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  tag_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoScuolaTennisTorneiFilter = {
+  quando?: InputMaybe<StringFilter>;
+  nome?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  quando_en?: InputMaybe<StringFilter>;
+  nome_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoScuolaTennisFilter = {
+  sezione1_eyebrow?: InputMaybe<StringFilter>;
+  sezione1_titolo?: InputMaybe<StringFilter>;
+  sezione1_titolo_accent?: InputMaybe<StringFilter>;
+  sezione1_lead?: InputMaybe<StringFilter>;
+  livelli?: InputMaybe<CorpoScuolaTennisLivelliFilter>;
+  livelli_footer_testo?: InputMaybe<StringFilter>;
+  livelli_footer_link_label?: InputMaybe<StringFilter>;
+  sezione2_eyebrow?: InputMaybe<StringFilter>;
+  sezione2_titolo?: InputMaybe<StringFilter>;
+  sezione2_titolo_accent?: InputMaybe<StringFilter>;
+  iscrizione_cards?: InputMaybe<CorpoScuolaTennisIscrizione_CardsFilter>;
+  iscrizione_cta_label?: InputMaybe<StringFilter>;
+  sezione3_eyebrow?: InputMaybe<StringFilter>;
+  sezione3_titolo?: InputMaybe<StringFilter>;
+  sezione3_titolo_accent?: InputMaybe<StringFilter>;
+  sezione3_badge?: InputMaybe<StringFilter>;
+  sezione3_paragrafo1?: InputMaybe<StringFilter>;
+  sezione3_paragrafo2?: InputMaybe<StringFilter>;
+  sezione3_paragrafo3?: InputMaybe<StringFilter>;
+  sezione3_immagine?: InputMaybe<ImageFilter>;
+  sezione3_immagine_alt?: InputMaybe<StringFilter>;
+  sezione4_eyebrow?: InputMaybe<StringFilter>;
+  sezione4_titolo?: InputMaybe<StringFilter>;
+  sezione4_titolo_accent?: InputMaybe<StringFilter>;
+  tornei?: InputMaybe<CorpoScuolaTennisTorneiFilter>;
+  sezione4_footer_testo?: InputMaybe<StringFilter>;
+  sezione1_eyebrow_en?: InputMaybe<StringFilter>;
+  sezione1_titolo_en?: InputMaybe<StringFilter>;
+  sezione1_titolo_accent_en?: InputMaybe<StringFilter>;
+  sezione1_lead_en?: InputMaybe<StringFilter>;
+  livelli_footer_testo_en?: InputMaybe<StringFilter>;
+  livelli_footer_link_label_en?: InputMaybe<StringFilter>;
+  sezione2_eyebrow_en?: InputMaybe<StringFilter>;
+  sezione2_titolo_en?: InputMaybe<StringFilter>;
+  sezione2_titolo_accent_en?: InputMaybe<StringFilter>;
+  iscrizione_cta_label_en?: InputMaybe<StringFilter>;
+  sezione3_eyebrow_en?: InputMaybe<StringFilter>;
+  sezione3_titolo_en?: InputMaybe<StringFilter>;
+  sezione3_titolo_accent_en?: InputMaybe<StringFilter>;
+  sezione3_badge_en?: InputMaybe<StringFilter>;
+  sezione3_paragrafo1_en?: InputMaybe<StringFilter>;
+  sezione3_paragrafo2_en?: InputMaybe<StringFilter>;
+  sezione3_paragrafo3_en?: InputMaybe<StringFilter>;
+  sezione3_immagine_alt_en?: InputMaybe<StringFilter>;
+  sezione4_eyebrow_en?: InputMaybe<StringFilter>;
+  sezione4_titolo_en?: InputMaybe<StringFilter>;
+  sezione4_titolo_accent_en?: InputMaybe<StringFilter>;
+  sezione4_footer_testo_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoScuolaTennisConnectionEdges = {
+  __typename?: 'CorpoScuolaTennisConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<CorpoScuolaTennis>;
+};
+
+export type CorpoScuolaTennisConnection = Connection & {
+  __typename?: 'CorpoScuolaTennisConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<CorpoScuolaTennisConnectionEdges>>>;
+};
+
 export type Info = Node & Document & {
   __typename?: 'Info';
   indirizzo: Scalars['String']['output'];
@@ -540,13 +959,6 @@ export type News = Node & Document & {
   _values: Scalars['JSON']['output'];
 };
 
-export type ImageFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
 export type NewsFilter = {
   titolo?: InputMaybe<StringFilter>;
   data?: InputMaybe<DatetimeFilter>;
@@ -589,6 +1001,13 @@ export type Pagine = Node & Document & {
   hero_sottotitolo?: Maybe<Scalars['String']['output']>;
   hero_immagine?: Maybe<Scalars['String']['output']>;
   hero_immagine_alt?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  description_en?: Maybe<Scalars['String']['output']>;
+  hero_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  hero_titolo_en?: Maybe<Scalars['String']['output']>;
+  hero_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  hero_sottotitolo_en?: Maybe<Scalars['String']['output']>;
+  hero_immagine_alt_en?: Maybe<Scalars['String']['output']>;
   body?: Maybe<Scalars['JSON']['output']>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
@@ -604,6 +1023,13 @@ export type PagineFilter = {
   hero_sottotitolo?: InputMaybe<StringFilter>;
   hero_immagine?: InputMaybe<StringFilter>;
   hero_immagine_alt?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  description_en?: InputMaybe<StringFilter>;
+  hero_eyebrow_en?: InputMaybe<StringFilter>;
+  hero_titolo_en?: InputMaybe<StringFilter>;
+  hero_titolo_accent_en?: InputMaybe<StringFilter>;
+  hero_sottotitolo_en?: InputMaybe<StringFilter>;
+  hero_immagine_alt_en?: InputMaybe<StringFilter>;
   body?: InputMaybe<RichTextFilter>;
 };
 
@@ -633,6 +1059,12 @@ export type Mutation = {
   createServizi: Servizi;
   updatePlanning: Planning;
   createPlanning: Planning;
+  updateCorpoStoria: CorpoStoria;
+  createCorpoStoria: CorpoStoria;
+  updateCorpoSummerCamps: CorpoSummerCamps;
+  createCorpoSummerCamps: CorpoSummerCamps;
+  updateCorpoScuolaTennis: CorpoScuolaTennis;
+  createCorpoScuolaTennis: CorpoScuolaTennis;
   updateInfo: Info;
   createInfo: Info;
   updateHelpdesk: Helpdesk;
@@ -713,6 +1145,42 @@ export type MutationCreatePlanningArgs = {
 };
 
 
+export type MutationUpdateCorpoStoriaArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoStoriaMutation;
+};
+
+
+export type MutationCreateCorpoStoriaArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoStoriaMutation;
+};
+
+
+export type MutationUpdateCorpoSummerCampsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoSummerCampsMutation;
+};
+
+
+export type MutationCreateCorpoSummerCampsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoSummerCampsMutation;
+};
+
+
+export type MutationUpdateCorpoScuolaTennisArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoScuolaTennisMutation;
+};
+
+
+export type MutationCreateCorpoScuolaTennisArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoScuolaTennisMutation;
+};
+
+
 export type MutationUpdateInfoArgs = {
   relativePath: Scalars['String']['input'];
   params: InfoMutation;
@@ -764,6 +1232,9 @@ export type DocumentUpdateMutation = {
   eventi?: InputMaybe<EventiMutation>;
   servizi?: InputMaybe<ServiziMutation>;
   planning?: InputMaybe<PlanningMutation>;
+  corpoStoria?: InputMaybe<CorpoStoriaMutation>;
+  corpoSummerCamps?: InputMaybe<CorpoSummerCampsMutation>;
+  corpoScuolaTennis?: InputMaybe<CorpoScuolaTennisMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -775,6 +1246,9 @@ export type DocumentMutation = {
   eventi?: InputMaybe<EventiMutation>;
   servizi?: InputMaybe<ServiziMutation>;
   planning?: InputMaybe<PlanningMutation>;
+  corpoStoria?: InputMaybe<CorpoStoriaMutation>;
+  corpoSummerCamps?: InputMaybe<CorpoSummerCampsMutation>;
+  corpoScuolaTennis?: InputMaybe<CorpoScuolaTennisMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -817,6 +1291,156 @@ export type PlanningLezioniMutation = {
 
 export type PlanningMutation = {
   lezioni?: InputMaybe<Array<InputMaybe<PlanningLezioniMutation>>>;
+};
+
+export type CorpoStoriaTimelineMutation = {
+  anno?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoStoriaGalleriaMutation = {
+  immagine?: InputMaybe<Scalars['String']['input']>;
+  alt?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoStoriaMutation = {
+  sezione1_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  timeline?: InputMaybe<Array<InputMaybe<CorpoStoriaTimelineMutation>>>;
+  sezione2_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  paragrafo1?: InputMaybe<Scalars['String']['input']>;
+  paragrafo2?: InputMaybe<Scalars['String']['input']>;
+  galleria?: InputMaybe<Array<InputMaybe<CorpoStoriaGalleriaMutation>>>;
+  sezione1_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  sezione2_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  paragrafo1_en?: InputMaybe<Scalars['String']['input']>;
+  paragrafo2_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoSummerCampsFeaturesMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoSummerCampsSettimaneMutation = {
+  settimana?: InputMaybe<Scalars['String']['input']>;
+  date?: InputMaybe<Scalars['String']['input']>;
+  settimana_en?: InputMaybe<Scalars['String']['input']>;
+  date_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoSummerCampsMutation = {
+  sezione1_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  features?: InputMaybe<Array<InputMaybe<CorpoSummerCampsFeaturesMutation>>>;
+  immagine1?: InputMaybe<Scalars['String']['input']>;
+  immagine1_alt?: InputMaybe<Scalars['String']['input']>;
+  immagine2?: InputMaybe<Scalars['String']['input']>;
+  immagine2_alt?: InputMaybe<Scalars['String']['input']>;
+  sezione2_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  settimane?: InputMaybe<Array<InputMaybe<CorpoSummerCampsSettimaneMutation>>>;
+  sezione1_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  immagine1_alt_en?: InputMaybe<Scalars['String']['input']>;
+  immagine2_alt_en?: InputMaybe<Scalars['String']['input']>;
+  sezione2_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoScuolaTennisLivelliMutation = {
+  dot?: InputMaybe<Scalars['String']['input']>;
+  nome?: InputMaybe<Scalars['String']['input']>;
+  tag?: InputMaybe<Scalars['String']['input']>;
+  range?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  nome_en?: InputMaybe<Scalars['String']['input']>;
+  tag_en?: InputMaybe<Scalars['String']['input']>;
+  range_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoScuolaTennisIscrizione_CardsMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  tag?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  tag_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoScuolaTennisTorneiMutation = {
+  quando?: InputMaybe<Scalars['String']['input']>;
+  nome?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  quando_en?: InputMaybe<Scalars['String']['input']>;
+  nome_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoScuolaTennisMutation = {
+  sezione1_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  sezione1_lead?: InputMaybe<Scalars['String']['input']>;
+  livelli?: InputMaybe<Array<InputMaybe<CorpoScuolaTennisLivelliMutation>>>;
+  livelli_footer_testo?: InputMaybe<Scalars['String']['input']>;
+  livelli_footer_link_label?: InputMaybe<Scalars['String']['input']>;
+  sezione2_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  iscrizione_cards?: InputMaybe<Array<InputMaybe<CorpoScuolaTennisIscrizione_CardsMutation>>>;
+  iscrizione_cta_label?: InputMaybe<Scalars['String']['input']>;
+  sezione3_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  sezione3_titolo?: InputMaybe<Scalars['String']['input']>;
+  sezione3_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  sezione3_badge?: InputMaybe<Scalars['String']['input']>;
+  sezione3_paragrafo1?: InputMaybe<Scalars['String']['input']>;
+  sezione3_paragrafo2?: InputMaybe<Scalars['String']['input']>;
+  sezione3_paragrafo3?: InputMaybe<Scalars['String']['input']>;
+  sezione3_immagine?: InputMaybe<Scalars['String']['input']>;
+  sezione3_immagine_alt?: InputMaybe<Scalars['String']['input']>;
+  sezione4_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  sezione4_titolo?: InputMaybe<Scalars['String']['input']>;
+  sezione4_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  tornei?: InputMaybe<Array<InputMaybe<CorpoScuolaTennisTorneiMutation>>>;
+  sezione4_footer_testo?: InputMaybe<Scalars['String']['input']>;
+  sezione1_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  sezione1_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  sezione1_lead_en?: InputMaybe<Scalars['String']['input']>;
+  livelli_footer_testo_en?: InputMaybe<Scalars['String']['input']>;
+  livelli_footer_link_label_en?: InputMaybe<Scalars['String']['input']>;
+  sezione2_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  sezione2_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  iscrizione_cta_label_en?: InputMaybe<Scalars['String']['input']>;
+  sezione3_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  sezione3_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  sezione3_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  sezione3_badge_en?: InputMaybe<Scalars['String']['input']>;
+  sezione3_paragrafo1_en?: InputMaybe<Scalars['String']['input']>;
+  sezione3_paragrafo2_en?: InputMaybe<Scalars['String']['input']>;
+  sezione3_paragrafo3_en?: InputMaybe<Scalars['String']['input']>;
+  sezione3_immagine_alt_en?: InputMaybe<Scalars['String']['input']>;
+  sezione4_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  sezione4_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  sezione4_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  sezione4_footer_testo_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type InfoMutation = {
@@ -870,6 +1494,13 @@ export type PagineMutation = {
   hero_sottotitolo?: InputMaybe<Scalars['String']['input']>;
   hero_immagine?: InputMaybe<Scalars['String']['input']>;
   hero_immagine_alt?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  description_en?: InputMaybe<Scalars['String']['input']>;
+  hero_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  hero_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  hero_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  hero_sottotitolo_en?: InputMaybe<Scalars['String']['input']>;
+  hero_immagine_alt_en?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
@@ -879,13 +1510,19 @@ export type ServiziPartsFragment = { __typename: 'Servizi', titolo: string, ordi
 
 export type PlanningPartsFragment = { __typename: 'Planning', lezioni?: Array<{ __typename: 'PlanningLezioni', giorno: string, ora: string, categoria: string, nome: string } | null> | null };
 
+export type CorpoStoriaPartsFragment = { __typename: 'CorpoStoria', sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, paragrafo1: string, paragrafo2: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, paragrafo1_en?: string | null, paragrafo2_en?: string | null, timeline: Array<{ __typename: 'CorpoStoriaTimeline', anno: string, testo: string, testo_en?: string | null }>, galleria: Array<{ __typename: 'CorpoStoriaGalleria', immagine: string, alt: string }> };
+
+export type CorpoSummerCampsPartsFragment = { __typename: 'CorpoSummerCamps', sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, immagine1: string, immagine1_alt: string, immagine2: string, immagine2_alt: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, immagine1_alt_en?: string | null, immagine2_alt_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, features: Array<{ __typename: 'CorpoSummerCampsFeatures', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, settimane: Array<{ __typename: 'CorpoSummerCampsSettimane', settimana: string, date: string, settimana_en?: string | null, date_en?: string | null }> };
+
+export type CorpoScuolaTennisPartsFragment = { __typename: 'CorpoScuolaTennis', sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, sezione1_lead: string, livelli_footer_testo: string, livelli_footer_link_label: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, iscrizione_cta_label: string, sezione3_eyebrow: string, sezione3_titolo: string, sezione3_titolo_accent: string, sezione3_badge: string, sezione3_paragrafo1: string, sezione3_paragrafo2: string, sezione3_paragrafo3: string, sezione3_immagine: string, sezione3_immagine_alt: string, sezione4_eyebrow: string, sezione4_titolo: string, sezione4_titolo_accent: string, sezione4_footer_testo: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, sezione1_lead_en?: string | null, livelli_footer_testo_en?: string | null, livelli_footer_link_label_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, iscrizione_cta_label_en?: string | null, sezione3_eyebrow_en?: string | null, sezione3_titolo_en?: string | null, sezione3_titolo_accent_en?: string | null, sezione3_badge_en?: string | null, sezione3_paragrafo1_en?: string | null, sezione3_paragrafo2_en?: string | null, sezione3_paragrafo3_en?: string | null, sezione3_immagine_alt_en?: string | null, sezione4_eyebrow_en?: string | null, sezione4_titolo_en?: string | null, sezione4_titolo_accent_en?: string | null, sezione4_footer_testo_en?: string | null, livelli: Array<{ __typename: 'CorpoScuolaTennisLivelli', dot: string, nome: string, tag: string, range: string, testo: string, nome_en?: string | null, tag_en?: string | null, range_en?: string | null, testo_en?: string | null }>, iscrizione_cards: Array<{ __typename: 'CorpoScuolaTennisIscrizione_cards', titolo: string, tag: string, testo: string, titolo_en?: string | null, tag_en?: string | null, testo_en?: string | null }>, tornei: Array<{ __typename: 'CorpoScuolaTennisTornei', quando: string, nome: string, testo: string, quando_en?: string | null, nome_en?: string | null, testo_en?: string | null }> };
+
 export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
 
 export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
 
 export type NewsPartsFragment = { __typename: 'News', titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, cta_label?: string | null, cta_href?: string | null, titolo_en?: string | null, categoria_en?: string | null, cta_label_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null };
 
-export type PaginePartsFragment = { __typename: 'Pagine', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, body?: any | null };
+export type PaginePartsFragment = { __typename: 'Pagine', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, body?: any | null };
 
 export type EventiQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -943,6 +1580,63 @@ export type PlanningConnectionQueryVariables = Exact<{
 
 
 export type PlanningConnectionQuery = { __typename?: 'Query', planningConnection: { __typename?: 'PlanningConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PlanningConnectionEdges', cursor: string, node?: { __typename: 'Planning', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, lezioni?: Array<{ __typename: 'PlanningLezioni', giorno: string, ora: string, categoria: string, nome: string } | null> | null } | null } | null> | null } };
+
+export type CorpoStoriaQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type CorpoStoriaQuery = { __typename?: 'Query', corpoStoria: { __typename: 'CorpoStoria', id: string, sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, paragrafo1: string, paragrafo2: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, paragrafo1_en?: string | null, paragrafo2_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, timeline: Array<{ __typename: 'CorpoStoriaTimeline', anno: string, testo: string, testo_en?: string | null }>, galleria: Array<{ __typename: 'CorpoStoriaGalleria', immagine: string, alt: string }> } };
+
+export type CorpoStoriaConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoStoriaFilter>;
+}>;
+
+
+export type CorpoStoriaConnectionQuery = { __typename?: 'Query', corpoStoriaConnection: { __typename?: 'CorpoStoriaConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CorpoStoriaConnectionEdges', cursor: string, node?: { __typename: 'CorpoStoria', id: string, sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, paragrafo1: string, paragrafo2: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, paragrafo1_en?: string | null, paragrafo2_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, timeline: Array<{ __typename: 'CorpoStoriaTimeline', anno: string, testo: string, testo_en?: string | null }>, galleria: Array<{ __typename: 'CorpoStoriaGalleria', immagine: string, alt: string }> } | null } | null> | null } };
+
+export type CorpoSummerCampsQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type CorpoSummerCampsQuery = { __typename?: 'Query', corpoSummerCamps: { __typename: 'CorpoSummerCamps', id: string, sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, immagine1: string, immagine1_alt: string, immagine2: string, immagine2_alt: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, immagine1_alt_en?: string | null, immagine2_alt_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features: Array<{ __typename: 'CorpoSummerCampsFeatures', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, settimane: Array<{ __typename: 'CorpoSummerCampsSettimane', settimana: string, date: string, settimana_en?: string | null, date_en?: string | null }> } };
+
+export type CorpoSummerCampsConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoSummerCampsFilter>;
+}>;
+
+
+export type CorpoSummerCampsConnectionQuery = { __typename?: 'Query', corpoSummerCampsConnection: { __typename?: 'CorpoSummerCampsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CorpoSummerCampsConnectionEdges', cursor: string, node?: { __typename: 'CorpoSummerCamps', id: string, sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, immagine1: string, immagine1_alt: string, immagine2: string, immagine2_alt: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, immagine1_alt_en?: string | null, immagine2_alt_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, features: Array<{ __typename: 'CorpoSummerCampsFeatures', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, settimane: Array<{ __typename: 'CorpoSummerCampsSettimane', settimana: string, date: string, settimana_en?: string | null, date_en?: string | null }> } | null } | null> | null } };
+
+export type CorpoScuolaTennisQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type CorpoScuolaTennisQuery = { __typename?: 'Query', corpoScuolaTennis: { __typename: 'CorpoScuolaTennis', id: string, sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, sezione1_lead: string, livelli_footer_testo: string, livelli_footer_link_label: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, iscrizione_cta_label: string, sezione3_eyebrow: string, sezione3_titolo: string, sezione3_titolo_accent: string, sezione3_badge: string, sezione3_paragrafo1: string, sezione3_paragrafo2: string, sezione3_paragrafo3: string, sezione3_immagine: string, sezione3_immagine_alt: string, sezione4_eyebrow: string, sezione4_titolo: string, sezione4_titolo_accent: string, sezione4_footer_testo: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, sezione1_lead_en?: string | null, livelli_footer_testo_en?: string | null, livelli_footer_link_label_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, iscrizione_cta_label_en?: string | null, sezione3_eyebrow_en?: string | null, sezione3_titolo_en?: string | null, sezione3_titolo_accent_en?: string | null, sezione3_badge_en?: string | null, sezione3_paragrafo1_en?: string | null, sezione3_paragrafo2_en?: string | null, sezione3_paragrafo3_en?: string | null, sezione3_immagine_alt_en?: string | null, sezione4_eyebrow_en?: string | null, sezione4_titolo_en?: string | null, sezione4_titolo_accent_en?: string | null, sezione4_footer_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, livelli: Array<{ __typename: 'CorpoScuolaTennisLivelli', dot: string, nome: string, tag: string, range: string, testo: string, nome_en?: string | null, tag_en?: string | null, range_en?: string | null, testo_en?: string | null }>, iscrizione_cards: Array<{ __typename: 'CorpoScuolaTennisIscrizione_cards', titolo: string, tag: string, testo: string, titolo_en?: string | null, tag_en?: string | null, testo_en?: string | null }>, tornei: Array<{ __typename: 'CorpoScuolaTennisTornei', quando: string, nome: string, testo: string, quando_en?: string | null, nome_en?: string | null, testo_en?: string | null }> } };
+
+export type CorpoScuolaTennisConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoScuolaTennisFilter>;
+}>;
+
+
+export type CorpoScuolaTennisConnectionQuery = { __typename?: 'Query', corpoScuolaTennisConnection: { __typename?: 'CorpoScuolaTennisConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CorpoScuolaTennisConnectionEdges', cursor: string, node?: { __typename: 'CorpoScuolaTennis', id: string, sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, sezione1_lead: string, livelli_footer_testo: string, livelli_footer_link_label: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, iscrizione_cta_label: string, sezione3_eyebrow: string, sezione3_titolo: string, sezione3_titolo_accent: string, sezione3_badge: string, sezione3_paragrafo1: string, sezione3_paragrafo2: string, sezione3_paragrafo3: string, sezione3_immagine: string, sezione3_immagine_alt: string, sezione4_eyebrow: string, sezione4_titolo: string, sezione4_titolo_accent: string, sezione4_footer_testo: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, sezione1_lead_en?: string | null, livelli_footer_testo_en?: string | null, livelli_footer_link_label_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, iscrizione_cta_label_en?: string | null, sezione3_eyebrow_en?: string | null, sezione3_titolo_en?: string | null, sezione3_titolo_accent_en?: string | null, sezione3_badge_en?: string | null, sezione3_paragrafo1_en?: string | null, sezione3_paragrafo2_en?: string | null, sezione3_paragrafo3_en?: string | null, sezione3_immagine_alt_en?: string | null, sezione4_eyebrow_en?: string | null, sezione4_titolo_en?: string | null, sezione4_titolo_accent_en?: string | null, sezione4_footer_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, livelli: Array<{ __typename: 'CorpoScuolaTennisLivelli', dot: string, nome: string, tag: string, range: string, testo: string, nome_en?: string | null, tag_en?: string | null, range_en?: string | null, testo_en?: string | null }>, iscrizione_cards: Array<{ __typename: 'CorpoScuolaTennisIscrizione_cards', titolo: string, tag: string, testo: string, titolo_en?: string | null, tag_en?: string | null, testo_en?: string | null }>, tornei: Array<{ __typename: 'CorpoScuolaTennisTornei', quando: string, nome: string, testo: string, quando_en?: string | null, nome_en?: string | null, testo_en?: string | null }> } | null } | null> | null } };
 
 export type InfoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -1006,7 +1700,7 @@ export type PagineQueryVariables = Exact<{
 }>;
 
 
-export type PagineQuery = { __typename?: 'Query', pagine: { __typename: 'Pagine', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type PagineQuery = { __typename?: 'Query', pagine: { __typename: 'Pagine', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
 export type PagineConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -1018,7 +1712,7 @@ export type PagineConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PagineConnectionQuery = { __typename?: 'Query', pagineConnection: { __typename?: 'PagineConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PagineConnectionEdges', cursor: string, node?: { __typename: 'Pagine', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type PagineConnectionQuery = { __typename?: 'Query', pagineConnection: { __typename?: 'PagineConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PagineConnectionEdges', cursor: string, node?: { __typename: 'Pagine', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export const EventiPartsFragmentDoc = gql`
     fragment EventiParts on Eventi {
@@ -1061,6 +1755,155 @@ export const PlanningPartsFragmentDoc = gql`
     categoria
     nome
   }
+}
+    `;
+export const CorpoStoriaPartsFragmentDoc = gql`
+    fragment CorpoStoriaParts on CorpoStoria {
+  __typename
+  sezione1_eyebrow
+  sezione1_titolo
+  sezione1_titolo_accent
+  timeline {
+    __typename
+    anno
+    testo
+    testo_en
+  }
+  sezione2_eyebrow
+  sezione2_titolo
+  sezione2_titolo_accent
+  paragrafo1
+  paragrafo2
+  galleria {
+    __typename
+    immagine
+    alt
+  }
+  sezione1_eyebrow_en
+  sezione1_titolo_en
+  sezione1_titolo_accent_en
+  sezione2_eyebrow_en
+  sezione2_titolo_en
+  sezione2_titolo_accent_en
+  paragrafo1_en
+  paragrafo2_en
+}
+    `;
+export const CorpoSummerCampsPartsFragmentDoc = gql`
+    fragment CorpoSummerCampsParts on CorpoSummerCamps {
+  __typename
+  sezione1_eyebrow
+  sezione1_titolo
+  sezione1_titolo_accent
+  features {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  immagine1
+  immagine1_alt
+  immagine2
+  immagine2_alt
+  sezione2_eyebrow
+  sezione2_titolo
+  sezione2_titolo_accent
+  settimane {
+    __typename
+    settimana
+    date
+    settimana_en
+    date_en
+  }
+  sezione1_eyebrow_en
+  sezione1_titolo_en
+  sezione1_titolo_accent_en
+  immagine1_alt_en
+  immagine2_alt_en
+  sezione2_eyebrow_en
+  sezione2_titolo_en
+  sezione2_titolo_accent_en
+}
+    `;
+export const CorpoScuolaTennisPartsFragmentDoc = gql`
+    fragment CorpoScuolaTennisParts on CorpoScuolaTennis {
+  __typename
+  sezione1_eyebrow
+  sezione1_titolo
+  sezione1_titolo_accent
+  sezione1_lead
+  livelli {
+    __typename
+    dot
+    nome
+    tag
+    range
+    testo
+    nome_en
+    tag_en
+    range_en
+    testo_en
+  }
+  livelli_footer_testo
+  livelli_footer_link_label
+  sezione2_eyebrow
+  sezione2_titolo
+  sezione2_titolo_accent
+  iscrizione_cards {
+    __typename
+    titolo
+    tag
+    testo
+    titolo_en
+    tag_en
+    testo_en
+  }
+  iscrizione_cta_label
+  sezione3_eyebrow
+  sezione3_titolo
+  sezione3_titolo_accent
+  sezione3_badge
+  sezione3_paragrafo1
+  sezione3_paragrafo2
+  sezione3_paragrafo3
+  sezione3_immagine
+  sezione3_immagine_alt
+  sezione4_eyebrow
+  sezione4_titolo
+  sezione4_titolo_accent
+  tornei {
+    __typename
+    quando
+    nome
+    testo
+    quando_en
+    nome_en
+    testo_en
+  }
+  sezione4_footer_testo
+  sezione1_eyebrow_en
+  sezione1_titolo_en
+  sezione1_titolo_accent_en
+  sezione1_lead_en
+  livelli_footer_testo_en
+  livelli_footer_link_label_en
+  sezione2_eyebrow_en
+  sezione2_titolo_en
+  sezione2_titolo_accent_en
+  iscrizione_cta_label_en
+  sezione3_eyebrow_en
+  sezione3_titolo_en
+  sezione3_titolo_accent_en
+  sezione3_badge_en
+  sezione3_paragrafo1_en
+  sezione3_paragrafo2_en
+  sezione3_paragrafo3_en
+  sezione3_immagine_alt_en
+  sezione4_eyebrow_en
+  sezione4_titolo_en
+  sezione4_titolo_accent_en
+  sezione4_footer_testo_en
 }
     `;
 export const InfoPartsFragmentDoc = gql`
@@ -1122,6 +1965,13 @@ export const PaginePartsFragmentDoc = gql`
   hero_sottotitolo
   hero_immagine
   hero_immagine_alt
+  title_en
+  description_en
+  hero_eyebrow_en
+  hero_titolo_en
+  hero_titolo_accent_en
+  hero_sottotitolo_en
+  hero_immagine_alt_en
   body
 }
     `;
@@ -1296,6 +2146,177 @@ export const PlanningConnectionDocument = gql`
   }
 }
     ${PlanningPartsFragmentDoc}`;
+export const CorpoStoriaDocument = gql`
+    query corpoStoria($relativePath: String!) {
+  corpoStoria(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoStoriaParts
+  }
+}
+    ${CorpoStoriaPartsFragmentDoc}`;
+export const CorpoStoriaConnectionDocument = gql`
+    query corpoStoriaConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoStoriaFilter) {
+  corpoStoriaConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoStoriaParts
+      }
+    }
+  }
+}
+    ${CorpoStoriaPartsFragmentDoc}`;
+export const CorpoSummerCampsDocument = gql`
+    query corpoSummerCamps($relativePath: String!) {
+  corpoSummerCamps(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoSummerCampsParts
+  }
+}
+    ${CorpoSummerCampsPartsFragmentDoc}`;
+export const CorpoSummerCampsConnectionDocument = gql`
+    query corpoSummerCampsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoSummerCampsFilter) {
+  corpoSummerCampsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoSummerCampsParts
+      }
+    }
+  }
+}
+    ${CorpoSummerCampsPartsFragmentDoc}`;
+export const CorpoScuolaTennisDocument = gql`
+    query corpoScuolaTennis($relativePath: String!) {
+  corpoScuolaTennis(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoScuolaTennisParts
+  }
+}
+    ${CorpoScuolaTennisPartsFragmentDoc}`;
+export const CorpoScuolaTennisConnectionDocument = gql`
+    query corpoScuolaTennisConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoScuolaTennisFilter) {
+  corpoScuolaTennisConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoScuolaTennisParts
+      }
+    }
+  }
+}
+    ${CorpoScuolaTennisPartsFragmentDoc}`;
 export const InfoDocument = gql`
     query info($relativePath: String!) {
   info(relativePath: $relativePath) {
@@ -1544,6 +2565,24 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     planningConnection(variables?: PlanningConnectionQueryVariables, options?: C): Promise<{data: PlanningConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PlanningConnectionQueryVariables, query: string}> {
         return requester<{data: PlanningConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PlanningConnectionQueryVariables, query: string}, PlanningConnectionQueryVariables>(PlanningConnectionDocument, variables, options);
+      },
+    corpoStoria(variables: CorpoStoriaQueryVariables, options?: C): Promise<{data: CorpoStoriaQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoStoriaQueryVariables, query: string}> {
+        return requester<{data: CorpoStoriaQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoStoriaQueryVariables, query: string}, CorpoStoriaQueryVariables>(CorpoStoriaDocument, variables, options);
+      },
+    corpoStoriaConnection(variables?: CorpoStoriaConnectionQueryVariables, options?: C): Promise<{data: CorpoStoriaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoStoriaConnectionQueryVariables, query: string}> {
+        return requester<{data: CorpoStoriaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoStoriaConnectionQueryVariables, query: string}, CorpoStoriaConnectionQueryVariables>(CorpoStoriaConnectionDocument, variables, options);
+      },
+    corpoSummerCamps(variables: CorpoSummerCampsQueryVariables, options?: C): Promise<{data: CorpoSummerCampsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoSummerCampsQueryVariables, query: string}> {
+        return requester<{data: CorpoSummerCampsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoSummerCampsQueryVariables, query: string}, CorpoSummerCampsQueryVariables>(CorpoSummerCampsDocument, variables, options);
+      },
+    corpoSummerCampsConnection(variables?: CorpoSummerCampsConnectionQueryVariables, options?: C): Promise<{data: CorpoSummerCampsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoSummerCampsConnectionQueryVariables, query: string}> {
+        return requester<{data: CorpoSummerCampsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoSummerCampsConnectionQueryVariables, query: string}, CorpoSummerCampsConnectionQueryVariables>(CorpoSummerCampsConnectionDocument, variables, options);
+      },
+    corpoScuolaTennis(variables: CorpoScuolaTennisQueryVariables, options?: C): Promise<{data: CorpoScuolaTennisQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoScuolaTennisQueryVariables, query: string}> {
+        return requester<{data: CorpoScuolaTennisQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoScuolaTennisQueryVariables, query: string}, CorpoScuolaTennisQueryVariables>(CorpoScuolaTennisDocument, variables, options);
+      },
+    corpoScuolaTennisConnection(variables?: CorpoScuolaTennisConnectionQueryVariables, options?: C): Promise<{data: CorpoScuolaTennisConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoScuolaTennisConnectionQueryVariables, query: string}> {
+        return requester<{data: CorpoScuolaTennisConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoScuolaTennisConnectionQueryVariables, query: string}, CorpoScuolaTennisConnectionQueryVariables>(CorpoScuolaTennisConnectionDocument, variables, options);
       },
     info(variables: InfoQueryVariables, options?: C): Promise<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}> {
         return requester<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}, InfoQueryVariables>(InfoDocument, variables, options);

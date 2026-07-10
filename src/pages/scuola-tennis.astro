@@ -10,54 +10,10 @@ const p = (path: string) => getLocalePath(lang, path);
 // SEO + hero gestibili da TinaCMS → src/content/pagine/scuola-tennis.md
 const d = (await getEntry("pagine", "scuola-tennis"))!.data;
 
-const livelli = [
-  {
-    dot: 'rosso',
-    name: 'Rosso',
-    tag: 'Mini Tennis',
-    range: 'Circa 4 – 6 anni',
-    text: 'Il primo approccio al tennis, con palla rossa a rimbalzo ridotto e campo ridotto. Un’ora di gioco, una o due volte a settimana, in gruppi omogenei per età.',
-  },
-  {
-    dot: 'arancio',
-    name: 'Arancio',
-    tag: 'Scuola Tennis',
-    range: 'Per livello · indicativamente 7 – 9 anni',
-    text: 'Si entra nella scuola tennis vera e propria: palla arancio e campo ridotto. Ogni seduta unisce 30 minuti di preparazione atletica e un’ora di tennis, da una a tre volte a settimana.',
-  },
-  {
-    dot: 'verde',
-    name: 'Verde',
-    tag: 'Scuola Tennis',
-    range: 'Per livello',
-    text: 'Palla verde, racchetta e campo più vicini al tennis tradizionale. Seduta da un’ora e mezza, da una a tre volte a settimana, con un lavoro tecnico e tattico più strutturato.',
-  },
-  {
-    dot: 'giallo',
-    name: 'Giallo',
-    tag: 'Scuola Tennis',
-    range: 'Per livello',
-    text: 'Palla tradizionale e campo intero: l’ultimo livello prima dell’agonistica. Seduta da un’ora e mezza, da una a tre volte a settimana.',
-  },
-];
-
-const tornei = [
-  {
-    when: 'Dicembre',
-    name: 'Torneo di Natale',
-    text: 'Il primo appuntamento dell’anno, aperto a tutte le categorie, dal Mini Tennis ai livelli più avanzati.',
-  },
-  {
-    when: 'Febbraio',
-    name: 'Torneo di Carnevale',
-    text: 'Una giornata di gioco e di festa per mettere alla prova quanto imparato nella prima parte della stagione.',
-  },
-  {
-    when: 'Fine corso',
-    name: 'Torneo di fine corso',
-    text: 'La chiusura della stagione: si gioca tutti insieme per celebrare il percorso fatto durante l’anno.',
-  },
-];
+// Corpo pagina → src/content/corpoScuolaTennis/corpo.md
+const c = (await getEntry("corpoScuolaTennis", "corpo"))!.data;
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 ---
 
 <BaseLayout
@@ -77,49 +33,42 @@ const tornei = [
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">Percorsi</span>
-      <h2 class="section-title">Un percorso<br><em>per ogni livello.</em></h2>
-      <p class="section-lead body-text">
-        Il Mini Tennis è organizzato per età; dal livello successivo i gruppi
-        seguono il livello di gioco, secondo la progressione a colori della
-        Federazione Italiana Tennis. Le età indicate sono puramente orientative.
-      </p>
+      <span class="eyebrow">{c.sezione1_eyebrow}</span>
+      <h2 class="section-title">{c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent}</em></h2>
+      <p class="section-lead body-text">{c.sezione1_lead}</p>
       <div class="age-grid">
-        {livelli.map((l) => (
+        {c.livelli.map((l) => (
           <div class="age-card">
             <span class={`level-dot level-dot--${l.dot}`} aria-hidden="true"></span>
             <span class="age-card__range">{l.range}</span>
-            <h3>{l.name}</h3>
+            <h3>{l.nome}</h3>
             <span class="level-tag">{l.tag}</span>
-            <p>{l.text}</p>
+            <p>{l.testo}</p>
           </div>
         ))}
       </div>
       <p class="level-after body-text">
-        Dopo il livello giallo si entra nella squadra agonistica.
-        <a href={p('/agonistica')}>Scopri l’agonistica →</a>
+        {c.livelli_footer_testo}
+        <a href={p('/agonistica')}>{c.livelli_footer_link_label}</a>
       </p>
     </div>
   </section>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">Dettagli iscrizione</span>
-      <h2 class="section-title">Corsi e<br><em>frequenza.</em></h2>
+      <span class="eyebrow">{c.sezione2_eyebrow}</span>
+      <h2 class="section-title">{c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent}</em></h2>
       <div class="iscrizione-grid">
-        <div class="iscrizione-card">
-          <h3>Scuola Mini-Tennis</h3>
-          <span class="iscrizione-card__tag">Nati nel 2020 e 2021</span>
-          <p>Lezioni di 60 minuti, solo tennis.<br>Frequenza: 1 o 2 volte a settimana.</p>
-        </div>
-        <div class="iscrizione-card">
-          <h3>Scuola Tennis</h3>
-          <span class="iscrizione-card__tag">Nati nel 2019 e anni precedenti</span>
-          <p>Lezioni di 60 minuti di tennis + 30 minuti di atletica.<br>Frequenza: 1, 2 o 3 volte a settimana.</p>
-        </div>
+        {c.iscrizione_cards.map((card) => (
+          <div class="iscrizione-card">
+            <h3>{card.titolo}</h3>
+            <span class="iscrizione-card__tag">{card.tag}</span>
+            <p set:html={nl2br(card.testo)} />
+          </div>
+        ))}
       </div>
       <div class="section-cta">
-        <button class="btn btn-red" data-open-modal="modal-contatti">Richiedi la Tua Prova</button>
+        <button class="btn btn-red" data-open-modal="modal-contatti">{c.iscrizione_cta_label}</button>
       </div>
     </div>
   </section>
@@ -127,56 +76,33 @@ const tornei = [
   <section class="content-section">
     <div class="content-section__inner two-col">
       <div class="two-col__text">
-        <span class="eyebrow">Il nostro metodo</span>
-        <h2 class="section-title">Maestri FITP.<br><em>Metodo TCA.</em></h2>
-        <span class="method-badge">Vavassori Tennis Academy · Top School, massimo riconoscimento FITP</span>
-        <p class="body-text">
-          Attraverso la collaborazione con la Vavassori Tennis Academy, il TCA
-          accompagna i tuoi bambini in un percorso tennistico <strong>dai primi passi
-          fino all'agonismo ad altissimi livelli</strong>.
-        </p>
-        <p class="body-text">
-          I gruppi sono costruiti per età e per livello, il più omogenei
-          possibile. Ogni allenamento abbina preparazione atletica e tennis,
-          con una frequenza di una, due o tre volte a settimana.
-        </p>
-        <p class="body-text">
-          La progressione segue la metodologia FITP: salendo di livello la palla
-          diventa più veloce e il campo si allunga, fino al campo intero del
-          livello giallo, unendo tecnica, gioco e valori dello sport per
-          <strong>formare non solo tennisti, ma persone</strong>. Tutti i nostri maestri sono
-          certificati dalla Federazione Italiana Tennis e Padel.
-        </p>
+        <span class="eyebrow">{c.sezione3_eyebrow}</span>
+        <h2 class="section-title">{c.sezione3_titolo}<br><em>{c.sezione3_titolo_accent}</em></h2>
+        <span class="method-badge">{c.sezione3_badge}</span>
+        <p class="body-text" set:html={mdBold(c.sezione3_paragrafo1)} />
+        <p class="body-text">{c.sezione3_paragrafo2}</p>
+        <p class="body-text" set:html={mdBold(c.sezione3_paragrafo3)} />
       </div>
       <div class="two-col__image">
-        <img
-          src={publicUrl("/cbc758d7-c31f-4a46-8337-7c7e8fcb34a9_TCA+Tennis+8.avif")}
-          alt="Maestro con allieva alla scuola tennis TCA"
-          class="full-img"
-        />
+        <img src={publicUrl(c.sezione3_immagine)} alt={c.sezione3_immagine_alt} class="full-img" />
       </div>
     </div>
   </section>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">Durante l’anno</span>
-      <h2 class="section-title">Si gioca,<br><em>tutto l’anno.</em></h2>
+      <span class="eyebrow">{c.sezione4_eyebrow}</span>
+      <h2 class="section-title">{c.sezione4_titolo}<br><em>{c.sezione4_titolo_accent}</em></h2>
       <div class="tornei-grid">
-        {tornei.map((t) => (
+        {c.tornei.map((t) => (
           <div class="torneo-card">
-            <span class="torneo-card__when">{t.when}</span>
-            <h3>{t.name}</h3>
-            <p>{t.text}</p>
+            <span class="torneo-card__when">{t.quando}</span>
+            <h3>{t.nome}</h3>
+            <p>{t.testo}</p>
           </div>
         ))}
       </div>
-      <p class="level-after body-text">
-        Agli allievi selezionati viene inoltre proposto il <strong>FITP Junior
-        Program</strong>, l’attività non agonistica del circuito federale: un
-        percorso di tornei a tappe, da novembre alla primavera, per chi vuole
-        iniziare a confrontarsi in gara.
-      </p>
+      <p class="level-after body-text" set:html={mdBold(c.sezione4_footer_testo)} />
     </div>
   </section>
 
