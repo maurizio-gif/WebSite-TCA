@@ -10,6 +10,8 @@ const d = (await getEntry("pagine", "agonistica"))!.data;
 <BaseLayout
   title={d.title}
   description={d.description}
+  image={d.hero_immagine}
+  imageAlt={d.hero_immagine_alt}
 >
   <PageHero
     eyebrow={d.hero_eyebrow}

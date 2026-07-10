@@ -14,6 +14,8 @@ const d = (await getEntry("pagine", "summer-camps"))!.data;
   lang={lang}
   title={d.title_en ?? d.title}
   description={d.description_en ?? d.description}
+  image={d.hero_immagine}
+  imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
 >
   <PageHero
     eyebrow={d.hero_eyebrow_en ?? d.hero_eyebrow}

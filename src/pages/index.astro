@@ -21,6 +21,8 @@ const d = (await getEntry("pagine", "home"))!.data;
   lang={lang}
   title={d.title}
   description={d.description}
+  image={d.hero_immagine}
+  imageAlt={d.hero_immagine_alt}
 >
   <Hero lang={lang} />
   <Manifesto lang={lang} />

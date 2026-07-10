@@ -5,17 +5,19 @@ import Footer from "../components/Footer.astro";
 import LeadModal from "../components/LeadModal.astro";
 import LeadFormInline from "../components/LeadFormInline.astro";
 import InfoPratiche from "../components/InfoPratiche.astro";
-import { getLangFromUrl, useTranslations, getAlternatePath, getLocalePath, type Lang } from "../i18n/utils";
+import { getLangFromUrl, useTranslations, getAlternatePath, getLocalePath, publicUrl, type Lang } from "../i18n/utils";
 
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  imageAlt?: string;
   lang?: Lang;
   hideLeadFormInline?: boolean;
   hideChrome?: boolean;
 }
 
-const { title, description, lang: langProp, hideLeadFormInline = false, hideChrome = false } = Astro.props;
+const { title, description, image, imageAlt, lang: langProp, hideLeadFormInline = false, hideChrome = false } = Astro.props;
 
 const lang: Lang = langProp ?? getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -32,6 +34,15 @@ const { it: itClean } = getAlternatePath(cleanPath);
 const siteOrigin = Astro.site?.origin ?? '';
 const itHreflang = `${siteOrigin}${getLocalePath('it', itClean)}`;
 const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
+const canonicalUrl = `${siteOrigin}${getLocalePath(lang, itClean)}`;
+
+// Foto social-preview: usa l'immagine hero della pagina (già curata in Tina),
+// con fallback sulla foto aerea del Club per le pagine senza hero_immagine.
+const DEFAULT_OG_IMAGE = '/HERO.avif';
+const ogImage = `${siteOrigin}${publicUrl(image ?? DEFAULT_OG_IMAGE)}`;
+const ogImageAlt = imageAlt ?? title;
+const ogLocale = lang === 'it' ? 'it_IT' : 'en_US';
+const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
 ---
 
 <!doctype html>
@@ -54,11 +65,29 @@ const enHreflang = `${siteOrigin}${getLocalePath('en', itClean)}`;
 
     <title>{title}</title>
     <meta name="description" content={desc} />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- hreflang — SEO multilingua -->
     <link rel="alternate" hreflang="it"        href={itHreflang} />
     <link rel="alternate" hreflang="en"        href={enHreflang} />
     <link rel="alternate" hreflang="x-default" href={itHreflang} />
+
+    <!-- Open Graph — anteprima social (Facebook, LinkedIn, WhatsApp...) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tennis Club Ambrosiano" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlternate} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- Google Fonts: Barlow Condensed (display/titoli) + Barlow (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

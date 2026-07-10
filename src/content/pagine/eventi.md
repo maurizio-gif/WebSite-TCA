@@ -1,7 +1,7 @@
 ---
 _template: generica
-title: "Eventi | Tennis Club Ambrosiano"
-description: "Gli eventi del Tennis Club Ambrosiano: tornei interni, serate sociali, aperitivi in club, esibizioni e tutto quello che anima la community TCA durante l'anno."
+title: "Eventi e Community | Tennis Club Ambrosiano Milano"
+description: "Tornei interni, serate sociali, aperitivi ed esibizioni: la vita del Tennis Club Ambrosiano va oltre il campo, tutto l'anno a Milano."
 hero_eyebrow: "Community"
 hero_titolo: "Eventi"
 hero_titolo_accent: "e Community"
