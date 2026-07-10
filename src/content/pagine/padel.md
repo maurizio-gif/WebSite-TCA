@@ -1,7 +1,7 @@
 ---
 _template: generica
-title: "Padel | Tennis Club Ambrosiano"
-description: "Padel al Tennis Club Ambrosiano. Campi coperti e scoperti, corsi per tutti i livelli, ambiente dinamico e community attiva a Milano."
+title: "Padel a Milano | Tennis Club Ambrosiano"
+description: "Padel al TCA: campi coperti e scoperti, maestri certificati FITP e una community attiva di giocatori di ogni livello, a Milano."
 hero_eyebrow: "Adulti · Padel"
 hero_titolo: "Padel"
 hero_titolo_accent: "al TCA"
