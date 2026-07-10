@@ -240,6 +240,71 @@ fragment CorpoPersonalTrainerParts on CorpoPersonalTrainer {
   sezione4_cta_label_en
 }
 
+fragment CorpoPreparazioneAtleticaParts on CorpoPreparazioneAtletica {
+  __typename
+  sala_eyebrow
+  sala_titolo
+  sala_titolo_accent
+  sala_paragrafo1
+  sala_paragrafo2
+  sala_slideshow {
+    __typename
+    immagine
+    alt
+    alt_en
+  }
+  sala_features {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  sala_cta_label
+  corsi_eyebrow
+  corsi_titolo
+  corsi_titolo_accent
+  corsi_sub
+  categorie {
+    __typename
+    id
+    label
+    desc
+    color
+    desc_en
+    corsi {
+      __typename
+      nome
+      durata
+      intensita
+      livello
+      desc
+      immagine
+      nome_en
+      livello_en
+      desc_en
+    }
+  }
+  calendario_eyebrow
+  calendario_titolo
+  calendario_titolo_accent
+  calendario_sub
+  sala_eyebrow_en
+  sala_titolo_en
+  sala_titolo_accent_en
+  sala_paragrafo1_en
+  sala_paragrafo2_en
+  sala_cta_label_en
+  corsi_eyebrow_en
+  corsi_titolo_en
+  corsi_titolo_accent_en
+  corsi_sub_en
+  calendario_eyebrow_en
+  calendario_titolo_en
+  calendario_titolo_accent_en
+  calendario_sub_en
+}
+
 fragment InfoParts on Info {
   __typename
   indirizzo
