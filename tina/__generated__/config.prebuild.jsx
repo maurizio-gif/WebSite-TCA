@@ -159,6 +159,88 @@ var config_default = defineConfig({
           }
         ]
       },
+      // ─── HELP DESK ─────────────────────────────────────────────────────────
+      // Guide della knowledge base Club Life (sezione Help Desk).
+      // Ogni guida è un file .md in src/content/helpdesk/
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: "helpdesk",
+        label: "Help Desk",
+        path: "src/content/helpdesk",
+        format: "md",
+        fields: [
+          {
+            type: "string",
+            name: "titolo",
+            label: "Titolo",
+            isTitle: true,
+            required: true
+          },
+          {
+            type: "string",
+            name: "categoria",
+            label: "Categoria",
+            required: true,
+            options: [
+              { value: "iscrizioni", label: "Iscrizioni & Tesseramento" },
+              { value: "prenotazioni", label: "Prenotazioni" },
+              { value: "app", label: "App & Area Riservata" },
+              { value: "pagamenti", label: "Pagamenti & Ricevute" },
+              { value: "regolamento", label: "Regolamento" },
+              { value: "scuola", label: "Scuola Tennis" }
+            ]
+          },
+          {
+            type: "string",
+            name: "sintesi",
+            label: "Sintesi (anteprima nella card)",
+            required: true,
+            ui: { component: "textarea" }
+          },
+          {
+            type: "string",
+            name: "tags",
+            label: "Tag (per la ricerca)",
+            list: true
+          },
+          {
+            type: "datetime",
+            name: "aggiornato",
+            label: "Ultimo aggiornamento",
+            required: true,
+            ui: { dateFormat: "DD/MM/YYYY" }
+          },
+          {
+            type: "string",
+            name: "titolo_en",
+            label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)"
+          },
+          {
+            type: "string",
+            name: "sintesi_en",
+            label: "\u{1F1EC}\u{1F1E7} Sintesi (inglese)",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "string",
+            name: "tags_en",
+            label: "\u{1F1EC}\u{1F1E7} Tag (inglese)",
+            list: true
+          },
+          {
+            type: "string",
+            name: "corpo_en",
+            label: "\u{1F1EC}\u{1F1E7} Testo guida (inglese) \u2014 un paragrafo per riga vuota, grassetto con **doppi asterischi**",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Testo guida (italiano)",
+            isBody: true
+          }
+        ]
+      },
       // ─── NEWS CLUB LIFE ────────────────────────────────────────────────────
       // Articoli della bacheca Club Life (carosello "News dal Club").
       // Ogni news è un file .md in src/content/news/

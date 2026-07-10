@@ -86,6 +86,8 @@ export type Query = {
   eventiConnection: EventiConnection;
   info: Info;
   infoConnection: InfoConnection;
+  helpdesk: Helpdesk;
+  helpdeskConnection: HelpdeskConnection;
   news: News;
   newsConnection: NewsConnection;
   pagine: Pagine;
@@ -144,6 +146,21 @@ export type QueryInfoConnectionArgs = {
 };
 
 
+export type QueryHelpdeskArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryHelpdeskConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<HelpdeskFilter>;
+};
+
+
 export type QueryNewsArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -176,6 +193,7 @@ export type QueryPagineConnectionArgs = {
 export type DocumentFilter = {
   eventi?: InputMaybe<EventiFilter>;
   info?: InputMaybe<InfoFilter>;
+  helpdesk?: InputMaybe<HelpdeskFilter>;
   news?: InputMaybe<NewsFilter>;
   pagine?: InputMaybe<PagineFilter>;
 };
@@ -217,7 +235,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Info | News | Pagine | Folder;
+export type DocumentNode = Eventi | Info | Helpdesk | News | Pagine | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -329,6 +347,49 @@ export type InfoConnection = Connection & {
   edges?: Maybe<Array<Maybe<InfoConnectionEdges>>>;
 };
 
+export type Helpdesk = Node & Document & {
+  __typename?: 'Helpdesk';
+  titolo: Scalars['String']['output'];
+  categoria: Scalars['String']['output'];
+  sintesi: Scalars['String']['output'];
+  tags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  aggiornato: Scalars['String']['output'];
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  sintesi_en?: Maybe<Scalars['String']['output']>;
+  tags_en?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  corpo_en?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type HelpdeskFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  categoria?: InputMaybe<StringFilter>;
+  sintesi?: InputMaybe<StringFilter>;
+  tags?: InputMaybe<StringFilter>;
+  aggiornato?: InputMaybe<DatetimeFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  sintesi_en?: InputMaybe<StringFilter>;
+  tags_en?: InputMaybe<StringFilter>;
+  corpo_en?: InputMaybe<StringFilter>;
+  body?: InputMaybe<RichTextFilter>;
+};
+
+export type HelpdeskConnectionEdges = {
+  __typename?: 'HelpdeskConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Helpdesk>;
+};
+
+export type HelpdeskConnection = Connection & {
+  __typename?: 'HelpdeskConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<HelpdeskConnectionEdges>>>;
+};
+
 export type News = Node & Document & {
   __typename?: 'News';
   titolo: Scalars['String']['output'];
@@ -437,6 +498,8 @@ export type Mutation = {
   createEventi: Eventi;
   updateInfo: Info;
   createInfo: Info;
+  updateHelpdesk: Helpdesk;
+  createHelpdesk: Helpdesk;
   updateNews: News;
   createNews: News;
   updatePagine: Pagine;
@@ -501,6 +564,18 @@ export type MutationCreateInfoArgs = {
 };
 
 
+export type MutationUpdateHelpdeskArgs = {
+  relativePath: Scalars['String']['input'];
+  params: HelpdeskMutation;
+};
+
+
+export type MutationCreateHelpdeskArgs = {
+  relativePath: Scalars['String']['input'];
+  params: HelpdeskMutation;
+};
+
+
 export type MutationUpdateNewsArgs = {
   relativePath: Scalars['String']['input'];
   params: NewsMutation;
@@ -527,6 +602,7 @@ export type MutationCreatePagineArgs = {
 export type DocumentUpdateMutation = {
   eventi?: InputMaybe<EventiMutation>;
   info?: InputMaybe<InfoMutation>;
+  helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
@@ -535,6 +611,7 @@ export type DocumentUpdateMutation = {
 export type DocumentMutation = {
   eventi?: InputMaybe<EventiMutation>;
   info?: InputMaybe<InfoMutation>;
+  helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
 };
@@ -562,6 +639,19 @@ export type InfoMutation = {
   orari_en?: InputMaybe<Scalars['String']['input']>;
   telefono?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type HelpdeskMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  categoria?: InputMaybe<Scalars['String']['input']>;
+  sintesi?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  aggiornato?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  sintesi_en?: InputMaybe<Scalars['String']['input']>;
+  tags_en?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  corpo_en?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type NewsMutation = {
@@ -595,6 +685,8 @@ export type PagineMutation = {
 export type EventiPartsFragment = { __typename: 'Eventi', titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null };
 
 export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
+
+export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
 
 export type NewsPartsFragment = { __typename: 'News', titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, titolo_en?: string | null, categoria_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null };
 
@@ -637,6 +729,25 @@ export type InfoConnectionQueryVariables = Exact<{
 
 
 export type InfoConnectionQuery = { __typename?: 'Query', infoConnection: { __typename?: 'InfoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'InfoConnectionEdges', cursor: string, node?: { __typename: 'Info', id: string, indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export type HelpdeskQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type HelpdeskQuery = { __typename?: 'Query', helpdesk: { __typename: 'Helpdesk', id: string, titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type HelpdeskConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<HelpdeskFilter>;
+}>;
+
+
+export type HelpdeskConnectionQuery = { __typename?: 'Query', helpdeskConnection: { __typename?: 'HelpdeskConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'HelpdeskConnectionEdges', cursor: string, node?: { __typename: 'Helpdesk', id: string, titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type NewsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -703,6 +814,21 @@ export const InfoPartsFragmentDoc = gql`
   orari_en
   telefono
   email
+}
+    `;
+export const HelpdeskPartsFragmentDoc = gql`
+    fragment HelpdeskParts on Helpdesk {
+  __typename
+  titolo
+  categoria
+  sintesi
+  tags
+  aggiornato
+  titolo_en
+  sintesi_en
+  tags_en
+  corpo_en
+  body
 }
     `;
 export const NewsPartsFragmentDoc = gql`
@@ -851,6 +977,63 @@ export const InfoConnectionDocument = gql`
   }
 }
     ${InfoPartsFragmentDoc}`;
+export const HelpdeskDocument = gql`
+    query helpdesk($relativePath: String!) {
+  helpdesk(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...HelpdeskParts
+  }
+}
+    ${HelpdeskPartsFragmentDoc}`;
+export const HelpdeskConnectionDocument = gql`
+    query helpdeskConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: HelpdeskFilter) {
+  helpdeskConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...HelpdeskParts
+      }
+    }
+  }
+}
+    ${HelpdeskPartsFragmentDoc}`;
 export const NewsDocument = gql`
     query news($relativePath: String!) {
   news(relativePath: $relativePath) {
@@ -979,6 +1162,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     infoConnection(variables?: InfoConnectionQueryVariables, options?: C): Promise<{data: InfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoConnectionQueryVariables, query: string}> {
         return requester<{data: InfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoConnectionQueryVariables, query: string}, InfoConnectionQueryVariables>(InfoConnectionDocument, variables, options);
+      },
+    helpdesk(variables: HelpdeskQueryVariables, options?: C): Promise<{data: HelpdeskQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskQueryVariables, query: string}> {
+        return requester<{data: HelpdeskQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskQueryVariables, query: string}, HelpdeskQueryVariables>(HelpdeskDocument, variables, options);
+      },
+    helpdeskConnection(variables?: HelpdeskConnectionQueryVariables, options?: C): Promise<{data: HelpdeskConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskConnectionQueryVariables, query: string}> {
+        return requester<{data: HelpdeskConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskConnectionQueryVariables, query: string}, HelpdeskConnectionQueryVariables>(HelpdeskConnectionDocument, variables, options);
       },
     news(variables: NewsQueryVariables, options?: C): Promise<{data: NewsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsQueryVariables, query: string}> {
         return requester<{data: NewsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsQueryVariables, query: string}, NewsQueryVariables>(NewsDocument, variables, options);
