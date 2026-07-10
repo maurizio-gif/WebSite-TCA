@@ -55,12 +55,16 @@ const news = defineCollection({
     immagine: z.string(),
     immagine_alt: z.string(),
     pubblicato: z.boolean().default(true),
+    // CTA opzionale nel popup della news: il pulsante appare solo se c'è il link
+    cta_label: z.string().optional(),
+    cta_href: z.string().optional(),
     // Versione inglese (opzionale): se assente si usa il fallback italiano
     titolo_en: z.string().optional(),
     categoria_en: z.string().optional(),
     sintesi_en: z.string().optional(),
     immagine_alt_en: z.string().optional(),
     corpo_en: z.string().optional(),
+    cta_label_en: z.string().optional(),
   }),
 });
 

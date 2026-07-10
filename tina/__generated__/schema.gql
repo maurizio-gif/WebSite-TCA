@@ -341,8 +341,11 @@ type News implements Node & Document {
   immagine: String!
   immagine_alt: String!
   pubblicato: Boolean
+  cta_label: String
+  cta_href: String
   titolo_en: String
   categoria_en: String
+  cta_label_en: String
   sintesi_en: String
   immagine_alt_en: String
   corpo_en: String
@@ -367,8 +370,11 @@ input NewsFilter {
   immagine: ImageFilter
   immagine_alt: StringFilter
   pubblicato: BooleanFilter
+  cta_label: StringFilter
+  cta_href: StringFilter
   titolo_en: StringFilter
   categoria_en: StringFilter
+  cta_label_en: StringFilter
   sintesi_en: StringFilter
   immagine_alt_en: StringFilter
   corpo_en: StringFilter
@@ -536,8 +542,11 @@ input NewsMutation {
   immagine: String
   immagine_alt: String
   pubblicato: Boolean
+  cta_label: String
+  cta_href: String
   titolo_en: String
   categoria_en: String
+  cta_label_en: String
   sintesi_en: String
   immagine_alt_en: String
   corpo_en: String

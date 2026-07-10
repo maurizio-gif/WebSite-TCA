@@ -1,5 +1,5 @@
 ---
-import { useTranslations, publicUrl, type Lang } from '../i18n/utils';
+import { useTranslations, publicUrl, getLocalePath, type Lang } from '../i18n/utils';
 import { getCollection } from 'astro:content';
 
 interface Props { lang?: Lang; }
@@ -35,6 +35,13 @@ const newsArticles = await Promise.all(entries.map(async (entry) => {
     sintesi: tx(d.sintesi, d.sintesi_en),
     img: publicUrl(d.immagine),
     imgAlt: tx(d.immagine_alt, d.immagine_alt_en),
+    // CTA opzionale: pulsante nel popup, solo se il link è compilato.
+    // I percorsi interni (es. /contatti) vengono localizzati per lingua.
+    ctaHref: d.cta_href
+      ? (d.cta_href.startsWith('/') ? getLocalePath(lang, d.cta_href) : d.cta_href)
+      : null,
+    ctaLabel: tx(d.cta_label ?? '', d.cta_label_en) || d.cta_label,
+    ctaExternal: !!d.cta_href && !d.cta_href.startsWith('/'),
     Content,
     // In inglese il corpo è un campo testo: un paragrafo per riga vuota
     paragrafiEn: lang === 'en' && d.corpo_en
@@ -99,6 +106,16 @@ const newsArticles = await Promise.all(entries.map(async (entry) => {
             ? art.paragrafiEn.map((par) => <p>{par}</p>)
             : <art.Content />}
         </div>
+        {art.ctaHref && art.ctaLabel && (
+          <div class="cl-news-modal__actions">
+            <a
+              class="btn btn-red"
+              href={art.ctaHref}
+              target={art.ctaExternal ? '_blank' : undefined}
+              rel={art.ctaExternal ? 'noopener noreferrer' : undefined}
+            >{art.ctaLabel}</a>
+          </div>
+        )}
       </div>
     </div>
   </dialog>
@@ -354,6 +371,10 @@ const newsArticles = await Promise.all(entries.map(async (entry) => {
     font-weight: 300;
     line-height: 1.8;
     color: var(--color-text-light);
+  }
+
+  .cl-news-modal__actions {
+    margin-top: 1.5rem;
   }
 
   .cl-news-modal__prose :global(p) { margin-bottom: 1em; }

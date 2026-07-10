@@ -450,6 +450,16 @@ export default defineConfig({
           },
           {
             type: 'string',
+            name: 'cta_label',
+            label: 'Pulsante — testo (es. Iscriviti ora)',
+          },
+          {
+            type: 'string',
+            name: 'cta_href',
+            label: 'Pulsante — link (URL esterno o percorso interno, es. /contatti). Il pulsante appare solo se compilato.',
+          },
+          {
+            type: 'string',
             name: 'titolo_en',
             label: '🇬🇧 Titolo (inglese)',
           },
@@ -457,6 +467,11 @@ export default defineConfig({
             type: 'string',
             name: 'categoria_en',
             label: '🇬🇧 Categoria (inglese)',
+          },
+          {
+            type: 'string',
+            name: 'cta_label_en',
+            label: '🇬🇧 Pulsante — testo (inglese)',
           },
           {
             type: 'string',

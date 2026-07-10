@@ -440,6 +440,16 @@ var config_default = defineConfig({
           },
           {
             type: "string",
+            name: "cta_label",
+            label: "Pulsante \u2014 testo (es. Iscriviti ora)"
+          },
+          {
+            type: "string",
+            name: "cta_href",
+            label: "Pulsante \u2014 link (URL esterno o percorso interno, es. /contatti). Il pulsante appare solo se compilato."
+          },
+          {
+            type: "string",
             name: "titolo_en",
             label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)"
           },
@@ -447,6 +457,11 @@ var config_default = defineConfig({
             type: "string",
             name: "categoria_en",
             label: "\u{1F1EC}\u{1F1E7} Categoria (inglese)"
+          },
+          {
+            type: "string",
+            name: "cta_label_en",
+            label: "\u{1F1EC}\u{1F1E7} Pulsante \u2014 testo (inglese)"
           },
           {
             type: "string",

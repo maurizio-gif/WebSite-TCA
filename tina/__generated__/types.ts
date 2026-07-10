@@ -526,8 +526,11 @@ export type News = Node & Document & {
   immagine: Scalars['String']['output'];
   immagine_alt: Scalars['String']['output'];
   pubblicato?: Maybe<Scalars['Boolean']['output']>;
+  cta_label?: Maybe<Scalars['String']['output']>;
+  cta_href?: Maybe<Scalars['String']['output']>;
   titolo_en?: Maybe<Scalars['String']['output']>;
   categoria_en?: Maybe<Scalars['String']['output']>;
+  cta_label_en?: Maybe<Scalars['String']['output']>;
   sintesi_en?: Maybe<Scalars['String']['output']>;
   immagine_alt_en?: Maybe<Scalars['String']['output']>;
   corpo_en?: Maybe<Scalars['String']['output']>;
@@ -552,8 +555,11 @@ export type NewsFilter = {
   immagine?: InputMaybe<ImageFilter>;
   immagine_alt?: InputMaybe<StringFilter>;
   pubblicato?: InputMaybe<BooleanFilter>;
+  cta_label?: InputMaybe<StringFilter>;
+  cta_href?: InputMaybe<StringFilter>;
   titolo_en?: InputMaybe<StringFilter>;
   categoria_en?: InputMaybe<StringFilter>;
+  cta_label_en?: InputMaybe<StringFilter>;
   sintesi_en?: InputMaybe<StringFilter>;
   immagine_alt_en?: InputMaybe<StringFilter>;
   corpo_en?: InputMaybe<StringFilter>;
@@ -844,8 +850,11 @@ export type NewsMutation = {
   immagine?: InputMaybe<Scalars['String']['input']>;
   immagine_alt?: InputMaybe<Scalars['String']['input']>;
   pubblicato?: InputMaybe<Scalars['Boolean']['input']>;
+  cta_label?: InputMaybe<Scalars['String']['input']>;
+  cta_href?: InputMaybe<Scalars['String']['input']>;
   titolo_en?: InputMaybe<Scalars['String']['input']>;
   categoria_en?: InputMaybe<Scalars['String']['input']>;
+  cta_label_en?: InputMaybe<Scalars['String']['input']>;
   sintesi_en?: InputMaybe<Scalars['String']['input']>;
   immagine_alt_en?: InputMaybe<Scalars['String']['input']>;
   corpo_en?: InputMaybe<Scalars['String']['input']>;
@@ -874,7 +883,7 @@ export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_ar
 
 export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
 
-export type NewsPartsFragment = { __typename: 'News', titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, titolo_en?: string | null, categoria_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null };
+export type NewsPartsFragment = { __typename: 'News', titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, cta_label?: string | null, cta_href?: string | null, titolo_en?: string | null, categoria_en?: string | null, cta_label_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null };
 
 export type PaginePartsFragment = { __typename: 'Pagine', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, body?: any | null };
 
@@ -978,7 +987,7 @@ export type NewsQueryVariables = Exact<{
 }>;
 
 
-export type NewsQuery = { __typename?: 'Query', news: { __typename: 'News', id: string, titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, titolo_en?: string | null, categoria_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type NewsQuery = { __typename?: 'Query', news: { __typename: 'News', id: string, titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, cta_label?: string | null, cta_href?: string | null, titolo_en?: string | null, categoria_en?: string | null, cta_label_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
 export type NewsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -990,7 +999,7 @@ export type NewsConnectionQueryVariables = Exact<{
 }>;
 
 
-export type NewsConnectionQuery = { __typename?: 'Query', newsConnection: { __typename?: 'NewsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'NewsConnectionEdges', cursor: string, node?: { __typename: 'News', id: string, titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, titolo_en?: string | null, categoria_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type NewsConnectionQuery = { __typename?: 'Query', newsConnection: { __typename?: 'NewsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'NewsConnectionEdges', cursor: string, node?: { __typename: 'News', id: string, titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, cta_label?: string | null, cta_href?: string | null, titolo_en?: string | null, categoria_en?: string | null, cta_label_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type PagineQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -1091,8 +1100,11 @@ export const NewsPartsFragmentDoc = gql`
   immagine
   immagine_alt
   pubblicato
+  cta_label
+  cta_href
   titolo_en
   categoria_en
+  cta_label_en
   sintesi_en
   immagine_alt_en
   corpo_en
