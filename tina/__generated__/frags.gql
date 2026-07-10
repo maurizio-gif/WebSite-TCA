@@ -616,4 +616,23 @@ fragment PagineParts on Pagine {
     torneo_prossima_titolo_accent_en
     torneo_prossima_testo_en
   }
+  ... on PagineRegolamento {
+    title
+    description
+    hero_eyebrow
+    hero_titolo
+    hero_titolo_accent
+    hero_sottotitolo
+    hero_immagine
+    hero_immagine_alt
+    title_en
+    description_en
+    hero_eyebrow_en
+    hero_titolo_en
+    hero_titolo_accent_en
+    hero_sottotitolo_en
+    hero_immagine_alt_en
+    regolamento_body
+    regolamento_body_en
+  }
 }

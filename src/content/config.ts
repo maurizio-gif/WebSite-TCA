@@ -364,6 +364,10 @@ const pagine = defineCollection({
     torneo_prossima_titolo_en: z.string().optional(),
     torneo_prossima_titolo_accent_en: z.string().optional(),
     torneo_prossima_testo_en: z.string().optional(),
+
+    // ── Corpo pagina: Regolamento del Club ──
+    regolamento_body: z.string().optional(),
+    regolamento_body_en: z.string().optional(),
   }),
 });
 

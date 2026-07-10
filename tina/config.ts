@@ -1090,6 +1090,19 @@ export default defineConfig({
                 { type: 'string', name: 'torneo_prossima_testo_en', label: '🇬🇧 Sezione Prossima edizione — testo (inglese)', ui: { component: 'textarea' } },
               ],
             },
+            {
+              name: 'regolamento',
+              label: 'Regolamento del Club',
+              fields: [
+                ...heroSeoFields,
+                {
+                  type: 'string', name: 'regolamento_body', label: 'Testo regolamento (italiano)', required: true,
+                  ui: { component: 'textarea' },
+                  description: 'Usa "## " per un titolo di sezione, "### " per un sottotitolo, "- " per un elenco puntato, riga vuota per andare a capo tra paragrafi, "**testo**" per il grassetto.',
+                },
+                { type: 'string', name: 'regolamento_body_en', label: '🇬🇧 Testo regolamento (inglese)', ui: { component: 'textarea' } },
+              ],
+            },
           ],
         };
       })(),

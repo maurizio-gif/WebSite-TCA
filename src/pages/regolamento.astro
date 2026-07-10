@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getEntry } from "astro:content";
+import { renderMiniMarkdown } from "../lib/miniMarkdown";
+
+// SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/regolamento.md
+const d = (await getEntry("pagine", "regolamento"))!.data;
+const bodyHtml = renderMiniMarkdown(d.regolamento_body ?? "");
+---
+
+<BaseLayout title={d.title} description={d.description}>
+  <div class="page-header">
+    <div class="page-header__inner">
+      <span class="eyebrow">{d.hero_eyebrow}</span>
+      <h1 class="page-header__title">{d.hero_titolo} <em>{d.hero_titolo_accent}</em></h1>
+      <p class="page-header__sub">{d.hero_sottotitolo}</p>
+    </div>
+  </div>
+
+  <section class="reg-body">
+    <div class="reg-body__inner prose" set:html={bodyHtml} />
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: calc(var(--header-h) + 6vh) var(--pad-x) 5vh;
+    background: var(--color-off-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-header__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .page-header__title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 0.95;
+    color: var(--color-text);
+    margin: 0.4em 0 0.6em;
+  }
+
+  .page-header__title em {
+    font-style: normal;
+    color: var(--color-accent);
+  }
+
+  .page-header__sub {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: clamp(15px, 1.2vw, 19px);
+    color: var(--color-text-light);
+    max-width: 60ch;
+  }
+
+  .reg-body {
+    padding: 6vh var(--pad-x) 8vh;
+  }
+
+  .reg-body__inner {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .prose {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1.05vw, 17px);
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--color-text-light);
+  }
+
+  .prose :global(p) { margin-bottom: 1.2em; }
+
+  .prose :global(h2),
+  .prose :global(h3) {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+
+  .prose :global(h2) {
+    font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+    margin-top: 2em;
+    margin-bottom: 0.7em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  .prose :global(h3) {
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    margin-top: 1.8em;
+    margin-bottom: 0.6em;
+  }
+
+  .prose :global(ul) { padding-left: 1.4em; margin-bottom: 1.2em; }
+  .prose :global(li) { margin-bottom: 0.5em; }
+  .prose :global(strong) { color: var(--color-text); font-weight: 600; }
+</style>
