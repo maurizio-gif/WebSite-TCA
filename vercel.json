@@ -1,5 +1,43 @@
 {
   "framework": "astro",
   "buildCommand": "npm run tina:build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/it/milan/club-ambrosiano/tennis", "destination": "/tennis", "permanent": true },
+    { "source": "/it/milan/club-ambrosiano/padel-e-pickleball", "destination": "/padel", "permanent": true },
+    { "source": "/it/milan/club-ambrosiano/famiglia", "destination": "/", "permanent": true },
+    { "source": "/it/milan/club-ambrosiano/summercamps", "destination": "/summer-camps", "permanent": true },
+    { "source": "/it/milan/club-ambrosiano/preparazione-atletica", "destination": "/preparazione-atletica", "permanent": true },
+    { "source": "/it/milan/club-ambrosiano/torneo-avvenire", "destination": "/torneo-avvenire", "permanent": true },
+    { "source": "/it/milan/club-ambrosiano/iscrizioni", "destination": "/iscrizioni", "permanent": true },
+    { "source": "/it/milan/club-ambrosiano/partners", "destination": "/partners", "permanent": true },
+    { "source": "/it/milan/club-ambrosiano/eventi", "destination": "/club-life", "permanent": true },
+    { "source": "/it/milan/club-ambrosiano/campaigns/:slug*", "destination": "/prenota-una-visita", "permanent": true },
+    { "source": "/it/tennis-padel", "destination": "/tennis", "permanent": true },
+    { "source": "/it/news/:path*", "destination": "/club-life", "permanent": true },
+    { "source": "/it/news", "destination": "/club-life", "permanent": true },
+    { "source": "/it/privacy-policy", "destination": "/privacy-policy", "permanent": true },
+    { "source": "/it/terms-conditions", "destination": "/regolamento", "permanent": true },
+
+    { "source": "/en/milan/club-ambrosiano/tennis", "destination": "/en/tennis", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/padel-e-pickleball", "destination": "/en/padel", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/famiglia", "destination": "/en", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/family", "destination": "/en", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/summercamps", "destination": "/en/summer-camps", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/fitness", "destination": "/en/preparazione-atletica", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/preparazione-atletica", "destination": "/en/preparazione-atletica", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/torneo-avvenire", "destination": "/en/torneo-avvenire", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/iscrizioni", "destination": "/en/iscrizioni", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/registrations", "destination": "/en/iscrizioni", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/partners", "destination": "/en/partners", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/eventi", "destination": "/en/club-life", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/campaigns/:slug*", "destination": "/en/prenota-una-visita", "permanent": true },
+    { "source": "/en/news/:path*", "destination": "/en/club-life", "permanent": true },
+    { "source": "/en/news", "destination": "/en/club-life", "permanent": true },
+    { "source": "/en/terms-conditions", "destination": "/en/regolamento", "permanent": true },
+
+    { "source": "/it/milan/club-ambrosiano/:path*", "destination": "/", "permanent": true },
+    { "source": "/en/milan/club-ambrosiano/:path*", "destination": "/en", "permanent": true },
+    { "source": "/it/:path*", "destination": "/", "permanent": true }
+  ]
 }

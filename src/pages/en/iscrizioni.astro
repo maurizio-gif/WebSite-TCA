@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import MembershipSection from "../../components/MembershipSection.astro";
+import { getEntry } from "astro:content";
+
+const lang = 'en' as const;
+
+// SEO + intestazione gestibili da TinaCMS → src/content/pagine/iscrizioni.md (campi _en)
+const d = (await getEntry("pagine", "iscrizioni"))!.data;
+---
+
+<BaseLayout
+  lang={lang}
+  title={d.title_en ?? d.title}
+  description={d.description_en ?? d.description}
+>
+  <div class="page-header">
+    <div class="page-header__inner">
+      <span class="eyebrow">{d.hero_eyebrow_en ?? d.hero_eyebrow}</span>
+      <h1 class="page-header__title">
+        {d.hero_titolo_en ?? d.hero_titolo} <em>{d.hero_titolo_accent_en ?? d.hero_titolo_accent}</em>
+      </h1>
+      <p class="page-header__sub">{d.hero_sottotitolo_en ?? d.hero_sottotitolo}</p>
+    </div>
+  </div>
+
+  <MembershipSection lang={lang} />
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: calc(var(--header-h) + 6vh) var(--pad-x) 5vh;
+    background: var(--color-off-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-header__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .page-header__title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 0.95;
+    color: var(--color-text);
+    margin: 0.4em 0 0.6em;
+  }
+
+  .page-header__title em {
+    font-style: normal;
+    color: var(--color-accent);
+  }
+
+  .page-header__sub {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: clamp(15px, 1.2vw, 19px);
+    color: var(--color-text-light);
+    max-width: 60ch;
+  }
+</style>

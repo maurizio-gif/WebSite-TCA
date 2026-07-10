@@ -660,4 +660,29 @@ fragment PagineParts on Pagine {
     privacy_body
     privacy_body_en
   }
+  ... on PaginePartners {
+    title
+    description
+    hero_eyebrow
+    hero_titolo
+    hero_titolo_accent
+    hero_sottotitolo
+    hero_immagine
+    hero_immagine_alt
+    title_en
+    description_en
+    hero_eyebrow_en
+    hero_titolo_en
+    hero_titolo_accent_en
+    hero_sottotitolo_en
+    hero_immagine_alt_en
+    partners_lista {
+      __typename
+      nome
+      descrizione
+      descrizione_en
+      logo
+      sito
+    }
+  }
 }
