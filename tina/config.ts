@@ -791,6 +791,97 @@ export default defineConfig({
           { type: 'string', name: 'calendario_sub_en', label: '🇬🇧 Calendario — testo introduttivo (inglese)' },
         ],
       },
+      // ─── MEMBERSHIP (tabella prezzi) ────────────────────────────────────────
+      // Tabella abbonamenti Silver/Gold/Platinum, condivisa da tennis,
+      // preparazione-atletica e personal-trainer.
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: 'membership',
+        label: 'Tabella Membership',
+        path: 'src/content/membership',
+        format: 'md',
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          { type: 'string', name: 'titolo', label: 'Titolo (prima parte)', required: true },
+          { type: 'string', name: 'titolo_accent', label: 'Titolo (parte evidenziata in rosso)', required: true },
+          { type: 'string', name: 'sottotitolo', label: 'Sottotitolo', required: true, ui: { component: 'textarea' } },
+          { type: 'string', name: 'silver_nome', label: 'Nome livello 1 (es. "Silver")', required: true },
+          { type: 'string', name: 'gold_nome', label: 'Nome livello 2 (es. "Gold")', required: true },
+          { type: 'string', name: 'platinum_nome', label: 'Nome livello 3 (es. "Platinum")', required: true },
+          { type: 'string', name: 'platinum_badge', label: 'Badge sul livello 3 (es. "Più completo")', required: true },
+          { type: 'string', name: 'cta_label', label: 'Testo pulsante (in ogni colonna)', required: true },
+          {
+            type: 'object',
+            name: 'categorie',
+            label: 'Categorie e righe della tabella',
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item: Record<string, string>) => ({ label: item?.label || 'Nuova categoria' }),
+            },
+            fields: [
+              { type: 'string', name: 'label', label: 'Nome categoria (es. "Accesso ai campi")', required: true },
+              { type: 'string', name: 'label_en', label: '🇬🇧 Nome categoria (inglese)' },
+              {
+                type: 'object',
+                name: 'righe',
+                label: 'Righe',
+                list: true,
+                required: true,
+                ui: {
+                  itemProps: (item: Record<string, string>) => ({ label: item?.feature || 'Nuova riga' }),
+                },
+                fields: [
+                  { type: 'string', name: 'feature', label: 'Nome caratteristica', required: true },
+                  { type: 'string', name: 'feature_tooltip', label: 'Tooltip (opzionale, icona info)' },
+                  {
+                    type: 'string', name: 'silver_tipo', label: 'Livello 1 — tipo cella', required: true,
+                    options: [
+                      { value: 'incluso', label: 'Incluso (verde)' },
+                      { value: 'parziale', label: 'Parziale/sconto (ambra)' },
+                      { value: 'valore', label: 'Valore testuale (es. "4 giorni")' },
+                      { value: 'check', label: 'Solo icona di spunta' },
+                    ],
+                  },
+                  { type: 'string', name: 'silver_valore', label: 'Livello 1 — testo cella (non serve per "check")' },
+                  {
+                    type: 'string', name: 'gold_tipo', label: 'Livello 2 — tipo cella', required: true,
+                    options: [
+                      { value: 'incluso', label: 'Incluso (verde)' },
+                      { value: 'parziale', label: 'Parziale/sconto (ambra)' },
+                      { value: 'valore', label: 'Valore testuale' },
+                      { value: 'check', label: 'Solo icona di spunta' },
+                    ],
+                  },
+                  { type: 'string', name: 'gold_valore', label: 'Livello 2 — testo cella (non serve per "check")' },
+                  {
+                    type: 'string', name: 'platinum_tipo', label: 'Livello 3 — tipo cella', required: true,
+                    options: [
+                      { value: 'incluso', label: 'Incluso (verde)' },
+                      { value: 'parziale', label: 'Parziale/sconto (ambra)' },
+                      { value: 'valore', label: 'Valore testuale' },
+                      { value: 'check', label: 'Solo icona di spunta' },
+                    ],
+                  },
+                  { type: 'string', name: 'platinum_valore', label: 'Livello 3 — testo cella (non serve per "check")' },
+                  { type: 'string', name: 'feature_en', label: '🇬🇧 Nome caratteristica (inglese)' },
+                  { type: 'string', name: 'feature_tooltip_en', label: '🇬🇧 Tooltip (inglese)' },
+                  { type: 'string', name: 'silver_valore_en', label: '🇬🇧 Livello 1 — testo cella (inglese)' },
+                  { type: 'string', name: 'gold_valore_en', label: '🇬🇧 Livello 2 — testo cella (inglese)' },
+                  { type: 'string', name: 'platinum_valore_en', label: '🇬🇧 Livello 3 — testo cella (inglese)' },
+                ],
+              },
+            ],
+          },
+          { type: 'string', name: 'titolo_en', label: '🇬🇧 Titolo (inglese)' },
+          { type: 'string', name: 'titolo_accent_en', label: '🇬🇧 Titolo evidenziato (inglese)' },
+          { type: 'string', name: 'sottotitolo_en', label: '🇬🇧 Sottotitolo (inglese)', ui: { component: 'textarea' } },
+          { type: 'string', name: 'platinum_badge_en', label: '🇬🇧 Badge livello 3 (inglese)' },
+          { type: 'string', name: 'cta_label_en', label: '🇬🇧 Testo pulsante (inglese)' },
+        ],
+      },
       // ─── INFO CLUB ─────────────────────────────────────────────────────────
       // File unico con orari, indirizzo e contatti del Club.
       // Le modifiche si riflettono su tutte le pagine (sezione "Vieni a trovarci").

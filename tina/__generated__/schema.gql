@@ -70,6 +70,8 @@ type Query {
   corpoPersonalTrainerConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoPersonalTrainerFilter): CorpoPersonalTrainerConnection!
   corpoPreparazioneAtletica(relativePath: String): CorpoPreparazioneAtletica!
   corpoPreparazioneAtleticaConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoPreparazioneAtleticaFilter): CorpoPreparazioneAtleticaConnection!
+  membership(relativePath: String): Membership!
+  membershipConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: MembershipFilter): MembershipConnection!
   info(relativePath: String): Info!
   infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
   helpdesk(relativePath: String): Helpdesk!
@@ -89,6 +91,7 @@ input DocumentFilter {
   corpoScuolaTennis: CorpoScuolaTennisFilter
   corpoPersonalTrainer: CorpoPersonalTrainerFilter
   corpoPreparazioneAtletica: CorpoPreparazioneAtleticaFilter
+  membership: MembershipFilter
   info: InfoFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
@@ -118,7 +121,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | CorpoPreparazioneAtletica | Info | Helpdesk | News | Pagine | Folder
+union DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | CorpoPreparazioneAtletica | Membership | Info | Helpdesk | News | Pagine | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -903,6 +906,98 @@ type CorpoPreparazioneAtleticaConnection implements Connection {
   edges: [CorpoPreparazioneAtleticaConnectionEdges]
 }
 
+type MembershipCategorieRighe {
+  feature: String!
+  feature_tooltip: String
+  silver_tipo: String!
+  silver_valore: String
+  gold_tipo: String!
+  gold_valore: String
+  platinum_tipo: String!
+  platinum_valore: String
+  feature_en: String
+  feature_tooltip_en: String
+  silver_valore_en: String
+  gold_valore_en: String
+  platinum_valore_en: String
+}
+
+type MembershipCategorie {
+  label: String!
+  label_en: String
+  righe: [MembershipCategorieRighe!]!
+}
+
+type Membership implements Node & Document {
+  titolo: String!
+  titolo_accent: String!
+  sottotitolo: String!
+  silver_nome: String!
+  gold_nome: String!
+  platinum_nome: String!
+  platinum_badge: String!
+  cta_label: String!
+  categorie: [MembershipCategorie!]!
+  titolo_en: String
+  titolo_accent_en: String
+  sottotitolo_en: String
+  platinum_badge_en: String
+  cta_label_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input MembershipCategorieRigheFilter {
+  feature: StringFilter
+  feature_tooltip: StringFilter
+  silver_tipo: StringFilter
+  silver_valore: StringFilter
+  gold_tipo: StringFilter
+  gold_valore: StringFilter
+  platinum_tipo: StringFilter
+  platinum_valore: StringFilter
+  feature_en: StringFilter
+  feature_tooltip_en: StringFilter
+  silver_valore_en: StringFilter
+  gold_valore_en: StringFilter
+  platinum_valore_en: StringFilter
+}
+
+input MembershipCategorieFilter {
+  label: StringFilter
+  label_en: StringFilter
+  righe: MembershipCategorieRigheFilter
+}
+
+input MembershipFilter {
+  titolo: StringFilter
+  titolo_accent: StringFilter
+  sottotitolo: StringFilter
+  silver_nome: StringFilter
+  gold_nome: StringFilter
+  platinum_nome: StringFilter
+  platinum_badge: StringFilter
+  cta_label: StringFilter
+  categorie: MembershipCategorieFilter
+  titolo_en: StringFilter
+  titolo_accent_en: StringFilter
+  sottotitolo_en: StringFilter
+  platinum_badge_en: StringFilter
+  cta_label_en: StringFilter
+}
+
+type MembershipConnectionEdges {
+  cursor: String!
+  node: Membership
+}
+
+type MembershipConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [MembershipConnectionEdges]
+}
+
 type Info implements Node & Document {
   indirizzo: String!
   come_arrivare: String!
@@ -1103,6 +1198,8 @@ type Mutation {
   createCorpoPersonalTrainer(relativePath: String!, params: CorpoPersonalTrainerMutation!): CorpoPersonalTrainer!
   updateCorpoPreparazioneAtletica(relativePath: String!, params: CorpoPreparazioneAtleticaMutation!): CorpoPreparazioneAtletica!
   createCorpoPreparazioneAtletica(relativePath: String!, params: CorpoPreparazioneAtleticaMutation!): CorpoPreparazioneAtletica!
+  updateMembership(relativePath: String!, params: MembershipMutation!): Membership!
+  createMembership(relativePath: String!, params: MembershipMutation!): Membership!
   updateInfo(relativePath: String!, params: InfoMutation!): Info!
   createInfo(relativePath: String!, params: InfoMutation!): Info!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
@@ -1122,6 +1219,7 @@ input DocumentUpdateMutation {
   corpoScuolaTennis: CorpoScuolaTennisMutation
   corpoPersonalTrainer: CorpoPersonalTrainerMutation
   corpoPreparazioneAtletica: CorpoPreparazioneAtleticaMutation
+  membership: MembershipMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -1138,6 +1236,7 @@ input DocumentMutation {
   corpoScuolaTennis: CorpoScuolaTennisMutation
   corpoPersonalTrainer: CorpoPersonalTrainerMutation
   corpoPreparazioneAtletica: CorpoPreparazioneAtleticaMutation
+  membership: MembershipMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -1456,6 +1555,45 @@ input CorpoPreparazioneAtleticaMutation {
   calendario_titolo_en: String
   calendario_titolo_accent_en: String
   calendario_sub_en: String
+}
+
+input MembershipCategorieRigheMutation {
+  feature: String
+  feature_tooltip: String
+  silver_tipo: String
+  silver_valore: String
+  gold_tipo: String
+  gold_valore: String
+  platinum_tipo: String
+  platinum_valore: String
+  feature_en: String
+  feature_tooltip_en: String
+  silver_valore_en: String
+  gold_valore_en: String
+  platinum_valore_en: String
+}
+
+input MembershipCategorieMutation {
+  label: String
+  label_en: String
+  righe: [MembershipCategorieRigheMutation]
+}
+
+input MembershipMutation {
+  titolo: String
+  titolo_accent: String
+  sottotitolo: String
+  silver_nome: String
+  gold_nome: String
+  platinum_nome: String
+  platinum_badge: String
+  cta_label: String
+  categorie: [MembershipCategorieMutation]
+  titolo_en: String
+  titolo_accent_en: String
+  sottotitolo_en: String
+  platinum_badge_en: String
+  cta_label_en: String
 }
 
 input InfoMutation {
