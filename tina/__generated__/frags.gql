@@ -305,6 +305,44 @@ fragment CorpoPreparazioneAtleticaParts on CorpoPreparazioneAtletica {
   calendario_sub_en
 }
 
+fragment MembershipParts on Membership {
+  __typename
+  titolo
+  titolo_accent
+  sottotitolo
+  silver_nome
+  gold_nome
+  platinum_nome
+  platinum_badge
+  cta_label
+  categorie {
+    __typename
+    label
+    label_en
+    righe {
+      __typename
+      feature
+      feature_tooltip
+      silver_tipo
+      silver_valore
+      gold_tipo
+      gold_valore
+      platinum_tipo
+      platinum_valore
+      feature_en
+      feature_tooltip_en
+      silver_valore_en
+      gold_valore_en
+      platinum_valore_en
+    }
+  }
+  titolo_en
+  titolo_accent_en
+  sottotitolo_en
+  platinum_badge_en
+  cta_label_en
+}
+
 fragment InfoParts on Info {
   __typename
   indirizzo

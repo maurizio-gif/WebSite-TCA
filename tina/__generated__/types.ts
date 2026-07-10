@@ -98,6 +98,8 @@ export type Query = {
   corpoPersonalTrainerConnection: CorpoPersonalTrainerConnection;
   corpoPreparazioneAtletica: CorpoPreparazioneAtletica;
   corpoPreparazioneAtleticaConnection: CorpoPreparazioneAtleticaConnection;
+  membership: Membership;
+  membershipConnection: MembershipConnection;
   info: Info;
   infoConnection: InfoConnection;
   helpdesk: Helpdesk;
@@ -250,6 +252,21 @@ export type QueryCorpoPreparazioneAtleticaConnectionArgs = {
 };
 
 
+export type QueryMembershipArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryMembershipConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<MembershipFilter>;
+};
+
+
 export type QueryInfoArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -318,6 +335,7 @@ export type DocumentFilter = {
   corpoScuolaTennis?: InputMaybe<CorpoScuolaTennisFilter>;
   corpoPersonalTrainer?: InputMaybe<CorpoPersonalTrainerFilter>;
   corpoPreparazioneAtletica?: InputMaybe<CorpoPreparazioneAtleticaFilter>;
+  membership?: InputMaybe<MembershipFilter>;
   info?: InputMaybe<InfoFilter>;
   helpdesk?: InputMaybe<HelpdeskFilter>;
   news?: InputMaybe<NewsFilter>;
@@ -361,7 +379,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | CorpoPreparazioneAtletica | Info | Helpdesk | News | Pagine | Folder;
+export type DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | CorpoPreparazioneAtletica | Membership | Info | Helpdesk | News | Pagine | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -1185,6 +1203,103 @@ export type CorpoPreparazioneAtleticaConnection = Connection & {
   edges?: Maybe<Array<Maybe<CorpoPreparazioneAtleticaConnectionEdges>>>;
 };
 
+export type MembershipCategorieRighe = {
+  __typename?: 'MembershipCategorieRighe';
+  feature: Scalars['String']['output'];
+  feature_tooltip?: Maybe<Scalars['String']['output']>;
+  silver_tipo: Scalars['String']['output'];
+  silver_valore?: Maybe<Scalars['String']['output']>;
+  gold_tipo: Scalars['String']['output'];
+  gold_valore?: Maybe<Scalars['String']['output']>;
+  platinum_tipo: Scalars['String']['output'];
+  platinum_valore?: Maybe<Scalars['String']['output']>;
+  feature_en?: Maybe<Scalars['String']['output']>;
+  feature_tooltip_en?: Maybe<Scalars['String']['output']>;
+  silver_valore_en?: Maybe<Scalars['String']['output']>;
+  gold_valore_en?: Maybe<Scalars['String']['output']>;
+  platinum_valore_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type MembershipCategorie = {
+  __typename?: 'MembershipCategorie';
+  label: Scalars['String']['output'];
+  label_en?: Maybe<Scalars['String']['output']>;
+  righe: Array<MembershipCategorieRighe>;
+};
+
+export type Membership = Node & Document & {
+  __typename?: 'Membership';
+  titolo: Scalars['String']['output'];
+  titolo_accent: Scalars['String']['output'];
+  sottotitolo: Scalars['String']['output'];
+  silver_nome: Scalars['String']['output'];
+  gold_nome: Scalars['String']['output'];
+  platinum_nome: Scalars['String']['output'];
+  platinum_badge: Scalars['String']['output'];
+  cta_label: Scalars['String']['output'];
+  categorie: Array<MembershipCategorie>;
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  sottotitolo_en?: Maybe<Scalars['String']['output']>;
+  platinum_badge_en?: Maybe<Scalars['String']['output']>;
+  cta_label_en?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type MembershipCategorieRigheFilter = {
+  feature?: InputMaybe<StringFilter>;
+  feature_tooltip?: InputMaybe<StringFilter>;
+  silver_tipo?: InputMaybe<StringFilter>;
+  silver_valore?: InputMaybe<StringFilter>;
+  gold_tipo?: InputMaybe<StringFilter>;
+  gold_valore?: InputMaybe<StringFilter>;
+  platinum_tipo?: InputMaybe<StringFilter>;
+  platinum_valore?: InputMaybe<StringFilter>;
+  feature_en?: InputMaybe<StringFilter>;
+  feature_tooltip_en?: InputMaybe<StringFilter>;
+  silver_valore_en?: InputMaybe<StringFilter>;
+  gold_valore_en?: InputMaybe<StringFilter>;
+  platinum_valore_en?: InputMaybe<StringFilter>;
+};
+
+export type MembershipCategorieFilter = {
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  righe?: InputMaybe<MembershipCategorieRigheFilter>;
+};
+
+export type MembershipFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  titolo_accent?: InputMaybe<StringFilter>;
+  sottotitolo?: InputMaybe<StringFilter>;
+  silver_nome?: InputMaybe<StringFilter>;
+  gold_nome?: InputMaybe<StringFilter>;
+  platinum_nome?: InputMaybe<StringFilter>;
+  platinum_badge?: InputMaybe<StringFilter>;
+  cta_label?: InputMaybe<StringFilter>;
+  categorie?: InputMaybe<MembershipCategorieFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  titolo_accent_en?: InputMaybe<StringFilter>;
+  sottotitolo_en?: InputMaybe<StringFilter>;
+  platinum_badge_en?: InputMaybe<StringFilter>;
+  cta_label_en?: InputMaybe<StringFilter>;
+};
+
+export type MembershipConnectionEdges = {
+  __typename?: 'MembershipConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Membership>;
+};
+
+export type MembershipConnection = Connection & {
+  __typename?: 'MembershipConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<MembershipConnectionEdges>>>;
+};
+
 export type Info = Node & Document & {
   __typename?: 'Info';
   indirizzo: Scalars['String']['output'];
@@ -1398,6 +1513,8 @@ export type Mutation = {
   createCorpoPersonalTrainer: CorpoPersonalTrainer;
   updateCorpoPreparazioneAtletica: CorpoPreparazioneAtletica;
   createCorpoPreparazioneAtletica: CorpoPreparazioneAtletica;
+  updateMembership: Membership;
+  createMembership: Membership;
   updateInfo: Info;
   createInfo: Info;
   updateHelpdesk: Helpdesk;
@@ -1538,6 +1655,18 @@ export type MutationCreateCorpoPreparazioneAtleticaArgs = {
 };
 
 
+export type MutationUpdateMembershipArgs = {
+  relativePath: Scalars['String']['input'];
+  params: MembershipMutation;
+};
+
+
+export type MutationCreateMembershipArgs = {
+  relativePath: Scalars['String']['input'];
+  params: MembershipMutation;
+};
+
+
 export type MutationUpdateInfoArgs = {
   relativePath: Scalars['String']['input'];
   params: InfoMutation;
@@ -1594,6 +1723,7 @@ export type DocumentUpdateMutation = {
   corpoScuolaTennis?: InputMaybe<CorpoScuolaTennisMutation>;
   corpoPersonalTrainer?: InputMaybe<CorpoPersonalTrainerMutation>;
   corpoPreparazioneAtletica?: InputMaybe<CorpoPreparazioneAtleticaMutation>;
+  membership?: InputMaybe<MembershipMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -1610,6 +1740,7 @@ export type DocumentMutation = {
   corpoScuolaTennis?: InputMaybe<CorpoScuolaTennisMutation>;
   corpoPersonalTrainer?: InputMaybe<CorpoPersonalTrainerMutation>;
   corpoPreparazioneAtletica?: InputMaybe<CorpoPreparazioneAtleticaMutation>;
+  membership?: InputMaybe<MembershipMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -1930,6 +2061,45 @@ export type CorpoPreparazioneAtleticaMutation = {
   calendario_sub_en?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type MembershipCategorieRigheMutation = {
+  feature?: InputMaybe<Scalars['String']['input']>;
+  feature_tooltip?: InputMaybe<Scalars['String']['input']>;
+  silver_tipo?: InputMaybe<Scalars['String']['input']>;
+  silver_valore?: InputMaybe<Scalars['String']['input']>;
+  gold_tipo?: InputMaybe<Scalars['String']['input']>;
+  gold_valore?: InputMaybe<Scalars['String']['input']>;
+  platinum_tipo?: InputMaybe<Scalars['String']['input']>;
+  platinum_valore?: InputMaybe<Scalars['String']['input']>;
+  feature_en?: InputMaybe<Scalars['String']['input']>;
+  feature_tooltip_en?: InputMaybe<Scalars['String']['input']>;
+  silver_valore_en?: InputMaybe<Scalars['String']['input']>;
+  gold_valore_en?: InputMaybe<Scalars['String']['input']>;
+  platinum_valore_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MembershipCategorieMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  righe?: InputMaybe<Array<InputMaybe<MembershipCategorieRigheMutation>>>;
+};
+
+export type MembershipMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  sottotitolo?: InputMaybe<Scalars['String']['input']>;
+  silver_nome?: InputMaybe<Scalars['String']['input']>;
+  gold_nome?: InputMaybe<Scalars['String']['input']>;
+  platinum_nome?: InputMaybe<Scalars['String']['input']>;
+  platinum_badge?: InputMaybe<Scalars['String']['input']>;
+  cta_label?: InputMaybe<Scalars['String']['input']>;
+  categorie?: InputMaybe<Array<InputMaybe<MembershipCategorieMutation>>>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  sottotitolo_en?: InputMaybe<Scalars['String']['input']>;
+  platinum_badge_en?: InputMaybe<Scalars['String']['input']>;
+  cta_label_en?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type InfoMutation = {
   indirizzo?: InputMaybe<Scalars['String']['input']>;
   come_arrivare?: InputMaybe<Scalars['String']['input']>;
@@ -2006,6 +2176,8 @@ export type CorpoScuolaTennisPartsFragment = { __typename: 'CorpoScuolaTennis', 
 export type CorpoPersonalTrainerPartsFragment = { __typename: 'CorpoPersonalTrainer', sezione1_eyebrow: string, sezione1_titolo: string, sezione1_titolo_accent: string, sezione1_paragrafo1: string, sezione1_paragrafo2: string, sezione2_eyebrow: string, sezione2_titolo: string, sezione2_titolo_accent: string, sezione3_eyebrow: string, sezione3_titolo: string, sezione3_titolo_accent: string, sezione4_titolo: string, sezione4_sottotitolo: string, sezione4_cta_label: string, sezione1_eyebrow_en?: string | null, sezione1_titolo_en?: string | null, sezione1_titolo_accent_en?: string | null, sezione1_paragrafo1_en?: string | null, sezione1_paragrafo2_en?: string | null, sezione2_eyebrow_en?: string | null, sezione2_titolo_en?: string | null, sezione2_titolo_accent_en?: string | null, sezione3_eyebrow_en?: string | null, sezione3_titolo_en?: string | null, sezione3_titolo_accent_en?: string | null, sezione4_titolo_en?: string | null, sezione4_sottotitolo_en?: string | null, sezione4_cta_label_en?: string | null, stats: Array<{ __typename: 'CorpoPersonalTrainerStats', numero: string, etichetta: string, etichetta_en?: string | null }>, trainers: Array<{ __typename: 'CorpoPersonalTrainerTrainers', nome: string, foto?: string | null, specializzazioni: Array<string>, qualifiche: Array<string>, lingue?: Array<string | null> | null, specializzazioni_en?: Array<string | null> | null, qualifiche_en?: Array<string | null> | null, lingue_en?: Array<string | null> | null }>, steps: Array<{ __typename: 'CorpoPersonalTrainerSteps', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> };
 
 export type CorpoPreparazioneAtleticaPartsFragment = { __typename: 'CorpoPreparazioneAtletica', sala_eyebrow: string, sala_titolo: string, sala_titolo_accent: string, sala_paragrafo1: string, sala_paragrafo2: string, sala_cta_label: string, corsi_eyebrow: string, corsi_titolo: string, corsi_titolo_accent: string, corsi_sub: string, calendario_eyebrow: string, calendario_titolo: string, calendario_titolo_accent: string, calendario_sub: string, sala_eyebrow_en?: string | null, sala_titolo_en?: string | null, sala_titolo_accent_en?: string | null, sala_paragrafo1_en?: string | null, sala_paragrafo2_en?: string | null, sala_cta_label_en?: string | null, corsi_eyebrow_en?: string | null, corsi_titolo_en?: string | null, corsi_titolo_accent_en?: string | null, corsi_sub_en?: string | null, calendario_eyebrow_en?: string | null, calendario_titolo_en?: string | null, calendario_titolo_accent_en?: string | null, calendario_sub_en?: string | null, sala_slideshow: Array<{ __typename: 'CorpoPreparazioneAtleticaSala_slideshow', immagine: string, alt: string, alt_en?: string | null }>, sala_features: Array<{ __typename: 'CorpoPreparazioneAtleticaSala_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, categorie: Array<{ __typename: 'CorpoPreparazioneAtleticaCategorie', id: string, label: string, desc: string, color: string, desc_en?: string | null, corsi: Array<{ __typename: 'CorpoPreparazioneAtleticaCategorieCorsi', nome: string, durata: string, intensita: number, livello: string, desc: string, immagine: string, nome_en?: string | null, livello_en?: string | null, desc_en?: string | null }> }> };
+
+export type MembershipPartsFragment = { __typename: 'Membership', titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, gold_tipo: string, gold_valore?: string | null, platinum_tipo: string, platinum_valore?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, gold_valore_en?: string | null, platinum_valore_en?: string | null }> }> };
 
 export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
 
@@ -2166,6 +2338,25 @@ export type CorpoPreparazioneAtleticaConnectionQueryVariables = Exact<{
 
 
 export type CorpoPreparazioneAtleticaConnectionQuery = { __typename?: 'Query', corpoPreparazioneAtleticaConnection: { __typename?: 'CorpoPreparazioneAtleticaConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CorpoPreparazioneAtleticaConnectionEdges', cursor: string, node?: { __typename: 'CorpoPreparazioneAtletica', id: string, sala_eyebrow: string, sala_titolo: string, sala_titolo_accent: string, sala_paragrafo1: string, sala_paragrafo2: string, sala_cta_label: string, corsi_eyebrow: string, corsi_titolo: string, corsi_titolo_accent: string, corsi_sub: string, calendario_eyebrow: string, calendario_titolo: string, calendario_titolo_accent: string, calendario_sub: string, sala_eyebrow_en?: string | null, sala_titolo_en?: string | null, sala_titolo_accent_en?: string | null, sala_paragrafo1_en?: string | null, sala_paragrafo2_en?: string | null, sala_cta_label_en?: string | null, corsi_eyebrow_en?: string | null, corsi_titolo_en?: string | null, corsi_titolo_accent_en?: string | null, corsi_sub_en?: string | null, calendario_eyebrow_en?: string | null, calendario_titolo_en?: string | null, calendario_titolo_accent_en?: string | null, calendario_sub_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, sala_slideshow: Array<{ __typename: 'CorpoPreparazioneAtleticaSala_slideshow', immagine: string, alt: string, alt_en?: string | null }>, sala_features: Array<{ __typename: 'CorpoPreparazioneAtleticaSala_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, categorie: Array<{ __typename: 'CorpoPreparazioneAtleticaCategorie', id: string, label: string, desc: string, color: string, desc_en?: string | null, corsi: Array<{ __typename: 'CorpoPreparazioneAtleticaCategorieCorsi', nome: string, durata: string, intensita: number, livello: string, desc: string, immagine: string, nome_en?: string | null, livello_en?: string | null, desc_en?: string | null }> }> } | null } | null> | null } };
+
+export type MembershipQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type MembershipQuery = { __typename?: 'Query', membership: { __typename: 'Membership', id: string, titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, gold_tipo: string, gold_valore?: string | null, platinum_tipo: string, platinum_valore?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, gold_valore_en?: string | null, platinum_valore_en?: string | null }> }> } };
+
+export type MembershipConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<MembershipFilter>;
+}>;
+
+
+export type MembershipConnectionQuery = { __typename?: 'Query', membershipConnection: { __typename?: 'MembershipConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'MembershipConnectionEdges', cursor: string, node?: { __typename: 'Membership', id: string, titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, gold_tipo: string, gold_valore?: string | null, platinum_tipo: string, platinum_valore?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, gold_valore_en?: string | null, platinum_valore_en?: string | null }> }> } | null } | null> | null } };
 
 export type InfoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2556,6 +2747,45 @@ export const CorpoPreparazioneAtleticaPartsFragmentDoc = gql`
   calendario_titolo_en
   calendario_titolo_accent_en
   calendario_sub_en
+}
+    `;
+export const MembershipPartsFragmentDoc = gql`
+    fragment MembershipParts on Membership {
+  __typename
+  titolo
+  titolo_accent
+  sottotitolo
+  silver_nome
+  gold_nome
+  platinum_nome
+  platinum_badge
+  cta_label
+  categorie {
+    __typename
+    label
+    label_en
+    righe {
+      __typename
+      feature
+      feature_tooltip
+      silver_tipo
+      silver_valore
+      gold_tipo
+      gold_valore
+      platinum_tipo
+      platinum_valore
+      feature_en
+      feature_tooltip_en
+      silver_valore_en
+      gold_valore_en
+      platinum_valore_en
+    }
+  }
+  titolo_en
+  titolo_accent_en
+  sottotitolo_en
+  platinum_badge_en
+  cta_label_en
 }
     `;
 export const InfoPartsFragmentDoc = gql`
@@ -3083,6 +3313,63 @@ export const CorpoPreparazioneAtleticaConnectionDocument = gql`
   }
 }
     ${CorpoPreparazioneAtleticaPartsFragmentDoc}`;
+export const MembershipDocument = gql`
+    query membership($relativePath: String!) {
+  membership(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...MembershipParts
+  }
+}
+    ${MembershipPartsFragmentDoc}`;
+export const MembershipConnectionDocument = gql`
+    query membershipConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: MembershipFilter) {
+  membershipConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...MembershipParts
+      }
+    }
+  }
+}
+    ${MembershipPartsFragmentDoc}`;
 export const InfoDocument = gql`
     query info($relativePath: String!) {
   info(relativePath: $relativePath) {
@@ -3361,6 +3648,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     corpoPreparazioneAtleticaConnection(variables?: CorpoPreparazioneAtleticaConnectionQueryVariables, options?: C): Promise<{data: CorpoPreparazioneAtleticaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoPreparazioneAtleticaConnectionQueryVariables, query: string}> {
         return requester<{data: CorpoPreparazioneAtleticaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoPreparazioneAtleticaConnectionQueryVariables, query: string}, CorpoPreparazioneAtleticaConnectionQueryVariables>(CorpoPreparazioneAtleticaConnectionDocument, variables, options);
+      },
+    membership(variables: MembershipQueryVariables, options?: C): Promise<{data: MembershipQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MembershipQueryVariables, query: string}> {
+        return requester<{data: MembershipQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MembershipQueryVariables, query: string}, MembershipQueryVariables>(MembershipDocument, variables, options);
+      },
+    membershipConnection(variables?: MembershipConnectionQueryVariables, options?: C): Promise<{data: MembershipConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MembershipConnectionQueryVariables, query: string}> {
+        return requester<{data: MembershipConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MembershipConnectionQueryVariables, query: string}, MembershipConnectionQueryVariables>(MembershipConnectionDocument, variables, options);
       },
     info(variables: InfoQueryVariables, options?: C): Promise<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}> {
         return requester<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}, InfoQueryVariables>(InfoDocument, variables, options);

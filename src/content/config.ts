@@ -432,6 +432,54 @@ const corpoPreparazioneAtletica = defineCollection({
   }),
 });
 
+// ─── MEMBERSHIP (tabella prezzi) ──────────────────────────────────────────────
+// Tabella abbonamenti Silver/Gold/Platinum, condivisa da tennis,
+// preparazione-atletica e personal-trainer. File unico.
+// Ogni riga ha un "tipo" per colonna che determina lo stile della cella:
+// incluso (verde), parziale (ambra), valore (numero/giorni), check (icona).
+// Gestibile da TinaCMS → collection 'membership'.
+// ─────────────────────────────────────────────────────────────────────────────
+const rigaMembership = z.object({
+  feature: z.string(),
+  feature_tooltip: z.string().optional(),
+  silver_tipo: z.enum(['incluso', 'parziale', 'valore', 'check']),
+  silver_valore: z.string().optional(),
+  gold_tipo: z.enum(['incluso', 'parziale', 'valore', 'check']),
+  gold_valore: z.string().optional(),
+  platinum_tipo: z.enum(['incluso', 'parziale', 'valore', 'check']),
+  platinum_valore: z.string().optional(),
+  feature_en: z.string().optional(),
+  feature_tooltip_en: z.string().optional(),
+  silver_valore_en: z.string().optional(),
+  gold_valore_en: z.string().optional(),
+  platinum_valore_en: z.string().optional(),
+});
+
+const membership = defineCollection({
+  type: 'content',
+  schema: z.object({
+    titolo: z.string(),
+    titolo_accent: z.string(),
+    sottotitolo: z.string(),
+    silver_nome: z.string(),
+    gold_nome: z.string(),
+    platinum_nome: z.string(),
+    platinum_badge: z.string(),
+    cta_label: z.string(),
+    categorie: z.array(z.object({
+      label: z.string(),
+      label_en: z.string().optional(),
+      righe: z.array(rigaMembership),
+    })),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    titolo_en: z.string().optional(),
+    titolo_accent_en: z.string().optional(),
+    sottotitolo_en: z.string().optional(),
+    platinum_badge_en: z.string().optional(),
+    cta_label_en: z.string().optional(),
+  }),
+});
+
 // ─── INFO CLUB ────────────────────────────────────────────────────────────────
 // File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
 // orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
@@ -450,4 +498,4 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, planning, corpoStoria, corpoSummerCamps, corpoScuolaTennis, corpoPersonalTrainer, corpoPreparazioneAtletica, info };
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, corpoStoria, corpoSummerCamps, corpoScuolaTennis, corpoPersonalTrainer, corpoPreparazioneAtletica, membership, info };
