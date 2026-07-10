@@ -1,0 +1,28 @@
+fragment EventiParts on Eventi {
+  __typename
+  titolo
+  data
+  categoria
+  descrizione
+  luogo
+  iscrizioniHref
+  pubblicato
+  titolo_en
+  descrizione_en
+  luogo_en
+  corpo_en
+  body
+}
+
+fragment PagineParts on Pagine {
+  __typename
+  title
+  description
+  hero_eyebrow
+  hero_titolo
+  hero_titolo_accent
+  hero_sottotitolo
+  hero_immagine
+  hero_immagine_alt
+  body
+}
