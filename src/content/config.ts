@@ -368,6 +368,10 @@ const pagine = defineCollection({
     // ── Corpo pagina: Regolamento del Club ──
     regolamento_body: z.string().optional(),
     regolamento_body_en: z.string().optional(),
+
+    // ── Corpo pagina: Privacy Policy ──
+    privacy_body: z.string().optional(),
+    privacy_body_en: z.string().optional(),
   }),
 });
 

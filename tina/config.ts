@@ -1129,6 +1129,19 @@ export default defineConfig({
                 { type: 'string', name: 'regolamento_body_en', label: '🇬🇧 Testo regolamento (inglese)', ui: { component: 'textarea' } },
               ],
             },
+            {
+              name: 'privacy',
+              label: 'Privacy Policy',
+              fields: [
+                ...heroSeoFields,
+                {
+                  type: 'string', name: 'privacy_body', label: 'Testo privacy policy (italiano)', required: true,
+                  ui: { component: 'textarea' },
+                  description: 'Usa "## " per un titolo di sezione, "### " per un sottotitolo, "- " per un elenco puntato, riga vuota per andare a capo tra paragrafi, "**testo**" per il grassetto.',
+                },
+                { type: 'string', name: 'privacy_body_en', label: '🇬🇧 Testo privacy policy (inglese)', ui: { component: 'textarea' } },
+              ],
+            },
           ],
         };
       })(),
