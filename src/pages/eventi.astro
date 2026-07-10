@@ -2,21 +2,25 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import EventiHome from "../components/EventiHome.astro";
+import { getEntry } from "astro:content";
 
 const lang = 'it' as const;
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/eventi.md
+const d = (await getEntry("pagine", "eventi"))!.data;
 ---
 
 <BaseLayout
-  title="Eventi | Tennis Club Ambrosiano"
-  description="Gli eventi del Tennis Club Ambrosiano: tornei interni, serate sociali, aperitivi in club, esibizioni e tutto quello che anima la community TCA durante l'anno."
+  title={d.title}
+  description={d.description}
 >
   <PageHero
-    eyebrow="Community"
-    title="Eventi"
-    titleAccent="e Community"
-    sub="Tornei interni, serate sociali, aperitivi e molto altro. La vita del TCA va ben oltre il campo: è una community che si ritrova tutto l'anno."
-    image="/TCA_Avvenire_2025%201.jpg"
-    imageAlt="Evento al Tennis Club Ambrosiano"
+    eyebrow={d.hero_eyebrow}
+    title={d.hero_titolo!}
+    titleAccent={d.hero_titolo_accent}
+    sub={d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt!}
   />
 
   <EventiHome lang={lang} limit={100} showAllLink={false} />

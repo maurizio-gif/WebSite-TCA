@@ -40,4 +40,22 @@ const eventi = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi };
+// ─── INFO CLUB ────────────────────────────────────────────────────────────────
+// File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
+// orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
+// Usato da InfoPratiche.astro.
+// ─────────────────────────────────────────────────────────────────────────────
+const info = defineCollection({
+  type: 'content',
+  schema: z.object({
+    indirizzo: z.string(),
+    come_arrivare: z.string(),
+    come_arrivare_en: z.string(),
+    orari: z.string(),
+    orari_en: z.string(),
+    telefono: z.string(),
+    email: z.string(),
+  }),
+});
+
+export const collections = { pagine, eventi, info };

@@ -56,12 +56,15 @@ type Query {
   document(collection: String, relativePath: String): DocumentNode!
   eventi(relativePath: String): Eventi!
   eventiConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: EventiFilter): EventiConnection!
+  info(relativePath: String): Info!
+  infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
   pagine(relativePath: String): Pagine!
   pagineConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PagineFilter): PagineConnection!
 }
 
 input DocumentFilter {
   eventi: EventiFilter
+  info: InfoFilter
   pagine: PagineFilter
 }
 
@@ -88,7 +91,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Pagine | Folder
+union DocumentNode = Eventi | Info | Pagine | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -160,6 +163,40 @@ type EventiConnection implements Connection {
   edges: [EventiConnectionEdges]
 }
 
+type Info implements Node & Document {
+  indirizzo: String!
+  come_arrivare: String!
+  come_arrivare_en: String!
+  orari: String!
+  orari_en: String!
+  telefono: String!
+  email: String!
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input InfoFilter {
+  indirizzo: StringFilter
+  come_arrivare: StringFilter
+  come_arrivare_en: StringFilter
+  orari: StringFilter
+  orari_en: StringFilter
+  telefono: StringFilter
+  email: StringFilter
+}
+
+type InfoConnectionEdges {
+  cursor: String!
+  node: Info
+}
+
+type InfoConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [InfoConnectionEdges]
+}
+
 type Pagine implements Node & Document {
   title: String!
   description: String!
@@ -206,18 +243,22 @@ type Mutation {
   createFolder(collection: String, relativePath: String!): DocumentNode!
   updateEventi(relativePath: String!, params: EventiMutation!): Eventi!
   createEventi(relativePath: String!, params: EventiMutation!): Eventi!
+  updateInfo(relativePath: String!, params: InfoMutation!): Info!
+  createInfo(relativePath: String!, params: InfoMutation!): Info!
   updatePagine(relativePath: String!, params: PagineMutation!): Pagine!
   createPagine(relativePath: String!, params: PagineMutation!): Pagine!
 }
 
 input DocumentUpdateMutation {
   eventi: EventiMutation
+  info: InfoMutation
   pagine: PagineMutation
   relativePath: String
 }
 
 input DocumentMutation {
   eventi: EventiMutation
+  info: InfoMutation
   pagine: PagineMutation
 }
 
@@ -234,6 +275,16 @@ input EventiMutation {
   luogo_en: String
   corpo_en: String
   body: JSON
+}
+
+input InfoMutation {
+  indirizzo: String
+  come_arrivare: String
+  come_arrivare_en: String
+  orari: String
+  orari_en: String
+  telefono: String
+  email: String
 }
 
 input PagineMutation {

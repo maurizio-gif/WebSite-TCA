@@ -1,19 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import { getEntry } from "astro:content";
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/agonistica.md
+const d = (await getEntry("pagine", "agonistica"))!.data;
 ---
 
 <BaseLayout
-  title="Agonistica | Tennis Club Ambrosiano"
-  description="Settore agonistico del Tennis Club Ambrosiano: squadre giovanili, preparazione ai tornei FITP e percorsi per atleti under 18 a Milano."
+  title={d.title}
+  description={d.description}
 >
   <PageHero
-    eyebrow="Junior · Agonistica"
-    title="Agonistica"
-    titleAccent="Giovanile"
-    sub="Il TCA forma campioni dal 1965. Squadre giovanili, tornei FITP, preparazione tecnica e atletica per ragazzi con ambizioni competitive."
-    image="/Tennis%20Agonistica.jpg"
-    imageAlt="Tennis agonistico giovanile TCA"
+    eyebrow={d.hero_eyebrow}
+    title={d.hero_titolo!}
+    titleAccent={d.hero_titolo_accent}
+    sub={d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt!}
     ctaLabel="Entra in squadra"
   />
 

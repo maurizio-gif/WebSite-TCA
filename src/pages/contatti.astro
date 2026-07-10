@@ -1,16 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getEntry } from "astro:content";
+
+// SEO + intestazione gestibili da TinaCMS → src/content/pagine/contatti.md
+const d = (await getEntry("pagine", "contatti"))!.data;
 ---
 
 <BaseLayout
-  title="Contatti | Tennis Club Ambrosiano"
-  description="Contatta il Tennis Club Ambrosiano: indirizzo, telefono, email e come raggiungerci. Via Feltre 33, Milano — Metro Udine (M2)."
+  title={d.title}
+  description={d.description}
 >
   <div class="page-header">
     <div class="page-header__inner">
-      <span class="eyebrow">Siamo a Milano</span>
-      <h1 class="page-header__title">Contatti</h1>
-      <p class="page-header__sub">Vieni a trovarci, scrivici o chiamaci. Siamo qui per risponderti.</p>
+      <span class="eyebrow">{d.hero_eyebrow}</span>
+      <h1 class="page-header__title">{d.hero_titolo}</h1>
+      <p class="page-header__sub">{d.hero_sottotitolo}</p>
     </div>
   </div>
 

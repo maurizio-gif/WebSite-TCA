@@ -84,6 +84,8 @@ export type Query = {
   document: DocumentNode;
   eventi: Eventi;
   eventiConnection: EventiConnection;
+  info: Info;
+  infoConnection: InfoConnection;
   pagine: Pagine;
   pagineConnection: PagineConnection;
 };
@@ -125,6 +127,21 @@ export type QueryEventiConnectionArgs = {
 };
 
 
+export type QueryInfoArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryInfoConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<InfoFilter>;
+};
+
+
 export type QueryPagineArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -141,6 +158,7 @@ export type QueryPagineConnectionArgs = {
 
 export type DocumentFilter = {
   eventi?: InputMaybe<EventiFilter>;
+  info?: InputMaybe<InfoFilter>;
   pagine?: InputMaybe<PagineFilter>;
 };
 
@@ -181,7 +199,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Pagine | Folder;
+export type DocumentNode = Eventi | Info | Pagine | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -256,6 +274,43 @@ export type EventiConnection = Connection & {
   edges?: Maybe<Array<Maybe<EventiConnectionEdges>>>;
 };
 
+export type Info = Node & Document & {
+  __typename?: 'Info';
+  indirizzo: Scalars['String']['output'];
+  come_arrivare: Scalars['String']['output'];
+  come_arrivare_en: Scalars['String']['output'];
+  orari: Scalars['String']['output'];
+  orari_en: Scalars['String']['output'];
+  telefono: Scalars['String']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type InfoFilter = {
+  indirizzo?: InputMaybe<StringFilter>;
+  come_arrivare?: InputMaybe<StringFilter>;
+  come_arrivare_en?: InputMaybe<StringFilter>;
+  orari?: InputMaybe<StringFilter>;
+  orari_en?: InputMaybe<StringFilter>;
+  telefono?: InputMaybe<StringFilter>;
+  email?: InputMaybe<StringFilter>;
+};
+
+export type InfoConnectionEdges = {
+  __typename?: 'InfoConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Info>;
+};
+
+export type InfoConnection = Connection & {
+  __typename?: 'InfoConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<InfoConnectionEdges>>>;
+};
+
 export type Pagine = Node & Document & {
   __typename?: 'Pagine';
   title: Scalars['String']['output'];
@@ -306,6 +361,8 @@ export type Mutation = {
   createFolder: DocumentNode;
   updateEventi: Eventi;
   createEventi: Eventi;
+  updateInfo: Info;
+  createInfo: Info;
   updatePagine: Pagine;
   createPagine: Pagine;
 };
@@ -356,6 +413,18 @@ export type MutationCreateEventiArgs = {
 };
 
 
+export type MutationUpdateInfoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: InfoMutation;
+};
+
+
+export type MutationCreateInfoArgs = {
+  relativePath: Scalars['String']['input'];
+  params: InfoMutation;
+};
+
+
 export type MutationUpdatePagineArgs = {
   relativePath: Scalars['String']['input'];
   params: PagineMutation;
@@ -369,12 +438,14 @@ export type MutationCreatePagineArgs = {
 
 export type DocumentUpdateMutation = {
   eventi?: InputMaybe<EventiMutation>;
+  info?: InputMaybe<InfoMutation>;
   pagine?: InputMaybe<PagineMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DocumentMutation = {
   eventi?: InputMaybe<EventiMutation>;
+  info?: InputMaybe<InfoMutation>;
   pagine?: InputMaybe<PagineMutation>;
 };
 
@@ -393,6 +464,16 @@ export type EventiMutation = {
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
+export type InfoMutation = {
+  indirizzo?: InputMaybe<Scalars['String']['input']>;
+  come_arrivare?: InputMaybe<Scalars['String']['input']>;
+  come_arrivare_en?: InputMaybe<Scalars['String']['input']>;
+  orari?: InputMaybe<Scalars['String']['input']>;
+  orari_en?: InputMaybe<Scalars['String']['input']>;
+  telefono?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type PagineMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -406,6 +487,8 @@ export type PagineMutation = {
 };
 
 export type EventiPartsFragment = { __typename: 'Eventi', titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null };
+
+export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
 
 export type PaginePartsFragment = { __typename: 'Pagine', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, body?: any | null };
 
@@ -427,6 +510,25 @@ export type EventiConnectionQueryVariables = Exact<{
 
 
 export type EventiConnectionQuery = { __typename?: 'Query', eventiConnection: { __typename?: 'EventiConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'EventiConnectionEdges', cursor: string, node?: { __typename: 'Eventi', id: string, titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export type InfoQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type InfoQuery = { __typename?: 'Query', info: { __typename: 'Info', id: string, indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type InfoConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<InfoFilter>;
+}>;
+
+
+export type InfoConnectionQuery = { __typename?: 'Query', infoConnection: { __typename?: 'InfoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'InfoConnectionEdges', cursor: string, node?: { __typename: 'Info', id: string, indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type PagineQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -462,6 +564,18 @@ export const EventiPartsFragmentDoc = gql`
   luogo_en
   corpo_en
   body
+}
+    `;
+export const InfoPartsFragmentDoc = gql`
+    fragment InfoParts on Info {
+  __typename
+  indirizzo
+  come_arrivare
+  come_arrivare_en
+  orari
+  orari_en
+  telefono
+  email
 }
     `;
 export const PaginePartsFragmentDoc = gql`
@@ -535,6 +649,63 @@ export const EventiConnectionDocument = gql`
   }
 }
     ${EventiPartsFragmentDoc}`;
+export const InfoDocument = gql`
+    query info($relativePath: String!) {
+  info(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...InfoParts
+  }
+}
+    ${InfoPartsFragmentDoc}`;
+export const InfoConnectionDocument = gql`
+    query infoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: InfoFilter) {
+  infoConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...InfoParts
+      }
+    }
+  }
+}
+    ${InfoPartsFragmentDoc}`;
 export const PagineDocument = gql`
     query pagine($relativePath: String!) {
   pagine(relativePath: $relativePath) {
@@ -600,6 +771,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     eventiConnection(variables?: EventiConnectionQueryVariables, options?: C): Promise<{data: EventiConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EventiConnectionQueryVariables, query: string}> {
         return requester<{data: EventiConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: EventiConnectionQueryVariables, query: string}, EventiConnectionQueryVariables>(EventiConnectionDocument, variables, options);
+      },
+    info(variables: InfoQueryVariables, options?: C): Promise<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}> {
+        return requester<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}, InfoQueryVariables>(InfoDocument, variables, options);
+      },
+    infoConnection(variables?: InfoConnectionQueryVariables, options?: C): Promise<{data: InfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoConnectionQueryVariables, query: string}> {
+        return requester<{data: InfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoConnectionQueryVariables, query: string}, InfoConnectionQueryVariables>(InfoConnectionDocument, variables, options);
       },
     pagine(variables: PagineQueryVariables, options?: C): Promise<{data: PagineQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PagineQueryVariables, query: string}> {
         return requester<{data: PagineQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PagineQueryVariables, query: string}, PagineQueryVariables>(PagineDocument, variables, options);

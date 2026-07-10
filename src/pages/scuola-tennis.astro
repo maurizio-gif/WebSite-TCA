@@ -2,9 +2,13 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import { publicUrl, getLocalePath } from "../i18n/utils";
+import { getEntry } from "astro:content";
 
 const lang = 'it' as const;
 const p = (path: string) => getLocalePath(lang, path);
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/scuola-tennis.md
+const d = (await getEntry("pagine", "scuola-tennis"))!.data;
 
 const livelli = [
   {
@@ -57,16 +61,16 @@ const tornei = [
 ---
 
 <BaseLayout
-  title="Scuola Tennis | Tennis Club Ambrosiano"
-  description="Scuola tennis per bambini e ragazzi al TCA. Mini tennis e livelli rosso, arancio, verde e giallo con metodo FITP. Storica scuola tennis di Milano dal 1965."
+  title={d.title}
+  description={d.description}
 >
   <PageHero
-    eyebrow="Junior · Scuola Tennis"
-    title="Scuola"
-    titleAccent="Tennis"
-    sub="Mini tennis e percorsi a livelli — rosso, arancio, verde e giallo — fino alla preparazione agonistica. Una storica scuola tennis di Milano, attiva dal 1965."
-    image="/SCUOLA%20TENNIS%205.avif"
-    imageAlt="Bambini a scuola tennis TCA"
+    eyebrow={d.hero_eyebrow}
+    title={d.hero_titolo!}
+    titleAccent={d.hero_titolo_accent}
+    sub={d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt!}
     imagePosition="center top"
     ctas={[{ label: "Richiedi la Tua Prova", openModal: true }]}
   />

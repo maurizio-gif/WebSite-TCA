@@ -14,6 +14,17 @@ fragment EventiParts on Eventi {
   body
 }
 
+fragment InfoParts on Info {
+  __typename
+  indirizzo
+  come_arrivare
+  come_arrivare_en
+  orari
+  orari_en
+  telefono
+  email
+}
+
 fragment PagineParts on Pagine {
   __typename
   title

@@ -53,6 +53,61 @@ query eventiConnection($before: String, $after: String, $first: Float, $last: Fl
   }
 }
 
+query info($relativePath: String!) {
+  info(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...InfoParts
+  }
+}
+
+query infoConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: InfoFilter) {
+  infoConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...InfoParts
+      }
+    }
+  }
+}
+
 query pagine($relativePath: String!) {
   pagine(relativePath: $relativePath) {
     ... on Document {

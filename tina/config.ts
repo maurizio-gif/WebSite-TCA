@@ -107,6 +107,65 @@ export default defineConfig({
           },
         ],
       },
+      // ─── INFO CLUB ─────────────────────────────────────────────────────────
+      // File unico con orari, indirizzo e contatti del Club.
+      // Le modifiche si riflettono su tutte le pagine (sezione "Vieni a trovarci").
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: 'info',
+        label: 'Informazioni Club',
+        path: 'src/content/info',
+        format: 'md',
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          {
+            type: 'string',
+            name: 'indirizzo',
+            label: 'Indirizzo',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'come_arrivare',
+            label: 'Come arrivare',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'come_arrivare_en',
+            label: '🇬🇧 Come arrivare (inglese)',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'orari',
+            label: 'Orari Club (una riga per fascia)',
+            required: true,
+            ui: { component: 'textarea' },
+          },
+          {
+            type: 'string',
+            name: 'orari_en',
+            label: '🇬🇧 Orari Club (inglese)',
+            required: true,
+            ui: { component: 'textarea' },
+          },
+          {
+            type: 'string',
+            name: 'telefono',
+            label: 'Telefono',
+            required: true,
+          },
+          {
+            type: 'string',
+            name: 'email',
+            label: 'Email',
+            required: true,
+          },
+        ],
+      },
       {
         name: 'pagine',
         label: 'Pagine',

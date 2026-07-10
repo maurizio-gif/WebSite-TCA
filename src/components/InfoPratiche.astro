@@ -1,16 +1,21 @@
 ---
 import type { Lang } from '../i18n/utils';
+import { getEntry } from 'astro:content';
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
+
+// Orari, indirizzo e contatti gestibili da TinaCMS → src/content/info/club.md
+const info = (await getEntry('info', 'club'))!.data;
+const nl2br = (s: string) => s.trim().replace(/\n/g, '<br>');
 
 const t = lang === 'en' ? {
   eyebrow:        'How to find us',
   title:          'Visit us.',
   labelAddress:   'Address',
   labelHow:       'Getting here',
-  howText:        "Metro Udine (line M2), a few minutes' walk.",
+  howText:        info.come_arrivare_en,
   labelHours:     'Club Hours',
-  hoursText:      'Mon–Fri 7:00–24:00<br>Sat–Sun 8:00–21:00',
+  hoursText:      nl2br(info.orari_en),
   labelReception: 'Reception',
   btnDirections:  'Directions',
   btnContact:     'Contact us',
@@ -19,13 +24,17 @@ const t = lang === 'en' ? {
   title:          'Vieni a trovarci.',
   labelAddress:   'Indirizzo',
   labelHow:       'Come arrivare',
-  howText:        'Metro Udine (linea M2), a pochi minuti a piedi.',
+  howText:        info.come_arrivare,
   labelHours:     'Orari Club',
-  hoursText:      'Lun–Ven 7:00–24:00<br>Sab–Dom 8:00–21:00',
+  hoursText:      nl2br(info.orari),
   labelReception: 'Reception',
   btnDirections:  'Indicazioni',
   btnContact:     'Contattaci',
 };
+
+const telHref = `tel:${info.telefono.replace(/\s+/g, '')}`;
+const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(info.indirizzo)}&z=16&output=embed`;
+const mapDirectionsHref = `https://maps.google.com/?q=${encodeURIComponent(info.indirizzo)}`;
 ---
 
 <section class="info">
@@ -39,8 +48,8 @@ const t = lang === 'en' ? {
     <div class="info__map">
       <iframe
         class="info__map-iframe"
-        src="https://www.google.com/maps?q=Via+Feltre+33,+20134+Milano&z=16&output=embed"
-        title="Tennis Club Ambrosiano — Via Feltre 33, Milano"
+        src={mapEmbedSrc}
+        title={`Tennis Club Ambrosiano — ${info.indirizzo}`}
         width="600"
         height="500"
         loading="lazy"
@@ -54,7 +63,7 @@ const t = lang === 'en' ? {
       <div class="info__grid">
         <div class="info__item">
           <span class="info__label">{t.labelAddress}</span>
-          <p class="info__value">Via Feltre 33, 20134 Milano</p>
+          <p class="info__value">{info.indirizzo}</p>
         </div>
 
         <div class="info__item">
@@ -70,14 +79,14 @@ const t = lang === 'en' ? {
         <div class="info__item">
           <span class="info__label">{t.labelReception}</span>
           <p class="info__value">
-            <a href="tel:+390226414392">+39 02 2641 4392</a><br>
-            <a href="mailto:info@tcambrosiano.com">info@tcambrosiano.com</a>
+            <a href={telHref}>{info.telefono}</a><br>
+            <a href={`mailto:${info.email}`}>{info.email}</a>
           </p>
         </div>
       </div>
 
       <div class="info__actions">
-        <a class="btn btn-outline--dark" href="https://maps.google.com/?q=Via+Feltre+33,+20134+Milano" target="_blank" rel="noopener">{t.btnDirections}</a>
+        <a class="btn btn-outline--dark" href={mapDirectionsHref} target="_blank" rel="noopener">{t.btnDirections}</a>
         <button class="btn btn-red" data-open-modal="modal-contatti">{t.btnContact}</button>
       </div>
     </div>

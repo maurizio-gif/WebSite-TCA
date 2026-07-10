@@ -10,14 +10,18 @@ import ClubLifeHelpDesk from "../components/ClubLifeHelpDesk.astro";
 import ClubLifeServizi from "../components/ClubLifeServizi.astro";
 import ClubLifeHelpForm from "../components/ClubLifeHelpForm.astro";
 import { useTranslations } from "../i18n/utils";
+import { getEntry } from "astro:content";
 
 const lang = 'it' as const;
 const t = useTranslations(lang);
+
+// SEO gestibile da TinaCMS → src/content/pagine/club-life.md (hero da i18n)
+const d = (await getEntry("pagine", "club-life"))!.data;
 ---
 
 <BaseLayout
-  title="Club Life | Tennis Club Ambrosiano"
-  description="Eventi, news, servizi e Help Desk del Tennis Club Ambrosiano: la bacheca del Club per soci e famiglie."
+  title={d.title}
+  description={d.description}
   hideLeadFormInline
   hideChrome
 >

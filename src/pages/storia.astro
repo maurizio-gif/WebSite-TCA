@@ -2,19 +2,23 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import { publicUrl } from "../i18n/utils";
+import { getEntry } from "astro:content";
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/storia.md
+const d = (await getEntry("pagine", "storia"))!.data;
 ---
 
 <BaseLayout
-  title="La Nostra Storia | Tennis Club Ambrosiano"
-  description="La storia del Tennis Club Ambrosiano: dalla fondazione nel 1963 ai giorni nostri, sessant'anni di tennis, sport e community a Milano."
+  title={d.title}
+  description={d.description}
 >
   <PageHero
-    eyebrow="Dal 1963"
-    title="La nostra"
-    titleAccent="Storia"
-    sub="Sessant'anni di passione per il tennis e per lo sport. Una storia fatta di campioni, community, tradizione e innovazione nel cuore di Milano."
-    image="/HERO.avif"
-    imageAlt="Il Tennis Club Ambrosiano visto dall'alto"
+    eyebrow={d.hero_eyebrow}
+    title={d.hero_titolo!}
+    titleAccent={d.hero_titolo_accent}
+    sub={d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt!}
     imagePosition="center 40%"
   />
 
