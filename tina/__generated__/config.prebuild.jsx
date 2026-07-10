@@ -573,6 +573,99 @@ var config_default = defineConfig({
           { type: "string", name: "sezione4_footer_testo_en", label: "\u{1F1EC}\u{1F1E7} Testo finale (inglese)", ui: { component: "textarea" } }
         ]
       },
+      // ─── CORPO PAGINA: PERSONAL TRAINER ────────────────────────────────────
+      // Contenuto sotto l'hero della pagina Personal Trainer.
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: "corpoPersonalTrainer",
+        label: "Pagina Personal Trainer \u2014 Contenuto",
+        path: "src/content/corpoPersonalTrainer",
+        format: "md",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          { type: "string", name: "sezione1_eyebrow", label: "Sezione 1 \u2014 eyebrow", required: true },
+          { type: "string", name: "sezione1_titolo", label: "Sezione 1 \u2014 titolo", required: true },
+          { type: "string", name: "sezione1_titolo_accent", label: "Sezione 1 \u2014 titolo evidenziato", required: true },
+          { type: "string", name: "sezione1_paragrafo1", label: "Sezione 1 \u2014 paragrafo 1", required: true, ui: { component: "textarea" } },
+          { type: "string", name: "sezione1_paragrafo2", label: "Sezione 1 \u2014 paragrafo 2", required: true, ui: { component: "textarea" } },
+          {
+            type: "object",
+            name: "stats",
+            label: "Statistiche",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.numero ? `${item.numero} \u2014 ${item.etichetta || ""}` : "Nuova statistica" })
+            },
+            fields: [
+              { type: "string", name: "numero", label: `Numero/simbolo (es. "5", "1:1", "60'", "\u221E")`, required: true },
+              { type: "string", name: "etichetta", label: "Etichetta (una riga per fascia)", required: true, ui: { component: "textarea" } },
+              { type: "string", name: "etichetta_en", label: "\u{1F1EC}\u{1F1E7} Etichetta (inglese)", ui: { component: "textarea" } }
+            ]
+          },
+          { type: "string", name: "sezione2_eyebrow", label: "Sezione 2 \u2014 eyebrow", required: true },
+          { type: "string", name: "sezione2_titolo", label: "Sezione 2 \u2014 titolo", required: true },
+          { type: "string", name: "sezione2_titolo_accent", label: "Sezione 2 \u2014 titolo evidenziato", required: true },
+          {
+            type: "object",
+            name: "trainers",
+            label: "Trainer",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.nome || "Nuovo trainer" })
+            },
+            fields: [
+              { type: "string", name: "nome", label: "Nome", required: true },
+              { type: "image", name: "foto", label: "Foto (se assente, mostra un placeholder col nome)" },
+              { type: "string", name: "specializzazioni", label: "Specializzazioni", list: true, required: true },
+              { type: "string", name: "qualifiche", label: "Qualifiche e certificazioni", list: true, required: true },
+              { type: "string", name: "lingue", label: "Lingue parlate (lascia vuoto per non mostrare la riga)", list: true },
+              { type: "string", name: "specializzazioni_en", label: "\u{1F1EC}\u{1F1E7} Specializzazioni (inglese)", list: true },
+              { type: "string", name: "qualifiche_en", label: "\u{1F1EC}\u{1F1E7} Qualifiche (inglese)", list: true },
+              { type: "string", name: "lingue_en", label: "\u{1F1EC}\u{1F1E7} Lingue (inglese)", list: true }
+            ]
+          },
+          { type: "string", name: "sezione3_eyebrow", label: "Sezione 3 \u2014 eyebrow", required: true },
+          { type: "string", name: "sezione3_titolo", label: "Sezione 3 \u2014 titolo", required: true },
+          { type: "string", name: "sezione3_titolo_accent", label: "Sezione 3 \u2014 titolo evidenziato", required: true },
+          {
+            type: "object",
+            name: "steps",
+            label: "Come funziona \u2014 step",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.titolo || "Nuovo step" })
+            },
+            fields: [
+              { type: "string", name: "titolo", label: "Titolo", required: true },
+              { type: "string", name: "testo", label: "Testo", required: true, ui: { component: "textarea" } },
+              { type: "string", name: "titolo_en", label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)" },
+              { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)", ui: { component: "textarea" } }
+            ]
+          },
+          { type: "string", name: "sezione4_titolo", label: "CTA finale \u2014 titolo", required: true },
+          { type: "string", name: "sezione4_sottotitolo", label: "CTA finale \u2014 sottotitolo", required: true, ui: { component: "textarea" } },
+          { type: "string", name: "sezione4_cta_label", label: "CTA finale \u2014 testo pulsante", required: true },
+          { type: "string", name: "sezione1_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 eyebrow (inglese)" },
+          { type: "string", name: "sezione1_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione1_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo evidenziato (inglese)" },
+          { type: "string", name: "sezione1_paragrafo1_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 paragrafo 1 (inglese)", ui: { component: "textarea" } },
+          { type: "string", name: "sezione1_paragrafo2_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 paragrafo 2 (inglese)", ui: { component: "textarea" } },
+          { type: "string", name: "sezione2_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 eyebrow (inglese)" },
+          { type: "string", name: "sezione2_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione2_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo evidenziato (inglese)" },
+          { type: "string", name: "sezione3_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 eyebrow (inglese)" },
+          { type: "string", name: "sezione3_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione3_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 titolo evidenziato (inglese)" },
+          { type: "string", name: "sezione4_titolo_en", label: "\u{1F1EC}\u{1F1E7} CTA finale \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione4_sottotitolo_en", label: "\u{1F1EC}\u{1F1E7} CTA finale \u2014 sottotitolo (inglese)", ui: { component: "textarea" } },
+          { type: "string", name: "sezione4_cta_label_en", label: "\u{1F1EC}\u{1F1E7} CTA finale \u2014 testo pulsante (inglese)" }
+        ]
+      },
       // ─── INFO CLUB ─────────────────────────────────────────────────────────
       // File unico con orari, indirizzo e contatti del Club.
       // Le modifiche si riflettono su tutte le pagine (sezione "Vieni a trovarci").

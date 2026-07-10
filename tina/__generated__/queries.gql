@@ -328,6 +328,61 @@ query corpoScuolaTennisConnection($before: String, $after: String, $first: Float
   }
 }
 
+query corpoPersonalTrainer($relativePath: String!) {
+  corpoPersonalTrainer(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoPersonalTrainerParts
+  }
+}
+
+query corpoPersonalTrainerConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoPersonalTrainerFilter) {
+  corpoPersonalTrainerConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoPersonalTrainerParts
+      }
+    }
+  }
+}
+
 query info($relativePath: String!) {
   info(relativePath: $relativePath) {
     ... on Document {
