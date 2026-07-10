@@ -402,6 +402,32 @@ var config_default = defineConfig({
           }
         ]
       },
+      // ─── DOCUMENTI LEGALI ──────────────────────────────────────────────────
+      // File unico con i PDF legali linkati dal footer (sezione "Legal").
+      // Per sostituire un documento basta caricare un nuovo PDF sul campo:
+      // il file va in public/legal/ e il link nel footer si aggiorna da solo.
+      // ─────────────────────────────────────────────────────────────────────
+      {
+        name: "legal",
+        label: "Documenti Legali",
+        path: "src/content/legal",
+        format: "md",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          {
+            type: "image",
+            name: "codice_condotta",
+            label: "Codice di Condotta (PDF)"
+          },
+          {
+            type: "image",
+            name: "nomina_responsabile",
+            label: "Nomina Responsabile Safeguarding (PDF)"
+          }
+        ]
+      },
       // ─── HELP DESK ─────────────────────────────────────────────────────────
       // Guide della knowledge base Club Life (sezione Help Desk).
       // Ogni guida è un file .md in src/content/helpdesk/

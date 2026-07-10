@@ -87,6 +87,12 @@ fragment InfoParts on Info {
   email
 }
 
+fragment LegalParts on Legal {
+  __typename
+  codice_condotta
+  nomina_responsabile
+}
+
 fragment HelpdeskParts on Helpdesk {
   __typename
   titolo
