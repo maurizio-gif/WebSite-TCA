@@ -25,6 +25,23 @@ fragment InfoParts on Info {
   email
 }
 
+fragment NewsParts on News {
+  __typename
+  titolo
+  data
+  categoria
+  sintesi
+  immagine
+  immagine_alt
+  pubblicato
+  titolo_en
+  categoria_en
+  sintesi_en
+  immagine_alt_en
+  corpo_en
+  body
+}
+
 fragment PagineParts on Pagine {
   __typename
   title

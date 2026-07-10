@@ -10,7 +10,8 @@ var config_default = defineConfig({
   },
   media: {
     tina: {
-      mediaRoot: "images",
+      // Le immagini del sito vivono direttamente in public/ (root)
+      mediaRoot: "",
       publicFolder: "public"
     }
   },
@@ -155,6 +156,95 @@ var config_default = defineConfig({
             name: "email",
             label: "Email",
             required: true
+          }
+        ]
+      },
+      // ─── NEWS CLUB LIFE ────────────────────────────────────────────────────
+      // Articoli della bacheca Club Life (carosello "News dal Club").
+      // Ogni news è un file .md in src/content/news/
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: "news",
+        label: "News Club Life",
+        path: "src/content/news",
+        format: "md",
+        fields: [
+          {
+            type: "string",
+            name: "titolo",
+            label: "Titolo",
+            isTitle: true,
+            required: true
+          },
+          {
+            type: "datetime",
+            name: "data",
+            label: "Data",
+            required: true,
+            ui: { dateFormat: "DD/MM/YYYY" }
+          },
+          {
+            type: "string",
+            name: "categoria",
+            label: "Categoria (es. Corsi, Scuola Tennis)",
+            required: true
+          },
+          {
+            type: "string",
+            name: "sintesi",
+            label: "Sintesi (anteprima nella card)",
+            required: true,
+            ui: { component: "textarea" }
+          },
+          {
+            type: "image",
+            name: "immagine",
+            label: "Immagine",
+            required: true
+          },
+          {
+            type: "string",
+            name: "immagine_alt",
+            label: "Testo alternativo immagine",
+            required: true
+          },
+          {
+            type: "boolean",
+            name: "pubblicato",
+            label: "Pubblicato"
+          },
+          {
+            type: "string",
+            name: "titolo_en",
+            label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)"
+          },
+          {
+            type: "string",
+            name: "categoria_en",
+            label: "\u{1F1EC}\u{1F1E7} Categoria (inglese)"
+          },
+          {
+            type: "string",
+            name: "sintesi_en",
+            label: "\u{1F1EC}\u{1F1E7} Sintesi (inglese)",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "string",
+            name: "immagine_alt_en",
+            label: "\u{1F1EC}\u{1F1E7} Testo alternativo immagine (inglese)"
+          },
+          {
+            type: "string",
+            name: "corpo_en",
+            label: "\u{1F1EC}\u{1F1E7} Testo articolo (inglese) \u2014 un paragrafo per riga vuota",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Testo articolo (italiano)",
+            isBody: true
           }
         ]
       },
