@@ -58,6 +58,8 @@ type Query {
   eventiConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: EventiFilter): EventiConnection!
   info(relativePath: String): Info!
   infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
+  news(relativePath: String): News!
+  newsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: NewsFilter): NewsConnection!
   pagine(relativePath: String): Pagine!
   pagineConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PagineFilter): PagineConnection!
 }
@@ -65,6 +67,7 @@ type Query {
 input DocumentFilter {
   eventi: EventiFilter
   info: InfoFilter
+  news: NewsFilter
   pagine: PagineFilter
 }
 
@@ -91,7 +94,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Info | Pagine | Folder
+union DocumentNode = Eventi | Info | News | Pagine | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -197,6 +200,59 @@ type InfoConnection implements Connection {
   edges: [InfoConnectionEdges]
 }
 
+type News implements Node & Document {
+  titolo: String!
+  data: String!
+  categoria: String!
+  sintesi: String!
+  immagine: String!
+  immagine_alt: String!
+  pubblicato: Boolean
+  titolo_en: String
+  categoria_en: String
+  sintesi_en: String
+  immagine_alt_en: String
+  corpo_en: String
+  body: JSON
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input NewsFilter {
+  titolo: StringFilter
+  data: DatetimeFilter
+  categoria: StringFilter
+  sintesi: StringFilter
+  immagine: ImageFilter
+  immagine_alt: StringFilter
+  pubblicato: BooleanFilter
+  titolo_en: StringFilter
+  categoria_en: StringFilter
+  sintesi_en: StringFilter
+  immagine_alt_en: StringFilter
+  corpo_en: StringFilter
+  body: RichTextFilter
+}
+
+type NewsConnectionEdges {
+  cursor: String!
+  node: News
+}
+
+type NewsConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [NewsConnectionEdges]
+}
+
 type Pagine implements Node & Document {
   title: String!
   description: String!
@@ -245,6 +301,8 @@ type Mutation {
   createEventi(relativePath: String!, params: EventiMutation!): Eventi!
   updateInfo(relativePath: String!, params: InfoMutation!): Info!
   createInfo(relativePath: String!, params: InfoMutation!): Info!
+  updateNews(relativePath: String!, params: NewsMutation!): News!
+  createNews(relativePath: String!, params: NewsMutation!): News!
   updatePagine(relativePath: String!, params: PagineMutation!): Pagine!
   createPagine(relativePath: String!, params: PagineMutation!): Pagine!
 }
@@ -252,6 +310,7 @@ type Mutation {
 input DocumentUpdateMutation {
   eventi: EventiMutation
   info: InfoMutation
+  news: NewsMutation
   pagine: PagineMutation
   relativePath: String
 }
@@ -259,6 +318,7 @@ input DocumentUpdateMutation {
 input DocumentMutation {
   eventi: EventiMutation
   info: InfoMutation
+  news: NewsMutation
   pagine: PagineMutation
 }
 
@@ -285,6 +345,22 @@ input InfoMutation {
   orari_en: String
   telefono: String
   email: String
+}
+
+input NewsMutation {
+  titolo: String
+  data: String
+  categoria: String
+  sintesi: String
+  immagine: String
+  immagine_alt: String
+  pubblicato: Boolean
+  titolo_en: String
+  categoria_en: String
+  sintesi_en: String
+  immagine_alt_en: String
+  corpo_en: String
+  body: JSON
 }
 
 input PagineMutation {

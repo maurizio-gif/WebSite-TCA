@@ -40,6 +40,30 @@ const eventi = defineCollection({
   }),
 });
 
+// ─── NEWS CLUB LIFE ───────────────────────────────────────────────────────────
+// Articoli della bacheca Club Life. Ogni file .md in src/content/news/ è una
+// news; il body (markdown) è il testo italiano, corpo_en quello inglese.
+// Gestibile da TinaCMS → collection 'news'.
+// ─────────────────────────────────────────────────────────────────────────────
+const news = defineCollection({
+  type: 'content',
+  schema: z.object({
+    titolo: z.string(),
+    data: z.date(),
+    categoria: z.string(),
+    sintesi: z.string(),
+    immagine: z.string(),
+    immagine_alt: z.string(),
+    pubblicato: z.boolean().default(true),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    titolo_en: z.string().optional(),
+    categoria_en: z.string().optional(),
+    sintesi_en: z.string().optional(),
+    immagine_alt_en: z.string().optional(),
+    corpo_en: z.string().optional(),
+  }),
+});
+
 // ─── INFO CLUB ────────────────────────────────────────────────────────────────
 // File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
 // orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
@@ -58,4 +82,4 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, info };
+export const collections = { pagine, eventi, news, info };

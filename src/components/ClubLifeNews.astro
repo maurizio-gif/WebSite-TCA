@@ -1,11 +1,47 @@
 ---
-import { useTranslations, type Lang } from '../i18n/utils';
-import { newsArticles } from '../data/clubLifeNews';
+import { useTranslations, publicUrl, type Lang } from '../i18n/utils';
+import { getCollection } from 'astro:content';
 
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
 const t = useTranslations(lang);
-const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
+const tx = (itVal: string, enVal?: string) => (lang === 'en' && enVal ? enVal : itVal);
+
+// News gestibili da TinaCMS → src/content/news/ (una per file .md)
+const MESI_IT = [
+  'gennaio','febbraio','marzo','aprile','maggio','giugno',
+  'luglio','agosto','settembre','ottobre','novembre','dicembre',
+];
+const MESI_EN = [
+  'January','February','March','April','May','June',
+  'July','August','September','October','November','December',
+];
+const formatData = (d: Date) =>
+  lang === 'en'
+    ? `${MESI_EN[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`
+    : `${d.getDate()} ${MESI_IT[d.getMonth()]} ${d.getFullYear()}`;
+
+const entries = (await getCollection('news', ({ data }) => data.pubblicato))
+  .sort((a, b) => b.data.data.getTime() - a.data.data.getTime());
+
+const newsArticles = await Promise.all(entries.map(async (entry) => {
+  const { Content } = await entry.render();
+  const d = entry.data;
+  return {
+    slug: entry.slug,
+    categoria: tx(d.categoria, d.categoria_en),
+    dataLabel: formatData(d.data),
+    titolo: tx(d.titolo, d.titolo_en),
+    sintesi: tx(d.sintesi, d.sintesi_en),
+    img: publicUrl(d.immagine),
+    imgAlt: tx(d.immagine_alt, d.immagine_alt_en),
+    Content,
+    // In inglese il corpo è un campo testo: un paragrafo per riga vuota
+    paragrafiEn: lang === 'en' && d.corpo_en
+      ? d.corpo_en.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
+      : null,
+  };
+}));
 ---
 
 <section class="cl-news" id="news">
@@ -32,11 +68,11 @@ const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
             <div class="cl-news-card__img" style={`background-image:url('${art.img}')`}></div>
             <div class="cl-news-card__body">
               <div class="cl-news-card__meta">
-                <span class="cl-news-card__cat">{tx(art.categoria, art.categoria_en)}</span>
-                <span class="cl-news-card__date">{tx(art.data, art.data_en)}</span>
+                <span class="cl-news-card__cat">{art.categoria}</span>
+                <span class="cl-news-card__date">{art.dataLabel}</span>
               </div>
-              <h3 class="cl-news-card__title">{tx(art.titolo, art.titolo_en)}</h3>
-              <p class="cl-news-card__desc">{tx(art.sintesi, art.sintesi_en)}</p>
+              <h3 class="cl-news-card__title">{art.titolo}</h3>
+              <p class="cl-news-card__desc">{art.sintesi}</p>
               <span class="cl-news-card__link">{t.clubLife.newsReadMore} <span aria-hidden="true">→</span></span>
             </div>
           </button>
@@ -54,12 +90,14 @@ const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
       <div class="cl-news-modal__body">
         <button class="cl-news-modal__close" data-news-close aria-label={t.clubLife.newsClose}>✕</button>
         <div class="cl-news-modal__meta">
-          <span class="cl-news-card__cat">{tx(art.categoria, art.categoria_en)}</span>
-          <span class="cl-news-card__date">{tx(art.data, art.data_en)}</span>
+          <span class="cl-news-card__cat">{art.categoria}</span>
+          <span class="cl-news-card__date">{art.dataLabel}</span>
         </div>
-        <h2 class="cl-news-modal__title" id={`news-title-${art.slug}`}>{tx(art.titolo, art.titolo_en)}</h2>
+        <h2 class="cl-news-modal__title" id={`news-title-${art.slug}`}>{art.titolo}</h2>
         <div class="cl-news-modal__prose">
-          {(lang === 'en' ? art.corpo_en : art.corpo).map((par) => <p>{par}</p>)}
+          {art.paragrafiEn
+            ? art.paragrafiEn.map((par) => <p>{par}</p>)
+            : <art.Content />}
         </div>
       </div>
     </div>
@@ -318,7 +356,7 @@ const tx = (itVal: string, enVal: string) => (lang === 'en' ? enVal : itVal);
     color: var(--color-text-light);
   }
 
-  .cl-news-modal__prose p { margin-bottom: 1em; }
+  .cl-news-modal__prose :global(p) { margin-bottom: 1em; }
 
   @media (max-width: 640px) {
     .cl-news-modal__body { padding: 1.5rem; }

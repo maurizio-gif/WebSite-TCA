@@ -86,6 +86,8 @@ export type Query = {
   eventiConnection: EventiConnection;
   info: Info;
   infoConnection: InfoConnection;
+  news: News;
+  newsConnection: NewsConnection;
   pagine: Pagine;
   pagineConnection: PagineConnection;
 };
@@ -142,6 +144,21 @@ export type QueryInfoConnectionArgs = {
 };
 
 
+export type QueryNewsArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryNewsConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<NewsFilter>;
+};
+
+
 export type QueryPagineArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -159,6 +176,7 @@ export type QueryPagineConnectionArgs = {
 export type DocumentFilter = {
   eventi?: InputMaybe<EventiFilter>;
   info?: InputMaybe<InfoFilter>;
+  news?: InputMaybe<NewsFilter>;
   pagine?: InputMaybe<PagineFilter>;
 };
 
@@ -199,7 +217,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Info | Pagine | Folder;
+export type DocumentNode = Eventi | Info | News | Pagine | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -311,6 +329,62 @@ export type InfoConnection = Connection & {
   edges?: Maybe<Array<Maybe<InfoConnectionEdges>>>;
 };
 
+export type News = Node & Document & {
+  __typename?: 'News';
+  titolo: Scalars['String']['output'];
+  data: Scalars['String']['output'];
+  categoria: Scalars['String']['output'];
+  sintesi: Scalars['String']['output'];
+  immagine: Scalars['String']['output'];
+  immagine_alt: Scalars['String']['output'];
+  pubblicato?: Maybe<Scalars['Boolean']['output']>;
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  categoria_en?: Maybe<Scalars['String']['output']>;
+  sintesi_en?: Maybe<Scalars['String']['output']>;
+  immagine_alt_en?: Maybe<Scalars['String']['output']>;
+  corpo_en?: Maybe<Scalars['String']['output']>;
+  body?: Maybe<Scalars['JSON']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type ImageFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type NewsFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  data?: InputMaybe<DatetimeFilter>;
+  categoria?: InputMaybe<StringFilter>;
+  sintesi?: InputMaybe<StringFilter>;
+  immagine?: InputMaybe<ImageFilter>;
+  immagine_alt?: InputMaybe<StringFilter>;
+  pubblicato?: InputMaybe<BooleanFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  categoria_en?: InputMaybe<StringFilter>;
+  sintesi_en?: InputMaybe<StringFilter>;
+  immagine_alt_en?: InputMaybe<StringFilter>;
+  corpo_en?: InputMaybe<StringFilter>;
+  body?: InputMaybe<RichTextFilter>;
+};
+
+export type NewsConnectionEdges = {
+  __typename?: 'NewsConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<News>;
+};
+
+export type NewsConnection = Connection & {
+  __typename?: 'NewsConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<NewsConnectionEdges>>>;
+};
+
 export type Pagine = Node & Document & {
   __typename?: 'Pagine';
   title: Scalars['String']['output'];
@@ -363,6 +437,8 @@ export type Mutation = {
   createEventi: Eventi;
   updateInfo: Info;
   createInfo: Info;
+  updateNews: News;
+  createNews: News;
   updatePagine: Pagine;
   createPagine: Pagine;
 };
@@ -425,6 +501,18 @@ export type MutationCreateInfoArgs = {
 };
 
 
+export type MutationUpdateNewsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: NewsMutation;
+};
+
+
+export type MutationCreateNewsArgs = {
+  relativePath: Scalars['String']['input'];
+  params: NewsMutation;
+};
+
+
 export type MutationUpdatePagineArgs = {
   relativePath: Scalars['String']['input'];
   params: PagineMutation;
@@ -439,6 +527,7 @@ export type MutationCreatePagineArgs = {
 export type DocumentUpdateMutation = {
   eventi?: InputMaybe<EventiMutation>;
   info?: InputMaybe<InfoMutation>;
+  news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -446,6 +535,7 @@ export type DocumentUpdateMutation = {
 export type DocumentMutation = {
   eventi?: InputMaybe<EventiMutation>;
   info?: InputMaybe<InfoMutation>;
+  news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
 };
 
@@ -474,6 +564,22 @@ export type InfoMutation = {
   email?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type NewsMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  data?: InputMaybe<Scalars['String']['input']>;
+  categoria?: InputMaybe<Scalars['String']['input']>;
+  sintesi?: InputMaybe<Scalars['String']['input']>;
+  immagine?: InputMaybe<Scalars['String']['input']>;
+  immagine_alt?: InputMaybe<Scalars['String']['input']>;
+  pubblicato?: InputMaybe<Scalars['Boolean']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  categoria_en?: InputMaybe<Scalars['String']['input']>;
+  sintesi_en?: InputMaybe<Scalars['String']['input']>;
+  immagine_alt_en?: InputMaybe<Scalars['String']['input']>;
+  corpo_en?: InputMaybe<Scalars['String']['input']>;
+  body?: InputMaybe<Scalars['JSON']['input']>;
+};
+
 export type PagineMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -489,6 +595,8 @@ export type PagineMutation = {
 export type EventiPartsFragment = { __typename: 'Eventi', titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null };
 
 export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
+
+export type NewsPartsFragment = { __typename: 'News', titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, titolo_en?: string | null, categoria_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null };
 
 export type PaginePartsFragment = { __typename: 'Pagine', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, body?: any | null };
 
@@ -529,6 +637,25 @@ export type InfoConnectionQueryVariables = Exact<{
 
 
 export type InfoConnectionQuery = { __typename?: 'Query', infoConnection: { __typename?: 'InfoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'InfoConnectionEdges', cursor: string, node?: { __typename: 'Info', id: string, indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export type NewsQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type NewsQuery = { __typename?: 'Query', news: { __typename: 'News', id: string, titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, titolo_en?: string | null, categoria_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type NewsConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<NewsFilter>;
+}>;
+
+
+export type NewsConnectionQuery = { __typename?: 'Query', newsConnection: { __typename?: 'NewsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'NewsConnectionEdges', cursor: string, node?: { __typename: 'News', id: string, titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, titolo_en?: string | null, categoria_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type PagineQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -576,6 +703,24 @@ export const InfoPartsFragmentDoc = gql`
   orari_en
   telefono
   email
+}
+    `;
+export const NewsPartsFragmentDoc = gql`
+    fragment NewsParts on News {
+  __typename
+  titolo
+  data
+  categoria
+  sintesi
+  immagine
+  immagine_alt
+  pubblicato
+  titolo_en
+  categoria_en
+  sintesi_en
+  immagine_alt_en
+  corpo_en
+  body
 }
     `;
 export const PaginePartsFragmentDoc = gql`
@@ -706,6 +851,63 @@ export const InfoConnectionDocument = gql`
   }
 }
     ${InfoPartsFragmentDoc}`;
+export const NewsDocument = gql`
+    query news($relativePath: String!) {
+  news(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...NewsParts
+  }
+}
+    ${NewsPartsFragmentDoc}`;
+export const NewsConnectionDocument = gql`
+    query newsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: NewsFilter) {
+  newsConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...NewsParts
+      }
+    }
+  }
+}
+    ${NewsPartsFragmentDoc}`;
 export const PagineDocument = gql`
     query pagine($relativePath: String!) {
   pagine(relativePath: $relativePath) {
@@ -777,6 +979,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     infoConnection(variables?: InfoConnectionQueryVariables, options?: C): Promise<{data: InfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoConnectionQueryVariables, query: string}> {
         return requester<{data: InfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoConnectionQueryVariables, query: string}, InfoConnectionQueryVariables>(InfoConnectionDocument, variables, options);
+      },
+    news(variables: NewsQueryVariables, options?: C): Promise<{data: NewsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsQueryVariables, query: string}> {
+        return requester<{data: NewsQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsQueryVariables, query: string}, NewsQueryVariables>(NewsDocument, variables, options);
+      },
+    newsConnection(variables?: NewsConnectionQueryVariables, options?: C): Promise<{data: NewsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsConnectionQueryVariables, query: string}> {
+        return requester<{data: NewsConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: NewsConnectionQueryVariables, query: string}, NewsConnectionQueryVariables>(NewsConnectionDocument, variables, options);
       },
     pagine(variables: PagineQueryVariables, options?: C): Promise<{data: PagineQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PagineQueryVariables, query: string}> {
         return requester<{data: PagineQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PagineQueryVariables, query: string}, PagineQueryVariables>(PagineDocument, variables, options);
