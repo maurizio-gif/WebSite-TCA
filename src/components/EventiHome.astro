@@ -98,14 +98,16 @@ const rendered  = await Promise.all(
             </a>
           </li>
         ) : (
-          <li
-            class="event-item"
-            role="button"
-            tabindex="0"
-            data-open-event={slug}
-            aria-label={label}
-          >
-            {inner}
+          <li>
+            <div
+              class="event-item"
+              role="button"
+              tabindex="0"
+              data-open-event={slug}
+              aria-label={label}
+            >
+              {inner}
+            </div>
           </li>
         );
       })}
