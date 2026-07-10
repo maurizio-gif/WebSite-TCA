@@ -109,7 +109,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | Folder
+union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -1107,7 +1107,37 @@ type PaginePrivacy implements Node & Document {
   _values: JSON!
 }
 
-union Pagine = PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy
+type PaginePartnersPartners_lista {
+  nome: String!
+  descrizione: String!
+  descrizione_en: String
+  logo: String!
+  sito: String!
+}
+
+type PaginePartners implements Node & Document {
+  title: String!
+  description: String!
+  hero_eyebrow: String
+  hero_titolo: String
+  hero_titolo_accent: String
+  hero_sottotitolo: String
+  hero_immagine: String
+  hero_immagine_alt: String
+  title_en: String
+  description_en: String
+  hero_eyebrow_en: String
+  hero_titolo_en: String
+  hero_titolo_accent_en: String
+  hero_sottotitolo_en: String
+  hero_immagine_alt_en: String
+  partners_lista: [PaginePartnersPartners_lista!]!
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+union Pagine = PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners
 
 input PagineGenericaFilter {
   title: StringFilter
@@ -1669,6 +1699,33 @@ input PaginePrivacyFilter {
   privacy_body_en: StringFilter
 }
 
+input PaginePartnersPartners_listaFilter {
+  nome: StringFilter
+  descrizione: StringFilter
+  descrizione_en: StringFilter
+  logo: ImageFilter
+  sito: StringFilter
+}
+
+input PaginePartnersFilter {
+  title: StringFilter
+  description: StringFilter
+  hero_eyebrow: StringFilter
+  hero_titolo: StringFilter
+  hero_titolo_accent: StringFilter
+  hero_sottotitolo: StringFilter
+  hero_immagine: StringFilter
+  hero_immagine_alt: StringFilter
+  title_en: StringFilter
+  description_en: StringFilter
+  hero_eyebrow_en: StringFilter
+  hero_titolo_en: StringFilter
+  hero_titolo_accent_en: StringFilter
+  hero_sottotitolo_en: StringFilter
+  hero_immagine_alt_en: StringFilter
+  partners_lista: PaginePartnersPartners_listaFilter
+}
+
 input PagineFilter {
   generica: PagineGenericaFilter
   storia: PagineStoriaFilter
@@ -1681,6 +1738,7 @@ input PagineFilter {
   torneo_avvenire: PagineTorneo_avvenireFilter
   regolamento: PagineRegolamentoFilter
   privacy: PaginePrivacyFilter
+  partners: PaginePartnersFilter
 }
 
 type PagineConnectionEdges {
@@ -2429,6 +2487,33 @@ input PaginePrivacyMutation {
   privacy_body_en: String
 }
 
+input PaginePartnersPartners_listaMutation {
+  nome: String
+  descrizione: String
+  descrizione_en: String
+  logo: String
+  sito: String
+}
+
+input PaginePartnersMutation {
+  title: String
+  description: String
+  hero_eyebrow: String
+  hero_titolo: String
+  hero_titolo_accent: String
+  hero_sottotitolo: String
+  hero_immagine: String
+  hero_immagine_alt: String
+  title_en: String
+  description_en: String
+  hero_eyebrow_en: String
+  hero_titolo_en: String
+  hero_titolo_accent_en: String
+  hero_sottotitolo_en: String
+  hero_immagine_alt_en: String
+  partners_lista: [PaginePartnersPartners_listaMutation]
+}
+
 input PagineMutation {
   generica: PagineGenericaMutation
   storia: PagineStoriaMutation
@@ -2441,6 +2526,7 @@ input PagineMutation {
   torneo_avvenire: PagineTorneo_avvenireMutation
   regolamento: PagineRegolamentoMutation
   privacy: PaginePrivacyMutation
+  partners: PaginePartnersMutation
 }
 
 schema {

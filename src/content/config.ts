@@ -372,6 +372,15 @@ const pagine = defineCollection({
     // ── Corpo pagina: Privacy Policy ──
     privacy_body: z.string().optional(),
     privacy_body_en: z.string().optional(),
+
+    // ── Corpo pagina: Partners ──
+    partners_lista: z.array(z.object({
+      nome: z.string(),
+      descrizione: z.string(),
+      descrizione_en: z.string().optional(),
+      logo: z.string(),
+      sito: z.string(),
+    })).optional(),
   }),
 });
 

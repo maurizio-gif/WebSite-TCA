@@ -1142,6 +1142,24 @@ export default defineConfig({
                 { type: 'string', name: 'privacy_body_en', label: '🇬🇧 Testo privacy policy (inglese)', ui: { component: 'textarea' } },
               ],
             },
+            {
+              name: 'partners',
+              label: 'Partners',
+              fields: [
+                ...heroSeoFields,
+                {
+                  type: 'object', name: 'partners_lista', label: 'Partner', list: true, required: true,
+                  ui: { itemProps: (item) => ({ label: item?.nome || 'Nuovo partner' }) },
+                  fields: [
+                    { type: 'string', name: 'nome', label: 'Nome', required: true },
+                    { type: 'string', name: 'descrizione', label: 'Descrizione', required: true, ui: { component: 'textarea' } },
+                    { type: 'string', name: 'descrizione_en', label: '🇬🇧 Descrizione (inglese)', ui: { component: 'textarea' } },
+                    { type: 'image', name: 'logo', label: 'Logo', required: true },
+                    { type: 'string', name: 'sito', label: 'Sito web (URL completo)', required: true },
+                  ],
+                },
+              ],
+            },
           ],
         };
       })(),
