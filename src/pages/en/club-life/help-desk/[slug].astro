@@ -3,26 +3,44 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import ClubLifeAssistBtn from '../../../../components/ClubLifeAssistBtn.astro';
 import ClubLifeLangSwitch from '../../../../components/ClubLifeLangSwitch.astro';
 import { getLocalePath, useTranslations, type Lang } from '../../../../i18n/utils';
-import { helpDeskArticles, helpDeskCategories } from '../../../../data/helpDesk';
+import { helpDeskCategories } from '../../../../data/helpDesk';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  return helpDeskArticles.map((entry) => ({
+  const guide = await getCollection('helpdesk');
+  return guide.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
 }
 
 interface Props {
-  entry: (typeof helpDeskArticles)[number];
+  entry: CollectionEntry<'helpdesk'>;
 }
 
 const { entry } = Astro.props;
+const d = entry.data;
 const lang: Lang = 'en';
 const t = useTranslations(lang);
 const p = (path: string) => getLocalePath(lang, path);
 
-const categoria = helpDeskCategories.find((c) => c.id === entry.categoria);
-const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria && a.slug !== entry.slug).slice(0, 3);
+const MESI_EN = [
+  'January','February','March','April','May','June',
+  'July','August','September','October','November','December',
+];
+const aggiornatoLabel = `${MESI_EN[d.aggiornato.getMonth()]} ${d.aggiornato.getFullYear()}`;
+
+// Corpo inglese: un paragrafo per riga vuota, **grassetto** in markdown
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+const paragrafiEn = (d.corpo_en ?? entry.body)
+  .trim().split(/\n\s*\n/).map((par) => mdBold(par.trim())).filter(Boolean);
+
+const titolo = d.titolo_en ?? d.titolo;
+const sintesi = d.sintesi_en ?? d.sintesi;
+const tags = d.tags_en ?? d.tags;
+
+const categoria = helpDeskCategories.find((c) => c.id === d.categoria);
+const related = (await getCollection('helpdesk', (g) => g.data.categoria === d.categoria && g.slug !== entry.slug)).slice(0, 3);
 ---
 
 <BaseLayout
@@ -40,12 +58,12 @@ const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria &
         <a href={`${p('/club-life')}#help-desk`}>{t.clubLife.helpDeskBack}</a>
       </nav>
 
-      <span class="hd-hero__cat">{categoria?.label_en ?? entry.categoria}</span>
-      <h1 class="hd-hero__title">{entry.titolo_en}</h1>
-      <p class="hd-hero__desc">{entry.sintesi_en}</p>
+      <span class="hd-hero__cat">{categoria?.label_en ?? d.categoria}</span>
+      <h1 class="hd-hero__title">{titolo}</h1>
+      <p class="hd-hero__desc">{sintesi}</p>
 
       <div class="hd-hero__tags">
-        {entry.tags_en.map((tag) => <span class="hd-hero__tag">{tag}</span>)}
+        {tags.map((tag) => <span class="hd-hero__tag">{tag}</span>)}
       </div>
     </div>
   </section>
@@ -53,17 +71,17 @@ const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria &
   <section class="hd-body">
     <div class="hd-body__inner">
       <div class="hd-body__content prose">
-        {entry.corpo_en.map((par) => <p set:html={par} />)}
+        {paragrafiEn.map((par) => <p set:html={par} />)}
       </div>
 
       <aside class="hd-body__sidebar">
         <div class="hd-sidebar__block">
           <h2 class="hd-sidebar__label">{t.clubLife.helpDeskCategory}</h2>
-          <p class="hd-sidebar__value">{categoria?.label_en ?? entry.categoria}</p>
+          <p class="hd-sidebar__value">{categoria?.label_en ?? d.categoria}</p>
         </div>
         <div class="hd-sidebar__block">
           <h2 class="hd-sidebar__label">{t.clubLife.helpDeskUpdated}</h2>
-          <p class="hd-sidebar__value">{entry.aggiornato_en}</p>
+          <p class="hd-sidebar__value">{aggiornatoLabel}</p>
         </div>
 
         {related.length > 0 && (
@@ -71,7 +89,7 @@ const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria &
             <h2 class="hd-sidebar__label">{t.clubLife.helpDeskRelated}</h2>
             <ul class="hd-sidebar__related-list">
               {related.map((r) => (
-                <li><a href={p(`/club-life/help-desk/${r.slug}`)}>{r.titolo_en}</a></li>
+                <li><a href={p(`/club-life/help-desk/${r.slug}`)}>{r.data.titolo_en ?? r.data.titolo}</a></li>
               ))}
             </ul>
           </div>

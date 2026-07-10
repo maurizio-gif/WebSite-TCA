@@ -3,26 +3,36 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ClubLifeAssistBtn from '../../../components/ClubLifeAssistBtn.astro';
 import ClubLifeLangSwitch from '../../../components/ClubLifeLangSwitch.astro';
 import { getLocalePath, useTranslations, type Lang } from '../../../i18n/utils';
-import { helpDeskArticles, helpDeskCategories } from '../../../data/helpDesk';
+import { helpDeskCategories } from '../../../data/helpDesk';
+import { getCollection, type CollectionEntry } from 'astro:content';
 
 export async function getStaticPaths() {
-  return helpDeskArticles.map((entry) => ({
+  const guide = await getCollection('helpdesk');
+  return guide.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
   }));
 }
 
 interface Props {
-  entry: (typeof helpDeskArticles)[number];
+  entry: CollectionEntry<'helpdesk'>;
 }
 
 const { entry } = Astro.props;
+const { Content } = await entry.render();
+const d = entry.data;
 const lang: Lang = 'it';
 const t = useTranslations(lang);
 const p = (path: string) => getLocalePath(lang, path);
 
-const categoria = helpDeskCategories.find((c) => c.id === entry.categoria);
-const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria && a.slug !== entry.slug).slice(0, 3);
+const MESI_IT = [
+  'Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',
+  'Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre',
+];
+const aggiornatoLabel = `${MESI_IT[d.aggiornato.getMonth()]} ${d.aggiornato.getFullYear()}`;
+
+const categoria = helpDeskCategories.find((c) => c.id === d.categoria);
+const related = (await getCollection('helpdesk', (g) => g.data.categoria === d.categoria && g.slug !== entry.slug)).slice(0, 3);
 ---
 
 <BaseLayout
@@ -40,12 +50,12 @@ const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria &
         <a href={`${p('/club-life')}#help-desk`}>{t.clubLife.helpDeskBack}</a>
       </nav>
 
-      <span class="hd-hero__cat">{categoria?.label ?? entry.categoria}</span>
-      <h1 class="hd-hero__title">{entry.titolo}</h1>
-      <p class="hd-hero__desc">{entry.sintesi}</p>
+      <span class="hd-hero__cat">{categoria?.label ?? d.categoria}</span>
+      <h1 class="hd-hero__title">{d.titolo}</h1>
+      <p class="hd-hero__desc">{d.sintesi}</p>
 
       <div class="hd-hero__tags">
-        {entry.tags.map((tag) => <span class="hd-hero__tag">{tag}</span>)}
+        {d.tags.map((tag) => <span class="hd-hero__tag">{tag}</span>)}
       </div>
     </div>
   </section>
@@ -53,17 +63,17 @@ const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria &
   <section class="hd-body">
     <div class="hd-body__inner">
       <div class="hd-body__content prose">
-        {entry.corpo.map((par) => <p set:html={par} />)}
+        <Content />
       </div>
 
       <aside class="hd-body__sidebar">
         <div class="hd-sidebar__block">
           <h2 class="hd-sidebar__label">{t.clubLife.helpDeskCategory}</h2>
-          <p class="hd-sidebar__value">{categoria?.label ?? entry.categoria}</p>
+          <p class="hd-sidebar__value">{categoria?.label ?? d.categoria}</p>
         </div>
         <div class="hd-sidebar__block">
           <h2 class="hd-sidebar__label">{t.clubLife.helpDeskUpdated}</h2>
-          <p class="hd-sidebar__value">{entry.aggiornato}</p>
+          <p class="hd-sidebar__value">{aggiornatoLabel}</p>
         </div>
 
         {related.length > 0 && (
@@ -71,7 +81,7 @@ const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria &
             <h2 class="hd-sidebar__label">{t.clubLife.helpDeskRelated}</h2>
             <ul class="hd-sidebar__related-list">
               {related.map((r) => (
-                <li><a href={p(`/club-life/help-desk/${r.slug}`)}>{r.titolo}</a></li>
+                <li><a href={p(`/club-life/help-desk/${r.slug}`)}>{r.data.titolo}</a></li>
               ))}
             </ul>
           </div>
@@ -184,7 +194,7 @@ const related = helpDeskArticles.filter((a) => a.categoria === entry.categoria &
     color: var(--color-text-light);
   }
 
-  .prose p { margin-bottom: 1.2em; }
+  .prose :global(p) { margin-bottom: 1.2em; }
 
   .hd-body__sidebar {
     position: sticky;

@@ -64,6 +64,29 @@ const news = defineCollection({
   }),
 });
 
+// ─── HELP DESK ────────────────────────────────────────────────────────────────
+// Guide della knowledge base Club Life. Ogni file .md in src/content/helpdesk/
+// è una guida; il body (markdown) è il testo italiano, corpo_en quello inglese
+// (un paragrafo per riga vuota, grassetti con **doppi asterischi**).
+// Le categorie (id + etichette) restano definite in src/data/helpDesk.ts.
+// Gestibile da TinaCMS → collection 'helpdesk'.
+// ─────────────────────────────────────────────────────────────────────────────
+const helpdesk = defineCollection({
+  type: 'content',
+  schema: z.object({
+    titolo: z.string(),
+    categoria: z.enum(['iscrizioni', 'prenotazioni', 'app', 'pagamenti', 'regolamento', 'scuola']),
+    sintesi: z.string(),
+    tags: z.array(z.string()).default([]),
+    aggiornato: z.date(),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    titolo_en: z.string().optional(),
+    sintesi_en: z.string().optional(),
+    tags_en: z.array(z.string()).optional(),
+    corpo_en: z.string().optional(),
+  }),
+});
+
 // ─── INFO CLUB ────────────────────────────────────────────────────────────────
 // File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
 // orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
@@ -82,4 +105,4 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, info };
+export const collections = { pagine, eventi, news, helpdesk, info };

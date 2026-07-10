@@ -25,6 +25,20 @@ fragment InfoParts on Info {
   email
 }
 
+fragment HelpdeskParts on Helpdesk {
+  __typename
+  titolo
+  categoria
+  sintesi
+  tags
+  aggiornato
+  titolo_en
+  sintesi_en
+  tags_en
+  corpo_en
+  body
+}
+
 fragment NewsParts on News {
   __typename
   titolo
