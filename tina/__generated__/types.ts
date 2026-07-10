@@ -92,6 +92,8 @@ export type Query = {
   membershipConnection: MembershipConnection;
   info: Info;
   infoConnection: InfoConnection;
+  legal: Legal;
+  legalConnection: LegalConnection;
   helpdesk: Helpdesk;
   helpdeskConnection: HelpdeskConnection;
   news: News;
@@ -197,6 +199,21 @@ export type QueryInfoConnectionArgs = {
 };
 
 
+export type QueryLegalArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryLegalConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<LegalFilter>;
+};
+
+
 export type QueryHelpdeskArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -247,6 +264,7 @@ export type DocumentFilter = {
   planning?: InputMaybe<PlanningFilter>;
   membership?: InputMaybe<MembershipFilter>;
   info?: InputMaybe<InfoFilter>;
+  legal?: InputMaybe<LegalFilter>;
   helpdesk?: InputMaybe<HelpdeskFilter>;
   news?: InputMaybe<NewsFilter>;
   pagine?: InputMaybe<PagineFilter>;
@@ -289,7 +307,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Servizi | Planning | Membership | Info | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | Folder;
+export type DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -589,6 +607,40 @@ export type InfoConnection = Connection & {
   edges?: Maybe<Array<Maybe<InfoConnectionEdges>>>;
 };
 
+export type Legal = Node & Document & {
+  __typename?: 'Legal';
+  codice_condotta?: Maybe<Scalars['String']['output']>;
+  nomina_responsabile?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type ImageFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type LegalFilter = {
+  codice_condotta?: InputMaybe<ImageFilter>;
+  nomina_responsabile?: InputMaybe<ImageFilter>;
+};
+
+export type LegalConnectionEdges = {
+  __typename?: 'LegalConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Legal>;
+};
+
+export type LegalConnection = Connection & {
+  __typename?: 'LegalConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<LegalConnectionEdges>>>;
+};
+
 export type Helpdesk = Node & Document & {
   __typename?: 'Helpdesk';
   titolo: Scalars['String']['output'];
@@ -653,13 +705,6 @@ export type News = Node & Document & {
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
-};
-
-export type ImageFilter = {
-  startsWith?: InputMaybe<Scalars['String']['input']>;
-  eq?: InputMaybe<Scalars['String']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type NewsFilter = {
@@ -1877,6 +1922,8 @@ export type Mutation = {
   createMembership: Membership;
   updateInfo: Info;
   createInfo: Info;
+  updateLegal: Legal;
+  createLegal: Legal;
   updateHelpdesk: Helpdesk;
   createHelpdesk: Helpdesk;
   updateNews: News;
@@ -1979,6 +2026,18 @@ export type MutationCreateInfoArgs = {
 };
 
 
+export type MutationUpdateLegalArgs = {
+  relativePath: Scalars['String']['input'];
+  params: LegalMutation;
+};
+
+
+export type MutationCreateLegalArgs = {
+  relativePath: Scalars['String']['input'];
+  params: LegalMutation;
+};
+
+
 export type MutationUpdateHelpdeskArgs = {
   relativePath: Scalars['String']['input'];
   params: HelpdeskMutation;
@@ -2020,6 +2079,7 @@ export type DocumentUpdateMutation = {
   planning?: InputMaybe<PlanningMutation>;
   membership?: InputMaybe<MembershipMutation>;
   info?: InputMaybe<InfoMutation>;
+  legal?: InputMaybe<LegalMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
@@ -2032,6 +2092,7 @@ export type DocumentMutation = {
   planning?: InputMaybe<PlanningMutation>;
   membership?: InputMaybe<MembershipMutation>;
   info?: InputMaybe<InfoMutation>;
+  legal?: InputMaybe<LegalMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
@@ -2122,6 +2183,11 @@ export type InfoMutation = {
   orari_en?: InputMaybe<Scalars['String']['input']>;
   telefono?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type LegalMutation = {
+  codice_condotta?: InputMaybe<Scalars['String']['input']>;
+  nomina_responsabile?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type HelpdeskMutation = {
@@ -2719,6 +2785,8 @@ export type MembershipPartsFragment = { __typename: 'Membership', titolo: string
 
 export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
 
+export type LegalPartsFragment = { __typename: 'Legal', codice_condotta?: string | null, nomina_responsabile?: string | null };
+
 export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
 
 export type NewsPartsFragment = { __typename: 'News', titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, cta_label?: string | null, cta_href?: string | null, titolo_en?: string | null, categoria_en?: string | null, cta_label_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null };
@@ -2839,6 +2907,25 @@ export type InfoConnectionQueryVariables = Exact<{
 
 
 export type InfoConnectionQuery = { __typename?: 'Query', infoConnection: { __typename?: 'InfoConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'InfoConnectionEdges', cursor: string, node?: { __typename: 'Info', id: string, indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export type LegalQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type LegalQuery = { __typename?: 'Query', legal: { __typename: 'Legal', id: string, codice_condotta?: string | null, nomina_responsabile?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type LegalConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<LegalFilter>;
+}>;
+
+
+export type LegalConnectionQuery = { __typename?: 'Query', legalConnection: { __typename?: 'LegalConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalConnectionEdges', cursor: string, node?: { __typename: 'Legal', id: string, codice_condotta?: string | null, nomina_responsabile?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type HelpdeskQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2989,6 +3076,13 @@ export const InfoPartsFragmentDoc = gql`
   orari_en
   telefono
   email
+}
+    `;
+export const LegalPartsFragmentDoc = gql`
+    fragment LegalParts on Legal {
+  __typename
+  codice_condotta
+  nomina_responsabile
 }
     `;
 export const HelpdeskPartsFragmentDoc = gql`
@@ -3829,6 +3923,63 @@ export const InfoConnectionDocument = gql`
   }
 }
     ${InfoPartsFragmentDoc}`;
+export const LegalDocument = gql`
+    query legal($relativePath: String!) {
+  legal(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...LegalParts
+  }
+}
+    ${LegalPartsFragmentDoc}`;
+export const LegalConnectionDocument = gql`
+    query legalConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: LegalFilter) {
+  legalConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...LegalParts
+      }
+    }
+  }
+}
+    ${LegalPartsFragmentDoc}`;
 export const HelpdeskDocument = gql`
     query helpdesk($relativePath: String!) {
   helpdesk(relativePath: $relativePath) {
@@ -4032,6 +4183,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     infoConnection(variables?: InfoConnectionQueryVariables, options?: C): Promise<{data: InfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoConnectionQueryVariables, query: string}> {
         return requester<{data: InfoConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoConnectionQueryVariables, query: string}, InfoConnectionQueryVariables>(InfoConnectionDocument, variables, options);
+      },
+    legal(variables: LegalQueryVariables, options?: C): Promise<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}> {
+        return requester<{data: LegalQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalQueryVariables, query: string}, LegalQueryVariables>(LegalDocument, variables, options);
+      },
+    legalConnection(variables?: LegalConnectionQueryVariables, options?: C): Promise<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}> {
+        return requester<{data: LegalConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalConnectionQueryVariables, query: string}, LegalConnectionQueryVariables>(LegalConnectionDocument, variables, options);
       },
     helpdesk(variables: HelpdeskQueryVariables, options?: C): Promise<{data: HelpdeskQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskQueryVariables, query: string}> {
         return requester<{data: HelpdeskQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskQueryVariables, query: string}, HelpdeskQueryVariables>(HelpdeskDocument, variables, options);

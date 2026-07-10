@@ -52,7 +52,7 @@ export const it = {
     regolamento:  'Regolamento del Club',
     privacy:      'Privacy Policy',
     terms:        'Termini e Condizioni',
-    modelloCondotta:     'Modello di Condotta',
+    modelloCondotta:     'Codice di Condotta',
     modelloOrganizzativo:'Modello Organizzativo',
     nominaSafeguarding:  'Nomina Safeguarding',
     sign:         'Tennis Club Ambrosiano — Dal 1963',

@@ -555,4 +555,17 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, planning, membership, info };
+// ─── DOCUMENTI LEGALI ──────────────────────────────────────────────────────────
+// File unico (documenti.md) con i PDF legali linkati dal footer (sezione
+// "Legal"). Ogni campo è il percorso del PDF in public/legal/, sostituibile
+// da TinaCMS caricando un nuovo file. Gestibile da TinaCMS → collection 'legal'.
+// ─────────────────────────────────────────────────────────────────────────────
+const legal = defineCollection({
+  type: 'content',
+  schema: z.object({
+    codice_condotta: z.string().optional(),
+    nomina_responsabile: z.string().optional(),
+  }),
+});
+
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, membership, info, legal };

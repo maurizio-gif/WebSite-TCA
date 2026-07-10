@@ -64,6 +64,8 @@ type Query {
   membershipConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: MembershipFilter): MembershipConnection!
   info(relativePath: String): Info!
   infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
+  legal(relativePath: String): Legal!
+  legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
   helpdesk(relativePath: String): Helpdesk!
   helpdeskConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: HelpdeskFilter): HelpdeskConnection!
   news(relativePath: String): News!
@@ -78,6 +80,7 @@ input DocumentFilter {
   planning: PlanningFilter
   membership: MembershipFilter
   info: InfoFilter
+  legal: LegalFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
   pagine: PagineFilter
@@ -106,7 +109,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | Folder
+union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -388,6 +391,37 @@ type InfoConnection implements Connection {
   edges: [InfoConnectionEdges]
 }
 
+type Legal implements Node & Document {
+  codice_condotta: String
+  nomina_responsabile: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input LegalFilter {
+  codice_condotta: ImageFilter
+  nomina_responsabile: ImageFilter
+}
+
+type LegalConnectionEdges {
+  cursor: String!
+  node: Legal
+}
+
+type LegalConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [LegalConnectionEdges]
+}
+
 type Helpdesk implements Node & Document {
   titolo: String!
   categoria: String!
@@ -448,13 +482,6 @@ type News implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
-}
-
-input ImageFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
 }
 
 input NewsFilter {
@@ -1639,6 +1666,8 @@ type Mutation {
   createMembership(relativePath: String!, params: MembershipMutation!): Membership!
   updateInfo(relativePath: String!, params: InfoMutation!): Info!
   createInfo(relativePath: String!, params: InfoMutation!): Info!
+  updateLegal(relativePath: String!, params: LegalMutation!): Legal!
+  createLegal(relativePath: String!, params: LegalMutation!): Legal!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
   createHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
   updateNews(relativePath: String!, params: NewsMutation!): News!
@@ -1653,6 +1682,7 @@ input DocumentUpdateMutation {
   planning: PlanningMutation
   membership: MembershipMutation
   info: InfoMutation
+  legal: LegalMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
   pagine: PagineMutation
@@ -1665,6 +1695,7 @@ input DocumentMutation {
   planning: PlanningMutation
   membership: MembershipMutation
   info: InfoMutation
+  legal: LegalMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
   pagine: PagineMutation
@@ -1755,6 +1786,11 @@ input InfoMutation {
   orari_en: String
   telefono: String
   email: String
+}
+
+input LegalMutation {
+  codice_condotta: String
+  nomina_responsabile: String
 }
 
 input HelpdeskMutation {
