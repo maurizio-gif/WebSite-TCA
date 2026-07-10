@@ -383,6 +383,61 @@ query corpoPersonalTrainerConnection($before: String, $after: String, $first: Fl
   }
 }
 
+query corpoPreparazioneAtletica($relativePath: String!) {
+  corpoPreparazioneAtletica(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoPreparazioneAtleticaParts
+  }
+}
+
+query corpoPreparazioneAtleticaConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoPreparazioneAtleticaFilter) {
+  corpoPreparazioneAtleticaConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoPreparazioneAtleticaParts
+      }
+    }
+  }
+}
+
 query info($relativePath: String!) {
   info(relativePath: $relativePath) {
     ... on Document {

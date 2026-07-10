@@ -68,6 +68,8 @@ type Query {
   corpoScuolaTennisConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoScuolaTennisFilter): CorpoScuolaTennisConnection!
   corpoPersonalTrainer(relativePath: String): CorpoPersonalTrainer!
   corpoPersonalTrainerConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoPersonalTrainerFilter): CorpoPersonalTrainerConnection!
+  corpoPreparazioneAtletica(relativePath: String): CorpoPreparazioneAtletica!
+  corpoPreparazioneAtleticaConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoPreparazioneAtleticaFilter): CorpoPreparazioneAtleticaConnection!
   info(relativePath: String): Info!
   infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
   helpdesk(relativePath: String): Helpdesk!
@@ -86,6 +88,7 @@ input DocumentFilter {
   corpoSummerCamps: CorpoSummerCampsFilter
   corpoScuolaTennis: CorpoScuolaTennisFilter
   corpoPersonalTrainer: CorpoPersonalTrainerFilter
+  corpoPreparazioneAtletica: CorpoPreparazioneAtleticaFilter
   info: InfoFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
@@ -115,7 +118,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | Info | Helpdesk | News | Pagine | Folder
+union DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | CorpoPreparazioneAtletica | Info | Helpdesk | News | Pagine | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -750,6 +753,156 @@ type CorpoPersonalTrainerConnection implements Connection {
   edges: [CorpoPersonalTrainerConnectionEdges]
 }
 
+type CorpoPreparazioneAtleticaSala_slideshow {
+  immagine: String!
+  alt: String!
+  alt_en: String
+}
+
+type CorpoPreparazioneAtleticaSala_features {
+  titolo: String!
+  testo: String!
+  titolo_en: String
+  testo_en: String
+}
+
+type CorpoPreparazioneAtleticaCategorieCorsi {
+  nome: String!
+  durata: String!
+  intensita: Float!
+  livello: String!
+  desc: String!
+  immagine: String!
+  nome_en: String
+  livello_en: String
+  desc_en: String
+}
+
+type CorpoPreparazioneAtleticaCategorie {
+  id: String!
+  label: String!
+  desc: String!
+  color: String!
+  desc_en: String
+  corsi: [CorpoPreparazioneAtleticaCategorieCorsi!]!
+}
+
+type CorpoPreparazioneAtletica implements Node & Document {
+  sala_eyebrow: String!
+  sala_titolo: String!
+  sala_titolo_accent: String!
+  sala_paragrafo1: String!
+  sala_paragrafo2: String!
+  sala_slideshow: [CorpoPreparazioneAtleticaSala_slideshow!]!
+  sala_features: [CorpoPreparazioneAtleticaSala_features!]!
+  sala_cta_label: String!
+  corsi_eyebrow: String!
+  corsi_titolo: String!
+  corsi_titolo_accent: String!
+  corsi_sub: String!
+  categorie: [CorpoPreparazioneAtleticaCategorie!]!
+  calendario_eyebrow: String!
+  calendario_titolo: String!
+  calendario_titolo_accent: String!
+  calendario_sub: String!
+  sala_eyebrow_en: String
+  sala_titolo_en: String
+  sala_titolo_accent_en: String
+  sala_paragrafo1_en: String
+  sala_paragrafo2_en: String
+  sala_cta_label_en: String
+  corsi_eyebrow_en: String
+  corsi_titolo_en: String
+  corsi_titolo_accent_en: String
+  corsi_sub_en: String
+  calendario_eyebrow_en: String
+  calendario_titolo_en: String
+  calendario_titolo_accent_en: String
+  calendario_sub_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CorpoPreparazioneAtleticaSala_slideshowFilter {
+  immagine: ImageFilter
+  alt: StringFilter
+  alt_en: StringFilter
+}
+
+input CorpoPreparazioneAtleticaSala_featuresFilter {
+  titolo: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input CorpoPreparazioneAtleticaCategorieCorsiFilter {
+  nome: StringFilter
+  durata: StringFilter
+  intensita: NumberFilter
+  livello: StringFilter
+  desc: StringFilter
+  immagine: ImageFilter
+  nome_en: StringFilter
+  livello_en: StringFilter
+  desc_en: StringFilter
+}
+
+input CorpoPreparazioneAtleticaCategorieFilter {
+  id: StringFilter
+  label: StringFilter
+  desc: StringFilter
+  color: StringFilter
+  desc_en: StringFilter
+  corsi: CorpoPreparazioneAtleticaCategorieCorsiFilter
+}
+
+input CorpoPreparazioneAtleticaFilter {
+  sala_eyebrow: StringFilter
+  sala_titolo: StringFilter
+  sala_titolo_accent: StringFilter
+  sala_paragrafo1: StringFilter
+  sala_paragrafo2: StringFilter
+  sala_slideshow: CorpoPreparazioneAtleticaSala_slideshowFilter
+  sala_features: CorpoPreparazioneAtleticaSala_featuresFilter
+  sala_cta_label: StringFilter
+  corsi_eyebrow: StringFilter
+  corsi_titolo: StringFilter
+  corsi_titolo_accent: StringFilter
+  corsi_sub: StringFilter
+  categorie: CorpoPreparazioneAtleticaCategorieFilter
+  calendario_eyebrow: StringFilter
+  calendario_titolo: StringFilter
+  calendario_titolo_accent: StringFilter
+  calendario_sub: StringFilter
+  sala_eyebrow_en: StringFilter
+  sala_titolo_en: StringFilter
+  sala_titolo_accent_en: StringFilter
+  sala_paragrafo1_en: StringFilter
+  sala_paragrafo2_en: StringFilter
+  sala_cta_label_en: StringFilter
+  corsi_eyebrow_en: StringFilter
+  corsi_titolo_en: StringFilter
+  corsi_titolo_accent_en: StringFilter
+  corsi_sub_en: StringFilter
+  calendario_eyebrow_en: StringFilter
+  calendario_titolo_en: StringFilter
+  calendario_titolo_accent_en: StringFilter
+  calendario_sub_en: StringFilter
+}
+
+type CorpoPreparazioneAtleticaConnectionEdges {
+  cursor: String!
+  node: CorpoPreparazioneAtletica
+}
+
+type CorpoPreparazioneAtleticaConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CorpoPreparazioneAtleticaConnectionEdges]
+}
+
 type Info implements Node & Document {
   indirizzo: String!
   come_arrivare: String!
@@ -948,6 +1101,8 @@ type Mutation {
   createCorpoScuolaTennis(relativePath: String!, params: CorpoScuolaTennisMutation!): CorpoScuolaTennis!
   updateCorpoPersonalTrainer(relativePath: String!, params: CorpoPersonalTrainerMutation!): CorpoPersonalTrainer!
   createCorpoPersonalTrainer(relativePath: String!, params: CorpoPersonalTrainerMutation!): CorpoPersonalTrainer!
+  updateCorpoPreparazioneAtletica(relativePath: String!, params: CorpoPreparazioneAtleticaMutation!): CorpoPreparazioneAtletica!
+  createCorpoPreparazioneAtletica(relativePath: String!, params: CorpoPreparazioneAtleticaMutation!): CorpoPreparazioneAtletica!
   updateInfo(relativePath: String!, params: InfoMutation!): Info!
   createInfo(relativePath: String!, params: InfoMutation!): Info!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
@@ -966,6 +1121,7 @@ input DocumentUpdateMutation {
   corpoSummerCamps: CorpoSummerCampsMutation
   corpoScuolaTennis: CorpoScuolaTennisMutation
   corpoPersonalTrainer: CorpoPersonalTrainerMutation
+  corpoPreparazioneAtletica: CorpoPreparazioneAtleticaMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -981,6 +1137,7 @@ input DocumentMutation {
   corpoSummerCamps: CorpoSummerCampsMutation
   corpoScuolaTennis: CorpoScuolaTennisMutation
   corpoPersonalTrainer: CorpoPersonalTrainerMutation
+  corpoPreparazioneAtletica: CorpoPreparazioneAtleticaMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -1231,6 +1388,74 @@ input CorpoPersonalTrainerMutation {
   sezione4_titolo_en: String
   sezione4_sottotitolo_en: String
   sezione4_cta_label_en: String
+}
+
+input CorpoPreparazioneAtleticaSala_slideshowMutation {
+  immagine: String
+  alt: String
+  alt_en: String
+}
+
+input CorpoPreparazioneAtleticaSala_featuresMutation {
+  titolo: String
+  testo: String
+  titolo_en: String
+  testo_en: String
+}
+
+input CorpoPreparazioneAtleticaCategorieCorsiMutation {
+  nome: String
+  durata: String
+  intensita: Float
+  livello: String
+  desc: String
+  immagine: String
+  nome_en: String
+  livello_en: String
+  desc_en: String
+}
+
+input CorpoPreparazioneAtleticaCategorieMutation {
+  id: String
+  label: String
+  desc: String
+  color: String
+  desc_en: String
+  corsi: [CorpoPreparazioneAtleticaCategorieCorsiMutation]
+}
+
+input CorpoPreparazioneAtleticaMutation {
+  sala_eyebrow: String
+  sala_titolo: String
+  sala_titolo_accent: String
+  sala_paragrafo1: String
+  sala_paragrafo2: String
+  sala_slideshow: [CorpoPreparazioneAtleticaSala_slideshowMutation]
+  sala_features: [CorpoPreparazioneAtleticaSala_featuresMutation]
+  sala_cta_label: String
+  corsi_eyebrow: String
+  corsi_titolo: String
+  corsi_titolo_accent: String
+  corsi_sub: String
+  categorie: [CorpoPreparazioneAtleticaCategorieMutation]
+  calendario_eyebrow: String
+  calendario_titolo: String
+  calendario_titolo_accent: String
+  calendario_sub: String
+  sala_eyebrow_en: String
+  sala_titolo_en: String
+  sala_titolo_accent_en: String
+  sala_paragrafo1_en: String
+  sala_paragrafo2_en: String
+  sala_cta_label_en: String
+  corsi_eyebrow_en: String
+  corsi_titolo_en: String
+  corsi_titolo_accent_en: String
+  corsi_sub_en: String
+  calendario_eyebrow_en: String
+  calendario_titolo_en: String
+  calendario_titolo_accent_en: String
+  calendario_sub_en: String
 }
 
 input InfoMutation {

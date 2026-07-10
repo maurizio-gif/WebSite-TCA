@@ -362,6 +362,76 @@ const corpoPersonalTrainer = defineCollection({
   }),
 });
 
+// ─── CORPO PAGINA: PREPARAZIONE ATLETICA ──────────────────────────────────────
+// Contenuto sotto l'hero della pagina Preparazione Atletica (sala attrezzi,
+// corsi di gruppo per categoria, intro al calendario — il calendario vero e
+// proprio è nella collection 'planning').
+// File unico, gestibile da TinaCMS → collection 'corpoPreparazioneAtletica'.
+// ─────────────────────────────────────────────────────────────────────────────
+const corpoPreparazioneAtletica = defineCollection({
+  type: 'content',
+  schema: z.object({
+    sala_eyebrow: z.string(),
+    sala_titolo: z.string(),
+    sala_titolo_accent: z.string(),
+    sala_paragrafo1: z.string(),
+    sala_paragrafo2: z.string(),
+    sala_slideshow: z.array(z.object({
+      immagine: z.string(),
+      alt: z.string(),
+      alt_en: z.string().optional(),
+    })),
+    sala_features: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })),
+    sala_cta_label: z.string(),
+    corsi_eyebrow: z.string(),
+    corsi_titolo: z.string(),
+    corsi_titolo_accent: z.string(),
+    corsi_sub: z.string(),
+    categorie: z.array(z.object({
+      id: z.enum(['endurance', 'strength', 'balance']),
+      label: z.string(),
+      desc: z.string(),
+      color: z.string(),
+      desc_en: z.string().optional(),
+      corsi: z.array(z.object({
+        nome: z.string(),
+        durata: z.string(),
+        intensita: z.number().min(1).max(3),
+        livello: z.string(),
+        desc: z.string(),
+        immagine: z.string(),
+        nome_en: z.string().optional(),
+        livello_en: z.string().optional(),
+        desc_en: z.string().optional(),
+      })),
+    })),
+    calendario_eyebrow: z.string(),
+    calendario_titolo: z.string(),
+    calendario_titolo_accent: z.string(),
+    calendario_sub: z.string(),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    sala_eyebrow_en: z.string().optional(),
+    sala_titolo_en: z.string().optional(),
+    sala_titolo_accent_en: z.string().optional(),
+    sala_paragrafo1_en: z.string().optional(),
+    sala_paragrafo2_en: z.string().optional(),
+    sala_cta_label_en: z.string().optional(),
+    corsi_eyebrow_en: z.string().optional(),
+    corsi_titolo_en: z.string().optional(),
+    corsi_titolo_accent_en: z.string().optional(),
+    corsi_sub_en: z.string().optional(),
+    calendario_eyebrow_en: z.string().optional(),
+    calendario_titolo_en: z.string().optional(),
+    calendario_titolo_accent_en: z.string().optional(),
+    calendario_sub_en: z.string().optional(),
+  }),
+});
+
 // ─── INFO CLUB ────────────────────────────────────────────────────────────────
 // File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
 // orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
@@ -380,4 +450,4 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, planning, corpoStoria, corpoSummerCamps, corpoScuolaTennis, corpoPersonalTrainer, info };
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, corpoStoria, corpoSummerCamps, corpoScuolaTennis, corpoPersonalTrainer, corpoPreparazioneAtletica, info };

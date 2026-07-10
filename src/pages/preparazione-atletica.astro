@@ -9,94 +9,17 @@ import { getEntry } from "astro:content";
 // SEO + hero gestibili da TinaCMS → src/content/pagine/preparazione-atletica.md
 const d = (await getEntry("pagine", "preparazione-atletica"))!.data;
 
-interface Course {
-  name: string;
-  duration: string;
-  intensity: 1 | 2 | 3;
-  level: string;
-  desc: string;
-  img: string;
-}
+// Corpo pagina (sala attrezzi, corsi per categoria) → src/content/corpoPreparazioneAtletica/corpo.md
+const c = (await getEntry("corpoPreparazioneAtletica", "corpo"))!.data;
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 
-interface Category {
-  id: string;
-  label: string;
-  desc: string;
-  color: string;
-  courses: Course[];
-}
-
-const YOGA      = '/YOGA%202.avif';
-const GYM       = '/Sala%20Attrezzi%202.avif';
-const RACKET    = '/aXCJ_AIvOtkhBw2j_Lifestyle_232026SpeedMP_DXT56509.avif';
-const CARDIO    = '/4af14e95-b254-472b-8b91-a0bfb9815ceb_shutterstock_564025705.avif';
-const YOGA2     = '/Yoga.avif';
-const CYCLING   = '/Cycling.avif';
-const DAVANZO   = '/Total%20Body.avif';
-const KETTLE    = '/Sala%20Attrezzi%209.avif';
-const AIRBIKE   = '/Sala%20Attrezzi%206.jpg';
-const ISOTONICA = '/Sala%20Attrezzi%207.jpg';
-const TAPIS     = '/Sala%20Attrezzi%201.avif';
-const TREADMILL = '/Sala%20Attrezzi.avif';
-const FUNCTIONAL = '/Functional.jpg';
-
-// Slideshow sala attrezzi — solo foto
-const salaImgs = [
-  { src: '/Sala%20Attrezzi%202.avif', alt: 'Sala attrezzi del Tennis Club Ambrosiano' },
-  { src: '/Sala%20Attrezzi%203.avif', alt: 'Area pesi liberi e macchinari professionali' },
-  { src: '/Sala%20Attrezzi%204.avif', alt: 'Zona cardio della sala attrezzi' },
-  { src: '/Sala%20Attrezzi%205.avif', alt: 'Allenamento funzionale nella sala attrezzi' },
-  { src: '/Sala%20Attrezzi%206.jpg', alt: 'Area funzionale e TRX' },
-  { src: '/Sala%20Attrezzi%207.jpg', alt: 'Macchinari isotonici della sala attrezzi' },
-  { src: '/Sala%20Attrezzi%201.avif', alt: 'Zona cardio con tapis roulant' },
-  { src: '/TCA_Gym%2012.jpg',        alt: 'Sala attrezzi TCA - vista generale' },
-];
-
-const categories: Category[] = [
-  {
-    id: 'endurance',
-    label: 'Endurance',
-    desc: 'Allena il sistema cardiovascolare, brucia calorie e migliora la resistenza e la coordinazione ritmica con corsi dinamici e coinvolgenti.',
-    color: '#B83A00',
-    courses: [
-      { name: 'Dance',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Coreografie su musica pop e dance. Cardio coinvolgente e coordinazione ritmica.',    img: CARDIO },
-      { name: 'Zumba',           duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Mix di danza latino-americana e allenamento aerobico. Brucia calorie con il sorriso.', img: DAVANZO },
-      { name: 'Cycling',         duration: '45 min', intensity: 3, level: 'Tutti i livelli', desc: 'Allenamento su bike al ritmo della musica. Massima resa cardiovascolare.',            img: CYCLING },
-      { name: 'Aeroboxe',        duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Combinazione di boxe e aerobica. Potenza, riflessi e resistenza.',                   img: AIRBIKE },
-      { name: 'Functional Step', duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step rivisitato con movimenti funzionali. Tonifica e migliora la resistenza.',       img: GYM },
-      { name: 'Step & Tone',     duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Step cardio abbinato a tonificazione. Allenamento a corpo completo.',                img: TREADMILL },
-    ]
-  },
-  {
-    id: 'strength',
-    label: 'Strength',
-    desc: 'Costruisci forza muscolare, potenza e stabilità. Allenamenti con pesi liberi, carichi e a corpo libero per una fisicità solida e funzionale.',
-    color: '#1E3A8A',
-    courses: [
-      { name: 'Funracket',            duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Sport-specific per tennisti e padellisti. Forza esplosiva, reattività e agilità.',    img: RACKET },
-      { name: 'Tribal-x',             duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Circuito ad alta intensità con carichi liberi. Forza e potenza muscolare.',           img: KETTLE },
-      { name: 'Functional',           duration: '45 min', intensity: 2, level: 'Tutti i livelli', desc: 'Allenamento con attrezzi e peso corporeo. Forza funzionale, mobilità e stabilità articolare.', img: '/Functional.jpg' },
-      { name: 'Active Pump',          duration: '60 min', intensity: 2, level: 'Tutti i livelli', desc: 'Barbell workout con bilanciere. Tonificazione totale su musica.',                    img: ISOTONICA },
-      { name: 'Total Body',           duration: '60 min', intensity: 3, level: 'Tutti i livelli', desc: 'Lavoro su tutti i distretti muscolari. Forza, resistenza e postura.',               img: TAPIS },
-      { name: 'Circuit',              duration: '45 min', intensity: 3, level: 'Intermedio',      desc: 'Stazioni cardio e forza in sequenza. Metabolismo alle stelle.',                     img: '/Strenght%20Circuit.jpg' },
-      { name: 'Suspension Training',  duration: '60 min', intensity: 3, level: 'Intermedio',      desc: 'Sling training: core, stabilità e forza funzionale in sospensione.', img: FUNCTIONAL },
-    ]
-  },
-  {
-    id: 'balance',
-    label: 'Balance',
-    desc: 'Equilibrio, flessibilità e benessere corpo-mente. Migliora postura, mobilità e consapevolezza corporea con pratiche dolci e dinamiche.',
-    color: '#0F7B5A',
-    courses: [
-      { name: 'Pilates Funzionale', duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pilates applicato al movimento quotidiano. Core, postura e consapevolezza corporea.', img: YOGA },
-      { name: 'Flexability',        duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Flessibilità e mobilità articolare. Previene infortuni e libera le tensioni.',        img: YOGA },
-      { name: 'Hatha Yoga',         duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Pratica yogica classica. Equilibrio corpo-mente attraverso asana e respiro.',        img: YOGA2 },
-      { name: 'Pilates',            duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Metodo originale di controllo e precisione. Rinforza il centro, migliora la postura.', img: YOGA2 },
-      { name: 'Postural',           duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Rieducazione posturale attiva. Corregge le tensioni e riequilibra il corpo.',        img: YOGA },
-      { name: 'Power Yoga',         duration: '60 min', intensity: 2, level: 'Intermedio',      desc: 'Yoga dinamico e intenso. Forza, flessibilità e concentrazione unite.',               img: YOGA },
-      { name: 'Ginnastica Dolce',   duration: '60 min', intensity: 1, level: 'Tutti i livelli', desc: 'Mobilità dolce per tutti. Ideale per over 50 e recupero attivo.',                   img: DAVANZO },
-    ]
-  }
+// Le 5 icone SVG delle caratteristiche sala attrezzi restano fisse per ordine (testo da Tina)
+const salaIcons = [
+  '<path d="M3 12h2m14 0h2M5 12a7 7 0 1 0 14 0 7 7 0 0 0-14 0zm4 0h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  '<rect x="2" y="11" width="4" height="2" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="18" y="11" width="4" height="2" rx="1" stroke="currentColor" stroke-width="1.8"/><path d="M6 12h12M6 9v6M18 9v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  '<path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  '<circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+  '<path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4M4 10h16M4 10v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M9 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
 ];
 ---
 
@@ -125,10 +48,10 @@ const categories: Category[] = [
         <div class="sala-split__media" data-anim="scale">
           <div class="sala-slider" data-sala-slider>
             <div class="sala-slider__track">
-              {salaImgs.map((img, i) => (
+              {c.sala_slideshow.map((img, i) => (
                 <div class="sala-slider__slide">
                   <img
-                    src={publicUrl(img.src)}
+                    src={publicUrl(img.immagine)}
                     alt={img.alt}
                     class="sala-slider__img"
                     loading={i === 0 ? "eager" : "lazy"}
@@ -137,7 +60,7 @@ const categories: Category[] = [
               ))}
             </div>
             <div class="sala-slider__dots">
-              {salaImgs.map((_, i) => (
+              {c.sala_slideshow.map((_, i) => (
                 <button
                   class={`sala-slider__dot${i === 0 ? " is-active" : ""}`}
                   data-sala-dot={i}
@@ -150,55 +73,25 @@ const categories: Category[] = [
         </div>
 
         <div class="sala-split__content">
-          <span class="eyebrow">Sala Attrezzi</span>
-          <h2 class="section-title">Potenziamento<br><em>su misura.</em></h2>
-          <p class="sala-body">
-            Uno spazio ampio e luminoso, riservato ai soci, con <strong>macchinari isotonici di ultima generazione</strong>, un'area cardio completa e una zona funzionale per il lavoro a corpo libero. Ogni postazione è pensata per accompagnarti in tutte le fasi dell'allenamento, dal riscaldamento al defaticamento.
-          </p>
-          <p class="sala-body">
-            Che il tuo obiettivo sia aumentare la forza, migliorare la resistenza, preparare la stagione agonistica o semplicemente mantenerti in forma, qui trovi tutto il necessario — affiancato da <strong>personal trainer qualificati</strong> pronti a costruire con te un programma su misura.
-          </p>
+          <span class="eyebrow">{c.sala_eyebrow}</span>
+          <h2 class="section-title">{c.sala_titolo}<br><em>{c.sala_titolo_accent}</em></h2>
+          <p class="sala-body" set:html={mdBold(c.sala_paragrafo1)} />
+          <p class="sala-body" set:html={mdBold(c.sala_paragrafo2)} />
 
           <ul class="sala-features">
-            <li class="sala-feat">
-              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h2m14 0h2M5 12a7 7 0 1 0 14 0 7 7 0 0 0-14 0zm4 0h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div>
-                <strong>Macchine Cardio</strong>
-                <span>Tapis roulant, ellittiche, rowing machine, bike</span>
-              </div>
-            </li>
-            <li class="sala-feat">
-              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="2" y="11" width="4" height="2" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="18" y="11" width="4" height="2" rx="1" stroke="currentColor" stroke-width="1.8"/><path d="M6 12h12M6 9v6M18 9v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div>
-                <strong>Pesi Liberi</strong>
-                <span>Manubri 1–40 kg, bilancieri, cavi multifunzione</span>
-              </div>
-            </li>
-            <li class="sala-feat">
-              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div>
-                <strong>Area Funzionale</strong>
-                <span>TRX, kettlebell, slam ball, battle rope</span>
-              </div>
-            </li>
-            <li class="sala-feat">
-              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div>
-                <strong>Accesso Riservato</strong>
-                <span>Sala esclusiva, disponibile tutti i giorni per i soci</span>
-              </div>
-            </li>
-            <li class="sala-feat">
-              <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4M4 10h16M4 10v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M9 14h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div>
-                <strong>Spogliatoi e Servizi</strong>
-                <span>Docce, armadietti e area relax a disposizione</span>
-              </div>
-            </li>
+            {c.sala_features.map((f, i) => (
+              <li class="sala-feat">
+                <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" set:html={salaIcons[i]} />
+                <div>
+                  <strong>{f.titolo}</strong>
+                  <span>{f.testo}</span>
+                </div>
+              </li>
+            ))}
           </ul>
 
           <a href="/personal-trainer" class="btn btn-red sala-cta">
-            Scopri i nostri Personal Trainer
+            {c.sala_cta_label}
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
               <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -212,11 +105,11 @@ const categories: Category[] = [
   <!-- ── Corsi di Gruppo ── -->
   <section class="corsi-section" id="corsi">
     <div class="corsi-section__inner">
-      <span class="eyebrow">Corsi di Gruppo</span>
-      <h2 class="section-title">Allenati in<br><em>gruppo.</em></h2>
-      <p class="corsi-sub">Ogni settimana sessioni guidate da istruttori certificati. Scegli il corso adatto al tuo obiettivo e prenota il tuo posto direttamente su PerfectGym.</p>
+      <span class="eyebrow">{c.corsi_eyebrow}</span>
+      <h2 class="section-title">{c.corsi_titolo}<br><em>{c.corsi_titolo_accent}</em></h2>
+      <p class="corsi-sub">{c.corsi_sub}</p>
 
-      {categories.map((cat) => (
+      {c.categorie.map((cat) => (
         <div class="cat-block">
           <div class="cat-block__head" style={`--cat-color: ${cat.color}`}>
             <div class="cat-block__title-row">
@@ -233,41 +126,41 @@ const categories: Category[] = [
             <div class="cat-block__meta">
               <p class="cat-block__desc">{cat.desc}</p>
               <div class="cat-block__line"></div>
-              <span class="cat-block__count">{cat.courses.length} corsi</span>
+              <span class="cat-block__count">{cat.corsi.length} corsi</span>
             </div>
           </div>
           <div class="courses-track-wrap">
             <div class="courses-track" data-carousel-id={`courses-${cat.id}`}>
-              {cat.courses.map((course) => (
+              {cat.corsi.map((course) => (
                 <div class="course-card" style={`--cat-color: ${cat.color}`}>
                   <div class="course-card__media">
                     <img
-                      src={publicUrl(course.img)}
-                      alt={course.name}
+                      src={publicUrl(course.immagine)}
+                      alt={course.nome}
                       class="course-card__media-img"
                       loading="lazy"
                     />
                   </div>
                   <div class="course-card__body">
                     <span class="course-card__cat">{cat.label}</span>
-                    <h3 class="course-card__name">{course.name}</h3>
+                    <h3 class="course-card__name">{course.nome}</h3>
                     <p class="course-card__desc">{course.desc}</p>
                     <div class="course-card__params">
                       <div class="param-item">
                         <span class="param-item__label">Intensità</span>
-                        <span class="param-item__dots" aria-label={course.intensity === 3 ? 'Alta' : course.intensity === 2 ? 'Media' : 'Bassa'}>
+                        <span class="param-item__dots" aria-label={course.intensita === 3 ? 'Alta' : course.intensita === 2 ? 'Media' : 'Bassa'}>
                           {[1,2,3].map(n => (
-                            <span class={`dot${n <= course.intensity ? ' dot--on' : ''}`}></span>
+                            <span class={`dot${n <= course.intensita ? ' dot--on' : ''}`}></span>
                           ))}
                         </span>
                       </div>
                       <div class="param-item">
                         <span class="param-item__label">Durata</span>
-                        <span class="param-item__value">{course.duration}</span>
+                        <span class="param-item__value">{course.durata}</span>
                       </div>
                       <div class="param-item">
                         <span class="param-item__label">Livello</span>
-                        <span class="param-item__value">{course.level}</span>
+                        <span class="param-item__value">{course.livello}</span>
                       </div>
                     </div>
                   </div>
@@ -283,9 +176,9 @@ const categories: Category[] = [
   <!-- ── Calendario corsi ── -->
   <section class="calendar-section" id="planning">
     <div class="calendar-section__inner">
-      <span class="eyebrow">Calendario</span>
-      <h2 class="section-title">Prenota il tuo<br><em>corso.</em></h2>
-      <p class="corsi-sub">Controlla il calendario settimanale e riserva il tuo posto direttamente su PerfectGym.</p>
+      <span class="eyebrow">{c.calendario_eyebrow}</span>
+      <h2 class="section-title">{c.calendario_titolo}<br><em>{c.calendario_titolo_accent}</em></h2>
+      <p class="corsi-sub">{c.calendario_sub}</p>
 
       <WeeklySchedule />
     </div>
