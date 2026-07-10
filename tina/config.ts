@@ -1,13 +1,12 @@
 import { defineConfig } from 'tinacms';
 
 // Credenziali TinaCloud — aggiungile come variabili d'ambiente:
-//   TINA_CLIENT_ID  →  Netlify: Site settings > Env vars
-//                      GitHub:  Settings > Secrets > Actions
+//   TINA_CLIENT_ID  →  Vercel: Project Settings > Environment Variables
 //   TINA_TOKEN      →  stessa posizione
 // Ottienile su: https://app.tina.io
 
 export default defineConfig({
-  branch: process.env.GITHUB_BRANCH || process.env.HEAD || 'main',
+  branch: process.env.VERCEL_GIT_COMMIT_REF || process.env.GITHUB_BRANCH || process.env.HEAD || 'main',
   clientId: process.env.TINA_CLIENT_ID || '',
   token: process.env.TINA_TOKEN || '',
 
