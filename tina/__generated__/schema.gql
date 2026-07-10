@@ -66,6 +66,8 @@ type Query {
   corpoSummerCampsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoSummerCampsFilter): CorpoSummerCampsConnection!
   corpoScuolaTennis(relativePath: String): CorpoScuolaTennis!
   corpoScuolaTennisConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoScuolaTennisFilter): CorpoScuolaTennisConnection!
+  corpoPersonalTrainer(relativePath: String): CorpoPersonalTrainer!
+  corpoPersonalTrainerConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoPersonalTrainerFilter): CorpoPersonalTrainerConnection!
   info(relativePath: String): Info!
   infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
   helpdesk(relativePath: String): Helpdesk!
@@ -83,6 +85,7 @@ input DocumentFilter {
   corpoStoria: CorpoStoriaFilter
   corpoSummerCamps: CorpoSummerCampsFilter
   corpoScuolaTennis: CorpoScuolaTennisFilter
+  corpoPersonalTrainer: CorpoPersonalTrainerFilter
   info: InfoFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
@@ -112,7 +115,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | Info | Helpdesk | News | Pagine | Folder
+union DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | Info | Helpdesk | News | Pagine | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -617,6 +620,136 @@ type CorpoScuolaTennisConnection implements Connection {
   edges: [CorpoScuolaTennisConnectionEdges]
 }
 
+type CorpoPersonalTrainerStats {
+  numero: String!
+  etichetta: String!
+  etichetta_en: String
+}
+
+type CorpoPersonalTrainerTrainers {
+  nome: String!
+  foto: String
+  specializzazioni: [String!]!
+  qualifiche: [String!]!
+  lingue: [String]
+  specializzazioni_en: [String]
+  qualifiche_en: [String]
+  lingue_en: [String]
+}
+
+type CorpoPersonalTrainerSteps {
+  titolo: String!
+  testo: String!
+  titolo_en: String
+  testo_en: String
+}
+
+type CorpoPersonalTrainer implements Node & Document {
+  sezione1_eyebrow: String!
+  sezione1_titolo: String!
+  sezione1_titolo_accent: String!
+  sezione1_paragrafo1: String!
+  sezione1_paragrafo2: String!
+  stats: [CorpoPersonalTrainerStats!]!
+  sezione2_eyebrow: String!
+  sezione2_titolo: String!
+  sezione2_titolo_accent: String!
+  trainers: [CorpoPersonalTrainerTrainers!]!
+  sezione3_eyebrow: String!
+  sezione3_titolo: String!
+  sezione3_titolo_accent: String!
+  steps: [CorpoPersonalTrainerSteps!]!
+  sezione4_titolo: String!
+  sezione4_sottotitolo: String!
+  sezione4_cta_label: String!
+  sezione1_eyebrow_en: String
+  sezione1_titolo_en: String
+  sezione1_titolo_accent_en: String
+  sezione1_paragrafo1_en: String
+  sezione1_paragrafo2_en: String
+  sezione2_eyebrow_en: String
+  sezione2_titolo_en: String
+  sezione2_titolo_accent_en: String
+  sezione3_eyebrow_en: String
+  sezione3_titolo_en: String
+  sezione3_titolo_accent_en: String
+  sezione4_titolo_en: String
+  sezione4_sottotitolo_en: String
+  sezione4_cta_label_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CorpoPersonalTrainerStatsFilter {
+  numero: StringFilter
+  etichetta: StringFilter
+  etichetta_en: StringFilter
+}
+
+input CorpoPersonalTrainerTrainersFilter {
+  nome: StringFilter
+  foto: ImageFilter
+  specializzazioni: StringFilter
+  qualifiche: StringFilter
+  lingue: StringFilter
+  specializzazioni_en: StringFilter
+  qualifiche_en: StringFilter
+  lingue_en: StringFilter
+}
+
+input CorpoPersonalTrainerStepsFilter {
+  titolo: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input CorpoPersonalTrainerFilter {
+  sezione1_eyebrow: StringFilter
+  sezione1_titolo: StringFilter
+  sezione1_titolo_accent: StringFilter
+  sezione1_paragrafo1: StringFilter
+  sezione1_paragrafo2: StringFilter
+  stats: CorpoPersonalTrainerStatsFilter
+  sezione2_eyebrow: StringFilter
+  sezione2_titolo: StringFilter
+  sezione2_titolo_accent: StringFilter
+  trainers: CorpoPersonalTrainerTrainersFilter
+  sezione3_eyebrow: StringFilter
+  sezione3_titolo: StringFilter
+  sezione3_titolo_accent: StringFilter
+  steps: CorpoPersonalTrainerStepsFilter
+  sezione4_titolo: StringFilter
+  sezione4_sottotitolo: StringFilter
+  sezione4_cta_label: StringFilter
+  sezione1_eyebrow_en: StringFilter
+  sezione1_titolo_en: StringFilter
+  sezione1_titolo_accent_en: StringFilter
+  sezione1_paragrafo1_en: StringFilter
+  sezione1_paragrafo2_en: StringFilter
+  sezione2_eyebrow_en: StringFilter
+  sezione2_titolo_en: StringFilter
+  sezione2_titolo_accent_en: StringFilter
+  sezione3_eyebrow_en: StringFilter
+  sezione3_titolo_en: StringFilter
+  sezione3_titolo_accent_en: StringFilter
+  sezione4_titolo_en: StringFilter
+  sezione4_sottotitolo_en: StringFilter
+  sezione4_cta_label_en: StringFilter
+}
+
+type CorpoPersonalTrainerConnectionEdges {
+  cursor: String!
+  node: CorpoPersonalTrainer
+}
+
+type CorpoPersonalTrainerConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CorpoPersonalTrainerConnectionEdges]
+}
+
 type Info implements Node & Document {
   indirizzo: String!
   come_arrivare: String!
@@ -813,6 +946,8 @@ type Mutation {
   createCorpoSummerCamps(relativePath: String!, params: CorpoSummerCampsMutation!): CorpoSummerCamps!
   updateCorpoScuolaTennis(relativePath: String!, params: CorpoScuolaTennisMutation!): CorpoScuolaTennis!
   createCorpoScuolaTennis(relativePath: String!, params: CorpoScuolaTennisMutation!): CorpoScuolaTennis!
+  updateCorpoPersonalTrainer(relativePath: String!, params: CorpoPersonalTrainerMutation!): CorpoPersonalTrainer!
+  createCorpoPersonalTrainer(relativePath: String!, params: CorpoPersonalTrainerMutation!): CorpoPersonalTrainer!
   updateInfo(relativePath: String!, params: InfoMutation!): Info!
   createInfo(relativePath: String!, params: InfoMutation!): Info!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
@@ -830,6 +965,7 @@ input DocumentUpdateMutation {
   corpoStoria: CorpoStoriaMutation
   corpoSummerCamps: CorpoSummerCampsMutation
   corpoScuolaTennis: CorpoScuolaTennisMutation
+  corpoPersonalTrainer: CorpoPersonalTrainerMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -844,6 +980,7 @@ input DocumentMutation {
   corpoStoria: CorpoStoriaMutation
   corpoSummerCamps: CorpoSummerCampsMutation
   corpoScuolaTennis: CorpoScuolaTennisMutation
+  corpoPersonalTrainer: CorpoPersonalTrainerMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -1036,6 +1173,64 @@ input CorpoScuolaTennisMutation {
   sezione4_titolo_en: String
   sezione4_titolo_accent_en: String
   sezione4_footer_testo_en: String
+}
+
+input CorpoPersonalTrainerStatsMutation {
+  numero: String
+  etichetta: String
+  etichetta_en: String
+}
+
+input CorpoPersonalTrainerTrainersMutation {
+  nome: String
+  foto: String
+  specializzazioni: [String]
+  qualifiche: [String]
+  lingue: [String]
+  specializzazioni_en: [String]
+  qualifiche_en: [String]
+  lingue_en: [String]
+}
+
+input CorpoPersonalTrainerStepsMutation {
+  titolo: String
+  testo: String
+  titolo_en: String
+  testo_en: String
+}
+
+input CorpoPersonalTrainerMutation {
+  sezione1_eyebrow: String
+  sezione1_titolo: String
+  sezione1_titolo_accent: String
+  sezione1_paragrafo1: String
+  sezione1_paragrafo2: String
+  stats: [CorpoPersonalTrainerStatsMutation]
+  sezione2_eyebrow: String
+  sezione2_titolo: String
+  sezione2_titolo_accent: String
+  trainers: [CorpoPersonalTrainerTrainersMutation]
+  sezione3_eyebrow: String
+  sezione3_titolo: String
+  sezione3_titolo_accent: String
+  steps: [CorpoPersonalTrainerStepsMutation]
+  sezione4_titolo: String
+  sezione4_sottotitolo: String
+  sezione4_cta_label: String
+  sezione1_eyebrow_en: String
+  sezione1_titolo_en: String
+  sezione1_titolo_accent_en: String
+  sezione1_paragrafo1_en: String
+  sezione1_paragrafo2_en: String
+  sezione2_eyebrow_en: String
+  sezione2_titolo_en: String
+  sezione2_titolo_accent_en: String
+  sezione3_eyebrow_en: String
+  sezione3_titolo_en: String
+  sezione3_titolo_accent_en: String
+  sezione4_titolo_en: String
+  sezione4_sottotitolo_en: String
+  sezione4_cta_label_en: String
 }
 
 input InfoMutation {

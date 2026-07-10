@@ -184,6 +184,62 @@ fragment CorpoScuolaTennisParts on CorpoScuolaTennis {
   sezione4_footer_testo_en
 }
 
+fragment CorpoPersonalTrainerParts on CorpoPersonalTrainer {
+  __typename
+  sezione1_eyebrow
+  sezione1_titolo
+  sezione1_titolo_accent
+  sezione1_paragrafo1
+  sezione1_paragrafo2
+  stats {
+    __typename
+    numero
+    etichetta
+    etichetta_en
+  }
+  sezione2_eyebrow
+  sezione2_titolo
+  sezione2_titolo_accent
+  trainers {
+    __typename
+    nome
+    foto
+    specializzazioni
+    qualifiche
+    lingue
+    specializzazioni_en
+    qualifiche_en
+    lingue_en
+  }
+  sezione3_eyebrow
+  sezione3_titolo
+  sezione3_titolo_accent
+  steps {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  sezione4_titolo
+  sezione4_sottotitolo
+  sezione4_cta_label
+  sezione1_eyebrow_en
+  sezione1_titolo_en
+  sezione1_titolo_accent_en
+  sezione1_paragrafo1_en
+  sezione1_paragrafo2_en
+  sezione2_eyebrow_en
+  sezione2_titolo_en
+  sezione2_titolo_accent_en
+  sezione3_eyebrow_en
+  sezione3_titolo_en
+  sezione3_titolo_accent_en
+  sezione4_titolo_en
+  sezione4_sottotitolo_en
+  sezione4_cta_label_en
+}
+
 fragment InfoParts on Info {
   __typename
   indirizzo

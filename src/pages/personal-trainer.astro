@@ -2,55 +2,15 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
 import MembershipSection from "../components/MembershipSection.astro";
+import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/personal-trainer.md
 const d = (await getEntry("pagine", "personal-trainer"))!.data;
 
-interface Trainer {
-  name: string;
-  specializzazioni: string[];
-  qualifiche: string[];
-  lingue?: string[];
-  imgName: string;
-}
-
-const trainers: Trainer[] = [
-  {
-    name: 'Alessio Andolina',
-    specializzazioni: ['Sport da combattimento, Boxe, Kickboxing', 'Crossfit e High Intensity Training', 'Preparazione atletica specifica'],
-    qualifiche: ['Atleta professionista sport da combattimento', 'Maestro Kick Boxing', 'Istruttore Kettlebell'],
-    lingue: ['Italiano'],
-    imgName: 'Alessio Andolina.jpg',
-  },
-  {
-    name: 'Federico Tronconi',
-    specializzazioni: ['Allenamento funzionale e Kettlebell', 'Allenamento della forza', 'Sport da combattimento (boxe, kick boxing, K-1)'],
-    qualifiche: ['Personal trainer certificato', 'Preparatore atletico sport da combattimento'],
-    lingue: ['Italiano', 'Francese'],
-    imgName: 'Federico Tronconi.jpg',
-  },
-  {
-    name: 'Giusi De Rosa',
-    specializzazioni: ['Body Building', 'Allenamento funzionale', 'Allenamento al femminile', 'Ricomposizione corporea', 'Allenamento in mini gruppi'],
-    qualifiche: ['Personal trainer certificato e docente A.I.F.', 'Specialista funzionale'],
-    lingue: ['Italiano', 'Inglese'],
-    imgName: 'Giusi De Rosa.jpg',
-  },
-  {
-    name: 'Matteo Sandri',
-    specializzazioni: ['Allenamento della forza', 'Preparazione sport-specifica', 'Recupero post-operatorio', 'Postura'],
-    qualifiche: ['Laurea in scienze motorie', 'Esercizio correttivo', 'Esercizio terapeutico per patologie articolari'],
-    lingue: ['Italiano'],
-    imgName: 'Matteo Sandri.jpg',
-  },
-  {
-    name: 'Elisa Borgo',
-    specializzazioni: ['Recupero post infortunio', 'Fitness in gravidanza e post parto', 'Postura'],
-    qualifiche: ['Laurea in scienze motorie e dello sport', 'Certificazione istruttore pilates 1° livello (Ref e Mat)', 'Certificazione PT ISSA'],
-    imgName: 'Elisa Borgo.jpg',
-  },
-];
+// Corpo pagina (intro, team, come funziona, CTA) → src/content/corpoPersonalTrainer/corpo.md
+const c = (await getEntry("corpoPersonalTrainer", "corpo"))!.data;
+const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 ---
 
 <BaseLayout
@@ -72,32 +32,18 @@ const trainers: Trainer[] = [
     <div class="intro-section__inner">
       <div class="intro-split">
         <div class="intro-split__text">
-          <span class="eyebrow">Il tuo allenamento</span>
-          <h2 class="pt-title">Allenarti bene<br><em>è una scienza.</em></h2>
-          <p>
-            Ogni persona è diversa: storia clinica, obiettivi, tempi di recupero, motivazioni. I nostri personal trainer partono da un assessment iniziale approfondito per costruire un programma che ti porti risultati reali, senza sprecare energia né tempo.
-          </p>
-          <p>
-            Che tu voglia perdere peso, aumentare la forza, prepararti per una gara di tennis o semplicemente muoverti meglio, lavorerai sempre con qualcuno che sa dove vuole portarti.
-          </p>
+          <span class="eyebrow">{c.sezione1_eyebrow}</span>
+          <h2 class="pt-title">{c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent}</em></h2>
+          <p>{c.sezione1_paragrafo1}</p>
+          <p>{c.sezione1_paragrafo2}</p>
         </div>
         <div class="intro-split__stats">
-          <div class="stat-item">
-            <span class="stat-num">5</span>
-            <span class="stat-label">Personal Trainer<br>certificati</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-num">1:1</span>
-            <span class="stat-label">Sedute individuali<br>o in coppia</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-num">60'</span>
-            <span class="stat-label">Durata standard<br>per sessione</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-num">∞</span>
-            <span class="stat-label">Obiettivi<br>raggiungibili</span>
-          </div>
+          {c.stats.map((s) => (
+            <div class="stat-item">
+              <span class="stat-num">{s.numero}</span>
+              <span class="stat-label" set:html={nl2br(s.etichetta)} />
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -108,8 +54,8 @@ const trainers: Trainer[] = [
     <div class="team-section__inner">
       <div class="team-head">
         <div>
-          <span class="eyebrow">Il Team</span>
-          <h2 class="pt-title">Conosci i tuoi<br><em>trainer.</em></h2>
+          <span class="eyebrow">{c.sezione2_eyebrow}</span>
+          <h2 class="pt-title">{c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent}</em></h2>
         </div>
         <div class="trainer-nav">
           <button class="courses-btn" data-dir="-1" data-track="trainers" aria-label="Precedente">
@@ -123,13 +69,15 @@ const trainers: Trainer[] = [
 
       <div class="trainer-track-wrap">
         <div class="trainer-track" data-carousel-id="trainers">
-          {trainers.map((trainer) => (
+          {c.trainers.map((trainer) => (
             <article class="trainer-card">
               <div class="trainer-card__media">
-                <div class="img-placeholder" data-name={trainer.imgName}></div>
+                {trainer.foto
+                  ? <img src={publicUrl(trainer.foto)} alt={trainer.nome} class="trainer-card__img" />
+                  : <div class="img-placeholder" data-name={`${trainer.nome}.jpg`}></div>}
               </div>
               <div class="trainer-card__body">
-                <h3 class="trainer-card__name">{trainer.name}</h3>
+                <h3 class="trainer-card__name">{trainer.nome}</h3>
                 <ul class="trainer-card__specs">
                   {trainer.specializzazioni.map(s => (
                     <li><span class="spec-tag">{s}</span></li>
@@ -141,7 +89,7 @@ const trainers: Trainer[] = [
                     {trainer.qualifiche.map(q => <li>{q}</li>)}
                   </ul>
                 </div>
-                {trainer.lingue && (
+                {trainer.lingue && trainer.lingue.length > 0 && (
                   <p class="trainer-card__langs"><strong>Lingue parlate:</strong> {trainer.lingue.join(', ')}</p>
                 )}
               </div>
@@ -155,30 +103,17 @@ const trainers: Trainer[] = [
   <!-- ── Come funziona ── -->
   <section class="flow-section">
     <div class="flow-section__inner">
-      <span class="eyebrow">Come funziona</span>
-      <h2 class="pt-title">Dal primo giorno<br><em>al tuo obiettivo.</em></h2>
+      <span class="eyebrow">{c.sezione3_eyebrow}</span>
+      <h2 class="pt-title">{c.sezione3_titolo}<br><em>{c.sezione3_titolo_accent}</em></h2>
 
       <div class="flow-steps">
-        <div class="flow-step">
-          <span class="flow-step__num">01</span>
-          <h3>Assessment iniziale</h3>
-          <p>Incontro gratuito con il trainer per valutare postura, mobilità, forza e definire gli obiettivi.</p>
-        </div>
-        <div class="flow-step">
-          <span class="flow-step__num">02</span>
-          <h3>Programma su misura</h3>
-          <p>Il trainer costruisce un piano periodizzato settimana per settimana, adattato ai tuoi tempi e alla tua condizione.</p>
-        </div>
-        <div class="flow-step">
-          <span class="flow-step__num">03</span>
-          <h3>Allenamento & monitoraggio</h3>
-          <p>Sessioni guidate in sala attrezzi con feedback continuo e aggiornamenti progressivi del programma.</p>
-        </div>
-        <div class="flow-step">
-          <span class="flow-step__num">04</span>
-          <h3>Risultati misurabili</h3>
-          <p>Rivalutazione periodica per tracciare i progressi e aggiustare la rotta. Ogni dato conta.</p>
-        </div>
+        {c.steps.map((s, i) => (
+          <div class="flow-step">
+            <span class="flow-step__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{s.titolo}</h3>
+            <p>{s.testo}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -186,9 +121,9 @@ const trainers: Trainer[] = [
   <!-- ── CTA contatto ── -->
   <section class="pt-cta-section">
     <div class="pt-cta-section__inner">
-      <h2 class="pt-cta-title">Pronto a iniziare?</h2>
-      <p class="pt-cta-sub">Prenota una sessione di assessment gratuita con uno dei nostri trainer. Nessun impegno: solo un'ora per capire come allenarti meglio.</p>
-      <button type="button" class="btn btn-red" data-open-modal="modal-contatti">Prenota il tuo assessment gratuito</button>
+      <h2 class="pt-cta-title">{c.sezione4_titolo}</h2>
+      <p class="pt-cta-sub">{c.sezione4_sottotitolo}</p>
+      <button type="button" class="btn btn-red" data-open-modal="modal-contatti">{c.sezione4_cta_label}</button>
     </div>
   </section>
 
@@ -355,6 +290,13 @@ const trainers: Trainer[] = [
     width: 100%;
     height: 100%;
     min-height: unset;
+  }
+
+  .trainer-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .trainer-card__body {

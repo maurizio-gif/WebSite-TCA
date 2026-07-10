@@ -301,6 +301,67 @@ const corpoScuolaTennis = defineCollection({
   }),
 });
 
+// ─── CORPO PAGINA: PERSONAL TRAINER ───────────────────────────────────────────
+// Contenuto sotto l'hero della pagina Personal Trainer (intro, team, come
+// funziona, CTA finale).
+// File unico, gestibile da TinaCMS → collection 'corpoPersonalTrainer'.
+// ─────────────────────────────────────────────────────────────────────────────
+const corpoPersonalTrainer = defineCollection({
+  type: 'content',
+  schema: z.object({
+    sezione1_eyebrow: z.string(),
+    sezione1_titolo: z.string(),
+    sezione1_titolo_accent: z.string(),
+    sezione1_paragrafo1: z.string(),
+    sezione1_paragrafo2: z.string(),
+    stats: z.array(z.object({
+      numero: z.string(),
+      etichetta: z.string(),
+      etichetta_en: z.string().optional(),
+    })),
+    sezione2_eyebrow: z.string(),
+    sezione2_titolo: z.string(),
+    sezione2_titolo_accent: z.string(),
+    trainers: z.array(z.object({
+      nome: z.string(),
+      foto: z.string().optional(),
+      specializzazioni: z.array(z.string()),
+      qualifiche: z.array(z.string()),
+      lingue: z.array(z.string()).optional(),
+      specializzazioni_en: z.array(z.string()).optional(),
+      qualifiche_en: z.array(z.string()).optional(),
+      lingue_en: z.array(z.string()).optional(),
+    })),
+    sezione3_eyebrow: z.string(),
+    sezione3_titolo: z.string(),
+    sezione3_titolo_accent: z.string(),
+    steps: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })),
+    sezione4_titolo: z.string(),
+    sezione4_sottotitolo: z.string(),
+    sezione4_cta_label: z.string(),
+    // Versione inglese (opzionale): se assente si usa il fallback italiano
+    sezione1_eyebrow_en: z.string().optional(),
+    sezione1_titolo_en: z.string().optional(),
+    sezione1_titolo_accent_en: z.string().optional(),
+    sezione1_paragrafo1_en: z.string().optional(),
+    sezione1_paragrafo2_en: z.string().optional(),
+    sezione2_eyebrow_en: z.string().optional(),
+    sezione2_titolo_en: z.string().optional(),
+    sezione2_titolo_accent_en: z.string().optional(),
+    sezione3_eyebrow_en: z.string().optional(),
+    sezione3_titolo_en: z.string().optional(),
+    sezione3_titolo_accent_en: z.string().optional(),
+    sezione4_titolo_en: z.string().optional(),
+    sezione4_sottotitolo_en: z.string().optional(),
+    sezione4_cta_label_en: z.string().optional(),
+  }),
+});
+
 // ─── INFO CLUB ────────────────────────────────────────────────────────────────
 // File unico (club.md) con i dati pratici del Club mostrati in tutto il sito:
 // orari, indirizzo, contatti. Gestibile da TinaCMS → collection 'info'.
@@ -319,4 +380,4 @@ const info = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, planning, corpoStoria, corpoSummerCamps, corpoScuolaTennis, info };
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, corpoStoria, corpoSummerCamps, corpoScuolaTennis, corpoPersonalTrainer, info };
