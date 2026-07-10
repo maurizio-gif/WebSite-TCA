@@ -72,8 +72,11 @@ fragment NewsParts on News {
   immagine
   immagine_alt
   pubblicato
+  cta_label
+  cta_href
   titolo_en
   categoria_en
+  cta_label_en
   sintesi_en
   immagine_alt_en
   corpo_en
