@@ -1,5 +1,5 @@
 ---
-_template: regolamento
+_template: generica
 title: "Regolamento del Club | Tennis Club Ambrosiano Milano"
 description: "Il regolamento del Tennis Club Ambrosiano: accesso al Club, campi da tennis e padel, palestra e corsi, spogliatoi, segreteria e norme generali."
 hero_eyebrow: "Aggiornato a giugno 2026"
