@@ -8,6 +8,9 @@ node_modules/
 # astro
 .astro/
 
+# tinacms (bundle admin generato da `tinacms build`)
+public/admin/
+
 # environment variables
 .env
 .env.production
