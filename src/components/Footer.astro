@@ -95,13 +95,13 @@ const columns = [
       <h3 class="footer__heading">{t.footer.legal}</h3>
       <ul class="footer__list">
         <li><a class="footer__link" href={p('/regolamento')}>{t.footer.regolamento}</a></li>
+        <li><a class="footer__link" href={p('/privacy-policy')}>{t.footer.privacy}</a></li>
         {legal.codice_condotta && (
           <li><a class="footer__link" href={publicUrl(legal.codice_condotta)} target="_blank" rel="noopener">{t.footer.modelloCondotta}</a></li>
         )}
         {legal.nomina_responsabile && (
           <li><a class="footer__link" href={publicUrl(legal.nomina_responsabile)} target="_blank" rel="noopener">{t.footer.nominaSafeguarding}</a></li>
         )}
-        {/* Privacy Policy verrà aggiunta qui non appena la pagina sarà pronta. */}
       </ul>
     </div>
   </div>
