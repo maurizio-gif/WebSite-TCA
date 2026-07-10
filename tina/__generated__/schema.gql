@@ -109,7 +109,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | Folder
+union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -1061,7 +1061,30 @@ type PagineTorneo_avvenire implements Node & Document {
   _values: JSON!
 }
 
-union Pagine = PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire
+type PagineRegolamento implements Node & Document {
+  title: String!
+  description: String!
+  hero_eyebrow: String
+  hero_titolo: String
+  hero_titolo_accent: String
+  hero_sottotitolo: String
+  hero_immagine: String
+  hero_immagine_alt: String
+  title_en: String
+  description_en: String
+  hero_eyebrow_en: String
+  hero_titolo_en: String
+  hero_titolo_accent_en: String
+  hero_sottotitolo_en: String
+  hero_immagine_alt_en: String
+  regolamento_body: String!
+  regolamento_body_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+union Pagine = PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento
 
 input PagineGenericaFilter {
   title: StringFilter
@@ -1583,6 +1606,26 @@ input PagineTorneo_avvenireFilter {
   torneo_prossima_testo_en: StringFilter
 }
 
+input PagineRegolamentoFilter {
+  title: StringFilter
+  description: StringFilter
+  hero_eyebrow: StringFilter
+  hero_titolo: StringFilter
+  hero_titolo_accent: StringFilter
+  hero_sottotitolo: StringFilter
+  hero_immagine: StringFilter
+  hero_immagine_alt: StringFilter
+  title_en: StringFilter
+  description_en: StringFilter
+  hero_eyebrow_en: StringFilter
+  hero_titolo_en: StringFilter
+  hero_titolo_accent_en: StringFilter
+  hero_sottotitolo_en: StringFilter
+  hero_immagine_alt_en: StringFilter
+  regolamento_body: StringFilter
+  regolamento_body_en: StringFilter
+}
+
 input PagineFilter {
   generica: PagineGenericaFilter
   storia: PagineStoriaFilter
@@ -1593,6 +1636,7 @@ input PagineFilter {
   tennis: PagineTennisFilter
   agonistica: PagineAgonisticaFilter
   torneo_avvenire: PagineTorneo_avvenireFilter
+  regolamento: PagineRegolamentoFilter
 }
 
 type PagineConnectionEdges {
@@ -2301,6 +2345,26 @@ input PagineTorneo_avvenireMutation {
   torneo_prossima_testo_en: String
 }
 
+input PagineRegolamentoMutation {
+  title: String
+  description: String
+  hero_eyebrow: String
+  hero_titolo: String
+  hero_titolo_accent: String
+  hero_sottotitolo: String
+  hero_immagine: String
+  hero_immagine_alt: String
+  title_en: String
+  description_en: String
+  hero_eyebrow_en: String
+  hero_titolo_en: String
+  hero_titolo_accent_en: String
+  hero_sottotitolo_en: String
+  hero_immagine_alt_en: String
+  regolamento_body: String
+  regolamento_body_en: String
+}
+
 input PagineMutation {
   generica: PagineGenericaMutation
   storia: PagineStoriaMutation
@@ -2311,6 +2375,7 @@ input PagineMutation {
   tennis: PagineTennisMutation
   agonistica: PagineAgonisticaMutation
   torneo_avvenire: PagineTorneo_avvenireMutation
+  regolamento: PagineRegolamentoMutation
 }
 
 schema {
