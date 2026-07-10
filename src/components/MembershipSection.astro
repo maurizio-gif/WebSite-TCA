@@ -19,6 +19,27 @@ const cellClass = (tipo: string, isPlat: boolean) => {
 };
 
 const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Registration';
+
+// Il tfoot è emesso via set:html per aggirare un bug del compilatore Astro:
+// un elemento di formattazione (<a>) in coda a una <table> viene "ricostruito"
+// duplicato (vuoto ma cliccabile) dopo ogni contenitore chiuso. Con set:html
+// il compilatore non parsa il markup e il problema sparisce. NB: le classi
+// usate qui sotto richiedono selettori :global negli stili scoped.
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const ctaLabel = esc(tx(m.cta_label, m.cta_label_en));
+const footHtml = `
+  <tr class="ms__foot-row">
+    <td class="ms__foot-cell ms__foot-cell--feat"></td>
+    <td class="ms__foot-cell ms__foot-cell--silver">
+      <a class="ms__discover" href="${REGISTER_URL}" target="_blank" rel="noopener noreferrer">${ctaLabel}</a>
+    </td>
+    <td class="ms__foot-cell ms__foot-cell--gold">
+      <a class="ms__discover" href="${REGISTER_URL}" target="_blank" rel="noopener noreferrer">${ctaLabel}</a>
+    </td>
+    <td class="ms__foot-cell ms__foot-cell--platinum">
+      <a class="ms__discover ms__discover--plat" href="${REGISTER_URL}" target="_blank" rel="noopener noreferrer">${ctaLabel}</a>
+    </td>
+  </tr>`;
 ---
 
 <section class="ms">
@@ -94,20 +115,7 @@ const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Regist
             </>
           ))}
         </tbody>
-        <tfoot>
-          <tr class="ms__foot-row">
-            <td class="ms__foot-cell ms__foot-cell--feat"></td>
-            <td class="ms__foot-cell ms__foot-cell--silver">
-              <a class="ms__discover" href={REGISTER_URL} target="_blank" rel="noopener noreferrer">{tx(m.cta_label, m.cta_label_en)}</a>
-            </td>
-            <td class="ms__foot-cell ms__foot-cell--gold">
-              <a class="ms__discover" href={REGISTER_URL} target="_blank" rel="noopener noreferrer">{tx(m.cta_label, m.cta_label_en)}</a>
-            </td>
-            <td class="ms__foot-cell ms__foot-cell--platinum">
-              <a class="ms__discover ms__discover--plat" href={REGISTER_URL} target="_blank" rel="noopener noreferrer">{tx(m.cta_label, m.cta_label_en)}</a>
-            </td>
-          </tr>
-        </tfoot>
+        <tfoot set:html={footHtml} />
       </table>
     </div>
 
@@ -222,8 +230,9 @@ const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Regist
     margin-bottom: 8px;
   }
 
-  /* Bottone "Scopri di più" */
-  .ms__discover {
+  /* Bottone "Scopri di più" — :global perché il tfoot è emesso via set:html
+     (vedi nota nel frontmatter) e non riceve l'attributo di scoping */
+  .ms__table :global(.ms__discover) {
     display: inline-block;
     font-family: var(--font-display);
     font-size: clamp(12px, 1vw, 14px);
@@ -239,19 +248,19 @@ const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Regist
     white-space: nowrap;
   }
 
-  .ms__discover:hover {
+  .ms__table :global(.ms__discover:hover) {
     background: #333;
     border-color: #333;
     color: #fff;
   }
 
-  .ms__discover--plat {
+  .ms__table :global(.ms__discover--plat) {
     background: var(--color-accent);
     border-color: var(--color-accent);
     color: #fff;
   }
 
-  .ms__discover--plat:hover {
+  .ms__table :global(.ms__discover--plat:hover) {
     background: var(--color-accent-dark);
     border-color: var(--color-accent-dark);
     color: #fff;
@@ -384,18 +393,18 @@ const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Regist
 
   .ms__cell--plat { background: rgba(139, 26, 26, 0.04); }
 
-  /* ── Footer row (Scopri di più) ── */
-  .ms__foot-row { border-top: 1px solid var(--color-border); }
+  /* ── Footer row (Scopri di più) — :global per il set:html del tfoot ── */
+  .ms__table :global(.ms__foot-row) { border-top: 1px solid var(--color-border); }
 
-  .ms__foot-cell {
+  .ms__table :global(.ms__foot-cell) {
     padding: 20px 20px;
     text-align: center;
     background: var(--color-off-white);
     vertical-align: middle;
   }
 
-  .ms__foot-cell--feat { background: var(--color-bg); }
-  .ms__foot-cell--platinum { background: #FBF3F3; }
+  .ms__table :global(.ms__foot-cell--feat) { background: var(--color-bg); }
+  .ms__table :global(.ms__foot-cell--platinum) { background: #FBF3F3; }
 
   /* ── MOBILE: scroll orizzontale + prima colonna sticky ── */
   @media (max-width: 768px) {
@@ -452,7 +461,7 @@ const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Regist
     .ms__th--feat,
     .ms__feat,
     .ms__cat-row .ms__cat-label,
-    .ms__foot-cell--feat {
+    .ms__table :global(.ms__foot-cell--feat) {
       position: sticky;
       left: 0;
       z-index: 2;
@@ -477,7 +486,7 @@ const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Regist
     }
 
     /* Footer prima colonna */
-    .ms__foot-cell--feat {
+    .ms__table :global(.ms__foot-cell--feat) {
       background: var(--color-bg);
     }
 
@@ -507,7 +516,7 @@ const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Regist
       margin-bottom: 6px;
     }
 
-    .ms__discover {
+    .ms__table :global(.ms__discover) {
       font-size: 12px;
       padding: 12px 20px;
       width: 100%;
