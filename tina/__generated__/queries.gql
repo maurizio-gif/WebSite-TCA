@@ -493,6 +493,171 @@ query membershipConnection($before: String, $after: String, $first: Float, $last
   }
 }
 
+query corpoTennis($relativePath: String!) {
+  corpoTennis(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoTennisParts
+  }
+}
+
+query corpoTennisConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoTennisFilter) {
+  corpoTennisConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoTennisParts
+      }
+    }
+  }
+}
+
+query corpoAgonistica($relativePath: String!) {
+  corpoAgonistica(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoAgonisticaParts
+  }
+}
+
+query corpoAgonisticaConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoAgonisticaFilter) {
+  corpoAgonisticaConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoAgonisticaParts
+      }
+    }
+  }
+}
+
+query corpoTorneoAvvenire($relativePath: String!) {
+  corpoTorneoAvvenire(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoTorneoAvvenireParts
+  }
+}
+
+query corpoTorneoAvvenireConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoTorneoAvvenireFilter) {
+  corpoTorneoAvvenireConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoTorneoAvvenireParts
+      }
+    }
+  }
+}
+
 query info($relativePath: String!) {
   info(relativePath: $relativePath) {
     ... on Document {

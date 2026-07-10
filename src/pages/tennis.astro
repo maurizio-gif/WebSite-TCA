@@ -8,6 +8,10 @@ import { getEntry } from "astro:content";
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/tennis.md
 const d = (await getEntry("pagine", "tennis"))!.data;
+
+// Corpo pagina (titoli e testi; le foto restano fisse) → src/content/corpoTennis/corpo.md
+const c = (await getEntry("corpoTennis", "corpo"))!.data;
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
 <BaseLayout
@@ -30,23 +34,23 @@ const d = (await getEntry("pagine", "tennis"))!.data;
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">I nostri campi</span>
-      <h2 class="section-title">16 Campi.<br><em>Tutte le superfici.</em></h2>
+      <span class="eyebrow">{c.campi_eyebrow}</span>
+      <h2 class="section-title">{c.campi_titolo}<br><em>{c.campi_titolo_accent}</em></h2>
       <div class="content-grid">
         <div class="content-card">
           <img src={publicUrl('/0b28cd5a-d9a8-4ffb-b8de-e5c6e675fbd2_TCA+Tennis+4.avif')} alt="Campo in terra rossa visto dall'alto durante una lezione" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>Terra Rossa</h3>
-          <p>Campi Omologati FITP, perfetti per il gioco di ogni livello.</p>
+          <h3>{c.campi[0].titolo}</h3>
+          <p>{c.campi[0].testo}</p>
         </div>
         <div class="content-card">
           <img src={publicUrl('/Tennis%20court%20indoor.jpeg')} alt="Campo da tennis indoor del Tennis Club Ambrosiano" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>Campi Indoor</h3>
-          <p>Strutture coperte, illuminate e riscaldate per giocare tutto l'anno.</p>
+          <h3>{c.campi[1].titolo}</h3>
+          <p>{c.campi[1].testo}</p>
         </div>
         <div class="content-card">
           <img src={publicUrl('/3fc4b526-1192-4919-9507-0700f9dbd3bd_TCA+Tennis+2.avif')} alt="Giocatrice in azione su superficie rapida" style="width:100%;height:220px;object-fit:cover;display:block" loading="lazy" />
-          <h3>Rapida</h3>
-          <p>Superficie sintetica adatta al gioco veloce e alle esigenze di tutti i livelli.</p>
+          <h3>{c.campi[2].titolo}</h3>
+          <p>{c.campi[2].testo}</p>
         </div>
       </div>
     </div>
@@ -54,9 +58,9 @@ const d = (await getEntry("pagine", "tennis"))!.data;
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">Per i nostri soci</span>
-      <h2 class="section-title">Sedici campi.<br><em>Sempre a tua disposizione.</em></h2>
-      <p class="section-lead">Diventa socio del Tennis Club Ambrosiano e gioca <strong>tutto l'anno sui nostri sedici campi</strong>, outdoor e indoor — e anche a padel, sui nostri campi dedicati. Ogni membership include un diverso livello di priorità nella prenotazione: scegli quella più adatta al tuo modo di giocare.</p>
+      <span class="eyebrow">{c.soci_eyebrow}</span>
+      <h2 class="section-title">{c.soci_titolo}<br><em>{c.soci_titolo_accent}</em></h2>
+      <p class="section-lead" set:html={mdBold(c.soci_testo)} />
     </div>
   </section>
 
@@ -66,29 +70,19 @@ const d = (await getEntry("pagine", "tennis"))!.data;
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">Corsi adulti</span>
-      <h2 class="section-title">Vuoi imparare o perfezionare<br><em>la tua tecnica?</em></h2>
-      <p class="section-lead">Non è mai troppo presto, né troppo tardi, per imparare il tennis o portare il tuo gioco al livello successivo. Al Tennis Club Ambrosiano organizziamo corsi per adulti di ogni età ed esperienza, con frequenza monosettimanale, bisettimanale o trisettimanale in base al tempo che vuoi dedicare al campo e agli obiettivi che vuoi raggiungere. <strong>Lezioni in piccoli gruppi o individuali, seguite dai nostri maestri federali FITP.</strong> Anche per il padel proponiamo lezioni individuali e di gruppo. Richiedi informazioni: ti aiutiamo a individuare la soluzione più adatta a te.</p>
+      <span class="eyebrow">{c.corsi_eyebrow}</span>
+      <h2 class="section-title">{c.corsi_titolo}<br><em>{c.corsi_titolo_accent}</em></h2>
+      <p class="section-lead" set:html={mdBold(c.corsi_intro)} />
       <div class="content-grid content-grid--4">
-        <div class="content-card content-card--simple">
-          <strong>Principianti</strong>
-          <p>Per chi inizia da zero. Gruppi ridotti, maestri pazienti, approccio graduale.</p>
-        </div>
-        <div class="content-card content-card--simple">
-          <strong>Intermedi</strong>
-          <p>Consolida la tecnica e migliora costanza e tattica nel gioco.</p>
-        </div>
-        <div class="content-card content-card--simple">
-          <strong>Avanzati</strong>
-          <p>Match play, analisi video e lavoro specifico sui colpi per giocatori competitivi.</p>
-        </div>
-        <div class="content-card content-card--simple">
-          <strong>Lezioni Private</strong>
-          <p>Lavoro one-to-one con il maestro. Intensità massima, progressi rapidi.</p>
-        </div>
+        {c.corsi_livelli.map((l) => (
+          <div class="content-card content-card--simple">
+            <strong>{l.titolo}</strong>
+            <p>{l.testo}</p>
+          </div>
+        ))}
       </div>
       <div class="section-cta">
-        <button class="btn btn-red" data-open-modal="modal-contatti">Richiedi Informazioni</button>
+        <button class="btn btn-red" data-open-modal="modal-contatti">{c.corsi_cta_label}</button>
       </div>
     </div>
   </section>

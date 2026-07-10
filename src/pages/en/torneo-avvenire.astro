@@ -3,66 +3,52 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import PhotoLightbox from "../../components/PhotoLightbox.astro";
 import { publicUrl } from "../../i18n/utils";
+import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/torneo-avvenire.md (campi _en)
+const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
+// Corpo pagina → src/content/corpoTorneoAvvenire/corpo.md
+const c = (await getEntry("corpoTorneoAvvenire", "corpo"))!.data;
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
 <BaseLayout
   lang={lang}
-  title="Avvenire Tournament | Tennis Club Ambrosiano Milan"
-  description="The Avvenire Tournament is the most important junior tennis tournament in Italy, hosted by Tennis Club Ambrosiano in Milan since 1965."
+  title={d.title_en ?? d.title}
+  description={d.description_en ?? d.description}
 >
   <PageHero
-    eyebrow="The Tournament"
-    title="Avvenire"
-    titleAccent="Tournament"
-    sub="The most important junior tennis tournament in Italy. Since 1965, TCA has hosted one of the most prestigious under-14 competitions in the world. Champions were born here."
-    image="/TCA_foto%20torneo%20Avvenire%202025.jpg"
-    imageAlt="Avvenire Tournament at Tennis Club Ambrosiano"
+    eyebrow={d.hero_eyebrow_en ?? d.hero_eyebrow}
+    title={d.hero_titolo_en ?? d.hero_titolo}
+    titleAccent={d.hero_titolo_accent_en ?? d.hero_titolo_accent}
+    sub={d.hero_sottotitolo_en ?? d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
     ctaLabel="Discover the tournament"
   />
 
   <p class="torneo-quote">
-    "The tournament that never gets a prediction wrong"<span>— Rino Tommasi</span>
+    {c.quote_testo_en ?? c.quote_testo}<span>{c.quote_autore_en ?? c.quote_autore}</span>
   </p>
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">The history</span>
-      <h2 class="section-title">A legendary<br><em>tournament.</em></h2>
+      <span class="eyebrow">{c.storia_eyebrow_en ?? c.storia_eyebrow}</span>
+      <h2 class="section-title">{c.storia_titolo_en ?? c.storia_titolo}<br><em>{c.storia_titolo_accent_en ?? c.storia_titolo_accent}</em></h2>
       <div class="torneo-intro">
-        <p class="body-text">
-          The Avvenire Tournament is one of the most important junior tennis events in the
-          world, igniting the dreams of young talents on the courts of Tennis Club Ambrosiano
-          since 1965. TCA has hosted the best under-16 and under-14 talents from across the
-          globe. On these clay courts, champions destined to write the history of world tennis
-          took their first steps — from <strong>Björn Borg</strong> to <strong>Roger Federer</strong>,
-          from <strong>Martina Hingis</strong> to <strong>Novak Djokovic</strong>.
-        </p>
-        <p class="body-text">
-          Since 2025 the Avvenire Tournament has become a prestigious <strong>Under-14 Super
-          Category</strong> tournament, the highest level of international junior tennis,
-          continuing its mission of discovering and nurturing tomorrow's champions.
-        </p>
+        <p class="body-text" set:html={mdBold(c.storia_paragrafo1_en ?? c.storia_paragrafo1)} />
+        <p class="body-text" set:html={mdBold(c.storia_paragrafo2_en ?? c.storia_paragrafo2)} />
       </div>
 
       <div class="stats-row">
-        <div class="stat">
-          <span class="stat__n">60+</span>
-          <span class="stat__label">Years of history</span>
-        </div>
-        <div class="stat">
-          <span class="stat__n">40+</span>
-          <span class="stat__label">Countries represented</span>
-        </div>
-        <div class="stat">
-          <span class="stat__n">U14</span>
-          <span class="stat__label">Super Category</span>
-        </div>
-        <div class="stat">
-          <span class="stat__n">57</span>
-          <span class="stat__label">Grand Slam titles won by our former players</span>
-        </div>
+        {c.stats.map((s) => (
+          <div class="stat">
+            <span class="stat__n">{s.numero}</span>
+            <span class="stat__label">{s.label_en ?? s.label}</span>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -70,10 +56,10 @@ const lang = 'en' as const;
   <!-- ── Champions who played the Avvenire ── -->
   <section class="content-section content-section--grey">
     <div class="content-section__inner">
-      <span class="eyebrow">Distinguished alumni</span>
-      <h2 class="section-title">Champions born<br><em>here.</em></h2>
+      <span class="eyebrow">{c.alumni_eyebrow_en ?? c.alumni_eyebrow}</span>
+      <h2 class="section-title">{c.alumni_titolo_en ?? c.alumni_titolo}<br><em>{c.alumni_titolo_accent_en ?? c.alumni_titolo_accent}</em></h2>
       <p class="body-text" style="max-width:64ch; margin-bottom:4vh;">
-        Some of the greatest names in world tennis took their first steps on TCA's courts, competing in the Avvenire Tournament as juniors.
+        {c.alumni_intro_en ?? c.alumni_intro}
       </p>
       <div class="champions-grid">
         <figure class="champion-fig">
@@ -139,8 +125,8 @@ const lang = 'en' as const;
   <!-- ── Recent editions gallery ── -->
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">Gallery</span>
-      <h2 class="section-title">The tournament<br><em>in pictures.</em></h2>
+      <span class="eyebrow">{c.galleria_eyebrow_en ?? c.galleria_eyebrow}</span>
+      <h2 class="section-title">{c.galleria_titolo_en ?? c.galleria_titolo}<br><em>{c.galleria_titolo_accent_en ?? c.galleria_titolo_accent}</em></h2>
       <div class="gallery-grid">
         <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Stretta%20di%20mano.jpg")} alt="Avvenire Tournament 2025 - handshake at the end of the match" loading="lazy" class="gallery-img gallery-img--wide" />
         <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Premiazione%20singolare.jpg")} alt="Avvenire Tournament 2025 - U14 winner's trophy ceremony" loading="lazy" class="gallery-img" />
@@ -157,11 +143,10 @@ const lang = 'en' as const;
 
   <section class="content-section content-section--dark">
     <div class="content-section__inner">
-      <span class="eyebrow eyebrow--grey">Next edition</span>
-      <h2 class="section-title section-title--light">2026<br><em>edition.</em></h2>
+      <span class="eyebrow eyebrow--grey">{c.prossima_eyebrow_en ?? c.prossima_eyebrow}</span>
+      <h2 class="section-title section-title--light">{c.prossima_titolo_en ?? c.prossima_titolo}<br><em>{c.prossima_titolo_accent_en ?? c.prossima_titolo_accent}</em></h2>
       <p class="body-text body-text--light">
-        Registration for the 2026 edition will be available on the Tennis Europe website.
-        Stay updated by following our official channels.
+        {c.prossima_testo_en ?? c.prossima_testo}
       </p>
     </div>
   </section>

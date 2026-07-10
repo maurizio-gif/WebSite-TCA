@@ -100,6 +100,12 @@ export type Query = {
   corpoPreparazioneAtleticaConnection: CorpoPreparazioneAtleticaConnection;
   membership: Membership;
   membershipConnection: MembershipConnection;
+  corpoTennis: CorpoTennis;
+  corpoTennisConnection: CorpoTennisConnection;
+  corpoAgonistica: CorpoAgonistica;
+  corpoAgonisticaConnection: CorpoAgonisticaConnection;
+  corpoTorneoAvvenire: CorpoTorneoAvvenire;
+  corpoTorneoAvvenireConnection: CorpoTorneoAvvenireConnection;
   info: Info;
   infoConnection: InfoConnection;
   helpdesk: Helpdesk;
@@ -267,6 +273,51 @@ export type QueryMembershipConnectionArgs = {
 };
 
 
+export type QueryCorpoTennisArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCorpoTennisConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoTennisFilter>;
+};
+
+
+export type QueryCorpoAgonisticaArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCorpoAgonisticaConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoAgonisticaFilter>;
+};
+
+
+export type QueryCorpoTorneoAvvenireArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryCorpoTorneoAvvenireConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoTorneoAvvenireFilter>;
+};
+
+
 export type QueryInfoArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -336,6 +387,9 @@ export type DocumentFilter = {
   corpoPersonalTrainer?: InputMaybe<CorpoPersonalTrainerFilter>;
   corpoPreparazioneAtletica?: InputMaybe<CorpoPreparazioneAtleticaFilter>;
   membership?: InputMaybe<MembershipFilter>;
+  corpoTennis?: InputMaybe<CorpoTennisFilter>;
+  corpoAgonistica?: InputMaybe<CorpoAgonisticaFilter>;
+  corpoTorneoAvvenire?: InputMaybe<CorpoTorneoAvvenireFilter>;
   info?: InputMaybe<InfoFilter>;
   helpdesk?: InputMaybe<HelpdeskFilter>;
   news?: InputMaybe<NewsFilter>;
@@ -379,7 +433,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | CorpoPreparazioneAtletica | Membership | Info | Helpdesk | News | Pagine | Folder;
+export type DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | CorpoPersonalTrainer | CorpoPreparazioneAtletica | Membership | CorpoTennis | CorpoAgonistica | CorpoTorneoAvvenire | Info | Helpdesk | News | Pagine | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -1300,6 +1354,273 @@ export type MembershipConnection = Connection & {
   edges?: Maybe<Array<Maybe<MembershipConnectionEdges>>>;
 };
 
+export type CorpoTennisCampi = {
+  __typename?: 'CorpoTennisCampi';
+  titolo: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoTennisCorsi_Livelli = {
+  __typename?: 'CorpoTennisCorsi_livelli';
+  titolo: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoTennis = Node & Document & {
+  __typename?: 'CorpoTennis';
+  campi_eyebrow: Scalars['String']['output'];
+  campi_titolo: Scalars['String']['output'];
+  campi_titolo_accent: Scalars['String']['output'];
+  campi: Array<CorpoTennisCampi>;
+  soci_eyebrow: Scalars['String']['output'];
+  soci_titolo: Scalars['String']['output'];
+  soci_titolo_accent: Scalars['String']['output'];
+  soci_testo: Scalars['String']['output'];
+  corsi_eyebrow: Scalars['String']['output'];
+  corsi_titolo: Scalars['String']['output'];
+  corsi_titolo_accent: Scalars['String']['output'];
+  corsi_intro: Scalars['String']['output'];
+  corsi_livelli: Array<CorpoTennisCorsi_Livelli>;
+  corsi_cta_label: Scalars['String']['output'];
+  campi_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  campi_titolo_en?: Maybe<Scalars['String']['output']>;
+  campi_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  soci_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  soci_titolo_en?: Maybe<Scalars['String']['output']>;
+  soci_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  soci_testo_en?: Maybe<Scalars['String']['output']>;
+  corsi_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  corsi_titolo_en?: Maybe<Scalars['String']['output']>;
+  corsi_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  corsi_intro_en?: Maybe<Scalars['String']['output']>;
+  corsi_cta_label_en?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type CorpoTennisCampiFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoTennisCorsi_LivelliFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoTennisFilter = {
+  campi_eyebrow?: InputMaybe<StringFilter>;
+  campi_titolo?: InputMaybe<StringFilter>;
+  campi_titolo_accent?: InputMaybe<StringFilter>;
+  campi?: InputMaybe<CorpoTennisCampiFilter>;
+  soci_eyebrow?: InputMaybe<StringFilter>;
+  soci_titolo?: InputMaybe<StringFilter>;
+  soci_titolo_accent?: InputMaybe<StringFilter>;
+  soci_testo?: InputMaybe<StringFilter>;
+  corsi_eyebrow?: InputMaybe<StringFilter>;
+  corsi_titolo?: InputMaybe<StringFilter>;
+  corsi_titolo_accent?: InputMaybe<StringFilter>;
+  corsi_intro?: InputMaybe<StringFilter>;
+  corsi_livelli?: InputMaybe<CorpoTennisCorsi_LivelliFilter>;
+  corsi_cta_label?: InputMaybe<StringFilter>;
+  campi_eyebrow_en?: InputMaybe<StringFilter>;
+  campi_titolo_en?: InputMaybe<StringFilter>;
+  campi_titolo_accent_en?: InputMaybe<StringFilter>;
+  soci_eyebrow_en?: InputMaybe<StringFilter>;
+  soci_titolo_en?: InputMaybe<StringFilter>;
+  soci_titolo_accent_en?: InputMaybe<StringFilter>;
+  soci_testo_en?: InputMaybe<StringFilter>;
+  corsi_eyebrow_en?: InputMaybe<StringFilter>;
+  corsi_titolo_en?: InputMaybe<StringFilter>;
+  corsi_titolo_accent_en?: InputMaybe<StringFilter>;
+  corsi_intro_en?: InputMaybe<StringFilter>;
+  corsi_cta_label_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoTennisConnectionEdges = {
+  __typename?: 'CorpoTennisConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<CorpoTennis>;
+};
+
+export type CorpoTennisConnection = Connection & {
+  __typename?: 'CorpoTennisConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<CorpoTennisConnectionEdges>>>;
+};
+
+export type CorpoAgonisticaStep = {
+  __typename?: 'CorpoAgonisticaStep';
+  titolo: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoAgonistica = Node & Document & {
+  __typename?: 'CorpoAgonistica';
+  eyebrow: Scalars['String']['output'];
+  titolo: Scalars['String']['output'];
+  titolo_accent: Scalars['String']['output'];
+  step: Array<CorpoAgonisticaStep>;
+  eyebrow_en?: Maybe<Scalars['String']['output']>;
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type CorpoAgonisticaStepFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoAgonisticaFilter = {
+  eyebrow?: InputMaybe<StringFilter>;
+  titolo?: InputMaybe<StringFilter>;
+  titolo_accent?: InputMaybe<StringFilter>;
+  step?: InputMaybe<CorpoAgonisticaStepFilter>;
+  eyebrow_en?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  titolo_accent_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoAgonisticaConnectionEdges = {
+  __typename?: 'CorpoAgonisticaConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<CorpoAgonistica>;
+};
+
+export type CorpoAgonisticaConnection = Connection & {
+  __typename?: 'CorpoAgonisticaConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<CorpoAgonisticaConnectionEdges>>>;
+};
+
+export type CorpoTorneoAvvenireStats = {
+  __typename?: 'CorpoTorneoAvvenireStats';
+  numero: Scalars['String']['output'];
+  label: Scalars['String']['output'];
+  label_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type CorpoTorneoAvvenire = Node & Document & {
+  __typename?: 'CorpoTorneoAvvenire';
+  quote_testo: Scalars['String']['output'];
+  quote_autore: Scalars['String']['output'];
+  storia_eyebrow: Scalars['String']['output'];
+  storia_titolo: Scalars['String']['output'];
+  storia_titolo_accent: Scalars['String']['output'];
+  storia_paragrafo1: Scalars['String']['output'];
+  storia_paragrafo2: Scalars['String']['output'];
+  stats: Array<CorpoTorneoAvvenireStats>;
+  alumni_eyebrow: Scalars['String']['output'];
+  alumni_titolo: Scalars['String']['output'];
+  alumni_titolo_accent: Scalars['String']['output'];
+  alumni_intro: Scalars['String']['output'];
+  galleria_eyebrow: Scalars['String']['output'];
+  galleria_titolo: Scalars['String']['output'];
+  galleria_titolo_accent: Scalars['String']['output'];
+  prossima_eyebrow: Scalars['String']['output'];
+  prossima_titolo: Scalars['String']['output'];
+  prossima_titolo_accent: Scalars['String']['output'];
+  prossima_testo: Scalars['String']['output'];
+  quote_testo_en?: Maybe<Scalars['String']['output']>;
+  quote_autore_en?: Maybe<Scalars['String']['output']>;
+  storia_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  storia_titolo_en?: Maybe<Scalars['String']['output']>;
+  storia_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  storia_paragrafo1_en?: Maybe<Scalars['String']['output']>;
+  storia_paragrafo2_en?: Maybe<Scalars['String']['output']>;
+  alumni_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  alumni_titolo_en?: Maybe<Scalars['String']['output']>;
+  alumni_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  alumni_intro_en?: Maybe<Scalars['String']['output']>;
+  galleria_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  galleria_titolo_en?: Maybe<Scalars['String']['output']>;
+  galleria_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  prossima_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  prossima_titolo_en?: Maybe<Scalars['String']['output']>;
+  prossima_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  prossima_testo_en?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type CorpoTorneoAvvenireStatsFilter = {
+  numero?: InputMaybe<StringFilter>;
+  label?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoTorneoAvvenireFilter = {
+  quote_testo?: InputMaybe<StringFilter>;
+  quote_autore?: InputMaybe<StringFilter>;
+  storia_eyebrow?: InputMaybe<StringFilter>;
+  storia_titolo?: InputMaybe<StringFilter>;
+  storia_titolo_accent?: InputMaybe<StringFilter>;
+  storia_paragrafo1?: InputMaybe<StringFilter>;
+  storia_paragrafo2?: InputMaybe<StringFilter>;
+  stats?: InputMaybe<CorpoTorneoAvvenireStatsFilter>;
+  alumni_eyebrow?: InputMaybe<StringFilter>;
+  alumni_titolo?: InputMaybe<StringFilter>;
+  alumni_titolo_accent?: InputMaybe<StringFilter>;
+  alumni_intro?: InputMaybe<StringFilter>;
+  galleria_eyebrow?: InputMaybe<StringFilter>;
+  galleria_titolo?: InputMaybe<StringFilter>;
+  galleria_titolo_accent?: InputMaybe<StringFilter>;
+  prossima_eyebrow?: InputMaybe<StringFilter>;
+  prossima_titolo?: InputMaybe<StringFilter>;
+  prossima_titolo_accent?: InputMaybe<StringFilter>;
+  prossima_testo?: InputMaybe<StringFilter>;
+  quote_testo_en?: InputMaybe<StringFilter>;
+  quote_autore_en?: InputMaybe<StringFilter>;
+  storia_eyebrow_en?: InputMaybe<StringFilter>;
+  storia_titolo_en?: InputMaybe<StringFilter>;
+  storia_titolo_accent_en?: InputMaybe<StringFilter>;
+  storia_paragrafo1_en?: InputMaybe<StringFilter>;
+  storia_paragrafo2_en?: InputMaybe<StringFilter>;
+  alumni_eyebrow_en?: InputMaybe<StringFilter>;
+  alumni_titolo_en?: InputMaybe<StringFilter>;
+  alumni_titolo_accent_en?: InputMaybe<StringFilter>;
+  alumni_intro_en?: InputMaybe<StringFilter>;
+  galleria_eyebrow_en?: InputMaybe<StringFilter>;
+  galleria_titolo_en?: InputMaybe<StringFilter>;
+  galleria_titolo_accent_en?: InputMaybe<StringFilter>;
+  prossima_eyebrow_en?: InputMaybe<StringFilter>;
+  prossima_titolo_en?: InputMaybe<StringFilter>;
+  prossima_titolo_accent_en?: InputMaybe<StringFilter>;
+  prossima_testo_en?: InputMaybe<StringFilter>;
+};
+
+export type CorpoTorneoAvvenireConnectionEdges = {
+  __typename?: 'CorpoTorneoAvvenireConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<CorpoTorneoAvvenire>;
+};
+
+export type CorpoTorneoAvvenireConnection = Connection & {
+  __typename?: 'CorpoTorneoAvvenireConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<CorpoTorneoAvvenireConnectionEdges>>>;
+};
+
 export type Info = Node & Document & {
   __typename?: 'Info';
   indirizzo: Scalars['String']['output'];
@@ -1515,6 +1836,12 @@ export type Mutation = {
   createCorpoPreparazioneAtletica: CorpoPreparazioneAtletica;
   updateMembership: Membership;
   createMembership: Membership;
+  updateCorpoTennis: CorpoTennis;
+  createCorpoTennis: CorpoTennis;
+  updateCorpoAgonistica: CorpoAgonistica;
+  createCorpoAgonistica: CorpoAgonistica;
+  updateCorpoTorneoAvvenire: CorpoTorneoAvvenire;
+  createCorpoTorneoAvvenire: CorpoTorneoAvvenire;
   updateInfo: Info;
   createInfo: Info;
   updateHelpdesk: Helpdesk;
@@ -1667,6 +1994,42 @@ export type MutationCreateMembershipArgs = {
 };
 
 
+export type MutationUpdateCorpoTennisArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoTennisMutation;
+};
+
+
+export type MutationCreateCorpoTennisArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoTennisMutation;
+};
+
+
+export type MutationUpdateCorpoAgonisticaArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoAgonisticaMutation;
+};
+
+
+export type MutationCreateCorpoAgonisticaArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoAgonisticaMutation;
+};
+
+
+export type MutationUpdateCorpoTorneoAvvenireArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoTorneoAvvenireMutation;
+};
+
+
+export type MutationCreateCorpoTorneoAvvenireArgs = {
+  relativePath: Scalars['String']['input'];
+  params: CorpoTorneoAvvenireMutation;
+};
+
+
 export type MutationUpdateInfoArgs = {
   relativePath: Scalars['String']['input'];
   params: InfoMutation;
@@ -1724,6 +2087,9 @@ export type DocumentUpdateMutation = {
   corpoPersonalTrainer?: InputMaybe<CorpoPersonalTrainerMutation>;
   corpoPreparazioneAtletica?: InputMaybe<CorpoPreparazioneAtleticaMutation>;
   membership?: InputMaybe<MembershipMutation>;
+  corpoTennis?: InputMaybe<CorpoTennisMutation>;
+  corpoAgonistica?: InputMaybe<CorpoAgonisticaMutation>;
+  corpoTorneoAvvenire?: InputMaybe<CorpoTorneoAvvenireMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -1741,6 +2107,9 @@ export type DocumentMutation = {
   corpoPersonalTrainer?: InputMaybe<CorpoPersonalTrainerMutation>;
   corpoPreparazioneAtletica?: InputMaybe<CorpoPreparazioneAtleticaMutation>;
   membership?: InputMaybe<MembershipMutation>;
+  corpoTennis?: InputMaybe<CorpoTennisMutation>;
+  corpoAgonistica?: InputMaybe<CorpoAgonisticaMutation>;
+  corpoTorneoAvvenire?: InputMaybe<CorpoTorneoAvvenireMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -2100,6 +2469,112 @@ export type MembershipMutation = {
   cta_label_en?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type CorpoTennisCampiMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoTennisCorsi_LivelliMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoTennisMutation = {
+  campi_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  campi_titolo?: InputMaybe<Scalars['String']['input']>;
+  campi_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  campi?: InputMaybe<Array<InputMaybe<CorpoTennisCampiMutation>>>;
+  soci_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  soci_titolo?: InputMaybe<Scalars['String']['input']>;
+  soci_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  soci_testo?: InputMaybe<Scalars['String']['input']>;
+  corsi_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  corsi_titolo?: InputMaybe<Scalars['String']['input']>;
+  corsi_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  corsi_intro?: InputMaybe<Scalars['String']['input']>;
+  corsi_livelli?: InputMaybe<Array<InputMaybe<CorpoTennisCorsi_LivelliMutation>>>;
+  corsi_cta_label?: InputMaybe<Scalars['String']['input']>;
+  campi_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  campi_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  campi_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  soci_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  soci_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  soci_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  soci_testo_en?: InputMaybe<Scalars['String']['input']>;
+  corsi_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  corsi_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  corsi_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  corsi_intro_en?: InputMaybe<Scalars['String']['input']>;
+  corsi_cta_label_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoAgonisticaStepMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoAgonisticaMutation = {
+  eyebrow?: InputMaybe<Scalars['String']['input']>;
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  step?: InputMaybe<Array<InputMaybe<CorpoAgonisticaStepMutation>>>;
+  eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoTorneoAvvenireStatsMutation = {
+  numero?: InputMaybe<Scalars['String']['input']>;
+  label?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CorpoTorneoAvvenireMutation = {
+  quote_testo?: InputMaybe<Scalars['String']['input']>;
+  quote_autore?: InputMaybe<Scalars['String']['input']>;
+  storia_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  storia_titolo?: InputMaybe<Scalars['String']['input']>;
+  storia_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  storia_paragrafo1?: InputMaybe<Scalars['String']['input']>;
+  storia_paragrafo2?: InputMaybe<Scalars['String']['input']>;
+  stats?: InputMaybe<Array<InputMaybe<CorpoTorneoAvvenireStatsMutation>>>;
+  alumni_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  alumni_titolo?: InputMaybe<Scalars['String']['input']>;
+  alumni_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  alumni_intro?: InputMaybe<Scalars['String']['input']>;
+  galleria_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  galleria_titolo?: InputMaybe<Scalars['String']['input']>;
+  galleria_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  prossima_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  prossima_titolo?: InputMaybe<Scalars['String']['input']>;
+  prossima_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  prossima_testo?: InputMaybe<Scalars['String']['input']>;
+  quote_testo_en?: InputMaybe<Scalars['String']['input']>;
+  quote_autore_en?: InputMaybe<Scalars['String']['input']>;
+  storia_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  storia_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  storia_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  storia_paragrafo1_en?: InputMaybe<Scalars['String']['input']>;
+  storia_paragrafo2_en?: InputMaybe<Scalars['String']['input']>;
+  alumni_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  alumni_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  alumni_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  alumni_intro_en?: InputMaybe<Scalars['String']['input']>;
+  galleria_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  galleria_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  galleria_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  prossima_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  prossima_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  prossima_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  prossima_testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type InfoMutation = {
   indirizzo?: InputMaybe<Scalars['String']['input']>;
   come_arrivare?: InputMaybe<Scalars['String']['input']>;
@@ -2178,6 +2653,12 @@ export type CorpoPersonalTrainerPartsFragment = { __typename: 'CorpoPersonalTrai
 export type CorpoPreparazioneAtleticaPartsFragment = { __typename: 'CorpoPreparazioneAtletica', sala_eyebrow: string, sala_titolo: string, sala_titolo_accent: string, sala_paragrafo1: string, sala_paragrafo2: string, sala_cta_label: string, corsi_eyebrow: string, corsi_titolo: string, corsi_titolo_accent: string, corsi_sub: string, calendario_eyebrow: string, calendario_titolo: string, calendario_titolo_accent: string, calendario_sub: string, sala_eyebrow_en?: string | null, sala_titolo_en?: string | null, sala_titolo_accent_en?: string | null, sala_paragrafo1_en?: string | null, sala_paragrafo2_en?: string | null, sala_cta_label_en?: string | null, corsi_eyebrow_en?: string | null, corsi_titolo_en?: string | null, corsi_titolo_accent_en?: string | null, corsi_sub_en?: string | null, calendario_eyebrow_en?: string | null, calendario_titolo_en?: string | null, calendario_titolo_accent_en?: string | null, calendario_sub_en?: string | null, sala_slideshow: Array<{ __typename: 'CorpoPreparazioneAtleticaSala_slideshow', immagine: string, alt: string, alt_en?: string | null }>, sala_features: Array<{ __typename: 'CorpoPreparazioneAtleticaSala_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, categorie: Array<{ __typename: 'CorpoPreparazioneAtleticaCategorie', id: string, label: string, desc: string, color: string, desc_en?: string | null, corsi: Array<{ __typename: 'CorpoPreparazioneAtleticaCategorieCorsi', nome: string, durata: string, intensita: number, livello: string, desc: string, immagine: string, nome_en?: string | null, livello_en?: string | null, desc_en?: string | null }> }> };
 
 export type MembershipPartsFragment = { __typename: 'Membership', titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, gold_tipo: string, gold_valore?: string | null, platinum_tipo: string, platinum_valore?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, gold_valore_en?: string | null, platinum_valore_en?: string | null }> }> };
+
+export type CorpoTennisPartsFragment = { __typename: 'CorpoTennis', campi_eyebrow: string, campi_titolo: string, campi_titolo_accent: string, soci_eyebrow: string, soci_titolo: string, soci_titolo_accent: string, soci_testo: string, corsi_eyebrow: string, corsi_titolo: string, corsi_titolo_accent: string, corsi_intro: string, corsi_cta_label: string, campi_eyebrow_en?: string | null, campi_titolo_en?: string | null, campi_titolo_accent_en?: string | null, soci_eyebrow_en?: string | null, soci_titolo_en?: string | null, soci_titolo_accent_en?: string | null, soci_testo_en?: string | null, corsi_eyebrow_en?: string | null, corsi_titolo_en?: string | null, corsi_titolo_accent_en?: string | null, corsi_intro_en?: string | null, corsi_cta_label_en?: string | null, campi: Array<{ __typename: 'CorpoTennisCampi', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, corsi_livelli: Array<{ __typename: 'CorpoTennisCorsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> };
+
+export type CorpoAgonisticaPartsFragment = { __typename: 'CorpoAgonistica', eyebrow: string, titolo: string, titolo_accent: string, eyebrow_en?: string | null, titolo_en?: string | null, titolo_accent_en?: string | null, step: Array<{ __typename: 'CorpoAgonisticaStep', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> };
+
+export type CorpoTorneoAvvenirePartsFragment = { __typename: 'CorpoTorneoAvvenire', quote_testo: string, quote_autore: string, storia_eyebrow: string, storia_titolo: string, storia_titolo_accent: string, storia_paragrafo1: string, storia_paragrafo2: string, alumni_eyebrow: string, alumni_titolo: string, alumni_titolo_accent: string, alumni_intro: string, galleria_eyebrow: string, galleria_titolo: string, galleria_titolo_accent: string, prossima_eyebrow: string, prossima_titolo: string, prossima_titolo_accent: string, prossima_testo: string, quote_testo_en?: string | null, quote_autore_en?: string | null, storia_eyebrow_en?: string | null, storia_titolo_en?: string | null, storia_titolo_accent_en?: string | null, storia_paragrafo1_en?: string | null, storia_paragrafo2_en?: string | null, alumni_eyebrow_en?: string | null, alumni_titolo_en?: string | null, alumni_titolo_accent_en?: string | null, alumni_intro_en?: string | null, galleria_eyebrow_en?: string | null, galleria_titolo_en?: string | null, galleria_titolo_accent_en?: string | null, prossima_eyebrow_en?: string | null, prossima_titolo_en?: string | null, prossima_titolo_accent_en?: string | null, prossima_testo_en?: string | null, stats: Array<{ __typename: 'CorpoTorneoAvvenireStats', numero: string, label: string, label_en?: string | null }> };
 
 export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
 
@@ -2357,6 +2838,63 @@ export type MembershipConnectionQueryVariables = Exact<{
 
 
 export type MembershipConnectionQuery = { __typename?: 'Query', membershipConnection: { __typename?: 'MembershipConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'MembershipConnectionEdges', cursor: string, node?: { __typename: 'Membership', id: string, titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, gold_tipo: string, gold_valore?: string | null, platinum_tipo: string, platinum_valore?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, gold_valore_en?: string | null, platinum_valore_en?: string | null }> }> } | null } | null> | null } };
+
+export type CorpoTennisQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type CorpoTennisQuery = { __typename?: 'Query', corpoTennis: { __typename: 'CorpoTennis', id: string, campi_eyebrow: string, campi_titolo: string, campi_titolo_accent: string, soci_eyebrow: string, soci_titolo: string, soci_titolo_accent: string, soci_testo: string, corsi_eyebrow: string, corsi_titolo: string, corsi_titolo_accent: string, corsi_intro: string, corsi_cta_label: string, campi_eyebrow_en?: string | null, campi_titolo_en?: string | null, campi_titolo_accent_en?: string | null, soci_eyebrow_en?: string | null, soci_titolo_en?: string | null, soci_titolo_accent_en?: string | null, soci_testo_en?: string | null, corsi_eyebrow_en?: string | null, corsi_titolo_en?: string | null, corsi_titolo_accent_en?: string | null, corsi_intro_en?: string | null, corsi_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, campi: Array<{ __typename: 'CorpoTennisCampi', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, corsi_livelli: Array<{ __typename: 'CorpoTennisCorsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } };
+
+export type CorpoTennisConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoTennisFilter>;
+}>;
+
+
+export type CorpoTennisConnectionQuery = { __typename?: 'Query', corpoTennisConnection: { __typename?: 'CorpoTennisConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CorpoTennisConnectionEdges', cursor: string, node?: { __typename: 'CorpoTennis', id: string, campi_eyebrow: string, campi_titolo: string, campi_titolo_accent: string, soci_eyebrow: string, soci_titolo: string, soci_titolo_accent: string, soci_testo: string, corsi_eyebrow: string, corsi_titolo: string, corsi_titolo_accent: string, corsi_intro: string, corsi_cta_label: string, campi_eyebrow_en?: string | null, campi_titolo_en?: string | null, campi_titolo_accent_en?: string | null, soci_eyebrow_en?: string | null, soci_titolo_en?: string | null, soci_titolo_accent_en?: string | null, soci_testo_en?: string | null, corsi_eyebrow_en?: string | null, corsi_titolo_en?: string | null, corsi_titolo_accent_en?: string | null, corsi_intro_en?: string | null, corsi_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, campi: Array<{ __typename: 'CorpoTennisCampi', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, corsi_livelli: Array<{ __typename: 'CorpoTennisCorsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } | null } | null> | null } };
+
+export type CorpoAgonisticaQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type CorpoAgonisticaQuery = { __typename?: 'Query', corpoAgonistica: { __typename: 'CorpoAgonistica', id: string, eyebrow: string, titolo: string, titolo_accent: string, eyebrow_en?: string | null, titolo_en?: string | null, titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, step: Array<{ __typename: 'CorpoAgonisticaStep', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } };
+
+export type CorpoAgonisticaConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoAgonisticaFilter>;
+}>;
+
+
+export type CorpoAgonisticaConnectionQuery = { __typename?: 'Query', corpoAgonisticaConnection: { __typename?: 'CorpoAgonisticaConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CorpoAgonisticaConnectionEdges', cursor: string, node?: { __typename: 'CorpoAgonistica', id: string, eyebrow: string, titolo: string, titolo_accent: string, eyebrow_en?: string | null, titolo_en?: string | null, titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, step: Array<{ __typename: 'CorpoAgonisticaStep', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } | null } | null> | null } };
+
+export type CorpoTorneoAvvenireQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type CorpoTorneoAvvenireQuery = { __typename?: 'Query', corpoTorneoAvvenire: { __typename: 'CorpoTorneoAvvenire', id: string, quote_testo: string, quote_autore: string, storia_eyebrow: string, storia_titolo: string, storia_titolo_accent: string, storia_paragrafo1: string, storia_paragrafo2: string, alumni_eyebrow: string, alumni_titolo: string, alumni_titolo_accent: string, alumni_intro: string, galleria_eyebrow: string, galleria_titolo: string, galleria_titolo_accent: string, prossima_eyebrow: string, prossima_titolo: string, prossima_titolo_accent: string, prossima_testo: string, quote_testo_en?: string | null, quote_autore_en?: string | null, storia_eyebrow_en?: string | null, storia_titolo_en?: string | null, storia_titolo_accent_en?: string | null, storia_paragrafo1_en?: string | null, storia_paragrafo2_en?: string | null, alumni_eyebrow_en?: string | null, alumni_titolo_en?: string | null, alumni_titolo_accent_en?: string | null, alumni_intro_en?: string | null, galleria_eyebrow_en?: string | null, galleria_titolo_en?: string | null, galleria_titolo_accent_en?: string | null, prossima_eyebrow_en?: string | null, prossima_titolo_en?: string | null, prossima_titolo_accent_en?: string | null, prossima_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, stats: Array<{ __typename: 'CorpoTorneoAvvenireStats', numero: string, label: string, label_en?: string | null }> } };
+
+export type CorpoTorneoAvvenireConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<CorpoTorneoAvvenireFilter>;
+}>;
+
+
+export type CorpoTorneoAvvenireConnectionQuery = { __typename?: 'Query', corpoTorneoAvvenireConnection: { __typename?: 'CorpoTorneoAvvenireConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'CorpoTorneoAvvenireConnectionEdges', cursor: string, node?: { __typename: 'CorpoTorneoAvvenire', id: string, quote_testo: string, quote_autore: string, storia_eyebrow: string, storia_titolo: string, storia_titolo_accent: string, storia_paragrafo1: string, storia_paragrafo2: string, alumni_eyebrow: string, alumni_titolo: string, alumni_titolo_accent: string, alumni_intro: string, galleria_eyebrow: string, galleria_titolo: string, galleria_titolo_accent: string, prossima_eyebrow: string, prossima_titolo: string, prossima_titolo_accent: string, prossima_testo: string, quote_testo_en?: string | null, quote_autore_en?: string | null, storia_eyebrow_en?: string | null, storia_titolo_en?: string | null, storia_titolo_accent_en?: string | null, storia_paragrafo1_en?: string | null, storia_paragrafo2_en?: string | null, alumni_eyebrow_en?: string | null, alumni_titolo_en?: string | null, alumni_titolo_accent_en?: string | null, alumni_intro_en?: string | null, galleria_eyebrow_en?: string | null, galleria_titolo_en?: string | null, galleria_titolo_accent_en?: string | null, prossima_eyebrow_en?: string | null, prossima_titolo_en?: string | null, prossima_titolo_accent_en?: string | null, prossima_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, stats: Array<{ __typename: 'CorpoTorneoAvvenireStats', numero: string, label: string, label_en?: string | null }> } | null } | null> | null } };
 
 export type InfoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -2786,6 +3324,114 @@ export const MembershipPartsFragmentDoc = gql`
   sottotitolo_en
   platinum_badge_en
   cta_label_en
+}
+    `;
+export const CorpoTennisPartsFragmentDoc = gql`
+    fragment CorpoTennisParts on CorpoTennis {
+  __typename
+  campi_eyebrow
+  campi_titolo
+  campi_titolo_accent
+  campi {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  soci_eyebrow
+  soci_titolo
+  soci_titolo_accent
+  soci_testo
+  corsi_eyebrow
+  corsi_titolo
+  corsi_titolo_accent
+  corsi_intro
+  corsi_livelli {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  corsi_cta_label
+  campi_eyebrow_en
+  campi_titolo_en
+  campi_titolo_accent_en
+  soci_eyebrow_en
+  soci_titolo_en
+  soci_titolo_accent_en
+  soci_testo_en
+  corsi_eyebrow_en
+  corsi_titolo_en
+  corsi_titolo_accent_en
+  corsi_intro_en
+  corsi_cta_label_en
+}
+    `;
+export const CorpoAgonisticaPartsFragmentDoc = gql`
+    fragment CorpoAgonisticaParts on CorpoAgonistica {
+  __typename
+  eyebrow
+  titolo
+  titolo_accent
+  step {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  eyebrow_en
+  titolo_en
+  titolo_accent_en
+}
+    `;
+export const CorpoTorneoAvvenirePartsFragmentDoc = gql`
+    fragment CorpoTorneoAvvenireParts on CorpoTorneoAvvenire {
+  __typename
+  quote_testo
+  quote_autore
+  storia_eyebrow
+  storia_titolo
+  storia_titolo_accent
+  storia_paragrafo1
+  storia_paragrafo2
+  stats {
+    __typename
+    numero
+    label
+    label_en
+  }
+  alumni_eyebrow
+  alumni_titolo
+  alumni_titolo_accent
+  alumni_intro
+  galleria_eyebrow
+  galleria_titolo
+  galleria_titolo_accent
+  prossima_eyebrow
+  prossima_titolo
+  prossima_titolo_accent
+  prossima_testo
+  quote_testo_en
+  quote_autore_en
+  storia_eyebrow_en
+  storia_titolo_en
+  storia_titolo_accent_en
+  storia_paragrafo1_en
+  storia_paragrafo2_en
+  alumni_eyebrow_en
+  alumni_titolo_en
+  alumni_titolo_accent_en
+  alumni_intro_en
+  galleria_eyebrow_en
+  galleria_titolo_en
+  galleria_titolo_accent_en
+  prossima_eyebrow_en
+  prossima_titolo_en
+  prossima_titolo_accent_en
+  prossima_testo_en
 }
     `;
 export const InfoPartsFragmentDoc = gql`
@@ -3370,6 +4016,177 @@ export const MembershipConnectionDocument = gql`
   }
 }
     ${MembershipPartsFragmentDoc}`;
+export const CorpoTennisDocument = gql`
+    query corpoTennis($relativePath: String!) {
+  corpoTennis(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoTennisParts
+  }
+}
+    ${CorpoTennisPartsFragmentDoc}`;
+export const CorpoTennisConnectionDocument = gql`
+    query corpoTennisConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoTennisFilter) {
+  corpoTennisConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoTennisParts
+      }
+    }
+  }
+}
+    ${CorpoTennisPartsFragmentDoc}`;
+export const CorpoAgonisticaDocument = gql`
+    query corpoAgonistica($relativePath: String!) {
+  corpoAgonistica(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoAgonisticaParts
+  }
+}
+    ${CorpoAgonisticaPartsFragmentDoc}`;
+export const CorpoAgonisticaConnectionDocument = gql`
+    query corpoAgonisticaConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoAgonisticaFilter) {
+  corpoAgonisticaConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoAgonisticaParts
+      }
+    }
+  }
+}
+    ${CorpoAgonisticaPartsFragmentDoc}`;
+export const CorpoTorneoAvvenireDocument = gql`
+    query corpoTorneoAvvenire($relativePath: String!) {
+  corpoTorneoAvvenire(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...CorpoTorneoAvvenireParts
+  }
+}
+    ${CorpoTorneoAvvenirePartsFragmentDoc}`;
+export const CorpoTorneoAvvenireConnectionDocument = gql`
+    query corpoTorneoAvvenireConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: CorpoTorneoAvvenireFilter) {
+  corpoTorneoAvvenireConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...CorpoTorneoAvvenireParts
+      }
+    }
+  }
+}
+    ${CorpoTorneoAvvenirePartsFragmentDoc}`;
 export const InfoDocument = gql`
     query info($relativePath: String!) {
   info(relativePath: $relativePath) {
@@ -3654,6 +4471,24 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     membershipConnection(variables?: MembershipConnectionQueryVariables, options?: C): Promise<{data: MembershipConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MembershipConnectionQueryVariables, query: string}> {
         return requester<{data: MembershipConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: MembershipConnectionQueryVariables, query: string}, MembershipConnectionQueryVariables>(MembershipConnectionDocument, variables, options);
+      },
+    corpoTennis(variables: CorpoTennisQueryVariables, options?: C): Promise<{data: CorpoTennisQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoTennisQueryVariables, query: string}> {
+        return requester<{data: CorpoTennisQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoTennisQueryVariables, query: string}, CorpoTennisQueryVariables>(CorpoTennisDocument, variables, options);
+      },
+    corpoTennisConnection(variables?: CorpoTennisConnectionQueryVariables, options?: C): Promise<{data: CorpoTennisConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoTennisConnectionQueryVariables, query: string}> {
+        return requester<{data: CorpoTennisConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoTennisConnectionQueryVariables, query: string}, CorpoTennisConnectionQueryVariables>(CorpoTennisConnectionDocument, variables, options);
+      },
+    corpoAgonistica(variables: CorpoAgonisticaQueryVariables, options?: C): Promise<{data: CorpoAgonisticaQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoAgonisticaQueryVariables, query: string}> {
+        return requester<{data: CorpoAgonisticaQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoAgonisticaQueryVariables, query: string}, CorpoAgonisticaQueryVariables>(CorpoAgonisticaDocument, variables, options);
+      },
+    corpoAgonisticaConnection(variables?: CorpoAgonisticaConnectionQueryVariables, options?: C): Promise<{data: CorpoAgonisticaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoAgonisticaConnectionQueryVariables, query: string}> {
+        return requester<{data: CorpoAgonisticaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoAgonisticaConnectionQueryVariables, query: string}, CorpoAgonisticaConnectionQueryVariables>(CorpoAgonisticaConnectionDocument, variables, options);
+      },
+    corpoTorneoAvvenire(variables: CorpoTorneoAvvenireQueryVariables, options?: C): Promise<{data: CorpoTorneoAvvenireQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoTorneoAvvenireQueryVariables, query: string}> {
+        return requester<{data: CorpoTorneoAvvenireQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoTorneoAvvenireQueryVariables, query: string}, CorpoTorneoAvvenireQueryVariables>(CorpoTorneoAvvenireDocument, variables, options);
+      },
+    corpoTorneoAvvenireConnection(variables?: CorpoTorneoAvvenireConnectionQueryVariables, options?: C): Promise<{data: CorpoTorneoAvvenireConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoTorneoAvvenireConnectionQueryVariables, query: string}> {
+        return requester<{data: CorpoTorneoAvvenireConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: CorpoTorneoAvvenireConnectionQueryVariables, query: string}, CorpoTorneoAvvenireConnectionQueryVariables>(CorpoTorneoAvvenireConnectionDocument, variables, options);
       },
     info(variables: InfoQueryVariables, options?: C): Promise<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}> {
         return requester<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}, InfoQueryVariables>(InfoDocument, variables, options);

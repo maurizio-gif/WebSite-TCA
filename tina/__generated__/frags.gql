@@ -343,6 +343,111 @@ fragment MembershipParts on Membership {
   cta_label_en
 }
 
+fragment CorpoTennisParts on CorpoTennis {
+  __typename
+  campi_eyebrow
+  campi_titolo
+  campi_titolo_accent
+  campi {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  soci_eyebrow
+  soci_titolo
+  soci_titolo_accent
+  soci_testo
+  corsi_eyebrow
+  corsi_titolo
+  corsi_titolo_accent
+  corsi_intro
+  corsi_livelli {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  corsi_cta_label
+  campi_eyebrow_en
+  campi_titolo_en
+  campi_titolo_accent_en
+  soci_eyebrow_en
+  soci_titolo_en
+  soci_titolo_accent_en
+  soci_testo_en
+  corsi_eyebrow_en
+  corsi_titolo_en
+  corsi_titolo_accent_en
+  corsi_intro_en
+  corsi_cta_label_en
+}
+
+fragment CorpoAgonisticaParts on CorpoAgonistica {
+  __typename
+  eyebrow
+  titolo
+  titolo_accent
+  step {
+    __typename
+    titolo
+    testo
+    titolo_en
+    testo_en
+  }
+  eyebrow_en
+  titolo_en
+  titolo_accent_en
+}
+
+fragment CorpoTorneoAvvenireParts on CorpoTorneoAvvenire {
+  __typename
+  quote_testo
+  quote_autore
+  storia_eyebrow
+  storia_titolo
+  storia_titolo_accent
+  storia_paragrafo1
+  storia_paragrafo2
+  stats {
+    __typename
+    numero
+    label
+    label_en
+  }
+  alumni_eyebrow
+  alumni_titolo
+  alumni_titolo_accent
+  alumni_intro
+  galleria_eyebrow
+  galleria_titolo
+  galleria_titolo_accent
+  prossima_eyebrow
+  prossima_titolo
+  prossima_titolo_accent
+  prossima_testo
+  quote_testo_en
+  quote_autore_en
+  storia_eyebrow_en
+  storia_titolo_en
+  storia_titolo_accent_en
+  storia_paragrafo1_en
+  storia_paragrafo2_en
+  alumni_eyebrow_en
+  alumni_titolo_en
+  alumni_titolo_accent_en
+  alumni_intro_en
+  galleria_eyebrow_en
+  galleria_titolo_en
+  galleria_titolo_accent_en
+  prossima_eyebrow_en
+  prossima_titolo_en
+  prossima_titolo_accent_en
+  prossima_testo_en
+}
+
 fragment InfoParts on Info {
   __typename
   indirizzo

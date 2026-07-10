@@ -1,58 +1,45 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/agonistica.md (campi _en)
+const d = (await getEntry("pagine", "agonistica"))!.data;
+// Corpo pagina → src/content/corpoAgonistica/corpo.md
+const c = (await getEntry("corpoAgonistica", "corpo"))!.data;
 ---
 
 <BaseLayout
   lang={lang}
-  title="Competitive | Tennis Club Ambrosiano Milan"
-  description="The competitive programme at Tennis Club Ambrosiano: junior squads, FITP tournament preparation and pathways for under-18 athletes in Milan."
+  title={d.title_en ?? d.title}
+  description={d.description_en ?? d.description}
 >
   <PageHero
-    eyebrow="Junior · Competitive"
-    title="Junior"
-    titleAccent="Competitive"
-    sub="TCA has been shaping champions since 1965. Junior squads, FITP tournaments, technical and athletic preparation for young players with competitive ambitions."
-    image="/Tennis%20Agonistica.jpg"
-    imageAlt="TCA junior competitive tennis"
+    eyebrow={d.hero_eyebrow_en ?? d.hero_eyebrow}
+    title={d.hero_titolo_en ?? d.hero_titolo}
+    titleAccent={d.hero_titolo_accent_en ?? d.hero_titolo_accent}
+    sub={d.hero_sottotitolo_en ?? d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
     ctaLabel="Join the squad"
   />
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">The pathway</span>
-      <h2 class="section-title">From the school<br><em>to competition.</em></h2>
+      <span class="eyebrow">{c.eyebrow_en ?? c.eyebrow}</span>
+      <h2 class="section-title">{c.titolo_en ?? c.titolo}<br><em>{c.titolo_accent_en ?? c.titolo_accent}</em></h2>
       <div class="steps">
-        <div class="step">
-          <span class="step__n">01</span>
-          <div class="step__body">
-            <h3>Selection and assessment</h3>
-            <p>Coaches assess each player's potential and define the most suitable pathway.</p>
+        {c.step.map((s, i) => (
+          <div class="step">
+            <span class="step__n">{String(i + 1).padStart(2, '0')}</span>
+            <div class="step__body">
+              <h3>{s.titolo_en ?? s.titolo}</h3>
+              <p>{s.testo_en ?? s.testo}</p>
+            </div>
           </div>
-        </div>
-        <div class="step">
-          <span class="step__n">02</span>
-          <div class="step__body">
-            <h3>Technical and tactical training</h3>
-            <p>Daily high-level sessions focused on strokes, tactics and match play.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step__n">03</span>
-          <div class="step__body">
-            <h3>Dedicated athletic preparation</h3>
-            <p>Sport-specific programmes for tennis performance: explosiveness, endurance and agility.</p>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step__n">04</span>
-          <div class="step__body">
-            <h3>Tournaments and away games</h3>
-            <p>Participation in regional and national FITP circuits with full technical support.</p>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </section>

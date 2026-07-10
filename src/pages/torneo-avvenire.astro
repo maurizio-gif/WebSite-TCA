@@ -7,6 +7,10 @@ import { getEntry } from "astro:content";
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/torneo-avvenire.md
 const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
+
+// Corpo pagina (titoli e testi; foto alumni/galleria restano fisse) → src/content/corpoTorneoAvvenire/corpo.md
+const c = (await getEntry("corpoTorneoAvvenire", "corpo"))!.data;
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
 <BaseLayout
@@ -24,46 +28,25 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
   />
 
   <p class="torneo-quote">
-    «Il Torneo che non sbaglia mai un pronostico»<span>— Rino Tommasi</span>
+    {c.quote_testo}<span>{c.quote_autore}</span>
   </p>
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">La storia</span>
-      <h2 class="section-title">Un torneo<br><em>leggendario.</em></h2>
+      <span class="eyebrow">{c.storia_eyebrow}</span>
+      <h2 class="section-title">{c.storia_titolo}<br><em>{c.storia_titolo_accent}</em></h2>
       <div class="torneo-intro">
-        <p class="body-text">
-          Il Torneo Avvenire è uno degli eventi tennis giovanili più importanti al mondo,
-          sin dal 1965 accende i sogni dei giovani talenti sui campi del Tennis Club Ambrosiano.
-          Il TCA ha ospitato i migliori talenti under 16 e 14 da tutto il globo. Tra queste
-          terre rosse hanno mosso i primi passi campioni destinati a scrivere la storia del
-          tennis mondiale, da <strong>Björn Borg</strong> a <strong>Roger Federer</strong>,
-          da <strong>Martina Hingis</strong> a <strong>Novak Djokovic</strong>.
-        </p>
-        <p class="body-text">
-          Dal 2025 il Torneo Avvenire è diventato un prestigioso <strong>torneo Under 14 Super
-          Category</strong>, il più alto livello del tennis giovanile internazionale, continuando
-          la sua missione di scoprire e valorizzare i campioni di domani.
-        </p>
+        <p class="body-text" set:html={mdBold(c.storia_paragrafo1)} />
+        <p class="body-text" set:html={mdBold(c.storia_paragrafo2)} />
       </div>
 
       <div class="stats-row">
-        <div class="stat">
-          <span class="stat__n">60+</span>
-          <span class="stat__label">Anni di storia</span>
-        </div>
-        <div class="stat">
-          <span class="stat__n">40+</span>
-          <span class="stat__label">Paesi rappresentati</span>
-        </div>
-        <div class="stat">
-          <span class="stat__n">U14</span>
-          <span class="stat__label">Super Category</span>
-        </div>
-        <div class="stat">
-          <span class="stat__n">57</span>
-          <span class="stat__label">Titoli Slam vinti dai nostri ex-partecipanti</span>
-        </div>
+        {c.stats.map((s) => (
+          <div class="stat">
+            <span class="stat__n">{s.numero}</span>
+            <span class="stat__label">{s.label}</span>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -71,10 +54,10 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
   <!-- ── Campioni che sono passati per l'Avvenire ── -->
   <section class="content-section content-section--grey">
     <div class="content-section__inner">
-      <span class="eyebrow">Alumni illustri</span>
-      <h2 class="section-title">Campioni nati<br><em>qui.</em></h2>
+      <span class="eyebrow">{c.alumni_eyebrow}</span>
+      <h2 class="section-title">{c.alumni_titolo}<br><em>{c.alumni_titolo_accent}</em></h2>
       <p class="body-text" style="max-width:64ch; margin-bottom:4vh;">
-        Alcuni dei più grandi nomi del tennis mondiale hanno mosso i primi passi proprio sui campi del TCA, partecipando al Torneo Avvenire da giovanissimi.
+        {c.alumni_intro}
       </p>
       <div class="champions-grid">
         <figure class="champion-fig">
@@ -140,8 +123,8 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
   <!-- ── Foto edizioni recenti ── -->
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">Galleria</span>
-      <h2 class="section-title">Il torneo<br><em>in immagini.</em></h2>
+      <span class="eyebrow">{c.galleria_eyebrow}</span>
+      <h2 class="section-title">{c.galleria_titolo}<br><em>{c.galleria_titolo_accent}</em></h2>
       <div class="gallery-grid">
         <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Stretta%20di%20mano.jpg")} alt="Torneo Avvenire 2025 - stretta di mano a fine match" loading="lazy" class="gallery-img gallery-img--wide" />
         <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Premiazione%20singolare.jpg")} alt="Torneo Avvenire 2025 - premiazione vincitrice U14" loading="lazy" class="gallery-img" />
@@ -158,11 +141,10 @@ const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
 
   <section class="content-section content-section--dark">
     <div class="content-section__inner">
-      <span class="eyebrow eyebrow--grey">Prossima edizione</span>
-      <h2 class="section-title section-title--light">Edizione<br><em>2026.</em></h2>
+      <span class="eyebrow eyebrow--grey">{c.prossima_eyebrow}</span>
+      <h2 class="section-title section-title--light">{c.prossima_titolo}<br><em>{c.prossima_titolo_accent}</em></h2>
       <p class="body-text body-text--light">
-        Le iscrizioni per l'edizione 2026 saranno disponibili sul sito Tennis Europe.
-        Resta aggiornato seguendo i nostri canali ufficiali.
+        {c.prossima_testo}
       </p>
     </div>
   </section>

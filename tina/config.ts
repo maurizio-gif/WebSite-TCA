@@ -882,6 +882,178 @@ export default defineConfig({
           { type: 'string', name: 'cta_label_en', label: '🇬🇧 Testo pulsante (inglese)' },
         ],
       },
+      // ─── CORPO PAGINA: TENNIS ───────────────────────────────────────────────
+      // Contenuto sotto l'hero della pagina Tennis (solo testi, no foto).
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: 'corpoTennis',
+        label: 'Pagina Tennis — Contenuto',
+        path: 'src/content/corpoTennis',
+        format: 'md',
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          { type: 'string', name: 'campi_eyebrow', label: 'Sezione Campi — eyebrow', required: true },
+          { type: 'string', name: 'campi_titolo', label: 'Sezione Campi — titolo', required: true },
+          { type: 'string', name: 'campi_titolo_accent', label: 'Sezione Campi — titolo evidenziato', required: true },
+          {
+            type: 'object',
+            name: 'campi',
+            label: 'Tipi di campo (foto non gestita da qui)',
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item: Record<string, string>) => ({ label: item?.titolo || 'Nuovo campo' }),
+            },
+            fields: [
+              { type: 'string', name: 'titolo', label: 'Titolo', required: true },
+              { type: 'string', name: 'testo', label: 'Testo', required: true },
+              { type: 'string', name: 'titolo_en', label: '🇬🇧 Titolo (inglese)' },
+              { type: 'string', name: 'testo_en', label: '🇬🇧 Testo (inglese)' },
+            ],
+          },
+          { type: 'string', name: 'soci_eyebrow', label: 'Sezione Soci — eyebrow', required: true },
+          { type: 'string', name: 'soci_titolo', label: 'Sezione Soci — titolo', required: true },
+          { type: 'string', name: 'soci_titolo_accent', label: 'Sezione Soci — titolo evidenziato', required: true },
+          { type: 'string', name: 'soci_testo', label: 'Sezione Soci — testo (**grassetto**)', required: true, ui: { component: 'textarea' } },
+          { type: 'string', name: 'corsi_eyebrow', label: 'Sezione Corsi — eyebrow', required: true },
+          { type: 'string', name: 'corsi_titolo', label: 'Sezione Corsi — titolo', required: true },
+          { type: 'string', name: 'corsi_titolo_accent', label: 'Sezione Corsi — titolo evidenziato', required: true },
+          { type: 'string', name: 'corsi_intro', label: 'Sezione Corsi — testo introduttivo (**grassetto**)', required: true, ui: { component: 'textarea' } },
+          {
+            type: 'object',
+            name: 'corsi_livelli',
+            label: 'Sezione Corsi — livelli',
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item: Record<string, string>) => ({ label: item?.titolo || 'Nuovo livello' }),
+            },
+            fields: [
+              { type: 'string', name: 'titolo', label: 'Titolo', required: true },
+              { type: 'string', name: 'testo', label: 'Testo', required: true },
+              { type: 'string', name: 'titolo_en', label: '🇬🇧 Titolo (inglese)' },
+              { type: 'string', name: 'testo_en', label: '🇬🇧 Testo (inglese)' },
+            ],
+          },
+          { type: 'string', name: 'corsi_cta_label', label: 'Sezione Corsi — testo pulsante', required: true },
+          { type: 'string', name: 'campi_eyebrow_en', label: '🇬🇧 Sezione Campi — eyebrow (inglese)' },
+          { type: 'string', name: 'campi_titolo_en', label: '🇬🇧 Sezione Campi — titolo (inglese)' },
+          { type: 'string', name: 'campi_titolo_accent_en', label: '🇬🇧 Sezione Campi — titolo evidenziato (inglese)' },
+          { type: 'string', name: 'soci_eyebrow_en', label: '🇬🇧 Sezione Soci — eyebrow (inglese)' },
+          { type: 'string', name: 'soci_titolo_en', label: '🇬🇧 Sezione Soci — titolo (inglese)' },
+          { type: 'string', name: 'soci_titolo_accent_en', label: '🇬🇧 Sezione Soci — titolo evidenziato (inglese)' },
+          { type: 'string', name: 'soci_testo_en', label: '🇬🇧 Sezione Soci — testo (inglese)', ui: { component: 'textarea' } },
+          { type: 'string', name: 'corsi_eyebrow_en', label: '🇬🇧 Sezione Corsi — eyebrow (inglese)' },
+          { type: 'string', name: 'corsi_titolo_en', label: '🇬🇧 Sezione Corsi — titolo (inglese)' },
+          { type: 'string', name: 'corsi_titolo_accent_en', label: '🇬🇧 Sezione Corsi — titolo evidenziato (inglese)' },
+          { type: 'string', name: 'corsi_intro_en', label: '🇬🇧 Sezione Corsi — testo introduttivo (inglese)', ui: { component: 'textarea' } },
+          { type: 'string', name: 'corsi_cta_label_en', label: '🇬🇧 Sezione Corsi — testo pulsante (inglese)' },
+        ],
+      },
+      // ─── CORPO PAGINA: AGONISTICA ───────────────────────────────────────────
+      // Contenuto sotto l'hero della pagina Agonistica (solo testi).
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: 'corpoAgonistica',
+        label: 'Pagina Agonistica — Contenuto',
+        path: 'src/content/corpoAgonistica',
+        format: 'md',
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          { type: 'string', name: 'eyebrow', label: 'Eyebrow', required: true },
+          { type: 'string', name: 'titolo', label: 'Titolo', required: true },
+          { type: 'string', name: 'titolo_accent', label: 'Titolo evidenziato', required: true },
+          {
+            type: 'object',
+            name: 'step',
+            label: 'Percorso — step',
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item: Record<string, string>) => ({ label: item?.titolo || 'Nuovo step' }),
+            },
+            fields: [
+              { type: 'string', name: 'titolo', label: 'Titolo', required: true },
+              { type: 'string', name: 'testo', label: 'Testo', required: true },
+              { type: 'string', name: 'titolo_en', label: '🇬🇧 Titolo (inglese)' },
+              { type: 'string', name: 'testo_en', label: '🇬🇧 Testo (inglese)' },
+            ],
+          },
+          { type: 'string', name: 'eyebrow_en', label: '🇬🇧 Eyebrow (inglese)' },
+          { type: 'string', name: 'titolo_en', label: '🇬🇧 Titolo (inglese)' },
+          { type: 'string', name: 'titolo_accent_en', label: '🇬🇧 Titolo evidenziato (inglese)' },
+        ],
+      },
+      // ─── CORPO PAGINA: TORNEO AVVENIRE ──────────────────────────────────────
+      // Contenuto sotto l'hero della pagina Torneo Avvenire (solo testi — le
+      // foto degli alumni e la galleria restano nel codice).
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: 'corpoTorneoAvvenire',
+        label: 'Pagina Torneo Avvenire — Contenuto',
+        path: 'src/content/corpoTorneoAvvenire',
+        format: 'md',
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          { type: 'string', name: 'quote_testo', label: 'Citazione', required: true },
+          { type: 'string', name: 'quote_autore', label: 'Autore citazione', required: true },
+          { type: 'string', name: 'storia_eyebrow', label: 'Sezione Storia — eyebrow', required: true },
+          { type: 'string', name: 'storia_titolo', label: 'Sezione Storia — titolo', required: true },
+          { type: 'string', name: 'storia_titolo_accent', label: 'Sezione Storia — titolo evidenziato', required: true },
+          { type: 'string', name: 'storia_paragrafo1', label: 'Sezione Storia — paragrafo 1 (**grassetto**)', required: true, ui: { component: 'textarea' } },
+          { type: 'string', name: 'storia_paragrafo2', label: 'Sezione Storia — paragrafo 2 (**grassetto**)', required: true, ui: { component: 'textarea' } },
+          {
+            type: 'object',
+            name: 'stats',
+            label: 'Statistiche',
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item: Record<string, string>) => ({ label: item?.numero ? `${item.numero} — ${item.label || ''}` : 'Nuova statistica' }),
+            },
+            fields: [
+              { type: 'string', name: 'numero', label: 'Numero (es. "60+", "U14")', required: true },
+              { type: 'string', name: 'label', label: 'Etichetta', required: true },
+              { type: 'string', name: 'label_en', label: '🇬🇧 Etichetta (inglese)' },
+            ],
+          },
+          { type: 'string', name: 'alumni_eyebrow', label: 'Sezione Alumni — eyebrow', required: true },
+          { type: 'string', name: 'alumni_titolo', label: 'Sezione Alumni — titolo', required: true },
+          { type: 'string', name: 'alumni_titolo_accent', label: 'Sezione Alumni — titolo evidenziato', required: true },
+          { type: 'string', name: 'alumni_intro', label: 'Sezione Alumni — testo introduttivo', required: true, ui: { component: 'textarea' } },
+          { type: 'string', name: 'galleria_eyebrow', label: 'Sezione Galleria — eyebrow', required: true },
+          { type: 'string', name: 'galleria_titolo', label: 'Sezione Galleria — titolo', required: true },
+          { type: 'string', name: 'galleria_titolo_accent', label: 'Sezione Galleria — titolo evidenziato', required: true },
+          { type: 'string', name: 'prossima_eyebrow', label: 'Sezione Prossima edizione — eyebrow', required: true },
+          { type: 'string', name: 'prossima_titolo', label: 'Sezione Prossima edizione — titolo', required: true },
+          { type: 'string', name: 'prossima_titolo_accent', label: 'Sezione Prossima edizione — titolo evidenziato', required: true },
+          { type: 'string', name: 'prossima_testo', label: 'Sezione Prossima edizione — testo', required: true, ui: { component: 'textarea' } },
+          { type: 'string', name: 'quote_testo_en', label: '🇬🇧 Citazione (inglese)' },
+          { type: 'string', name: 'quote_autore_en', label: '🇬🇧 Autore citazione (inglese)' },
+          { type: 'string', name: 'storia_eyebrow_en', label: '🇬🇧 Sezione Storia — eyebrow (inglese)' },
+          { type: 'string', name: 'storia_titolo_en', label: '🇬🇧 Sezione Storia — titolo (inglese)' },
+          { type: 'string', name: 'storia_titolo_accent_en', label: '🇬🇧 Sezione Storia — titolo evidenziato (inglese)' },
+          { type: 'string', name: 'storia_paragrafo1_en', label: '🇬🇧 Sezione Storia — paragrafo 1 (inglese)', ui: { component: 'textarea' } },
+          { type: 'string', name: 'storia_paragrafo2_en', label: '🇬🇧 Sezione Storia — paragrafo 2 (inglese)', ui: { component: 'textarea' } },
+          { type: 'string', name: 'alumni_eyebrow_en', label: '🇬🇧 Sezione Alumni — eyebrow (inglese)' },
+          { type: 'string', name: 'alumni_titolo_en', label: '🇬🇧 Sezione Alumni — titolo (inglese)' },
+          { type: 'string', name: 'alumni_titolo_accent_en', label: '🇬🇧 Sezione Alumni — titolo evidenziato (inglese)' },
+          { type: 'string', name: 'alumni_intro_en', label: '🇬🇧 Sezione Alumni — testo introduttivo (inglese)', ui: { component: 'textarea' } },
+          { type: 'string', name: 'galleria_eyebrow_en', label: '🇬🇧 Sezione Galleria — eyebrow (inglese)' },
+          { type: 'string', name: 'galleria_titolo_en', label: '🇬🇧 Sezione Galleria — titolo (inglese)' },
+          { type: 'string', name: 'galleria_titolo_accent_en', label: '🇬🇧 Sezione Galleria — titolo evidenziato (inglese)' },
+          { type: 'string', name: 'prossima_eyebrow_en', label: '🇬🇧 Sezione Prossima edizione — eyebrow (inglese)' },
+          { type: 'string', name: 'prossima_titolo_en', label: '🇬🇧 Sezione Prossima edizione — titolo (inglese)' },
+          { type: 'string', name: 'prossima_titolo_accent_en', label: '🇬🇧 Sezione Prossima edizione — titolo evidenziato (inglese)' },
+          { type: 'string', name: 'prossima_testo_en', label: '🇬🇧 Sezione Prossima edizione — testo (inglese)', ui: { component: 'textarea' } },
+        ],
+      },
       // ─── INFO CLUB ─────────────────────────────────────────────────────────
       // File unico con orari, indirizzo e contatti del Club.
       // Le modifiche si riflettono su tutte le pagine (sezione "Vieni a trovarci").
