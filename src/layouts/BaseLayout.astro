@@ -89,13 +89,28 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <meta name="twitter:description" content={desc} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Google Fonts: Barlow Condensed (display/titoli) + Barlow (body) -->
+    <!-- Google Fonts: Barlow Condensed (display/titoli) + Barlow (body).
+         Caricamento non bloccante (preload + swap del media) per non
+         ritardare il render del testo: font-display=swap fa il resto. -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,600;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap"
-      rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,600;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,600;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap"
+      />
+    </noscript>
     <slot name="head" />
 
     <!-- Rilevamento embed in-app (?app=1): nasconde header/footer prima del
