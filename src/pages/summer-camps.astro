@@ -6,6 +6,9 @@ import { getEntry } from "astro:content";
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/summer-camps.md
 const d = (await getEntry("pagine", "summer-camps"))!.data;
+
+// Corpo pagina (programma + date) → src/content/corpoSummerCamps/corpo.md
+const c = (await getEntry("corpoSummerCamps", "corpo"))!.data;
 ---
 
 <BaseLayout
@@ -24,68 +27,34 @@ const d = (await getEntry("pagine", "summer-camps"))!.data;
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">Il programma</span>
-      <h2 class="section-title">Un'estate<br><em>indimenticabile.</em></h2>
+      <span class="eyebrow">{c.sezione1_eyebrow}</span>
+      <h2 class="section-title">{c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent}</em></h2>
       <div class="features-grid">
-        <div class="feature">
-          <span class="feature__num">01</span>
-          <h3>Tennis ogni mattina</h3>
-          <p>Sessioni tecniche e match play guidati dai nostri maestri FITP.</p>
-        </div>
-        <div class="feature">
-          <span class="feature__num">02</span>
-          <h3>Multi rackets-sport pomeridiano</h3>
-          <p>Tennis, padel, pickleball, badminton, ping-pong e altri sport per un'estate completa.</p>
-        </div>
-        <div class="feature">
-          <span class="feature__num">03</span>
-          <h3>Animazione e giochi</h3>
-          <p>Un team dedicato crea ogni giorno momenti divertenti e memorabili.</p>
-        </div>
-        <div class="feature">
-          <span class="feature__num">04</span>
-          <h3>Gruppi per età e livello</h3>
-          <p>Gruppi omogenei per garantire la massima sicurezza e il giusto ritmo.</p>
-        </div>
+        {c.features.map((f, i) => (
+          <div class="feature">
+            <span class="feature__num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{f.titolo}</h3>
+            <p>{f.testo}</p>
+          </div>
+        ))}
       </div>
 
       <div class="camp-img-row">
-        <img
-          src={publicUrl("/aYszOt0YXLCxVpqZ_TCA_summercamp2026_orizzontale_tennisfemmina_nologhi.avif")}
-          alt="Summer Camps tennis TCA"
-          class="camp-img"
-        />
-        <img
-          src={publicUrl("/ZhlJNzjCgu4jzybm_shutterstock_409391734_kidsrunfunoutdoor.avif")}
-          alt="Bambini che corrono all'aperto"
-          class="camp-img"
-        />
+        <img src={publicUrl(c.immagine1)} alt={c.immagine1_alt} class="camp-img" />
+        <img src={publicUrl(c.immagine2)} alt={c.immagine2_alt} class="camp-img" />
       </div>
     </div>
   </section>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">Date 2026</span>
-      <h2 class="section-title">Settimane<br><em>disponibili.</em></h2>
+      <span class="eyebrow">{c.sezione2_eyebrow}</span>
+      <h2 class="section-title">{c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent}</em></h2>
       <div class="dates-grid">
-        {[
-          { week: "1ª Settimana", dates: "8 – 12 Giugno 2026" },
-          { week: "2ª Settimana", dates: "15 – 19 Giugno 2026" },
-          { week: "3ª Settimana", dates: "22 – 26 Giugno 2026" },
-          { week: "4ª Settimana", dates: "29 Giugno – 3 Luglio 2026" },
-          { week: "5ª Settimana", dates: "6 – 10 Luglio 2026" },
-          { week: "6ª Settimana", dates: "13 – 17 Luglio 2026" },
-          { week: "7ª Settimana", dates: "20 – 24 Luglio 2026" },
-          { week: "8ª Settimana", dates: "27 – 31 Luglio 2026" },
-          { week: "9ª Settimana", dates: "3 – 7 Agosto 2026" },
-          { week: "10ª Settimana", dates: "24 – 28 Agosto 2026" },
-          { week: "11ª Settimana", dates: "31 Agosto – 4 Settembre 2026" },
-          { week: "12ª Settimana", dates: "7 – 11 Settembre 2026*" },
-        ].map((d) => (
+        {c.settimane.map((s) => (
           <div class="date-item">
-            <span class="date-item__week">{d.week}</span>
-            <span class="date-item__dates">{d.dates}</span>
+            <span class="date-item__week">{s.settimana}</span>
+            <span class="date-item__dates">{s.date}</span>
           </div>
         ))}
       </div>

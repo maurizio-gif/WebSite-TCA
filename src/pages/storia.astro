@@ -6,6 +6,10 @@ import { getEntry } from "astro:content";
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/storia.md
 const d = (await getEntry("pagine", "storia"))!.data;
+
+// Corpo pagina (timeline + "il club oggi") → src/content/corpoStoria/corpo.md
+const c = (await getEntry("corpoStoria", "corpo"))!.data;
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
 <BaseLayout
@@ -24,24 +28,14 @@ const d = (await getEntry("pagine", "storia"))!.data;
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">La timeline</span>
-      <h2 class="section-title">Sessant'anni<br><em>di storia.</em></h2>
+      <span class="eyebrow">{c.sezione1_eyebrow}</span>
+      <h2 class="section-title">{c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent}</em></h2>
 
       <div class="timeline">
-        {[
-          { year: "1963", text: "Fondazione del Tennis Club Ambrosiano e apertura della sede di Via Feltre, nel cuore del quartiere Feltre-Udine di Milano." },
-          { year: "1965", text: "Prima edizione del Torneo Avvenire, destinato a diventare uno dei più prestigiosi tornei giovanili internazionali." },
-          { year: "1969", text: "Il Torneo Avvenire si apre ai migliori talenti internazionali." },
-          { year: "1980s", text: "Ampliamento della struttura: nuovi campi, spogliatoi e servizi per rispondere alla crescente domanda dei soci." },
-          { year: "2000s", text: "Apertura dei campi da padel. Il club abbraccia il nuovo sport e lo integra nell'offerta per i soci." },
-          { year: "2020s", text: "Avvio del progetto di modernizzazione digitale e ampliamento dell'offerta con il pickleball e i programmi di preparazione atletica." },
-          { year: "2023", text: "Introduzione della categoria Under 14 al Torneo Avvenire nel circuito Tennis Europe." },
-          { year: "2025", text: "Il Torneo Avvenire diventa ufficialmente un torneo Under 14 Super Category, il più alto livello del tennis giovanile europeo." },
-          { year: "2026", text: "Il Club continua il proprio percorso di innovazione con il rinnovamento digitale e l'ampliamento dei servizi dedicati a sport e famiglie." },
-        ].map((item) => (
+        {c.timeline.map((item) => (
           <div class="timeline__item">
-            <span class="timeline__year">{item.year}</span>
-            <p class="timeline__text">{item.text}</p>
+            <span class="timeline__year">{item.anno}</span>
+            <p class="timeline__text">{item.testo}</p>
           </div>
         ))}
       </div>
@@ -52,28 +46,15 @@ const d = (await getEntry("pagine", "storia"))!.data;
     <div class="content-section__inner">
       <div class="two-col">
         <div>
-          <span class="eyebrow">Il club oggi</span>
-          <h2 class="section-title">Una community<br><em>viva.</em></h2>
-          <p class="body-text">
-            Oggi il Tennis Club Ambrosiano è uno dei più importanti punti di riferimento per
-            gli sport di racchetta a Milano. Con <strong>quasi 2.000 soci</strong>, 16 campi da
-            tennis, 2 campi da padel, 2 campi da pickleball, oltre 80 corsi settimanali, aree
-            dedicate alla preparazione atletica, una Scuola Tennis riconosciuta
-            <strong>TOP School FITP</strong> e un settore agonistico di alto livello, il Club
-            accoglie ogni giorno sportivi di tutte le età e livello.
-          </p>
-          <p class="body-text" style="margin-top:1.25rem;">
-            Ma il TCA è molto più di un centro sportivo: <strong>è una comunità</strong>. Durante
-            tutto l'anno organizza tornei, eventi sociali, clinic, feste e momenti di incontro
-            dedicati a soci, famiglie e amici, trasformando la terrazza affacciata sui campi e le
-            aree verdi in luoghi di condivisione, convivialità e amicizia.
-          </p>
+          <span class="eyebrow">{c.sezione2_eyebrow}</span>
+          <h2 class="section-title">{c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent}</em></h2>
+          <p class="body-text" set:html={mdBold(c.paragrafo1)} />
+          <p class="body-text" style="margin-top:1.25rem;" set:html={mdBold(c.paragrafo2)} />
         </div>
         <div class="gallery">
-          <img src={publicUrl("/aW-n8QIvOtkhBvwi_HCM_Tennis_Outdoor_July-2025.avif")} alt="Club TCA" class="gallery__img" />
-          <img src={publicUrl("/aW-n8gIvOtkhBvwl_HCM_Tennis_Outdoor_July-2025-2.avif")} alt="Club TCA" class="gallery__img" />
-          <img src={publicUrl("/EricDavanzo1169.jpg")} alt="Club TCA" class="gallery__img" />
-          <img src={publicUrl("/aW-n8wIvOtkhBvwn_HCM_Tennis_Outdoor_July-2025-3.avif")} alt="Club TCA" class="gallery__img" />
+          {c.galleria.map((img) => (
+            <img src={publicUrl(img.immagine)} alt={img.alt} class="gallery__img" />
+          ))}
         </div>
       </div>
     </div>

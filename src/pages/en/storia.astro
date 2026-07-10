@@ -2,45 +2,42 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import { publicUrl } from "../../i18n/utils";
+import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/storia.md (campi _en)
+const d = (await getEntry("pagine", "storia"))!.data;
+// Corpo pagina (timeline + "il club oggi") → src/content/corpoStoria/corpo.md
+const c = (await getEntry("corpoStoria", "corpo"))!.data;
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
 <BaseLayout
   lang={lang}
-  title="Our History | Tennis Club Ambrosiano Milan"
-  description="The history of Tennis Club Ambrosiano: from its foundation in 1963 to the present day, sixty years of tennis, sport and community in Milan."
+  title={d.title_en ?? d.title}
+  description={d.description_en ?? d.description}
 >
   <PageHero
-    eyebrow="Since 1963"
-    title="Our"
-    titleAccent="History"
-    sub="Sixty years of passion for tennis and sport. A story of champions, community, tradition and innovation in the heart of Milan."
-    image="/HERO.avif"
-    imageAlt="Aerial view of Tennis Club Ambrosiano"
+    eyebrow={d.hero_eyebrow_en ?? d.hero_eyebrow}
+    title={d.hero_titolo_en ?? d.hero_titolo}
+    titleAccent={d.hero_titolo_accent_en ?? d.hero_titolo_accent}
+    sub={d.hero_sottotitolo_en ?? d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
     imagePosition="center 40%"
   />
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">The timeline</span>
-      <h2 class="section-title">Sixty years<br><em>of history.</em></h2>
+      <span class="eyebrow">{c.sezione1_eyebrow_en ?? c.sezione1_eyebrow}</span>
+      <h2 class="section-title">{c.sezione1_titolo_en ?? c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent_en ?? c.sezione1_titolo_accent}</em></h2>
 
       <div class="timeline">
-        {[
-          { year: "1963", text: "Tennis Club Ambrosiano is founded, opening its home on Via Feltre, in the heart of Milan's Feltre-Udine district." },
-          { year: "1965", text: "First edition of the Avvenire Tournament, destined to become one of the most prestigious international junior tournaments." },
-          { year: "1969", text: "The Avvenire Tournament opens up to the best international talents." },
-          { year: "1980s", text: "Expansion of the facility: new courts, changing rooms and services to meet growing demand from members." },
-          { year: "2000s", text: "Padel courts open. The club embraces the new sport and integrates it into its offering for members." },
-          { year: "2020s", text: "Launch of the digital modernisation project and expansion of the offering with pickleball and athletic training programmes." },
-          { year: "2023", text: "The Under-14 category joins the Avvenire Tournament within the Tennis Europe circuit." },
-          { year: "2025", text: "The Avvenire Tournament officially becomes an Under-14 Super Category tournament, the highest level of European junior tennis." },
-          { year: "2026", text: "The Club continues its path of innovation with digital renewal and an expanded range of services for sport and families." },
-        ].map((item) => (
+        {c.timeline.map((item) => (
           <div class="timeline__item">
-            <span class="timeline__year">{item.year}</span>
-            <p class="timeline__text">{item.text}</p>
+            <span class="timeline__year">{item.anno}</span>
+            <p class="timeline__text">{item.testo_en ?? item.testo}</p>
           </div>
         ))}
       </div>
@@ -51,28 +48,15 @@ const lang = 'en' as const;
     <div class="content-section__inner">
       <div class="two-col">
         <div>
-          <span class="eyebrow">The club today</span>
-          <h2 class="section-title">A living<br><em>community.</em></h2>
-          <p class="body-text">
-            Today Tennis Club Ambrosiano is one of the most important reference points for
-            racket sports in Milan. With <strong>nearly 2,000 members</strong>, 16 tennis courts,
-            2 padel courts, 2 pickleball courts, over 80 weekly classes, areas dedicated to
-            athletic training, a Tennis School recognised as a <strong>FITP Top School</strong>
-            and a high-level competitive programme, the Club welcomes athletes of every age and
-            level every day.
-          </p>
-          <p class="body-text" style="margin-top:1.25rem;">
-            But TCA is much more than a sports centre: <strong>it's a community</strong>.
-            Throughout the year it organises tournaments, social events, clinics, parties and
-            get-togethers for members, families and friends, turning the terrace overlooking the
-            courts and the green spaces into places to share, connect and make friends.
-          </p>
+          <span class="eyebrow">{c.sezione2_eyebrow_en ?? c.sezione2_eyebrow}</span>
+          <h2 class="section-title">{c.sezione2_titolo_en ?? c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent_en ?? c.sezione2_titolo_accent}</em></h2>
+          <p class="body-text" set:html={mdBold(c.paragrafo1_en ?? c.paragrafo1)} />
+          <p class="body-text" style="margin-top:1.25rem;" set:html={mdBold(c.paragrafo2_en ?? c.paragrafo2)} />
         </div>
         <div class="gallery">
-          <img src={publicUrl("/aW-n8QIvOtkhBvwi_HCM_Tennis_Outdoor_July-2025.avif")} alt="TCA club" class="gallery__img" />
-          <img src={publicUrl("/aW-n8gIvOtkhBvwl_HCM_Tennis_Outdoor_July-2025-2.avif")} alt="TCA club" class="gallery__img" />
-          <img src={publicUrl("/EricDavanzo1169.jpg")} alt="TCA club" class="gallery__img" />
-          <img src={publicUrl("/aW-n8wIvOtkhBvwn_HCM_Tennis_Outdoor_July-2025-3.avif")} alt="TCA club" class="gallery__img" />
+          {c.galleria.map((img) => (
+            <img src={publicUrl(img.immagine)} alt={img.alt} class="gallery__img" />
+          ))}
         </div>
       </div>
     </div>

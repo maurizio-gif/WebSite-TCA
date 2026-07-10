@@ -60,6 +60,12 @@ type Query {
   serviziConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ServiziFilter): ServiziConnection!
   planning(relativePath: String): Planning!
   planningConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PlanningFilter): PlanningConnection!
+  corpoStoria(relativePath: String): CorpoStoria!
+  corpoStoriaConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoStoriaFilter): CorpoStoriaConnection!
+  corpoSummerCamps(relativePath: String): CorpoSummerCamps!
+  corpoSummerCampsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoSummerCampsFilter): CorpoSummerCampsConnection!
+  corpoScuolaTennis(relativePath: String): CorpoScuolaTennis!
+  corpoScuolaTennisConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: CorpoScuolaTennisFilter): CorpoScuolaTennisConnection!
   info(relativePath: String): Info!
   infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
   helpdesk(relativePath: String): Helpdesk!
@@ -74,6 +80,9 @@ input DocumentFilter {
   eventi: EventiFilter
   servizi: ServiziFilter
   planning: PlanningFilter
+  corpoStoria: CorpoStoriaFilter
+  corpoSummerCamps: CorpoSummerCampsFilter
+  corpoScuolaTennis: CorpoScuolaTennisFilter
   info: InfoFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
@@ -103,7 +112,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | Info | Helpdesk | News | Pagine | Folder
+union DocumentNode = Eventi | Servizi | Planning | CorpoStoria | CorpoSummerCamps | CorpoScuolaTennis | Info | Helpdesk | News | Pagine | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -259,6 +268,355 @@ type PlanningConnection implements Connection {
   edges: [PlanningConnectionEdges]
 }
 
+type CorpoStoriaTimeline {
+  anno: String!
+  testo: String!
+  testo_en: String
+}
+
+type CorpoStoriaGalleria {
+  immagine: String!
+  alt: String!
+}
+
+type CorpoStoria implements Node & Document {
+  sezione1_eyebrow: String!
+  sezione1_titolo: String!
+  sezione1_titolo_accent: String!
+  timeline: [CorpoStoriaTimeline!]!
+  sezione2_eyebrow: String!
+  sezione2_titolo: String!
+  sezione2_titolo_accent: String!
+  paragrafo1: String!
+  paragrafo2: String!
+  galleria: [CorpoStoriaGalleria!]!
+  sezione1_eyebrow_en: String
+  sezione1_titolo_en: String
+  sezione1_titolo_accent_en: String
+  sezione2_eyebrow_en: String
+  sezione2_titolo_en: String
+  sezione2_titolo_accent_en: String
+  paragrafo1_en: String
+  paragrafo2_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CorpoStoriaTimelineFilter {
+  anno: StringFilter
+  testo: StringFilter
+  testo_en: StringFilter
+}
+
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input CorpoStoriaGalleriaFilter {
+  immagine: ImageFilter
+  alt: StringFilter
+}
+
+input CorpoStoriaFilter {
+  sezione1_eyebrow: StringFilter
+  sezione1_titolo: StringFilter
+  sezione1_titolo_accent: StringFilter
+  timeline: CorpoStoriaTimelineFilter
+  sezione2_eyebrow: StringFilter
+  sezione2_titolo: StringFilter
+  sezione2_titolo_accent: StringFilter
+  paragrafo1: StringFilter
+  paragrafo2: StringFilter
+  galleria: CorpoStoriaGalleriaFilter
+  sezione1_eyebrow_en: StringFilter
+  sezione1_titolo_en: StringFilter
+  sezione1_titolo_accent_en: StringFilter
+  sezione2_eyebrow_en: StringFilter
+  sezione2_titolo_en: StringFilter
+  sezione2_titolo_accent_en: StringFilter
+  paragrafo1_en: StringFilter
+  paragrafo2_en: StringFilter
+}
+
+type CorpoStoriaConnectionEdges {
+  cursor: String!
+  node: CorpoStoria
+}
+
+type CorpoStoriaConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CorpoStoriaConnectionEdges]
+}
+
+type CorpoSummerCampsFeatures {
+  titolo: String!
+  testo: String!
+  titolo_en: String
+  testo_en: String
+}
+
+type CorpoSummerCampsSettimane {
+  settimana: String!
+  date: String!
+  settimana_en: String
+  date_en: String
+}
+
+type CorpoSummerCamps implements Node & Document {
+  sezione1_eyebrow: String!
+  sezione1_titolo: String!
+  sezione1_titolo_accent: String!
+  features: [CorpoSummerCampsFeatures!]!
+  immagine1: String!
+  immagine1_alt: String!
+  immagine2: String!
+  immagine2_alt: String!
+  sezione2_eyebrow: String!
+  sezione2_titolo: String!
+  sezione2_titolo_accent: String!
+  settimane: [CorpoSummerCampsSettimane!]!
+  sezione1_eyebrow_en: String
+  sezione1_titolo_en: String
+  sezione1_titolo_accent_en: String
+  immagine1_alt_en: String
+  immagine2_alt_en: String
+  sezione2_eyebrow_en: String
+  sezione2_titolo_en: String
+  sezione2_titolo_accent_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CorpoSummerCampsFeaturesFilter {
+  titolo: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input CorpoSummerCampsSettimaneFilter {
+  settimana: StringFilter
+  date: StringFilter
+  settimana_en: StringFilter
+  date_en: StringFilter
+}
+
+input CorpoSummerCampsFilter {
+  sezione1_eyebrow: StringFilter
+  sezione1_titolo: StringFilter
+  sezione1_titolo_accent: StringFilter
+  features: CorpoSummerCampsFeaturesFilter
+  immagine1: ImageFilter
+  immagine1_alt: StringFilter
+  immagine2: ImageFilter
+  immagine2_alt: StringFilter
+  sezione2_eyebrow: StringFilter
+  sezione2_titolo: StringFilter
+  sezione2_titolo_accent: StringFilter
+  settimane: CorpoSummerCampsSettimaneFilter
+  sezione1_eyebrow_en: StringFilter
+  sezione1_titolo_en: StringFilter
+  sezione1_titolo_accent_en: StringFilter
+  immagine1_alt_en: StringFilter
+  immagine2_alt_en: StringFilter
+  sezione2_eyebrow_en: StringFilter
+  sezione2_titolo_en: StringFilter
+  sezione2_titolo_accent_en: StringFilter
+}
+
+type CorpoSummerCampsConnectionEdges {
+  cursor: String!
+  node: CorpoSummerCamps
+}
+
+type CorpoSummerCampsConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CorpoSummerCampsConnectionEdges]
+}
+
+type CorpoScuolaTennisLivelli {
+  dot: String!
+  nome: String!
+  tag: String!
+  range: String!
+  testo: String!
+  nome_en: String
+  tag_en: String
+  range_en: String
+  testo_en: String
+}
+
+type CorpoScuolaTennisIscrizione_cards {
+  titolo: String!
+  tag: String!
+  testo: String!
+  titolo_en: String
+  tag_en: String
+  testo_en: String
+}
+
+type CorpoScuolaTennisTornei {
+  quando: String!
+  nome: String!
+  testo: String!
+  quando_en: String
+  nome_en: String
+  testo_en: String
+}
+
+type CorpoScuolaTennis implements Node & Document {
+  sezione1_eyebrow: String!
+  sezione1_titolo: String!
+  sezione1_titolo_accent: String!
+  sezione1_lead: String!
+  livelli: [CorpoScuolaTennisLivelli!]!
+  livelli_footer_testo: String!
+  livelli_footer_link_label: String!
+  sezione2_eyebrow: String!
+  sezione2_titolo: String!
+  sezione2_titolo_accent: String!
+  iscrizione_cards: [CorpoScuolaTennisIscrizione_cards!]!
+  iscrizione_cta_label: String!
+  sezione3_eyebrow: String!
+  sezione3_titolo: String!
+  sezione3_titolo_accent: String!
+  sezione3_badge: String!
+  sezione3_paragrafo1: String!
+  sezione3_paragrafo2: String!
+  sezione3_paragrafo3: String!
+  sezione3_immagine: String!
+  sezione3_immagine_alt: String!
+  sezione4_eyebrow: String!
+  sezione4_titolo: String!
+  sezione4_titolo_accent: String!
+  tornei: [CorpoScuolaTennisTornei!]!
+  sezione4_footer_testo: String!
+  sezione1_eyebrow_en: String
+  sezione1_titolo_en: String
+  sezione1_titolo_accent_en: String
+  sezione1_lead_en: String
+  livelli_footer_testo_en: String
+  livelli_footer_link_label_en: String
+  sezione2_eyebrow_en: String
+  sezione2_titolo_en: String
+  sezione2_titolo_accent_en: String
+  iscrizione_cta_label_en: String
+  sezione3_eyebrow_en: String
+  sezione3_titolo_en: String
+  sezione3_titolo_accent_en: String
+  sezione3_badge_en: String
+  sezione3_paragrafo1_en: String
+  sezione3_paragrafo2_en: String
+  sezione3_paragrafo3_en: String
+  sezione3_immagine_alt_en: String
+  sezione4_eyebrow_en: String
+  sezione4_titolo_en: String
+  sezione4_titolo_accent_en: String
+  sezione4_footer_testo_en: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input CorpoScuolaTennisLivelliFilter {
+  dot: StringFilter
+  nome: StringFilter
+  tag: StringFilter
+  range: StringFilter
+  testo: StringFilter
+  nome_en: StringFilter
+  tag_en: StringFilter
+  range_en: StringFilter
+  testo_en: StringFilter
+}
+
+input CorpoScuolaTennisIscrizione_cardsFilter {
+  titolo: StringFilter
+  tag: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  tag_en: StringFilter
+  testo_en: StringFilter
+}
+
+input CorpoScuolaTennisTorneiFilter {
+  quando: StringFilter
+  nome: StringFilter
+  testo: StringFilter
+  quando_en: StringFilter
+  nome_en: StringFilter
+  testo_en: StringFilter
+}
+
+input CorpoScuolaTennisFilter {
+  sezione1_eyebrow: StringFilter
+  sezione1_titolo: StringFilter
+  sezione1_titolo_accent: StringFilter
+  sezione1_lead: StringFilter
+  livelli: CorpoScuolaTennisLivelliFilter
+  livelli_footer_testo: StringFilter
+  livelli_footer_link_label: StringFilter
+  sezione2_eyebrow: StringFilter
+  sezione2_titolo: StringFilter
+  sezione2_titolo_accent: StringFilter
+  iscrizione_cards: CorpoScuolaTennisIscrizione_cardsFilter
+  iscrizione_cta_label: StringFilter
+  sezione3_eyebrow: StringFilter
+  sezione3_titolo: StringFilter
+  sezione3_titolo_accent: StringFilter
+  sezione3_badge: StringFilter
+  sezione3_paragrafo1: StringFilter
+  sezione3_paragrafo2: StringFilter
+  sezione3_paragrafo3: StringFilter
+  sezione3_immagine: ImageFilter
+  sezione3_immagine_alt: StringFilter
+  sezione4_eyebrow: StringFilter
+  sezione4_titolo: StringFilter
+  sezione4_titolo_accent: StringFilter
+  tornei: CorpoScuolaTennisTorneiFilter
+  sezione4_footer_testo: StringFilter
+  sezione1_eyebrow_en: StringFilter
+  sezione1_titolo_en: StringFilter
+  sezione1_titolo_accent_en: StringFilter
+  sezione1_lead_en: StringFilter
+  livelli_footer_testo_en: StringFilter
+  livelli_footer_link_label_en: StringFilter
+  sezione2_eyebrow_en: StringFilter
+  sezione2_titolo_en: StringFilter
+  sezione2_titolo_accent_en: StringFilter
+  iscrizione_cta_label_en: StringFilter
+  sezione3_eyebrow_en: StringFilter
+  sezione3_titolo_en: StringFilter
+  sezione3_titolo_accent_en: StringFilter
+  sezione3_badge_en: StringFilter
+  sezione3_paragrafo1_en: StringFilter
+  sezione3_paragrafo2_en: StringFilter
+  sezione3_paragrafo3_en: StringFilter
+  sezione3_immagine_alt_en: StringFilter
+  sezione4_eyebrow_en: StringFilter
+  sezione4_titolo_en: StringFilter
+  sezione4_titolo_accent_en: StringFilter
+  sezione4_footer_testo_en: StringFilter
+}
+
+type CorpoScuolaTennisConnectionEdges {
+  cursor: String!
+  node: CorpoScuolaTennis
+}
+
+type CorpoScuolaTennisConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [CorpoScuolaTennisConnectionEdges]
+}
+
 type Info implements Node & Document {
   indirizzo: String!
   come_arrivare: String!
@@ -355,13 +713,6 @@ type News implements Node & Document {
   _values: JSON!
 }
 
-input ImageFilter {
-  startsWith: String
-  eq: String
-  exists: Boolean
-  in: [String]
-}
-
 input NewsFilter {
   titolo: StringFilter
   data: DatetimeFilter
@@ -401,6 +752,13 @@ type Pagine implements Node & Document {
   hero_sottotitolo: String
   hero_immagine: String
   hero_immagine_alt: String
+  title_en: String
+  description_en: String
+  hero_eyebrow_en: String
+  hero_titolo_en: String
+  hero_titolo_accent_en: String
+  hero_sottotitolo_en: String
+  hero_immagine_alt_en: String
   body: JSON
   id: ID!
   _sys: SystemInfo!
@@ -416,6 +774,13 @@ input PagineFilter {
   hero_sottotitolo: StringFilter
   hero_immagine: StringFilter
   hero_immagine_alt: StringFilter
+  title_en: StringFilter
+  description_en: StringFilter
+  hero_eyebrow_en: StringFilter
+  hero_titolo_en: StringFilter
+  hero_titolo_accent_en: StringFilter
+  hero_sottotitolo_en: StringFilter
+  hero_immagine_alt_en: StringFilter
   body: RichTextFilter
 }
 
@@ -442,6 +807,12 @@ type Mutation {
   createServizi(relativePath: String!, params: ServiziMutation!): Servizi!
   updatePlanning(relativePath: String!, params: PlanningMutation!): Planning!
   createPlanning(relativePath: String!, params: PlanningMutation!): Planning!
+  updateCorpoStoria(relativePath: String!, params: CorpoStoriaMutation!): CorpoStoria!
+  createCorpoStoria(relativePath: String!, params: CorpoStoriaMutation!): CorpoStoria!
+  updateCorpoSummerCamps(relativePath: String!, params: CorpoSummerCampsMutation!): CorpoSummerCamps!
+  createCorpoSummerCamps(relativePath: String!, params: CorpoSummerCampsMutation!): CorpoSummerCamps!
+  updateCorpoScuolaTennis(relativePath: String!, params: CorpoScuolaTennisMutation!): CorpoScuolaTennis!
+  createCorpoScuolaTennis(relativePath: String!, params: CorpoScuolaTennisMutation!): CorpoScuolaTennis!
   updateInfo(relativePath: String!, params: InfoMutation!): Info!
   createInfo(relativePath: String!, params: InfoMutation!): Info!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
@@ -456,6 +827,9 @@ input DocumentUpdateMutation {
   eventi: EventiMutation
   servizi: ServiziMutation
   planning: PlanningMutation
+  corpoStoria: CorpoStoriaMutation
+  corpoSummerCamps: CorpoSummerCampsMutation
+  corpoScuolaTennis: CorpoScuolaTennisMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -467,6 +841,9 @@ input DocumentMutation {
   eventi: EventiMutation
   servizi: ServiziMutation
   planning: PlanningMutation
+  corpoStoria: CorpoStoriaMutation
+  corpoSummerCamps: CorpoSummerCampsMutation
+  corpoScuolaTennis: CorpoScuolaTennisMutation
   info: InfoMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
@@ -509,6 +886,156 @@ input PlanningLezioniMutation {
 
 input PlanningMutation {
   lezioni: [PlanningLezioniMutation]
+}
+
+input CorpoStoriaTimelineMutation {
+  anno: String
+  testo: String
+  testo_en: String
+}
+
+input CorpoStoriaGalleriaMutation {
+  immagine: String
+  alt: String
+}
+
+input CorpoStoriaMutation {
+  sezione1_eyebrow: String
+  sezione1_titolo: String
+  sezione1_titolo_accent: String
+  timeline: [CorpoStoriaTimelineMutation]
+  sezione2_eyebrow: String
+  sezione2_titolo: String
+  sezione2_titolo_accent: String
+  paragrafo1: String
+  paragrafo2: String
+  galleria: [CorpoStoriaGalleriaMutation]
+  sezione1_eyebrow_en: String
+  sezione1_titolo_en: String
+  sezione1_titolo_accent_en: String
+  sezione2_eyebrow_en: String
+  sezione2_titolo_en: String
+  sezione2_titolo_accent_en: String
+  paragrafo1_en: String
+  paragrafo2_en: String
+}
+
+input CorpoSummerCampsFeaturesMutation {
+  titolo: String
+  testo: String
+  titolo_en: String
+  testo_en: String
+}
+
+input CorpoSummerCampsSettimaneMutation {
+  settimana: String
+  date: String
+  settimana_en: String
+  date_en: String
+}
+
+input CorpoSummerCampsMutation {
+  sezione1_eyebrow: String
+  sezione1_titolo: String
+  sezione1_titolo_accent: String
+  features: [CorpoSummerCampsFeaturesMutation]
+  immagine1: String
+  immagine1_alt: String
+  immagine2: String
+  immagine2_alt: String
+  sezione2_eyebrow: String
+  sezione2_titolo: String
+  sezione2_titolo_accent: String
+  settimane: [CorpoSummerCampsSettimaneMutation]
+  sezione1_eyebrow_en: String
+  sezione1_titolo_en: String
+  sezione1_titolo_accent_en: String
+  immagine1_alt_en: String
+  immagine2_alt_en: String
+  sezione2_eyebrow_en: String
+  sezione2_titolo_en: String
+  sezione2_titolo_accent_en: String
+}
+
+input CorpoScuolaTennisLivelliMutation {
+  dot: String
+  nome: String
+  tag: String
+  range: String
+  testo: String
+  nome_en: String
+  tag_en: String
+  range_en: String
+  testo_en: String
+}
+
+input CorpoScuolaTennisIscrizione_cardsMutation {
+  titolo: String
+  tag: String
+  testo: String
+  titolo_en: String
+  tag_en: String
+  testo_en: String
+}
+
+input CorpoScuolaTennisTorneiMutation {
+  quando: String
+  nome: String
+  testo: String
+  quando_en: String
+  nome_en: String
+  testo_en: String
+}
+
+input CorpoScuolaTennisMutation {
+  sezione1_eyebrow: String
+  sezione1_titolo: String
+  sezione1_titolo_accent: String
+  sezione1_lead: String
+  livelli: [CorpoScuolaTennisLivelliMutation]
+  livelli_footer_testo: String
+  livelli_footer_link_label: String
+  sezione2_eyebrow: String
+  sezione2_titolo: String
+  sezione2_titolo_accent: String
+  iscrizione_cards: [CorpoScuolaTennisIscrizione_cardsMutation]
+  iscrizione_cta_label: String
+  sezione3_eyebrow: String
+  sezione3_titolo: String
+  sezione3_titolo_accent: String
+  sezione3_badge: String
+  sezione3_paragrafo1: String
+  sezione3_paragrafo2: String
+  sezione3_paragrafo3: String
+  sezione3_immagine: String
+  sezione3_immagine_alt: String
+  sezione4_eyebrow: String
+  sezione4_titolo: String
+  sezione4_titolo_accent: String
+  tornei: [CorpoScuolaTennisTorneiMutation]
+  sezione4_footer_testo: String
+  sezione1_eyebrow_en: String
+  sezione1_titolo_en: String
+  sezione1_titolo_accent_en: String
+  sezione1_lead_en: String
+  livelli_footer_testo_en: String
+  livelli_footer_link_label_en: String
+  sezione2_eyebrow_en: String
+  sezione2_titolo_en: String
+  sezione2_titolo_accent_en: String
+  iscrizione_cta_label_en: String
+  sezione3_eyebrow_en: String
+  sezione3_titolo_en: String
+  sezione3_titolo_accent_en: String
+  sezione3_badge_en: String
+  sezione3_paragrafo1_en: String
+  sezione3_paragrafo2_en: String
+  sezione3_paragrafo3_en: String
+  sezione3_immagine_alt_en: String
+  sezione4_eyebrow_en: String
+  sezione4_titolo_en: String
+  sezione4_titolo_accent_en: String
+  sezione4_footer_testo_en: String
 }
 
 input InfoMutation {
@@ -562,6 +1089,13 @@ input PagineMutation {
   hero_sottotitolo: String
   hero_immagine: String
   hero_immagine_alt: String
+  title_en: String
+  description_en: String
+  hero_eyebrow_en: String
+  hero_titolo_en: String
+  hero_titolo_accent_en: String
+  hero_sottotitolo_en: String
+  hero_immagine_alt_en: String
   body: JSON
 }
 

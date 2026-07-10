@@ -243,6 +243,336 @@ var config_default = defineConfig({
           }
         ]
       },
+      // ─── CORPO PAGINA: STORIA ──────────────────────────────────────────────
+      // Contenuto sotto l'hero della pagina Storia (timeline + "Il club oggi").
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: "corpoStoria",
+        label: "Pagina Storia \u2014 Contenuto",
+        path: "src/content/corpoStoria",
+        format: "md",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          {
+            type: "string",
+            name: "sezione1_eyebrow",
+            label: 'Sezione 1 \u2014 eyebrow (es. "La timeline")',
+            required: true
+          },
+          {
+            type: "string",
+            name: "sezione1_titolo",
+            label: "Sezione 1 \u2014 titolo",
+            required: true
+          },
+          {
+            type: "string",
+            name: "sezione1_titolo_accent",
+            label: "Sezione 1 \u2014 titolo (parte evidenziata in rosso)",
+            required: true
+          },
+          {
+            type: "object",
+            name: "timeline",
+            label: "Timeline",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({
+                label: item?.anno ? `${item.anno} \u2014 ${item.testo || ""}` : "Nuova voce"
+              })
+            },
+            fields: [
+              { type: "string", name: "anno", label: "Anno", required: true },
+              { type: "string", name: "testo", label: "Testo", required: true, ui: { component: "textarea" } },
+              { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)", ui: { component: "textarea" } }
+            ]
+          },
+          {
+            type: "string",
+            name: "sezione2_eyebrow",
+            label: 'Sezione 2 \u2014 eyebrow (es. "Il club oggi")',
+            required: true
+          },
+          {
+            type: "string",
+            name: "sezione2_titolo",
+            label: "Sezione 2 \u2014 titolo",
+            required: true
+          },
+          {
+            type: "string",
+            name: "sezione2_titolo_accent",
+            label: "Sezione 2 \u2014 titolo (parte evidenziata in rosso)",
+            required: true
+          },
+          {
+            type: "string",
+            name: "paragrafo1",
+            label: "Paragrafo 1 \u2014 grassetto con **doppi asterischi**",
+            required: true,
+            ui: { component: "textarea" }
+          },
+          {
+            type: "string",
+            name: "paragrafo2",
+            label: "Paragrafo 2 \u2014 grassetto con **doppi asterischi**",
+            required: true,
+            ui: { component: "textarea" }
+          },
+          {
+            type: "object",
+            name: "galleria",
+            label: "Galleria immagini",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.alt || "Immagine" })
+            },
+            fields: [
+              { type: "image", name: "immagine", label: "Immagine", required: true },
+              { type: "string", name: "alt", label: "Testo alternativo", required: true }
+            ]
+          },
+          {
+            type: "string",
+            name: "sezione1_eyebrow_en",
+            label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 eyebrow (inglese)"
+          },
+          {
+            type: "string",
+            name: "sezione1_titolo_en",
+            label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo (inglese)"
+          },
+          {
+            type: "string",
+            name: "sezione1_titolo_accent_en",
+            label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo evidenziato (inglese)"
+          },
+          {
+            type: "string",
+            name: "sezione2_eyebrow_en",
+            label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 eyebrow (inglese)"
+          },
+          {
+            type: "string",
+            name: "sezione2_titolo_en",
+            label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo (inglese)"
+          },
+          {
+            type: "string",
+            name: "sezione2_titolo_accent_en",
+            label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo evidenziato (inglese)"
+          },
+          {
+            type: "string",
+            name: "paragrafo1_en",
+            label: "\u{1F1EC}\u{1F1E7} Paragrafo 1 (inglese)",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "string",
+            name: "paragrafo2_en",
+            label: "\u{1F1EC}\u{1F1E7} Paragrafo 2 (inglese)",
+            ui: { component: "textarea" }
+          }
+        ]
+      },
+      // ─── CORPO PAGINA: SUMMER CAMPS ────────────────────────────────────────
+      // Contenuto sotto l'hero della pagina Summer Camps.
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: "corpoSummerCamps",
+        label: "Pagina Summer Camps \u2014 Contenuto",
+        path: "src/content/corpoSummerCamps",
+        format: "md",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          { type: "string", name: "sezione1_eyebrow", label: "Sezione 1 \u2014 eyebrow", required: true },
+          { type: "string", name: "sezione1_titolo", label: "Sezione 1 \u2014 titolo", required: true },
+          { type: "string", name: "sezione1_titolo_accent", label: "Sezione 1 \u2014 titolo evidenziato", required: true },
+          {
+            type: "object",
+            name: "features",
+            label: "Caratteristiche del programma",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.titolo || "Nuova caratteristica" })
+            },
+            fields: [
+              { type: "string", name: "titolo", label: "Titolo", required: true },
+              { type: "string", name: "testo", label: "Testo", required: true, ui: { component: "textarea" } },
+              { type: "string", name: "titolo_en", label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)" },
+              { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)", ui: { component: "textarea" } }
+            ]
+          },
+          { type: "image", name: "immagine1", label: "Immagine 1 (grande)", required: true },
+          { type: "string", name: "immagine1_alt", label: "Immagine 1 \u2014 testo alternativo", required: true },
+          { type: "image", name: "immagine2", label: "Immagine 2 (piccola)", required: true },
+          { type: "string", name: "immagine2_alt", label: "Immagine 2 \u2014 testo alternativo", required: true },
+          { type: "string", name: "sezione2_eyebrow", label: "Sezione 2 \u2014 eyebrow", required: true },
+          { type: "string", name: "sezione2_titolo", label: "Sezione 2 \u2014 titolo", required: true },
+          { type: "string", name: "sezione2_titolo_accent", label: "Sezione 2 \u2014 titolo evidenziato", required: true },
+          {
+            type: "object",
+            name: "settimane",
+            label: "Settimane disponibili",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({
+                label: item?.settimana ? `${item.settimana} \u2014 ${item.date || ""}` : "Nuova settimana"
+              })
+            },
+            fields: [
+              { type: "string", name: "settimana", label: 'Settimana (es. "1\xAA Settimana")', required: true },
+              { type: "string", name: "date", label: 'Date (es. "8 \u2013 12 Giugno 2026")', required: true },
+              { type: "string", name: "settimana_en", label: '\u{1F1EC}\u{1F1E7} Settimana (inglese, es. "Week 1")' },
+              { type: "string", name: "date_en", label: "\u{1F1EC}\u{1F1E7} Date (inglese)" }
+            ]
+          },
+          { type: "string", name: "sezione1_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 eyebrow (inglese)" },
+          { type: "string", name: "sezione1_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione1_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo evidenziato (inglese)" },
+          { type: "string", name: "immagine1_alt_en", label: "\u{1F1EC}\u{1F1E7} Immagine 1 \u2014 alt (inglese)" },
+          { type: "string", name: "immagine2_alt_en", label: "\u{1F1EC}\u{1F1E7} Immagine 2 \u2014 alt (inglese)" },
+          { type: "string", name: "sezione2_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 eyebrow (inglese)" },
+          { type: "string", name: "sezione2_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione2_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo evidenziato (inglese)" }
+        ]
+      },
+      // ─── CORPO PAGINA: SCUOLA TENNIS ───────────────────────────────────────
+      // Contenuto sotto l'hero della pagina Scuola Tennis.
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: "corpoScuolaTennis",
+        label: "Pagina Scuola Tennis \u2014 Contenuto",
+        path: "src/content/corpoScuolaTennis",
+        format: "md",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          { type: "string", name: "sezione1_eyebrow", label: "Sezione 1 \u2014 eyebrow", required: true },
+          { type: "string", name: "sezione1_titolo", label: "Sezione 1 \u2014 titolo", required: true },
+          { type: "string", name: "sezione1_titolo_accent", label: "Sezione 1 \u2014 titolo evidenziato", required: true },
+          { type: "string", name: "sezione1_lead", label: "Sezione 1 \u2014 testo introduttivo", required: true, ui: { component: "textarea" } },
+          {
+            type: "object",
+            name: "livelli",
+            label: "Livelli (percorso a colori)",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.nome || "Nuovo livello" })
+            },
+            fields: [
+              {
+                type: "string",
+                name: "dot",
+                label: "Colore",
+                required: true,
+                options: [
+                  { value: "rosso", label: "Rosso" },
+                  { value: "arancio", label: "Arancio" },
+                  { value: "verde", label: "Verde" },
+                  { value: "giallo", label: "Giallo" }
+                ]
+              },
+              { type: "string", name: "nome", label: "Nome livello", required: true },
+              { type: "string", name: "tag", label: 'Tag (es. "Mini Tennis")', required: true },
+              { type: "string", name: "range", label: "Fascia et\xE0", required: true },
+              { type: "string", name: "testo", label: "Testo", required: true, ui: { component: "textarea" } },
+              { type: "string", name: "nome_en", label: "\u{1F1EC}\u{1F1E7} Nome (inglese)" },
+              { type: "string", name: "tag_en", label: "\u{1F1EC}\u{1F1E7} Tag (inglese)" },
+              { type: "string", name: "range_en", label: "\u{1F1EC}\u{1F1E7} Fascia et\xE0 (inglese)" },
+              { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)", ui: { component: "textarea" } }
+            ]
+          },
+          { type: "string", name: "livelli_footer_testo", label: "Testo dopo i livelli (prima del link)", required: true },
+          { type: "string", name: "livelli_footer_link_label", label: "Etichetta link (verso /agonistica)", required: true },
+          { type: "string", name: "sezione2_eyebrow", label: "Sezione 2 \u2014 eyebrow", required: true },
+          { type: "string", name: "sezione2_titolo", label: "Sezione 2 \u2014 titolo", required: true },
+          { type: "string", name: "sezione2_titolo_accent", label: "Sezione 2 \u2014 titolo evidenziato", required: true },
+          {
+            type: "object",
+            name: "iscrizione_cards",
+            label: "Card iscrizione",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.titolo || "Nuova card" })
+            },
+            fields: [
+              { type: "string", name: "titolo", label: "Titolo", required: true },
+              { type: "string", name: "tag", label: 'Tag (es. "Nati nel 2020 e 2021")', required: true },
+              { type: "string", name: "testo", label: "Testo", required: true, ui: { component: "textarea" } },
+              { type: "string", name: "titolo_en", label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)" },
+              { type: "string", name: "tag_en", label: "\u{1F1EC}\u{1F1E7} Tag (inglese)" },
+              { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)", ui: { component: "textarea" } }
+            ]
+          },
+          { type: "string", name: "iscrizione_cta_label", label: "Testo pulsante iscrizione", required: true },
+          { type: "string", name: "sezione3_eyebrow", label: "Sezione 3 \u2014 eyebrow", required: true },
+          { type: "string", name: "sezione3_titolo", label: "Sezione 3 \u2014 titolo", required: true },
+          { type: "string", name: "sezione3_titolo_accent", label: "Sezione 3 \u2014 titolo evidenziato", required: true },
+          { type: "string", name: "sezione3_badge", label: 'Sezione 3 \u2014 badge (es. "Vavassori Tennis Academy...")', required: true },
+          { type: "string", name: "sezione3_paragrafo1", label: "Sezione 3 \u2014 paragrafo 1 (**grassetto**)", required: true, ui: { component: "textarea" } },
+          { type: "string", name: "sezione3_paragrafo2", label: "Sezione 3 \u2014 paragrafo 2", required: true, ui: { component: "textarea" } },
+          { type: "string", name: "sezione3_paragrafo3", label: "Sezione 3 \u2014 paragrafo 3 (**grassetto**)", required: true, ui: { component: "textarea" } },
+          { type: "image", name: "sezione3_immagine", label: "Sezione 3 \u2014 immagine", required: true },
+          { type: "string", name: "sezione3_immagine_alt", label: "Sezione 3 \u2014 immagine, testo alternativo", required: true },
+          { type: "string", name: "sezione4_eyebrow", label: "Sezione 4 \u2014 eyebrow", required: true },
+          { type: "string", name: "sezione4_titolo", label: "Sezione 4 \u2014 titolo", required: true },
+          { type: "string", name: "sezione4_titolo_accent", label: "Sezione 4 \u2014 titolo evidenziato", required: true },
+          {
+            type: "object",
+            name: "tornei",
+            label: "Tornei durante l'anno",
+            list: true,
+            required: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.nome || "Nuovo torneo" })
+            },
+            fields: [
+              { type: "string", name: "quando", label: 'Quando (es. "Dicembre")', required: true },
+              { type: "string", name: "nome", label: "Nome torneo", required: true },
+              { type: "string", name: "testo", label: "Testo", required: true, ui: { component: "textarea" } },
+              { type: "string", name: "quando_en", label: "\u{1F1EC}\u{1F1E7} Quando (inglese)" },
+              { type: "string", name: "nome_en", label: "\u{1F1EC}\u{1F1E7} Nome (inglese)" },
+              { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)", ui: { component: "textarea" } }
+            ]
+          },
+          { type: "string", name: "sezione4_footer_testo", label: "Testo finale (FITP Junior Program, **grassetto**)", required: true, ui: { component: "textarea" } },
+          { type: "string", name: "sezione1_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 eyebrow (inglese)" },
+          { type: "string", name: "sezione1_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione1_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo evidenziato (inglese)" },
+          { type: "string", name: "sezione1_lead_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 testo introduttivo (inglese)", ui: { component: "textarea" } },
+          { type: "string", name: "livelli_footer_testo_en", label: "\u{1F1EC}\u{1F1E7} Testo dopo i livelli (inglese)" },
+          { type: "string", name: "livelli_footer_link_label_en", label: "\u{1F1EC}\u{1F1E7} Etichetta link (inglese)" },
+          { type: "string", name: "sezione2_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 eyebrow (inglese)" },
+          { type: "string", name: "sezione2_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione2_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo evidenziato (inglese)" },
+          { type: "string", name: "iscrizione_cta_label_en", label: "\u{1F1EC}\u{1F1E7} Testo pulsante iscrizione (inglese)" },
+          { type: "string", name: "sezione3_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 eyebrow (inglese)" },
+          { type: "string", name: "sezione3_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione3_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 titolo evidenziato (inglese)" },
+          { type: "string", name: "sezione3_badge_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 badge (inglese)" },
+          { type: "string", name: "sezione3_paragrafo1_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 paragrafo 1 (inglese)", ui: { component: "textarea" } },
+          { type: "string", name: "sezione3_paragrafo2_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 paragrafo 2 (inglese)", ui: { component: "textarea" } },
+          { type: "string", name: "sezione3_paragrafo3_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 paragrafo 3 (inglese)", ui: { component: "textarea" } },
+          { type: "string", name: "sezione3_immagine_alt_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 immagine, alt (inglese)" },
+          { type: "string", name: "sezione4_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 4 \u2014 eyebrow (inglese)" },
+          { type: "string", name: "sezione4_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 4 \u2014 titolo (inglese)" },
+          { type: "string", name: "sezione4_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 4 \u2014 titolo evidenziato (inglese)" },
+          { type: "string", name: "sezione4_footer_testo_en", label: "\u{1F1EC}\u{1F1E7} Testo finale (inglese)", ui: { component: "textarea" } }
+        ]
+      },
       // ─── INFO CLUB ─────────────────────────────────────────────────────────
       // File unico con orari, indirizzo e contatti del Club.
       // Le modifiche si riflettono su tutte le pagine (sezione "Vieni a trovarci").
@@ -538,6 +868,43 @@ var config_default = defineConfig({
             type: "string",
             name: "hero_immagine_alt",
             label: "Hero \u2014 testo alternativo immagine"
+          },
+          {
+            type: "string",
+            name: "title_en",
+            label: "\u{1F1EC}\u{1F1E7} Titolo SEO (inglese)"
+          },
+          {
+            type: "string",
+            name: "description_en",
+            label: "\u{1F1EC}\u{1F1E7} Descrizione SEO (inglese)",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "string",
+            name: "hero_eyebrow_en",
+            label: "\u{1F1EC}\u{1F1E7} Hero \u2014 eyebrow (inglese)"
+          },
+          {
+            type: "string",
+            name: "hero_titolo_en",
+            label: "\u{1F1EC}\u{1F1E7} Hero \u2014 titolo (inglese)"
+          },
+          {
+            type: "string",
+            name: "hero_titolo_accent_en",
+            label: "\u{1F1EC}\u{1F1E7} Hero \u2014 titolo evidenziato (inglese)"
+          },
+          {
+            type: "string",
+            name: "hero_sottotitolo_en",
+            label: "\u{1F1EC}\u{1F1E7} Hero \u2014 sottotitolo (inglese)",
+            ui: { component: "textarea" }
+          },
+          {
+            type: "string",
+            name: "hero_immagine_alt_en",
+            label: "\u{1F1EC}\u{1F1E7} Hero \u2014 testo alternativo immagine (inglese)"
           },
           {
             type: "rich-text",
