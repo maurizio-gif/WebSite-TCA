@@ -86,6 +86,8 @@ export type Query = {
   eventiConnection: EventiConnection;
   servizi: Servizi;
   serviziConnection: ServiziConnection;
+  planning: Planning;
+  planningConnection: PlanningConnection;
   info: Info;
   infoConnection: InfoConnection;
   helpdesk: Helpdesk;
@@ -145,6 +147,21 @@ export type QueryServiziConnectionArgs = {
   last?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   filter?: InputMaybe<ServiziFilter>;
+};
+
+
+export type QueryPlanningArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryPlanningConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PlanningFilter>;
 };
 
 
@@ -210,6 +227,7 @@ export type QueryPagineConnectionArgs = {
 export type DocumentFilter = {
   eventi?: InputMaybe<EventiFilter>;
   servizi?: InputMaybe<ServiziFilter>;
+  planning?: InputMaybe<PlanningFilter>;
   info?: InputMaybe<InfoFilter>;
   helpdesk?: InputMaybe<HelpdeskFilter>;
   news?: InputMaybe<NewsFilter>;
@@ -253,7 +271,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Servizi | Info | Helpdesk | News | Pagine | Folder;
+export type DocumentNode = Eventi | Servizi | Planning | Info | Helpdesk | News | Pagine | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -377,6 +395,46 @@ export type ServiziConnection = Connection & {
   pageInfo: PageInfo;
   totalCount: Scalars['Float']['output'];
   edges?: Maybe<Array<Maybe<ServiziConnectionEdges>>>;
+};
+
+export type PlanningLezioni = {
+  __typename?: 'PlanningLezioni';
+  giorno: Scalars['String']['output'];
+  ora: Scalars['String']['output'];
+  categoria: Scalars['String']['output'];
+  nome: Scalars['String']['output'];
+};
+
+export type Planning = Node & Document & {
+  __typename?: 'Planning';
+  lezioni?: Maybe<Array<Maybe<PlanningLezioni>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type PlanningLezioniFilter = {
+  giorno?: InputMaybe<StringFilter>;
+  ora?: InputMaybe<StringFilter>;
+  categoria?: InputMaybe<StringFilter>;
+  nome?: InputMaybe<StringFilter>;
+};
+
+export type PlanningFilter = {
+  lezioni?: InputMaybe<PlanningLezioniFilter>;
+};
+
+export type PlanningConnectionEdges = {
+  __typename?: 'PlanningConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Planning>;
+};
+
+export type PlanningConnection = Connection & {
+  __typename?: 'PlanningConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<PlanningConnectionEdges>>>;
 };
 
 export type Info = Node & Document & {
@@ -567,6 +625,8 @@ export type Mutation = {
   createEventi: Eventi;
   updateServizi: Servizi;
   createServizi: Servizi;
+  updatePlanning: Planning;
+  createPlanning: Planning;
   updateInfo: Info;
   createInfo: Info;
   updateHelpdesk: Helpdesk;
@@ -635,6 +695,18 @@ export type MutationCreateServiziArgs = {
 };
 
 
+export type MutationUpdatePlanningArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PlanningMutation;
+};
+
+
+export type MutationCreatePlanningArgs = {
+  relativePath: Scalars['String']['input'];
+  params: PlanningMutation;
+};
+
+
 export type MutationUpdateInfoArgs = {
   relativePath: Scalars['String']['input'];
   params: InfoMutation;
@@ -685,6 +757,7 @@ export type MutationCreatePagineArgs = {
 export type DocumentUpdateMutation = {
   eventi?: InputMaybe<EventiMutation>;
   servizi?: InputMaybe<ServiziMutation>;
+  planning?: InputMaybe<PlanningMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -695,6 +768,7 @@ export type DocumentUpdateMutation = {
 export type DocumentMutation = {
   eventi?: InputMaybe<EventiMutation>;
   servizi?: InputMaybe<ServiziMutation>;
+  planning?: InputMaybe<PlanningMutation>;
   info?: InputMaybe<InfoMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
@@ -726,6 +800,17 @@ export type ServiziMutation = {
   titolo_en?: InputMaybe<Scalars['String']['input']>;
   desc_en?: InputMaybe<Scalars['String']['input']>;
   dettaglio_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PlanningLezioniMutation = {
+  giorno?: InputMaybe<Scalars['String']['input']>;
+  ora?: InputMaybe<Scalars['String']['input']>;
+  categoria?: InputMaybe<Scalars['String']['input']>;
+  nome?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PlanningMutation = {
+  lezioni?: InputMaybe<Array<InputMaybe<PlanningLezioniMutation>>>;
 };
 
 export type InfoMutation = {
@@ -783,6 +868,8 @@ export type EventiPartsFragment = { __typename: 'Eventi', titolo: string, data: 
 
 export type ServiziPartsFragment = { __typename: 'Servizi', titolo: string, ordine: number, icon: string, desc: string, dettaglio: string, href?: string | null, titolo_en?: string | null, desc_en?: string | null, dettaglio_en?: string | null };
 
+export type PlanningPartsFragment = { __typename: 'Planning', lezioni?: Array<{ __typename: 'PlanningLezioni', giorno: string, ora: string, categoria: string, nome: string } | null> | null };
+
 export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
 
 export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
@@ -828,6 +915,25 @@ export type ServiziConnectionQueryVariables = Exact<{
 
 
 export type ServiziConnectionQuery = { __typename?: 'Query', serviziConnection: { __typename?: 'ServiziConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ServiziConnectionEdges', cursor: string, node?: { __typename: 'Servizi', id: string, titolo: string, ordine: number, icon: string, desc: string, dettaglio: string, href?: string | null, titolo_en?: string | null, desc_en?: string | null, dettaglio_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+
+export type PlanningQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type PlanningQuery = { __typename?: 'Query', planning: { __typename: 'Planning', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, lezioni?: Array<{ __typename: 'PlanningLezioni', giorno: string, ora: string, categoria: string, nome: string } | null> | null } };
+
+export type PlanningConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<PlanningFilter>;
+}>;
+
+
+export type PlanningConnectionQuery = { __typename?: 'Query', planningConnection: { __typename?: 'PlanningConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PlanningConnectionEdges', cursor: string, node?: { __typename: 'Planning', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, lezioni?: Array<{ __typename: 'PlanningLezioni', giorno: string, ora: string, categoria: string, nome: string } | null> | null } | null } | null> | null } };
 
 export type InfoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -934,6 +1040,18 @@ export const ServiziPartsFragmentDoc = gql`
   titolo_en
   desc_en
   dettaglio_en
+}
+    `;
+export const PlanningPartsFragmentDoc = gql`
+    fragment PlanningParts on Planning {
+  __typename
+  lezioni {
+    __typename
+    giorno
+    ora
+    categoria
+    nome
+  }
 }
     `;
 export const InfoPartsFragmentDoc = gql`
@@ -1109,6 +1227,63 @@ export const ServiziConnectionDocument = gql`
   }
 }
     ${ServiziPartsFragmentDoc}`;
+export const PlanningDocument = gql`
+    query planning($relativePath: String!) {
+  planning(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PlanningParts
+  }
+}
+    ${PlanningPartsFragmentDoc}`;
+export const PlanningConnectionDocument = gql`
+    query planningConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PlanningFilter) {
+  planningConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...PlanningParts
+      }
+    }
+  }
+}
+    ${PlanningPartsFragmentDoc}`;
 export const InfoDocument = gql`
     query info($relativePath: String!) {
   info(relativePath: $relativePath) {
@@ -1351,6 +1526,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     serviziConnection(variables?: ServiziConnectionQueryVariables, options?: C): Promise<{data: ServiziConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiziConnectionQueryVariables, query: string}> {
         return requester<{data: ServiziConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ServiziConnectionQueryVariables, query: string}, ServiziConnectionQueryVariables>(ServiziConnectionDocument, variables, options);
+      },
+    planning(variables: PlanningQueryVariables, options?: C): Promise<{data: PlanningQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PlanningQueryVariables, query: string}> {
+        return requester<{data: PlanningQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PlanningQueryVariables, query: string}, PlanningQueryVariables>(PlanningDocument, variables, options);
+      },
+    planningConnection(variables?: PlanningConnectionQueryVariables, options?: C): Promise<{data: PlanningConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PlanningConnectionQueryVariables, query: string}> {
+        return requester<{data: PlanningConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: PlanningConnectionQueryVariables, query: string}, PlanningConnectionQueryVariables>(PlanningConnectionDocument, variables, options);
       },
     info(variables: InfoQueryVariables, options?: C): Promise<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}> {
         return requester<{data: InfoQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: InfoQueryVariables, query: string}, InfoQueryVariables>(InfoDocument, variables, options);

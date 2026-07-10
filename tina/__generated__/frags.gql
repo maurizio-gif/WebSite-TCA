@@ -27,6 +27,17 @@ fragment ServiziParts on Servizi {
   dettaglio_en
 }
 
+fragment PlanningParts on Planning {
+  __typename
+  lezioni {
+    __typename
+    giorno
+    ora
+    categoria
+    nome
+  }
+}
+
 fragment InfoParts on Info {
   __typename
   indirizzo

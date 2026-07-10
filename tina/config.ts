@@ -185,6 +185,74 @@ export default defineConfig({
           },
         ],
       },
+      // ─── PLANNING CORSI ────────────────────────────────────────────────────
+      // Planning settimanale dei corsi di gruppo (pagina Preparazione
+      // Atletica). File unico: ogni riga è una lezione.
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: 'planning',
+        label: 'Planning Corsi',
+        path: 'src/content/planning',
+        format: 'md',
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          {
+            type: 'object',
+            name: 'lezioni',
+            label: 'Lezioni',
+            list: true,
+            ui: {
+              itemProps: (item: Record<string, string>) => ({
+                label: item?.giorno && item?.ora
+                  ? `${(item.giorno || '').toUpperCase()} ${item.ora} — ${item.nome || ''}`
+                  : 'Nuova lezione',
+              }),
+            },
+            fields: [
+              {
+                type: 'string',
+                name: 'giorno',
+                label: 'Giorno',
+                required: true,
+                options: [
+                  { value: 'lun', label: 'Lunedì' },
+                  { value: 'mar', label: 'Martedì' },
+                  { value: 'mer', label: 'Mercoledì' },
+                  { value: 'gio', label: 'Giovedì' },
+                  { value: 'ven', label: 'Venerdì' },
+                  { value: 'sab', label: 'Sabato' },
+                  { value: 'dom', label: 'Domenica' },
+                ],
+              },
+              {
+                type: 'string',
+                name: 'ora',
+                label: 'Orario (es. 09:15)',
+                required: true,
+              },
+              {
+                type: 'string',
+                name: 'categoria',
+                label: 'Categoria',
+                required: true,
+                options: [
+                  { value: 'S', label: 'Strength' },
+                  { value: 'B', label: 'Balance' },
+                  { value: 'E', label: 'Endurance' },
+                ],
+              },
+              {
+                type: 'string',
+                name: 'nome',
+                label: 'Nome corso',
+                required: true,
+              },
+            ],
+          },
+        ],
+      },
       // ─── INFO CLUB ─────────────────────────────────────────────────────────
       // File unico con orari, indirizzo e contatti del Club.
       // Le modifiche si riflettono su tutte le pagine (sezione "Vieni a trovarci").
