@@ -8,8 +8,6 @@ import { getEntry } from "astro:content";
 // SEO + hero gestibili da TinaCMS → src/content/pagine/personal-trainer.md
 const d = (await getEntry("pagine", "personal-trainer"))!.data;
 
-// Corpo pagina (intro, team, come funziona, CTA) → src/content/corpoPersonalTrainer/corpo.md
-const c = (await getEntry("corpoPersonalTrainer", "corpo"))!.data;
 const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 ---
 
@@ -32,13 +30,13 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
     <div class="intro-section__inner">
       <div class="intro-split">
         <div class="intro-split__text">
-          <span class="eyebrow">{c.sezione1_eyebrow}</span>
-          <h2 class="pt-title">{c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent}</em></h2>
-          <p>{c.sezione1_paragrafo1}</p>
-          <p>{c.sezione1_paragrafo2}</p>
+          <span class="eyebrow">{d.pt_sezione1_eyebrow}</span>
+          <h2 class="pt-title">{d.pt_sezione1_titolo}<br><em>{d.pt_sezione1_titolo_accent}</em></h2>
+          <p>{d.pt_sezione1_paragrafo1}</p>
+          <p>{d.pt_sezione1_paragrafo2}</p>
         </div>
         <div class="intro-split__stats">
-          {c.stats.map((s) => (
+          {d.pt_stats.map((s) => (
             <div class="stat-item">
               <span class="stat-num">{s.numero}</span>
               <span class="stat-label" set:html={nl2br(s.etichetta)} />
@@ -54,8 +52,8 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
     <div class="team-section__inner">
       <div class="team-head">
         <div>
-          <span class="eyebrow">{c.sezione2_eyebrow}</span>
-          <h2 class="pt-title">{c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent}</em></h2>
+          <span class="eyebrow">{d.pt_sezione2_eyebrow}</span>
+          <h2 class="pt-title">{d.pt_sezione2_titolo}<br><em>{d.pt_sezione2_titolo_accent}</em></h2>
         </div>
         <div class="trainer-nav">
           <button class="courses-btn" data-dir="-1" data-track="trainers" aria-label="Precedente">
@@ -69,7 +67,7 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 
       <div class="trainer-track-wrap">
         <div class="trainer-track" data-carousel-id="trainers">
-          {c.trainers.map((trainer) => (
+          {d.pt_trainers.map((trainer) => (
             <article class="trainer-card">
               <div class="trainer-card__media">
                 {trainer.foto
@@ -103,11 +101,11 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
   <!-- ── Come funziona ── -->
   <section class="flow-section">
     <div class="flow-section__inner">
-      <span class="eyebrow">{c.sezione3_eyebrow}</span>
-      <h2 class="pt-title">{c.sezione3_titolo}<br><em>{c.sezione3_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.pt_sezione3_eyebrow}</span>
+      <h2 class="pt-title">{d.pt_sezione3_titolo}<br><em>{d.pt_sezione3_titolo_accent}</em></h2>
 
       <div class="flow-steps">
-        {c.steps.map((s, i) => (
+        {d.pt_steps.map((s, i) => (
           <div class="flow-step">
             <span class="flow-step__num">{String(i + 1).padStart(2, '0')}</span>
             <h3>{s.titolo}</h3>
@@ -121,9 +119,9 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
   <!-- ── CTA contatto ── -->
   <section class="pt-cta-section">
     <div class="pt-cta-section__inner">
-      <h2 class="pt-cta-title">{c.sezione4_titolo}</h2>
-      <p class="pt-cta-sub">{c.sezione4_sottotitolo}</p>
-      <button type="button" class="btn btn-red" data-open-modal="modal-contatti">{c.sezione4_cta_label}</button>
+      <h2 class="pt-cta-title">{d.pt_sezione4_titolo}</h2>
+      <p class="pt-cta-sub">{d.pt_sezione4_sottotitolo}</p>
+      <button type="button" class="btn btn-red" data-open-modal="modal-contatti">{d.pt_sezione4_cta_label}</button>
     </div>
   </section>
 

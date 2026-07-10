@@ -5,11 +5,8 @@ import PhotoLightbox from "../components/PhotoLightbox.astro";
 import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
-// SEO + hero gestibili da TinaCMS → src/content/pagine/torneo-avvenire.md
+// SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/torneo-avvenire.md
 const d = (await getEntry("pagine", "torneo-avvenire"))!.data;
-
-// Corpo pagina (titoli e testi; foto alumni/galleria restano fisse) → src/content/corpoTorneoAvvenire/corpo.md
-const c = (await getEntry("corpoTorneoAvvenire", "corpo"))!.data;
 const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
@@ -28,20 +25,20 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
   />
 
   <p class="torneo-quote">
-    {c.quote_testo}<span>{c.quote_autore}</span>
+    {d.torneo_quote_testo}<span>{d.torneo_quote_autore}</span>
   </p>
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.storia_eyebrow}</span>
-      <h2 class="section-title">{c.storia_titolo}<br><em>{c.storia_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.torneo_storia_eyebrow}</span>
+      <h2 class="section-title">{d.torneo_storia_titolo}<br><em>{d.torneo_storia_titolo_accent}</em></h2>
       <div class="torneo-intro">
-        <p class="body-text" set:html={mdBold(c.storia_paragrafo1)} />
-        <p class="body-text" set:html={mdBold(c.storia_paragrafo2)} />
+        <p class="body-text" set:html={mdBold(d.torneo_storia_paragrafo1)} />
+        <p class="body-text" set:html={mdBold(d.torneo_storia_paragrafo2)} />
       </div>
 
       <div class="stats-row">
-        {c.stats.map((s) => (
+        {d.torneo_stats.map((s) => (
           <div class="stat">
             <span class="stat__n">{s.numero}</span>
             <span class="stat__label">{s.label}</span>
@@ -54,10 +51,10 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
   <!-- ── Campioni che sono passati per l'Avvenire ── -->
   <section class="content-section content-section--grey">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.alumni_eyebrow}</span>
-      <h2 class="section-title">{c.alumni_titolo}<br><em>{c.alumni_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.torneo_alumni_eyebrow}</span>
+      <h2 class="section-title">{d.torneo_alumni_titolo}<br><em>{d.torneo_alumni_titolo_accent}</em></h2>
       <p class="body-text" style="max-width:64ch; margin-bottom:4vh;">
-        {c.alumni_intro}
+        {d.torneo_alumni_intro}
       </p>
       <div class="champions-grid">
         <figure class="champion-fig">
@@ -123,8 +120,8 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
   <!-- ── Foto edizioni recenti ── -->
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.galleria_eyebrow}</span>
-      <h2 class="section-title">{c.galleria_titolo}<br><em>{c.galleria_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.torneo_galleria_eyebrow}</span>
+      <h2 class="section-title">{d.torneo_galleria_titolo}<br><em>{d.torneo_galleria_titolo_accent}</em></h2>
       <div class="gallery-grid">
         <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Stretta%20di%20mano.jpg")} alt="Torneo Avvenire 2025 - stretta di mano a fine match" loading="lazy" class="gallery-img gallery-img--wide" />
         <img src={publicUrl("/TCA%20Avvenire%202025%20-%20Premiazione%20singolare.jpg")} alt="Torneo Avvenire 2025 - premiazione vincitrice U14" loading="lazy" class="gallery-img" />
@@ -141,10 +138,10 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
 
   <section class="content-section content-section--dark">
     <div class="content-section__inner">
-      <span class="eyebrow eyebrow--grey">{c.prossima_eyebrow}</span>
-      <h2 class="section-title section-title--light">{c.prossima_titolo}<br><em>{c.prossima_titolo_accent}</em></h2>
+      <span class="eyebrow eyebrow--grey">{d.torneo_prossima_eyebrow}</span>
+      <h2 class="section-title section-title--light">{d.torneo_prossima_titolo}<br><em>{d.torneo_prossima_titolo_accent}</em></h2>
       <p class="body-text body-text--light">
-        {c.prossima_testo}
+        {d.torneo_prossima_testo}
       </p>
     </div>
   </section>

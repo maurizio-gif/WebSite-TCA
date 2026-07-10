@@ -7,10 +7,8 @@ import { getEntry } from "astro:content";
 const lang = 'en' as const;
 const p = (path: string) => getLocalePath(lang, path);
 
-// SEO + hero gestibili da TinaCMS → src/content/pagine/scuola-tennis.md (campi _en)
+// SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/scuola-tennis.md (campi _en)
 const d = (await getEntry("pagine", "scuola-tennis"))!.data;
-// Corpo pagina → src/content/corpoScuolaTennis/corpo.md
-const c = (await getEntry("corpoScuolaTennis", "corpo"))!.data;
 const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 ---
@@ -33,11 +31,11 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 
   <section class="content-section">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.sezione1_eyebrow_en ?? c.sezione1_eyebrow}</span>
-      <h2 class="section-title">{c.sezione1_titolo_en ?? c.sezione1_titolo}<br><em>{c.sezione1_titolo_accent_en ?? c.sezione1_titolo_accent}</em></h2>
-      <p class="section-lead body-text">{c.sezione1_lead_en ?? c.sezione1_lead}</p>
+      <span class="eyebrow">{d.scuola_sezione1_eyebrow_en ?? d.scuola_sezione1_eyebrow}</span>
+      <h2 class="section-title">{d.scuola_sezione1_titolo_en ?? d.scuola_sezione1_titolo}<br><em>{d.scuola_sezione1_titolo_accent_en ?? d.scuola_sezione1_titolo_accent}</em></h2>
+      <p class="section-lead body-text">{d.scuola_sezione1_lead_en ?? d.scuola_sezione1_lead}</p>
       <div class="age-grid">
-        {c.livelli.map((l) => (
+        {d.scuola_livelli.map((l) => (
           <div class="age-card">
             <span class={`level-dot level-dot--${l.dot}`} aria-hidden="true"></span>
             <span class="age-card__range">{l.range_en ?? l.range}</span>
@@ -48,18 +46,18 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
         ))}
       </div>
       <p class="level-after body-text">
-        {c.livelli_footer_testo_en ?? c.livelli_footer_testo}
-        <a href={p('/agonistica')}>{c.livelli_footer_link_label_en ?? c.livelli_footer_link_label}</a>
+        {d.scuola_livelli_footer_testo_en ?? d.scuola_livelli_footer_testo}
+        <a href={p('/agonistica')}>{d.scuola_livelli_footer_link_label_en ?? d.scuola_livelli_footer_link_label}</a>
       </p>
     </div>
   </section>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.sezione2_eyebrow_en ?? c.sezione2_eyebrow}</span>
-      <h2 class="section-title">{c.sezione2_titolo_en ?? c.sezione2_titolo}<br><em>{c.sezione2_titolo_accent_en ?? c.sezione2_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.scuola_sezione2_eyebrow_en ?? d.scuola_sezione2_eyebrow}</span>
+      <h2 class="section-title">{d.scuola_sezione2_titolo_en ?? d.scuola_sezione2_titolo}<br><em>{d.scuola_sezione2_titolo_accent_en ?? d.scuola_sezione2_titolo_accent}</em></h2>
       <div class="iscrizione-grid">
-        {c.iscrizione_cards.map((card) => (
+        {d.scuola_iscrizione_cards.map((card) => (
           <div class="iscrizione-card">
             <h3>{card.titolo_en ?? card.titolo}</h3>
             <span class="iscrizione-card__tag">{card.tag_en ?? card.tag}</span>
@@ -68,7 +66,7 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
         ))}
       </div>
       <div class="section-cta">
-        <button class="btn btn-red" data-open-modal="modal-contatti">{c.iscrizione_cta_label_en ?? c.iscrizione_cta_label}</button>
+        <button class="btn btn-red" data-open-modal="modal-contatti">{d.scuola_iscrizione_cta_label_en ?? d.scuola_iscrizione_cta_label}</button>
       </div>
     </div>
   </section>
@@ -76,25 +74,25 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
   <section class="content-section">
     <div class="content-section__inner two-col">
       <div class="two-col__text">
-        <span class="eyebrow">{c.sezione3_eyebrow_en ?? c.sezione3_eyebrow}</span>
-        <h2 class="section-title">{c.sezione3_titolo_en ?? c.sezione3_titolo}<br><em>{c.sezione3_titolo_accent_en ?? c.sezione3_titolo_accent}</em></h2>
-        <span class="method-badge">{c.sezione3_badge_en ?? c.sezione3_badge}</span>
-        <p class="body-text" set:html={mdBold(c.sezione3_paragrafo1_en ?? c.sezione3_paragrafo1)} />
-        <p class="body-text">{c.sezione3_paragrafo2_en ?? c.sezione3_paragrafo2}</p>
-        <p class="body-text" set:html={mdBold(c.sezione3_paragrafo3_en ?? c.sezione3_paragrafo3)} />
+        <span class="eyebrow">{d.scuola_sezione3_eyebrow_en ?? d.scuola_sezione3_eyebrow}</span>
+        <h2 class="section-title">{d.scuola_sezione3_titolo_en ?? d.scuola_sezione3_titolo}<br><em>{d.scuola_sezione3_titolo_accent_en ?? d.scuola_sezione3_titolo_accent}</em></h2>
+        <span class="method-badge">{d.scuola_sezione3_badge_en ?? d.scuola_sezione3_badge}</span>
+        <p class="body-text" set:html={mdBold(d.scuola_sezione3_paragrafo1_en ?? d.scuola_sezione3_paragrafo1)} />
+        <p class="body-text">{d.scuola_sezione3_paragrafo2_en ?? d.scuola_sezione3_paragrafo2}</p>
+        <p class="body-text" set:html={mdBold(d.scuola_sezione3_paragrafo3_en ?? d.scuola_sezione3_paragrafo3)} />
       </div>
       <div class="two-col__image">
-        <img src={publicUrl(c.sezione3_immagine)} alt={c.sezione3_immagine_alt_en ?? c.sezione3_immagine_alt} class="full-img" />
+        <img src={publicUrl(d.scuola_sezione3_immagine)} alt={d.scuola_sezione3_immagine_alt_en ?? d.scuola_sezione3_immagine_alt} class="full-img" />
       </div>
     </div>
   </section>
 
   <section class="content-section content-section--alt">
     <div class="content-section__inner">
-      <span class="eyebrow">{c.sezione4_eyebrow_en ?? c.sezione4_eyebrow}</span>
-      <h2 class="section-title">{c.sezione4_titolo_en ?? c.sezione4_titolo}<br><em>{c.sezione4_titolo_accent_en ?? c.sezione4_titolo_accent}</em></h2>
+      <span class="eyebrow">{d.scuola_sezione4_eyebrow_en ?? d.scuola_sezione4_eyebrow}</span>
+      <h2 class="section-title">{d.scuola_sezione4_titolo_en ?? d.scuola_sezione4_titolo}<br><em>{d.scuola_sezione4_titolo_accent_en ?? d.scuola_sezione4_titolo_accent}</em></h2>
       <div class="tornei-grid">
-        {c.tornei.map((t) => (
+        {d.scuola_tornei.map((t) => (
           <div class="torneo-card">
             <span class="torneo-card__when">{t.quando_en ?? t.quando}</span>
             <h3>{t.nome_en ?? t.nome}</h3>
@@ -102,7 +100,7 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
           </div>
         ))}
       </div>
-      <p class="level-after body-text" set:html={mdBold(c.sezione4_footer_testo_en ?? c.sezione4_footer_testo)} />
+      <p class="level-after body-text" set:html={mdBold(d.scuola_sezione4_footer_testo_en ?? d.scuola_sezione4_footer_testo)} />
     </div>
   </section>
 

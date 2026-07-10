@@ -1,4 +1,5 @@
 ---
+_template: generica
 title: "Tennis Club Ambrosiano | Tennis, Sport e Famiglia a Milano"
 description: "Dal 1963, il club del Torneo Avvenire, in campo dal 1965. 16 campi, scuola tennis, padel, preparazione atletica e attività per tutta la famiglia, a pochi passi dalla metro Udine."
 hero_eyebrow: "Dal 1963, il tennis a Milano"

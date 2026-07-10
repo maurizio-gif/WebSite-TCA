@@ -1,4 +1,5 @@
 ---
+_template: generica
 title: "Famiglia | Tennis Club Ambrosiano Milano"
 description: "Attività junior, corsi kids, feste di compleanno e uno spazio dove tutta la famiglia trova il proprio sport. Il TCA è un luogo dove crescere insieme."
 hero_eyebrow: "Per tutta la famiglia"
