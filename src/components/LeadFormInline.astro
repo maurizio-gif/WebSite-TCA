@@ -113,19 +113,23 @@ const lfi = lang === 'en' ? {
   // @ts-nocheck — vanilla browser script (DOM access, no type annotations)
   (function () {
     var LANG = document.documentElement.lang === 'en' ? 'en' : 'it';
-    var WEBHOOK_CHECK = '';
-    var WEBHOOK_LEAD  = '';
+    var WEBHOOK_CHECK = 'https://automazione.n8ndevelop.it/webhook/tca-verifica-iscritto';
+    var WEBHOOK_LEAD  = 'https://automazione.n8ndevelop.it/webhook/tca-form-compilato';
     var P = 'li'; // prefix for this inline form instance
 
     var ATTIVITA_LABELS = LANG === 'en' ? {
-      tennis:'Tennis', padel:'Padel', prep:'Athletic Training',
+      tennis:'Adult Tennis', padel:'Padel', prep:'Athletic Training',
       scuola:'Tennis School (children)', agonistica:'Competitive Tennis',
       camps:'Summer Camps', membership:'Membership',
     } : {
-      tennis:'Tennis', padel:'Padel', prep:'Preparazione Atletica',
+      tennis:'Tennis Adulti', padel:'Padel', prep:'Preparazione Atletica',
       scuola:'Scuola Tennis (bambini)', agonistica:'Agonistica Tennis',
       camps:'Summer Camps', membership:'Membership / Abbonamento',
     };
+
+    // Gruppo attività: determina il flusso condizionale insieme allo stato utente
+    var ADULT_IDS  = ['membership','prep','tennis','padel'];
+    var JUNIOR_IDS = ['scuola','agonistica','camps'];
 
     var DAYS_LONG = LANG === 'en'
       ? ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
@@ -230,9 +234,16 @@ const lfi = lang === 'en' ? {
     var state = {
       email:'', nome:'', cognome:'', cellulare:'',
       attivita:[], privacy:false, marketing:false, isNewUser:true,
+      stato:'nuovo', gruppoAttivita:'', flow:null,
+      pagina: location.pathname, cta: 'Form inline',
       callbackDate:null, callbackTime:null, callbackReason:'',
       visitDate:null, visitTime:null, visitReason:'', messageText:'',
     };
+
+    // UTM/click-id catturati al primo touch della sessione (vedi BaseLayout.astro)
+    function getUtm() {
+      try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch(e) { return {}; }
+    }
 
     function showStep(n, activeDot) {
       var key = String(n);
@@ -264,8 +275,25 @@ const lfi = lang === 'en' ? {
     }
     function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
 
+    // Etichette complete delle attività selezionate, per i payload inviati ai webhook
+    function attivitaLabels() {
+      return state.attivita.map(function(id) { return ATTIVITA_LABELS[id] || id; });
+    }
+
+    // Il webhook n8n restituisce stato+gruppo insieme (es. "iscritto_adulto",
+    // "esiste_bambino"): li separiamo qui. Il gruppo di n8n è autoritativo
+    // (deriva dallo stesso IF "Adulti / Bambini" del workflow) e sovrascrive
+    // la classificazione client-side.
+    var GRUPPO_MAP = { adulto:'adulti', bambino:'junior' };
+    function parseStato(raw) {
+      var m = /^(iscritto|esiste|nuovo)(?:_(adulto|bambino))?$/.exec(String(raw || ''));
+      if (!m) return { stato:'nuovo', gruppo:null };
+      return { stato:m[1], gruppo: m[2] ? GRUPPO_MAP[m[2]] : null };
+    }
+
     function resetForm() {
       state = { email:'',nome:'',cognome:'',cellulare:'',attivita:[],privacy:false,marketing:false,isNewUser:true,
+                stato:'nuovo',gruppoAttivita:'',flow:null,
                 callbackDate:null,callbackTime:null,callbackReason:'',
                 visitDate:null,visitTime:null,visitReason:'',messageText:'' };
 
@@ -316,26 +344,47 @@ const lfi = lang === 'en' ? {
 
       state.email    = emailInput.value.trim();
       state.attivita = Array.from(root.querySelectorAll('input[name="attivita"]:checked')).map(function(c){return c.value;});
+      state.gruppoAttivita = state.attivita.some(function(id){ return JUNIOR_IDS.indexOf(id) !== -1; }) ? 'junior' : 'adulti';
       btn.disabled   = true; loader.hidden = false;
 
       try {
-        var isExisting = false;
+        var stato = 'nuovo';
         if (WEBHOOK_CHECK) {
-          var r = await fetch(WEBHOOK_CHECK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:state.email})});
-          isExisting = !!(await r.json()).exists;
+          var r = await fetch(WEBHOOK_CHECK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:state.email, attivita:attivitaLabels(), pagina:state.pagina, cta:state.cta, utm:getUtm()})});
+          var data   = await r.json();
+          var parsed = parseStato(data.stato);
+          stato = parsed.stato;
+          if (parsed.gruppo) state.gruppoAttivita = parsed.gruppo;
         }
-        state.isNewUser = !isExisting;
+        state.stato     = stato;
+        state.isNewUser = stato === 'nuovo';
+        // 1: iscritto · 2/4: esiste (adulti/junior) · 3/5: nuovo (adulti/junior)
+        state.flow = stato === 'iscritto' ? 1
+                   : stato === 'esiste'   ? (state.gruppoAttivita === 'adulti' ? 2 : 4)
+                   :                        (state.gruppoAttivita === 'adulti' ? 3 : 5);
         loader.hidden = true; btn.disabled = false;
-        showStep(isExisting ? 3 : 2, isExisting ? 3 : 2);
+
+        if (stato === 'nuovo') {
+          showStep(2,2);
+        } else if (stato === 'esiste' && state.gruppoAttivita === 'adulti') {
+          showStep(3,3);
+        } else {
+          // iscritto (adulti o junior) ed esiste_bambino: salta la scelta,
+          // va dritto allo step "scrivi un messaggio"
+          showStep('4-message');
+        }
       } catch(e) {
-        loader.hidden = true; btn.disabled = false; state.isNewUser = true; showStep(2,2);
+        loader.hidden = true; btn.disabled = false;
+        state.stato = 'nuovo'; state.isNewUser = true;
+        state.flow  = state.gruppoAttivita === 'adulti' ? 3 : 5;
+        showStep(2,2);
       }
     });
 
     // STEP 2
     root.querySelector('#'+P+'-step2-back').addEventListener('click', function(){ showStep(1,1); });
 
-    root.querySelector('#'+P+'-step2-next').addEventListener('click', async function() {
+    root.querySelector('#'+P+'-step2-next').addEventListener('click', function() {
       var s2 = getStep(2); clearError(s2);
       var nome    = root.querySelector('#'+P+'-nome');
       var cognome = root.querySelector('#'+P+'-cognome');
@@ -354,9 +403,6 @@ const lfi = lang === 'en' ? {
       state.privacy   = true;
       state.marketing = root.querySelector('#'+P+'-marketing').checked;
 
-      if (WEBHOOK_LEAD) {
-        try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'lead-nuovo'}))}); } catch(e){}
-      }
       showStep(3,3);
     });
 
@@ -516,13 +562,16 @@ const lfi = lang === 'en' ? {
     }
 
     // STEP 4a
-    document.getElementById(P+'-cb-confirm').addEventListener('click', function() {
+    document.getElementById(P+'-cb-confirm').addEventListener('click', async function() {
       var s=getStep('4-callback'); clearError(s);
       var r=root.querySelector('#'+P+'-cb-reason');
       if(!state.callbackDate){showError(s, ERR.cbDate);return;}
       if(!state.callbackTime){showError(s, ERR.cbTime);return;}
       if(!r.value.trim()){showError(s, ERR.cbReason);r.focus();return;}
       state.callbackReason=r.value.trim();
+      if (WEBHOOK_LEAD) {
+        try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'richiamami',attivita:attivitaLabels(),utm:getUtm()}))}); } catch(e){}
+      }
       var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
       document.getElementById(P+'-cb-when').innerHTML=
         whenRow(WHEN.cb,fmtDateLong(state.callbackDate))+
@@ -537,13 +586,16 @@ const lfi = lang === 'en' ? {
     });
 
     // STEP 4b
-    document.getElementById(P+'-visit-confirm').addEventListener('click', function() {
+    document.getElementById(P+'-visit-confirm').addEventListener('click', async function() {
       var s=getStep('4-visit'); clearError(s);
       var r=root.querySelector('#'+P+'-visit-reason');
       if(!state.visitDate){showError(s, ERR.visitDate);return;}
       if(!state.visitTime){showError(s, ERR.visitTime);return;}
       if(!r.value.trim()){showError(s, ERR.visitReason);r.focus();return;}
       state.visitReason=r.value.trim();
+      if (WEBHOOK_LEAD) {
+        try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'visita',attivita:attivitaLabels(),utm:getUtm()}))}); } catch(e){}
+      }
       var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
       document.getElementById(P+'-visit-when').innerHTML=
         whenRow(WHEN.visit,fmtDateLong(state.visitDate))+
@@ -564,7 +616,7 @@ const lfi = lang === 'en' ? {
       if(!msgEl.value.trim()){showError(s, ERR.msg);msgEl.focus();return;}
       state.messageText=msgEl.value.trim();
       if(WEBHOOK_LEAD){
-        try{await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'messaggio'}))});}catch(e){}
+        try{await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'messaggio',attivita:attivitaLabels(),utm:getUtm()}))});}catch(e){}
       }
       var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
       document.getElementById(P+'-msg-summary').innerHTML=

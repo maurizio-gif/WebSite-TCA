@@ -192,7 +192,7 @@ const prefissi: { flag: string; dial: string }[] = [
 prefissi.sort((a, b) => parseInt(a.dial.slice(1), 10) - parseInt(b.dial.slice(1), 10));
 
 const attivita = lang === 'en' ? [
-  { id: 'tennis',     label: 'Tennis' },
+  { id: 'tennis',     label: 'Adult Tennis' },
   { id: 'padel',      label: 'Padel' },
   { id: 'prep',       label: 'Athletic Training' },
   { id: 'scuola',     label: 'Tennis School (children)' },
@@ -200,7 +200,7 @@ const attivita = lang === 'en' ? [
   { id: 'camps',      label: 'Summer Camps' },
   { id: 'membership', label: 'Membership' },
 ] : [
-  { id: 'tennis',     label: 'Tennis' },
+  { id: 'tennis',     label: 'Tennis Adulti' },
   { id: 'padel',      label: 'Padel' },
   { id: 'prep',       label: 'Preparazione Atletica' },
   { id: 'scuola',     label: 'Scuola Tennis (bambini)' },
