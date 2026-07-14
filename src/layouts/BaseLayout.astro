@@ -130,6 +130,24 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
         document.documentElement.classList.add('is-app-embed');
       }
     </script>
+
+    <!-- Cattura UTM/click-id da campagne Meta/Google Ads al primo touch della
+         sessione (sessionStorage, mai sovrascritto): permette di attribuire il
+         contatto anche se il form viene compilato dopo una navigazione interna
+         che non porta più la querystring della campagna. -->
+    <script is:inline>
+      (function () {
+        if (sessionStorage.getItem('tca_utm')) return;
+        var params = new URLSearchParams(location.search);
+        var KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
+        var found = {};
+        var hasAny = false;
+        KEYS.forEach(function (k) {
+          if (params.has(k)) { found[k] = params.get(k); hasAny = true; }
+        });
+        if (hasAny) sessionStorage.setItem('tca_utm', JSON.stringify(found));
+      })();
+    </script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
