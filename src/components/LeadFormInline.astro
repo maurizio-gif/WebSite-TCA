@@ -245,6 +245,12 @@ const lfi = lang === 'en' ? {
       try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch(e) { return {}; }
     }
 
+    // ID visitatore persistente (vedi BaseLayout.astro), per riconoscere il
+    // lead al ritorno sul sito indipendentemente dall'email inserita
+    function getVid() {
+      return window.tcaGetVid ? window.tcaGetVid() : null;
+    }
+
     function showStep(n, activeDot) {
       var key = String(n);
       root.querySelectorAll('[data-step]').forEach(function(el) {
@@ -350,7 +356,7 @@ const lfi = lang === 'en' ? {
       try {
         var stato = 'nuovo';
         if (WEBHOOK_CHECK) {
-          var r = await fetch(WEBHOOK_CHECK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:state.email, attivita:attivitaLabels(), pagina:state.pagina, cta:state.cta, utm:getUtm()})});
+          var r = await fetch(WEBHOOK_CHECK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:state.email, attivita:attivitaLabels(), pagina:state.pagina, cta:state.cta, utm:getUtm(), vid:getVid()})});
           var data   = await r.json();
           var parsed = parseStato(data.stato);
           stato = parsed.stato;
@@ -570,7 +576,7 @@ const lfi = lang === 'en' ? {
       if(!r.value.trim()){showError(s, ERR.cbReason);r.focus();return;}
       state.callbackReason=r.value.trim();
       if (WEBHOOK_LEAD) {
-        try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'richiamami',attivita:attivitaLabels(),utm:getUtm()}))}); } catch(e){}
+        try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'richiamami',attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))}); } catch(e){}
       }
       var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
       document.getElementById(P+'-cb-when').innerHTML=
@@ -594,7 +600,7 @@ const lfi = lang === 'en' ? {
       if(!r.value.trim()){showError(s, ERR.visitReason);r.focus();return;}
       state.visitReason=r.value.trim();
       if (WEBHOOK_LEAD) {
-        try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'visita',attivita:attivitaLabels(),utm:getUtm()}))}); } catch(e){}
+        try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'visita',attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))}); } catch(e){}
       }
       var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
       document.getElementById(P+'-visit-when').innerHTML=
@@ -616,7 +622,7 @@ const lfi = lang === 'en' ? {
       if(!msgEl.value.trim()){showError(s, ERR.msg);msgEl.focus();return;}
       state.messageText=msgEl.value.trim();
       if(WEBHOOK_LEAD){
-        try{await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'messaggio',attivita:attivitaLabels(),utm:getUtm()}))});}catch(e){}
+        try{await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'messaggio',attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))});}catch(e){}
       }
       var atts=state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
       document.getElementById(P+'-msg-summary').innerHTML=
