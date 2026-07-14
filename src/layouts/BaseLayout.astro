@@ -148,6 +148,52 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
         if (hasAny) sessionStorage.setItem('tca_utm', JSON.stringify(found));
       })();
     </script>
+
+    <!-- ID visitatore persistente (localStorage, non scade): identifica lo
+         stesso browser tra una visita e l'altra, così il form (e in futuro
+         il beacon qui sotto) possono riconoscere un lead già noto anche
+         senza aver ricompilato nulla. Generato una sola volta, poi riletto. -->
+    <script is:inline>
+      (function () {
+        var KEY = 'tca_vid';
+        var vid;
+        try { vid = localStorage.getItem(KEY); } catch (e) { vid = null; }
+        if (!vid) {
+          vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() :
+            'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+              var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+            });
+          try { localStorage.setItem(KEY, vid); } catch (e) {}
+        }
+        window.tcaGetVid = function () { return vid; };
+      })();
+    </script>
+
+    <!-- Beacon "ritorno sul sito": ad ogni pagina vista segnala l'ID
+         visitatore persistente a n8n, così un lead già noto può essere
+         riconosciuto anche senza ricompilare il form. Disattivato finché
+         WEBHOOK_VISIT non viene valorizzato con l'endpoint del workflow
+         n8n dedicato (da creare — non esiste ancora). -->
+    <script is:inline>
+      (function () {
+        var WEBHOOK_VISIT = ''; // es. 'https://automazione.n8ndevelop.it/webhook/tca-visita'
+        if (!WEBHOOK_VISIT) return;
+        var utm = {};
+        try { utm = JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) {}
+        var body = JSON.stringify({
+          vid: window.tcaGetVid ? window.tcaGetVid() : null,
+          pagina: location.pathname,
+          referrer: document.referrer || null,
+          utm: utm
+        });
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(WEBHOOK_VISIT, new Blob([body], { type: 'application/json' }));
+        } else {
+          fetch(WEBHOOK_VISIT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true }).catch(function () {});
+        }
+      })();
+    </script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
