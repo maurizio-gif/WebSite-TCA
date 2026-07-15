@@ -11,7 +11,7 @@ const p = (path: string) => getLocalePath(lang, path);
 const d = (await getEntry("pagine", "iscrizione-scuola-tennis"))!.data;
 ---
 
-<BaseLayout lang={lang} title={d.title_en ?? d.title} description={d.description_en ?? d.description}>
+<BaseLayout lang={lang} title={d.title_en ?? d.title} description={d.description_en ?? d.description} hideChrome hideLeadFormInline>
   <div class="page-header">
     <div class="page-header__inner">
       <span class="eyebrow">{d.hero_eyebrow_en ?? d.hero_eyebrow}</span>
