@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
-import IscrizioneScuolaModal from "../components/IscrizioneScuolaModal.astro";
 import { publicUrl, getLocalePath } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
@@ -128,14 +127,12 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
             <span class="iscrizione-cta__fact-val">21 Settembre 2026</span>
           </div>
         </div>
-        <button class="btn btn-red iscrizione-cta__btn" data-open-modal="modal-iscrizione-scuola">Iscriviti Ora</button>
+        <a class="btn btn-red iscrizione-cta__btn" href={p('/iscrizione-scuola-tennis')}>Iscriviti Ora</a>
       </div>
     </div>
   </section>
 
 </BaseLayout>
-
-<IscrizioneScuolaModal lang={lang} />
 
 <style>
   .content-section {
