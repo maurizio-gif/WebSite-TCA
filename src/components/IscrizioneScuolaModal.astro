@@ -77,6 +77,8 @@ const t = lang === 'en' ? {
 
   kitTitle: 'Tennis School kit sizes',
   kitIntro: 'The kit (t-shirt, shorts and hoodie) is included in the annual Tennis School fee.',
+  kitGuide: '{link} to open the size guide, then select "Kids".',
+  kitGuideLink: 'Click here',
   sizeShirt: 'T-shirt size',
   sizeShorts: 'Shorts size',
   sizeHoodie: 'Hoodie size',
@@ -186,6 +188,8 @@ const t = lang === 'en' ? {
 
   kitTitle: 'Taglie kit Scuola Tennis',
   kitIntro: 'Il kit (maglietta, pantaloncini e felpa) è incluso nella quota annuale della Scuola Tennis.',
+  kitGuide: '{link} per aprire la guida alle taglie, poi seleziona "Bambino".',
+  kitGuideLink: 'Clicca qui',
   sizeShirt: 'Taglia maglietta',
   sizeShorts: 'Taglia pantaloncini',
   sizeHoodie: 'Taglia felpa',
@@ -420,6 +424,7 @@ const t = lang === 'en' ? {
     <div class="lm__body" data-isc-step="3" hidden>
       <p class="lm__section-title lm__section-title--first">{t.kitTitle}</p>
       <p class="lm__sub">{t.kitIntro}</p>
+      <p class="lm__sub" set:html={t.kitGuide.replace('{link}', `<a href="https://www.joma-sport.com/on/demandware.store/Sites-joma_it-Site/it_IT/Page-SizeGuide" target="_blank" rel="noopener">${t.kitGuideLink}</a>`)} />
 
       <div class="lm__field">
         <label for="isc-size-shirt">{t.sizeShirt} <span aria-hidden="true">*</span></label>
@@ -537,6 +542,9 @@ const t = lang === 'en' ? {
     font-family: var(--font-body); font-size: clamp(11px,.8vw,12px);
     font-weight: 300; color: var(--lm-text-dim); margin: -0.6rem 0 0;
   }
+
+  .lm__sub a { color: var(--color-accent); text-decoration: underline; }
+  .lm__sub a:hover { color: var(--color-accent-dark); }
 
   /* ── Box informativo (date, quote di riferimento) ────────────────── */
   .lm__notice {
