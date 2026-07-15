@@ -761,7 +761,12 @@ const lm = lang === 'en' ? {
     state.privacy   = true;
     state.marketing = modal.querySelector('#lm-marketing').checked;
 
-    showStep(3,3);
+    if (state.gruppoAttivita === 'junior') {
+      // nuovo_bambino: salta la scelta, va dritto allo step "scrivi un messaggio"
+      showStep('4-message');
+    } else {
+      showStep(3,3);
+    }
   });
 
   // STEP 3
