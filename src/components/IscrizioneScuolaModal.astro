@@ -11,13 +11,13 @@ const t = lang === 'en' ? {
   eyebrow: 'Tennis Academy',
   title: 'Enrolment<br><em>Form.</em>',
   closeLabel: 'Close',
+  stepLabel: 'Step {n} of {total}',
 
   intro: 'Pre-enrolment is possible until <strong>15 August 2026</strong> and is considered valid upon payment of a deposit of <strong>€300</strong>.',
   introTrials: 'Trials: from 1 to 4 September (reserved for pre-enrolled students) and from 7 to 18 September (for new enrolments), 15.00–18.30, Monday to Friday.',
   introStart: 'Courses start: 21 September.',
 
   minorTitle: "Minor's details",
-  minorSub: 'Enter the details of the child/teenager to be enrolled.',
   minorFirst: "Child's first name",
   minorLast: "Child's last name",
   minorDob: 'Date of birth',
@@ -85,12 +85,14 @@ const t = lang === 'en' ? {
   sizePh: 'Choose a size',
 
   termsTitle: 'Terms & Conditions',
-  termsList: [
+  termsList1: [
     'This pre-enrolment is considered valid subject to payment of the €300 deposit by secure online payment or bank transfer by 15 August 2026;',
     'the enrolment is to be considered a confirmatory deposit, therefore non-refundable in case of cancellation or non-attendance;',
     'failure to pay fees by the due dates will be considered a withdrawal from the course, and previously paid fees will not be refunded in any way;',
+  ],
+  termsList2: [
     'withdrawal from the courses during the year, for any reason, does not give the right to any refund, not even partial;',
-    "it is mandatory to submit the medical certificate of fitness for sports activity before the course begins;",
+    'it is mandatory to submit the medical certificate of fitness for sports activity before the course begins;',
     'FITP (Italian Tennis and Padel Federation) membership is mandatory.',
   ],
   acceptTerms: 'I have read and accept the Terms & Conditions.',
@@ -122,13 +124,13 @@ const t = lang === 'en' ? {
   eyebrow: 'Tennis Academy',
   title: 'Modulo<br><em>Iscrizione.</em>',
   closeLabel: 'Chiudi',
+  stepLabel: 'Passo {n} di {total}',
 
   intro: 'La preiscrizione sarà possibile fino al <strong>15 agosto 2026</strong> e si intenderà valida a fronte del versamento di un acconto pari a <strong>€300</strong>.',
   introTrials: 'Provini: dall’1 al 4 settembre (riservati alle preiscrizioni) e dal 7 al 18 settembre (per le nuove iscrizioni), 15.00–18.30, dal lunedì al venerdì.',
   introStart: 'Inizio dei corsi: 21 settembre.',
 
   minorTitle: 'Dati del minore',
-  minorSub: 'Inserisci di seguito i dati del bambino/ragazzo da iscrivere.',
   minorFirst: 'Nome del minore',
   minorLast: 'Cognome del minore',
   minorDob: 'Data di nascita',
@@ -196,10 +198,12 @@ const t = lang === 'en' ? {
   sizePh: 'Scegli una taglia',
 
   termsTitle: 'Termini e condizioni',
-  termsList: [
+  termsList1: [
     'la presente preiscrizione è ritenuta valida subordinatamente al versamento dell’acconto di €300 tramite pagamento sicuro online oppure bonifico bancario entro il 15 agosto 2026;',
     'l’iscrizione è da intendersi quale caparra confirmatoria, quindi non rimborsabile nel caso di disdetta dell’iscrizione o di mancata frequenza del corso;',
     'il mancato pagamento delle quote alle scadenze previste sarà considerato quale rinuncia al corso e le quote precedentemente versate non verranno in alcun modo rimborsate;',
+  ],
+  termsList2: [
     'l’eventuale ritiro dai corsi durante l’anno, per qualsiasi motivo, non dà diritto ad alcun rimborso, neppure parziale;',
     'si ricorda che è obbligatorio consegnare il certificato medico di idoneità all’attività sportiva prima dell’inizio del corso;',
     'è obbligatorio effettuare il tesseramento alla FITP (Federazione Italiana Tennis e Padel).',
@@ -230,9 +234,13 @@ const t = lang === 'en' ? {
   errCheck: 'Seleziona almeno un’opzione.',
   errConsent: 'Questo consenso è obbligatorio.',
 };
+
+// Ogni sotto-passo mostra al massimo 1-2 campi, per stare nella finestra
+// anche su mobile senza bisogno di scroll (vedi script in fondo per il
+// calcolo dinamico del percorso mini-tennis / tennis e del contatore passi).
 ---
 
-<dialog id="modal-iscrizione-scuola" class="lm" aria-labelledby="isc-title">
+<dialog id="modal-iscrizione-scuola" class="lm lm--isc" aria-labelledby="isc-title">
   <div class="lm__panel">
 
     <div class="lm__head">
@@ -247,17 +255,21 @@ const t = lang === 'en' ? {
       </button>
     </div>
 
-    <!-- STEP 1 — Dati minore + genitore -->
-    <div class="lm__body" data-isc-step="1">
+    <!-- intro -->
+    <div class="lm__body" data-isc-step="intro">
       <div class="lm__notice">
         <p set:html={t.intro} />
         <p>{t.introTrials}</p>
         <p>{t.introStart}</p>
       </div>
+      <div class="lm__actions">
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
 
-      <p class="lm__section-title lm__section-title--first">{t.minorTitle}</p>
-      <p class="lm__sub">{t.minorSub}</p>
-
+    <!-- minore-nome -->
+    <div class="lm__body" data-isc-step="minore-nome" hidden>
+      <p class="lm__step-context"><span>{t.minorTitle}</span><span class="lm__progress"></span></p>
       <div class="lm__grid">
         <div class="lm__field">
           <label for="isc-minor-nome">{t.minorFirst} <span aria-hidden="true">*</span></label>
@@ -267,6 +279,18 @@ const t = lang === 'en' ? {
           <label for="isc-minor-cognome">{t.minorLast} <span aria-hidden="true">*</span></label>
           <input id="isc-minor-cognome" type="text" required />
         </div>
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- minore-nascita -->
+    <div class="lm__body" data-isc-step="minore-nascita" hidden>
+      <p class="lm__step-context"><span>{t.minorTitle}</span><span class="lm__progress"></span></p>
+      <div class="lm__grid">
         <div class="lm__field">
           <label for="isc-minor-dob">{t.minorDob} <span aria-hidden="true">*</span></label>
           <input id="isc-minor-dob" type="date" required />
@@ -275,13 +299,32 @@ const t = lang === 'en' ? {
           <label for="isc-minor-pob">{t.minorPob} <span aria-hidden="true">*</span></label>
           <input id="isc-minor-pob" type="text" required />
         </div>
-        <div class="lm__field lm__field--full">
-          <label for="isc-minor-cf">{t.minorCf} <span aria-hidden="true">*</span></label>
-          <input id="isc-minor-cf" type="text" maxlength="16" class="lm__input--cf" required />
-        </div>
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- minore-cf -->
+    <div class="lm__body" data-isc-step="minore-cf" hidden>
+      <p class="lm__step-context"><span>{t.minorTitle}</span><span class="lm__progress"></span></p>
+      <div class="lm__field">
+        <label for="isc-minor-cf">{t.minorCf} <span aria-hidden="true">*</span></label>
+        <input id="isc-minor-cf" type="text" maxlength="16" class="lm__input--cf" required />
       </div>
       <p class="lm__hint">{t.minorCfNote}</p>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
 
+    <!-- minore-indirizzo -->
+    <div class="lm__body" data-isc-step="minore-indirizzo" hidden>
+      <p class="lm__step-context"><span>{t.minorTitle}</span><span class="lm__progress"></span></p>
       <div class="lm__grid">
         <div class="lm__field lm__field--full">
           <label for="isc-addr">{t.addr} <span aria-hidden="true">*</span></label>
@@ -291,17 +334,37 @@ const t = lang === 'en' ? {
           <label for="isc-city">{t.city} <span aria-hidden="true">*</span></label>
           <input id="isc-city" type="text" placeholder={t.cityPh} required />
         </div>
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- minore-cap -->
+    <div class="lm__body" data-isc-step="minore-cap" hidden>
+      <p class="lm__step-context"><span>{t.minorTitle}</span><span class="lm__progress"></span></p>
+      <div class="lm__grid">
         <div class="lm__field">
           <label for="isc-prov">{t.prov} <span aria-hidden="true">*</span></label>
           <input id="isc-prov" type="text" maxlength="2" placeholder={t.provPh} required />
         </div>
-        <div class="lm__field lm__field--full">
+        <div class="lm__field">
           <label for="isc-cap">{t.cap} <span aria-hidden="true">*</span></label>
           <input id="isc-cap" type="text" inputmode="numeric" required />
         </div>
       </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
 
-      <p class="lm__section-title">{t.parentTitle}</p>
+    <!-- genitore-nome -->
+    <div class="lm__body" data-isc-step="genitore-nome" hidden>
+      <p class="lm__step-context"><span>{t.parentTitle}</span><span class="lm__progress"></span></p>
       <div class="lm__grid">
         <div class="lm__field">
           <label for="isc-parent-nome">{t.parentFirst} <span aria-hidden="true">*</span></label>
@@ -311,37 +374,61 @@ const t = lang === 'en' ? {
           <label for="isc-parent-cognome">{t.parentLast} <span aria-hidden="true">*</span></label>
           <input id="isc-parent-cognome" type="text" autocomplete="family-name" required />
         </div>
-        <div class="lm__field lm__field--full">
-          <label for="isc-email">{t.email} <span aria-hidden="true">*</span></label>
-          <input id="isc-email" type="email" autocomplete="email" placeholder="nome@esempio.com" required />
-        </div>
       </div>
-      <p class="lm__hint">{t.emailNote}</p>
-      <div class="lm__grid">
-        <div class="lm__field lm__field--full">
-          <label for="isc-cell">{t.mobile} <span aria-hidden="true">*</span></label>
-          <input id="isc-cell" type="tel" autocomplete="tel" placeholder="3XX XXX XXXX" required />
-        </div>
-      </div>
-
       <p class="lm__error" hidden role="alert"></p>
       <div class="lm__actions">
-        <button type="button" class="btn btn-red lm__next" data-isc-next="1">
-          {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
-        </button>
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
       </div>
     </div>
 
-    <!-- STEP 2 — Dettagli iscrizione -->
-    <div class="lm__body" data-isc-step="2" hidden>
-      <p class="lm__section-title lm__section-title--first">{t.detailsTitle}</p>
+    <!-- genitore-email -->
+    <div class="lm__body" data-isc-step="genitore-email" hidden>
+      <p class="lm__step-context"><span>{t.parentTitle}</span><span class="lm__progress"></span></p>
+      <div class="lm__field">
+        <label for="isc-email">{t.email} <span aria-hidden="true">*</span></label>
+        <input id="isc-email" type="email" autocomplete="email" placeholder="nome@esempio.com" required />
+      </div>
+      <p class="lm__hint">{t.emailNote}</p>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- genitore-cell -->
+    <div class="lm__body" data-isc-step="genitore-cell" hidden>
+      <p class="lm__step-context"><span>{t.parentTitle}</span><span class="lm__progress"></span></p>
+      <div class="lm__field">
+        <label for="isc-cell">{t.mobile} <span aria-hidden="true">*</span></label>
+        <input id="isc-cell" type="tel" autocomplete="tel" placeholder="3XX XXX XXXX" required />
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- corso-notice -->
+    <div class="lm__body" data-isc-step="corso-notice" hidden>
+      <p class="lm__step-context"><span>{t.detailsTitle}</span><span class="lm__progress"></span></p>
       <div class="lm__notice">
         <p><strong>{t.miniLabel}</strong> {t.miniAge}<br />{t.miniDesc}</p>
         <p><strong>{t.tennisLabel}</strong> {t.tennisAge}<br />{t.tennisDesc}</p>
       </div>
       <p class="lm__notice-warn">{t.warnSaldo}</p>
       <p class="lm__notice-warn">{t.warnFitp}</p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
 
+    <!-- corso-tipo -->
+    <div class="lm__body" data-isc-step="corso-tipo" hidden>
+      <p class="lm__step-context"><span>{t.detailsTitle}</span><span class="lm__progress"></span></p>
       <div class="lm__field">
         <label for="isc-tipo">{t.courseType} <span aria-hidden="true">*</span></label>
         <select id="isc-tipo" required>
@@ -350,21 +437,23 @@ const t = lang === 'en' ? {
           <option value="tennis">{t.tennisLabel}</option>
         </select>
       </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
 
+    <!-- corso-frequenza -->
+    <div class="lm__body" data-isc-step="corso-frequenza" hidden>
+      <p class="lm__step-context"><span>{t.detailsTitle}</span><span class="lm__progress"></span></p>
       <div data-isc-tipo-group="mini" hidden>
         <p class="lm__label-group">{t.frequency} <span aria-hidden="true">*</span></p>
         <div class="lm__checks">
           <label class="lm__check-item"><input type="radio" name="isc-freq-mini" value="mono" /> <span>{t.miniMono}</span></label>
           <label class="lm__check-item"><input type="radio" name="isc-freq-mini" value="bi" /> <span>{t.miniBi}</span></label>
         </div>
-        <p class="lm__label-group">{t.days} <span aria-hidden="true">*</span></p>
-        <div class="lm__checks">
-          {t.dayNames.map((d) => (
-            <label class="lm__check-item"><input type="checkbox" name="isc-giorni-mini" value={d} /> <span>{d} 17.30</span></label>
-          ))}
-        </div>
       </div>
-
       <div data-isc-tipo-group="tennis" hidden>
         <p class="lm__label-group">{t.frequency} <span aria-hidden="true">*</span></p>
         <div class="lm__checks">
@@ -372,26 +461,72 @@ const t = lang === 'en' ? {
           <label class="lm__check-item"><input type="radio" name="isc-freq-tennis" value="bi" /> <span>{t.tennisBi}</span></label>
           <label class="lm__check-item"><input type="radio" name="isc-freq-tennis" value="tri" /> <span>{t.tennisTri}</span></label>
         </div>
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- corso-giorni -->
+    <div class="lm__body" data-isc-step="corso-giorni" hidden>
+      <p class="lm__step-context"><span>{t.detailsTitle}</span><span class="lm__progress"></span></p>
+      <div data-isc-tipo-group="mini" hidden>
+        <p class="lm__label-group">{t.days} <span aria-hidden="true">*</span></p>
+        <div class="lm__checks">
+          {t.dayNames.map((d) => (
+            <label class="lm__check-item"><input type="checkbox" name="isc-giorni-mini" value={d} /> <span>{d} 17.30</span></label>
+          ))}
+        </div>
+      </div>
+      <div data-isc-tipo-group="tennis" hidden>
         <p class="lm__label-group">{t.days} <span aria-hidden="true">*</span></p>
         <div class="lm__checks">
           {t.dayNames.map((d) => (
             <label class="lm__check-item"><input type="checkbox" name="isc-giorni-tennis" value={d} /> <span>{d}</span></label>
           ))}
         </div>
-        <p class="lm__label-group">{t.timePrefs} <span aria-hidden="true">*</span></p>
-        <div class="lm__checks">
-          {PREP_SLOTS.map((s) => (
-            <label class="lm__check-item"><input type="checkbox" name="isc-orari-tennis" value={s} /> <span>{s.replace(':', '.')}</span></label>
-          ))}
-        </div>
       </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
 
+    <!-- corso-orari (solo Scuola Tennis) -->
+    <div class="lm__body" data-isc-step="corso-orari" hidden>
+      <p class="lm__step-context"><span>{t.detailsTitle}</span><span class="lm__progress"></span></p>
+      <p class="lm__label-group">{t.timePrefs} <span aria-hidden="true">*</span></p>
+      <div class="lm__checks">
+        {PREP_SLOTS.map((s) => (
+          <label class="lm__check-item"><input type="checkbox" name="isc-orari-tennis" value={s} /> <span>{s.replace(':', '.')}</span></label>
+        ))}
+      </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- corso-compagno -->
+    <div class="lm__body" data-isc-step="corso-compagno" hidden>
+      <p class="lm__step-context"><span>{t.detailsTitle}</span><span class="lm__progress"></span></p>
       <div class="lm__field">
         <label for="isc-buddy">{t.buddy}</label>
         <input id="isc-buddy" type="text" />
       </div>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
 
-      <p class="lm__section-title">{t.athleticTitle}</p>
+    <!-- corso-prep -->
+    <div class="lm__body" data-isc-step="corso-prep" hidden>
+      <p class="lm__step-context"><span>{t.athleticTitle}</span><span class="lm__progress"></span></p>
       <div data-isc-tipo-group="tennis" hidden>
         <div class="lm__field">
           <label for="isc-prep-orario">{t.athleticSlot} <span aria-hidden="true">*</span></label>
@@ -410,22 +545,17 @@ const t = lang === 'en' ? {
         </div>
       </div>
       <p class="lm__hint" data-isc-tipo-group="mini" hidden>{t.athleticNote}</p>
-
       <p class="lm__error" hidden role="alert"></p>
       <div class="lm__actions">
-        <button type="button" class="lm__back" data-isc-back="1">{t.back}</button>
-        <button type="button" class="btn btn-red lm__next" data-isc-next="2">
-          {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
-        </button>
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
       </div>
     </div>
 
-    <!-- STEP 3 — Taglie kit (solo Scuola Tennis) -->
-    <div class="lm__body" data-isc-step="3" hidden>
-      <p class="lm__section-title lm__section-title--first">{t.kitTitle}</p>
-      <p class="lm__sub">{t.kitIntro}</p>
+    <!-- taglie-maglietta (solo Scuola Tennis) -->
+    <div class="lm__body" data-isc-step="taglie-maglietta" hidden>
+      <p class="lm__step-context"><span>{t.kitTitle}</span><span class="lm__progress"></span></p>
       <p class="lm__sub" set:html={t.kitGuide.replace('{link}', `<a href="https://www.joma-sport.com/on/demandware.store/Sites-joma_it-Site/it_IT/Page-SizeGuide" target="_blank" rel="noopener">${t.kitGuideLink}</a>`)} />
-
       <div class="lm__field">
         <label for="isc-size-shirt">{t.sizeShirt} <span aria-hidden="true">*</span></label>
         <select id="isc-size-shirt" required>
@@ -433,6 +563,16 @@ const t = lang === 'en' ? {
           {SIZES.map((s) => <option value={s}>{s}</option>)}
         </select>
       </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- taglie-pantaloncini (solo Scuola Tennis) -->
+    <div class="lm__body" data-isc-step="taglie-pantaloncini" hidden>
+      <p class="lm__step-context"><span>{t.kitTitle}</span><span class="lm__progress"></span></p>
       <div class="lm__field">
         <label for="isc-size-shorts">{t.sizeShorts} <span aria-hidden="true">*</span></label>
         <select id="isc-size-shorts" required>
@@ -440,6 +580,16 @@ const t = lang === 'en' ? {
           {SIZES.map((s) => <option value={s}>{s}</option>)}
         </select>
       </div>
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- taglie-felpa (solo Scuola Tennis) -->
+    <div class="lm__body" data-isc-step="taglie-felpa" hidden>
+      <p class="lm__step-context"><span>{t.kitTitle}</span><span class="lm__progress"></span></p>
       <div class="lm__field">
         <label for="isc-size-hoodie">{t.sizeHoodie} <span aria-hidden="true">*</span></label>
         <select id="isc-size-hoodie" required>
@@ -447,23 +597,40 @@ const t = lang === 'en' ? {
           {SIZES.map((s) => <option value={s}>{s}</option>)}
         </select>
       </div>
-
       <p class="lm__error" hidden role="alert"></p>
       <div class="lm__actions">
-        <button type="button" class="lm__back" data-isc-back="2">{t.back}</button>
-        <button type="button" class="btn btn-red lm__next" data-isc-next="3">
-          {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
-        </button>
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
       </div>
     </div>
 
-    <!-- STEP 4 — Termini e condizioni -->
-    <div class="lm__body" data-isc-step="4" hidden>
-      <p class="lm__section-title lm__section-title--first">{t.termsTitle}</p>
+    <!-- termini-1 -->
+    <div class="lm__body" data-isc-step="termini-1" hidden>
+      <p class="lm__step-context"><span>{t.termsTitle}</span><span class="lm__progress"></span></p>
       <ul class="lm__terms-list">
-        {t.termsList.map((item) => <li>{item}</li>)}
+        {t.termsList1.map((item) => <li>{item}</li>)}
       </ul>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
 
+    <!-- termini-2 -->
+    <div class="lm__body" data-isc-step="termini-2" hidden>
+      <p class="lm__step-context"><span>{t.termsTitle}</span><span class="lm__progress"></span></p>
+      <ul class="lm__terms-list">
+        {t.termsList2.map((item) => <li>{item}</li>)}
+      </ul>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next>{t.next} <span class="lm__arrow" aria-hidden="true">→</span></button>
+      </div>
+    </div>
+
+    <!-- consensi -->
+    <div class="lm__body" data-isc-step="consensi" hidden>
+      <p class="lm__step-context"><span>{t.termsTitle}</span><span class="lm__progress"></span></p>
       <div class="lm__consent">
         <label class="lm__consent-item">
           <input type="checkbox" id="isc-accept-terms" required />
@@ -478,11 +645,10 @@ const t = lang === 'en' ? {
           <span set:html={t.acceptPrivacy.replace('{link}', `<a href="/privacy-policy" target="_blank">${t.acceptPrivacyLink}</a>`)} />
         </label>
       </div>
-
       <p class="lm__error" hidden role="alert"></p>
       <div class="lm__actions">
-        <button type="button" class="lm__back" data-isc-back-dynamic>{t.back}</button>
-        <button type="button" class="btn btn-red lm__next" id="isc-submit">
+        <button type="button" class="lm__back" data-isc-back>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" id="isc-submit" data-isc-next>
           {t.submit} <span class="lm__arrow" aria-hidden="true">→</span>
         </button>
       </div>
@@ -491,7 +657,7 @@ const t = lang === 'en' ? {
     <!-- CONFERMA -->
     <div class="lm__body lm__confirm" data-isc-step="confirm" hidden aria-live="polite">
       <div class="lm__confirm-check" aria-hidden="true">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <svg width="22" height="22" viewBox="0 0 26 26" fill="none">
           <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
@@ -529,14 +695,14 @@ const t = lang === 'en' ? {
 
   .lm__input--cf { text-transform: uppercase; }
 
-  /* ── Titoli di sotto-sezione dentro uno step ─────────────────────── */
-  .lm__section-title {
-    font-family: var(--font-display); font-size: clamp(1rem,1.6vw,1.25rem);
-    font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em;
-    color: var(--lm-text); margin: 0.6rem 0 0;
-    padding-top: 1rem; border-top: 1px solid var(--lm-border);
+  /* ── Riga di contesto passo (fase + contatore) ───────────────────── */
+  .lm__step-context {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    font-family: var(--font-display); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-accent);
+    margin: 0; padding-bottom: 0.6rem; border-bottom: 1px solid var(--lm-border);
   }
-  .lm__section-title--first { padding-top: 0; border-top: none; margin-top: 0; }
+  .lm__step-context .lm__progress { color: var(--lm-text-dim); font-weight: 600; white-space: nowrap; }
 
   .lm__hint {
     font-family: var(--font-body); font-size: clamp(11px,.8vw,12px);
@@ -566,7 +732,7 @@ const t = lang === 'en' ? {
   /* ── Elenco termini e condizioni ──────────────────────────────────── */
   .lm__terms-list {
     margin: 0; padding-left: 1.1rem;
-    display: flex; flex-direction: column; gap: 0.5rem;
+    display: flex; flex-direction: column; gap: 0.6rem;
     font-family: var(--font-body); font-size: clamp(12px,.9vw,13px);
     font-weight: 300; line-height: 1.6; color: var(--lm-text-sub);
   }
@@ -574,10 +740,26 @@ const t = lang === 'en' ? {
   /* ── Tabella slot preparazione fisica ─────────────────────────────── */
   .lm__table-wrap { overflow-x: auto; border: 1px solid var(--lm-border); }
   .lm__table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: clamp(11px,.85vw,12.5px); }
-  .lm__table th, .lm__table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--lm-border); text-align: left; }
+  .lm__table th, .lm__table td { padding: 0.5rem 0.65rem; border-bottom: 1px solid var(--lm-border); text-align: left; }
   .lm__table th { font-weight: 700; color: var(--lm-text); background: var(--lm-bg-head); white-space: nowrap; }
   .lm__table td { font-weight: 300; color: var(--lm-text-sub); }
   .lm__table tr:last-child td { border-bottom: none; }
+
+  /* ── Modal iscrizione: passi corti, niente scroll su mobile ───────── */
+  .lm--isc .lm__body { gap: 1rem; }
+
+  @media (max-width: 640px) {
+    .lm--isc { max-width: 100vw; width: 100%; height: 100dvh; max-height: 100dvh; margin: 0; }
+    .lm--isc .lm__panel { max-height: 100dvh; height: 100%; display: flex; flex-direction: column; }
+    .lm--isc .lm__head { padding: 1rem 1.1rem 0.9rem; flex-shrink: 0; }
+    .lm--isc .lm__title { font-size: 1.3rem; margin-top: 0.15rem; }
+    .lm--isc .lm__body { padding: 1.1rem 1.1rem 1.3rem; }
+    .lm--isc .lm__body:not([hidden]) { flex: 1; display: flex; flex-direction: column; }
+    .lm--isc .lm__body:not([hidden]) .lm__actions { margin-top: auto; }
+    .lm--isc .lm__notice { padding: 0.8rem 1rem; }
+    .lm--isc .lm__confirm-check { width: 2.6rem; height: 2.6rem; }
+    .lm--isc .lm__confirm-title { font-size: 1.5rem; }
+  }
 </style>
 
 <script define:vars={{ ERR: {
@@ -586,29 +768,52 @@ const t = lang === 'en' ? {
   choice: t.errChoice,
   check: t.errCheck,
   consent: t.errConsent,
-} }}>
+}, STEP_LABEL: t.stepLabel }}>
   const modal = document.getElementById('modal-iscrizione-scuola');
 
   function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
 
-  function showStep(key) {
-    modal.querySelectorAll('[data-isc-step]').forEach((el) => {
-      el.hidden = el.dataset.iscStep !== String(key);
-    });
-    modal.querySelector('.lm__panel').scrollTop = 0;
-  }
-
-  function showError(step, msg) {
-    const err = modal.querySelector(`[data-isc-step="${step}"] > .lm__error`);
-    if (err) { err.textContent = msg; err.hidden = false; }
-  }
-  function clearError(step) {
-    const err = modal.querySelector(`[data-isc-step="${step}"] > .lm__error`);
-    if (err) err.hidden = true;
-  }
-
   const tipoSelect = document.getElementById('isc-tipo');
   const prepSelect = document.getElementById('isc-prep-orario');
+
+  const PREFIX = ['minore-nome','minore-nascita','minore-cf','minore-indirizzo','minore-cap',
+                  'genitore-nome','genitore-email','genitore-cell','corso-notice','corso-tipo'];
+  const MID_TENNIS = ['corso-frequenza','corso-giorni','corso-orari','corso-compagno','corso-prep',
+                      'taglie-maglietta','taglie-pantaloncini','taglie-felpa'];
+  const MID_MINI = ['corso-frequenza','corso-giorni','corso-compagno','corso-prep'];
+  const SUFFIX = ['termini-1','termini-2','consensi'];
+
+  function getSteps() {
+    const mid = tipoSelect.value === 'tennis' ? MID_TENNIS : MID_MINI;
+    return ['intro'].concat(PREFIX, mid, SUFFIX);
+  }
+
+  let currentStep = 'intro';
+
+  function updateProgress(key) {
+    const steps = getSteps();
+    const idx = steps.indexOf(key);
+    const label = idx === -1 ? '' : STEP_LABEL.replace('{n}', idx + 1).replace('{total}', steps.length);
+    modal.querySelectorAll('.lm__progress').forEach((el) => { el.textContent = label; });
+  }
+
+  function renderStep(key) {
+    currentStep = key;
+    modal.querySelectorAll('[data-isc-step]').forEach((el) => {
+      el.hidden = el.dataset.iscStep !== key;
+    });
+    modal.querySelector('.lm__panel').scrollTop = 0;
+    updateProgress(key);
+  }
+
+  function showError(msg) {
+    const err = modal.querySelector(`[data-isc-step="${currentStep}"] > .lm__error`);
+    if (err) { err.textContent = msg; err.hidden = false; }
+  }
+  function clearError() {
+    const err = modal.querySelector(`[data-isc-step="${currentStep}"] > .lm__error`);
+    if (err) err.hidden = true;
+  }
 
   function syncTipoGroups() {
     const tipo = tipoSelect.value;
@@ -618,6 +823,79 @@ const t = lang === 'en' ? {
   }
   tipoSelect.addEventListener('change', syncTipoGroups);
 
+  function requireFields(ids) {
+    for (const id of ids) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { showError(ERR.required); el.focus(); return false; }
+    }
+    return true;
+  }
+  function requireSelect(id) {
+    const el = document.getElementById(id);
+    if (!el.value) { showError(ERR.choice); el.focus(); return false; }
+    return true;
+  }
+
+  const VALIDATORS = {
+    'minore-nome': () => requireFields(['isc-minor-nome','isc-minor-cognome']),
+    'minore-nascita': () => requireFields(['isc-minor-dob','isc-minor-pob']),
+    'minore-cf': () => requireFields(['isc-minor-cf']),
+    'minore-indirizzo': () => requireFields(['isc-addr','isc-city']),
+    'minore-cap': () => requireFields(['isc-prov','isc-cap']),
+    'genitore-nome': () => requireFields(['isc-parent-nome','isc-parent-cognome']),
+    'genitore-email': () => {
+      if (!requireFields(['isc-email'])) return false;
+      const el = document.getElementById('isc-email');
+      if (!isValidEmail(el.value)) { showError(ERR.email); el.focus(); return false; }
+      return true;
+    },
+    'genitore-cell': () => requireFields(['isc-cell']),
+    'corso-tipo': () => {
+      if (!tipoSelect.value) { showError(ERR.choice); tipoSelect.focus(); return false; }
+      return true;
+    },
+    'corso-frequenza': () => {
+      const tipo = tipoSelect.value;
+      if (!modal.querySelector(`input[name="isc-freq-${tipo}"]:checked`)) { showError(ERR.choice); return false; }
+      return true;
+    },
+    'corso-giorni': () => {
+      const tipo = tipoSelect.value;
+      if (modal.querySelectorAll(`input[name="isc-giorni-${tipo}"]:checked`).length === 0) { showError(ERR.check); return false; }
+      return true;
+    },
+    'corso-orari': () => {
+      if (modal.querySelectorAll('input[name="isc-orari-tennis"]:checked').length === 0) { showError(ERR.check); return false; }
+      return true;
+    },
+    'corso-prep': () => {
+      if (tipoSelect.value === 'tennis' && !prepSelect.value) { showError(ERR.choice); prepSelect.focus(); return false; }
+      return true;
+    },
+    'taglie-maglietta': () => requireSelect('isc-size-shirt'),
+    'taglie-pantaloncini': () => requireSelect('isc-size-shorts'),
+    'taglie-felpa': () => requireSelect('isc-size-hoodie'),
+    'consensi': () => {
+      const ok = ['isc-accept-terms','isc-accept-rules','isc-accept-privacy']
+        .every((id) => document.getElementById(id).checked);
+      if (!ok) { showError(ERR.consent); return false; }
+      return true;
+    },
+  };
+
+  function goNext() {
+    const steps = getSteps();
+    const idx = steps.indexOf(currentStep);
+    if (idx === -1 || idx === steps.length - 1) { renderStep('confirm'); return; }
+    renderStep(steps[idx + 1]);
+  }
+  function goBack() {
+    const steps = getSteps();
+    const idx = steps.indexOf(currentStep);
+    if (idx <= 0) { renderStep('intro'); return; }
+    renderStep(steps[idx - 1]);
+  }
+
   function resetForm() {
     modal.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[inputmode="numeric"]').forEach((el) => {
       el.value = '';
@@ -626,7 +904,7 @@ const t = lang === 'en' ? {
     modal.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach((el) => { el.checked = false; });
     modal.querySelectorAll('.lm__error').forEach((el) => { el.hidden = true; });
     syncTipoGroups();
-    showStep('1');
+    renderStep('intro');
   }
 
   function closeAndReset() {
@@ -638,78 +916,18 @@ const t = lang === 'en' ? {
     const trigger = e.target.closest('[data-open-modal]');
     if (trigger && trigger.dataset.openModal === 'modal-iscrizione-scuola') {
       modal.showModal();
-      showStep('1');
+      renderStep('intro');
     }
   });
 
   modal.addEventListener('click', (e) => {
-    if (e.target.closest('[data-isc-close]') || e.target === modal) closeAndReset();
-  });
-
-  modal.querySelectorAll('[data-isc-back]').forEach((btn) => {
-    btn.addEventListener('click', () => showStep(btn.dataset.iscBack));
-  });
-
-  // STEP 1 → 2
-  modal.querySelector('[data-isc-next="1"]').addEventListener('click', () => {
-    clearError('1');
-    const required = ['isc-minor-nome','isc-minor-cognome','isc-minor-dob','isc-minor-pob','isc-minor-cf',
-                      'isc-addr','isc-city','isc-prov','isc-cap',
-                      'isc-parent-nome','isc-parent-cognome','isc-email','isc-cell'];
-    for (const id of required) {
-      const el = document.getElementById(id);
-      if (!el.value.trim()) { showError('1', ERR.required); el.focus(); return; }
+    if (e.target.closest('[data-isc-close]') || e.target === modal) { closeAndReset(); return; }
+    if (e.target.closest('[data-isc-back]')) { goBack(); return; }
+    if (e.target.closest('[data-isc-next]')) {
+      clearError();
+      const validator = VALIDATORS[currentStep];
+      if (validator && !validator()) return;
+      goNext();
     }
-    const emailEl = document.getElementById('isc-email');
-    if (!isValidEmail(emailEl.value)) { showError('1', ERR.email); emailEl.focus(); return; }
-    showStep('2');
-  });
-
-  // STEP 2 → 3 (o 4 se Mini Tennis)
-  modal.querySelector('[data-isc-next="2"]').addEventListener('click', () => {
-    clearError('2');
-    const tipo = tipoSelect.value;
-    if (!tipo) { showError('2', ERR.choice); tipoSelect.focus(); return; }
-
-    const freqChecked = modal.querySelector(`input[name="isc-freq-${tipo}"]:checked`);
-    if (!freqChecked) { showError('2', ERR.choice); return; }
-
-    const giorniChecked = modal.querySelectorAll(`input[name="isc-giorni-${tipo}"]:checked`);
-    if (giorniChecked.length === 0) { showError('2', ERR.check); return; }
-
-    if (tipo === 'tennis') {
-      const orariChecked = modal.querySelectorAll('input[name="isc-orari-tennis"]:checked');
-      if (orariChecked.length === 0) { showError('2', ERR.check); return; }
-      if (!prepSelect.value) { showError('2', ERR.choice); prepSelect.focus(); return; }
-      showStep('3');
-    } else {
-      showStep('4');
-    }
-  });
-
-  // STEP 3 → 4 (solo Scuola Tennis)
-  modal.querySelector('[data-isc-next="3"]').addEventListener('click', () => {
-    clearError('3');
-    const sizes = ['isc-size-shirt','isc-size-shorts','isc-size-hoodie'];
-    for (const id of sizes) {
-      const el = document.getElementById(id);
-      if (!el.value) { showError('3', ERR.choice); el.focus(); return; }
-    }
-    showStep('4');
-  });
-
-  // Indietro da step 4: torna a 3 se Scuola Tennis, altrimenti a 2
-  modal.querySelector('[data-isc-back-dynamic]').addEventListener('click', () => {
-    showStep(tipoSelect.value === 'tennis' ? '3' : '2');
-  });
-
-  // STEP 4 → conferma
-  document.getElementById('isc-submit').addEventListener('click', () => {
-    clearError('4');
-    const terms = document.getElementById('isc-accept-terms');
-    const rules = document.getElementById('isc-accept-rules');
-    const privacy = document.getElementById('isc-accept-privacy');
-    if (!terms.checked || !rules.checked || !privacy.checked) { showError('4', ERR.consent); return; }
-    showStep('confirm');
   });
 </script>
