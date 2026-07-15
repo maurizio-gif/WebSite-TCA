@@ -172,12 +172,10 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
 
     <!-- Beacon "ritorno sul sito": ad ogni pagina vista segnala l'ID
          visitatore persistente a n8n, così un lead già noto può essere
-         riconosciuto anche senza ricompilare il form. Disattivato finché
-         WEBHOOK_VISIT non viene valorizzato con l'endpoint del workflow
-         n8n dedicato (da creare — non esiste ancora). -->
+         riconosciuto anche senza ricompilare il form. -->
     <script is:inline>
       (function () {
-        var WEBHOOK_VISIT = ''; // es. 'https://automazione.n8ndevelop.it/webhook/tca-visita'
+        var WEBHOOK_VISIT = 'https://automazione.n8ndevelop.it/webhook/ping-tca';
         if (!WEBHOOK_VISIT) return;
         var utm = {};
         try { utm = JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) {}
