@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import IscrizioneScuolaModal from "../components/IscrizioneScuolaModal.astro";
 import { publicUrl, getLocalePath } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
@@ -105,7 +106,36 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
     </div>
   </section>
 
+  <section class="content-section">
+    <div class="content-section__inner">
+      <span class="eyebrow">Tennis Academy · Iscrizioni aperte</span>
+      <h2 class="section-title">Iscriviti<br><em>Ora.</em></h2>
+      <p class="section-lead body-text">
+        Le iscrizioni alla Scuola Tennis per la stagione 2026/2027 sono aperte: assicurati il posto con la preiscrizione online, versando un acconto di €300.
+      </p>
+      <div class="iscrizione-cta">
+        <div class="iscrizione-cta__facts">
+          <div class="iscrizione-cta__fact">
+            <span class="iscrizione-cta__fact-label">Preiscrizione entro</span>
+            <span class="iscrizione-cta__fact-val">15 Agosto 2026</span>
+          </div>
+          <div class="iscrizione-cta__fact">
+            <span class="iscrizione-cta__fact-label">Acconto richiesto</span>
+            <span class="iscrizione-cta__fact-val">€ 300</span>
+          </div>
+          <div class="iscrizione-cta__fact">
+            <span class="iscrizione-cta__fact-label">Inizio corsi</span>
+            <span class="iscrizione-cta__fact-val">21 Settembre 2026</span>
+          </div>
+        </div>
+        <button class="btn btn-red iscrizione-cta__btn" data-open-modal="modal-iscrizione-scuola">Iscriviti Ora</button>
+      </div>
+    </div>
+  </section>
+
 </BaseLayout>
+
+<IscrizioneScuolaModal lang={lang} />
 
 <style>
   .content-section {
@@ -355,5 +385,56 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 
   @media (max-width: 600px) {
     .age-grid { grid-template-columns: 1fr; }
+  }
+
+  .iscrizione-cta {
+    margin-top: 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    background: var(--color-off-white);
+    padding: 1.6rem 2rem;
+  }
+
+  .iscrizione-cta__facts {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .iscrizione-cta__fact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .iscrizione-cta__fact-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .iscrizione-cta__fact-val {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.6vw, 1.3rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+  }
+
+  .iscrizione-cta__btn {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 700px) {
+    .iscrizione-cta { flex-direction: column; align-items: stretch; }
+    .iscrizione-cta__btn { text-align: center; }
   }
 </style>

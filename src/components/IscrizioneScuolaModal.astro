@@ -1,0 +1,707 @@
+---
+import type { Lang } from '../i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+
+const SIZES = ['6XS','5XS','4XS','3XS','2XS','XS','S','M','L','XL'];
+const PREP_SLOTS = ['14:30','15:30','16:30','17:30','18:30'];
+
+const t = lang === 'en' ? {
+  eyebrow: 'Tennis Academy',
+  title: 'Enrolment<br><em>Form.</em>',
+  closeLabel: 'Close',
+
+  intro: 'Pre-enrolment is possible until <strong>15 August 2026</strong> and is considered valid upon payment of a deposit of <strong>€300</strong>.',
+  introTrials: 'Trials: from 1 to 4 September (reserved for pre-enrolled students) and from 7 to 18 September (for new enrolments), 15.00–18.30, Monday to Friday.',
+  introStart: 'Courses start: 21 September.',
+
+  minorTitle: "Minor's details",
+  minorSub: 'Enter the details of the child/teenager to be enrolled.',
+  minorFirst: "Child's first name",
+  minorLast: "Child's last name",
+  minorDob: 'Date of birth',
+  minorPob: 'Place of birth',
+  minorCf: 'Fiscal code',
+  minorCfNote: 'If you have trouble entering it, contact the Club at tennis-academy@tcambrosiano.com',
+  addr: 'Address',
+  addrPh: 'Via Feltre 33',
+  city: 'City',
+  cityPh: 'Milano',
+  prov: 'Province',
+  provPh: 'MI',
+  cap: 'Postal code',
+
+  parentTitle: "Parent's details",
+  parentFirst: "Parent's first name",
+  parentLast: "Parent's last name",
+  email: 'Email',
+  emailNote: "Make sure the email address is correct: you'll receive all communications from the Club there.",
+  mobile: 'Mobile',
+
+  detailsTitle: 'Enrolment details',
+  miniLabel: 'Mini-tennis School',
+  miniAge: '(born in 2020 and 2021)',
+  miniDesc: '60-minute lessons, tennis only. Frequency: 1 or 2 times a week.',
+  tennisLabel: 'Tennis School',
+  tennisAge: '(born in 2019 and earlier)',
+  tennisDesc: '60 minutes of tennis + 30 minutes of athletics. Frequency: 1, 2 or 3 times a week.',
+  warnSaldo: 'To consider the enrolment valid, the full fee must be paid before the activities begin.',
+  warnFitp: 'Please note that a valid FITP membership card is required (the fee is needed to complete enrolment). A valid medical certificate must also be provided.',
+
+  courseType: 'Course type',
+  courseTypePh: 'Select a course type…',
+  frequency: 'Frequency',
+  miniMono: 'Mini-tennis once a week',
+  miniBi: 'Mini-tennis twice a week',
+  tennisMono: 'Tennis once a week',
+  tennisBi: 'Tennis twice a week',
+  tennisTri: 'Tennis three times a week',
+  days: 'Day preference',
+  dayNames: ['Monday','Tuesday','Wednesday','Thursday','Friday'],
+  timePrefs: 'Tennis School time preference',
+  buddy: 'Preferred tennis partner',
+  athleticTitle: 'Athletic Training',
+  athleticSlot: 'Athletic training time slot (not offered for Mini Tennis) — see table',
+  athleticSlotPh: 'Select a time…',
+  athleticNote: 'Not offered for the Mini-Tennis School.',
+  athleticTablePick: 'Chosen slot',
+  athleticTableTime: 'Athletic training time',
+  athleticRows: [
+    ['14:30 – 15:30','14:00 – 14:30 (30 min before)'],
+    ['15:30 – 16:30','15:00 – 15:30 (before) or 16:30 – 17:00 (after)'],
+    ['16:30 – 17:30','16:00 – 16:30 (30 min before)'],
+    ['17:30 – 18:30','17:00 – 17:30 (30 min before)'],
+    ['18:30 – 19:30','18:00 – 18:30 (30 min before)'],
+  ],
+
+  kitTitle: 'Tennis School kit sizes',
+  kitIntro: 'The kit (t-shirt, shorts and hoodie) is included in the annual Tennis School fee.',
+  sizeShirt: 'T-shirt size',
+  sizeShorts: 'Shorts size',
+  sizeHoodie: 'Hoodie size',
+  sizePh: 'Choose a size',
+
+  termsTitle: 'Terms & Conditions',
+  termsList: [
+    'This pre-enrolment is considered valid subject to payment of the €300 deposit by secure online payment or bank transfer by 15 August 2026;',
+    'the enrolment is to be considered a confirmatory deposit, therefore non-refundable in case of cancellation or non-attendance;',
+    'failure to pay fees by the due dates will be considered a withdrawal from the course, and previously paid fees will not be refunded in any way;',
+    'withdrawal from the courses during the year, for any reason, does not give the right to any refund, not even partial;',
+    "it is mandatory to submit the medical certificate of fitness for sports activity before the course begins;",
+    'FITP (Italian Tennis and Padel Federation) membership is mandatory.',
+  ],
+  acceptTerms: 'I have read and accept the Terms & Conditions.',
+  acceptRules: 'I have read and accept the {link} of the Tennis School.',
+  acceptRulesLink: 'rules',
+  acceptPrivacy: 'I have read and accept your {link}.',
+  acceptPrivacyLink: 'Privacy Policy',
+
+  back: '← Back',
+  next: 'Next',
+  submit: 'Submit pre-enrolment',
+  closeBtn: 'Close',
+
+  confirmTitle: 'Thank<br><em>you!</em>',
+  confirmNote: 'Thank you for your interest.',
+  confirmPayNote: 'Please proceed with the pre-enrolment payment by bank transfer within 3 days, indicating in the description: <strong>Tennis Academy Deposit and the child’s first and last name.</strong>',
+  payName: 'Name',
+  payIban: 'IBAN',
+  payBic: 'BIC',
+  payReason: 'Description',
+  payReasonVal: "Tennis Academy Deposit and the child's first and last name.",
+
+  errRequired: 'Please fill in this required field.',
+  errEmail: 'Please enter a valid email address.',
+  errChoice: 'Please make a choice.',
+  errCheck: 'Please select at least one option.',
+  errConsent: 'This consent is required.',
+} : {
+  eyebrow: 'Tennis Academy',
+  title: 'Modulo<br><em>Iscrizione.</em>',
+  closeLabel: 'Chiudi',
+
+  intro: 'La preiscrizione sarà possibile fino al <strong>15 agosto 2026</strong> e si intenderà valida a fronte del versamento di un acconto pari a <strong>€300</strong>.',
+  introTrials: 'Provini: dall’1 al 4 settembre (riservati alle preiscrizioni) e dal 7 al 18 settembre (per le nuove iscrizioni), 15.00–18.30, dal lunedì al venerdì.',
+  introStart: 'Inizio dei corsi: 21 settembre.',
+
+  minorTitle: 'Dati del minore',
+  minorSub: 'Inserisci di seguito i dati del bambino/ragazzo da iscrivere.',
+  minorFirst: 'Nome del minore',
+  minorLast: 'Cognome del minore',
+  minorDob: 'Data di nascita',
+  minorPob: 'Luogo di nascita',
+  minorCf: 'Codice fiscale',
+  minorCfNote: "In caso di problemi con l'inserimento, contattare il Club all'indirizzo tennis-academy@tcambrosiano.com",
+  addr: 'Indirizzo',
+  addrPh: 'Via Feltre 33',
+  city: 'Città',
+  cityPh: 'Milano',
+  prov: 'Provincia',
+  provPh: 'MI',
+  cap: 'Codice postale',
+
+  parentTitle: 'Dati del genitore',
+  parentFirst: 'Nome del genitore',
+  parentLast: 'Cognome del genitore',
+  email: 'Email',
+  emailNote: "Controlla bene di aver inserito un indirizzo email corretto: lì riceverai tutte le comunicazioni da parte del Club.",
+  mobile: 'Cellulare',
+
+  detailsTitle: 'Dettagli iscrizione',
+  miniLabel: 'Scuola mini-tennis',
+  miniAge: '(nati nel 2020 e 2021)',
+  miniDesc: 'Lezioni di 60 minuti, solo tennis. Frequenza: 1 o 2 volte a settimana.',
+  tennisLabel: 'Scuola tennis',
+  tennisAge: '(nati nel 2019 e anni precedenti)',
+  tennisDesc: 'Lezioni di 60 minuti di tennis + 30 minuti di atletica. Frequenza: 1, 2 o 3 volte a settimana.',
+  warnSaldo: "Per considerare valida l'iscrizione, sarà necessario provvedere al saldo dell'intera quota prima dell'inizio delle attività.",
+  warnFitp: "Si prega di notare che è richiesto il possesso della tessera FITP (in corso di validità), la cui quota è necessaria per completare l'iscrizione. Inoltre, è obbligatorio presentare un certificato medico in corso di validità.",
+
+  courseType: 'Tipo di corso',
+  courseTypePh: 'Seleziona un tipo di corso…',
+  frequency: 'Frequenza',
+  miniMono: 'Mini-tennis mono settimanale',
+  miniBi: 'Mini-tennis bisettimanale',
+  tennisMono: 'Tennis mono settimanale',
+  tennisBi: 'Tennis bisettimanale',
+  tennisTri: 'Tennis trisettimanale',
+  days: 'Preferenza giorni',
+  dayNames: ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì'],
+  timePrefs: 'Preferenza orari scuola tennis',
+  buddy: 'Compagno di tennis preferito',
+  athleticTitle: 'Preparazione Fisica',
+  athleticSlot: 'Scelta orario per preparazione fisica SCUOLA TENNIS (non prevista per Mini Tennis) — vedi tabella',
+  athleticSlotPh: 'Seleziona un orario…',
+  athleticNote: 'Non prevista per la Scuola Mini-Tennis.',
+  athleticTablePick: 'Scelta slot orario',
+  athleticTableTime: 'Orario preparazione fisica',
+  athleticRows: [
+    ['14:30 – 15:30','14:00 – 14:30 (30 min prima)'],
+    ['15:30 – 16:30','15:00 – 15:30 (prima) oppure 16:30 – 17:00 (dopo)'],
+    ['16:30 – 17:30','16:00 – 16:30 (30 min prima)'],
+    ['17:30 – 18:30','17:00 – 17:30 (30 min prima)'],
+    ['18:30 – 19:30','18:00 – 18:30 (30 min prima)'],
+  ],
+
+  kitTitle: 'Taglie kit Scuola Tennis',
+  kitIntro: 'Il kit (maglietta, pantaloncini e felpa) è incluso nella quota annuale della Scuola Tennis.',
+  sizeShirt: 'Taglia maglietta',
+  sizeShorts: 'Taglia pantaloncini',
+  sizeHoodie: 'Taglia felpa',
+  sizePh: 'Scegli una taglia',
+
+  termsTitle: 'Termini e condizioni',
+  termsList: [
+    'la presente preiscrizione è ritenuta valida subordinatamente al versamento dell’acconto di €300 tramite pagamento sicuro online oppure bonifico bancario entro il 15 agosto 2026;',
+    'l’iscrizione è da intendersi quale caparra confirmatoria, quindi non rimborsabile nel caso di disdetta dell’iscrizione o di mancata frequenza del corso;',
+    'il mancato pagamento delle quote alle scadenze previste sarà considerato quale rinuncia al corso e le quote precedentemente versate non verranno in alcun modo rimborsate;',
+    'l’eventuale ritiro dai corsi durante l’anno, per qualsiasi motivo, non dà diritto ad alcun rimborso, neppure parziale;',
+    'si ricorda che è obbligatorio consegnare il certificato medico di idoneità all’attività sportiva prima dell’inizio del corso;',
+    'è obbligatorio effettuare il tesseramento alla FITP (Federazione Italiana Tennis e Padel).',
+  ],
+  acceptTerms: 'Ho letto e accetto i Termini e Condizioni.',
+  acceptRules: 'Ho letto e accetto il {link} della Scuola Tennis.',
+  acceptRulesLink: 'regolamento',
+  acceptPrivacy: 'Ho letto e accetto la vostra {link}.',
+  acceptPrivacyLink: 'Privacy Policy',
+
+  back: '← Indietro',
+  next: 'Avanti',
+  submit: 'Invia la preiscrizione',
+  closeBtn: 'Chiudi',
+
+  confirmTitle: 'Grazie!',
+  confirmNote: 'Ti ringraziamo per l’interesse mostrato.',
+  confirmPayNote: 'Ti invitiamo a procedere al pagamento della preiscrizione tramite bonifico bancario entro 3 giorni, indicando nella causale: <strong>Acconto Tennis Academy e nome e cognome del bambino.</strong>',
+  payName: 'Nome',
+  payIban: 'IBAN',
+  payBic: 'BIC',
+  payReason: 'Causale',
+  payReasonVal: 'Acconto Tennis Academy e nome e cognome del bambino.',
+
+  errRequired: 'Compila questo campo obbligatorio.',
+  errEmail: 'Inserisci un indirizzo email valido.',
+  errChoice: 'Effettua una scelta.',
+  errCheck: 'Seleziona almeno un’opzione.',
+  errConsent: 'Questo consenso è obbligatorio.',
+};
+---
+
+<dialog id="modal-iscrizione-scuola" class="lm" aria-labelledby="isc-title">
+  <div class="lm__panel">
+
+    <div class="lm__head">
+      <div>
+        <span class="eyebrow lm__eyebrow">{t.eyebrow}</span>
+        <h2 class="lm__title" id="isc-title" set:html={t.title} />
+      </div>
+      <button class="lm__close" aria-label={t.closeLabel} data-isc-close>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- STEP 1 — Dati minore + genitore -->
+    <div class="lm__body" data-isc-step="1">
+      <div class="lm__notice">
+        <p set:html={t.intro} />
+        <p>{t.introTrials}</p>
+        <p>{t.introStart}</p>
+      </div>
+
+      <p class="lm__section-title lm__section-title--first">{t.minorTitle}</p>
+      <p class="lm__sub">{t.minorSub}</p>
+
+      <div class="lm__grid">
+        <div class="lm__field">
+          <label for="isc-minor-nome">{t.minorFirst} <span aria-hidden="true">*</span></label>
+          <input id="isc-minor-nome" type="text" required />
+        </div>
+        <div class="lm__field">
+          <label for="isc-minor-cognome">{t.minorLast} <span aria-hidden="true">*</span></label>
+          <input id="isc-minor-cognome" type="text" required />
+        </div>
+        <div class="lm__field">
+          <label for="isc-minor-dob">{t.minorDob} <span aria-hidden="true">*</span></label>
+          <input id="isc-minor-dob" type="date" required />
+        </div>
+        <div class="lm__field">
+          <label for="isc-minor-pob">{t.minorPob} <span aria-hidden="true">*</span></label>
+          <input id="isc-minor-pob" type="text" required />
+        </div>
+        <div class="lm__field lm__field--full">
+          <label for="isc-minor-cf">{t.minorCf} <span aria-hidden="true">*</span></label>
+          <input id="isc-minor-cf" type="text" maxlength="16" class="lm__input--cf" required />
+        </div>
+      </div>
+      <p class="lm__hint">{t.minorCfNote}</p>
+
+      <div class="lm__grid">
+        <div class="lm__field lm__field--full">
+          <label for="isc-addr">{t.addr} <span aria-hidden="true">*</span></label>
+          <input id="isc-addr" type="text" placeholder={t.addrPh} required />
+        </div>
+        <div class="lm__field">
+          <label for="isc-city">{t.city} <span aria-hidden="true">*</span></label>
+          <input id="isc-city" type="text" placeholder={t.cityPh} required />
+        </div>
+        <div class="lm__field">
+          <label for="isc-prov">{t.prov} <span aria-hidden="true">*</span></label>
+          <input id="isc-prov" type="text" maxlength="2" placeholder={t.provPh} required />
+        </div>
+        <div class="lm__field lm__field--full">
+          <label for="isc-cap">{t.cap} <span aria-hidden="true">*</span></label>
+          <input id="isc-cap" type="text" inputmode="numeric" required />
+        </div>
+      </div>
+
+      <p class="lm__section-title">{t.parentTitle}</p>
+      <div class="lm__grid">
+        <div class="lm__field">
+          <label for="isc-parent-nome">{t.parentFirst} <span aria-hidden="true">*</span></label>
+          <input id="isc-parent-nome" type="text" autocomplete="given-name" required />
+        </div>
+        <div class="lm__field">
+          <label for="isc-parent-cognome">{t.parentLast} <span aria-hidden="true">*</span></label>
+          <input id="isc-parent-cognome" type="text" autocomplete="family-name" required />
+        </div>
+        <div class="lm__field lm__field--full">
+          <label for="isc-email">{t.email} <span aria-hidden="true">*</span></label>
+          <input id="isc-email" type="email" autocomplete="email" placeholder="nome@esempio.com" required />
+        </div>
+      </div>
+      <p class="lm__hint">{t.emailNote}</p>
+      <div class="lm__grid">
+        <div class="lm__field lm__field--full">
+          <label for="isc-cell">{t.mobile} <span aria-hidden="true">*</span></label>
+          <input id="isc-cell" type="tel" autocomplete="tel" placeholder="3XX XXX XXXX" required />
+        </div>
+      </div>
+
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="btn btn-red lm__next" data-isc-next="1">
+          {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2 — Dettagli iscrizione -->
+    <div class="lm__body" data-isc-step="2" hidden>
+      <p class="lm__section-title lm__section-title--first">{t.detailsTitle}</p>
+      <div class="lm__notice">
+        <p><strong>{t.miniLabel}</strong> {t.miniAge}<br />{t.miniDesc}</p>
+        <p><strong>{t.tennisLabel}</strong> {t.tennisAge}<br />{t.tennisDesc}</p>
+      </div>
+      <p class="lm__notice-warn">{t.warnSaldo}</p>
+      <p class="lm__notice-warn">{t.warnFitp}</p>
+
+      <div class="lm__field">
+        <label for="isc-tipo">{t.courseType} <span aria-hidden="true">*</span></label>
+        <select id="isc-tipo" required>
+          <option value="" selected disabled>{t.courseTypePh}</option>
+          <option value="mini">{t.miniLabel}</option>
+          <option value="tennis">{t.tennisLabel}</option>
+        </select>
+      </div>
+
+      <div data-isc-tipo-group="mini" hidden>
+        <p class="lm__label-group">{t.frequency} <span aria-hidden="true">*</span></p>
+        <div class="lm__checks">
+          <label class="lm__check-item"><input type="radio" name="isc-freq-mini" value="mono" /> <span>{t.miniMono}</span></label>
+          <label class="lm__check-item"><input type="radio" name="isc-freq-mini" value="bi" /> <span>{t.miniBi}</span></label>
+        </div>
+        <p class="lm__label-group">{t.days} <span aria-hidden="true">*</span></p>
+        <div class="lm__checks">
+          {t.dayNames.map((d) => (
+            <label class="lm__check-item"><input type="checkbox" name="isc-giorni-mini" value={d} /> <span>{d} 17.30</span></label>
+          ))}
+        </div>
+      </div>
+
+      <div data-isc-tipo-group="tennis" hidden>
+        <p class="lm__label-group">{t.frequency} <span aria-hidden="true">*</span></p>
+        <div class="lm__checks">
+          <label class="lm__check-item"><input type="radio" name="isc-freq-tennis" value="mono" /> <span>{t.tennisMono}</span></label>
+          <label class="lm__check-item"><input type="radio" name="isc-freq-tennis" value="bi" /> <span>{t.tennisBi}</span></label>
+          <label class="lm__check-item"><input type="radio" name="isc-freq-tennis" value="tri" /> <span>{t.tennisTri}</span></label>
+        </div>
+        <p class="lm__label-group">{t.days} <span aria-hidden="true">*</span></p>
+        <div class="lm__checks">
+          {t.dayNames.map((d) => (
+            <label class="lm__check-item"><input type="checkbox" name="isc-giorni-tennis" value={d} /> <span>{d}</span></label>
+          ))}
+        </div>
+        <p class="lm__label-group">{t.timePrefs} <span aria-hidden="true">*</span></p>
+        <div class="lm__checks">
+          {PREP_SLOTS.map((s) => (
+            <label class="lm__check-item"><input type="checkbox" name="isc-orari-tennis" value={s} /> <span>{s.replace(':', '.')}</span></label>
+          ))}
+        </div>
+      </div>
+
+      <div class="lm__field">
+        <label for="isc-buddy">{t.buddy}</label>
+        <input id="isc-buddy" type="text" />
+      </div>
+
+      <p class="lm__section-title">{t.athleticTitle}</p>
+      <div data-isc-tipo-group="tennis" hidden>
+        <div class="lm__field">
+          <label for="isc-prep-orario">{t.athleticSlot} <span aria-hidden="true">*</span></label>
+          <select id="isc-prep-orario">
+            <option value="" selected disabled>{t.athleticSlotPh}</option>
+            {PREP_SLOTS.map((s) => <option value={s}>{s}</option>)}
+          </select>
+        </div>
+        <div class="lm__table-wrap">
+          <table class="lm__table">
+            <thead><tr><th>{t.athleticTablePick}</th><th>{t.athleticTableTime}</th></tr></thead>
+            <tbody>
+              {t.athleticRows.map((r) => <tr><td>{r[0]}</td><td>{r[1]}</td></tr>)}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p class="lm__hint" data-isc-tipo-group="mini" hidden>{t.athleticNote}</p>
+
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back="1">{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next="2">
+          {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3 — Taglie kit (solo Scuola Tennis) -->
+    <div class="lm__body" data-isc-step="3" hidden>
+      <p class="lm__section-title lm__section-title--first">{t.kitTitle}</p>
+      <p class="lm__sub">{t.kitIntro}</p>
+
+      <div class="lm__field">
+        <label for="isc-size-shirt">{t.sizeShirt} <span aria-hidden="true">*</span></label>
+        <select id="isc-size-shirt" required>
+          <option value="" selected disabled>{t.sizePh}</option>
+          {SIZES.map((s) => <option value={s}>{s}</option>)}
+        </select>
+      </div>
+      <div class="lm__field">
+        <label for="isc-size-shorts">{t.sizeShorts} <span aria-hidden="true">*</span></label>
+        <select id="isc-size-shorts" required>
+          <option value="" selected disabled>{t.sizePh}</option>
+          {SIZES.map((s) => <option value={s}>{s}</option>)}
+        </select>
+      </div>
+      <div class="lm__field">
+        <label for="isc-size-hoodie">{t.sizeHoodie} <span aria-hidden="true">*</span></label>
+        <select id="isc-size-hoodie" required>
+          <option value="" selected disabled>{t.sizePh}</option>
+          {SIZES.map((s) => <option value={s}>{s}</option>)}
+        </select>
+      </div>
+
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back="2">{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" data-isc-next="3">
+          {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 4 — Termini e condizioni -->
+    <div class="lm__body" data-isc-step="4" hidden>
+      <p class="lm__section-title lm__section-title--first">{t.termsTitle}</p>
+      <ul class="lm__terms-list">
+        {t.termsList.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <div class="lm__consent">
+        <label class="lm__consent-item">
+          <input type="checkbox" id="isc-accept-terms" required />
+          <span>{t.acceptTerms}</span>
+        </label>
+        <label class="lm__consent-item">
+          <input type="checkbox" id="isc-accept-rules" required />
+          <span set:html={t.acceptRules.replace('{link}', `<a href="/regolamento" target="_blank">${t.acceptRulesLink}</a>`)} />
+        </label>
+        <label class="lm__consent-item">
+          <input type="checkbox" id="isc-accept-privacy" required />
+          <span set:html={t.acceptPrivacy.replace('{link}', `<a href="/privacy-policy" target="_blank">${t.acceptPrivacyLink}</a>`)} />
+        </label>
+      </div>
+
+      <p class="lm__error" hidden role="alert"></p>
+      <div class="lm__actions">
+        <button type="button" class="lm__back" data-isc-back-dynamic>{t.back}</button>
+        <button type="button" class="btn btn-red lm__next" id="isc-submit">
+          {t.submit} <span class="lm__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- CONFERMA -->
+    <div class="lm__body lm__confirm" data-isc-step="confirm" hidden aria-live="polite">
+      <div class="lm__confirm-check" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 class="lm__confirm-title" set:html={t.confirmTitle} />
+      <p class="lm__confirm-note">{t.confirmNote}</p>
+      <p class="lm__confirm-note" set:html={t.confirmPayNote} />
+      <div class="lm__confirm-summary">
+        <div class="lm__confirm-row"><span>{t.payName}</span><span>Tennis Club Ambrosiano SSD a R.L.</span></div>
+        <div class="lm__confirm-row"><span>{t.payIban}</span><span>IE50SUMU99036511541465</span></div>
+        <div class="lm__confirm-row"><span>{t.payBic}</span><span>SUMUIE22XXX</span></div>
+        <div class="lm__confirm-row"><span>{t.payReason}</span><span>{t.payReasonVal}</span></div>
+      </div>
+      <button type="button" class="btn btn-red lm__confirm-cta" data-isc-close>{t.closeBtn}</button>
+    </div>
+
+  </div>
+</dialog>
+
+<style is:global>
+  /* ── Select coerenti con input/textarea del sistema .lm ─────────── */
+  .lm__field select {
+    font-family: var(--font-body); font-size: clamp(13px,.95vw,15px);
+    font-weight: 300; padding: 0.7rem 2rem 0.7rem 0.85rem;
+    border: 1px solid var(--lm-input-bd);
+    background: var(--lm-input-bg); color: var(--lm-text);
+    width: 100%; transition: border-color 0.18s;
+    -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236B5C57' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+  }
+  .lm__field select:invalid { color: var(--lm-text-dim); }
+  .lm__field select:focus { outline: none; border-color: var(--color-accent); background-color: #fff; }
+
+  .lm__check-item input[type="radio"] { accent-color: var(--color-accent); flex-shrink: 0; }
+
+  .lm__input--cf { text-transform: uppercase; }
+
+  /* ── Titoli di sotto-sezione dentro uno step ─────────────────────── */
+  .lm__section-title {
+    font-family: var(--font-display); font-size: clamp(1rem,1.6vw,1.25rem);
+    font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em;
+    color: var(--lm-text); margin: 0.6rem 0 0;
+    padding-top: 1rem; border-top: 1px solid var(--lm-border);
+  }
+  .lm__section-title--first { padding-top: 0; border-top: none; margin-top: 0; }
+
+  .lm__hint {
+    font-family: var(--font-body); font-size: clamp(11px,.8vw,12px);
+    font-weight: 300; color: var(--lm-text-dim); margin: -0.6rem 0 0;
+  }
+
+  /* ── Box informativo (date, quote di riferimento) ────────────────── */
+  .lm__notice {
+    background: var(--lm-input-bg); border: 1px solid var(--lm-border);
+    border-left: 3px solid var(--color-accent);
+    padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .lm__notice p {
+    font-family: var(--font-body); font-size: clamp(12px,.9vw,13px);
+    font-weight: 300; line-height: 1.6; color: var(--lm-text-sub); margin: 0;
+  }
+  .lm__notice p strong { color: var(--lm-text); font-weight: 700; }
+
+  .lm__notice-warn {
+    font-family: var(--font-body); font-size: clamp(12px,.9vw,13px);
+    font-weight: 400; line-height: 1.6; color: var(--color-accent); margin: 0;
+  }
+
+  /* ── Elenco termini e condizioni ──────────────────────────────────── */
+  .lm__terms-list {
+    margin: 0; padding-left: 1.1rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    font-family: var(--font-body); font-size: clamp(12px,.9vw,13px);
+    font-weight: 300; line-height: 1.6; color: var(--lm-text-sub);
+  }
+
+  /* ── Tabella slot preparazione fisica ─────────────────────────────── */
+  .lm__table-wrap { overflow-x: auto; border: 1px solid var(--lm-border); }
+  .lm__table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: clamp(11px,.85vw,12.5px); }
+  .lm__table th, .lm__table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--lm-border); text-align: left; }
+  .lm__table th { font-weight: 700; color: var(--lm-text); background: var(--lm-bg-head); white-space: nowrap; }
+  .lm__table td { font-weight: 300; color: var(--lm-text-sub); }
+  .lm__table tr:last-child td { border-bottom: none; }
+</style>
+
+<script define:vars={{ ERR: {
+  required: t.errRequired,
+  email: t.errEmail,
+  choice: t.errChoice,
+  check: t.errCheck,
+  consent: t.errConsent,
+} }}>
+  const modal = document.getElementById('modal-iscrizione-scuola');
+
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+
+  function showStep(key) {
+    modal.querySelectorAll('[data-isc-step]').forEach((el) => {
+      el.hidden = el.dataset.iscStep !== String(key);
+    });
+    modal.querySelector('.lm__panel').scrollTop = 0;
+  }
+
+  function showError(step, msg) {
+    const err = modal.querySelector(`[data-isc-step="${step}"] > .lm__error`);
+    if (err) { err.textContent = msg; err.hidden = false; }
+  }
+  function clearError(step) {
+    const err = modal.querySelector(`[data-isc-step="${step}"] > .lm__error`);
+    if (err) err.hidden = true;
+  }
+
+  const tipoSelect = document.getElementById('isc-tipo');
+  const prepSelect = document.getElementById('isc-prep-orario');
+
+  function syncTipoGroups() {
+    const tipo = tipoSelect.value;
+    modal.querySelectorAll('[data-isc-tipo-group]').forEach((el) => {
+      el.hidden = el.dataset.iscTipoGroup !== tipo;
+    });
+  }
+  tipoSelect.addEventListener('change', syncTipoGroups);
+
+  function resetForm() {
+    modal.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[inputmode="numeric"]').forEach((el) => {
+      el.value = '';
+    });
+    modal.querySelectorAll('select').forEach((el) => { el.selectedIndex = 0; });
+    modal.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach((el) => { el.checked = false; });
+    modal.querySelectorAll('.lm__error').forEach((el) => { el.hidden = true; });
+    syncTipoGroups();
+    showStep('1');
+  }
+
+  function closeAndReset() {
+    modal.close();
+    resetForm();
+  }
+
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-open-modal]');
+    if (trigger && trigger.dataset.openModal === 'modal-iscrizione-scuola') {
+      modal.showModal();
+      showStep('1');
+    }
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target.closest('[data-isc-close]') || e.target === modal) closeAndReset();
+  });
+
+  modal.querySelectorAll('[data-isc-back]').forEach((btn) => {
+    btn.addEventListener('click', () => showStep(btn.dataset.iscBack));
+  });
+
+  // STEP 1 → 2
+  modal.querySelector('[data-isc-next="1"]').addEventListener('click', () => {
+    clearError('1');
+    const required = ['isc-minor-nome','isc-minor-cognome','isc-minor-dob','isc-minor-pob','isc-minor-cf',
+                      'isc-addr','isc-city','isc-prov','isc-cap',
+                      'isc-parent-nome','isc-parent-cognome','isc-email','isc-cell'];
+    for (const id of required) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { showError('1', ERR.required); el.focus(); return; }
+    }
+    const emailEl = document.getElementById('isc-email');
+    if (!isValidEmail(emailEl.value)) { showError('1', ERR.email); emailEl.focus(); return; }
+    showStep('2');
+  });
+
+  // STEP 2 → 3 (o 4 se Mini Tennis)
+  modal.querySelector('[data-isc-next="2"]').addEventListener('click', () => {
+    clearError('2');
+    const tipo = tipoSelect.value;
+    if (!tipo) { showError('2', ERR.choice); tipoSelect.focus(); return; }
+
+    const freqChecked = modal.querySelector(`input[name="isc-freq-${tipo}"]:checked`);
+    if (!freqChecked) { showError('2', ERR.choice); return; }
+
+    const giorniChecked = modal.querySelectorAll(`input[name="isc-giorni-${tipo}"]:checked`);
+    if (giorniChecked.length === 0) { showError('2', ERR.check); return; }
+
+    if (tipo === 'tennis') {
+      const orariChecked = modal.querySelectorAll('input[name="isc-orari-tennis"]:checked');
+      if (orariChecked.length === 0) { showError('2', ERR.check); return; }
+      if (!prepSelect.value) { showError('2', ERR.choice); prepSelect.focus(); return; }
+      showStep('3');
+    } else {
+      showStep('4');
+    }
+  });
+
+  // STEP 3 → 4 (solo Scuola Tennis)
+  modal.querySelector('[data-isc-next="3"]').addEventListener('click', () => {
+    clearError('3');
+    const sizes = ['isc-size-shirt','isc-size-shorts','isc-size-hoodie'];
+    for (const id of sizes) {
+      const el = document.getElementById(id);
+      if (!el.value) { showError('3', ERR.choice); el.focus(); return; }
+    }
+    showStep('4');
+  });
+
+  // Indietro da step 4: torna a 3 se Scuola Tennis, altrimenti a 2
+  modal.querySelector('[data-isc-back-dynamic]').addEventListener('click', () => {
+    showStep(tipoSelect.value === 'tennis' ? '3' : '2');
+  });
+
+  // STEP 4 → conferma
+  document.getElementById('isc-submit').addEventListener('click', () => {
+    clearError('4');
+    const terms = document.getElementById('isc-accept-terms');
+    const rules = document.getElementById('isc-accept-rules');
+    const privacy = document.getElementById('isc-accept-privacy');
+    if (!terms.checked || !rules.checked || !privacy.checked) { showError('4', ERR.consent); return; }
+    showStep('confirm');
+  });
+</script>
