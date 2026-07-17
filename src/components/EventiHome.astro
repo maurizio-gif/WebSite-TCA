@@ -100,13 +100,13 @@ const rendered  = await Promise.all(
         );
 
         return linkToDetail ? (
-          <li>
+          <li data-event-date={ev.data.toISOString().slice(0, 10)}>
             <a class="event-item" href={p(`/eventi/${slug}`)} aria-label={label}>
               {inner}
             </a>
           </li>
         ) : (
-          <li>
+          <li data-event-date={ev.data.toISOString().slice(0, 10)}>
             <div
               class="event-item"
               role="button"
@@ -615,6 +615,20 @@ const rendered  = await Promise.all(
 </style>
 
 <script>
+  // ── Nascondi gli eventi passati anche lato client ─────────────────────────
+  // Il filtro in fase di build invecchia tra un deploy e l'altro (sito
+  // statico): qui si nasconde da ieri indietro in base alla data del
+  // visitatore, senza bisogno di un nuovo build.
+  const oggi = new Date();
+  const oggiStr = [
+    oggi.getFullYear(),
+    String(oggi.getMonth() + 1).padStart(2, '0'),
+    String(oggi.getDate()).padStart(2, '0'),
+  ].join('-');
+  document.querySelectorAll<HTMLElement>('[data-event-date]').forEach((li) => {
+    if (li.dataset.eventDate! < oggiStr) li.hidden = true;
+  });
+
   // ── Apri event modal ──────────────────────────────────────────────────────
   document.querySelectorAll<HTMLElement>('[data-open-event]').forEach((item) => {
     const open = () => {
