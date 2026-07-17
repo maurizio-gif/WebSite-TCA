@@ -29,8 +29,16 @@ const catLabel = (cat: string) => ({
 // Sceglie il campo nella lingua corrente, con fallback all'italiano
 const tx = (itVal: string, enVal?: string) => (lang === 'en' && enVal) ? enVal : itVal;
 
-// Carica gli eventi dalla Content Collection, ordina per data, mostra i 3 prossimi
-const allEventi = await getCollection('eventi', ({ data }) => data.pubblicato);
+// Carica gli eventi dalla Content Collection, ordina per data, mostra i 3 prossimi.
+// Gli eventi passati (da ieri indietro) sono esclusi: resta visibile solo ciò
+// che accade oggi o in futuro. Il confronto è al giorno (mezzanotte), non
+// all'ora, e avviene in fase di build.
+const oggi = new Date();
+oggi.setHours(0, 0, 0, 0);
+const allEventi = await getCollection(
+  'eventi',
+  ({ data }) => data.pubblicato && data.data.getTime() >= oggi.getTime(),
+);
 const sorted    = allEventi.sort((a, b) => a.data.data.getTime() - b.data.data.getTime());
 const eventiN   = sorted.slice(0, limit);
 
