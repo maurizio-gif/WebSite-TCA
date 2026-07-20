@@ -258,7 +258,7 @@ const secondaryItems = [
       <a class="accedi-modal__btn accedi-modal__btn--red" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Login" target="_blank" rel="noopener">
         {t.accediModal.webBtn}
       </a>
-      <a class="accedi-modal__btn accedi-modal__btn--outline" id="btn-app-store" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Login" target="_blank" rel="noopener">
+      <a class="accedi-modal__btn accedi-modal__btn--outline" id="btn-app-store" href="https://onelink.to/7vfvz2" target="_blank" rel="noopener">
         {t.accediModal.appBtn}
       </a>
     </div>
@@ -1134,20 +1134,6 @@ const secondaryItems = [
   document.getElementById('btn-accedi')?.addEventListener('click', () => accediModal?.showModal());
   document.getElementById('accedi-close')?.addEventListener('click', () => accediModal?.close());
   accediModal?.addEventListener('click', (e) => { if (e.target === accediModal) accediModal.close(); });
-
-  // Smart app store link — iOS → App Store, Android → Play Store
-  const btnApp = document.getElementById('btn-app-store') as HTMLAnchorElement | null;
-  if (btnApp) {
-    const ua = navigator.userAgent;
-    if (/iphone|ipad|ipod/i.test(ua)) {
-      btnApp.href = 'https://apps.apple.com/it/app/club-ambrosiano/id1583896957';
-    } else if (/android/i.test(ua)) {
-      btnApp.href = 'https://play.google.com/store/apps/details?id=com.perfectgym.perfectgymgo2.ambrosiano&pcampaignid=web_share';
-    } else {
-      // Desktop: mostra entrambe le opzioni aprendo il Play Store come fallback generico
-      btnApp.href = 'https://apps.apple.com/it/app/club-ambrosiano/id1583896957';
-    }
-  }
 
   const menu   = document.getElementById('g-menu') as HTMLElement | null;
   const burger = document.getElementById('burger-btn') as HTMLButtonElement | null;
