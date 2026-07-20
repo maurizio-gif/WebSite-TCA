@@ -1,8 +1,12 @@
 ---
 import { getEntry } from 'astro:content';
+import type { Lang } from '../i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
 
 type Cat = 'S' | 'B' | 'E';
-interface Lesson { t: string; c: Cat; n: string; }
+interface Lesson { t: string; c: Cat; n: string; desc: string; durata: string; livello: string; }
 
 const CAT: Record<Cat, { label: string }> = {
   S: { label: 'Strength'  },
@@ -11,8 +15,45 @@ const CAT: Record<Cat, { label: string }> = {
 };
 
 // Lezioni gestibili da TinaCMS → src/content/planning/corsi.md
-// Qui si raggruppa per giorno e si ordina per orario.
 const { lezioni } = (await getEntry('planning', 'corsi'))!.data;
+
+// Descrizione, durata e livello di ogni corso: unica fonte editabile da
+// TinaCMS → src/content/pagine/preparazione-atletica.md (prep_categorie).
+// Il planning qui sopra fa solo riferimento al nome del corso: qualunque
+// modifica al testo in quella pagina si riflette automaticamente nel
+// modal, senza doverla duplicare altrove.
+const prep = (await getEntry('pagine', 'preparazione-atletica'))!.data;
+const courseInfo = new Map<string, { nome: string; desc: string; durata: string; livello: string }>();
+(prep.prep_categorie ?? []).forEach((cat) => {
+  (cat.corsi ?? []).forEach((corso) => {
+    courseInfo.set(corso.nome, {
+      nome: (lang === 'en' && corso.nome_en) ? corso.nome_en : corso.nome,
+      desc: (lang === 'en' && corso.desc_en) ? corso.desc_en : corso.desc,
+      durata: corso.durata,
+      livello: (lang === 'en' && corso.livello_en) ? corso.livello_en : corso.livello,
+    });
+  });
+});
+
+const NO_DESC = lang === 'en'
+  ? 'Description coming soon — ask our staff for details.'
+  : 'Descrizione in arrivo — chiedi pure allo staff per i dettagli.';
+
+const t = lang === 'en' ? {
+  restDay: 'Rest day',
+  note1: 'Indicative schedule, subject to weekly changes.',
+  note2: 'Book your spot on our web portal',
+  downloadApple: 'Download on the', appStore: 'App Store',
+  downloadAndroid: 'Get it on', playStore: 'Google Play',
+  close: 'Close',
+} : {
+  restDay: 'Giornata di riposo',
+  note1: 'Planning indicativo, soggetto a variazioni settimanali.',
+  note2: 'Prenota il tuo posto sul nostro portale web',
+  downloadApple: 'Scarica su', appStore: 'App Store',
+  downloadAndroid: 'Disponibile su', playStore: 'Google Play',
+  close: 'Chiudi',
+};
 
 const GIORNI = [
   { id: 'lun', full: 'Lunedì',    short: 'LUN' },
@@ -30,7 +71,17 @@ const DAYS: Array<{ full: string; short: string; lessons: Lesson[] }> = GIORNI.m
   lessons: lezioni
     .filter((l) => l.giorno === g.id)
     .sort((a, b) => a.ora.localeCompare(b.ora))
-    .map((l) => ({ t: l.ora, c: l.categoria, n: l.nome })),
+    .map((l) => {
+      const info = courseInfo.get(l.nome);
+      return {
+        t: l.ora,
+        c: l.categoria,
+        n: info?.nome ?? l.nome,
+        desc: info?.desc ?? '',
+        durata: info?.durata ?? '',
+        livello: info?.livello ?? '',
+      };
+    }),
 }));
 
 const PG_URL      = 'https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar';
@@ -59,21 +110,26 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
           <!-- Lista corsi -->
           <div class="ws__cards">
             {day.lessons.length === 0
-              ? <div class="ws__rest">Giornata di riposo</div>
+              ? <div class="ws__rest">{t.restDay}</div>
               : day.lessons.map(l => (
-                  <a
+                  <button
+                    type="button"
                     class={`ws__card ws__card--${l.c.toLowerCase()}`}
-                    href={PG_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={`${CAT[l.c].label} · ${l.n} — ${l.t}`}
+                    data-open-lesson
+                    data-name={l.n}
+                    data-cat={CAT[l.c].label}
+                    data-time={l.t}
+                    data-day={day.full}
+                    data-durata={l.durata}
+                    data-livello={l.livello}
+                    data-desc={l.desc}
                   >
                     <span class="ws__card-time">{l.t}</span>
                     <span class="ws__card-body">
                       <span class="ws__card-cat">{CAT[l.c].label}</span>
                       <span class="ws__card-name">{l.n}</span>
                     </span>
-                  </a>
+                  </button>
                 ))
             }
           </div>
@@ -85,9 +141,9 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
   <!-- CTA footer -->
   <div class="ws__footer">
     <p class="ws__cta-note">
-      Planning indicativo, soggetto a variazioni settimanali. &nbsp;
+      {t.note1} &nbsp;
       <a class="ws__cta-link" href={PG_URL} target="_blank" rel="noopener noreferrer">
-        Prenota il tuo posto sul nostro portale web
+        {t.note2}
         <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true">
           <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -96,18 +152,18 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
 
     <div class="ws__badges">
       <!-- Apple App Store -->
-      <a class="ws__badge" href={APPLE_URL} target="_blank" rel="noopener noreferrer" aria-label="Scarica su App Store">
+      <a class="ws__badge" href={APPLE_URL} target="_blank" rel="noopener noreferrer" aria-label={`${t.downloadApple} ${t.appStore}`}>
         <svg class="ws__badge-logo" viewBox="0 0 814 1000" fill="currentColor" aria-hidden="true">
           <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-42.3-148.2-105.3c-47.1-67.5-89.1-172.8-89.1-278s56.2-198.3 148.2-261.8c60.9-42.2 128.3-65.5 203.7-65.5 73 0 130.3 30.7 175.7 60.7 45.4 30 62.4 61.1 64.2 63.4zM590.6 98.5c21.5-25.3 36.7-60.6 36.7-95.9 0-4.9-.3-9.9-1-14.8-34.8 1.3-76 23.3-100.8 52.3-19.8 22.8-37.3 57.8-37.3 93.1 0 5.1.8 10.3 1.2 11.9 2.3.4 6.1.8 9.9.8 31.2 0 70-21 92.3-47.4z"/>
         </svg>
         <span class="ws__badge-text">
-          <span class="ws__badge-small">Scarica su</span>
-          <span class="ws__badge-big">App Store</span>
+          <span class="ws__badge-small">{t.downloadApple}</span>
+          <span class="ws__badge-big">{t.appStore}</span>
         </span>
       </a>
 
       <!-- Google Play -->
-      <a class="ws__badge" href={ANDROID_URL} target="_blank" rel="noopener noreferrer" aria-label="Scarica su Google Play">
+      <a class="ws__badge" href={ANDROID_URL} target="_blank" rel="noopener noreferrer" aria-label={`${t.downloadAndroid} ${t.playStore}`}>
         <svg class="ws__badge-logo ws__badge-logo--play" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M3.18 23.76c.34.19.72.24 1.1.14l12.02-12.02L12.63 8.2 3.18 23.76z" fill="#EA4335"/>
           <path d="M22.49 10.56L19.04 8.6l-3.8 3.8 3.8 3.8 3.47-2c1-.57 1-.2 1-3.32-.01-.53-.02-1.74-1.02-2.32z" fill="#FBBC05"/>
@@ -115,12 +171,31 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
           <path d="M16.32 11.9 4.28 23.9c.3.17.65.1.98-.08l12.02-7.22-1-4.7z" fill="#34A853"/>
         </svg>
         <span class="ws__badge-text">
-          <span class="ws__badge-small">Disponibile su</span>
-          <span class="ws__badge-big">Google Play</span>
+          <span class="ws__badge-small">{t.downloadAndroid}</span>
+          <span class="ws__badge-big">{t.playStore}</span>
         </span>
       </a>
     </div>
   </div>
+
+  <!-- Modal descrizione lezione -->
+  <dialog class="ws-modal" id="ws-lesson-modal" aria-labelledby="ws-modal-title" data-no-desc={NO_DESC}>
+    <div class="ws-modal__panel">
+      <div class="ws-modal__head">
+        <div>
+          <span class="ws-modal__cat" id="ws-modal-cat"></span>
+          <p class="ws-modal__title" id="ws-modal-title" role="heading" aria-level="3"></p>
+        </div>
+        <button type="button" class="ws-modal__close" data-close-lesson aria-label={t.close}>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="ws-modal__meta" id="ws-modal-meta"></div>
+      <p class="ws-modal__desc" id="ws-modal-desc"></p>
+    </div>
+  </dialog>
 </div>
 
 <style>
@@ -233,9 +308,14 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
     display: flex;
     align-items: flex-start;
     gap: 6px;
+    width: 100%;
     padding: 7px 8px 7px 11px;
+    border: none;
     border-bottom: 1px solid var(--color-border);
+    background: none;
+    text-align: left;
     text-decoration: none;
+    font: inherit;
     color: inherit;
     position: relative;
     transition: background 0.12s;
@@ -243,7 +323,8 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
   }
 
   .ws__card:last-child { border-bottom: none; }
-  .ws__card:hover { background: var(--color-off-white); }
+  .ws__card:hover, .ws__card:focus-visible { background: var(--color-off-white); }
+  .ws__card:focus-visible { outline: 2px solid var(--color-accent); outline-offset: -2px; }
 
   /* Linea colorata sinistra */
   .ws__card::before {
@@ -409,4 +490,140 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
     .ws__card-time { font-size: 10px; min-width: 28px; }
     .ws__card-name { font-size: 11px; }
   }
+
+  /* ══════════════════════════════════════════════════════════════
+     MODAL DESCRIZIONE LEZIONE
+  ══════════════════════════════════════════════════════════════ */
+  .ws-modal {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: min(94vw, 480px);
+    width: 100%;
+    margin: auto;
+  }
+
+  .ws-modal::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .ws-modal__panel {
+    background: var(--color-bg);
+    color: var(--color-text);
+    padding: 1.75rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .ws-modal__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .ws-modal__cat {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.4rem;
+  }
+
+  .ws-modal__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .ws-modal__close {
+    background: none;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-light);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: border-color 0.18s, color 0.18s;
+    padding: 0;
+  }
+
+  .ws-modal__close:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+  .ws-modal__meta {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0.9rem 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+  }
+
+  .ws-modal__meta span strong { color: var(--color-text); font-weight: 800; }
+
+  .ws-modal__desc {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.05vw, 16px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+
+  .ws-modal[hidden] { display: none; }
 </style>
+
+<script>
+  (function () {
+    const modal = document.getElementById('ws-lesson-modal') as HTMLDialogElement | null;
+    if (!modal) return;
+
+    const catEl  = document.getElementById('ws-modal-cat');
+    const titleEl = document.getElementById('ws-modal-title');
+    const metaEl = document.getElementById('ws-modal-meta');
+    const descEl = document.getElementById('ws-modal-desc');
+    const NO_DESC = modal.dataset.noDesc ?? '';
+
+    document.querySelectorAll<HTMLButtonElement>('[data-open-lesson]').forEach((card) => {
+      card.addEventListener('click', () => {
+        const d = card.dataset;
+        if (catEl) catEl.textContent = `${d.cat} · ${d.day} ${d.time}`;
+        if (titleEl) titleEl.textContent = d.name ?? '';
+
+        if (metaEl) {
+          const parts: string[] = [];
+          if (d.durata) parts.push(`<span><strong>${d.durata}</strong></span>`);
+          if (d.livello) parts.push(`<span><strong>${d.livello}</strong></span>`);
+          metaEl.innerHTML = parts.join('');
+          metaEl.style.display = parts.length === 0 ? 'none' : 'flex';
+        }
+
+        if (descEl) descEl.textContent = d.desc && d.desc.trim() ? d.desc : NO_DESC;
+
+        modal.showModal();
+      });
+    });
+
+    modal.querySelector('[data-close-lesson]')?.addEventListener('click', () => modal.close());
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.close(); });
+  })();
+</script>
