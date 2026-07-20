@@ -33,14 +33,6 @@ const img = publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'
 <section class="socio">
   <div class="socio__inner">
 
-    <!-- Media -->
-    <div class="socio__media" data-anim="reveal">
-      <div class="socio__media-img" style={`background-image: url('${img}')`}></div>
-      <span class="socio__badge" aria-hidden="true">
-        <strong>1</strong> Club, <strong>3</strong> sport
-      </span>
-    </div>
-
     <!-- Content -->
     <div class="socio__content">
       <span class="eyebrow">{t.eyebrow}</span>
@@ -69,6 +61,14 @@ const img = publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'
       </div>
     </div>
 
+    <!-- Media -->
+    <div class="socio__media" data-anim="reveal">
+      <div class="socio__media-img" style={`background-image: url('${img}')`}></div>
+      <span class="socio__badge" aria-hidden="true">
+        <strong>1</strong> Club, <strong>3</strong> sport
+      </span>
+    </div>
+
   </div>
 </section>
 
@@ -82,17 +82,16 @@ const img = publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'
   .socio__inner {
     max-width: var(--max-width);
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: clamp(2rem, 5vw, 5rem);
-    align-items: center;
+    display: flex;
+    flex-direction: column;
   }
 
   /* ── Media ── */
   .socio__media {
     position: relative;
-    aspect-ratio: 4 / 5;
+    height: clamp(280px, 42vh, 520px);
     overflow: hidden;
+    margin-top: 3rem;
   }
 
   .socio__media-img {
@@ -142,7 +141,6 @@ const img = publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'
     font-weight: 300;
     line-height: 1.8;
     color: var(--color-text-light);
-    max-width: 54ch;
     margin-bottom: 3vh;
   }
 
@@ -218,14 +216,9 @@ const img = publicUrl('/c99ebd5f-16b9-442f-9bb7-2437d5203cd2_TCA+Fitness+5.avif'
 
   /* ── Mobile ── */
   @media (max-width: 860px) {
-    .socio__inner {
-      grid-template-columns: 1fr;
-      gap: 3vh;
-    }
-
     .socio__media {
-      aspect-ratio: 16 / 10;
-      order: -1;
+      height: clamp(220px, 40vh, 380px);
+      margin-top: 2rem;
     }
   }
 </style>

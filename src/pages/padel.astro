@@ -86,13 +86,10 @@ const d = (await getEntry("pagine", "padel"))!.data;
     color: var(--color-text-light);
   }
 
-  .body-text--max { max-width: 68ch; }
-
   .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 4rem;
-    align-items: center;
   }
 
   .two-col__text {
@@ -101,15 +98,14 @@ const d = (await getEntry("pagine", "padel"))!.data;
     gap: 1rem;
   }
 
-  .rounded-img {
-    width: 100%;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    display: block;
+  .two-col__image {
+    margin-top: 2.5rem;
   }
 
-  @media (max-width: 860px) {
-    .two-col { grid-template-columns: 1fr; }
-    .two-col__image { order: -1; }
+  .rounded-img {
+    width: 100%;
+    height: clamp(280px, 42vh, 520px);
+    object-fit: cover;
+    display: block;
   }
 </style>

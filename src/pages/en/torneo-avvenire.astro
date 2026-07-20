@@ -58,7 +58,7 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
     <div class="content-section__inner">
       <span class="eyebrow">{d.torneo_alumni_eyebrow_en ?? d.torneo_alumni_eyebrow}</span>
       <h2 class="section-title">{d.torneo_alumni_titolo_en ?? d.torneo_alumni_titolo}<br><em>{d.torneo_alumni_titolo_accent_en ?? d.torneo_alumni_titolo_accent}</em></h2>
-      <p class="body-text" style="max-width:64ch; margin-bottom:4vh;">
+      <p class="body-text" style="margin-bottom:4vh;">
         {d.torneo_alumni_intro_en ?? d.torneo_alumni_intro}
       </p>
       <div class="champions-grid">
@@ -209,7 +209,6 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    max-width: 72ch;
     margin-bottom: 5vh;
   }
 
@@ -221,7 +220,7 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
     color: var(--color-text-light);
   }
 
-  .body-text--light { color: rgba(255, 255, 255, 0.65); max-width: 60ch; }
+  .body-text--light { color: rgba(255, 255, 255, 0.65); }
 
   .stats-row {
     display: grid;
