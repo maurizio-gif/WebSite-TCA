@@ -57,6 +57,8 @@ export const it = {
     nominaSafeguarding:  'Nomina Safeguarding',
     sign:         'Tennis Club Ambrosiano — Dal 1963',
     diventaSocio: 'Iscriviti Online',
+    propaganda:   "SITO WEB PER LA PROPAGANDA DELL'ATTIVITA' SPORTIVA DILETTANTISTICA",
+    affiliazioni: 'Enti sportivi affiliati',
   },
   hero: {
     eyebrow: 'Dal 1963, il tennis a Milano',

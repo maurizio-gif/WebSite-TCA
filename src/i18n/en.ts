@@ -59,6 +59,8 @@ export const en: UI = {
     nominaSafeguarding:  'Safeguarding Officer',
     sign:         'Tennis Club Ambrosiano — Since 1963',
     diventaSocio: 'Sign Up Online',
+    propaganda:   "SITO WEB PER LA PROPAGANDA DELL'ATTIVITA' SPORTIVA DILETTANTISTICA",
+    affiliazioni: 'Affiliated sports organisations',
   },
   hero: {
     eyebrow: 'Since 1963, tennis in Milan',
