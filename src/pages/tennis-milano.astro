@@ -12,12 +12,21 @@ const lang: Lang = "it";
 
 const heroImg  = publicUrl("/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif");
 const tennisImg = publicUrl("/aW-n8QIvOtkhBvwi_HCM_Tennis_Outdoor_July-2025.avif");
-const gymImg   = publicUrl("/TCA_Gym%2012.jpg");
+
+// Slideshow Preparazione Atletica — 6 foto della sala attrezzi
+const prepSlides = [
+  { src: "/TCA_Gym%2012.jpg",        alt: "Sala attrezzi del Tennis Club Ambrosiano — vista generale" },
+  { src: "/Sala%20Attrezzi%204.avif", alt: "Zona cardio della sala attrezzi" },
+  { src: "/Sala%20Attrezzi%205.avif", alt: "Area pesi liberi e macchinari della sala attrezzi" },
+  { src: "/Sala%20Attrezzi%207.jpg",  alt: "Postazioni cardio della sala attrezzi" },
+  { src: "/Functional.jpg",           alt: "Allenamento funzionale in sala attrezzi" },
+  { src: "/Sala%20Attrezzi%206.jpg",  alt: "Zona funzionale con TRX e attrezzi" },
+].map((s) => ({ src: publicUrl(s.src), alt: s.alt }));
 
 const stats = [
-  { num: "1963", label: "Anno di fondazione" },
-  { num: "16",   label: "Campi, tutte le superfici" },
-  { num: "30.000+", label: "Mq dedicati allo sport" },
+  { num: "1963", label: "Anno di fondazione", countTo: 1963 },
+  { num: "16",   label: "Campi, tutte le superfici", countTo: 16 },
+  { num: "30.000+", label: "Mq dedicati allo sport", countTo: 30000, suffix: "+", thousands: true },
   { num: "FITP", label: "Maestri federali qualificati" },
 ];
 
@@ -63,6 +72,8 @@ const prepFeatures = [
   description="Gioca a tennis al Tennis Club Ambrosiano: 16 campi, maestri federali FITP, palestra e membership. A due passi dalla metro Udine. Prenota una visita gratuita."
   image="/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif"
   imageAlt="Campi da tennis del Tennis Club Ambrosiano"
+  hideChrome={true}
+  hideLeadFormInline={true}
 >
   <Fragment slot="head">
     <meta name="robots" content="noindex, nofollow" />
@@ -96,7 +107,12 @@ const prepFeatures = [
     <div class="lp-stats__inner">
       {stats.map((s, i) => (
         <div class="lp-stat" data-anim="scale" data-anim-delay={String(i * 90)}>
-          <span class="lp-stat__num">{s.num}</span>
+          <span
+            class="lp-stat__num"
+            data-count-to={s.countTo ?? undefined}
+            data-suffix={s.suffix ?? ""}
+            data-thousands={s.thousands ? "1" : ""}
+          >{s.countTo !== undefined ? "0" : s.num}</span>
           <span class="lp-stat__label">{s.label}</span>
         </div>
       ))}
@@ -208,8 +224,21 @@ const prepFeatures = [
           </ul>
         </div>
         <div class="lp-prep__media">
-          <img src={gymImg} alt="Sala attrezzi professionale del Tennis Club Ambrosiano"
-               loading="lazy" decoding="async" />
+          <div class="lp-slider" data-lp-slider>
+            <div class="lp-slider__track">
+              {prepSlides.map((s) => (
+                <div class="lp-slider__slide">
+                  <img src={s.src} alt={s.alt} class="lp-slider__img" loading="lazy" decoding="async" />
+                </div>
+              ))}
+            </div>
+            <div class="lp-slider__dots">
+              {prepSlides.map((_, i) => (
+                <button class={`lp-slider__dot${i === 0 ? " is-active" : ""}`} data-lp-dot={i}
+                        type="button" aria-label={`Foto ${i + 1}`}></button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -272,30 +301,32 @@ const prepFeatures = [
   }
   .lp-hero__grad {
     position: absolute; inset: 0;
-    background: linear-gradient(105deg, rgba(15,15,18,0.84) 30%, rgba(139,26,26,0.4));
+    background: linear-gradient(180deg, rgba(15,15,18,0.35) 0%, rgba(15,15,18,0.68) 55%, rgba(15,15,18,0.85) 100%);
   }
   .lp-hero__content {
     position: relative; z-index: 2;
     width: 100%; max-width: var(--max-width);
     margin: 0 auto; padding: 10vh var(--pad-x) 9vh;
     color: #fff;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center;
   }
   .lp-hero__title {
     font-family: var(--font-display);
     font-size: clamp(2.8rem, 6.5vw, 7rem);
     font-weight: 800; text-transform: uppercase;
     letter-spacing: -0.01em; line-height: 0.94;
-    margin: 0.6rem 0 2.5vh; max-width: 18ch;
+    margin: 0.6rem 0 2.5vh; max-width: 20ch;
   }
   .lp-hero__title em { color: var(--color-accent); font-style: normal; }
   .lp-hero__sub {
     font-family: var(--font-body);
-    font-size: clamp(15px, 1.3vw, 19px);
+    font-size: clamp(17px, 1.3vw, 21px);
     font-weight: 300; line-height: 1.75;
     color: rgba(255,255,255,0.82);
-    max-width: 52ch; margin-bottom: 4vh;
+    max-width: 58ch; margin: 0 auto 4vh;
   }
-  .lp-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .lp-hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
   /* ═══════════════════ STATS ═══════════════════ */
   .lp-stats {
@@ -340,7 +371,7 @@ const prepFeatures = [
   .lp-title em { color: var(--color-accent); font-style: normal; }
   .lp-lead {
     font-family: var(--font-body);
-    font-size: clamp(14px, 1.05vw, 17px);
+    font-size: clamp(16px, 1.05vw, 19px);
     font-weight: 300; line-height: 1.8;
     color: var(--color-text-light);
   }
@@ -353,7 +384,7 @@ const prepFeatures = [
   .lp-tennis__inner { max-width: var(--max-width); margin: 0 auto; }
   .lp-tennis__media { overflow: hidden; margin-top: 3rem; }
   .lp-tennis__media img {
-    width: 100%; height: clamp(280px, 42vh, 520px);
+    width: 100%; height: clamp(360px, 66vh, 720px);
     object-fit: cover; display: block;
   }
   .lp-appendix {
@@ -363,7 +394,7 @@ const prepFeatures = [
   }
   .lp-appendix p {
     font-family: var(--font-body);
-    font-size: clamp(14px, 1vw, 16px);
+    font-size: clamp(16px, 1vw, 18px);
     font-weight: 300; line-height: 1.7;
     color: var(--color-text); margin: 0;
   }
@@ -398,7 +429,7 @@ const prepFeatures = [
   .lp-inclusi__list li {
     display: flex; align-items: flex-start; gap: 0.7rem;
     font-family: var(--font-body);
-    font-size: clamp(13.5px, 1vw, 15.5px);
+    font-size: clamp(15.5px, 1vw, 17.5px);
     font-weight: 300; line-height: 1.5;
     color: var(--color-text);
   }
@@ -435,7 +466,7 @@ const prepFeatures = [
   }
   .lp-tier__desc {
     font-family: var(--font-body);
-    font-size: clamp(13px, 0.95vw, 14.5px);
+    font-size: clamp(15px, 0.95vw, 16.5px);
     font-weight: 300; line-height: 1.6;
     color: var(--color-text-light); margin: 0;
   }
@@ -448,11 +479,29 @@ const prepFeatures = [
   }
   .lp-prep__inner { max-width: var(--max-width); margin: 0 auto; }
   .lp-prep__top { margin-bottom: 8vh; }
-  .lp-prep__media { overflow: hidden; margin-top: 3rem; }
-  .lp-prep__media img {
-    width: 100%; height: clamp(280px, 42vh, 520px);
-    object-fit: cover; display: block;
+  .lp-prep__media { margin-top: 3rem; }
+
+  /* ── Slideshow ── */
+  .lp-slider { position: relative; overflow: hidden; height: clamp(360px, 66vh, 720px); }
+  .lp-slider__track {
+    display: flex; height: 100%;
+    transition: transform 0.6s cubic-bezier(0.22, 0.68, 0, 1.1);
+    will-change: transform;
   }
+  .lp-slider__slide { flex: 0 0 100%; height: 100%; }
+  .lp-slider__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lp-slider__dots {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 9px; z-index: 2;
+  }
+  .lp-slider__dot {
+    width: 9px; height: 9px; border-radius: 50%; padding: 0;
+    border: none; background: rgba(255, 255, 255, 0.5); cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+    transition: background 0.2s, transform 0.2s;
+  }
+  .lp-slider__dot:hover { background: rgba(255, 255, 255, 0.8); }
+  .lp-slider__dot.is-active { background: #fff; transform: scale(1.3); }
   .lp-prep__features {
     list-style: none; margin-top: 2rem;
     display: flex; flex-direction: column;
@@ -471,7 +520,7 @@ const prepFeatures = [
   }
   .lp-prep__feat-text {
     font-family: var(--font-body);
-    font-size: clamp(13px, 0.95vw, 15px);
+    font-size: clamp(15px, 0.95vw, 17px);
     font-weight: 300; color: var(--color-text-light);
   }
 
@@ -503,7 +552,7 @@ const prepFeatures = [
   .lp-cta__title em { color: var(--color-accent); font-style: normal; }
   .lp-cta__sub {
     font-family: var(--font-body);
-    font-size: clamp(14px, 1.1vw, 17px);
+    font-size: clamp(16px, 1.1vw, 19px);
     font-weight: 300; line-height: 1.8;
     color: rgba(255,255,255,0.78);
     margin: 0 auto 2.5rem; max-width: 50ch;
@@ -516,6 +565,11 @@ const prepFeatures = [
   }
   .lp-cta__refs a { color: rgba(255,255,255,0.85); text-decoration: none; }
   .lp-cta__refs a:hover { color: #fff; }
+
+  /* Desktop: la prima riga "Gioca a tennis dove è nata" resta intera */
+  @media (min-width: 900px) {
+    .lp-hero__title { max-width: 30ch; }
+  }
 
   /* ═══════════════════ RESPONSIVE ═══════════════════ */
   @media (max-width: 900px) {
@@ -533,5 +587,92 @@ const prepFeatures = [
     .lp-hero { align-items: center; min-height: 100svh; }
     .lp-hero__actions .btn,
     .lp-actions .btn { flex: 1 1 100%; text-align: center; }
+    .lp-tennis__media img,
+    .lp-slider { height: clamp(240px, 46vh, 400px); }
   }
 </style>
+
+<script>
+  // Slideshow Preparazione Atletica: auto-avanzamento + dot cliccabili
+  (function () {
+    var slider = document.querySelector('[data-lp-slider]');
+    if (!slider) return;
+    var track = slider.querySelector('.lp-slider__track');
+    var slides = slider.querySelectorAll('.lp-slider__slide');
+    var dots = Array.prototype.slice.call(slider.querySelectorAll('[data-lp-dot]'));
+    if (!track || slides.length < 2) return;
+
+    var total = slides.length;
+    var idx = 0;
+    var timer;
+    var DELAY = 3800;
+
+    function go(n) {
+      idx = ((n % total) + total) % total;
+      track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = undefined; } }
+    function start() { stop(); timer = setInterval(function () { go(idx + 1); }, DELAY); }
+
+    dots.forEach(function (d, i) {
+      d.addEventListener('click', function () { go(i); start(); });
+    });
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+
+    start();
+  })();
+
+  // Stats: count-up numerico quando la sezione entra in viewport
+  (function () {
+    var els = Array.prototype.slice.call(document.querySelectorAll('.lp-stat__num[data-count-to]'));
+    if (!els.length) return;
+
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var DURATION = 1400;
+
+    function format(value, thousands, suffix) {
+      var n = Math.round(value);
+      var s = thousands ? n.toLocaleString('it-IT') : String(n);
+      return s + suffix;
+    }
+
+    function animate(el) {
+      var target = parseInt(el.dataset.countTo, 10);
+      var suffix = el.dataset.suffix || '';
+      var thousands = el.dataset.thousands === '1';
+      if (!isFinite(target)) return;
+
+      if (reduceMotion) {
+        el.textContent = format(target, thousands, suffix);
+        return;
+      }
+
+      var start = null;
+      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+      function step(ts) {
+        if (start === null) start = ts;
+        var p = Math.min((ts - start) / DURATION, 1);
+        el.textContent = format(target * easeOutCubic(p), thousands, suffix);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      els.forEach(animate);
+      return;
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        animate(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.5 });
+
+    els.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
