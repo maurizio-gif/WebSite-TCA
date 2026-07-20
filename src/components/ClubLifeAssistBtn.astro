@@ -1,19 +1,19 @@
 ---
 import { useTranslations, type Lang } from '../i18n/utils';
 
-interface Props { lang?: Lang; href?: string; }
-const { lang = 'it', href = '#contatti' } = Astro.props;
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
 const t = useTranslations(lang);
 ---
 
-<a class="cl-assist" href={href} aria-label={t.clubLife.floatingHelpCta}>
+<button type="button" class="cl-assist" data-open-modal="modal-contatti" aria-label={t.clubLife.floatingHelpCta}>
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/>
     <circle cx="12" cy="12" r="3.4" stroke="currentColor" stroke-width="1.7"/>
     <path d="M5.8 5.8l3.3 3.3M18.2 5.8l-3.3 3.3M5.8 18.2l3.3-3.3M18.2 18.2l-3.3-3.3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
   </svg>
   <span class="cl-assist__label">{t.clubLife.floatingHelpCta}</span>
-</a>
+</button>
 
 <style>
   .cl-assist {
@@ -27,6 +27,8 @@ const t = useTranslations(lang);
     background: var(--color-accent);
     color: #fff;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
     font-family: var(--font-display);
     font-size: 13px;
     font-weight: 700;
