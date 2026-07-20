@@ -46,6 +46,32 @@ const salaIcons = [
     <div class="sala-section__inner">
       <div class="sala-split">
 
+        <div class="sala-split__content">
+          <span class="eyebrow">{d.prep_sala_eyebrow_en ?? d.prep_sala_eyebrow}</span>
+          <h2 class="section-title">{d.prep_sala_titolo_en ?? d.prep_sala_titolo}<br><em>{d.prep_sala_titolo_accent_en ?? d.prep_sala_titolo_accent}</em></h2>
+          <p class="sala-body" set:html={mdBold(d.prep_sala_paragrafo1_en ?? d.prep_sala_paragrafo1)} />
+          <p class="sala-body" set:html={mdBold(d.prep_sala_paragrafo2_en ?? d.prep_sala_paragrafo2)} />
+
+          <ul class="sala-features">
+            {d.prep_sala_features.map((f, i) => (
+              <li class="sala-feat">
+                <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" set:html={salaIcons[i]} />
+                <div>
+                  <strong>{f.titolo_en ?? f.titolo}</strong>
+                  <span>{f.testo_en ?? f.testo}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <a href="/en/personal-trainer" class="btn btn-red sala-cta">
+            {d.prep_sala_cta_label_en ?? d.prep_sala_cta_label}
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
         <div class="sala-split__media" data-anim="scale">
           <div class="sala-slider" data-sala-slider>
             <div class="sala-slider__track">
@@ -71,32 +97,6 @@ const salaIcons = [
               ))}
             </div>
           </div>
-        </div>
-
-        <div class="sala-split__content">
-          <span class="eyebrow">{d.prep_sala_eyebrow_en ?? d.prep_sala_eyebrow}</span>
-          <h2 class="section-title">{d.prep_sala_titolo_en ?? d.prep_sala_titolo}<br><em>{d.prep_sala_titolo_accent_en ?? d.prep_sala_titolo_accent}</em></h2>
-          <p class="sala-body" set:html={mdBold(d.prep_sala_paragrafo1_en ?? d.prep_sala_paragrafo1)} />
-          <p class="sala-body" set:html={mdBold(d.prep_sala_paragrafo2_en ?? d.prep_sala_paragrafo2)} />
-
-          <ul class="sala-features">
-            {d.prep_sala_features.map((f, i) => (
-              <li class="sala-feat">
-                <svg class="sala-feat__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" set:html={salaIcons[i]} />
-                <div>
-                  <strong>{f.titolo_en ?? f.titolo}</strong>
-                  <span>{f.testo_en ?? f.testo}</span>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          <a href="/en/personal-trainer" class="btn btn-red sala-cta">
-            {d.prep_sala_cta_label_en ?? d.prep_sala_cta_label}
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M1 13L13 1M13 1H5M13 1V9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
         </div>
 
       </div>
@@ -290,13 +290,11 @@ const salaIcons = [
   .sala-section__inner { max-width: var(--max-width); margin: 0 auto; }
 
   .sala-split {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(2rem, 5vw, 6rem);
-    align-items: center;
+    display: flex;
+    flex-direction: column;
   }
 
-  .sala-split__media { position: relative; overflow: hidden; }
+  .sala-split__media { position: relative; overflow: hidden; margin-top: 2.5rem; }
 
   /* ── Gym slideshow (photos only) ── */
   .sala-slider { position: relative; overflow: hidden; }
@@ -306,7 +304,7 @@ const salaIcons = [
     will-change: transform;
   }
   .sala-slider__slide { flex: 0 0 100%; min-width: 0; }
-  .sala-slider__img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; }
+  .sala-slider__img { width: 100%; height: clamp(280px, 42vh, 520px); object-fit: cover; display: block; }
   .sala-slider__dots {
     position: absolute;
     left: 0; right: 0; bottom: 16px;
@@ -342,7 +340,6 @@ const salaIcons = [
     font-weight: 300;
     line-height: 1.75;
     color: var(--color-text-light);
-    max-width: 52ch;
   }
 
   .sala-features {
@@ -378,11 +375,6 @@ const salaIcons = [
 
   .sala-cta { align-self: flex-start; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem; }
 
-  @media (max-width: 860px) {
-    .sala-split { grid-template-columns: 1fr; }
-    .sala-slider__img { aspect-ratio: 16/9; }
-  }
-
   .corsi-section { padding: 7vh var(--pad-x); background: var(--color-off-white); }
   .corsi-section__inner { max-width: var(--max-width); margin: 0 auto; }
 
@@ -392,7 +384,6 @@ const salaIcons = [
     font-weight: 300;
     line-height: 1.75;
     color: var(--color-text-light);
-    max-width: 64ch;
     margin-bottom: 6vh;
   }
 

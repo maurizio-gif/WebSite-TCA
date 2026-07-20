@@ -43,10 +43,9 @@ const copy = lang === 'en' ? {
   .manifesto__inner {
     max-width: var(--max-width);
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem 5rem;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
   }
 
   .manifesto__title {

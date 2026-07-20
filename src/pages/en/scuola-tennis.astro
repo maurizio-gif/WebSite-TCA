@@ -171,7 +171,6 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
   }
 
   .section-lead {
-    max-width: 70ch;
     margin-bottom: 3vh;
   }
 
@@ -342,10 +341,9 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
   }
 
   .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 4rem;
-    align-items: center;
   }
 
   .two-col__text {
@@ -365,9 +363,10 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 
   .full-img {
     width: 100%;
-    aspect-ratio: 4/3;
+    height: clamp(280px, 42vh, 520px);
     object-fit: cover;
     display: block;
+    margin-top: 2.5rem;
   }
 
   @media (max-width: 1024px) {
@@ -375,8 +374,6 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
   }
 
   @media (max-width: 860px) {
-    .two-col { grid-template-columns: 1fr; }
-    .two-col__image { order: -1; }
     .tornei-grid { grid-template-columns: 1fr; }
     .iscrizione-grid { grid-template-columns: 1fr; }
   }

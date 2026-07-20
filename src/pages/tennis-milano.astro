@@ -1,0 +1,537 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Reassurance from "../components/Reassurance.astro";
+import WeeklySchedule from "../components/WeeklySchedule.astro";
+import { publicUrl, type Lang } from "../i18n/utils";
+
+// Landing page dedicata alle campagne Google Ads (tennis + membership).
+// Solo italiano, noindex, lead-gen tramite LeadModal (#modal-contatti) già
+// tracciato via UTM/click-id in BaseLayout. Nessuna iscrizione online: ogni
+// CTA apre il form lead (Prenota una visita / Richiedi informazioni).
+const lang: Lang = "it";
+
+const heroImg  = publicUrl("/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif");
+const tennisImg = publicUrl("/aW-n8QIvOtkhBvwi_HCM_Tennis_Outdoor_July-2025.avif");
+const gymImg   = publicUrl("/TCA_Gym%2012.jpg");
+
+const stats = [
+  { num: "1963", label: "Anno di fondazione" },
+  { num: "16",   label: "Campi, tutte le superfici" },
+  { num: "30.000+", label: "Mq dedicati allo sport" },
+  { num: "FITP", label: "Maestri federali qualificati" },
+];
+
+// Cosa include l'abbonamento (senza prezzi, solo vantaggi)
+const inclusi = [
+  "Accesso ai campi da tennis outdoor e indoor",
+  "Campi da padel dedicati",
+  "Sala attrezzi professionale, tutti i giorni",
+  "Oltre 80 corsi di gruppo a settimana",
+  "Priorità di prenotazione campi (fino a 10 giorni)",
+  "Tariffe agevolate su corsi e lezioni individuali",
+];
+
+const tiers = [
+  {
+    nome: "Silver",
+    color: "#6B7280",
+    desc: "L'essenziale per allenarti: sala attrezzi, corsi selezionati e sconto soci sui campi.",
+  },
+  {
+    nome: "Gold",
+    color: "#A07B10",
+    desc: "Più campo e più corsi: tennis outdoor incluso, tutti i corsi di gruppo, 7 giorni di anticipo.",
+  },
+  {
+    nome: "Platinum",
+    color: "var(--color-accent)",
+    badge: "Più completo",
+    desc: "L'esperienza completa: tennis e padel indoor/outdoor inclusi, 10 giorni di anticipo, massima priorità.",
+  },
+];
+
+const prepFeatures = [
+  { titolo: "Sala attrezzi", testo: "Cardio, pesi liberi 1–40 kg, area funzionale TRX" },
+  { titolo: "80+ corsi / settimana", testo: "Cycling, Functional, Pilates, Yoga e molto altro" },
+  { titolo: "Personal trainer", testo: "Programmi su misura e sport-specific per tennisti" },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title="Tennis a Milano dal 1963 | Tennis Club Ambrosiano"
+  description="Gioca a tennis al Tennis Club Ambrosiano: 16 campi, maestri federali FITP, palestra e membership. A due passi dalla metro Udine. Prenota una visita gratuita."
+  image="/c06f453c-9d44-46ee-9c7e-4101654893cc_TCA+Tennis+Header.avif"
+  imageAlt="Campi da tennis del Tennis Club Ambrosiano"
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section class="lp-hero hero">
+    <div class="lp-hero__bg">
+      <img src={heroImg} alt="Campi da tennis del Tennis Club Ambrosiano"
+           class="lp-hero__img" fetchpriority="high" loading="eager" decoding="async" />
+    </div>
+    <div class="lp-hero__grad"></div>
+
+    <div class="lp-hero__content">
+      <span class="eyebrow eyebrow--light">Dal 1963, il tennis a Milano</span>
+      <h1 class="lp-hero__title">Gioca a tennis dove è nata<br><em>la tradizione milanese</em></h1>
+      <p class="lp-hero__sub">
+        Sedici campi su ogni superficie, maestri federali FITP e oltre 30.000 mq
+        di sport a due passi dalla metro Udine. Che tu voglia iniziare da zero o
+        tornare in campo, qui trovi il tuo posto.
+      </p>
+      <div class="lp-hero__actions">
+        <button class="btn btn-red" data-open-modal="modal-contatti">Prenota una visita</button>
+        <button class="btn btn-outline" data-open-modal="modal-contatti">Richiedi informazioni</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ STATS ═══════════════════ -->
+  <section class="lp-stats">
+    <div class="lp-stats__inner">
+      {stats.map((s, i) => (
+        <div class="lp-stat" data-anim="scale" data-anim-delay={String(i * 90)}>
+          <span class="lp-stat__num">{s.num}</span>
+          <span class="lp-stat__label">{s.label}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ═══════════════════ TENNIS ═══════════════════ -->
+  <section class="lp-tennis">
+    <div class="lp-tennis__inner">
+      <div class="lp-tennis__body">
+        <span class="eyebrow">Il tennis al TCA</span>
+        <h2 class="lp-title">Sedici campi,<br><em>tutto l'anno</em></h2>
+        <p class="lp-lead">
+          Sedici campi su ogni superficie — terra rossa omologata FITP, campi
+          indoor coperti e riscaldati per giocare anche d'inverno, e superfici
+          rapide. Come socio giochi quando vuoi, con la priorità di prenotazione
+          della tua membership.
+        </p>
+
+        <div class="lp-appendix">
+          <p>
+            <strong>Vuoi ricominciare a giocare o imparare da zero?</strong>
+            Affidati ai nostri tecnici federali FITP: corsi per adulti di ogni
+            livello, in piccoli gruppi o individuali. E come Member hai sempre
+            una <strong>tariffa agevolata</strong>.
+          </p>
+        </div>
+
+        <div class="lp-actions">
+          <button class="btn btn-red" data-open-modal="modal-contatti">Prenota una visita</button>
+          <button class="btn btn-outline--dark" data-open-modal="modal-contatti">Richiedi informazioni</button>
+        </div>
+      </div>
+      <div class="lp-tennis__media">
+        <img src={tennisImg} alt="Campi da tennis outdoor del Tennis Club Ambrosiano"
+             loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ MEMBERSHIP ═══════════════════ -->
+  <section class="lp-member">
+    <div class="lp-member__inner">
+      <div class="lp-member__head">
+        <span class="eyebrow">Diventa socio</span>
+        <h2 class="lp-title">Un'unica tessera,<br><em>tutto il Club</em></h2>
+        <p class="lp-lead">
+          Con la membership del Tennis Club Ambrosiano giochi tutto l'anno sui
+          sedici campi, outdoor e indoor — e a padel sui campi dedicati. Tre
+          livelli pensati per esigenze diverse.
+        </p>
+      </div>
+
+      <div class="lp-member__grid">
+        <div class="lp-inclusi">
+          <p class="lp-inclusi__title">Cosa include l'abbonamento</p>
+          <ul class="lp-inclusi__list">
+            {inclusi.map((v) => (
+              <li>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                  <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".25"/>
+                  <path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>{v}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="lp-tiers">
+          {tiers.map((t) => (
+            <div class={`lp-tier${t.badge ? " lp-tier--plat" : ""}`}>
+              {t.badge && <span class="lp-tier__badge">{t.badge}</span>}
+              <span class="lp-tier__name" style={`color:${t.color}`}>{t.nome}</span>
+              <p class="lp-tier__desc">{t.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="lp-actions lp-actions--center">
+        <button class="btn btn-red" data-open-modal="modal-contatti">Prenota una visita</button>
+        <button class="btn btn-outline--dark" data-open-modal="modal-contatti">Richiedi informazioni</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PREPARAZIONE ATLETICA ═══════════════════ -->
+  <section class="lp-prep">
+    <div class="lp-prep__inner">
+      <div class="lp-prep__top">
+        <div class="lp-prep__body">
+          <span class="eyebrow">Preparazione Atletica</span>
+          <h2 class="lp-title">Allenamento e benessere,<br><em>inclusi</em></h2>
+          <p class="lp-lead">
+            Sala attrezzi professionale riservata ai soci, con macchinari isotonici
+            di ultima generazione, area cardio e zona funzionale. Al fianco, personal
+            trainer qualificati per un programma su misura. E ogni settimana oltre 80
+            corsi di gruppo: endurance, forza ed equilibrio corpo-mente.
+          </p>
+          <ul class="lp-prep__features">
+            {prepFeatures.map((f) => (
+              <li class="lp-prep__feat">
+                <span class="lp-prep__feat-title">{f.titolo}</span>
+                <span class="lp-prep__feat-text">{f.testo}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="lp-prep__media">
+          <img src={gymImg} alt="Sala attrezzi professionale del Tennis Club Ambrosiano"
+               loading="lazy" decoding="async" />
+        </div>
+      </div>
+
+      <div class="lp-planning">
+        <span class="eyebrow">Planning corsi</span>
+        <h3 class="lp-planning__title">La settimana in palestra</h3>
+        <p class="lp-lead">
+          Oltre 80 sessioni a settimana guidate da istruttori certificati.
+          Ecco come si compone la tua settimana di allenamento.
+        </p>
+        <WeeklySchedule />
+      </div>
+
+      <div class="lp-actions lp-actions--center">
+        <button class="btn btn-red" data-open-modal="modal-contatti">Prenota una visita</button>
+        <button class="btn btn-outline--dark" data-open-modal="modal-contatti">Richiedi informazioni</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ PERCHÉ SCEGLIERCI ═══════════════════ -->
+  <Reassurance lang={lang} />
+
+  <!-- ═══════════════════ CTA FINALE ═══════════════════ -->
+  <section class="lp-cta">
+    <div class="lp-cta__inner">
+      <span class="eyebrow eyebrow--light">Vieni a conoscerci</span>
+      <h2 class="lp-cta__title">Prenota una visita gratuita,<br><em>senza impegno</em></h2>
+      <p class="lp-cta__sub">
+        Ti accompagniamo noi tra campi, palestra e struttura. Oppure lasciaci i
+        tuoi dati e ti richiamiamo: scegli tu come preferisci essere seguito.
+      </p>
+      <div class="lp-actions lp-actions--center">
+        <button class="btn btn-red" data-open-modal="modal-contatti">Prenota la tua visita</button>
+        <button class="btn btn-outline" data-open-modal="modal-contatti">Richiedi informazioni</button>
+      </div>
+      <p class="lp-cta__refs">
+        Via Feltre 33, Milano &nbsp;·&nbsp; Metro Udine (M2) &nbsp;·&nbsp;
+        <a href="tel:+390226414392">+39 02 2641 4392</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ═══════════════════ HERO ═══════════════════ */
+  .lp-hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding-top: var(--header-h);
+  }
+  .lp-hero__bg { position: absolute; inset: 0; overflow: hidden; }
+  .lp-hero__img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 30%;
+    display: block;
+  }
+  .lp-hero__grad {
+    position: absolute; inset: 0;
+    background: linear-gradient(105deg, rgba(15,15,18,0.84) 30%, rgba(139,26,26,0.4));
+  }
+  .lp-hero__content {
+    position: relative; z-index: 2;
+    width: 100%; max-width: var(--max-width);
+    margin: 0 auto; padding: 10vh var(--pad-x) 9vh;
+    color: #fff;
+  }
+  .lp-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6.5vw, 7rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: -0.01em; line-height: 0.94;
+    margin: 0.6rem 0 2.5vh; max-width: 18ch;
+  }
+  .lp-hero__title em { color: var(--color-accent); font-style: normal; }
+  .lp-hero__sub {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1.3vw, 19px);
+    font-weight: 300; line-height: 1.75;
+    color: rgba(255,255,255,0.82);
+    max-width: 52ch; margin-bottom: 4vh;
+  }
+  .lp-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* ═══════════════════ STATS ═══════════════════ */
+  .lp-stats {
+    background: var(--color-text);
+    color: #fff;
+  }
+  .lp-stats__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .lp-stat {
+    padding: 5vh var(--pad-x);
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.12);
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .lp-stat:last-child { border-right: none; }
+  .lp-stat__num {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 800; line-height: 1;
+    color: var(--color-accent);
+    letter-spacing: -0.01em;
+  }
+  .lp-stat__label {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.95vw, 14px);
+    font-weight: 300; line-height: 1.4;
+    color: rgba(255,255,255,0.72);
+  }
+
+  /* ═══════════════════ TITOLI CONDIVISI ═══════════════════ */
+  .lp-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4.2vw, 4.2rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: -0.01em; line-height: 0.95;
+    margin: 0.5rem 0 1.25rem;
+    color: var(--color-text);
+  }
+  .lp-title em { color: var(--color-accent); font-style: normal; }
+  .lp-lead {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.05vw, 17px);
+    font-weight: 300; line-height: 1.8;
+    color: var(--color-text-light);
+  }
+
+  .lp-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 2.5rem; }
+  .lp-actions--center { justify-content: center; }
+
+  /* ═══════════════════ TENNIS ═══════════════════ */
+  .lp-tennis { background: var(--color-bg); padding: 8vh var(--pad-x); }
+  .lp-tennis__inner { max-width: var(--max-width); margin: 0 auto; }
+  .lp-tennis__media { overflow: hidden; margin-top: 3rem; }
+  .lp-tennis__media img {
+    width: 100%; height: clamp(280px, 42vh, 520px);
+    object-fit: cover; display: block;
+  }
+  .lp-appendix {
+    margin-top: 2rem; padding: 1.5rem 1.75rem;
+    background: var(--color-off-white);
+    border-left: 3px solid var(--color-accent);
+  }
+  .lp-appendix p {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1vw, 16px);
+    font-weight: 300; line-height: 1.7;
+    color: var(--color-text); margin: 0;
+  }
+  .lp-appendix strong { font-weight: 600; color: var(--color-text); }
+
+  /* ═══════════════════ MEMBERSHIP ═══════════════════ */
+  .lp-member {
+    background: var(--color-off-white);
+    padding: 8vh var(--pad-x);
+    border-top: 1px solid var(--color-border);
+  }
+  .lp-member__inner { max-width: var(--max-width); margin: 0 auto; }
+  .lp-member__head { margin-bottom: 4vh; }
+  .lp-member__grid {
+    display: grid; grid-template-columns: 0.9fr 1.5fr;
+    gap: clamp(1.5rem, 3vw, 3rem); align-items: start;
+  }
+
+  .lp-inclusi {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 2rem 1.75rem;
+  }
+  .lp-inclusi__title {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--color-text-light);
+    margin: 0 0 1.25rem;
+  }
+  .lp-inclusi__list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+  .lp-inclusi__list li {
+    display: flex; align-items: flex-start; gap: 0.7rem;
+    font-family: var(--font-body);
+    font-size: clamp(13.5px, 1vw, 15.5px);
+    font-weight: 300; line-height: 1.5;
+    color: var(--color-text);
+  }
+  .lp-inclusi__list svg { color: #1A6636; flex-shrink: 0; margin-top: 2px; }
+
+  .lp-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .lp-tier {
+    position: relative;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-top: 4px solid #9CA3AF;
+    padding: 2rem 1.5rem;
+    display: flex; flex-direction: column; gap: 0.9rem;
+  }
+  .lp-tier:nth-child(2) { border-top-color: #A07B10; }
+  .lp-tier--plat {
+    border-top-color: var(--color-accent);
+    background: #FBF3F3;
+  }
+  .lp-tier__badge {
+    display: inline-block; align-self: flex-start;
+    font-family: var(--font-display);
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--color-accent);
+    background: rgba(139,26,26,0.1);
+    padding: 3px 10px;
+  }
+  .lp-tier__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.03em; line-height: 1;
+  }
+  .lp-tier__desc {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 14.5px);
+    font-weight: 300; line-height: 1.6;
+    color: var(--color-text-light); margin: 0;
+  }
+
+  /* ═══════════════════ PREPARAZIONE ATLETICA ═══════════════════ */
+  .lp-prep {
+    background: var(--color-bg);
+    padding: 8vh var(--pad-x);
+    border-top: 1px solid var(--color-border);
+  }
+  .lp-prep__inner { max-width: var(--max-width); margin: 0 auto; }
+  .lp-prep__top { margin-bottom: 8vh; }
+  .lp-prep__media { overflow: hidden; margin-top: 3rem; }
+  .lp-prep__media img {
+    width: 100%; height: clamp(280px, 42vh, 520px);
+    object-fit: cover; display: block;
+  }
+  .lp-prep__features {
+    list-style: none; margin-top: 2rem;
+    display: flex; flex-direction: column;
+  }
+  .lp-prep__feat {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 1rem 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .lp-prep__feat:last-child { border-bottom: 1px solid var(--color-border); }
+  .lp-prep__feat-title {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: -0.01em; color: var(--color-text);
+  }
+  .lp-prep__feat-text {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 300; color: var(--color-text-light);
+  }
+
+  .lp-planning__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: -0.01em; line-height: 1;
+    margin: 0.4rem 0 1rem; color: var(--color-text);
+  }
+  .lp-planning :global(.ws) { margin-top: 3vh; text-align: left; }
+
+  /* ═══════════════════ CTA FINALE ═══════════════════ */
+  .lp-cta {
+    position: relative;
+    background: var(--color-text);
+    color: #fff;
+    padding: 10vh var(--pad-x);
+    text-align: center;
+  }
+  .lp-cta__inner { max-width: 62ch; margin: 0 auto; }
+  .lp-cta__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4.5vw, 4.5rem);
+    font-weight: 800; text-transform: uppercase;
+    letter-spacing: -0.01em; line-height: 0.95;
+    margin: 0.6rem 0 1.5rem;
+  }
+  .lp-cta__title em { color: var(--color-accent); font-style: normal; }
+  .lp-cta__sub {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 17px);
+    font-weight: 300; line-height: 1.8;
+    color: rgba(255,255,255,0.78);
+    margin: 0 auto 2.5rem; max-width: 50ch;
+  }
+  .lp-cta__refs {
+    margin-top: 3rem;
+    font-family: var(--font-body);
+    font-size: clamp(13px, 1vw, 15px);
+    font-weight: 300; color: rgba(255,255,255,0.6);
+  }
+  .lp-cta__refs a { color: rgba(255,255,255,0.85); text-decoration: none; }
+  .lp-cta__refs a:hover { color: #fff; }
+
+  /* ═══════════════════ RESPONSIVE ═══════════════════ */
+  @media (max-width: 900px) {
+    .lp-stats__inner { grid-template-columns: repeat(2, 1fr); }
+    .lp-stat:nth-child(2) { border-right: none; }
+    .lp-stat:nth-child(1), .lp-stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .lp-member__grid { grid-template-columns: 1fr; }
+    .lp-tiers { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .lp-stats__inner { grid-template-columns: 1fr; }
+    .lp-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .lp-stat:last-child { border-bottom: none; }
+    .lp-hero { align-items: center; min-height: 100svh; }
+    .lp-hero__actions .btn,
+    .lp-actions .btn { flex: 1 1 100%; text-align: center; }
+  }
+</style>

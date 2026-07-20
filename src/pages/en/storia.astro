@@ -97,7 +97,6 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
     font-weight: 300;
     line-height: 1.8;
     color: var(--color-text-light);
-    max-width: 60ch;
   }
 
   /* Timeline */
@@ -137,10 +136,9 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
 
   /* Two col */
   .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
   }
 
   .gallery {
@@ -157,7 +155,6 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
   }
 
   @media (max-width: 860px) {
-    .two-col { grid-template-columns: 1fr; }
     .timeline__item { grid-template-columns: 80px 1fr; gap: 1rem; }
   }
 
