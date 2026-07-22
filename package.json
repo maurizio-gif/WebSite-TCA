@@ -8,7 +8,7 @@
     "tina:dev": "tinacms dev -c \"astro dev\"",
     "start": "astro dev",
     "build": "astro build",
-    "tina:build": "tinacms build && astro build",
+    "tina:build": "tinacms build --skip-cloud-checks && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
