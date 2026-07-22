@@ -8,7 +8,7 @@ const d = (await getEntry("pagine", "partners"))!.data;
 const partners = d.partners_lista ?? [];
 ---
 
-<BaseLayout title={d.title} description={d.description}>
+<BaseLayout title={d.title} description={d.description} image={d.hero_immagine} imageAlt={d.hero_immagine_alt}>
   <div class="page-header">
     <div class="page-header__inner">
       <span class="eyebrow">{d.hero_eyebrow}</span>

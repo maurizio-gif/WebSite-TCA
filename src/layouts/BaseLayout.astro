@@ -39,8 +39,13 @@ const canonicalUrl = `${siteOrigin}${getLocalePath(lang, itClean)}`;
 
 // Foto social-preview: usa l'immagine hero della pagina (già curata in Tina),
 // con fallback sulla foto aerea del Club per le pagine senza hero_immagine.
+// Facebook/LinkedIn/WhatsApp non leggono in modo affidabile l'AVIF nelle
+// anteprime dei link: per ogni hero .avif usiamo il "gemello" .jpg
+// (stesso nome file, generato in 1200x630 — il formato/dimensione
+// raccomandato da Open Graph) invece del file originale.
 const DEFAULT_OG_IMAGE = '/HERO.avif';
-const ogImage = `${siteOrigin}${publicUrl(image ?? DEFAULT_OG_IMAGE)}`;
+const ogImageSrc = (image ?? DEFAULT_OG_IMAGE).replace(/\.avif$/i, '.jpg');
+const ogImage = `${siteOrigin}${publicUrl(ogImageSrc)}`;
 const ogImageAlt = imageAlt ?? title;
 const ogLocale = lang === 'it' ? 'it_IT' : 'en_US';
 const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
@@ -76,6 +81,7 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#8B1A1A" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
     <link rel="icon" type="image/png" href={`${import.meta.env.BASE_URL}logos/tca-logo.png`} />
     <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}logos/tca-logo.png`} />
@@ -97,6 +103,9 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <meta property="og:description" content={desc} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:locale:alternate" content={ogLocaleAlternate} />
@@ -106,6 +115,45 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={desc} />
     <meta name="twitter:image" content={ogImage} />
+
+    <!-- Dati strutturati JSON-LD — scheda Google/rich result per il Club
+         (indirizzo, orari, contatti, social). TennisComplex è il tipo
+         schema.org più specifico disponibile per un circolo di tennis. -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "TennisComplex",
+      "name": "Tennis Club Ambrosiano",
+      "image": `${siteOrigin}${publicUrl('/HERO.jpg')}`,
+      "url": `${siteOrigin}/`,
+      "telephone": "+39-02-2641-4392",
+      "email": "info@tcambrosiano.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Via Feltre 33",
+        "addressLocality": "Milano",
+        "postalCode": "20134",
+        "addressRegion": "MI",
+        "addressCountry": "IT",
+      },
+      "sameAs": [
+        "https://www.instagram.com/clubambrosiano",
+        "https://www.facebook.com/tcambrosiano",
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "07:00",
+          "closes": "23:59",
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Saturday", "Sunday"],
+          "opens": "08:00",
+          "closes": "21:00",
+        },
+      ],
+    })} />
 
     <!-- Google Fonts: Barlow Condensed (display/titoli) + Barlow (body).
          Caricamento non bloccante (preload + swap del media) per non

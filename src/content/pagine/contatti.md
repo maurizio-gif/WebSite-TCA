@@ -5,4 +5,6 @@ description: "Contatta il Tennis Club Ambrosiano: indirizzo, telefono, email e c
 hero_eyebrow: "Siamo a Milano"
 hero_titolo: "Contatti"
 hero_sottotitolo: "Vieni a trovarci, scrivici o chiamaci. Siamo qui per risponderti."
+hero_immagine: "/Tennis%20court%20indoor.jpeg"
+hero_immagine_alt: "Campo coperto del Tennis Club Ambrosiano"
 ---

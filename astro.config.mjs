@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 
@@ -15,4 +16,12 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'it',
+        locales: { it: 'it', en: 'en' },
+      },
+    }),
+  ],
 });
