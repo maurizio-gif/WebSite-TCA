@@ -1,0 +1,124 @@
+---
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { useTranslations, publicUrl, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'it' } = Astro.props;
+const t = useTranslations(lang);
+
+// Loghi enti sportivi affiliati → public/logos/partners/
+// Se il file non è ancora presente, mostra l'utility .img-placeholder
+// (vedi CLAUDE.md) finché non viene aggiunta la foto reale.
+const affiliazioni = [
+  { file: 'csain.png', nome: 'C.S.A.In.' },
+  { file: 'asi.png',   nome: 'A.S.I. — Associazioni Sportive Sociali Italiane' },
+  { file: 'fitp.png',  nome: 'FITP — Federazione Italiana Tennis e Padel' },
+  { file: 'coni.png',  nome: 'CONI — Comitato Olimpico Nazionale Italiano' },
+].map((l) => ({
+  ...l,
+  exists: existsSync(path.join(process.cwd(), 'public', 'logos', 'partners', l.file)),
+}));
+
+// Con soli 4 loghi, un singolo giro non basta a riempire la fascia sui
+// desktop molto larghi: il movimento risulterebbe appena percettibile
+// invece di un vero loop continuo. Ripetiamo il set 3 volte (poi duplicato
+// nel markup per lo scroll infinito) così il nastro resta denso anche su
+// schermi ultra-wide.
+const affiliazioniLoop = [...affiliazioni, ...affiliazioni, ...affiliazioni];
+---
+
+<div class="affiliazioni-slider">
+  <p class="affiliazioni-slider__propaganda">{t.footer.propaganda}</p>
+
+  <div class="affiliazioni-slider__viewport" aria-label={t.footer.affiliazioni}>
+    <div class="affiliazioni-slider__track">
+      {[...affiliazioniLoop, ...affiliazioniLoop].map((l) => (
+        <div class="affiliazioni-slider__chip">
+          {l.exists
+            ? <img src={publicUrl(`/logos/partners/${l.file}`)} alt={l.nome}
+                   class="affiliazioni-slider__chip-img" loading="lazy" />
+            : <div class="img-placeholder affiliazioni-slider__chip-placeholder" data-name={l.file}></div>}
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .affiliazioni-slider {
+    background: #ffffff;
+    padding: 4vh 0 4.5vh;
+  }
+
+  .affiliazioni-slider__propaganda {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 1vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--color-text-light);
+    width: 100%;
+    padding: 0 var(--pad-x);
+    margin-bottom: 3vh;
+  }
+
+  .affiliazioni-slider__viewport {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .affiliazioni-slider__track {
+    display: flex;
+    align-items: center;
+    gap: clamp(3rem, 6vw, 6rem);
+    width: max-content;
+    animation: affiliazioni-marquee 90s linear infinite;
+  }
+
+  .affiliazioni-slider__viewport:hover .affiliazioni-slider__track { animation-play-state: paused; }
+
+  .affiliazioni-slider__chip {
+    flex-shrink: 0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .affiliazioni-slider__chip-img {
+    height: 100%;
+    width: auto;
+    max-width: 170px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .affiliazioni-slider__chip-placeholder {
+    height: 100%;
+    width: 140px;
+    min-height: 0;
+    font-size: 10px;
+  }
+
+  @keyframes affiliazioni-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .affiliazioni-slider__track { animation: none; }
+    .affiliazioni-slider__viewport { overflow-x: auto; }
+  }
+
+  @media (max-width: 640px) {
+    .affiliazioni-slider__chip { height: 44px; }
+    .affiliazioni-slider__chip-img { max-width: 120px; }
+  }
+</style>
