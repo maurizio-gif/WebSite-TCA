@@ -95,11 +95,14 @@ const junior: ActivityItem[] = [
         <div class="act-carousel__track" data-carousel-id="adulti">
           {adulti.map((item) => (
             <a class="act-card" href={item.href}>
-              <div class="act-card__img" style={`background-image: url('${item.img}'); background-position: ${item.imgPosition ?? 'center'};`}></div>
-              <div class="act-card__body">
-                <span class="act-card__num">{item.num}</span>
-                <strong class="act-card__name">{item.name}</strong>
-                <p class="act-card__desc">{item.desc}</p>
+              <div class="act-card__media" style={`background-image: url('${item.img}'); background-position: ${item.imgPosition ?? 'center'};`}>
+                <span class="act-card__scrim" aria-hidden="true"></span>
+                <span class="act-card__backdrop" aria-hidden="true"></span>
+                <div class="act-card__content">
+                  <span class="act-card__num">{item.num}</span>
+                  <strong class="act-card__name">{item.name}</strong>
+                  <p class="act-card__desc">{item.desc}</p>
+                </div>
               </div>
             </a>
           ))}
@@ -133,11 +136,14 @@ const junior: ActivityItem[] = [
         <div class="act-carousel__track" data-carousel-id="junior">
           {junior.map((item) => (
             <a class="act-card" href={item.href}>
-              <div class="act-card__img" style={`background-image: url('${item.img}'); background-position: ${item.imgPosition ?? 'center'};`}></div>
-              <div class="act-card__body">
-                <span class="act-card__num">{item.num}</span>
-                <strong class="act-card__name">{item.name}</strong>
-                <p class="act-card__desc">{item.desc}</p>
+              <div class="act-card__media" style={`background-image: url('${item.img}'); background-position: ${item.imgPosition ?? 'center'};`}>
+                <span class="act-card__scrim" aria-hidden="true"></span>
+                <span class="act-card__backdrop" aria-hidden="true"></span>
+                <div class="act-card__content">
+                  <span class="act-card__num">{item.num}</span>
+                  <strong class="act-card__name">{item.name}</strong>
+                  <p class="act-card__desc">{item.desc}</p>
+                </div>
               </div>
             </a>
           ))}
@@ -170,6 +176,7 @@ const junior: ActivityItem[] = [
     position: relative;
     padding: 6vh var(--pad-x);
     overflow: hidden;
+    min-width: 0;
   }
 
   /* Ghosted watermark */
@@ -280,26 +287,64 @@ const junior: ActivityItem[] = [
     display: none;
   }
 
-  /* Card */
+  /* Card — foto piena, titolo sempre visibile, descrizione rivelata
+     all'hover (mouse) o al passaggio in viewport su mobile (.is-revealed). */
   .act-card {
     flex: 0 0 calc((100% - 2 * 1.25rem) / 3);
     scroll-snap-align: start;
-    border-radius: 6px;
+    border-radius: 10px;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
     display: block;
     background: var(--color-off-white);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .act-card__img {
+  .act-card:hover,
+  .act-card:focus-within {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  .act-card__media {
+    position: relative;
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 3/4;
     background-size: cover;
-    background-position: center;
+    display: flex;
+    align-items: flex-end;
   }
 
-  .act-card__body {
+  /* Scrim leggero sempre presente: legge meglio numero/titolo sulla foto */
+  .act-card__scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.35) 38%, rgba(0, 0, 0, 0) 68%);
+    pointer-events: none;
+  }
+
+  /* Layer scuro che sale/si intensifica quando la card si rivela */
+  .act-card__backdrop {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.55) 55%, rgba(0, 0, 0, 0) 85%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .act-card:hover .act-card__backdrop,
+  .act-card:focus-within .act-card__backdrop,
+  .act-card.is-revealed .act-card__backdrop {
+    opacity: 1;
+  }
+
+  .act-card__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
     padding: 1.25rem;
   }
 
@@ -316,21 +361,32 @@ const junior: ActivityItem[] = [
   .act-card__name {
     display: block;
     font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2vw, 1.9rem);
+    font-size: clamp(1.7rem, 2.8vw, 2.5rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
     line-height: 1;
-    color: var(--color-text);
-    margin-bottom: 8px;
+    color: #ffffff;
   }
 
   .act-card__desc {
     font-family: var(--font-body);
-    font-size: 18px;
+    font-size: clamp(16px, 1.3vw, 19px);
     font-weight: 300;
-    color: var(--color-text-light);
+    color: rgba(255, 255, 255, 0.85);
     line-height: 1.5;
+    margin-top: 10px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s ease 0.05s, margin-top 0.35s ease;
+  }
+
+  .act-card:hover .act-card__desc,
+  .act-card:focus-within .act-card__desc,
+  .act-card.is-revealed .act-card__desc {
+    max-height: 200px;
+    opacity: 1;
   }
 
   /* ── Mobile ── */
@@ -345,7 +401,11 @@ const junior: ActivityItem[] = [
     }
 
     .act-card__name {
-      font-size: clamp(1.4rem, 6vw, 1.9rem);
+      font-size: clamp(1.7rem, 7vw, 2.2rem);
+    }
+
+    .act-card__desc {
+      font-size: clamp(16px, 4vw, 18px);
     }
   }
 
@@ -379,5 +439,19 @@ const junior: ActivityItem[] = [
         track.scrollBy({ left: dir * cardWidth, behavior: 'smooth' });
       });
     });
+
+    // ── Reveal della descrizione su touch: senza hover del mouse, la card
+    // si "apre" da sola quando entra a metà nel viewport durante lo scroll. ──
+    if (window.matchMedia('(hover: none)').matches) {
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            entry.target.classList.toggle('is-revealed', entry.isIntersecting);
+          });
+        },
+        { threshold: 0.6 }
+      );
+      document.querySelectorAll('.act-card').forEach((card) => obs.observe(card));
+    }
   });
 </script>
