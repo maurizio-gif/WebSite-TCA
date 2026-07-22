@@ -1,12 +1,15 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import { publicUrl } from "../../i18n/utils";
 import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/agonistica.md (campi _en)
 const d = (await getEntry("pagine", "agonistica"))!.data;
+
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
 <BaseLayout
@@ -25,6 +28,50 @@ const d = (await getEntry("pagine", "agonistica"))!.data;
     imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
     ctaLabel="Join the squad"
   />
+
+  <section class="metodo-section">
+    <div class="metodo-section__inner">
+      <div class="metodo-head">
+        <span class="eyebrow">{d.agonistica_metodo_eyebrow_en ?? d.agonistica_metodo_eyebrow}</span>
+        <h2 class="section-title">{d.agonistica_metodo_titolo_en ?? d.agonistica_metodo_titolo}<br><em>{d.agonistica_metodo_titolo_accent_en ?? d.agonistica_metodo_titolo_accent}</em></h2>
+        <p class="metodo-lead" set:html={mdBold(d.agonistica_metodo_lead_en ?? d.agonistica_metodo_lead!)} />
+      </div>
+
+      <div class="metodo-img-row">
+        <img src={publicUrl(d.agonistica_metodo_immagine1!)} alt={d.agonistica_metodo_immagine1_alt_en ?? d.agonistica_metodo_immagine1_alt!} class="metodo-img" loading="lazy" />
+        <img src={publicUrl(d.agonistica_metodo_immagine2!)} alt={d.agonistica_metodo_immagine2_alt_en ?? d.agonistica_metodo_immagine2_alt!} class="metodo-img" loading="lazy" />
+      </div>
+
+      <div class="metodo-pillars">
+        {d.agonistica_metodo_pillars!.map((p, i) => (
+          <div class="metodo-pillar">
+            <span class="metodo-pillar__n">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{p.titolo_en ?? p.titolo}</h3>
+            <p>{p.testo_en ?? p.testo}</p>
+          </div>
+        ))}
+      </div>
+
+      <blockquote class="metodo-quote">
+        <p>{d.agonistica_metodo_quote_en ?? d.agonistica_metodo_quote}</p>
+      </blockquote>
+
+      <div class="punti-chiave-card">
+        <h3 class="punti-chiave-card__title">{d.agonistica_punti_chiave_titolo_en ?? d.agonistica_punti_chiave_titolo}</h3>
+        <ul class="punti-chiave">
+          {d.agonistica_punti_chiave!.map((p) => (
+            <li class="punto-chiave">
+              <svg class="punto-chiave__icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/>
+                <path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>{p.testo_en ?? p.testo}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <section class="content-section">
     <div class="content-section__inner">
@@ -47,6 +94,168 @@ const d = (await getEntry("pagine", "agonistica"))!.data;
 </BaseLayout>
 
 <style>
+  .metodo-section {
+    padding: 7vh var(--pad-x);
+  }
+
+  .metodo-section__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .metodo-head {
+    max-width: 760px;
+    margin-bottom: 5vh;
+  }
+
+  .metodo-lead {
+    font-family: var(--font-body);
+    font-size: clamp(18px, 1.3vw, 22px);
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--color-text);
+    margin-top: 1.5rem;
+  }
+
+  .metodo-lead :global(strong) {
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  /* ── Photos ── */
+  .metodo-img-row {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 1rem;
+    margin-bottom: 5vh;
+  }
+
+  .metodo-img {
+    width: 100%;
+    height: clamp(220px, 32vh, 380px);
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    .metodo-img-row { grid-template-columns: 1fr; }
+    .metodo-img { height: 260px; }
+  }
+
+  /* ── Pillar columns ── */
+  .metodo-pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+    margin-bottom: 5vh;
+  }
+
+  .metodo-pillar {
+    background: var(--color-off-white);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .metodo-pillar__n {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .metodo-pillar h3 {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .metodo-pillar p {
+    font-family: var(--font-body);
+    font-size: clamp(14.5px, 0.95vw, 16.5px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+  }
+
+  /* ── Closing quote ── */
+  .metodo-quote {
+    max-width: 760px;
+    margin: 0 0 5vh;
+    padding-left: 2rem;
+    border-left: 4px solid var(--color-accent);
+  }
+
+  .metodo-quote p {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    font-weight: 700;
+    font-style: normal;
+    line-height: 1.4;
+    color: var(--color-text);
+  }
+
+  /* ── "At a glance" box ── */
+  .punti-chiave-card {
+    background: var(--color-off-white);
+    border: 1px solid var(--color-border);
+    padding: 2.5rem clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .punti-chiave-card__title {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 0.9vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    margin-bottom: 1.75rem;
+  }
+
+  .punti-chiave {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem 2rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .punto-chiave {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .punto-chiave__icon {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    margin-top: 2px;
+  }
+
+  .punto-chiave span {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 0.95vw, 16px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 760px) {
+    .metodo-pillars { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .punti-chiave { grid-template-columns: 1fr; }
+    .metodo-quote { padding-left: 1.25rem; border-left-width: 3px; }
+  }
+
   .content-section {
     padding: 7vh var(--pad-x);
   }
