@@ -576,6 +576,16 @@ const t = lang === 'en' ? {
 } }}>
   const root = document.getElementById('isc-form-root');
 
+  const WEBHOOK_ISCRIZIONE = 'https://automazione.n8ndevelop.it/webhook/scuola-tennis-tca';
+
+  // UTM/click-id e ID visitatore persistente (vedi BaseLayout.astro)
+  function getUtm() {
+    try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) { return {}; }
+  }
+  function getVid() {
+    return window.tcaGetVid ? window.tcaGetVid() : null;
+  }
+
   function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
 
   function showStep(key) {
@@ -662,13 +672,78 @@ const t = lang === 'en' ? {
     showStep(tipoSelect.value === 'tennis' ? '3' : '2');
   });
 
-  // STEP 4 → conferma
-  document.getElementById('isc-submit').addEventListener('click', () => {
+  // Raccoglie tutti i campi compilati negli step 1-3 per l'invio finale
+  function collectPayload() {
+    const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+    const tipo = tipoSelect.value;
+    const giorni = Array.from(root.querySelectorAll(`input[name="isc-giorni-${tipo}"]:checked`)).map((el) => el.value);
+    const freqEl = root.querySelector(`input[name="isc-freq-${tipo}"]:checked`);
+
+    const payload = {
+      minore: {
+        nome: val('isc-minor-nome'),
+        cognome: val('isc-minor-cognome'),
+        dataNascita: val('isc-minor-dob'),
+        luogoNascita: val('isc-minor-pob'),
+        codiceFiscale: val('isc-minor-cf'),
+      },
+      indirizzo: {
+        via: val('isc-addr'),
+        citta: val('isc-city'),
+        provincia: val('isc-prov'),
+        cap: val('isc-cap'),
+      },
+      genitore: {
+        nome: val('isc-parent-nome'),
+        cognome: val('isc-parent-cognome'),
+        email: val('isc-email'),
+        cellulare: val('isc-cell'),
+      },
+      iscrizione: {
+        tipo,
+        frequenza: freqEl ? freqEl.value : '',
+        giorni,
+        compagnoPreferito: val('isc-buddy'),
+      },
+      consensi: { termini: true, regolamento: true, privacy: true },
+      pagina: location.href,
+      referrer: document.referrer || null,
+      utm: getUtm(),
+      vid: getVid(),
+    };
+
+    if (tipo === 'tennis') {
+      payload.iscrizione.orariPreferiti = Array.from(root.querySelectorAll('input[name="isc-orari-tennis"]:checked')).map((el) => el.value);
+      payload.iscrizione.orarioPreparazione = prepSelect.value;
+      payload.taglie = {
+        maglietta: val('isc-size-shirt'),
+        pantaloncini: val('isc-size-shorts'),
+        felpa: val('isc-size-hoodie'),
+      };
+    }
+
+    return payload;
+  }
+
+  // STEP 4 → invio + conferma
+  const submitBtn = document.getElementById('isc-submit');
+  submitBtn.addEventListener('click', async () => {
     clearError('4');
     const terms = document.getElementById('isc-accept-terms');
     const rules = document.getElementById('isc-accept-rules');
     const privacy = document.getElementById('isc-accept-privacy');
     if (!terms.checked || !rules.checked || !privacy.checked) { showError('4', ERR.consent); return; }
+
+    submitBtn.disabled = true;
+    try {
+      await fetch(WEBHOOK_ISCRIZIONE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(collectPayload()),
+      });
+    } catch (e) {}
+    submitBtn.disabled = false;
+
     showStep('confirm');
   });
 </script>
