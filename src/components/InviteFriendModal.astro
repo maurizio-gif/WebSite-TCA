@@ -1,5 +1,6 @@
 ---
 import type { Lang } from '../i18n/utils';
+import prefissi from '../data/prefissi-telefonici';
 
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
@@ -109,7 +110,15 @@ const t = lang === 'en' ? {
         </div>
         <div class="lm__field">
           <label for="ia-friend-cell">{t.friendPhone} <span aria-hidden="true">*</span></label>
-          <input id="ia-friend-cell" type="tel" autocomplete="off" placeholder="3XX XXX XXXX" required />
+          <div class="lm__tel-wrap">
+            <select id="ia-friend-pfx" name="prefisso" class="lm__tel-prefix" autocomplete="tel-country-code">
+              {prefissi.map((pf) => (
+                <option value={pf.dial} selected={pf.dial === '+39'}>{pf.flag} {pf.dial}</option>
+              ))}
+            </select>
+            <input id="ia-friend-cell" name="cellulare" type="tel" autocomplete="tel-national"
+                   placeholder="3XX XXX XXXX" required />
+          </div>
         </div>
       </div>
 
@@ -155,6 +164,20 @@ const t = lang === 'en' ? {
   const modal = document.getElementById('modal-invita-amico');
   const dots = modal.querySelectorAll('[data-ia-dot]');
 
+  const WEBHOOK_REFERRAL = 'https://automazione.n8ndevelop.it/webhook/referral-tca';
+
+  // UTM/click-id e ID visitatore persistente (vedi BaseLayout.astro)
+  function getUtm() {
+    try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) { return {}; }
+  }
+  function getVid() {
+    return window.tcaGetVid ? window.tcaGetVid() : null;
+  }
+
+  // Pagina e CTA da cui è stato aperto il modal (catturati all'apertura)
+  let openPagina = location.pathname;
+  let openCta = '';
+
   function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
 
   function showStep(n) {
@@ -194,7 +217,12 @@ const t = lang === 'en' ? {
   // Apertura tramite data-open-modal="modal-invita-amico"
   document.addEventListener('click', (e) => {
     const t = e.target.closest('[data-open-modal]');
-    if (t && t.dataset.openModal === 'modal-invita-amico') { modal.showModal(); showStep(1); }
+    if (t && t.dataset.openModal === 'modal-invita-amico') {
+      openPagina = location.pathname;
+      openCta = (t.textContent || '').trim();
+      modal.showModal();
+      showStep(1);
+    }
   });
 
   modal.addEventListener('click', (e) => {
@@ -220,11 +248,13 @@ const t = lang === 'en' ? {
   });
 
   // STEP 2
-  document.getElementById('ia-step2-send').addEventListener('click', () => {
+  const step2SendBtn = document.getElementById('ia-step2-send');
+  step2SendBtn.addEventListener('click', async () => {
     clearError(2);
     const nome = document.getElementById('ia-friend-nome');
     const cognome = document.getElementById('ia-friend-cognome');
     const friendEmail = document.getElementById('ia-friend-email');
+    const prefisso = document.getElementById('ia-friend-pfx');
     const cell = document.getElementById('ia-friend-cell');
     const consent = document.getElementById('ia-consent');
 
@@ -233,6 +263,29 @@ const t = lang === 'en' ? {
     if (!friendEmail.value.trim() || !isValidEmail(friendEmail.value)) { showError(2, ERR.friendEmail); friendEmail.focus(); return; }
     if (!cell.value.trim()) { showError(2, ERR.cell); cell.focus(); return; }
     if (!consent.checked) { showError(2, ERR.consent); return; }
+
+    step2SendBtn.disabled = true;
+    try {
+      await fetch(WEBHOOK_REFERRAL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: emailInput.value.trim(),
+          amico: {
+            nome: nome.value.trim(),
+            cognome: cognome.value.trim(),
+            email: friendEmail.value.trim(),
+            prefisso: prefisso.value,
+            cellulare: cell.value.trim(),
+          },
+          pagina: openPagina,
+          cta: openCta,
+          utm: getUtm(),
+          vid: getVid(),
+        }),
+      });
+    } catch (e) {}
+    step2SendBtn.disabled = false;
 
     showStep(3);
   });
