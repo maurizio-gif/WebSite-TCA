@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import LeadModal from "../components/LeadModal.astro";
 import LeadFormInline from "../components/LeadFormInline.astro";
 import InfoPratiche from "../components/InfoPratiche.astro";
+import AffiliazioniSlider from "../components/AffiliazioniSlider.astro";
 import { getLangFromUrl, useTranslations, getAlternatePath, getLocalePath, publicUrl, type Lang } from "../i18n/utils";
 
 interface Props {
@@ -48,6 +49,13 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
 <!doctype html>
 <html lang={lang} class={hideChrome ? 'is-app-embed' : undefined}>
   <head>
+    <!-- Start cookieyes banner: deve stare il più in alto possibile in <head>,
+         prima di qualsiasi script di tracciamento, così può bloccarli finché
+         l'utente non presta consenso (vedi script sotto con
+         type="text/plain" data-cookieyes="..."). -->
+    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/a52d1f8cdcea8593d12025ba01e05026/script.js"></script>
+    <!-- End cookieyes banner -->
+
     <!-- Preconnect ai domini di GTM/Analytics: la connessione si apre in
          parallelo mentre il resto della pagina carica, invece di attendere
          che lo script GTM la richieda (risparmio stimato ~1.3s da PSI). -->
@@ -56,8 +64,10 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <link rel="preconnect" href="https://region1.analytics.google.com" />
     <link rel="preconnect" href="https://stats.g.doubleclick.net" />
 
-    <!-- Google Tag Manager -->
-    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <!-- Google Tag Manager — bloccato da CookieYes finché l'utente non
+         accetta i cookie di analytics (gestisce anche tutti i tag interni
+         al container: GA4, Ads, remarketing, ecc.). -->
+    <script is:inline type="text/plain" data-cookieyes="cookieyes-analytics">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -134,8 +144,9 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <!-- Cattura UTM/click-id da campagne Meta/Google Ads al primo touch della
          sessione (sessionStorage, mai sovrascritto): permette di attribuire il
          contatto anche se il form viene compilato dopo una navigazione interna
-         che non porta più la querystring della campagna. -->
-    <script is:inline>
+         che non porta più la querystring della campagna.
+         Bloccato da CookieYes finché l'utente non accetta i cookie di analytics. -->
+    <script is:inline type="text/plain" data-cookieyes="cookieyes-analytics">
       (function () {
         if (sessionStorage.getItem('tca_utm')) return;
         var params = new URLSearchParams(location.search);
@@ -152,8 +163,9 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <!-- ID visitatore persistente (localStorage, non scade): identifica lo
          stesso browser tra una visita e l'altra, così il form (e in futuro
          il beacon qui sotto) possono riconoscere un lead già noto anche
-         senza aver ricompilato nulla. Generato una sola volta, poi riletto. -->
-    <script is:inline>
+         senza aver ricompilato nulla. Generato una sola volta, poi riletto.
+         Bloccato da CookieYes finché l'utente non accetta i cookie di analytics. -->
+    <script is:inline type="text/plain" data-cookieyes="cookieyes-analytics">
       (function () {
         var KEY = 'tca_vid';
         var vid;
@@ -172,8 +184,9 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
 
     <!-- Beacon "ritorno sul sito": ad ogni pagina vista segnala l'ID
          visitatore persistente a n8n, così un lead già noto può essere
-         riconosciuto anche senza ricompilare il form. -->
-    <script is:inline>
+         riconosciuto anche senza ricompilare il form.
+         Bloccato da CookieYes finché l'utente non accetta i cookie di analytics. -->
+    <script is:inline type="text/plain" data-cookieyes="cookieyes-analytics">
       (function () {
         var WEBHOOK_VISIT = 'https://automazione.n8ndevelop.it/webhook/ping-tca';
         if (!WEBHOOK_VISIT) return;
@@ -205,6 +218,7 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     </main>
     {!hideLeadFormInline && <LeadFormInline lang={lang} />}
     {!hideChrome && <InfoPratiche lang={lang} />}
+    {!hideChrome && <AffiliazioniSlider lang={lang} />}
     {!hideChrome && <Footer lang={lang} />}
     <LeadModal lang={lang} />
 

@@ -1,6 +1,4 @@
 ---
-import { existsSync } from 'node:fs';
-import path from 'node:path';
 import { getEntry } from 'astro:content';
 import { useTranslations, getLocalePath, publicUrl, type Lang } from '../i18n/utils';
 
@@ -11,26 +9,6 @@ interface Props {
 const { lang = 'it' } = Astro.props;
 const t = useTranslations(lang);
 const p = (path: string) => getLocalePath(lang, path);
-
-// Loghi enti sportivi affiliati → public/logos/partners/
-// Se il file non è ancora presente, mostra l'utility .img-placeholder
-// (vedi CLAUDE.md) finché non viene aggiunta la foto reale.
-const affiliazioni = [
-  { file: 'csain.png', nome: 'C.S.A.In.' },
-  { file: 'asi.png',   nome: 'A.S.I. — Associazioni Sportive Sociali Italiane' },
-  { file: 'fitp.png',  nome: 'FITP — Federazione Italiana Tennis e Padel' },
-  { file: 'coni.png',  nome: 'CONI — Comitato Olimpico Nazionale Italiano' },
-].map((l) => ({
-  ...l,
-  exists: existsSync(path.join(process.cwd(), 'public', 'logos', 'partners', l.file)),
-}));
-
-// Con soli 4 loghi, un singolo giro non basta a riempire la fascia sui
-// desktop molto larghi: il movimento risulterebbe appena percettibile
-// invece di un vero loop continuo. Ripetiamo il set 3 volte (poi duplicato
-// nel markup per lo scroll infinito) così il nastro resta denso anche su
-// schermi ultra-wide.
-const affiliazioniLoop = [...affiliazioni, ...affiliazioni, ...affiliazioni];
 
 // PDF legali gestibili da TinaCMS → src/content/legal/documenti.md
 const legal = (await getEntry('legal', 'documenti'))!.data;
@@ -128,23 +106,6 @@ const columns = [
     </div>
   </div>
 
-  <div class="footer__affiliazioni">
-    <p class="footer__propaganda">{t.footer.propaganda}</p>
-
-    <div class="footer__logos-slider" aria-label={t.footer.affiliazioni}>
-      <div class="footer__logos-track">
-        {[...affiliazioniLoop, ...affiliazioniLoop].map((l) => (
-          <div class="footer__logo-chip">
-            {l.exists
-              ? <img src={publicUrl(`/logos/partners/${l.file}`)} alt={l.nome}
-                     class="footer__logo-chip-img" loading="lazy" />
-              : <div class="img-placeholder footer__logo-chip-placeholder" data-name={l.file}></div>}
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-
   <div class="footer__bottom">
     <div class="footer__bottom-inner">
       <p class="footer__sign">{t.footer.sign}</p>
@@ -218,80 +179,6 @@ const columns = [
 
   .footer__link { text-decoration: none; }
   .footer__link:hover { color: #fff; }
-
-  /* ── Enti sportivi affiliati ─────────────────────────────────────── */
-  .footer__affiliazioni {
-    background: #ffffff;
-    padding: 4vh 0 4.5vh;
-  }
-
-  .footer__propaganda {
-    font-family: var(--font-display);
-    font-size: clamp(11px, 1vw, 13px);
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-align: center;
-    color: var(--color-text-light);
-    width: 100%;
-    padding: 0 var(--pad-x);
-    margin-bottom: 3vh;
-  }
-
-  .footer__logos-slider {
-    width: 100%;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  }
-
-  .footer__logos-track {
-    display: flex;
-    align-items: center;
-    gap: clamp(3rem, 6vw, 6rem);
-    width: max-content;
-    animation: footer-marquee 90s linear infinite;
-  }
-
-  .footer__logos-slider:hover .footer__logos-track { animation-play-state: paused; }
-
-  .footer__logo-chip {
-    flex-shrink: 0;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .footer__logo-chip-img {
-    height: 100%;
-    width: auto;
-    max-width: 170px;
-    object-fit: contain;
-    display: block;
-  }
-
-  .footer__logo-chip-placeholder {
-    height: 100%;
-    width: 140px;
-    min-height: 0;
-    font-size: 10px;
-  }
-
-  @keyframes footer-marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .footer__logos-track { animation: none; }
-    .footer__logos-slider { overflow-x: auto; }
-  }
-
-  @media (max-width: 640px) {
-    .footer__logo-chip { height: 44px; }
-    .footer__logo-chip-img { max-width: 120px; }
-  }
 
   .footer__bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
