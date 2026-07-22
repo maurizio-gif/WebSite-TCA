@@ -1,12 +1,12 @@
 ---
 import { getEntry } from 'astro:content';
-import type { Lang } from '../i18n/utils';
+import { publicUrl, type Lang } from '../i18n/utils';
 
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
 
 type Cat = 'S' | 'B' | 'E';
-interface Lesson { t: string; c: Cat; n: string; desc: string; durata: string; livello: string; }
+interface Lesson { t: string; c: Cat; n: string; desc: string; durata: string; livello: string; img: string; }
 
 const CAT: Record<Cat, { label: string }> = {
   S: { label: 'Strength'  },
@@ -17,13 +17,14 @@ const CAT: Record<Cat, { label: string }> = {
 // Lezioni gestibili da TinaCMS → src/content/planning/corsi.md
 const { lezioni } = (await getEntry('planning', 'corsi'))!.data;
 
-// Descrizione, durata e livello di ogni corso: unica fonte editabile da
-// TinaCMS → src/content/pagine/preparazione-atletica.md (prep_categorie).
-// Il planning qui sopra fa solo riferimento al nome del corso: qualunque
-// modifica al testo in quella pagina si riflette automaticamente nel
-// modal, senza doverla duplicare altrove.
+// Descrizione, durata, livello e foto di ogni corso: unica fonte editabile
+// da TinaCMS → src/content/pagine/preparazione-atletica.md (prep_categorie,
+// stessa immagine mostrata nella card del corso). Il planning qui sopra fa
+// solo riferimento al nome del corso: qualunque modifica al testo o alla
+// foto in quella pagina si riflette automaticamente nel modal, senza
+// doverla duplicare altrove.
 const prep = (await getEntry('pagine', 'preparazione-atletica'))!.data;
-const courseInfo = new Map<string, { nome: string; desc: string; durata: string; livello: string }>();
+const courseInfo = new Map<string, { nome: string; desc: string; durata: string; livello: string; img: string }>();
 (prep.prep_categorie ?? []).forEach((cat) => {
   (cat.corsi ?? []).forEach((corso) => {
     courseInfo.set(corso.nome, {
@@ -31,6 +32,7 @@ const courseInfo = new Map<string, { nome: string; desc: string; durata: string;
       desc: (lang === 'en' && corso.desc_en) ? corso.desc_en : corso.desc,
       durata: corso.durata,
       livello: (lang === 'en' && corso.livello_en) ? corso.livello_en : corso.livello,
+      img: corso.immagine ? publicUrl(corso.immagine) : '',
     });
   });
 });
@@ -80,6 +82,7 @@ const DAYS: Array<{ full: string; short: string; lessons: Lesson[] }> = GIORNI.m
         desc: info?.desc ?? '',
         durata: info?.durata ?? '',
         livello: info?.livello ?? '',
+        img: info?.img ?? '',
       };
     }),
 }));
@@ -123,6 +126,7 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
                     data-durata={l.durata}
                     data-livello={l.livello}
                     data-desc={l.desc}
+                    data-img={l.img}
                   >
                     <span class="ws__card-time">{l.t}</span>
                     <span class="ws__card-body">
@@ -181,19 +185,24 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
   <!-- Modal descrizione lezione -->
   <dialog class="ws-modal" id="ws-lesson-modal" aria-labelledby="ws-modal-title" data-no-desc={NO_DESC}>
     <div class="ws-modal__panel">
-      <div class="ws-modal__head">
-        <div>
-          <span class="ws-modal__cat" id="ws-modal-cat"></span>
-          <p class="ws-modal__title" id="ws-modal-title" role="heading" aria-level="3"></p>
-        </div>
-        <button type="button" class="ws-modal__close" data-close-lesson aria-label={t.close}>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-          </svg>
-        </button>
+      <div class="ws-modal__media" id="ws-modal-media" hidden>
+        <img class="ws-modal__img" id="ws-modal-img" alt="" loading="lazy" />
       </div>
-      <div class="ws-modal__meta" id="ws-modal-meta"></div>
-      <p class="ws-modal__desc" id="ws-modal-desc"></p>
+      <div class="ws-modal__body">
+        <div class="ws-modal__head">
+          <div>
+            <span class="ws-modal__cat" id="ws-modal-cat"></span>
+            <p class="ws-modal__title" id="ws-modal-title" role="heading" aria-level="3"></p>
+          </div>
+          <button type="button" class="ws-modal__close" data-close-lesson aria-label={t.close}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="ws-modal__meta" id="ws-modal-meta"></div>
+        <p class="ws-modal__desc" id="ws-modal-desc"></p>
+      </div>
     </div>
   </dialog>
 </div>
@@ -512,6 +521,25 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
   .ws-modal__panel {
     background: var(--color-bg);
     color: var(--color-text);
+    overflow: hidden;
+  }
+
+  .ws-modal__media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--color-off-white);
+  }
+
+  .ws-modal__media[hidden] { display: none; }
+
+  .ws-modal__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .ws-modal__body {
     padding: 1.75rem 2rem 2rem;
     display: flex;
     flex-direction: column;
@@ -601,6 +629,8 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
     const titleEl = document.getElementById('ws-modal-title');
     const metaEl = document.getElementById('ws-modal-meta');
     const descEl = document.getElementById('ws-modal-desc');
+    const mediaEl = document.getElementById('ws-modal-media') as HTMLElement | null;
+    const imgEl = document.getElementById('ws-modal-img') as HTMLImageElement | null;
     const NO_DESC = modal.dataset.noDesc ?? '';
 
     document.querySelectorAll<HTMLButtonElement>('[data-open-lesson]').forEach((card) => {
@@ -618,6 +648,17 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
         }
 
         if (descEl) descEl.textContent = d.desc && d.desc.trim() ? d.desc : NO_DESC;
+
+        if (mediaEl && imgEl) {
+          if (d.img && d.img.trim()) {
+            imgEl.src = d.img;
+            imgEl.alt = d.name ?? '';
+            mediaEl.hidden = false;
+          } else {
+            imgEl.src = '';
+            mediaEl.hidden = true;
+          }
+        }
 
         modal.showModal();
       });
