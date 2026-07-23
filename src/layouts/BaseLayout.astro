@@ -189,68 +189,86 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
       }
     </script>
 
-    <!-- Cattura UTM/click-id da campagne Meta/Google Ads al primo touch della
-         sessione (sessionStorage, mai sovrascritto): permette di attribuire il
-         contatto anche se il form viene compilato dopo una navigazione interna
-         che non porta più la querystring della campagna.
-         Bloccato da CookieYes finché l'utente non accetta i cookie di analytics. -->
-    <script is:inline type="text/plain" data-cookieyes="cookieyes-analytics">
+    <!-- UTM/click-id, ID visitatore persistente e beacon "ritorno sul sito":
+         script sempre presente (non bloccato via type="text/plain"), ma la
+         logica scatta solo con consenso Analytics confermato da CookieYes.
+         Lo swap automatico di type="text/plain" -> text/javascript non è
+         affidabile per script custom (funziona bene solo per script di terze
+         parti riconosciute, es. GTM sotto): usiamo invece gli eventi
+         documentati da CookieYes per questo caso (cookieyes_banner_load per
+         chi ha già dato consenso in una visita precedente,
+         cookieyes_consent_update per chi lo dà ora). -->
+    <script is:inline>
       (function () {
-        if (sessionStorage.getItem('tca_utm')) return;
-        var params = new URLSearchParams(location.search);
-        var KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
-        var found = {};
-        var hasAny = false;
-        KEYS.forEach(function (k) {
-          if (params.has(k)) { found[k] = params.get(k); hasAny = true; }
-        });
-        if (hasAny) sessionStorage.setItem('tca_utm', JSON.stringify(found));
-      })();
-    </script>
-
-    <!-- ID visitatore persistente (localStorage, non scade): identifica lo
-         stesso browser tra una visita e l'altra, così il form (e in futuro
-         il beacon qui sotto) possono riconoscere un lead già noto anche
-         senza aver ricompilato nulla. Generato una sola volta, poi riletto.
-         Bloccato da CookieYes finché l'utente non accetta i cookie di analytics. -->
-    <script is:inline type="text/plain" data-cookieyes="cookieyes-analytics">
-      (function () {
-        var KEY = 'tca_vid';
-        var vid;
-        try { vid = localStorage.getItem(KEY); } catch (e) { vid = null; }
-        if (!vid) {
-          vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() :
-            'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-              var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-              return v.toString(16);
-            });
-          try { localStorage.setItem(KEY, vid); } catch (e) {}
-        }
-        window.tcaGetVid = function () { return vid; };
-      })();
-    </script>
-
-    <!-- Beacon "ritorno sul sito": ad ogni pagina vista segnala l'ID
-         visitatore persistente a n8n, così un lead già noto può essere
-         riconosciuto anche senza ricompilare il form.
-         Bloccato da CookieYes finché l'utente non accetta i cookie di analytics. -->
-    <script is:inline type="text/plain" data-cookieyes="cookieyes-analytics">
-      (function () {
+        var KEY_VID = 'tca_vid';
+        var KEY_UTM = 'tca_utm';
         var WEBHOOK_VISIT = 'https://automazione.n8ndevelop.it/webhook/ping-tca';
-        if (!WEBHOOK_VISIT) return;
-        var utm = {};
-        try { utm = JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) {}
-        var body = JSON.stringify({
-          vid: window.tcaGetVid ? window.tcaGetVid() : null,
-          pagina: location.pathname,
-          referrer: document.referrer || null,
-          utm: utm
-        });
-        if (navigator.sendBeacon) {
-          navigator.sendBeacon(WEBHOOK_VISIT, new Blob([body], { type: 'application/json' }));
-        } else {
-          fetch(WEBHOOK_VISIT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true }).catch(function () {});
+        var attivato = false;
+
+        function catturaUtm() {
+          try {
+            if (sessionStorage.getItem(KEY_UTM)) return;
+            var params = new URLSearchParams(location.search);
+            var KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
+            var found = {};
+            var hasAny = false;
+            KEYS.forEach(function (k) {
+              if (params.has(k)) { found[k] = params.get(k); hasAny = true; }
+            });
+            if (hasAny) sessionStorage.setItem(KEY_UTM, JSON.stringify(found));
+          } catch (e) {}
         }
+
+        function generaVid() {
+          var vid;
+          try { vid = localStorage.getItem(KEY_VID); } catch (e) { vid = null; }
+          if (!vid) {
+            vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() :
+              'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+              });
+            try { localStorage.setItem(KEY_VID, vid); } catch (e) {}
+          }
+          window.tcaGetVid = function () { return vid; };
+        }
+
+        function inviaBeacon() {
+          var utm = {};
+          try { utm = JSON.parse(sessionStorage.getItem(KEY_UTM) || '{}'); } catch (e) {}
+          var body = JSON.stringify({
+            vid: window.tcaGetVid ? window.tcaGetVid() : null,
+            pagina: location.pathname,
+            referrer: document.referrer || null,
+            utm: utm
+          });
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(WEBHOOK_VISIT, new Blob([body], { type: 'application/json' }));
+          } else {
+            fetch(WEBHOOK_VISIT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true }).catch(function () {});
+          }
+        }
+
+        function attivaTracciamento() {
+          if (attivato) return;
+          attivato = true;
+          catturaUtm();
+          generaVid();
+          inviaBeacon();
+        }
+
+        // Visitatore che ha già dato consenso in una visita precedente:
+        // l'API/i dati di consenso sono disponibili solo a banner caricato.
+        document.addEventListener('cookieyes_banner_load', function (e) {
+          var categorie = (e.detail && e.detail.categories) || {};
+          if (categorie.analytics) attivaTracciamento();
+        });
+
+        // Visitatore che accetta (o cambia preferenze) ora dal banner.
+        document.addEventListener('cookieyes_consent_update', function (e) {
+          var accettate = (e.detail && e.detail.accepted) || [];
+          if (accettate.indexOf('analytics') !== -1) attivaTracciamento();
+        });
       })();
     </script>
   </head>
