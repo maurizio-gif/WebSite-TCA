@@ -1,8 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
-import { publicUrl } from "../i18n/utils";
+import { publicUrl, getLocalePath } from "../i18n/utils";
 import { getEntry } from "astro:content";
+
+const lang = 'it' as const;
+const p = (path: string) => getLocalePath(lang, path);
 
 // SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/summer-camps.md
 const d = (await getEntry("pagine", "summer-camps"))!.data;
@@ -146,7 +149,7 @@ const d = (await getEntry("pagine", "summer-camps"))!.data;
       </ul>
 
       <div class="cta-row">
-        <button class="btn btn-red" data-open-modal="modal-contatti">{d.camps_cta_label}</button>
+        <a class="btn btn-red" href={p('/iscrizione-summer-camp')}>{d.camps_cta_label}</a>
       </div>
     </div>
   </section>

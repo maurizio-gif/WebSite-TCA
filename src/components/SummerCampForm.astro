@@ -1,0 +1,619 @@
+---
+import type { Lang } from '../i18n/utils';
+import prefissi from '../data/prefissi-telefonici';
+
+interface Props { lang?: Lang; backHref?: string; }
+const { lang = 'it', backHref = '/summer-camps' } = Astro.props;
+
+// endISO = ultimo giorno della settimana (2026), usato lato client per nascondere le settimane già trascorse
+const WEEKS = [
+  { id: 'w1', range: '8/06 – 12/06', endISO: '2026-06-12' },
+  { id: 'w2', range: '15/06 – 19/06', endISO: '2026-06-19' },
+  { id: 'w3', range: '22/06 – 26/06', endISO: '2026-06-26' },
+  { id: 'w4', range: '29/06 – 3/07', endISO: '2026-07-03' },
+  { id: 'w5', range: '6/07 – 10/07', endISO: '2026-07-10' },
+  { id: 'w6', range: '13/07 – 17/07', endISO: '2026-07-17' },
+  { id: 'w7', range: '20/07 – 24/07', endISO: '2026-07-24' },
+  { id: 'w8', range: '27/07 – 31/07', endISO: '2026-07-31' },
+  { id: 'w9', range: '3/08 – 7/08', endISO: '2026-08-07' },
+  { id: 'w10', range: '24/08 – 28/08', endISO: '2026-08-28' },
+  { id: 'w11', range: '31/08 – 4/09', endISO: '2026-09-04' },
+  { id: 'w12', range: '7/09 – 11/09', endISO: '2026-09-11' },
+];
+
+const t = lang === 'en' ? {
+  minorTitle: "Child's details",
+  minorSub: 'Enter the details of the child to be enrolled.',
+  minorFirst: "Child's first name",
+  minorLast: "Child's last name",
+  minorDob: 'Date of birth',
+  minorPob: 'Place of birth',
+  minorCf: 'Fiscal code',
+  addr: 'Address',
+  addrPh: 'Via Feltre 33',
+  city: 'City',
+  cityPh: 'Milano',
+  cap: 'Postal code',
+
+  parentTitle: "Parent's details",
+  parentFirst: "Parent's first name",
+  parentLast: "Parent's last name",
+  email: 'Email',
+  emailNote: "Make sure the email address is correct: you'll receive all communications from the Club there.",
+  mobile: 'Mobile',
+
+  statusTitle: 'Enrolment status',
+  fitp: 'Is the child a registered FITP member?',
+  fitpCard: 'Membership number',
+  member: 'Is the child a Club Member?',
+  yes: 'Yes',
+  no: 'No',
+  pastCamp: 'Did the child attend our summer camps last year?',
+
+  weeksTitle: 'Select weeks',
+  weeksSub: 'Choose the weeks of Summer Camp you want to enrol for, and add Pre-Camp where needed (from 8.00am).',
+  weeksHeadWeek: 'Week',
+  weeksHeadCamp: 'Summer Camp',
+  weeksHeadPre: 'Pre-Camp (+€25/week)',
+  quoteNotice: 'Rates: Members €260/week (€250 from the 2nd week or for siblings) · Tennis School students €270/week (€260) · Non-Members €295/week (€285). Member rates apply only to children regularly enrolled with a kids membership.',
+
+  healthTitle: 'Health & consents',
+  healthLabel: 'Heart conditions / medication / intolerances / allergies / special diets',
+  healthPh: 'Leave blank if not applicable',
+  medicalCert: 'I confirm that I will submit a valid medical certificate at enrolment, as required.',
+  termsNote: [
+    'No refunds are given for cancellations or withdrawals.',
+    'At payment, a €50 deposit is required; non-members also pay a one-time €10 CSAIN insurance/membership fee.',
+    'Weeks cannot be split.',
+    'The welcome kit, lunch and snacks (in-house catering) are included in the price.',
+    'Enrolment is considered valid once payment is received by the Club.',
+    'Payment must be made within 10 days of the camp start date.',
+  ],
+  acceptRules: 'I have read and accept the {link} of the Club.',
+  acceptRulesLink: 'rules',
+  acceptPrivacy: 'I have read and accept your {link} and authorise the Club to use and store my data.',
+  acceptPrivacyLink: 'Privacy Policy',
+
+  back: '← Back',
+  next: 'Next',
+  submit: 'Submit enrolment',
+  backToPage: 'Back to the Summer Camps page',
+
+  confirmTitle: 'Thank<br><em>you!</em>',
+  confirmNote: 'Thank you for your interest — we’ve received your enrolment request.',
+  confirmPayNote: 'A €50 deposit (+€10 CSAIN fee for non-members) is required to confirm your spot. Payment can be made at Reception or by bank transfer within 10 days of the camp start date, indicating in the description: <strong>Summer Camp deposit and the child’s first and last name.</strong>',
+  payName: 'Name',
+  payIban: 'IBAN',
+  payBic: 'BIC',
+  payReason: 'Description',
+  payReasonVal: "Summer Camp deposit and the child's first and last name.",
+
+  errRequired: 'Please fill in this required field.',
+  errEmail: 'Please enter a valid email address.',
+  errChoice: 'Please make a choice.',
+  errCheck: 'Please select at least one week.',
+  errConsent: 'This consent is required.',
+} : {
+  minorTitle: 'Dati del bambino',
+  minorSub: 'Inserisci di seguito i dati del bambino da iscrivere.',
+  minorFirst: 'Nome del bambino',
+  minorLast: 'Cognome del bambino',
+  minorDob: 'Data di nascita',
+  minorPob: 'Luogo di nascita',
+  minorCf: 'Codice fiscale',
+  addr: 'Indirizzo',
+  addrPh: 'Via Feltre 33',
+  city: 'Città',
+  cityPh: 'Milano',
+  cap: 'CAP',
+
+  parentTitle: 'Dati del genitore',
+  parentFirst: 'Nome del genitore',
+  parentLast: 'Cognome del genitore',
+  email: 'Email',
+  emailNote: "Controlla bene di aver inserito un indirizzo email corretto: lì riceverai tutte le comunicazioni da parte del Club.",
+  mobile: 'Cellulare',
+
+  statusTitle: 'Stato iscrizione',
+  fitp: 'Il bambino è tesserato FITP?',
+  fitpCard: 'N° tessera',
+  member: 'Il bambino è Socio del Club?',
+  yes: 'Sì',
+  no: 'No',
+  pastCamp: 'Il bambino ha partecipato l’anno scorso ai nostri summer camp?',
+
+  weeksTitle: 'Seleziona le settimane',
+  weeksSub: 'Scegli le settimane di Summer Camp a cui iscriverti, e aggiungi il Pre-Camp dove serve (dalle 8.00).',
+  weeksHeadWeek: 'Settimana',
+  weeksHeadCamp: 'Summer Camp',
+  weeksHeadPre: 'Pre-Camp (+25€/sett.)',
+  quoteNotice: 'Quote: Soci 260€/sett. (250€ dalla 2ª settimana o per fratelli) · Scuola Tennis 270€/sett. (260€) · Non Soci 295€/sett. (285€). Le quote Soci si applicano solo ai bambini regolarmente iscritti con membership kids.',
+
+  healthTitle: 'Salute e consensi',
+  healthLabel: 'Cardiopatie / uso farmaci / intolleranze / allergie / diete speciali',
+  healthPh: 'Lascia vuoto se non applicabile',
+  medicalCert: 'Confermo che presenterò un certificato medico in corso di validità al momento dell’iscrizione, come richiesto.',
+  termsNote: [
+    'Non sono previsti rimborsi per rinunce o disdette;',
+    'al momento del pagamento è richiesto il versamento di una caparra di 50€; per i non soci è previsto inoltre un contributo di 10€ per l’assicurazione CSAIN;',
+    'la settimana non è frazionabile;',
+    'il kit di benvenuto, il pranzo e le merende, con ristorazione interna, sono inclusi nel prezzo;',
+    'l’iscrizione verrà considerata effettiva al ricevimento del pagamento da parte del Club;',
+    'il pagamento va effettuato entro 10 giorni dall’inizio del camp.',
+  ],
+  acceptRules: 'Ho letto e accetto il {link} del Club.',
+  acceptRulesLink: 'regolamento',
+  acceptPrivacy: 'Ho letto e accetto la vostra {link} e autorizzo il Club a utilizzare e archiviare i miei dati.',
+  acceptPrivacyLink: 'Privacy Policy',
+
+  back: '← Indietro',
+  next: 'Avanti',
+  submit: 'Invia l’iscrizione',
+  backToPage: 'Torna alla pagina Summer Camps',
+
+  confirmTitle: 'Grazie!',
+  confirmNote: 'Ti ringraziamo per l’interesse: abbiamo ricevuto la tua richiesta di iscrizione.',
+  confirmPayNote: 'Per confermare il posto è richiesta una caparra di 50€ (+10€ assicurazione CSAIN per i non soci). Il pagamento può essere effettuato in Reception oppure tramite bonifico bancario entro 10 giorni dall’inizio del camp, indicando nella causale: <strong>Acconto Summer Camp e nome e cognome del bambino.</strong>',
+  payName: 'Nome',
+  payIban: 'IBAN',
+  payBic: 'BIC',
+  payReason: 'Causale',
+  payReasonVal: 'Acconto Summer Camp e nome e cognome del bambino.',
+
+  errRequired: 'Compila questo campo obbligatorio.',
+  errEmail: 'Inserisci un indirizzo email valido.',
+  errChoice: 'Effettua una scelta.',
+  errCheck: 'Seleziona almeno una settimana.',
+  errConsent: 'Questo consenso è obbligatorio.',
+};
+---
+
+<div class="isc-form" id="sc-form-root">
+
+  <!-- STEP 1 — Dati bambino + genitore -->
+  <div class="lm__body" data-sc-step="1">
+    <p class="lm__section-title lm__section-title--first">{t.minorTitle}</p>
+    <p class="lm__sub">{t.minorSub}</p>
+
+    <div class="lm__grid">
+      <div class="lm__field">
+        <label for="sc-minor-nome">{t.minorFirst} <span aria-hidden="true">*</span></label>
+        <input id="sc-minor-nome" type="text" required />
+      </div>
+      <div class="lm__field">
+        <label for="sc-minor-cognome">{t.minorLast} <span aria-hidden="true">*</span></label>
+        <input id="sc-minor-cognome" type="text" required />
+      </div>
+      <div class="lm__field">
+        <label for="sc-minor-dob">{t.minorDob} <span aria-hidden="true">*</span></label>
+        <input id="sc-minor-dob" type="date" required />
+      </div>
+      <div class="lm__field">
+        <label for="sc-minor-pob">{t.minorPob} <span aria-hidden="true">*</span></label>
+        <input id="sc-minor-pob" type="text" required />
+      </div>
+      <div class="lm__field lm__field--full">
+        <label for="sc-minor-cf">{t.minorCf} <span aria-hidden="true">*</span></label>
+        <input id="sc-minor-cf" type="text" maxlength="16" class="lm__input--cf" required />
+      </div>
+    </div>
+
+    <div class="lm__grid">
+      <div class="lm__field lm__field--full">
+        <label for="sc-addr">{t.addr} <span aria-hidden="true">*</span></label>
+        <input id="sc-addr" type="text" placeholder={t.addrPh} required />
+      </div>
+      <div class="lm__field">
+        <label for="sc-city">{t.city} <span aria-hidden="true">*</span></label>
+        <input id="sc-city" type="text" placeholder={t.cityPh} required />
+      </div>
+      <div class="lm__field">
+        <label for="sc-cap">{t.cap} <span aria-hidden="true">*</span></label>
+        <input id="sc-cap" type="text" inputmode="numeric" required />
+      </div>
+    </div>
+
+    <p class="lm__section-title">{t.parentTitle}</p>
+    <div class="lm__grid">
+      <div class="lm__field">
+        <label for="sc-parent-nome">{t.parentFirst} <span aria-hidden="true">*</span></label>
+        <input id="sc-parent-nome" type="text" autocomplete="given-name" required />
+      </div>
+      <div class="lm__field">
+        <label for="sc-parent-cognome">{t.parentLast} <span aria-hidden="true">*</span></label>
+        <input id="sc-parent-cognome" type="text" autocomplete="family-name" required />
+      </div>
+      <div class="lm__field lm__field--full">
+        <label for="sc-email">{t.email} <span aria-hidden="true">*</span></label>
+        <input id="sc-email" type="email" autocomplete="email" placeholder="nome@esempio.com" required />
+      </div>
+    </div>
+    <p class="lm__hint">{t.emailNote}</p>
+    <div class="lm__grid">
+      <div class="lm__field lm__field--full">
+        <label for="sc-cell">{t.mobile} <span aria-hidden="true">*</span></label>
+        <div class="lm__tel-wrap">
+          <select id="sc-pfx" class="lm__tel-prefix" autocomplete="tel-country-code">
+            {prefissi.map((pf) => (
+              <option value={pf.dial} selected={pf.dial === '+39'}>{pf.flag} {pf.dial}</option>
+            ))}
+          </select>
+          <input id="sc-cell" type="tel" autocomplete="tel-national" placeholder="3XX XXX XXXX" required />
+        </div>
+      </div>
+    </div>
+
+    <p class="lm__error" hidden role="alert"></p>
+    <div class="lm__actions">
+      <button type="button" class="btn btn-red lm__next" data-sc-next="1">
+        {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2 — Stato iscrizione -->
+  <div class="lm__body" data-sc-step="2" hidden>
+    <p class="lm__section-title lm__section-title--first">{t.statusTitle}</p>
+
+    <div class="lm__yesno-row">
+      <p class="lm__label-group">{t.fitp} <span aria-hidden="true">*</span></p>
+      <div class="lm__checks">
+        <label class="lm__check-item"><input type="radio" name="sc-fitp" value="si" /> <span>{t.yes}</span></label>
+        <label class="lm__check-item"><input type="radio" name="sc-fitp" value="no" /> <span>{t.no}</span></label>
+      </div>
+      <div data-sc-show-if="sc-fitp=si" hidden>
+        <div class="lm__field">
+          <label for="sc-fitp-tessera">{t.fitpCard}</label>
+          <input id="sc-fitp-tessera" type="text" />
+        </div>
+      </div>
+    </div>
+
+    <div class="lm__yesno-row">
+      <p class="lm__label-group">{t.member} <span aria-hidden="true">*</span></p>
+      <div class="lm__checks">
+        <label class="lm__check-item"><input type="radio" name="sc-socio" value="si" /> <span>{t.yes}</span></label>
+        <label class="lm__check-item"><input type="radio" name="sc-socio" value="no" /> <span>{t.no}</span></label>
+      </div>
+    </div>
+
+    <div class="lm__yesno-row">
+      <p class="lm__label-group">{t.pastCamp} <span aria-hidden="true">*</span></p>
+      <div class="lm__checks">
+        <label class="lm__check-item"><input type="radio" name="sc-past-camp" value="si" /> <span>{t.yes}</span></label>
+        <label class="lm__check-item"><input type="radio" name="sc-past-camp" value="no" /> <span>{t.no}</span></label>
+      </div>
+    </div>
+
+    <p class="lm__error" hidden role="alert"></p>
+    <div class="lm__actions">
+      <button type="button" class="lm__back" data-sc-back="1">{t.back}</button>
+      <button type="button" class="btn btn-red lm__next" data-sc-next="2">
+        {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3 — Selezione settimane -->
+  <div class="lm__body" data-sc-step="3" hidden>
+    <p class="lm__section-title lm__section-title--first">{t.weeksTitle}</p>
+    <p class="lm__sub">{t.weeksSub}</p>
+
+    <div class="lm__table-wrap">
+      <table class="lm__table lm__table--weeks">
+        <thead>
+          <tr>
+            <th>{t.weeksHeadWeek}</th>
+            <th>{t.weeksHeadCamp}</th>
+            <th>{t.weeksHeadPre}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {WEEKS.map((w) => (
+            <tr data-week-row={w.id} data-week-end={w.endISO}>
+              <td>{w.range}</td>
+              <td class="lm__table-check"><input type="checkbox" name="sc-week" value={w.id} data-week-check={w.id} /></td>
+              <td class="lm__table-check"><input type="checkbox" name="sc-precamp" value={w.id} data-precamp-check={w.id} disabled /></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="lm__hint lm__hint--notice">{t.quoteNotice}</p>
+
+    <p class="lm__error" hidden role="alert"></p>
+    <div class="lm__actions">
+      <button type="button" class="lm__back" data-sc-back="2">{t.back}</button>
+      <button type="button" class="btn btn-red lm__next" data-sc-next="3">
+        {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 4 — Salute e consensi -->
+  <div class="lm__body" data-sc-step="4" hidden>
+    <p class="lm__section-title lm__section-title--first">{t.healthTitle}</p>
+
+    <div class="lm__field lm__field--full">
+      <label for="sc-health">{t.healthLabel}</label>
+      <textarea id="sc-health" rows="3" placeholder={t.healthPh}></textarea>
+    </div>
+
+    <ul class="lm__terms-list">
+      {t.termsNote.map((item) => <li>{item}</li>)}
+    </ul>
+
+    <div class="lm__consent">
+      <label class="lm__consent-item">
+        <input type="checkbox" id="sc-accept-medical" required />
+        <span>{t.medicalCert}</span>
+      </label>
+      <label class="lm__consent-item">
+        <input type="checkbox" id="sc-accept-rules" required />
+        <span set:html={t.acceptRules.replace('{link}', `<a href="/regolamento" target="_blank">${t.acceptRulesLink}</a>`)} />
+      </label>
+      <label class="lm__consent-item">
+        <input type="checkbox" id="sc-accept-privacy" required />
+        <span set:html={t.acceptPrivacy.replace('{link}', `<a href="/privacy-policy" target="_blank">${t.acceptPrivacyLink}</a>`)} />
+      </label>
+    </div>
+
+    <p class="lm__error" hidden role="alert"></p>
+    <div class="lm__actions">
+      <button type="button" class="lm__back" data-sc-back="3">{t.back}</button>
+      <button type="button" class="btn btn-red lm__next" id="sc-submit">
+        {t.submit} <span class="lm__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONFERMA -->
+  <div class="lm__body lm__confirm" data-sc-step="confirm" hidden aria-live="polite">
+    <div class="lm__confirm-check" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3 class="lm__confirm-title" set:html={t.confirmTitle} />
+    <p class="lm__confirm-note">{t.confirmNote}</p>
+    <p class="lm__confirm-note" set:html={t.confirmPayNote} />
+    <div class="lm__confirm-summary">
+      <div class="lm__confirm-row"><span>{t.payName}</span><span>Tennis Club Ambrosiano SSD a R.L.</span></div>
+      <div class="lm__confirm-row"><span>{t.payIban}</span><span>IE50SUMU99036511541465</span></div>
+      <div class="lm__confirm-row"><span>{t.payBic}</span><span>SUMUIE22XXX</span></div>
+      <div class="lm__confirm-row"><span>{t.payReason}</span><span>{t.payReasonVal}</span></div>
+    </div>
+    <a class="btn btn-red lm__confirm-cta" href={backHref}>{t.backToPage}</a>
+  </div>
+
+</div>
+
+<style>
+  .isc-form {
+    background: var(--lm-bg);
+    color: var(--lm-text);
+    border: 1px solid var(--lm-border);
+  }
+</style>
+
+<style is:global>
+  .lm__check-item input[type="radio"] { accent-color: var(--color-accent); flex-shrink: 0; }
+  .lm__input--cf { text-transform: uppercase; }
+
+  .lm__section-title {
+    font-family: var(--font-display); font-size: clamp(1rem,1.6vw,1.25rem);
+    font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em;
+    color: var(--lm-text); margin: 0.6rem 0 0;
+    padding-top: 1rem; border-top: 1px solid var(--lm-border);
+  }
+  .lm__section-title--first { padding-top: 0; border-top: none; margin-top: 0; }
+
+  .lm__hint {
+    font-family: var(--font-body); font-size: clamp(11px,.8vw,12px);
+    font-weight: 300; color: var(--lm-text-dim); margin: -0.6rem 0 0;
+  }
+  .lm__hint--notice {
+    margin-top: 0; background: var(--lm-input-bg); border: 1px solid var(--lm-border);
+    border-left: 3px solid var(--color-accent); padding: 0.85rem 1rem;
+  }
+
+  .lm__sub a { color: var(--color-accent); text-decoration: underline; }
+  .lm__sub a:hover { color: var(--color-accent-dark); }
+
+  .lm__yesno-row { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem; }
+
+  .lm__terms-list {
+    margin: 0; padding-left: 1.1rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    font-family: var(--font-body); font-size: clamp(12px,.9vw,13px);
+    font-weight: 300; line-height: 1.6; color: var(--lm-text-sub);
+  }
+
+  .lm__field textarea {
+    font-family: var(--font-body); font-size: clamp(13px,.95vw,15px);
+    font-weight: 300; padding: 0.7rem 0.85rem;
+    border: 1px solid var(--lm-input-bd);
+    background: var(--lm-input-bg); color: var(--lm-text);
+    width: 100%; resize: vertical; transition: border-color 0.18s;
+  }
+  .lm__field textarea:focus { outline: none; border-color: var(--color-accent); background-color: #fff; }
+
+  .lm__table-wrap { overflow-x: auto; border: 1px solid var(--lm-border); }
+  .lm__table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: clamp(11px,.85vw,12.5px); }
+  .lm__table th, .lm__table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--lm-border); text-align: left; }
+  .lm__table th { font-weight: 700; color: var(--lm-text); background: var(--lm-bg-head); white-space: nowrap; }
+  .lm__table td { font-weight: 300; color: var(--lm-text-sub); }
+  .lm__table tr:last-child td { border-bottom: none; }
+  .lm__table--weeks th:not(:first-child), .lm__table--weeks td:not(:first-child) { text-align: center; white-space: nowrap; }
+  .lm__table-check input[type="checkbox"] { accent-color: var(--color-accent); width: 18px; height: 18px; cursor: pointer; }
+  .lm__table-check input[type="checkbox"]:disabled { cursor: not-allowed; opacity: 0.35; }
+</style>
+
+<script define:vars={{ ERR: {
+  required: t.errRequired,
+  email: t.errEmail,
+  choice: t.errChoice,
+  check: t.errCheck,
+  consent: t.errConsent,
+}, WEEK_IDS: WEEKS.map((w) => w.id) }}>
+  const root = document.getElementById('sc-form-root');
+
+  const WEBHOOK_ISCRIZIONE = 'https://automazione.n8ndevelop.it/webhook/tca-summer-camp';
+
+  // Nasconde le settimane già trascorse (mostra solo quelle a oggi o future)
+  (function hidePastWeeks() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    root.querySelectorAll('[data-week-row]').forEach((row) => {
+      const end = new Date(`${row.dataset.weekEnd}T23:59:59`);
+      if (end < today) row.remove();
+    });
+  })();
+
+  function getUtm() {
+    try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) { return {}; }
+  }
+  function getVid() {
+    return window.tcaGetVid ? window.tcaGetVid() : null;
+  }
+
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+
+  function showStep(key) {
+    root.querySelectorAll('[data-sc-step]').forEach((el) => {
+      el.hidden = el.dataset.scStep !== String(key);
+    });
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showError(step, msg) {
+    const err = root.querySelector(`[data-sc-step="${step}"] > .lm__error`);
+    if (err) { err.textContent = msg; err.hidden = false; }
+  }
+  function clearError(step) {
+    const err = root.querySelector(`[data-sc-step="${step}"] > .lm__error`);
+    if (err) err.hidden = true;
+  }
+
+  root.querySelectorAll('[data-sc-back]').forEach((btn) => {
+    btn.addEventListener('click', () => showStep(btn.dataset.scBack));
+  });
+
+  // Mostra/nasconde campo N° tessera in base a Sì/No
+  root.querySelectorAll('[data-sc-show-if]').forEach((el) => {
+    const [name, val] = el.dataset.scShowIf.split('=');
+    root.querySelectorAll(`input[name="${name}"]`).forEach((radio) => {
+      radio.addEventListener('change', () => {
+        el.hidden = radio.value !== val || !radio.checked;
+      });
+    });
+  });
+
+  // Pre-Camp selezionabile solo se la settimana corrispondente è spuntata
+  // (alcune settimane potrebbero essere già state rimosse da hidePastWeeks)
+  WEEK_IDS.forEach((id) => {
+    const weekEl = root.querySelector(`[data-week-check="${id}"]`);
+    const preEl = root.querySelector(`[data-precamp-check="${id}"]`);
+    if (!weekEl || !preEl) return;
+    weekEl.addEventListener('change', () => {
+      preEl.disabled = !weekEl.checked;
+      if (!weekEl.checked) preEl.checked = false;
+    });
+  });
+
+  // STEP 1 → 2
+  root.querySelector('[data-sc-next="1"]').addEventListener('click', () => {
+    clearError('1');
+    const required = ['sc-minor-nome','sc-minor-cognome','sc-minor-dob','sc-minor-pob','sc-minor-cf',
+                      'sc-addr','sc-city','sc-cap',
+                      'sc-parent-nome','sc-parent-cognome','sc-email','sc-cell'];
+    for (const id of required) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { showError('1', ERR.required); el.focus(); return; }
+    }
+    const emailEl = document.getElementById('sc-email');
+    if (!isValidEmail(emailEl.value)) { showError('1', ERR.email); emailEl.focus(); return; }
+    showStep('2');
+  });
+
+  // STEP 2 → 3
+  root.querySelector('[data-sc-next="2"]').addEventListener('click', () => {
+    clearError('2');
+    if (!root.querySelector('input[name="sc-fitp"]:checked')) { showError('2', ERR.choice); return; }
+    if (!root.querySelector('input[name="sc-socio"]:checked')) { showError('2', ERR.choice); return; }
+    if (!root.querySelector('input[name="sc-past-camp"]:checked')) { showError('2', ERR.choice); return; }
+    showStep('3');
+  });
+
+  // STEP 3 → 4
+  root.querySelector('[data-sc-next="3"]').addEventListener('click', () => {
+    clearError('3');
+    const weeksChecked = root.querySelectorAll('input[name="sc-week"]:checked');
+    if (weeksChecked.length === 0) { showError('3', ERR.check); return; }
+    showStep('4');
+  });
+
+  function collectPayload() {
+    const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+    const radioVal = (name) => { const el = root.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
+    const weeks = Array.from(root.querySelectorAll('input[name="sc-week"]:checked')).map((el) => el.value);
+    const preCamp = Array.from(root.querySelectorAll('input[name="sc-precamp"]:checked')).map((el) => el.value);
+
+    return {
+      minore: {
+        nome: val('sc-minor-nome'),
+        cognome: val('sc-minor-cognome'),
+        dataNascita: val('sc-minor-dob'),
+        luogoNascita: val('sc-minor-pob'),
+        codiceFiscale: val('sc-minor-cf'),
+      },
+      indirizzo: {
+        via: val('sc-addr'),
+        citta: val('sc-city'),
+        cap: val('sc-cap'),
+      },
+      genitore: {
+        nome: val('sc-parent-nome'),
+        cognome: val('sc-parent-cognome'),
+        email: val('sc-email'),
+        cellulare: `${document.getElementById('sc-pfx').value} ${val('sc-cell')}`,
+      },
+      iscrizione: {
+        tesseratoFitp: radioVal('sc-fitp') === 'si',
+        tesseraFitpNumero: val('sc-fitp-tessera'),
+        socioClub: radioVal('sc-socio') === 'si',
+        partecipatoAnnoScorso: radioVal('sc-past-camp') === 'si',
+        settimane: weeks,
+        preCampSettimane: preCamp,
+      },
+      noteMediche: val('sc-health'),
+      consensi: { certificatoMedico: true, regolamento: true, privacy: true },
+      pagina: location.href,
+      referrer: document.referrer || null,
+      utm: getUtm(),
+      vid: getVid(),
+    };
+  }
+
+  const submitBtn = document.getElementById('sc-submit');
+  submitBtn.addEventListener('click', async () => {
+    clearError('4');
+    const medical = document.getElementById('sc-accept-medical');
+    const rules = document.getElementById('sc-accept-rules');
+    const privacy = document.getElementById('sc-accept-privacy');
+    if (!medical.checked || !rules.checked || !privacy.checked) { showError('4', ERR.consent); return; }
+
+    submitBtn.disabled = true;
+    try {
+      await fetch(WEBHOOK_ISCRIZIONE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(collectPayload()),
+      });
+    } catch (e) {}
+    submitBtn.disabled = false;
+
+    showStep('confirm');
+  });
+</script>
