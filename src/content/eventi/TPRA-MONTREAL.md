@@ -30,7 +30,7 @@ corpo_en: |-
 
 Si gioca con formule di punteggio ridotte e veloci, come i set a 4 games. E' aperto a tesserati **non agonistici** o di **4° Categoria**.
 
-Procedura di Iscrizione:
+**Procedura di Iscrizione:**
 
 1. Iscrizioni tramite il portale [https://tpra.fitp.it/tornei/calendario-tornei](https://tpra.fitp.it/tornei/calendario-tornei)
 2. Pagamento in Segreteria
