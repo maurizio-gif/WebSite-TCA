@@ -629,15 +629,21 @@ const rigaMembership = z.object({
   feature_tooltip: z.string().optional(),
   silver_tipo: z.enum(['incluso', 'parziale', 'valore', 'check']),
   silver_valore: z.string().optional(),
+  silver_valore_tooltip: z.string().optional(),
   gold_tipo: z.enum(['incluso', 'parziale', 'valore', 'check']),
   gold_valore: z.string().optional(),
+  gold_valore_tooltip: z.string().optional(),
   platinum_tipo: z.enum(['incluso', 'parziale', 'valore', 'check']),
   platinum_valore: z.string().optional(),
+  platinum_valore_tooltip: z.string().optional(),
   feature_en: z.string().optional(),
   feature_tooltip_en: z.string().optional(),
   silver_valore_en: z.string().optional(),
+  silver_valore_tooltip_en: z.string().optional(),
   gold_valore_en: z.string().optional(),
+  gold_valore_tooltip_en: z.string().optional(),
   platinum_valore_en: z.string().optional(),
+  platinum_valore_tooltip_en: z.string().optional(),
 });
 
 const membership = defineCollection({
@@ -651,6 +657,12 @@ const membership = defineCollection({
     platinum_nome: z.string(),
     platinum_badge: z.string(),
     cta_label: z.string(),
+    silver_prezzo: z.string().optional(),
+    gold_prezzo: z.string().optional(),
+    platinum_prezzo: z.string().optional(),
+    prezzo_suffisso: z.string().optional(),
+    prezzo_tooltip: z.string().optional(),
+    nota_finale: z.string().optional(),
     categorie: z.array(z.object({
       label: z.string(),
       label_en: z.string().optional(),
@@ -662,6 +674,9 @@ const membership = defineCollection({
     sottotitolo_en: z.string().optional(),
     platinum_badge_en: z.string().optional(),
     cta_label_en: z.string().optional(),
+    prezzo_suffisso_en: z.string().optional(),
+    prezzo_tooltip_en: z.string().optional(),
+    nota_finale_en: z.string().optional(),
   }),
 });
 

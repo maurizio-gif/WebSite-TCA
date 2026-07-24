@@ -274,6 +274,12 @@ export default defineConfig({
           { type: 'string', name: 'platinum_nome', label: 'Nome livello 3 (es. "Platinum")', required: true },
           { type: 'string', name: 'platinum_badge', label: 'Badge sul livello 3 (es. "Più completo")', required: true },
           { type: 'string', name: 'cta_label', label: 'Testo pulsante (in ogni colonna)', required: true },
+          { type: 'string', name: 'silver_prezzo', label: 'Livello 1 — prezzo mensile (solo numero, es. "45")' },
+          { type: 'string', name: 'gold_prezzo', label: 'Livello 2 — prezzo mensile (solo numero, es. "55")' },
+          { type: 'string', name: 'platinum_prezzo', label: 'Livello 3 — prezzo mensile (solo numero, es. "100")' },
+          { type: 'string', name: 'prezzo_suffisso', label: 'Suffisso prezzo (es. "/mese")' },
+          { type: 'string', name: 'prezzo_tooltip', label: 'Tooltip sul prezzo (icona info)', ui: { component: 'textarea' } },
+          { type: 'string', name: 'nota_finale', label: 'Nota generica sotto la tabella', ui: { component: 'textarea' } },
           {
             type: 'object',
             name: 'categorie',
@@ -308,6 +314,7 @@ export default defineConfig({
                     ],
                   },
                   { type: 'string', name: 'silver_valore', label: 'Livello 1 — testo cella (non serve per "check")' },
+                  { type: 'string', name: 'silver_valore_tooltip', label: 'Livello 1 — tooltip sul valore (opzionale, icona info)' },
                   {
                     type: 'string', name: 'gold_tipo', label: 'Livello 2 — tipo cella', required: true,
                     options: [
@@ -318,6 +325,7 @@ export default defineConfig({
                     ],
                   },
                   { type: 'string', name: 'gold_valore', label: 'Livello 2 — testo cella (non serve per "check")' },
+                  { type: 'string', name: 'gold_valore_tooltip', label: 'Livello 2 — tooltip sul valore (opzionale, icona info)' },
                   {
                     type: 'string', name: 'platinum_tipo', label: 'Livello 3 — tipo cella', required: true,
                     options: [
@@ -328,11 +336,15 @@ export default defineConfig({
                     ],
                   },
                   { type: 'string', name: 'platinum_valore', label: 'Livello 3 — testo cella (non serve per "check")' },
+                  { type: 'string', name: 'platinum_valore_tooltip', label: 'Livello 3 — tooltip sul valore (opzionale, icona info)' },
                   { type: 'string', name: 'feature_en', label: '🇬🇧 Nome caratteristica (inglese)' },
                   { type: 'string', name: 'feature_tooltip_en', label: '🇬🇧 Tooltip (inglese)' },
                   { type: 'string', name: 'silver_valore_en', label: '🇬🇧 Livello 1 — testo cella (inglese)' },
+                  { type: 'string', name: 'silver_valore_tooltip_en', label: '🇬🇧 Livello 1 — tooltip sul valore (inglese)' },
                   { type: 'string', name: 'gold_valore_en', label: '🇬🇧 Livello 2 — testo cella (inglese)' },
+                  { type: 'string', name: 'gold_valore_tooltip_en', label: '🇬🇧 Livello 2 — tooltip sul valore (inglese)' },
                   { type: 'string', name: 'platinum_valore_en', label: '🇬🇧 Livello 3 — testo cella (inglese)' },
+                  { type: 'string', name: 'platinum_valore_tooltip_en', label: '🇬🇧 Livello 3 — tooltip sul valore (inglese)' },
                 ],
               },
             ],
@@ -342,6 +354,9 @@ export default defineConfig({
           { type: 'string', name: 'sottotitolo_en', label: '🇬🇧 Sottotitolo (inglese)', ui: { component: 'textarea' } },
           { type: 'string', name: 'platinum_badge_en', label: '🇬🇧 Badge livello 3 (inglese)' },
           { type: 'string', name: 'cta_label_en', label: '🇬🇧 Testo pulsante (inglese)' },
+          { type: 'string', name: 'prezzo_suffisso_en', label: '🇬🇧 Suffisso prezzo (inglese)' },
+          { type: 'string', name: 'prezzo_tooltip_en', label: '🇬🇧 Tooltip sul prezzo (inglese)', ui: { component: 'textarea' } },
+          { type: 'string', name: 'nota_finale_en', label: '🇬🇧 Nota generica sotto la tabella (inglese)', ui: { component: 'textarea' } },
         ],
       },
       // ─── INFO CLUB ─────────────────────────────────────────────────────────
