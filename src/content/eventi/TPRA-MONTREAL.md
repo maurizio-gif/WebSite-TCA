@@ -2,7 +2,7 @@
 titolo: TPRA MONTREAL
 data: 2026-08-01T00:00:00.000Z
 categoria: Torneo
-descrizione: Torneo di Tennis Amatoriale del Circuito FITP TPRA
+descrizione: '1 e 2 Agosto: Torneo di Tennis Amatoriale del Circuito FITP TPRA'
 luogo: Campi in Terra
 iscrizioniHref: 'https://tpra.fitp.it/tornei/calendario-tornei'
 titolo_en: TPRA MONTREAL
