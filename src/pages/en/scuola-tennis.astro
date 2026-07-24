@@ -106,6 +106,45 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
     </div>
   </section>
 
+  <!-- Summer Tennis School -->
+  <section class="content-section content-section--alt">
+    <div class="content-section__inner">
+      <span class="eyebrow">{d.scuola_sezione5_eyebrow_en ?? d.scuola_sezione5_eyebrow}</span>
+      <h2 class="section-title">{d.scuola_sezione5_titolo_en ?? d.scuola_sezione5_titolo}<br><em>{d.scuola_sezione5_titolo_accent_en ?? d.scuola_sezione5_titolo_accent}</em></h2>
+      <p class="section-lead body-text">{d.scuola_sezione5_testo_en ?? d.scuola_sezione5_testo}</p>
+
+      <div class="info-grid">
+        {d.scuola_sezione5_info_rapide!.map((info) => (
+          <div class="info-item">
+            <span class="info-item__label">{info.label_en ?? info.label}</span>
+            <span class="info-item__value">{info.valore_en ?? info.valore}</span>
+          </div>
+        ))}
+      </div>
+
+      <div class="price-table-wrap">
+        <table class="price-table">
+          <tbody>
+            {d.scuola_sezione5_quote_righe!.map((r) => (
+              <tr>
+                <td class="price-table__cat">{r.categoria_en ?? r.categoria}</td>
+                <td>{r.prezzo}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <ul class="bullet-list">
+        {(d.scuola_sezione5_note_en ?? d.scuola_sezione5_note)!.map((nota) => <li>{nota}</li>)}
+      </ul>
+
+      <div class="section-cta">
+        <button class="btn btn-red" data-open-modal="modal-contatti">{d.scuola_sezione5_cta_label_en ?? d.scuola_sezione5_cta_label}</button>
+      </div>
+    </div>
+  </section>
+
   <section class="content-section">
     <div class="content-section__inner">
       <span class="eyebrow">Tennis Academy · Enrolment open</span>
@@ -369,8 +408,110 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
     margin-top: 2.5rem;
   }
 
+  /* Summer Tennis School: quick info, rates table, condition list */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+    margin-bottom: 3vh;
+  }
+
+  .info-item {
+    background: var(--color-bg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .info-item__label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .info-item__value {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 0.95vw, 16px);
+    font-weight: 400;
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .price-table-wrap {
+    overflow-x: auto;
+    max-width: 480px;
+    margin-bottom: 2.5vh;
+  }
+
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 320px;
+  }
+
+  .price-table td {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 0.95vw, 16px);
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+  }
+
+  .price-table__cat {
+    font-weight: 600;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .price-table tbody tr:nth-child(odd) {
+    background: var(--color-bg);
+  }
+
+  .content-section--alt .price-table tbody tr:nth-child(odd) {
+    background: var(--color-off-white);
+  }
+
+  .bullet-list {
+    list-style: none;
+    margin: 0 0 3vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    max-width: 70ch;
+  }
+
+  .bullet-list li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-family: var(--font-body);
+    font-size: clamp(14px, 0.95vw, 16px);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--color-text);
+  }
+
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 6px;
+    height: 6px;
+    background: var(--color-accent);
+    border-radius: 50%;
+  }
+
   @media (max-width: 1024px) {
     .age-grid { grid-template-columns: repeat(2, 1fr); }
+    .info-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 860px) {
@@ -380,6 +521,7 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 
   @media (max-width: 600px) {
     .age-grid { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
   }
 
   .iscrizione-cta {
