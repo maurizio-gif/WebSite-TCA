@@ -1,5 +1,6 @@
 ---
 import type { Lang } from '../i18n/utils';
+import prefissi from '../data/prefissi-telefonici';
 
 interface Props { lang?: Lang; backHref?: string; }
 const { lang = 'it', backHref = '/scuola-tennis' } = Astro.props;
@@ -299,7 +300,14 @@ const t = lang === 'en' ? {
     <div class="lm__grid">
       <div class="lm__field lm__field--full">
         <label for="isc-cell">{t.mobile} <span aria-hidden="true">*</span></label>
-        <input id="isc-cell" type="tel" autocomplete="tel" placeholder="3XX XXX XXXX" required />
+        <div class="lm__tel-wrap">
+          <select id="isc-pfx" class="lm__tel-prefix" autocomplete="tel-country-code">
+            {prefissi.map((pf) => (
+              <option value={pf.dial} selected={pf.dial === '+39'}>{pf.flag} {pf.dial}</option>
+            ))}
+          </select>
+          <input id="isc-cell" type="tel" autocomplete="tel-national" placeholder="3XX XXX XXXX" required />
+        </div>
       </div>
     </div>
 
@@ -497,8 +505,11 @@ const t = lang === 'en' ? {
 </style>
 
 <style is:global>
-  /* ── Select coerenti con input/textarea del sistema .lm ─────────── */
-  .lm__field select {
+  /* ── Select coerenti con input/textarea del sistema .lm ───────────
+     Selettore ristretto ai figli diretti di .lm__field: il select del
+     prefisso telefonico (dentro .lm__tel-wrap) ha le sue regole dedicate
+     e non deve ereditare width:100%. ───────────────────────────────── */
+  .lm__field > select {
     font-family: var(--font-body); font-size: clamp(13px,.95vw,15px);
     font-weight: 300; padding: 0.7rem 2rem 0.7rem 0.85rem;
     border: 1px solid var(--lm-input-bd);
@@ -508,8 +519,8 @@ const t = lang === 'en' ? {
     background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236B5C57' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat; background-position: right 14px center;
   }
-  .lm__field select:invalid { color: var(--lm-text-dim); }
-  .lm__field select:focus { outline: none; border-color: var(--color-accent); background-color: #fff; }
+  .lm__field > select:invalid { color: var(--lm-text-dim); }
+  .lm__field > select:focus { outline: none; border-color: var(--color-accent); background-color: #fff; }
 
   .lm__check-item input[type="radio"] { accent-color: var(--color-accent); flex-shrink: 0; }
 
@@ -697,7 +708,7 @@ const t = lang === 'en' ? {
         nome: val('isc-parent-nome'),
         cognome: val('isc-parent-cognome'),
         email: val('isc-email'),
-        cellulare: val('isc-cell'),
+        cellulare: `${document.getElementById('isc-pfx').value} ${val('isc-cell')}`,
       },
       iscrizione: {
         tipo,
