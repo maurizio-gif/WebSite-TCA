@@ -21,7 +21,7 @@ pt_sezione1_titolo_accent: "è una scienza."
 pt_sezione1_paragrafo1: "Ogni persona è diversa: storia clinica, obiettivi, tempi di recupero, motivazioni. I nostri personal trainer partono da un assessment iniziale approfondito per costruire un programma che ti porti risultati reali, senza sprecare energia né tempo."
 pt_sezione1_paragrafo2: "Che tu voglia perdere peso, aumentare la forza, prepararti per una gara di tennis o semplicemente muoverti meglio, lavorerai sempre con qualcuno che sa dove vuole portarti."
 pt_stats:
-  - numero: "5"
+  - numero: "4"
     etichetta: "Personal Trainer\ncertificati"
     etichetta_en: "Certified\npersonal trainers"
   - numero: "1:1"
@@ -38,6 +38,7 @@ pt_sezione2_titolo: "Conosci i tuoi"
 pt_sezione2_titolo_accent: "trainer."
 pt_trainers:
   - nome: "Alessio Andolina"
+    foto: "/Personal%20Trainer%20Alessio%20Andolina.jpg"
     specializzazioni:
       - "Sport da combattimento, Boxe, Kickboxing"
       - "Crossfit e High Intensity Training"
@@ -59,6 +60,7 @@ pt_trainers:
     lingue_en:
       - "Italian"
   - nome: "Federico Tronconi"
+    foto: "/Personal%20Trainer%20Federico%20Tronconi.jpg"
     specializzazioni:
       - "Allenamento funzionale e Kettlebell"
       - "Allenamento della forza"
@@ -80,6 +82,7 @@ pt_trainers:
       - "Italian"
       - "French"
   - nome: "Giusi De Rosa"
+    foto: "/Personal%20Trainer%20Giusi%20De%20Rosa.jpg"
     specializzazioni:
       - "Body Building"
       - "Allenamento funzionale"
@@ -105,6 +108,7 @@ pt_trainers:
       - "Italian"
       - "English"
   - nome: "Matteo Sandri"
+    foto: "/Personal%20Trainer%20Matteo%20Sandri.jpg"
     specializzazioni:
       - "Allenamento della forza"
       - "Preparazione sport-specifica"
@@ -127,23 +131,6 @@ pt_trainers:
       - "Therapeutic exercise for joint conditions"
     lingue_en:
       - "Italian"
-  - nome: "Elisa Borgo"
-    specializzazioni:
-      - "Recupero post infortunio"
-      - "Fitness in gravidanza e post parto"
-      - "Postura"
-    qualifiche:
-      - "Laurea in scienze motorie e dello sport"
-      - "Certificazione istruttore pilates 1° livello (Ref e Mat)"
-      - "Certificazione PT ISSA"
-    specializzazioni_en:
-      - "Post-injury recovery"
-      - "Pregnancy and postpartum fitness"
-      - "Posture"
-    qualifiche_en:
-      - "Degree in Sport Science"
-      - "Level 1 Pilates instructor certification (Reformer and Mat)"
-      - "ISSA Personal Trainer certification"
 pt_sezione3_eyebrow: "Come funziona"
 pt_sezione3_titolo: "Dal primo giorno"
 pt_sezione3_titolo_accent: "al tuo obiettivo."
