@@ -132,31 +132,6 @@ const pagine = defineCollection({
     camps_quote_note_en: z.array(z.string()).optional(),
     camps_cta_label_en: z.string().optional(),
 
-    // ── Corpo pagina: Scuola Tennis Estiva (sezione dedicata su Summer Camps) ──
-    scuolaestiva_eyebrow: z.string().optional(),
-    scuolaestiva_titolo: z.string().optional(),
-    scuolaestiva_titolo_accent: z.string().optional(),
-    scuolaestiva_testo: z.string().optional(),
-    scuolaestiva_info_rapide: z.array(z.object({
-      label: z.string(),
-      valore: z.string(),
-      label_en: z.string().optional(),
-      valore_en: z.string().optional(),
-    })).optional(),
-    scuolaestiva_quote_righe: z.array(z.object({
-      categoria: z.string(),
-      prezzo: z.string(),
-      categoria_en: z.string().optional(),
-    })).optional(),
-    scuolaestiva_note: z.array(z.string()).optional(),
-    scuolaestiva_cta_label: z.string().optional(),
-    scuolaestiva_eyebrow_en: z.string().optional(),
-    scuolaestiva_titolo_en: z.string().optional(),
-    scuolaestiva_titolo_accent_en: z.string().optional(),
-    scuolaestiva_testo_en: z.string().optional(),
-    scuolaestiva_note_en: z.array(z.string()).optional(),
-    scuolaestiva_cta_label_en: z.string().optional(),
-
     // ── Corpo pagina: Scuola Tennis ──
     scuola_sezione1_eyebrow: z.string().optional(),
     scuola_sezione1_titolo: z.string().optional(),
@@ -208,6 +183,23 @@ const pagine = defineCollection({
       testo_en: z.string().optional(),
     })).optional(),
     scuola_sezione4_footer_testo: z.string().optional(),
+    scuola_sezione5_eyebrow: z.string().optional(),
+    scuola_sezione5_titolo: z.string().optional(),
+    scuola_sezione5_titolo_accent: z.string().optional(),
+    scuola_sezione5_testo: z.string().optional(),
+    scuola_sezione5_info_rapide: z.array(z.object({
+      label: z.string(),
+      valore: z.string(),
+      label_en: z.string().optional(),
+      valore_en: z.string().optional(),
+    })).optional(),
+    scuola_sezione5_quote_righe: z.array(z.object({
+      categoria: z.string(),
+      prezzo: z.string(),
+      categoria_en: z.string().optional(),
+    })).optional(),
+    scuola_sezione5_note: z.array(z.string()).optional(),
+    scuola_sezione5_cta_label: z.string().optional(),
     scuola_sezione1_eyebrow_en: z.string().optional(),
     scuola_sezione1_titolo_en: z.string().optional(),
     scuola_sezione1_titolo_accent_en: z.string().optional(),
@@ -230,6 +222,12 @@ const pagine = defineCollection({
     scuola_sezione4_titolo_en: z.string().optional(),
     scuola_sezione4_titolo_accent_en: z.string().optional(),
     scuola_sezione4_footer_testo_en: z.string().optional(),
+    scuola_sezione5_eyebrow_en: z.string().optional(),
+    scuola_sezione5_titolo_en: z.string().optional(),
+    scuola_sezione5_titolo_accent_en: z.string().optional(),
+    scuola_sezione5_testo_en: z.string().optional(),
+    scuola_sezione5_note_en: z.array(z.string()).optional(),
+    scuola_sezione5_cta_label_en: z.string().optional(),
 
     // ── Corpo pagina: Personal Trainer ──
     pt_sezione1_eyebrow: z.string().optional(),
