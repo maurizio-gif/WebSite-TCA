@@ -30,7 +30,25 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
     ctas={[{ label: "Richiedi la Tua Prova", openModal: true }]}
   />
 
+  <!-- Metodo -->
   <section class="content-section">
+    <div class="content-section__inner two-col">
+      <div class="two-col__text">
+        <span class="eyebrow">{d.scuola_sezione3_eyebrow}</span>
+        <h2 class="section-title">{d.scuola_sezione3_titolo}<br><em>{d.scuola_sezione3_titolo_accent}</em></h2>
+        <span class="method-badge">{d.scuola_sezione3_badge}</span>
+        <p class="body-text" set:html={mdBold(d.scuola_sezione3_paragrafo1)} />
+        <p class="body-text">{d.scuola_sezione3_paragrafo2}</p>
+        <p class="body-text" set:html={mdBold(d.scuola_sezione3_paragrafo3)} />
+      </div>
+      <div class="two-col__image">
+        <img src={publicUrl(d.scuola_sezione3_immagine)} alt={d.scuola_sezione3_immagine_alt} class="full-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Un percorso per ogni livello -->
+  <section class="content-section content-section--alt">
     <div class="content-section__inner">
       <span class="eyebrow">{d.scuola_sezione1_eyebrow}</span>
       <h2 class="section-title">{d.scuola_sezione1_titolo}<br><em>{d.scuola_sezione1_titolo_accent}</em></h2>
@@ -53,121 +71,120 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
     </div>
   </section>
 
-  <section class="content-section content-section--alt">
-    <div class="content-section__inner">
-      <span class="eyebrow">{d.scuola_sezione2_eyebrow}</span>
-      <h2 class="section-title">{d.scuola_sezione2_titolo}<br><em>{d.scuola_sezione2_titolo_accent}</em></h2>
-      <div class="iscrizione-grid">
-        {d.scuola_iscrizione_cards.map((card) => (
-          <div class="iscrizione-card">
-            <h3>{card.titolo}</h3>
-            <span class="iscrizione-card__tag">{card.tag}</span>
-            <p set:html={nl2br(card.testo)} />
-          </div>
-        ))}
-      </div>
-      <div class="section-cta">
-        <button class="btn btn-red" data-open-modal="modal-contatti">{d.scuola_iscrizione_cta_label}</button>
-      </div>
-    </div>
-  </section>
+  <!-- Corsi Stagionali: Corsi e Frequenza + Si gioca tutto l'anno + Iscriviti Ora -->
+  <section class="course-group">
+    <span class="course-group__badge">Sezione Corsi Stagionali</span>
+    <div class="course-group__body">
 
-  <section class="content-section">
-    <div class="content-section__inner two-col">
-      <div class="two-col__text">
-        <span class="eyebrow">{d.scuola_sezione3_eyebrow}</span>
-        <h2 class="section-title">{d.scuola_sezione3_titolo}<br><em>{d.scuola_sezione3_titolo_accent}</em></h2>
-        <span class="method-badge">{d.scuola_sezione3_badge}</span>
-        <p class="body-text" set:html={mdBold(d.scuola_sezione3_paragrafo1)} />
-        <p class="body-text">{d.scuola_sezione3_paragrafo2}</p>
-        <p class="body-text" set:html={mdBold(d.scuola_sezione3_paragrafo3)} />
-      </div>
-      <div class="two-col__image">
-        <img src={publicUrl(d.scuola_sezione3_immagine)} alt={d.scuola_sezione3_immagine_alt} class="full-img" />
-      </div>
-    </div>
-  </section>
-
-  <section class="content-section content-section--alt">
-    <div class="content-section__inner">
-      <span class="eyebrow">{d.scuola_sezione4_eyebrow}</span>
-      <h2 class="section-title">{d.scuola_sezione4_titolo}<br><em>{d.scuola_sezione4_titolo_accent}</em></h2>
-      <div class="tornei-grid">
-        {d.scuola_tornei.map((t) => (
-          <div class="torneo-card">
-            <span class="torneo-card__when">{t.quando}</span>
-            <h3>{t.nome}</h3>
-            <p>{t.testo}</p>
-          </div>
-        ))}
-      </div>
-      <p class="level-after body-text" set:html={mdBold(d.scuola_sezione4_footer_testo)} />
-    </div>
-  </section>
-
-  <!-- Scuola Tennis Estiva -->
-  <section class="content-section content-section--alt">
-    <div class="content-section__inner">
-      <span class="eyebrow">{d.scuola_sezione5_eyebrow}</span>
-      <h2 class="section-title">{d.scuola_sezione5_titolo}<br><em>{d.scuola_sezione5_titolo_accent}</em></h2>
-      <p class="section-lead body-text">{d.scuola_sezione5_testo}</p>
-
-      <div class="info-grid">
-        {d.scuola_sezione5_info_rapide!.map((info) => (
-          <div class="info-item">
-            <span class="info-item__label">{info.label}</span>
-            <span class="info-item__value">{info.valore}</span>
-          </div>
-        ))}
-      </div>
-
-      <div class="price-table-wrap">
-        <table class="price-table">
-          <tbody>
-            {d.scuola_sezione5_quote_righe!.map((r) => (
-              <tr>
-                <td class="price-table__cat">{r.categoria}</td>
-                <td>{r.prezzo}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <ul class="bullet-list">
-        {d.scuola_sezione5_note!.map((nota) => <li>{nota}</li>)}
-      </ul>
-
-      <div class="section-cta">
-        <button class="btn btn-red" data-open-modal="modal-contatti">{d.scuola_sezione5_cta_label}</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="content-section">
-    <div class="content-section__inner">
-      <span class="eyebrow">Tennis Academy · Iscrizioni aperte</span>
-      <h2 class="section-title">Iscriviti<br><em>Ora.</em></h2>
-      <p class="section-lead body-text">
-        Le iscrizioni alla Scuola Tennis per la stagione 2026/2027 sono aperte: assicurati il posto con la preiscrizione online, versando un acconto di €300.
-      </p>
-      <div class="iscrizione-cta">
-        <div class="iscrizione-cta__facts">
-          <div class="iscrizione-cta__fact">
-            <span class="iscrizione-cta__fact-label">Preiscrizione entro</span>
-            <span class="iscrizione-cta__fact-val">15 Agosto 2026</span>
-          </div>
-          <div class="iscrizione-cta__fact">
-            <span class="iscrizione-cta__fact-label">Acconto richiesto</span>
-            <span class="iscrizione-cta__fact-val">€ 300</span>
-          </div>
-          <div class="iscrizione-cta__fact">
-            <span class="iscrizione-cta__fact-label">Inizio corsi</span>
-            <span class="iscrizione-cta__fact-val">21 Settembre 2026</span>
-          </div>
+    <div class="content-section">
+      <div class="content-section__inner">
+        <span class="eyebrow">{d.scuola_sezione2_eyebrow}</span>
+        <h2 class="section-title">{d.scuola_sezione2_titolo}<br><em>{d.scuola_sezione2_titolo_accent}</em></h2>
+        <div class="iscrizione-grid">
+          {d.scuola_iscrizione_cards.map((card) => (
+            <div class="iscrizione-card">
+              <h3>{card.titolo}</h3>
+              <span class="iscrizione-card__tag">{card.tag}</span>
+              <p set:html={nl2br(card.testo)} />
+            </div>
+          ))}
         </div>
-        <a class="btn btn-red iscrizione-cta__btn" href={p('/iscrizione-scuola-tennis')}>Iscriviti Ora</a>
+        <div class="section-cta">
+          <button class="btn btn-red" data-open-modal="modal-contatti">{d.scuola_iscrizione_cta_label}</button>
+        </div>
       </div>
+    </div>
+
+    <div class="content-section content-section--alt">
+      <div class="content-section__inner">
+        <span class="eyebrow">{d.scuola_sezione4_eyebrow}</span>
+        <h2 class="section-title">{d.scuola_sezione4_titolo}<br><em>{d.scuola_sezione4_titolo_accent}</em></h2>
+        <div class="tornei-grid">
+          {d.scuola_tornei.map((t) => (
+            <div class="torneo-card">
+              <span class="torneo-card__when">{t.quando}</span>
+              <h3>{t.nome}</h3>
+              <p>{t.testo}</p>
+            </div>
+          ))}
+        </div>
+        <p class="level-after body-text" set:html={mdBold(d.scuola_sezione4_footer_testo)} />
+      </div>
+    </div>
+
+    <div class="content-section">
+      <div class="content-section__inner">
+        <span class="eyebrow">Tennis Academy · Iscrizioni aperte</span>
+        <h2 class="section-title">Iscriviti<br><em>Ora.</em></h2>
+        <p class="section-lead body-text">
+          Le iscrizioni alla Scuola Tennis per la stagione 2026/2027 sono aperte: assicurati il posto con la preiscrizione online, versando un acconto di €300.
+        </p>
+        <div class="iscrizione-cta">
+          <div class="iscrizione-cta__facts">
+            <div class="iscrizione-cta__fact">
+              <span class="iscrizione-cta__fact-label">Preiscrizione entro</span>
+              <span class="iscrizione-cta__fact-val">15 Agosto 2026</span>
+            </div>
+            <div class="iscrizione-cta__fact">
+              <span class="iscrizione-cta__fact-label">Acconto richiesto</span>
+              <span class="iscrizione-cta__fact-val">€ 300</span>
+            </div>
+            <div class="iscrizione-cta__fact">
+              <span class="iscrizione-cta__fact-label">Inizio corsi</span>
+              <span class="iscrizione-cta__fact-val">21 Settembre 2026</span>
+            </div>
+          </div>
+          <a class="btn btn-red iscrizione-cta__btn" href={p('/iscrizione-scuola-tennis')}>Iscriviti Ora</a>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </section>
+
+  <!-- Corsi Estivi: Scuola Tennis Estiva -->
+  <section class="course-group">
+    <span class="course-group__badge">Sezione Corsi Estivi</span>
+    <div class="course-group__body">
+
+    <div class="content-section content-section--alt">
+      <div class="content-section__inner">
+        <span class="eyebrow">{d.scuola_sezione5_eyebrow}</span>
+        <h2 class="section-title">{d.scuola_sezione5_titolo}<br><em>{d.scuola_sezione5_titolo_accent}</em></h2>
+        <p class="section-lead body-text">{d.scuola_sezione5_testo}</p>
+
+        <div class="info-grid">
+          {d.scuola_sezione5_info_rapide!.map((info) => (
+            <div class="info-item">
+              <span class="info-item__label">{info.label}</span>
+              <span class="info-item__value">{info.valore}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="price-table-wrap">
+          <table class="price-table">
+            <tbody>
+              {d.scuola_sezione5_quote_righe!.map((r) => (
+                <tr>
+                  <td class="price-table__cat">{r.categoria}</td>
+                  <td>{r.prezzo}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <ul class="bullet-list">
+          {d.scuola_sezione5_note!.map((nota) => <li>{nota}</li>)}
+        </ul>
+
+        <div class="section-cta">
+          <button class="btn btn-red" data-open-modal="modal-contatti">{d.scuola_sezione5_cta_label}</button>
+        </div>
+      </div>
+    </div>
+
     </div>
   </section>
 
@@ -214,6 +231,41 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
 
   .section-cta {
     margin-top: 4vh;
+  }
+
+  /* ---------- Perimetro Corsi Stagionali / Corsi Estivi ---------- */
+  .course-group {
+    position: relative;
+    margin: 8vh var(--pad-x);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+  }
+
+  .course-group__badge {
+    position: absolute;
+    top: 0;
+    left: clamp(20px, 4vw, 48px);
+    transform: translateY(-50%);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.6rem 1.4rem;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    z-index: 1;
+  }
+
+  .course-group__body {
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
+  .course-group__body > .content-section--alt:first-child {
+    border-top: none;
   }
 
   .age-grid {
