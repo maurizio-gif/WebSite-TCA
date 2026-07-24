@@ -27,7 +27,29 @@ const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Regist
 // usate qui sotto richiedono selettori :global negli stili scoped.
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const ctaLabel = esc(tx(m.cta_label, m.cta_label_en));
+const infoIcon = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>';
+
+const suffisso = esc(tx(m.prezzo_suffisso ?? '', m.prezzo_suffisso_en));
+const prezzoTooltip = esc(tx(m.prezzo_tooltip ?? '', m.prezzo_tooltip_en));
+const priceCell = (prezzo: string | undefined, mod: string) => {
+  if (!prezzo) return `<td class="ms__foot-cell ms__foot-cell--${mod}"></td>`;
+  return `<td class="ms__foot-cell ms__foot-cell--${mod}">
+    <span class="ms__price">
+      <span class="ms__price-val">${esc(prezzo)}€</span><span class="ms__price-suffix">${suffisso}</span>
+      ${prezzoTooltip ? `<span class="ms__foot-info" tabindex="0">${infoIcon}<span class="ms__foot-tooltip" role="tooltip">${prezzoTooltip}</span></span>` : ''}
+    </span>
+  </td>`;
+};
+const hasPrezzi = Boolean(m.silver_prezzo || m.gold_prezzo || m.platinum_prezzo);
+const priceRowHtml = hasPrezzi ? `
+  <tr class="ms__price-row">
+    <td class="ms__foot-cell ms__foot-cell--feat"></td>
+    ${priceCell(m.silver_prezzo, 'silver')}
+    ${priceCell(m.gold_prezzo, 'gold')}
+    ${priceCell(m.platinum_prezzo, 'platinum')}
+  </tr>` : '';
 const footHtml = `
+  ${priceRowHtml}
   <tr class="ms__foot-row">
     <td class="ms__foot-cell ms__foot-cell--feat"></td>
     <td class="ms__foot-cell ms__foot-cell--silver">
@@ -99,16 +121,34 @@ const footHtml = `
                     {r.silver_tipo === 'check'
                       ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/><path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                       : tx(r.silver_valore ?? '', r.silver_valore_en)}
+                    {r.silver_valore_tooltip && (
+                      <span class="ms__info" tabindex="0">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                        <span class="ms__tooltip" role="tooltip">{tx(r.silver_valore_tooltip, r.silver_valore_tooltip_en)}</span>
+                      </span>
+                    )}
                   </td>
                   <td class={cellClass(r.gold_tipo, false)}>
                     {r.gold_tipo === 'check'
                       ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/><path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                       : tx(r.gold_valore ?? '', r.gold_valore_en)}
+                    {r.gold_valore_tooltip && (
+                      <span class="ms__info" tabindex="0">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                        <span class="ms__tooltip" role="tooltip">{tx(r.gold_valore_tooltip, r.gold_valore_tooltip_en)}</span>
+                      </span>
+                    )}
                   </td>
                   <td class={cellClass(r.platinum_tipo, true)}>
                     {r.platinum_tipo === 'check'
                       ? <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="9" cy="9" r="8" stroke="currentColor" stroke-opacity=".2"/><path d="M5 9.5l2.8 2.8 5.2-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                       : tx(r.platinum_valore ?? '', r.platinum_valore_en)}
+                    {r.platinum_valore_tooltip && (
+                      <span class="ms__info" tabindex="0">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9.5" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+                        <span class="ms__tooltip" role="tooltip">{tx(r.platinum_valore_tooltip, r.platinum_valore_tooltip_en)}</span>
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -118,6 +158,15 @@ const footHtml = `
         <tfoot set:html={footHtml} />
       </table>
     </div>
+
+    {m.nota_finale && (
+      <div class="ms__note">
+        <span class="ms__note-badge" aria-hidden="true">
+          <svg width="11" height="9" viewBox="0 0 14 10" fill="none"><path d="M1 5l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="ms__note-text">{tx(m.nota_finale, m.nota_finale_en)}</span>
+      </div>
+    )}
 
   </div>
 </section>
@@ -405,6 +454,120 @@ const footHtml = `
   .ms__table :global(.ms__foot-cell--feat) { background: var(--color-bg); }
   .ms__table :global(.ms__foot-cell--platinum) { background: #FBF3F3; }
 
+  /* ── Riga prezzo nel footer (sopra "Scopri di più") — :global, vedi nota tfoot ── */
+  .ms__table :global(.ms__price-row) .ms__foot-cell,
+  .ms__table :global(.ms__price-row .ms__foot-cell) {
+    padding-bottom: 6px;
+  }
+
+  .ms__table :global(.ms__price) {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 3px;
+  }
+
+  .ms__table :global(.ms__price-val) {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-weight: 800;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+  }
+
+  .ms__table :global(.ms__price-suffix) {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13px);
+    font-weight: 300;
+    color: var(--color-text-light);
+  }
+
+  .ms__table :global(.ms__foot-info) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2px;
+    color: var(--color-text-light);
+    cursor: help;
+    vertical-align: middle;
+  }
+
+  .ms__table :global(.ms__foot-info:hover),
+  .ms__table :global(.ms__foot-info:focus) {
+    color: var(--color-accent);
+    outline: none;
+  }
+
+  .ms__table :global(.ms__foot-tooltip) {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    bottom: calc(100% + 10px);
+    z-index: 20;
+    width: max-content;
+    max-width: 220px;
+    background: var(--color-text);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    font-weight: 300;
+    line-height: 1.5;
+    padding: 10px 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+    pointer-events: none;
+  }
+
+  .ms__table :global(.ms__foot-info:hover .ms__foot-tooltip),
+  .ms__table :global(.ms__foot-info:focus .ms__foot-tooltip) {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ── Nota generica: banner allineato, agganciato al fondo della tabella ── */
+  .ms__note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 20px;
+    background: var(--color-off-white);
+    border: 1px solid var(--color-border);
+    border-top: none;
+    margin-top: -1px;
+  }
+
+  .ms__note-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff;
+  }
+
+  .ms__note-text {
+    font-family: var(--font-body);
+    font-size: clamp(12.5px, 0.9vw, 14px);
+    font-weight: 400;
+    color: var(--color-text);
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .ms__note {
+      padding: 14px 16px;
+      text-align: left;
+    }
+  }
+
   /* ── MOBILE: scroll orizzontale + prima colonna sticky ── */
   @media (max-width: 768px) {
 
@@ -423,6 +586,13 @@ const footHtml = `
     .ms__table-wrap {
       border-left: none;
       border-right: none;
+    }
+
+    .ms__note {
+      border-left: none;
+      border-right: none;
+      padding-left: var(--pad-x);
+      padding-right: var(--pad-x);
     }
 
     /* Colonna feature: fissa, abbastanza larga da leggere le label */

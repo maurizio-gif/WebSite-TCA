@@ -7,16 +7,26 @@ gold_nome: "Gold"
 platinum_nome: "Platinum"
 platinum_badge: "Più completo"
 cta_label: "Scopri di più"
+silver_prezzo: "45"
+gold_prezzo: "55"
+platinum_prezzo: "100"
+prezzo_suffisso: "/mese"
+prezzo_tooltip: "Prezzo relativo alla rata mensile di abbonamento annuale, per maggiori info clicca su Scopri di più."
+nota_finale: "Per tutti gli abbonamenti sono previste tariffe agevolate su corsi e lezioni individuali."
 titolo_en: "Choose your"
 titolo_accent_en: "membership."
 sottotitolo_en: "Three tiers designed for different needs. All members access the Club facilities, member benefits, and the unique Ambrosiano atmosphere."
 platinum_badge_en: "Best value"
 cta_label_en: "Learn more"
+prezzo_suffisso_en: "/month"
+prezzo_tooltip_en: "Price refers to the monthly instalment of the annual membership. For more info click Learn more."
+nota_finale_en: "All memberships include discounted rates on courses and individual lessons."
 categorie:
   - label: "Accesso ai campi"
     label_en: "Court access"
     righe:
       - feature: "Campi da tennis all'aperto"
+        feature_tooltip: "13 campi in terra rossa e 3 in sintetico."
         silver_tipo: parziale
         silver_valore: "Sconto soci"
         gold_tipo: incluso
@@ -24,10 +34,12 @@ categorie:
         platinum_tipo: incluso
         platinum_valore: "Incluso"
         feature_en: "Outdoor tennis courts"
+        feature_tooltip_en: "13 clay courts and 3 synthetic courts."
         silver_valore_en: "Member discount"
         gold_valore_en: "Included"
         platinum_valore_en: "Included"
       - feature: "Campi da tennis al coperto"
+        feature_tooltip: "11 dei 16 campi coperti durante l'inverno."
         silver_tipo: parziale
         silver_valore: "Sconto soci"
         gold_tipo: parziale
@@ -35,10 +47,12 @@ categorie:
         platinum_tipo: incluso
         platinum_valore: "Incluso"
         feature_en: "Indoor tennis courts"
+        feature_tooltip_en: "11 of the 16 courts covered during winter."
         silver_valore_en: "Member discount"
         gold_valore_en: "Member discount"
         platinum_valore_en: "Included"
       - feature: "Campi da padel"
+        feature_tooltip: "1 campo indoor e 1 campo outdoor."
         silver_tipo: parziale
         silver_valore: "Sconto soci"
         gold_tipo: parziale
@@ -46,6 +60,7 @@ categorie:
         platinum_tipo: incluso
         platinum_valore: "Incluso"
         feature_en: "Padel courts"
+        feature_tooltip_en: "1 indoor court and 1 outdoor court."
         silver_valore_en: "Member discount"
         gold_valore_en: "Member discount"
         platinum_valore_en: "Included"
@@ -53,6 +68,7 @@ categorie:
     label_en: "Athletic Preparation"
     righe:
       - feature: "Sale di allenamento"
+        feature_tooltip: "Una palestra Cardio e Isotonico e una Sala Pesi e Rack."
         silver_tipo: incluso
         silver_valore: "Incluso"
         gold_tipo: incluso
@@ -60,20 +76,23 @@ categorie:
         platinum_tipo: incluso
         platinum_valore: "Incluso"
         feature_en: "Training rooms"
+        feature_tooltip_en: "A Cardio & Isotonic gym and a Free Weights & Rack room."
         silver_valore_en: "Included"
         gold_valore_en: "Included"
         platinum_valore_en: "Included"
       - feature: "Corsi di gruppo"
-        feature_tooltip: "Escluso il Group Cycling."
+        feature_tooltip: "Oltre 80 corsi a settimana: Endurance, Strength e Balance."
         silver_tipo: parziale
         silver_valore: "Selezione inclusa"
+        silver_valore_tooltip: "Escluso il Group Cycling."
         gold_tipo: incluso
         gold_valore: "Tutti inclusi"
         platinum_tipo: incluso
         platinum_valore: "Tutti inclusi"
         feature_en: "Group classes"
-        feature_tooltip_en: "Group Cycling not included."
+        feature_tooltip_en: "Over 80 classes a week: Endurance, Strength and Balance."
         silver_valore_en: "Selection included"
+        silver_valore_tooltip_en: "Group Cycling not included."
         gold_valore_en: "All included"
         platinum_valore_en: "All included"
   - label: "Priorità di prenotazione"
@@ -116,17 +135,4 @@ categorie:
         silver_valore_en: "1"
         gold_valore_en: "2"
         platinum_valore_en: "2"
-  - label: "Vantaggi economici"
-    label_en: "Member benefits"
-    righe:
-      - feature: "Tariffe agevolate su corsi"
-        silver_tipo: check
-        gold_tipo: check
-        platinum_tipo: check
-        feature_en: "Discounted course rates"
-      - feature: "Sconto su lezioni individuali"
-        silver_tipo: check
-        gold_tipo: check
-        platinum_tipo: check
-        feature_en: "Discount on private lessons"
 ---
