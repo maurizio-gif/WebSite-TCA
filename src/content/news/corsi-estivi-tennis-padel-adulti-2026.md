@@ -1,15 +1,15 @@
 ---
-titolo: "Al via i corsi estivi di Tennis e Padel per adulti"
-data: 2026-05-28
-categoria: "Corsi"
-sintesi: "Tennis dall'8 giugno al 3 luglio, Padel dall'8 giugno al 16 luglio: entrambi dalle 19.30 alle 22.30."
-immagine: "/Tennis%20Adulti.avif"
-immagine_alt: "Corso estivo di tennis per adulti al tramonto"
-pubblicato: true
-titolo_en: "Summer Tennis and Padel courses for adults are starting"
-categoria_en: "Courses"
-sintesi_en: "Tennis from June 8 to July 3, Padel from June 8 to July 16: both from 7.30pm to 10.30pm."
-immagine_alt_en: "Summer adult tennis course at sunset"
+titolo: Al via i corsi estivi di Tennis e Padel per adulti
+data: 2026-05-28T00:00:00.000Z
+categoria: Corsi
+sintesi: 'Tennis dall''8 giugno al 3 luglio, Padel dall''8 giugno al 16 luglio: entrambi dalle 19.30 alle 22.30.'
+immagine: /Tennis%20Adulti.avif
+immagine_alt: Corso estivo di tennis per adulti al tramonto
+pubblicato: false
+titolo_en: Summer Tennis and Padel courses for adults are starting
+categoria_en: Courses
+sintesi_en: 'Tennis from June 8 to July 3, Padel from June 8 to July 16: both from 7.30pm to 10.30pm.'
+immagine_alt_en: Summer adult tennis course at sunset
 corpo_en: |-
   The summer Tennis and Padel courses for adults have started, every evening from 7.30pm to 10.30pm.
 
@@ -26,4 +26,4 @@ Il corso di Tennis va dall'8 giugno al 3 luglio: quota di 120€ per i Soci e 16
 
 Il corso di Padel va dall'8 giugno al 16 luglio: quota di 180€ per i Soci e 240€ per i Non Soci. Per informazioni: Matteo Zanchi, 347 438 3669.
 
-Per ulteriori dettagli: info@tcambrosiano.com.
+Per ulteriori dettagli: [info@tcambrosiano.com](mailto:info@tcambrosiano.com).
