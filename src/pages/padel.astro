@@ -1,11 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHero from "../components/PageHero.astro";
+import MembershipSection from "../components/MembershipSection.astro";
+import ConversionBlock from "../components/ConversionBlock.astro";
 import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/padel.md
 const d = (await getEntry("pagine", "padel"))!.data;
+const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
 ---
 
 <BaseLayout
@@ -13,6 +16,7 @@ const d = (await getEntry("pagine", "padel"))!.data;
   description={d.description}
   image={d.hero_immagine}
   imageAlt={d.hero_immagine_alt}
+  hideLeadFormInline
 >
   <PageHero
     eyebrow={d.hero_eyebrow}
@@ -21,7 +25,10 @@ const d = (await getEntry("pagine", "padel"))!.data;
     sub={d.hero_sottotitolo}
     image={d.hero_immagine!}
     imageAlt={d.hero_immagine_alt!}
-    ctaLabel="Richiedi informazioni"
+    ctas={[
+      { label: "Diventa Socio", href: "#membership" },
+      { label: "Prenota un Campo", href: "https://playtomic.io/club-ambrosiano-padel/3c5b3aaa-85e7-41dc-838e-e72899aae1cd?q=PADEL~2024-10-23~~~", external: true, outline: true },
+    ]}
   />
 
   <section class="content-section">
@@ -36,7 +43,7 @@ const d = (await getEntry("pagine", "padel"))!.data;
             <strong>campi illuminati, maestri certificati FITP</strong> e una comunità
             di giocatori di ogni livello pronta ad accoglierti.
           </p>
-          <a class="btn btn-red" href="#lead" style="margin-top: 1.5rem;">Inizia a giocare</a>
+          <button class="btn btn-red" data-open-modal="modal-contatti" style="margin-top: 1.5rem;">Inizia a giocare</button>
         </div>
         <div class="two-col__image">
           <img
@@ -48,6 +55,31 @@ const d = (await getEntry("pagine", "padel"))!.data;
       </div>
     </div>
   </section>
+
+  <div id="membership" class="anchor-target">
+    <MembershipSection />
+  </div>
+
+  <section class="content-section content-section--alt">
+    <div class="content-section__inner">
+      <span class="eyebrow">{d.padel_corsi_eyebrow}</span>
+      <h2 class="section-title">{d.padel_corsi_titolo}<br><em>{d.padel_corsi_titolo_accent}</em></h2>
+      <p class="section-lead" set:html={mdBold(d.padel_corsi_intro)} />
+      <div class="content-grid content-grid--4">
+        {d.padel_corsi_livelli!.map((l) => (
+          <div class="content-card content-card--simple">
+            <strong>{l.titolo}</strong>
+            <p>{l.testo}</p>
+          </div>
+        ))}
+      </div>
+      <div class="section-cta">
+        <button class="btn btn-red" data-open-modal="modal-contatti">{d.padel_corsi_cta_label}</button>
+      </div>
+    </div>
+  </section>
+
+  <ConversionBlock />
 
 </BaseLayout>
 
@@ -107,5 +139,66 @@ const d = (await getEntry("pagine", "padel"))!.data;
     height: clamp(280px, 42vh, 520px);
     object-fit: cover;
     display: block;
+  }
+
+  .section-lead {
+    font-family: var(--font-body);
+    font-size: clamp(16px, 1.1vw, 19px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-text-light);
+    max-width: none;
+    margin-bottom: 4vh;
+  }
+
+  .section-cta {
+    margin-top: 4vh;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .content-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+  .content-card--simple {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .content-card--simple strong {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text);
+  }
+
+  .content-card--simple p {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1vw, 18px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+  }
+
+  @media (max-width: 1024px) {
+    .content-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .content-grid--4 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Anchor offset per navbar fissa ── */
+  .anchor-target {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
   }
 </style>

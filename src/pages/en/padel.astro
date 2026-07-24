@@ -1,9 +1,18 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import MembershipSection from "../../components/MembershipSection.astro";
+import ConversionBlock from "../../components/ConversionBlock.astro";
 import { publicUrl } from "../../i18n/utils";
 
 const lang = 'en' as const;
+
+const corsiLivelli = [
+  { titolo: "Beginners", testo: "For those starting from scratch. Small groups, patient coaches, a gradual approach." },
+  { titolo: "Intermediate", testo: "Consolidate your technique and improve consistency and tactics in your game." },
+  { titolo: "Advanced", testo: "Match play and stroke-specific work for competitive players." },
+  { titolo: "Private Lessons", testo: "One-to-one work with the coach. Maximum intensity, rapid progress." },
+];
 ---
 
 <BaseLayout
@@ -12,6 +21,7 @@ const lang = 'en' as const;
   description="Padel at TCA: indoor and outdoor courts, certified FITP coaches and an active community of players at every level, in Milan."
   image="/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif"
   imageAlt="Padel court at Tennis Club Ambrosiano"
+  hideLeadFormInline
 >
   <PageHero
     eyebrow="Adults · Padel"
@@ -20,7 +30,10 @@ const lang = 'en' as const;
     sub="Indoor and outdoor courts, FITP-certified coaches and a community of players of every level ready to welcome you."
     image="/ba63296a-9191-42dd-ae45-f53124e649ce_Padel.avif"
     imageAlt="Padel court at Tennis Club Ambrosiano"
-    ctaLabel="Request Information"
+    ctas={[
+      { label: "Become a Member", href: "#membership" },
+      { label: "Book a Court", href: "https://playtomic.io/club-ambrosiano-padel/3c5b3aaa-85e7-41dc-838e-e72899aae1cd?q=PADEL~2024-10-23~~~", external: true, outline: true },
+    ]}
   />
 
   <section class="content-section">
@@ -35,7 +48,7 @@ const lang = 'en' as const;
             <strong>floodlit courts, FITP-certified coaches</strong> and a community of
             players of every level ready to welcome you.
           </p>
-          <a class="btn btn-red" href="#lead" style="margin-top: 1.5rem;">Start playing</a>
+          <button class="btn btn-red" data-open-modal="modal-contatti" style="margin-top: 1.5rem;">Start playing</button>
         </div>
         <div class="two-col__image">
           <img
@@ -47,6 +60,31 @@ const lang = 'en' as const;
       </div>
     </div>
   </section>
+
+  <div id="membership" class="anchor-target">
+    <MembershipSection lang={lang} />
+  </div>
+
+  <section class="content-section content-section--alt">
+    <div class="content-section__inner">
+      <span class="eyebrow">Adult courses</span>
+      <h2 class="section-title">Want to learn or refine<br><em>your technique?</em></h2>
+      <p class="section-lead">It's never too early, or too late, to learn padel or take your game to the next level. At Tennis Club Ambrosiano we run adult padel courses for every age and experience level, with individual or small-group lessons. <strong>Lessons led by our FITP-certified coaches.</strong> Request information: we'll help you find the solution that suits you best.</p>
+      <div class="content-grid content-grid--4">
+        {corsiLivelli.map((l) => (
+          <div class="content-card content-card--simple">
+            <strong>{l.titolo}</strong>
+            <p>{l.testo}</p>
+          </div>
+        ))}
+      </div>
+      <div class="section-cta">
+        <button class="btn btn-red" data-open-modal="modal-contatti">Request Information</button>
+      </div>
+    </div>
+  </section>
+
+  <ConversionBlock lang={lang} />
 
 </BaseLayout>
 
@@ -106,5 +144,66 @@ const lang = 'en' as const;
     height: clamp(280px, 42vh, 520px);
     object-fit: cover;
     display: block;
+  }
+
+  .section-lead {
+    font-family: var(--font-body);
+    font-size: clamp(16px, 1.1vw, 19px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-text-light);
+    max-width: none;
+    margin-bottom: 4vh;
+  }
+
+  .section-cta {
+    margin-top: 4vh;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .content-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+  .content-card--simple {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .content-card--simple strong {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.4vw, 1.4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text);
+  }
+
+  .content-card--simple p {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1vw, 18px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+  }
+
+  @media (max-width: 1024px) {
+    .content-grid--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .content-grid--4 { grid-template-columns: 1fr; }
+  }
+
+  /* ── Anchor offset per navbar fissa ── */
+  .anchor-target {
+    scroll-margin-top: calc(var(--header-h) + 1rem);
   }
 </style>

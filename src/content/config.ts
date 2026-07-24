@@ -377,6 +377,24 @@ const pagine = defineCollection({
     tennis_corsi_intro_en: z.string().optional(),
     tennis_corsi_cta_label_en: z.string().optional(),
 
+    // ── Corpo pagina: Padel ──
+    padel_corsi_eyebrow: z.string().optional(),
+    padel_corsi_titolo: z.string().optional(),
+    padel_corsi_titolo_accent: z.string().optional(),
+    padel_corsi_intro: z.string().optional(),
+    padel_corsi_livelli: z.array(z.object({
+      titolo: z.string(),
+      testo: z.string(),
+      titolo_en: z.string().optional(),
+      testo_en: z.string().optional(),
+    })).optional(),
+    padel_corsi_cta_label: z.string().optional(),
+    padel_corsi_eyebrow_en: z.string().optional(),
+    padel_corsi_titolo_en: z.string().optional(),
+    padel_corsi_titolo_accent_en: z.string().optional(),
+    padel_corsi_intro_en: z.string().optional(),
+    padel_corsi_cta_label_en: z.string().optional(),
+
     // ── Corpo pagina: Agonistica ──
     agonistica_metodo_eyebrow: z.string().optional(),
     agonistica_metodo_titolo: z.string().optional(),
