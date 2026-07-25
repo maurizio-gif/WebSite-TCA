@@ -43,7 +43,7 @@ hero_eyebrow: Junior · Scuola Tennis
 hero_titolo: Scuola
 hero_titolo_accent: Tennis
 hero_sottotitolo: 'Scuola Tennis con percorsi a livelli — rosso, arancio, verde e giallo — fino alla preparazione agonistica. Una storica scuola tennis di Milano, attiva dal 1965.'
-hero_immagine: /SCUOLA%20TENNIS%205.avif
+hero_immagine: /scuola-tennis-hero.avif
 hero_immagine_alt: Bambini a scuola tennis TCA
 title_en: Tennis School in Milan Since 1965 | Tennis Club Ambrosiano
 description_en: 'Milan''s most historic tennis school for children and teens: mini tennis and red, orange, green, yellow levels with the FITP method. At TCA since 1965.'
@@ -127,7 +127,7 @@ scuola_sezione3_badge: 'Vavassori Tennis Academy · Top School, massimo riconosc
 scuola_sezione3_paragrafo1: 'Attraverso la collaborazione con la Vavassori Tennis Academy, il TCA accompagna i tuoi bambini in un percorso tennistico **dai primi passi fino all''agonismo ad altissimi livelli**.'
 scuola_sezione3_paragrafo2: 'I gruppi sono costruiti per età e per livello, il più omogenei possibile. Ogni allenamento abbina preparazione atletica e tennis, con una frequenza di una, due o tre volte a settimana.'
 scuola_sezione3_paragrafo3: 'La progressione segue la metodologia FITP: salendo di livello la palla diventa più veloce e il campo si allunga, fino al campo intero del livello giallo, unendo tecnica, gioco e valori dello sport per **formare non solo tennisti, ma persone**. Tutti i nostri maestri sono certificati dalla Federazione Italiana Tennis e Padel.'
-scuola_sezione3_immagine: /cbc758d7-c31f-4a46-8337-7c7e8fcb34a9_TCA+Tennis+8.avif
+scuola_sezione3_immagine: /scuola-tennis-middle.avif
 scuola_sezione3_immagine_alt: Maestro con allieva alla scuola tennis TCA
 scuola_sezione4_eyebrow: Durante l'anno
 scuola_sezione4_titolo: 'Si gioca,'
