@@ -26,6 +26,7 @@ const d = (await getEntry("pagine", "summer-camps"))!.data;
     image={d.hero_immagine!}
     imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
     ctaLabel="Book your spot"
+    ctaHref={p('/iscrizione-summer-camp')}
   />
 
   <!-- The programme -->
