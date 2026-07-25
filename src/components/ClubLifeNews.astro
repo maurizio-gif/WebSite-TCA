@@ -1,6 +1,7 @@
 ---
 import { useTranslations, publicUrl, getLocalePath, type Lang } from '../i18n/utils';
 import { getCollection } from 'astro:content';
+import { mdParagraphsHtml } from '../lib/richtext';
 
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
@@ -43,9 +44,10 @@ const newsArticles = await Promise.all(entries.map(async (entry) => {
     ctaLabel: tx(d.cta_label ?? '', d.cta_label_en) || d.cta_label,
     ctaExternal: !!d.cta_href && !d.cta_href.startsWith('/'),
     Content,
-    // In inglese il corpo è un campo testo: un paragrafo per riga vuota
+    // In inglese il corpo è un campo testo: un paragrafo per riga vuota,
+    // grassetto con **doppi asterischi**
     paragrafiEn: lang === 'en' && d.corpo_en
-      ? d.corpo_en.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean)
+      ? mdParagraphsHtml(d.corpo_en)
       : null,
   };
 }));
@@ -101,9 +103,9 @@ const newsArticles = await Promise.all(entries.map(async (entry) => {
           <span class="cl-news-card__date">{art.dataLabel}</span>
         </div>
         <h2 class="cl-news-modal__title" id={`news-title-${art.slug}`}>{art.titolo}</h2>
-        <div class="cl-news-modal__prose">
+        <div class="cl-news-modal__prose rich-body">
           {art.paragrafiEn
-            ? art.paragrafiEn.map((par) => <p>{par}</p>)
+            ? art.paragrafiEn.map((par) => <p set:html={par} />)
             : <art.Content />}
         </div>
         {art.ctaHref && art.ctaLabel && (

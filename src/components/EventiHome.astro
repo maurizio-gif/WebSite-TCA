@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { getLocalePath, useTranslations, type Lang } from '../i18n/utils';
+import { mdParagraphsHtml } from '../lib/richtext';
 
 interface Props {
   lang?: Lang;
@@ -161,9 +162,9 @@ const rendered  = await Promise.all(
               {ev.luogo && <p class="em__luogo">{tx(ev.luogo, ev.luogo_en)}</p>}
               <h2 class="em__title" id={`em-title-${slug}`}>{tx(ev.titolo, ev.titolo_en)}</h2>
               <p class="em__desc">{tx(ev.descrizione, ev.descrizione_en)}</p>
-              <div class="em__prose">
+              <div class="em__prose rich-body">
                 {lang === 'en' && ev.corpo_en
-                  ? ev.corpo_en.split('\n').filter((r) => r.trim()).map((r) => <p>{r}</p>)
+                  ? mdParagraphsHtml(ev.corpo_en).map((par) => <p set:html={par} />)
                   : <Content />}
               </div>
             </div>

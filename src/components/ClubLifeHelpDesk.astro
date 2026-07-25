@@ -2,6 +2,7 @@
 import { getLocalePath, useTranslations, type Lang } from '../i18n/utils';
 import { helpDeskCategories } from '../data/helpDesk';
 import { getCollection } from 'astro:content';
+import { mdParagraphsHtml } from '../lib/richtext';
 
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
@@ -14,11 +15,7 @@ const catLabel = (id: string) => {
 };
 
 // Guide gestibili da TinaCMS → src/content/helpdesk/ (una per file .md)
-// Nell'anteprima (modale) si mostrano i primi 2 paragrafi in testo semplice.
-const stripMd = (s: string) => s.replace(/\*\*/g, '').replace(/<[^>]+>/g, '');
-const paragrafi = (s: string) =>
-  s.trim().split(/\n\s*\n/).map((par) => stripMd(par).trim()).filter(Boolean);
-
+// Nell'anteprima (modale) si mostrano i primi 2 paragrafi, con grassetto.
 const entries = await getCollection('helpdesk');
 const helpDeskArticles = entries.map((entry) => {
   const d = entry.data;
@@ -31,7 +28,7 @@ const helpDeskArticles = entries.map((entry) => {
     sintesi_en: d.sintesi_en ?? d.sintesi,
     tags: d.tags,
     tags_en: d.tags_en ?? d.tags,
-    anteprima: paragrafi(lang === 'en' && d.corpo_en ? d.corpo_en : entry.body).slice(0, 2),
+    anteprima: mdParagraphsHtml(lang === 'en' && d.corpo_en ? d.corpo_en : entry.body).slice(0, 2),
   };
 });
 ---
@@ -108,8 +105,8 @@ const helpDeskArticles = entries.map((entry) => {
       <button class="cl-help-modal__close" data-help-close aria-label={t.clubLife.newsClose}>✕</button>
       <span class="cl-help-modal__cat">{catLabel(art.categoria)}</span>
       <h2 class="cl-help-modal__title" id={`help-title-${art.slug}`}>{tx(art.titolo, art.titolo_en)}</h2>
-      <div class="cl-help-modal__prose">
-        {art.anteprima.map((par) => <p>{par}</p>)}
+      <div class="cl-help-modal__prose rich-body">
+        {art.anteprima.map((par) => <p set:html={par} />)}
       </div>
       <a class="cl-help-modal__full" href={p(`/club-life/help-desk/${art.slug}`)}>
         {t.clubLife.helpDeskReadFull}

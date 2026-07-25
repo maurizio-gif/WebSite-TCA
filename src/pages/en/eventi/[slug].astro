@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getLocalePath } from '../../../i18n/utils';
+import { mdParagraphsHtml } from '../../../lib/richtext';
 
 export async function getStaticPaths() {
   const eventi = await getCollection('eventi');
@@ -22,7 +23,7 @@ const p = (path: string) => getLocalePath(lang, path);
 const titolo      = ev.titolo_en      ?? ev.titolo;
 const descrizione = ev.descrizione_en ?? ev.descrizione;
 const luogo       = ev.luogo_en       ?? ev.luogo;
-const corpoEn     = ev.corpo_en;
+const paragrafiEn = ev.corpo_en ? mdParagraphsHtml(ev.corpo_en) : null;
 
 const catLabel: Record<string, string> = {
   Torneo: 'Tournament',
@@ -88,8 +89,8 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
   <section class="ev-body">
     <div class="ev-body__inner">
       <div class="ev-body__content prose">
-        {corpoEn
-          ? corpoEn.split('\n').filter((r) => r.trim()).map((r) => <p>{r}</p>)
+        {paragrafiEn
+          ? paragrafiEn.map((par) => <p set:html={par} />)
           : <Content />}
       </div>
 

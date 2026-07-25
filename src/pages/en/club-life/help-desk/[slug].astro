@@ -5,6 +5,7 @@ import ClubLifeLangSwitch from '../../../../components/ClubLifeLangSwitch.astro'
 import { getLocalePath, useTranslations, type Lang } from '../../../../i18n/utils';
 import { helpDeskCategories } from '../../../../data/helpDesk';
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { mdParagraphsHtml } from '../../../../lib/richtext';
 
 export async function getStaticPaths() {
   const guide = await getCollection('helpdesk');
@@ -31,9 +32,7 @@ const MESI_EN = [
 const aggiornatoLabel = `${MESI_EN[d.aggiornato.getMonth()]} ${d.aggiornato.getFullYear()}`;
 
 // Corpo inglese: un paragrafo per riga vuota, **grassetto** in markdown
-const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-const paragrafiEn = (d.corpo_en ?? entry.body)
-  .trim().split(/\n\s*\n/).map((par) => mdBold(par.trim())).filter(Boolean);
+const paragrafiEn = mdParagraphsHtml(d.corpo_en ?? entry.body);
 
 const titolo = d.titolo_en ?? d.titolo;
 const sintesi = d.sintesi_en ?? d.sintesi;
@@ -70,7 +69,7 @@ const related = (await getCollection('helpdesk', (g) => g.data.categoria === d.c
 
   <section class="hd-body">
     <div class="hd-body__inner">
-      <div class="hd-body__content prose">
+      <div class="hd-body__content prose rich-body">
         {paragrafiEn.map((par) => <p set:html={par} />)}
       </div>
 

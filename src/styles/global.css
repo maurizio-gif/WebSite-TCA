@@ -195,6 +195,54 @@ body.menu-open { overflow: hidden; }
   content: attr(data-name);
 }
 
+/* ---------- Utility: rich-body ----------
+   Testo lungo da markdown/campi rich-text (news, eventi, help desk):
+   normalizza titoli, liste, link e grassetto. Non impone font-size/colore,
+   che restano al contesto (lo scoped <style> del componente che applica
+   la classe insieme alla propria, es. class="hd-body__content prose rich-body").
+   Uso: <div class="rich-body"><Content /></div>
+*/
+.rich-body p { margin-bottom: 1em; }
+.rich-body p:last-child { margin-bottom: 0; }
+
+.rich-body strong { font-weight: 700; }
+
+.rich-body h2,
+.rich-body h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 1.05;
+  margin: 1.4em 0 0.6em;
+}
+.rich-body h2:first-child,
+.rich-body h3:first-child { margin-top: 0; }
+
+.rich-body h2 { font-size: clamp(1.2rem, 2vw, 1.6rem); }
+.rich-body h3 { font-size: clamp(1.05rem, 1.5vw, 1.3rem); }
+
+.rich-body ul,
+.rich-body ol {
+  padding-left: 1.4em;
+  margin-bottom: 1em;
+}
+.rich-body li { margin-bottom: 0.4em; }
+
+.rich-body a {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.rich-body a:hover { color: var(--color-accent-dark); }
+
+.rich-body blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 1em;
+  margin: 1em 0;
+  font-style: italic;
+}
+
 /* ---------- Scroll animations ----------
    Tipi disponibili via data-anim="<tipo>":
    • (default / "true") → slide-up + fade

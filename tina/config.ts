@@ -97,7 +97,7 @@ export default defineConfig({
           {
             type: 'string',
             name: 'corpo_en',
-            label: '🇬🇧 Dettagli evento (inglese)',
+            label: '🇬🇧 Dettagli evento (inglese) — un paragrafo per riga vuota, grassetto con **doppi asterischi**',
             ui: { component: 'textarea' },
           },
           {
@@ -619,7 +619,7 @@ export default defineConfig({
           {
             type: 'string',
             name: 'corpo_en',
-            label: '🇬🇧 Testo articolo (inglese) — un paragrafo per riga vuota',
+            label: '🇬🇧 Testo articolo (inglese) — un paragrafo per riga vuota, grassetto con **doppi asterischi**',
             ui: { component: 'textarea' },
           },
           {
