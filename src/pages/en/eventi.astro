@@ -2,24 +2,28 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import EventiHome from "../../components/EventiHome.astro";
+import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
+
+// SEO + hero gestibili da TinaCMS → src/content/pagine/eventi.md (campi _en)
+const d = (await getEntry("pagine", "eventi"))!.data;
 ---
 
 <BaseLayout
   lang={lang}
-  title="Events & Community | Tennis Club Ambrosiano Milan"
-  description="Internal tournaments, social evenings, aperitivo nights and exhibitions: life at Tennis Club Ambrosiano goes beyond the court, all year in Milan."
-  image="/TCA_Avvenire_2025%201.jpg"
-  imageAlt="Event at Tennis Club Ambrosiano"
+  title={d.title_en ?? d.title}
+  description={d.description_en ?? d.description}
+  image={d.hero_immagine}
+  imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
 >
   <PageHero
-    eyebrow="Community"
-    title="Events"
-    titleAccent="& Community"
-    sub="Internal tournaments, social evenings, aperitivo nights and much more. Life at TCA goes well beyond the court — it's a community that comes together all year round."
-    image="/TCA_Avvenire_2025%201.jpg"
-    imageAlt="Events at Tennis Club Ambrosiano"
+    eyebrow={d.hero_eyebrow_en ?? d.hero_eyebrow}
+    title={(d.hero_titolo_en ?? d.hero_titolo)!}
+    titleAccent={d.hero_titolo_accent_en ?? d.hero_titolo_accent}
+    sub={d.hero_sottotitolo_en ?? d.hero_sottotitolo}
+    image={d.hero_immagine!}
+    imageAlt={(d.hero_immagine_alt_en ?? d.hero_immagine_alt)!}
   />
 
   <EventiHome lang={lang} limit={100} showAllLink={false} />

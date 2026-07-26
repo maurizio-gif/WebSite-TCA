@@ -10,15 +10,19 @@ import ClubLifeHelpDesk from "../../components/ClubLifeHelpDesk.astro";
 import ClubLifeServizi from "../../components/ClubLifeServizi.astro";
 import ClubLifeHelpForm from "../../components/ClubLifeHelpForm.astro";
 import { useTranslations } from "../../i18n/utils";
+import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
 const t = useTranslations(lang);
+
+// SEO gestibile da TinaCMS → src/content/pagine/club-life.md (campi _en; hero da i18n)
+const d = (await getEntry("pagine", "club-life"))!.data;
 ---
 
 <BaseLayout
   lang={lang}
-  title="Club Life | Tennis Club Ambrosiano Milan"
-  description="Events, news, services and Help Desk of Tennis Club Ambrosiano: the Club's noticeboard for members and families in Milan."
+  title={d.title_en ?? d.title}
+  description={d.description_en ?? d.description}
   hideLeadFormInline
   hideChrome
 >
