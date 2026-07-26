@@ -5,6 +5,8 @@
 // modificabile da TinaCMS). Oltre all'accordion visibile, il componente emette
 // lo schema JSON-LD FAQPage: è ciò che permette a Google, ChatGPT e agli altri
 // motori/LLM di leggere domande e risposte in forma strutturata.
+// Le risposte possono contenere HTML (es. <strong> e <a href>): Google accetta
+// questi tag anche dentro il campo text di FAQPage.
 // ──────────────────────────────────────────────────────────────────────────────
 interface FaqItem {
   domanda?: string;
@@ -19,6 +21,12 @@ interface Props {
 }
 
 const { lang = 'it', items = [] } = Astro.props;
+
+// Prefissa il base path (es. '/WebSite-TCA' su GitHub Pages) ai link interni
+// scritti nelle risposte come href="/pagina": chi edita da TinaCMS scrive
+// sempre il percorso pulito, senza preoccuparsi dell'ambiente di deploy.
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const withBase = (html: string) => (base ? html.replace(/href="\//g, `href="${base}/`) : html);
 
 const resolved = items
   .map((f) => ({
@@ -64,7 +72,7 @@ const jsonLd = {
             </button>
             <div class="faq-item__panel" id={`faq-panel-${i}`} role="region">
               <div class="faq-item__panel-inner">
-                <p>{f.a}</p>
+                <p set:html={withBase(f.a)} />
               </div>
             </div>
           </div>
@@ -171,6 +179,21 @@ const jsonLd = {
     color: var(--color-text-light);
     padding: 0 clamp(1.25rem, 2.5vw, 2rem) 1.5rem;
     max-width: 72ch;
+  }
+
+  .faq-item__panel-inner p :global(strong) {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .faq-item__panel-inner p :global(a) {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .faq-item__panel-inner p :global(a:hover) {
+    color: var(--color-accent-dark);
   }
 </style>
 

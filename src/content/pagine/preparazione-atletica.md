@@ -315,7 +315,7 @@ faq:
     domanda_en: "Is a medical certificate required to train in the gym?"
     risposta_en: "Yes, a valid medical certificate is mandatory and must be handed in at reception before accessing the training areas."
   - domanda: "Posso farmi seguire da un personal trainer?"
-    risposta: "Sì, al Club lavorano personal trainer certificati che costruiscono programmi su misura partendo da un assessment iniziale, con sedute individuali o in coppia."
+    risposta: "Sì, al Club lavorano <a href=\"/personal-trainer\">personal trainer certificati</a> che costruiscono programmi su misura partendo da un assessment iniziale, con sedute individuali o in coppia."
     domanda_en: "Can I train with a personal trainer?"
-    risposta_en: "Yes, the Club has certified personal trainers who build tailored programmes starting from an initial assessment, with individual or paired sessions."
+    risposta_en: "Yes, the Club has <a href=\"/en/personal-trainer\">certified personal trainers</a> who build tailored programmes starting from an initial assessment, with individual or paired sessions."
 ---

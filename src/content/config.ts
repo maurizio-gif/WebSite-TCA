@@ -481,8 +481,9 @@ const pagine = defineCollection({
     torneo_prossima_testo_en: z.string().optional(),
 
     // ── FAQ (sezione comune alle pagine attività) ──
-    // Rese anche in JSON-LD FAQPage da FaqAccordion.astro: risposte in testo
-    // semplice, senza markdown.
+    // Rese anche in JSON-LD FAQPage da FaqAccordion.astro. Le risposte possono
+    // contenere HTML (<strong>, <a href>): tag ammessi anche da Google nel
+    // campo text di FAQPage.
     faq: z.array(z.object({
       domanda: z.string(),
       risposta: z.string(),

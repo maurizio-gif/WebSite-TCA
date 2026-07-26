@@ -1,5 +1,5 @@
 ---
-_template: generica
+_template: padel
 title: "Padel a Milano | Tennis Club Ambrosiano"
 description: "Padel al TCA: campi coperti e scoperti, maestri certificati FITP e una community attiva di giocatori di ogni livello, a Milano."
 hero_eyebrow: "Adulti · Padel"
@@ -8,6 +8,13 @@ hero_titolo_accent: "al TCA"
 hero_sottotitolo: "Campi coperti e scoperti, maestri certificati FITP e una community di giocatori di ogni livello pronta ad accoglierti."
 hero_immagine: "/padel-hero.avif"
 hero_immagine_alt: "Campo da padel del Tennis Club Ambrosiano"
+title_en: "Padel in Milan | Tennis Club Ambrosiano"
+description_en: "Padel at TCA: indoor and outdoor courts, certified FITP coaches and an active community of players at every level, in Milan."
+hero_eyebrow_en: "Adults · Padel"
+hero_titolo_en: "Padel"
+hero_titolo_accent_en: "at TCA"
+hero_sottotitolo_en: "Indoor and outdoor courts, FITP-certified coaches and a community of players of every level ready to welcome you."
+hero_immagine_alt_en: "Padel court at Tennis Club Ambrosiano"
 padel_corsi_eyebrow: "Corsi adulti"
 padel_corsi_titolo: "Vuoi imparare o perfezionare"
 padel_corsi_titolo_accent: "la tua tecnica?"
