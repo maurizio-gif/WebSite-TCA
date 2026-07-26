@@ -13,11 +13,14 @@ const t = useTranslations(lang);
 // Loghi enti sportivi affiliati → public/logos/partners/
 // Se il file non è ancora presente, mostra l'utility .img-placeholder
 // (vedi CLAUDE.md) finché non viene aggiunta la foto reale.
+// w/h sono le dimensioni native dei file: servono al browser per calcolare
+// il rapporto d'aspetto e riservare lo spazio prima del caricamento (CLS).
+// La dimensione a schermo resta governata dal CSS (height 100%, width auto).
 const affiliazioni = [
-  { file: 'csain.png', nome: 'C.S.A.In.' },
-  { file: 'asi.png',   nome: 'A.S.I. — Associazioni Sportive Sociali Italiane' },
-  { file: 'fitp.png',  nome: 'FITP — Federazione Italiana Tennis e Padel' },
-  { file: 'coni.png',  nome: 'CONI — Comitato Olimpico Nazionale Italiano' },
+  { file: 'csain.png', nome: 'C.S.A.In.', w: 592, h: 517 },
+  { file: 'asi.png',   nome: 'A.S.I. — Associazioni Sportive Sociali Italiane', w: 600, h: 600 },
+  { file: 'fitp.png',  nome: 'FITP — Federazione Italiana Tennis e Padel', w: 642, h: 366 },
+  { file: 'coni.png',  nome: 'CONI — Comitato Olimpico Nazionale Italiano', w: 840, h: 307 },
 ].map((l) => ({
   ...l,
   exists: existsSync(path.join(process.cwd(), 'public', 'logos', 'partners', l.file)),
@@ -40,6 +43,7 @@ const affiliazioniLoop = [...affiliazioni, ...affiliazioni, ...affiliazioni];
         <div class="affiliazioni-slider__chip">
           {l.exists
             ? <img src={publicUrl(`/logos/partners/${l.file}`)} alt={l.nome}
+                   width={l.w} height={l.h}
                    class="affiliazioni-slider__chip-img" loading="lazy" />
             : <div class="img-placeholder affiliazioni-slider__chip-placeholder" data-name={l.file}></div>}
         </div>

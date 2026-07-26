@@ -13,7 +13,10 @@ const closeLabel = lang === 'en' ? 'Close' : 'Chiudi';
       <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
     </svg>
   </button>
-  <img class="plb__img" src="" alt="" />
+  <!-- src viene popolato via JS all'apertura: niente src="" nel markup,
+       che il browser risolverebbe come URL della pagina corrente,
+       scaricando il documento una seconda volta. -->
+  <img class="plb__img" src={undefined} alt="" />
   <p class="plb__caption"></p>
 </dialog>
 

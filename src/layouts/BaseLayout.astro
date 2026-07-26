@@ -61,13 +61,16 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/a52d1f8cdcea8593d12025ba01e05026/script.js"></script>
     <!-- End cookieyes banner -->
 
-    <!-- Preconnect ai domini di GTM/Analytics: la connessione si apre in
-         parallelo mentre il resto della pagina carica, invece di attendere
-         che lo script GTM la richieda (risparmio stimato ~1.3s da PSI). -->
+    <!-- Preconnect solo a GTM, che è l'unico dominio richiesto subito: la
+         connessione si apre in parallelo invece di attendere lo script.
+         Gli altri domini Analytics vengono contattati solo dopo il consenso
+         (e solo da GTM stesso): per loro basta il dns-prefetch, che risolve
+         il DNS senza aprire una connessione. Preconnect va usato con
+         parsimonia — oltre 4 origini PSI segnala uno spreco di socket. -->
     <link rel="preconnect" href="https://www.googletagmanager.com" />
-    <link rel="preconnect" href="https://www.google-analytics.com" />
-    <link rel="preconnect" href="https://region1.analytics.google.com" />
-    <link rel="preconnect" href="https://stats.g.doubleclick.net" />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+    <link rel="dns-prefetch" href="https://region1.analytics.google.com" />
+    <link rel="dns-prefetch" href="https://stats.g.doubleclick.net" />
 
     <!-- Google Tag Manager — bloccato da CookieYes finché l'utente non
          accetta i cookie di analytics (gestisce anche tutti i tag interni
