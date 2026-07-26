@@ -167,6 +167,31 @@ scuola_sezione4_eyebrow_en: Throughout the year
 scuola_sezione4_titolo_en: 'We play,'
 scuola_sezione4_titolo_accent_en: all year round.
 scuola_sezione4_footer_testo_en: 'Selected pupils are also offered the **FITP Junior Program**, the non-competitive activity of the federation circuit: a series of tournament stages, from November into spring, for those who want to start testing themselves in matches.'
+faq:
+  - domanda: "A che età si può iniziare la scuola tennis?"
+    risposta: "L'età consigliata per iniziare è indicativamente dai 5 anni. Il maestro può valutare l'inserimento di bambini di 4 anni in base allo sviluppo fisico e alle capacità motorie. Il Mini Tennis è organizzato per età, dai 4 ai 6 anni circa."
+    domanda_en: "At what age can children start tennis school?"
+    risposta_en: "The recommended starting age is around 5. Coaches may assess 4-year-olds based on physical development and motor skills. Mini Tennis is organised by age, roughly from 4 to 6."
+  - domanda: "Come funzionano i livelli della scuola tennis?"
+    risposta: "La progressione segue la metodologia FITP con quattro livelli a colori: rosso (Mini Tennis), arancio, verde e giallo. Salendo di livello la palla diventa più veloce e il campo si allunga, fino al campo intero. Dopo il livello giallo si entra nella squadra agonistica."
+    domanda_en: "How do the tennis school levels work?"
+    risposta_en: "Progression follows the FITP methodology with four colour levels: red (Mini Tennis), orange, green and yellow. As the level rises the ball gets faster and the court longer, up to the full court. After the yellow level, players move into the competitive squad."
+  - domanda: "È possibile inserire mio figlio a corso già avviato?"
+    risposta: "Sì, è possibile inserire i bambini in corsi già iniziati previa una prova di livello e in base alla disponibilità di giorni e orari. La quota di iscrizione viene ricalcolata proporzionalmente al periodo di inizio."
+    domanda_en: "Can my child join a course that has already started?"
+    risposta_en: "Yes, children can join courses already underway after a level assessment, subject to day and time availability. The enrolment fee is recalculated in proportion to the starting period."
+  - domanda: "Si recuperano le lezioni perse?"
+    risposta: "In caso di assenza del corsista le lezioni non vengono recuperate; solo per casi particolari, come infortuni o malattie prolungate, si possono concordare recuperi con il maestro. Se la lezione viene sospesa dal Club per maltempo o inagibilità, viene recuperata in coda al corso."
+    domanda_en: "Can missed lessons be made up?"
+    risposta_en: "Lessons missed by the student are not made up; only in special cases, such as injury or prolonged illness, can make-up sessions be agreed with the coach. If the Club suspends a lesson due to bad weather or court unavailability, it is rescheduled at the end of the course."
+  - domanda: "Sono previste lezioni private per i bambini?"
+    risposta: "No, per bambini e ragazzi non sono previste lezioni private individuali. I giovani allievi possono iscriversi ai corsi della scuola tennis durante l'anno scolastico e alla Scuola Tennis Estiva, attiva da giugno a settembre."
+    domanda_en: "Are private lessons available for children?"
+    risposta_en: "No, individual private lessons are not offered for children and teens. Young players can enrol in the tennis school courses during the school year and in the Summer Tennis School, which runs from June to September."
+  - domanda: "Serve il certificato medico per iscriversi?"
+    risposta: "Sì, il certificato medico è obbligatorio per tutti gli iscritti ai corsi e va consegnato in segreteria prima di iniziare le lezioni. Per l'attività non agonistica è sufficiente il certificato non agonistico."
+    domanda_en: "Is a medical certificate required to enrol?"
+    risposta_en: "Yes, a medical certificate is mandatory for everyone enrolled in courses and must be handed in at reception before lessons begin. For non-competitive activity, a non-competitive certificate is sufficient."
 _template: scuola_tennis
 ---
 

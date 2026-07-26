@@ -1,0 +1,211 @@
+---
+// ─── FAQ ACCORDION ────────────────────────────────────────────────────────────
+// Sezione "Domande frequenti" in fondo alle pagine attività. Le voci arrivano
+// dal frontmatter della pagina (campo `faq` in src/content/pagine/*.md,
+// modificabile da TinaCMS). Oltre all'accordion visibile, il componente emette
+// lo schema JSON-LD FAQPage: è ciò che permette a Google, ChatGPT e agli altri
+// motori/LLM di leggere domande e risposte in forma strutturata.
+// Le risposte possono contenere HTML (es. <strong> e <a href>): Google accetta
+// questi tag anche dentro il campo text di FAQPage.
+// ──────────────────────────────────────────────────────────────────────────────
+interface FaqItem {
+  domanda?: string;
+  risposta?: string;
+  domanda_en?: string;
+  risposta_en?: string;
+}
+
+interface Props {
+  lang?: 'it' | 'en';
+  items: FaqItem[] | undefined;
+}
+
+const { lang = 'it', items = [] } = Astro.props;
+
+// Prefissa il base path (es. '/WebSite-TCA' su GitHub Pages) ai link interni
+// scritti nelle risposte come href="/pagina": chi edita da TinaCMS scrive
+// sempre il percorso pulito, senza preoccuparsi dell'ambiente di deploy.
+const base = (import.meta.env.BASE_URL ?? '/').replace(/\/$/, '');
+const withBase = (html: string) => (base ? html.replace(/href="\//g, `href="${base}/`) : html);
+
+const resolved = items
+  .map((f) => ({
+    q: (lang === 'en' ? (f.domanda_en ?? f.domanda) : f.domanda) ?? '',
+    a: (lang === 'en' ? (f.risposta_en ?? f.risposta) : f.risposta) ?? '',
+  }))
+  .filter((f) => f.q && f.a);
+
+const eyebrow = 'FAQ';
+const titolo = lang === 'en' ? 'Frequently asked' : 'Domande';
+const titoloAccent = lang === 'en' ? 'questions.' : 'frequenti.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: resolved.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+{resolved.length > 0 && (
+  <section class="faq-section">
+    <div class="faq-section__inner">
+      <span class="eyebrow">{eyebrow}</span>
+      <h2 class="faq-title">{titolo}<br /><em>{titoloAccent}</em></h2>
+
+      <div class="faq-list">
+        {resolved.map((f, i) => (
+          <div class="faq-item">
+            <button
+              type="button"
+              class="faq-item__q"
+              aria-expanded="false"
+              aria-controls={`faq-panel-${i}`}
+            >
+              <span class="faq-item__q-text">{f.q}</span>
+              <svg class="faq-item__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              </svg>
+            </button>
+            <div class="faq-item__panel" id={`faq-panel-${i}`} role="region">
+              <div class="faq-item__panel-inner">
+                <p set:html={withBase(f.a)} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </section>
+)}
+
+<style>
+  .faq-section {
+    padding: 7vh var(--pad-x);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq-section__inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin-bottom: 4vh;
+  }
+
+  .faq-title em {
+    color: var(--color-accent);
+    font-style: normal;
+  }
+
+  .faq-list {
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+  }
+
+  .faq-item + .faq-item {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .faq-item__q {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 1.35rem clamp(1.25rem, 2.5vw, 2rem);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .faq-item__q-text {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.3vw, 1.25rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    color: var(--color-text);
+    transition: color 0.2s ease;
+  }
+
+  .faq-item__q:hover .faq-item__q-text {
+    color: var(--color-accent);
+  }
+
+  .faq-item__icon {
+    flex-shrink: 0;
+    color: var(--color-accent);
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item__q[aria-expanded="true"] .faq-item__icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-item__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+
+  .faq-item__panel-inner {
+    overflow: hidden;
+  }
+
+  .faq-item__q[aria-expanded="true"] + .faq-item__panel {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-item__panel-inner p {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1vw, 17px);
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--color-text-light);
+    padding: 0 clamp(1.25rem, 2.5vw, 2rem) 1.5rem;
+    max-width: 72ch;
+  }
+
+  .faq-item__panel-inner p :global(strong) {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .faq-item__panel-inner p :global(a) {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .faq-item__panel-inner p :global(a:hover) {
+    color: var(--color-accent-dark);
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.faq-list').forEach((list) => {
+    const buttons = list.querySelectorAll<HTMLButtonElement>('.faq-item__q');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const isOpen = btn.getAttribute('aria-expanded') === 'true';
+        buttons.forEach((b) => b.setAttribute('aria-expanded', 'false'));
+        if (!isOpen) btn.setAttribute('aria-expanded', 'true');
+      });
+    });
+  });
+</script>

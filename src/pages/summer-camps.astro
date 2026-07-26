@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
 import PageHero from "../components/PageHero.astro";
 import { publicUrl, getLocalePath } from "../i18n/utils";
 import { getEntry } from "astro:content";
@@ -154,6 +155,8 @@ const d = (await getEntry("pagine", "summer-camps"))!.data;
       </div>
     </div>
   </section>
+
+  <FaqAccordion items={d.faq} />
 
 </BaseLayout>
 

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
 import PageHero from "../../components/PageHero.astro";
 import { publicUrl } from "../../i18n/utils";
 import { getEntry } from "astro:content";
@@ -90,6 +91,8 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
       </div>
     </div>
   </section>
+
+  <FaqAccordion lang="en" items={d.faq} />
 
 </BaseLayout>
 

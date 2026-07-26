@@ -655,6 +655,22 @@ export default defineConfig({
           { type: 'string', name: 'hero_immagine_alt_en', label: '🇬🇧 Hero — testo alternativo immagine (inglese)' },
         ];
 
+        // FAQ in fondo alle pagine attività (accordion + schema FAQPage per
+        // Google e assistenti AI). Le risposte possono contenere HTML:
+        // grassetto con <strong>testo</strong> e link con <a href="/pagina">testo</a>.
+        const faqFields = [
+          {
+            type: 'object', name: 'faq', label: 'FAQ (domande frequenti in fondo alla pagina)', list: true,
+            ui: { itemProps: (item) => ({ label: item?.domanda || 'Nuova domanda' }) },
+            fields: [
+              { type: 'string', name: 'domanda', label: 'Domanda', required: true },
+              { type: 'string', name: 'risposta', label: 'Risposta — HTML consentito: <strong>grassetto</strong>, <a href="/pagina">link</a>', required: true, ui: { component: 'textarea' } },
+              { type: 'string', name: 'domanda_en', label: '🇬🇧 Domanda (inglese)' },
+              { type: 'string', name: 'risposta_en', label: '🇬🇧 Risposta (inglese) — HTML consentito come sopra', ui: { component: 'textarea' } },
+            ],
+          },
+        ];
+
         return {
           name: 'pagine',
           label: 'Pagine',
@@ -664,7 +680,7 @@ export default defineConfig({
             {
               name: 'generica',
               label: 'Pagina generica (solo SEO + Hero)',
-              fields: [...heroSeoFields],
+              fields: [...heroSeoFields, ...faqFields],
             },
             {
               name: 'storia',
@@ -807,6 +823,7 @@ export default defineConfig({
                 { type: 'string', name: 'camps_quote_titolo_en', label: '🇬🇧 Quote — titolo (inglese)' },
                 { type: 'string', name: 'camps_quote_note_en', label: '🇬🇧 Note quote/condizioni (inglese)', list: true, ui: { component: 'textarea' } },
                 { type: 'string', name: 'camps_cta_label_en', label: '🇬🇧 Etichetta bottone iscrizione (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -937,6 +954,7 @@ export default defineConfig({
                 { type: 'string', name: 'scuola_sezione5_testo_en', label: '🇬🇧 Sezione 5 — testo introduttivo (inglese)', ui: { component: 'textarea' } },
                 { type: 'string', name: 'scuola_sezione5_note_en', label: '🇬🇧 Sezione 5 — note/condizioni (inglese)', list: true, ui: { component: 'textarea' } },
                 { type: 'string', name: 'scuola_sezione5_cta_label_en', label: '🇬🇧 Sezione 5 — etichetta bottone iscrizione (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -1005,6 +1023,7 @@ export default defineConfig({
                 { type: 'string', name: 'pt_sezione4_titolo_en', label: '🇬🇧 CTA finale — titolo (inglese)' },
                 { type: 'string', name: 'pt_sezione4_sottotitolo_en', label: '🇬🇧 CTA finale — sottotitolo (inglese)', ui: { component: 'textarea' } },
                 { type: 'string', name: 'pt_sezione4_cta_label_en', label: '🇬🇧 CTA finale — testo pulsante (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -1092,6 +1111,7 @@ export default defineConfig({
                 { type: 'string', name: 'prep_calendario_titolo_en', label: '🇬🇧 Calendario — titolo (inglese)' },
                 { type: 'string', name: 'prep_calendario_titolo_accent_en', label: '🇬🇧 Calendario — titolo evidenziato (inglese)' },
                 { type: 'string', name: 'prep_calendario_sub_en', label: '🇬🇧 Calendario — testo introduttivo (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -1143,6 +1163,35 @@ export default defineConfig({
                 { type: 'string', name: 'tennis_corsi_titolo_accent_en', label: '🇬🇧 Sezione Corsi — titolo evidenziato (inglese)' },
                 { type: 'string', name: 'tennis_corsi_intro_en', label: '🇬🇧 Sezione Corsi — testo introduttivo (inglese)', ui: { component: 'textarea' } },
                 { type: 'string', name: 'tennis_corsi_cta_label_en', label: '🇬🇧 Sezione Corsi — testo pulsante (inglese)' },
+                ...faqFields,
+              ],
+            },
+            {
+              name: 'padel',
+              label: 'Padel',
+              fields: [
+                ...heroSeoFields,
+                { type: 'string', name: 'padel_corsi_eyebrow', label: 'Sezione Corsi — eyebrow', required: true },
+                { type: 'string', name: 'padel_corsi_titolo', label: 'Sezione Corsi — titolo', required: true },
+                { type: 'string', name: 'padel_corsi_titolo_accent', label: 'Sezione Corsi — titolo evidenziato', required: true },
+                { type: 'string', name: 'padel_corsi_intro', label: 'Sezione Corsi — testo introduttivo (**grassetto**)', required: true, ui: { component: 'textarea' } },
+                {
+                  type: 'object', name: 'padel_corsi_livelli', label: 'Sezione Corsi — livelli', list: true, required: true,
+                  ui: { itemProps: (item) => ({ label: item?.titolo || 'Nuovo livello' }) },
+                  fields: [
+                    { type: 'string', name: 'titolo', label: 'Titolo', required: true },
+                    { type: 'string', name: 'testo', label: 'Testo', required: true },
+                    { type: 'string', name: 'titolo_en', label: '🇬🇧 Titolo (inglese)' },
+                    { type: 'string', name: 'testo_en', label: '🇬🇧 Testo (inglese)' },
+                  ],
+                },
+                { type: 'string', name: 'padel_corsi_cta_label', label: 'Sezione Corsi — testo pulsante', required: true },
+                { type: 'string', name: 'padel_corsi_eyebrow_en', label: '🇬🇧 Sezione Corsi — eyebrow (inglese)' },
+                { type: 'string', name: 'padel_corsi_titolo_en', label: '🇬🇧 Sezione Corsi — titolo (inglese)' },
+                { type: 'string', name: 'padel_corsi_titolo_accent_en', label: '🇬🇧 Sezione Corsi — titolo evidenziato (inglese)' },
+                { type: 'string', name: 'padel_corsi_intro_en', label: '🇬🇧 Sezione Corsi — testo introduttivo (inglese)', ui: { component: 'textarea' } },
+                { type: 'string', name: 'padel_corsi_cta_label_en', label: '🇬🇧 Sezione Corsi — testo pulsante (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -1202,6 +1251,7 @@ export default defineConfig({
                 { type: 'string', name: 'agonistica_eyebrow_en', label: '🇬🇧 Eyebrow (inglese)' },
                 { type: 'string', name: 'agonistica_titolo_en', label: '🇬🇧 Titolo (inglese)' },
                 { type: 'string', name: 'agonistica_titolo_accent_en', label: '🇬🇧 Titolo evidenziato (inglese)' },
+                ...faqFields,
               ],
             },
             {

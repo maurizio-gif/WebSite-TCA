@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
 import PageHero from "../../components/PageHero.astro";
 import MembershipSection from "../../components/MembershipSection.astro";
 import WeeklySchedule from "../../components/WeeklySchedule.astro";
@@ -219,6 +220,8 @@ const salaIcons = [
       });
     });
   </script>
+
+  <FaqAccordion lang="en" items={d.faq} />
 
 </BaseLayout>
 
