@@ -16,13 +16,13 @@ tags_en:
   - federation
   - competitive
 corpo_en: |-
-  FITP registration (Italian Tennis and Padel Federation) is **mandatory** for anyone who wants to play on the courts of Tennis Club Ambrosiano, take part in federal tournaments or join team championships.
+  FITP registration (Italian Tennis and Padel Federation) is **mandatory** for anyone who wants to play on the courts of Tennis Club Ambrosiano, take part in federation tournaments or join team championships.
 
   **How to register:** the registration request must be submitted directly by the player through the FITP portal (tesseramento.fitp.it). Once the online request is complete, the member must hand in a valid medical certificate and the registration fee at the Club reception.
 
-  **Competitive registration:** mandatory for players who intend to take part in federal tournaments or championships and for all athletes classified as competitive. To obtain it you must submit a valid competitive medical certificate and the registration fee. The form for requesting the competitive medical certificate, to be presented at the medical centre of your choice, must be collected from reception beforehand.
+  **Competitive registration:** mandatory for players who intend to take part in federation tournaments or championships and for all athletes classified as competitive. To obtain it you must submit a valid competitive medical certificate and the registration fee. The form for requesting the competitive medical certificate, to be presented at the medical centre of your choice, must be collected from reception beforehand.
 
-  **Registration validity:** the FITP card is valid for one year and expires on 31 December each year, regardless of the issue date. To keep taking part in federal activities and using services that require registration, you need to renew it for the new sporting season.
+  **Registration validity:** the FITP card is valid for one year and expires on 31 December each year, regardless of the issue date. To keep taking part in federation activities and using services that require registration, you need to renew it for the new sporting season.
 ---
 
 Il tesseramento FITP (Federazione Italiana Tennis e Padel) è **obbligatorio** per tutti coloro che desiderano giocare sui campi del Tennis Club Ambrosiano, partecipare a tornei federali o prendere parte ai campionati a squadre.

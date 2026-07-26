@@ -16,7 +16,7 @@ tags_en:
   - login
   - access
 corpo_en: |-
-  The TCA member area runs on **PerfectGym**, accessible both from your browser (the "Log in" button top-right on the site) and from the dedicated app, available for iOS and Android.
+  The TCA member area runs on **PerfectGym**, accessible both from your browser (the "Log in" button in the top right of the site) and from the dedicated app, available for iOS and Android.
 
   From there you can **book courts and courses, check your membership, download receipts** and update your contact details.
 

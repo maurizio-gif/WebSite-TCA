@@ -69,7 +69,7 @@ prep_sala_features:
 prep_sala_cta_label: "Scopri i nostri Personal Trainer"
 prep_sala_eyebrow_en: "Gym"
 prep_sala_titolo_en: "Strength training,"
-prep_sala_titolo_accent_en: "on your terms."
+prep_sala_titolo_accent_en: "tailored to you."
 prep_sala_paragrafo1_en: "A spacious, bright members-only space with **the latest resistance machines**, a complete cardio area and a functional zone for bodyweight work. Every station is designed to support you through each phase of your workout, from warm-up to cool-down."
 prep_sala_paragrafo2_en: "Whether your goal is to build strength, improve endurance, prepare for the competitive season or simply stay in shape, everything you need is right here — alongside **qualified personal trainers** ready to build a tailored programme with you."
 prep_sala_cta_label_en: "Meet our Personal Trainers"

@@ -9,20 +9,15 @@ titolo_en: TPRA MONTREAL
 descrizione_en: FITP TPRA Circuit Amateur Tennis Tournament
 luogo_en: Clay Courts
 corpo_en: |-
-  Matches are played using shortened, fast scoring formats, such as 4-game sets. Open to non-competitive or 4th Category registered players.
-
+  Matches are played using shortened, fast scoring formats, such as 4-game sets. Open to players registered as non-competitive or 4th Category.
 
   Registration Procedure:
-  Register via the portal: https://tpra.fitp.it/tornei/calendario-tornei
-  Payment at the club office
-
-
+  1. Register via the portal: https://tpra.fitp.it/tornei/calendario-tornei
+  2. Payment at reception
 
   Fees:
   Members: €20 Singles / €10 Mixed
   Non-members: €25 Singles / €15 Mixed
-
-
 
   Prizes:
   Trophies and medals for top finishers
