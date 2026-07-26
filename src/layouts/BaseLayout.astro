@@ -374,10 +374,10 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     </script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WRDQ2RTG"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    <!-- L'iframe <noscript> di GTM è stato rimosso di proposito: con
+         JavaScript disabilitato il Consent Mode non può funzionare, quindi
+         quell'iframe caricherebbe GTM scavalcando il consenso. Senza JS la
+         misurazione sarebbe comunque quasi nulla, per cui si perde niente. -->
 
     {!hideChrome && <Navbar lang={lang} />}
     <main class="site-main">
