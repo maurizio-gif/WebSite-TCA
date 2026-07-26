@@ -591,6 +591,7 @@ const t = lang === 'en' ? {
 
   // UTM/click-id e ID visitatore persistente (vedi BaseLayout.astro)
   function getUtm() {
+    if (window.tcaGetUtm) return window.tcaGetUtm();
     try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) { return {}; }
   }
   function getVid() {

@@ -30,6 +30,7 @@ privacy_body: |
   - Indirizzo email
   - Numero di telefono
   - Interessi/attività selezionate (es. tennis, padel, corsi)
+  - Provenienza della richiesta: la pagina da cui è stata inviata e, se l'utente è arrivato da un annuncio o da una campagna, i relativi parametri presenti nell'indirizzo web (es. utm_source, utm_medium, utm_campaign, gclid). Questi parametri sono letti dall'indirizzo della pagina al momento dell'invio, non comportano alcuna memorizzazione sul dispositivo e servono unicamente a capire da quale canale è arrivata la richiesta.
 
   Attraverso la navigazione sul sito, se l'utente presta il consenso tramite il banner cookie, raccogliamo inoltre:
   - Cookie tecnici (necessari al funzionamento del sito, sempre attivi)
@@ -102,6 +103,7 @@ privacy_body_en: |
   - Email address
   - Phone number
   - Selected interests/activities (e.g. tennis, padel, classes)
+  - The origin of your request: the page it was sent from and, if you arrived from an advert or campaign, the related parameters in the web address (e.g. utm_source, utm_medium, utm_campaign, gclid). These parameters are read from the page address at the moment you submit the form, involve no storage on your device, and are used solely to understand which channel your request came from.
 
   Through browsing the site, if you consent via the cookie banner, we also collect:
   - Technical cookies (necessary for the site to function, always active)

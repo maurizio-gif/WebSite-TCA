@@ -580,13 +580,28 @@ const lm = lang === 'en' ? {
 
   // UTM/click-id catturati al primo touch della sessione (vedi BaseLayout.astro)
   function getUtm() {
-    try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch(e) { return {}; }
+    if (window.tcaGetUtm) return window.tcaGetUtm();
+    try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) { return {}; }
   }
 
   // ID visitatore persistente (vedi BaseLayout.astro), per riconoscere il
   // lead al ritorno sul sito indipendentemente dall'email inserita
   function getVid() {
     return window.tcaGetVid ? window.tcaGetVid() : null;
+  }
+
+  // Conversione: evento unico per i tre tipi di richiesta, così in GTM basta
+  // un trigger su "generate_lead" e si segmenta con lead_tipo. Nessun dato
+  // personale nell'evento: solo tipo di richiesta, pagina e testo del
+  // pulsante, che servono a distinguere le conversioni per campagna.
+  function trackLead(tipo) {
+    if (!window.tcaTrack) return;
+    window.tcaTrack('generate_lead', {
+      lead_tipo: tipo,
+      lead_pagina: state.pagina || location.pathname,
+      lead_cta: state.cta || '',
+      lead_attivita: attivitaLabels().join(', '),
+    });
   }
 
   var modal    = document.getElementById('modal-contatti');
@@ -972,6 +987,9 @@ const lm = lang === 'en' ? {
       try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'richiamami',attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))}); } catch(e){}
     }
 
+    // Conversione per GTM/Google Ads (vedi tcaTrack in BaseLayout).
+    trackLead('richiamami');
+
     var atts = state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
     document.getElementById('lm-cb-when').innerHTML =
       whenRow(WHEN.cb, fmtDateLong(state.callbackDate)) +
@@ -1000,6 +1018,9 @@ const lm = lang === 'en' ? {
       try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'visita',attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))}); } catch(e){}
     }
 
+    // Conversione per GTM/Google Ads (vedi tcaTrack in BaseLayout).
+    trackLead('visita');
+
     var atts = state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
     document.getElementById('lm-visit-when').innerHTML =
       whenRow(WHEN.visit, fmtDateLong(state.visitDate)) +
@@ -1025,6 +1046,9 @@ const lm = lang === 'en' ? {
     if (WEBHOOK_LEAD) {
       try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'messaggio',attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))}); } catch(e){}
     }
+
+    // Conversione per GTM/Google Ads (vedi tcaTrack in BaseLayout).
+    trackLead('messaggio');
 
     var atts = state.attivita.map(function(id){return ATTIVITA_LABELS[id]||id;}).join(', ')||'—';
     document.getElementById('lm-msg-summary').innerHTML =

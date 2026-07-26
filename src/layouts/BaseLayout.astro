@@ -207,18 +207,60 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
         var KEY_UTM = 'tca_utm';
         var WEBHOOK_VISIT = 'https://automazione.n8ndevelop.it/webhook/ping-tca';
         var attivato = false;
+        var KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
 
+        // ── Coda eventi per GTM ──────────────────────────────────────────
+        // dataLayer va inizializzato sempre, non solo a consenso dato: è un
+        // semplice array in memoria, non scrive sul dispositivo e non fa
+        // chiamate di rete. GTM lo legge solo quando viene attivato dal
+        // consenso; senza consenso gli eventi restano lì e non parte nulla.
+        window.dataLayer = window.dataLayer || [];
+        window.tcaTrack = function (nome, dati) {
+          try {
+            var ev = { event: nome };
+            if (dati) { for (var k in dati) { if (dati[k] != null && dati[k] !== '') ev[k] = dati[k]; } }
+            window.dataLayer.push(ev);
+          } catch (e) {}
+        };
+
+        // ── Attribuzione campagna ────────────────────────────────────────
+        // Leggere i parametri dall'URL non è archiviazione nel terminale
+        // (art. 122 Codice Privacy / art. 5(3) ePrivacy): è solo lettura
+        // della barra degli indirizzi, quindi non richiede consenso. Il
+        // dato viaggia poi insieme al lead che l'utente invia di sua
+        // iniziativa, sulla stessa base giuridica della richiesta.
+        function utmDaUrl() {
+          var out = {};
+          try {
+            var params = new URLSearchParams(location.search);
+            KEYS.forEach(function (k) { if (params.has(k)) out[k] = params.get(k); });
+          } catch (e) {}
+          return out;
+        }
+
+        function utmSalvati() {
+          try { return JSON.parse(sessionStorage.getItem(KEY_UTM) || '{}'); } catch (e) { return {}; }
+        }
+
+        // Attribuzione esposta ai form: vince il primo tocco memorizzato
+        // (disponibile solo con consenso), altrimenti si ricade sull'URL
+        // corrente. Così un lead da campagna resta attribuito anche se
+        // l'utente rifiuta i cookie, purché converta sulla pagina d'arrivo.
+        // Il set è atomico: o tutto il primo tocco o tutto l'URL corrente,
+        // mai un misto, altrimenti si otterrebbero record incoerenti (es.
+        // source di una campagna e campaign di un'altra).
+        window.tcaGetUtm = function () {
+          var salvati = utmSalvati();
+          return Object.keys(salvati).length ? salvati : utmDaUrl();
+        };
+
+        // Memorizzare, invece, è archiviazione nel terminale: resta
+        // subordinato al consenso analytics, come il vid e il beacon.
         function catturaUtm() {
           try {
             if (sessionStorage.getItem(KEY_UTM)) return;
-            var params = new URLSearchParams(location.search);
-            var KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'];
-            var found = {};
-            var hasAny = false;
-            KEYS.forEach(function (k) {
-              if (params.has(k)) { found[k] = params.get(k); hasAny = true; }
-            });
-            if (hasAny) sessionStorage.setItem(KEY_UTM, JSON.stringify(found));
+            var found = utmDaUrl();
+            if (Object.keys(found).length) sessionStorage.setItem(KEY_UTM, JSON.stringify(found));
           } catch (e) {}
         }
 

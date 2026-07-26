@@ -472,6 +472,7 @@ const t = lang === 'en' ? {
   })();
 
   function getUtm() {
+    if (window.tcaGetUtm) return window.tcaGetUtm();
     try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) { return {}; }
   }
   function getVid() {
