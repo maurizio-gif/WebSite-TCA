@@ -16,7 +16,7 @@ tags_en:
   - app
   - reset
 corpo_en: |-
-  On the login screen, both on web and app, you'll find a **"Forgot password?"** link: enter your registered email and you'll receive instructions to set a new one.
+  On the login screen, on both the website and the app, you'll find a **"Forgot password?"** link: enter your registered email and you'll receive instructions to set a new one.
 
   If you don't receive the email within a few minutes, check your spam folder or write to us via the Help Desk form below: we'll verify the address linked to your account.
 ---

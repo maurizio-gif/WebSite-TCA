@@ -8,16 +8,20 @@ import Reassurance from "../../components/Reassurance.astro";
 import TorneoAvvenire from "../../components/TorneoAvvenire.astro";
 import EventiHome from "../../components/EventiHome.astro";
 import ConversionBlock from "../../components/ConversionBlock.astro";
+import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
+
+// SEO gestibile da TinaCMS → src/content/pagine/home.md (campi _en)
+const d = (await getEntry("pagine", "home"))!.data;
 ---
 
 <BaseLayout
   lang={lang}
-  title="Tennis Club Ambrosiano Milan | Premier Tennis School Since 1963"
-  description="Milan's premier tennis school since 1963: 16 courts, padel, gym and athletic training. Home of the Avvenire Tournament, steps from Udine metro station."
-  image="/HERO.avif"
-  imageAlt="Aerial view of Tennis Club Ambrosiano courts"
+  title={d.title_en ?? d.title}
+  description={d.description_en ?? d.description}
+  image={d.hero_immagine}
+  imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
 >
   <Hero lang={lang} />
   <Manifesto lang={lang} />

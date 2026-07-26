@@ -17,7 +17,7 @@ corpo_en: |-
 
   Minitennis (born in 2020 and 2021): €720 Members / €790 Non-members once a week, €1,000 / €1,200 twice a week.
 
-  Enrolment requires the sign-up form, a medical certificate and FITP membership.
+  Enrolment requires the sign-up form, a medical certificate and FITP registration.
 ---
 
 Sono aperte le iscrizioni alla nuova stagione di Scuola Tennis e Minitennis, in partenza a settembre.

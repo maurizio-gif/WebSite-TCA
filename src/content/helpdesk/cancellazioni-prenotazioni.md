@@ -16,13 +16,13 @@ tags_en:
   - booking
   - rules
 corpo_en: |-
-  **Tennis and Padel (Playtomic):** cancellations must be made at least **24 hours** before your court time. You can cancel independently via the website or app, or by sending a WhatsApp message to Reception.
+  **Tennis and Padel (Playtomic):** cancellations must be made at least **24 hours** before your court time. You can cancel independently via the website or app, or by sending a WhatsApp message to reception.
 
-  If you cancel with less than 24 hours' notice, or in case of a no-show, the court fee will be charged to the person who booked. If the names of all players were not provided, the remaining shares will be treated as non-member rates; players who don't pay their share of the court will be charged a **flat fee of €5**.
+  If you cancel with less than 24 hours' notice, or in case of a no-show, the court fee will be charged to the person who booked. If not all players' names were provided, the remaining shares will be charged at the non-member rate; players who don't pay their share of the court will be charged a **flat fee of €5**.
 
   Three late cancellations or no-shows will result in the **loss of advance court booking privileges for 15 days**. If you still show up at the Club, the fee will be charged at the non-member rate.
 
-  **Group classes (App):** you can cancel a class up to **2 hours** before it starts, independently via the app or by sending a WhatsApp message to Reception. After 3 no-shows, the member will be blocked from booking classes for one week.
+  **Group classes (App):** you can cancel a class up to **2 hours** before it starts, independently via the app or by sending a WhatsApp message to reception. After 3 no-shows, you will be blocked from booking classes for a week.
 ---
 
 **Tennis e Padel (Playtomic):** la cancellazione dovrà essere effettuata almeno **24 ore prima** dell'inizio del proprio turno di gioco. È possibile disdire in autonomia tramite sito web o app; in alternativa puoi inviare un messaggio WhatsApp alla Reception.

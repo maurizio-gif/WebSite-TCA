@@ -11,7 +11,7 @@ descrizione_en: 'Terrace aperitivo by Ghusto, followed by music and Twist&Shout 
 luogo_en: Terrace
 corpo_en: |
   Terrace aperitivo from 6.30pm to 8.30pm by Ghusto, followed by fun and Twist&Shout dancing.
-  Aperitivo: Members €20 — Non-members €25. Booking required by July 11.
+  Aperitivo: Members €20 — Non-members €25. Booking required by 11 July.
   Free entry from 8.30pm.
 ---
 

@@ -1,20 +1,25 @@
 ---
-// EN stub — translate content when copy is ready
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
+
+// SEO + intestazione gestibili da TinaCMS → src/content/pagine/contatti.md (campi _en)
+const d = (await getEntry("pagine", "contatti"))!.data;
 ---
 
 <BaseLayout
   lang={lang}
-  title="Contact | Tennis Club Ambrosiano Milan"
-  description="Contact Tennis Club Ambrosiano: address, phone, email and how to find us. Via Feltre 33, Milan — Udine metro station (M2)."
+  title={d.title_en ?? d.title}
+  description={d.description_en ?? d.description}
+  image={d.hero_immagine}
+  imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
 >
   <div class="page-header">
     <div class="page-header__inner">
-      <span class="eyebrow">We're in Milan</span>
-      <h1 class="page-header__title">Contact</h1>
-      <p class="page-header__sub">Come and visit us, write or call. We're here to answer you.</p>
+      <span class="eyebrow">{d.hero_eyebrow_en ?? d.hero_eyebrow}</span>
+      <h1 class="page-header__title">{d.hero_titolo_en ?? d.hero_titolo}</h1>
+      <p class="page-header__sub">{d.hero_sottotitolo_en ?? d.hero_sottotitolo}</p>
     </div>
   </div>
 

@@ -22,7 +22,7 @@ corpo_en: |-
 
   The certificate is **valid for one year from the issue date**: we recommend noting the expiry and renewing it in good time so you're never left without cover during the season.
 
-  Upload the certificate to your member area (see the "Access the member area" guide) or hand it in at reception in paper form.
+  Upload the certificate to your member area (see the "Accessing the member area from web and app" guide) or hand in a paper copy at reception.
 ---
 
 Per accedere ai campi e ai corsi del Club è obbligatorio presentare un certificato medico in corso di validità, come previsto dalla normativa sportiva vigente.

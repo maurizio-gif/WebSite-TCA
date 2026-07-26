@@ -65,7 +65,7 @@ scuola_livelli:
     nome_en: Red
     tag_en: Mini Tennis
     range_en: Around ages 4 – 6
-    testo_en: 'The first approach to tennis, with a low-bounce red ball on a reduced court. One hour of play, once or twice a week, in groups grouped by age.'
+    testo_en: 'The first approach to tennis, with a low-bounce red ball on a reduced court. One hour of play, once or twice a week, in age-based groups.'
   - dot: arancio
     nome: Arancio
     tag: Scuola Tennis
@@ -156,17 +156,17 @@ scuola_livelli_footer_testo_en: 'After the yellow level, players move into the c
 scuola_livelli_footer_link_label_en: Discover competition →
 scuola_iscrizione_cta_label_en: Request Your Trial
 scuola_sezione3_eyebrow_en: Our method
-scuola_sezione3_titolo_en: TOP SCHOOL FITP
-scuola_sezione3_titolo_accent_en: VAVASSORI TEAM
+scuola_sezione3_titolo_en: TOP SCHOOL FITP.
+scuola_sezione3_titolo_accent_en: VAVASSORI TEAM.
 scuola_sezione3_badge_en: 'Vavassori Tennis Academy · Top School, FITP''s highest recognition'
 scuola_sezione3_paragrafo1_en: 'Through our partnership with the Vavassori Tennis Academy, TCA guides your children on a tennis journey **from their very first steps to competing at the highest levels**.'
 scuola_sezione3_paragrafo2_en: 'Groups are built by age and by level, as homogeneous as possible. Every training session combines athletic preparation and tennis, with a frequency of once, twice or three times a week.'
 scuola_sezione3_paragrafo3_en: 'The progression follows the FITP methodology: as the level rises the ball becomes faster and the court lengthens, up to the full court of the yellow level, combining technique, play and the values of sport **to shape not only tennis players, but people**. All our coaches are certified by the Italian Tennis and Padel Federation.'
 scuola_sezione3_immagine_alt_en: Coach with young student at TCA tennis school
 scuola_sezione4_eyebrow_en: Throughout the year
-scuola_sezione4_titolo_en: 'Play happens,'
+scuola_sezione4_titolo_en: 'We play,'
 scuola_sezione4_titolo_accent_en: all year round.
-scuola_sezione4_footer_testo_en: 'Selected pupils are also offered the **FITP Junior Program**, the non-competitive activity of the federal circuit: a series of tournament stages, from November into spring, for those who want to start testing themselves in matches.'
+scuola_sezione4_footer_testo_en: 'Selected pupils are also offered the **FITP Junior Program**, the non-competitive activity of the federation circuit: a series of tournament stages, from November into spring, for those who want to start testing themselves in matches.'
 _template: scuola_tennis
 ---
 

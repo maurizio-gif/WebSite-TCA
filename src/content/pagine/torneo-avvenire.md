@@ -34,7 +34,7 @@ torneo_stats:
     label_en: "Super Category"
   - numero: "57"
     label: "Titoli Slam vinti dai nostri ex-partecipanti"
-    label_en: "Grand Slam titles won by our former players"
+    label_en: "Grand Slam titles won by past Avvenire entrants"
 torneo_alumni_eyebrow: "Alumni illustri"
 torneo_alumni_titolo: "Campioni nati"
 torneo_alumni_titolo_accent: "qui."

@@ -9,7 +9,7 @@ titolo_en: "Saturday Burraco"
 descrizione_en: "An afternoon of Burraco in Studio 1, with 4 rounds (3 Mitchell + 1 Danish). A fixed weekly appointment every Saturday at 4.30pm."
 luogo_en: "Studio 1"
 corpo_en: |
-  Every Saturday at 4.30pm: an afternoon of Burraco in Studio 1, with 4 rounds (3 Mitchell format + 1 Danish format).
+  Every Saturday at 4.30pm: an afternoon of Burraco in Studio 1, with 4 rounds (3 Mitchell + 1 Danish).
   Info and sign-up: 335 589 9440.
 ---
 

@@ -181,14 +181,14 @@ regolamento_body_en: |
   ## Access to the Club
 
   The Club is open:
-  - Monday to Friday: 7:00 am to midnight
-  - Saturday and Sunday: 8:00 am to 9:00 pm
+  - Monday to Friday: 7am to midnight
+  - Saturday and Sunday: 8am to 9pm
 
   Use of courts, gyms and training areas is permitted up to 30 minutes before closing time.
 
   Use of changing rooms and related facilities is permitted up to 5 minutes before closing time.
 
-  The Club observes the following closing days: December 25th and August 15th. On days before public holidays and during the central weeks of August, closing time may be brought forward and opening time postponed.
+  The Club observes the following closing days: 25 December and 15 August. On days before public holidays and during the central weeks of August, closing time may be brought forward and opening time postponed.
 
   The Club's car, bicycle and motorcycle parking is reserved exclusively for Members and suppliers, subject to availability. Driving at walking pace is mandatory within the Club. Parking within the Club is neither attended nor under video surveillance; the Management declines any responsibility in the event of theft or damage. The Management reserves the right to close or restrict access to the car park for technical, maintenance or event-related needs.
 
@@ -251,10 +251,10 @@ regolamento_body_en: |
 
   - Courts can be booked via the Playtomic website or app, or in person, with the advance notice provided for by your membership type. Platinum: 10 days – Gold: 7 days – Silver: 4 days.
   - The maximum number of active bookings (as the person booking and/or as a participant) depends on your membership type. Platinum: 4 tennis / 2 padel – Gold: 3 tennis / 2 padel – Silver: 2 tennis / 1 padel.
-  - A maximum of 2 active bookings per day is allowed, of which only 1 may fall in the weekday Premium time slot (Monday–Friday, 5:30 pm–11:30 pm); exceeding the booking limit will result in the external rate being applied.
+  - A maximum of 2 active bookings per day is allowed, of which only 1 may fall in the weekday Premium time slot (Monday–Friday, 5.30pm–11.30pm); exceeding the booking limit will result in the external rate being applied.
   - Tennis courts can be booked for 60 minutes for singles (2 people) and 120 minutes for doubles (4 people). Padel courts can be booked for 90 minutes (4 people).
-  - Cancellations must be made at least 24 hours before the start of your session; otherwise, if partial, the booking may be cancelled directly by the secretariat. You can cancel independently via the website or app. Alternatively, you can send a WhatsApp message to Reception.
-  - In case of cancellation with less than 24 hours' notice, or in case of a no-show, the cost of the court will be charged to the person who made the booking. If the names of all players have not been provided, the remaining shares will be treated as non-member rates. For players who do not pay their share of the court (e.g. Gold on an outdoor court), a flat fee of €5 will apply.
+  - Cancellations must be made at least 24 hours before the start of your session; otherwise, if partial, the booking may be cancelled directly by the secretariat. You can cancel independently via the website or app. Alternatively, you can send a WhatsApp message to reception.
+  - In case of cancellation with less than 24 hours' notice, or in case of a no-show, the cost of the court will be charged to the person who made the booking. If not all players' names were provided, the remaining shares will be charged at the non-member rate. For players who do not pay their share of the court (e.g. Gold on an outdoor court), a flat fee of €5 will apply.
   - Three late cancellations or no-shows will result in the loss of advance court-booking rights for 15 days. If you show up at the Club, the non-member rate will apply.
 
   ### Frequently Asked Questions — Padel and Tennis
@@ -269,12 +269,12 @@ regolamento_body_en: |
 
   **What does "days in advance" mean for booking?**
 
-  A Platinum member (for example) can book a court on Tuesday at 3:00 pm for the following Friday at 3:00 pm.
+  A Platinum member (for example) can book a court on Tuesday at 3pm for the following Friday at 3pm.
 
   **What happens if I book beyond the allowed limits?**
 
   Excess bookings will be cancelled, with notice given to the member. Examples:
-  - two active bookings, one from 6:30 pm to 7:30 pm and another from 7:30 pm to 8:30 pm (even on different courts): the second booking will be cancelled.
+  - two active bookings, one from 6.30pm to 7.30pm and another from 7.30pm to 8.30pm (even on different courts): the second booking will be cancelled.
   - a Platinum member with five active tennis bookings: the fifth booking will be cancelled.
 
   **With a Platinum membership, can I book lessons with a coach 10 days in advance?**
@@ -317,7 +317,7 @@ regolamento_body_en: |
   - The maximum number of active bookings is 6.
   - Classes can be cancelled up to 2 hours before the start of the class.
   - After 3 no-shows, a Member will be prevented from booking classes for one week.
-  - You can cancel independently via the app. Alternatively, you can send a WhatsApp message to Reception.
+  - You can cancel independently via the app. Alternatively, you can send a WhatsApp message to reception.
 
   ## Card Games
 
@@ -338,7 +338,7 @@ regolamento_body_en: |
   - You must go to the secretariat to pay for court rental, lessons and classes before using them.
   - Payments can be made by debit/credit card or cash. The secretariat cannot accept banknotes of €200.00 or more, and no more than €999.99 per service purchased.
   - All requests, payments and formalities are handled by the secretariat's front office.
-  - Please wait your turn while keeping a distance from the previous customer, to ensure appropriate privacy.
+  - Please wait your turn at a distance from the person ahead of you, to protect their privacy.
   - Appropriate clothing is required.
   - Customers must never use offensive language towards secretariat staff or other customers present; a tone of voice appropriate to the setting is also recommended.
   - Tables in the indoor room and on the terrace are primarily for use by bar customers; if needed, and if you are not currently consuming something, please give up your seat.

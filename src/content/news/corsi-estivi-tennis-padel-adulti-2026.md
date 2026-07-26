@@ -8,14 +8,14 @@ immagine_alt: Corso estivo di tennis per adulti al tramonto
 pubblicato: false
 titolo_en: Summer Tennis and Padel courses for adults are starting
 categoria_en: Courses
-sintesi_en: 'Tennis from June 8 to July 3, Padel from June 8 to July 16: both from 7.30pm to 10.30pm.'
+sintesi_en: 'Tennis from 8 June to 3 July, Padel from 8 June to 16 July: both from 7.30pm to 10.30pm.'
 immagine_alt_en: Summer adult tennis course at sunset
 corpo_en: |-
   The summer Tennis and Padel courses for adults have started, every evening from 7.30pm to 10.30pm.
 
-  The Tennis course runs from June 8 to July 3: €120 for Members, €160 for Non-members. Information: Mattia Tacchella, 333 878 6691.
+  The Tennis course runs from 8 June to 3 July: €120 for Members, €160 for Non-members. Information: Mattia Tacchella, 333 878 6691.
 
-  The Padel course runs from June 8 to July 16: €180 for Members, €240 for Non-members. Information: Matteo Zanchi, 347 438 3669.
+  The Padel course runs from 8 June to 16 July: €180 for Members, €240 for Non-members. Information: Matteo Zanchi, 347 438 3669.
 
   For further details: info@tcambrosiano.com.
 ---

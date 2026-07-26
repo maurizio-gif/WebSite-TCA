@@ -16,9 +16,9 @@ tags_en:
   - guests
   - dress code
 corpo_en: |-
-  The full club regulation is available at reception and in the member area; here is a summary of the rules members ask about most.
+  The full club regulations are available at reception and in the member area; here is a summary of the rules members ask about most.
 
-  Members may bring guests to the Club within the time slots and guest fees in place: ask reception for the current conditions.
+  Members may bring guests to the Club, subject to the designated time slots and applicable guest fees: ask reception for current details.
 
   Suitable sportswear and shoes appropriate to the surface are required on all courts (**no black soles on indoor courts**).
 

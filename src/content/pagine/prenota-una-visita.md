@@ -9,10 +9,10 @@ hero_sottotitolo: "Sedici campi da tennis, padel, una palestra professionale e o
 hero_immagine: "/HERO.avif"
 hero_immagine_alt: "Vista aerea del Tennis Club Ambrosiano"
 title_en: "Book a Visit | Tennis Club Ambrosiano Milan"
-description_en: "Visit Tennis Club Ambrosiano: 16 tennis courts, padel and gym across 30,000 sqm in Milan, steps from Udine metro station."
+description_en: "Visit Tennis Club Ambrosiano: 16 tennis courts, padel and gym across 30,000 m² in Milan, steps from Udine metro station."
 hero_eyebrow_en: "Since 1963, tennis in Milan"
 hero_titolo_en: "Come and"
 hero_titolo_accent_en: "meet us"
-hero_sottotitolo_en: "Sixteen tennis courts, padel, a professional gym and over 30,000 sqm dedicated to sport and family. Book a visit: we'll show you around, no strings attached."
+hero_sottotitolo_en: "Sixteen tennis courts, padel, a professional gym and over 30,000 m² dedicated to sport and family. Book a visit: we'll show you around, no strings attached."
 hero_immagine_alt_en: "Aerial view of Tennis Club Ambrosiano"
 ---

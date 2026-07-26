@@ -15,11 +15,11 @@ prezzo_tooltip: "Prezzo relativo alla rata mensile di abbonamento annuale, per m
 nota_finale: "Per tutti gli abbonamenti sono previste tariffe agevolate su corsi e lezioni individuali."
 titolo_en: "Choose your"
 titolo_accent_en: "membership."
-sottotitolo_en: "Three tiers designed for different needs. All members access the Club facilities, member benefits, and the unique Ambrosiano atmosphere."
-platinum_badge_en: "Best value"
+sottotitolo_en: "Three tiers designed for different needs. All members enjoy access to the Club's facilities, member benefits and the unique Ambrosiano atmosphere."
+platinum_badge_en: "Most complete"
 cta_label_en: "Learn more"
 prezzo_suffisso_en: "/month"
-prezzo_tooltip_en: "Price refers to the monthly instalment of the annual membership. For more info click Learn more."
+prezzo_tooltip_en: "Price refers to the monthly instalment of the annual membership. For more information, click 'Learn more'."
 nota_finale_en: "All memberships include discounted rates on courses and individual lessons."
 categorie:
   - label: "Accesso ai campi"
@@ -105,7 +105,7 @@ categorie:
         gold_valore: "7 giorni"
         platinum_tipo: valore
         platinum_valore: "10 giorni"
-        feature_en: "Court booking advance"
+        feature_en: "Advance booking window"
         silver_valore_en: "4 days"
         gold_valore_en: "7 days"
         platinum_valore_en: "10 days"
