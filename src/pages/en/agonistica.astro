@@ -26,7 +26,7 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
     sub={d.hero_sottotitolo_en ?? d.hero_sottotitolo}
     image={d.hero_immagine!}
     imageAlt={d.hero_immagine_alt_en ?? d.hero_immagine_alt}
-    ctaLabel="Join the squad"
+    ctas={[{ label: "Join the squad", openModal: true }]}
   />
 
   <section class="metodo-section">
