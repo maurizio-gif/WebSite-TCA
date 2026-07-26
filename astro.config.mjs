@@ -17,19 +17,6 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  vite: {
-    build: {
-      // Soglia sotto la quale Astro incorpora i CSS nell'HTML invece di
-      // linkarli (build.inlineStylesheets è 'auto' di default).
-      // 16 KB include i due fogli di pagina (~9 e ~14 KB), che così non
-      // costano più un round trip in blocco al rendering, ma resta sotto il
-      // bundle condiviso (~48 KB): quello va tenuto esterno, perché è lo
-      // stesso su tutte le pagine e deve restare in cache tra una e l'altra.
-      // Nessun effetto sulle immagini: stanno in public/, non passano dal
-      // bundler, quindi non rischiano di finire inlineate in base64.
-      assetsInlineLimit: 16384,
-    },
-  },
   markdown: {
     // Un solo a-capo (senza riga vuota) nel corpo markdown (news, eventi,
     // help desk) diventa un <br> invece di essere ignorato: chi scrive da

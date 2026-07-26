@@ -57,15 +57,8 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <!-- Start cookieyes banner: deve stare il più in alto possibile in <head>,
          prima di qualsiasi script di tracciamento, così può bloccarli finché
          l'utente non presta consenso (vedi script sotto con
-         type="text/plain" data-cookieyes="...").
-
-         Caricato in async: da sincrono bloccava il rendering per ~1050ms su
-         4G lento (PSI). Il blocco del tracciamento resta comunque garantito
-         perché GTM non è uno script eseguibile finché CookieYes non lo
-         attiva: è type="text/plain", quindi il browser non può eseguirlo da
-         solo, a prescindere da quando arriva CookieYes. L'unico effetto è
-         che il banner compare qualche centinaio di ms più tardi. -->
-    <script id="cookieyes" type="text/javascript" async src="https://cdn-cookieyes.com/client_data/a52d1f8cdcea8593d12025ba01e05026/script.js"></script>
+         type="text/plain" data-cookieyes="..."). -->
+    <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/a52d1f8cdcea8593d12025ba01e05026/script.js"></script>
     <!-- End cookieyes banner -->
 
     <!-- Preconnect solo a GTM, che è l'unico dominio richiesto subito: la
