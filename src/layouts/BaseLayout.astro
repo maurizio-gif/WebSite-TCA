@@ -54,10 +54,39 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
 <!doctype html>
 <html lang={lang} class={hideChrome ? 'is-app-embed' : undefined}>
   <head>
-    <!-- Start cookieyes banner: deve stare il più in alto possibile in <head>,
-         prima di qualsiasi script di tracciamento, così può bloccarli finché
-         l'utente non presta consenso (vedi script sotto con
-         type="text/plain" data-cookieyes="..."). -->
+    <!-- ── Google Consent Mode v2 — stato di default ────────────────────
+         DEVE restare il primissimo script della pagina: se GTM partisse
+         prima di questo, Google considererebbe il consenso concesso e
+         traccerebbe senza autorizzazione.
+
+         Tutto negato tranne ciò che è strettamente necessario. GTM si
+         carica comunque (vedi sotto), ma in stato limitato: nessun cookie,
+         nessun identificativo, solo ping anonimi. Google li usa per
+         stimare le conversioni di chi rifiuta, invece di perderle del
+         tutto come accadeva col blocco totale dello script.
+
+         wait_for_update dà 500ms a CookieYes per ripristinare la scelta di
+         chi ha già acconsentito in una visita precedente, prima che i tag
+         inizino a inviare: senza, i primi eventi partirebbero da "negato"
+         anche per chi aveva già detto sì. -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        personalization_storage: 'denied',
+        functionality_storage: 'granted',
+        security_storage: 'granted',
+        wait_for_update: 500,
+      });
+    </script>
+
+    <!-- Start cookieyes banner: deve restare in alto in <head>, subito dopo
+         lo stato di default, perché è lui a comunicare la scelta dell'utente
+         (vedi il ponte verso il Consent Mode nello script più in basso). -->
     <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/a52d1f8cdcea8593d12025ba01e05026/script.js"></script>
     <!-- End cookieyes banner -->
 
@@ -72,10 +101,14 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <link rel="dns-prefetch" href="https://region1.analytics.google.com" />
     <link rel="dns-prefetch" href="https://stats.g.doubleclick.net" />
 
-    <!-- Google Tag Manager — bloccato da CookieYes finché l'utente non
-         accetta i cookie di analytics (gestisce anche tutti i tag interni
-         al container: GA4, Ads, remarketing, ecc.). -->
-    <script is:inline type="text/plain" data-cookieyes="cookieyes-analytics">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <!-- Google Tag Manager (GA4, Ads, remarketing: tutto è nel container).
+         Non è più bloccato con type="text/plain": con il Consent Mode il
+         gating non lo fa più il blocco dello script, ma lo stato di consenso
+         impostato sopra. GTM parte, legge "negato" e resta in modalità
+         senza cookie finché l'utente non accetta. È l'approccio raccomandato
+         da Google e l'unico che consente la modellazione delle conversioni
+         e, in area SEE, le funzioni di remarketing. -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -302,16 +335,39 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
           inviaBeacon();
         }
 
+        // ── Ponte CookieYes → Google Consent Mode ────────────────────────
+        // Traduce le categorie del banner nei segnali che GTM/GA4/Ads
+        // leggono. Lo facciamo qui invece di affidarci all'integrazione
+        // nativa di CookieYes: non dipende dal piano sottoscritto e resta
+        // sotto il nostro controllo. Per questo motivo l'integrazione
+        // Consent Mode di CookieYes va lasciata DISATTIVATA, altrimenti si
+        // avrebbero due sorgenti che inviano gli stessi segnali.
+        function aggiornaConsenso(analytics, marketing) {
+          if (typeof gtag !== 'function') return;
+          gtag('consent', 'update', {
+            analytics_storage: analytics ? 'granted' : 'denied',
+            ad_storage: marketing ? 'granted' : 'denied',
+            ad_user_data: marketing ? 'granted' : 'denied',
+            ad_personalization: marketing ? 'granted' : 'denied',
+            personalization_storage: marketing ? 'granted' : 'denied',
+          });
+        }
+
         // Visitatore che ha già dato consenso in una visita precedente:
         // l'API/i dati di consenso sono disponibili solo a banner caricato.
         document.addEventListener('cookieyes_banner_load', function (e) {
           var categorie = (e.detail && e.detail.categories) || {};
+          aggiornaConsenso(!!categorie.analytics, !!categorie.advertisement);
           if (categorie.analytics) attivaTracciamento();
         });
 
         // Visitatore che accetta (o cambia preferenze) ora dal banner.
         document.addEventListener('cookieyes_consent_update', function (e) {
           var accettate = (e.detail && e.detail.accepted) || [];
+          aggiornaConsenso(
+            accettate.indexOf('analytics') !== -1,
+            accettate.indexOf('advertisement') !== -1
+          );
           if (accettate.indexOf('analytics') !== -1) attivaTracciamento();
         });
       })();
