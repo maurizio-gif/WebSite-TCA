@@ -655,6 +655,21 @@ export default defineConfig({
           { type: 'string', name: 'hero_immagine_alt_en', label: '🇬🇧 Hero — testo alternativo immagine (inglese)' },
         ];
 
+        // FAQ in fondo alle pagine attività (accordion + schema FAQPage per
+        // Google e assistenti AI). Risposte in testo semplice, senza markdown.
+        const faqFields = [
+          {
+            type: 'object', name: 'faq', label: 'FAQ (domande frequenti in fondo alla pagina)', list: true,
+            ui: { itemProps: (item) => ({ label: item?.domanda || 'Nuova domanda' }) },
+            fields: [
+              { type: 'string', name: 'domanda', label: 'Domanda', required: true },
+              { type: 'string', name: 'risposta', label: 'Risposta (testo semplice, senza grassetti)', required: true, ui: { component: 'textarea' } },
+              { type: 'string', name: 'domanda_en', label: '🇬🇧 Domanda (inglese)' },
+              { type: 'string', name: 'risposta_en', label: '🇬🇧 Risposta (inglese)', ui: { component: 'textarea' } },
+            ],
+          },
+        ];
+
         return {
           name: 'pagine',
           label: 'Pagine',
@@ -664,7 +679,7 @@ export default defineConfig({
             {
               name: 'generica',
               label: 'Pagina generica (solo SEO + Hero)',
-              fields: [...heroSeoFields],
+              fields: [...heroSeoFields, ...faqFields],
             },
             {
               name: 'storia',
@@ -807,6 +822,7 @@ export default defineConfig({
                 { type: 'string', name: 'camps_quote_titolo_en', label: '🇬🇧 Quote — titolo (inglese)' },
                 { type: 'string', name: 'camps_quote_note_en', label: '🇬🇧 Note quote/condizioni (inglese)', list: true, ui: { component: 'textarea' } },
                 { type: 'string', name: 'camps_cta_label_en', label: '🇬🇧 Etichetta bottone iscrizione (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -937,6 +953,7 @@ export default defineConfig({
                 { type: 'string', name: 'scuola_sezione5_testo_en', label: '🇬🇧 Sezione 5 — testo introduttivo (inglese)', ui: { component: 'textarea' } },
                 { type: 'string', name: 'scuola_sezione5_note_en', label: '🇬🇧 Sezione 5 — note/condizioni (inglese)', list: true, ui: { component: 'textarea' } },
                 { type: 'string', name: 'scuola_sezione5_cta_label_en', label: '🇬🇧 Sezione 5 — etichetta bottone iscrizione (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -1005,6 +1022,7 @@ export default defineConfig({
                 { type: 'string', name: 'pt_sezione4_titolo_en', label: '🇬🇧 CTA finale — titolo (inglese)' },
                 { type: 'string', name: 'pt_sezione4_sottotitolo_en', label: '🇬🇧 CTA finale — sottotitolo (inglese)', ui: { component: 'textarea' } },
                 { type: 'string', name: 'pt_sezione4_cta_label_en', label: '🇬🇧 CTA finale — testo pulsante (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -1092,6 +1110,7 @@ export default defineConfig({
                 { type: 'string', name: 'prep_calendario_titolo_en', label: '🇬🇧 Calendario — titolo (inglese)' },
                 { type: 'string', name: 'prep_calendario_titolo_accent_en', label: '🇬🇧 Calendario — titolo evidenziato (inglese)' },
                 { type: 'string', name: 'prep_calendario_sub_en', label: '🇬🇧 Calendario — testo introduttivo (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -1143,6 +1162,7 @@ export default defineConfig({
                 { type: 'string', name: 'tennis_corsi_titolo_accent_en', label: '🇬🇧 Sezione Corsi — titolo evidenziato (inglese)' },
                 { type: 'string', name: 'tennis_corsi_intro_en', label: '🇬🇧 Sezione Corsi — testo introduttivo (inglese)', ui: { component: 'textarea' } },
                 { type: 'string', name: 'tennis_corsi_cta_label_en', label: '🇬🇧 Sezione Corsi — testo pulsante (inglese)' },
+                ...faqFields,
               ],
             },
             {
@@ -1202,6 +1222,7 @@ export default defineConfig({
                 { type: 'string', name: 'agonistica_eyebrow_en', label: '🇬🇧 Eyebrow (inglese)' },
                 { type: 'string', name: 'agonistica_titolo_en', label: '🇬🇧 Titolo (inglese)' },
                 { type: 'string', name: 'agonistica_titolo_accent_en', label: '🇬🇧 Titolo evidenziato (inglese)' },
+                ...faqFields,
               ],
             },
             {

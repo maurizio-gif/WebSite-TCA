@@ -480,6 +480,16 @@ const pagine = defineCollection({
     torneo_prossima_titolo_accent_en: z.string().optional(),
     torneo_prossima_testo_en: z.string().optional(),
 
+    // ── FAQ (sezione comune alle pagine attività) ──
+    // Rese anche in JSON-LD FAQPage da FaqAccordion.astro: risposte in testo
+    // semplice, senza markdown.
+    faq: z.array(z.object({
+      domanda: z.string(),
+      risposta: z.string(),
+      domanda_en: z.string().optional(),
+      risposta_en: z.string().optional(),
+    })).optional(),
+
     // ── Corpo pagina: Regolamento del Club ──
     regolamento_body: z.string().optional(),
     regolamento_body_en: z.string().optional(),

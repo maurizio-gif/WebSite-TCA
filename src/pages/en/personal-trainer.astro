@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
 import PageHero from "../../components/PageHero.astro";
 import MembershipSection from "../../components/MembershipSection.astro";
 import { publicUrl } from "../../i18n/utils";
@@ -130,6 +131,8 @@ const nl2br = (s: string) => s.replace(/\n/g, '<br>');
   </section>
 
   <MembershipSection lang={lang} />
+  <FaqAccordion lang="en" items={d.faq} />
+
 </BaseLayout>
 
 <style>

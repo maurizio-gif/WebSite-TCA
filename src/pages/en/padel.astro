@@ -1,11 +1,16 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
 import PageHero from "../../components/PageHero.astro";
 import MembershipSection from "../../components/MembershipSection.astro";
 import ConversionBlock from "../../components/ConversionBlock.astro";
 import { publicUrl } from "../../i18n/utils";
+import { getEntry } from "astro:content";
 
 const lang = 'en' as const;
+
+// FAQ gestibili da TinaCMS → src/content/pagine/padel.md (campi faq/_en)
+const d = (await getEntry("pagine", "padel"))!.data;
 
 const corsiLivelli = [
   { titolo: "Beginners", testo: "For those starting from scratch. Small groups, patient coaches, a gradual approach." },
@@ -83,6 +88,8 @@ const corsiLivelli = [
       </div>
     </div>
   </section>
+
+  <FaqAccordion lang="en" items={d.faq} />
 
   <ConversionBlock lang={lang} />
 
