@@ -14,7 +14,7 @@ const p = (path: string) => getLocalePath(lang, path);
   <div class="hero__bg">
     <img
       src={publicUrl('/HERO.avif')}
-      alt="Tennis Club Ambrosiano — vista aerea dei campi"
+      alt="TC Ambrosiano — vista aerea dei campi"
       class="hero__img"
       fetchpriority="high"
       loading="eager"
@@ -30,17 +30,20 @@ const p = (path: string) => getLocalePath(lang, path);
         <span class="hero__title-inner" style="--reveal-delay:0.12s">TC<em>Ambrosiano</em></span>
       </span>
     </h1>
-    <p class="hero__sub hero-reveal-fade" style="--reveal-delay:0.72s">Tennis, Padel, Preparazione Atletica and Community</p>
+    <p class="hero__sub hero-reveal-fade" style="--reveal-delay:0.72s">{t.hero.tagline}</p>
 
     <div class="hero__actions hero-reveal-fade" style="--reveal-delay:0.9s">
       <a class="btn btn-red" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Registration" target="_blank" rel="noopener noreferrer">{t.hero.cta1}</a>
       <button class="btn btn-outline" data-open-modal="modal-contatti">{t.hero.cta2}</button>
-      <button class="hero__accedi-btn" id="btn-accedi-hero" type="button" aria-label="Accedi al tuo account">
-        <svg width="17" height="17" viewBox="0 0 24 26" fill="none" aria-hidden="true">
-          <circle cx="12" cy="8" r="5" stroke="currentColor" stroke-width="2"/>
-          <path d="M2 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
+      <div class="hero__accedi-group">
+        <span class="hero__accedi-label" aria-hidden="true">{t.hero.accediLabel}</span>
+        <button class="hero__accedi-btn" id="btn-accedi-hero" type="button" aria-label={t.hero.accediAria}>
+          <svg width="17" height="17" viewBox="0 0 24 26" fill="none" aria-hidden="true">
+            <circle cx="12" cy="8" r="5" stroke="currentColor" stroke-width="2"/>
+            <path d="M2 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -198,6 +201,23 @@ const p = (path: string) => getLocalePath(lang, path);
     .hero-reveal-fade {
       animation: none;
     }
+  }
+
+  .hero__accedi-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 4px;
+  }
+
+  .hero__accedi-label {
+    font-family: var(--font-display);
+    font-size: clamp(11px, 0.85vw, 13px);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
   }
 
   .hero__accedi-btn {

@@ -1,17 +1,17 @@
 ---
 _template: privacy
-title: "Privacy Policy | Tennis Club Ambrosiano Milano"
-description: "Informativa sul trattamento dei dati personali del Tennis Club Ambrosiano: dati raccolti, finalità, cookie, servizi di terze parti e diritti dell'interessato."
+title: "Privacy Policy | TC Ambrosiano Milano"
+description: "Informativa sul trattamento dei dati personali del TC Ambrosiano: dati raccolti, finalità, cookie, servizi di terze parti e diritti dell'interessato."
 hero_eyebrow: "Aggiornato a luglio 2026"
 hero_titolo: "Privacy"
 hero_titolo_accent: "Policy"
-hero_sottotitolo: "Come raccogliamo, utilizziamo e proteggiamo i dati personali di chi visita il sito e di chi richiede informazioni o si iscrive al Tennis Club Ambrosiano."
-title_en: "Privacy Policy | Tennis Club Ambrosiano Milan"
-description_en: "Tennis Club Ambrosiano's personal data processing policy: data collected, purposes, cookies, third-party services and your rights."
+hero_sottotitolo: "Come raccogliamo, utilizziamo e proteggiamo i dati personali di chi visita il sito e di chi richiede informazioni o si iscrive al TC Ambrosiano."
+title_en: "Privacy Policy | TC Ambrosiano Milan"
+description_en: "TC Ambrosiano's personal data processing policy: data collected, purposes, cookies, third-party services and your rights."
 hero_eyebrow_en: "Updated July 2026"
 hero_titolo_en: "Privacy"
 hero_titolo_accent_en: "Policy"
-hero_sottotitolo_en: "How we collect, use and protect the personal data of website visitors and of those who request information or register with Tennis Club Ambrosiano."
+hero_sottotitolo_en: "How we collect, use and protect the personal data of website visitors and of those who request information or register with TC Ambrosiano."
 privacy_body: |
   ## Titolare del Trattamento
 

@@ -37,7 +37,7 @@ scuola_sezione5_eyebrow_en: Summer Tennis School
 scuola_sezione5_titolo_en: 'Keep improving,'
 scuola_sezione5_titolo_accent_en: even in summer.
 scuola_sezione5_testo_en: 'With the Vavassori Academy coaches, an intensive summer path for those who want to keep training and growing during the holidays.'
-title: Scuola Tennis a Milano dal 1965 | Tennis Club Ambrosiano
+title: Scuola Tennis a Milano dal 1965 | TC Ambrosiano
 description: 'La scuola tennis per bambini e ragazzi più storica di Milano: mini tennis e livelli rosso, arancio, verde, giallo con metodo FITP. Al TCA dal 1965.'
 hero_eyebrow: Junior · Scuola Tennis
 hero_titolo: Scuola
@@ -45,7 +45,7 @@ hero_titolo_accent: Tennis
 hero_sottotitolo: 'Scuola Tennis con percorsi a livelli — rosso, arancio, verde e giallo — fino alla preparazione agonistica. Una storica scuola tennis di Milano, attiva dal 1965.'
 hero_immagine: /scuola-tennis-hero.avif
 hero_immagine_alt: Bambini a scuola tennis TCA
-title_en: Tennis School in Milan Since 1965 | Tennis Club Ambrosiano
+title_en: Tennis School in Milan Since 1965 | TC Ambrosiano
 description_en: 'Milan''s most historic tennis school for children and teens: mini tennis and red, orange, green, yellow levels with the FITP method. At TCA since 1965.'
 hero_eyebrow_en: Junior · Tennis School
 hero_titolo_en: Tennis
