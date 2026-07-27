@@ -503,7 +503,7 @@ const lm = lang === 'en' ? {
     email:       'Please enter a valid email address.',
     nome:        'Please enter your first name.',
     cognome:     'Please enter your last name.',
-    cell:        'Please enter your mobile number.',
+    cell:        'Please enter a valid mobile number.',
     privacy:     'Consent to the Privacy Policy is required.',
     cbDate:      'Required: please choose a day for the call.',
     cbTime:      'Required: please select an available time.',
@@ -516,7 +516,7 @@ const lm = lang === 'en' ? {
     email:       'Inserisci un indirizzo email valido.',
     nome:        'Inserisci il tuo nome.',
     cognome:     'Inserisci il tuo cognome.',
-    cell:        'Inserisci il numero di cellulare.',
+    cell:        'Inserisci un numero di cellulare valido.',
     privacy:     'Il consenso alla Privacy Policy è obbligatorio.',
     cbDate:      'Campo obbligatorio: scegli un giorno per la chiamata.',
     cbTime:      'Campo obbligatorio: seleziona un orario disponibile.',
@@ -640,6 +640,13 @@ const lm = lang === 'en' ? {
 
   function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
 
+  // Numero locale (senza prefisso, gestito a parte dalla select): solo
+  // cifre/spazi/trattini, lunghezza plausibile per un cellulare reale.
+  function isValidPhone(v) {
+    var cifre = v.replace(/[^0-9]/g, '');
+    return /^[0-9\s-]+$/.test(v.trim()) && cifre.length >= 6 && cifre.length <= 14;
+  }
+
   // Etichette complete delle attività selezionate, per i payload inviati ai webhook
   function attivitaLabels() {
     return state.attivita.map(function(id) { return ATTIVITA_LABELS[id] || id; });
@@ -706,6 +713,14 @@ const lm = lang === 'en' ? {
     if (isValidEmail(emailInput.value)) emailInput.classList.remove('lm__input--error');
   });
 
+  var cellInput = modal.querySelector('#lm-cell');
+  cellInput.addEventListener('blur', function() {
+    cellInput.classList.toggle('lm__input--error', !!cellInput.value && !isValidPhone(cellInput.value));
+  });
+  cellInput.addEventListener('input', function() {
+    if (isValidPhone(cellInput.value)) cellInput.classList.remove('lm__input--error');
+  });
+
   modal.querySelector('#lm-step1-next').addEventListener('click', async function() {
     var s1     = getStep(1);
     var loader = s1.querySelector('.lm__loader');
@@ -760,13 +775,16 @@ const lm = lang === 'en' ? {
   modal.querySelector('#lm-step2-back').addEventListener('click', function(){ showStep(1,1); });
 
   modal.querySelector('#lm-step2-next').addEventListener('click', function() {
-    var s2 = getStep(2); clearError(s2);
+    var s2 = getStep(2); clearError(s2); cellInput.classList.remove('lm__input--error');
     var nome=modal.querySelector('#lm-nome'), cognome=modal.querySelector('#lm-cognome'),
         cell=modal.querySelector('#lm-cell'), privacy=modal.querySelector('#lm-privacy');
 
     if (!nome.value.trim())    { showError(s2, ERR.nome); nome.focus(); return; }
     if (!cognome.value.trim()) { showError(s2, ERR.cognome); cognome.focus(); return; }
-    if (!cell.value.trim())    { showError(s2, ERR.cell); cell.focus(); return; }
+    if (!cell.value.trim() || !isValidPhone(cell.value)) {
+      cellInput.classList.add('lm__input--error');
+      showError(s2, ERR.cell); cell.focus(); return;
+    }
     if (!privacy.checked)      { showError(s2, ERR.privacy); return; }
 
     var prefix = modal.querySelector('#lm-pfx');
