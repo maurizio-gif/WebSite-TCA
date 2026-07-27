@@ -77,18 +77,32 @@ const columns = [
 
     <div class="footer__col">
       <h3 class="footer__heading">{t.footer.social}</h3>
-      <ul class="footer__list">
-        <li>
-          <a class="footer__link" href="https://www.instagram.com/clubambrosiano" target="_blank" rel="noopener">
-            Instagram
-          </a>
-        </li>
-        <li>
-          <a class="footer__link" href="https://www.facebook.com/tcambrosiano" target="_blank" rel="noopener">
-            Facebook
-          </a>
-        </li>
-      </ul>
+      <div class="footer__social">
+        <a
+          class="footer__social-link footer__social-link--instagram"
+          href="https://www.instagram.com/clubambrosiano"
+          target="_blank"
+          rel="noopener"
+          aria-label="Instagram"
+        >
+          <svg class="footer__social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+          <span class="footer__social-label">Instagram</span>
+        </a>
+        <a
+          class="footer__social-link footer__social-link--facebook"
+          href="https://www.facebook.com/tcambrosiano"
+          target="_blank"
+          rel="noopener"
+          aria-label="Facebook"
+        >
+          <svg class="footer__social-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036c-1.751 0-2.6.6-2.6 2.3v1.671h3.259l-.6 3.667h-2.659v7.98H9.101z"/>
+          </svg>
+          <span class="footer__social-label">Facebook</span>
+        </a>
+      </div>
     </div>
 
     <div class="footer__col">
@@ -179,6 +193,52 @@ const columns = [
 
   .footer__link { text-decoration: none; }
   .footer__link:hover { color: #fff; }
+
+  .footer__social {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer__social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.55rem 0.9rem 0.55rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.85);
+    transition: background 0.2s, border-color 0.2s, transform 0.2s, color 0.2s;
+    width: fit-content;
+  }
+
+  .footer__social-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  .footer__social-label {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.9vw, 15px);
+    font-weight: 400;
+  }
+
+  .footer__social-link:hover {
+    transform: translateY(-2px);
+    border-color: transparent;
+    color: #fff;
+  }
+
+  .footer__social-link--instagram:hover {
+    background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  }
+
+  .footer__social-link--facebook:hover {
+    background: #1877F2;
+  }
 
   .footer__bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
