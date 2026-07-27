@@ -287,6 +287,43 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
           return Object.keys(salvati).length ? salvati : utmDaUrl();
         };
 
+        // Propagazione UTM tra le pagine del sito: come sopra, è solo
+        // lettura dell'URL corrente e riscrittura dei link in uscita, non
+        // archiviazione sul dispositivo, quindi non richiede consenso e
+        // funziona anche per chi rifiuta i cookie. Senza questo, i parametri
+        // spariscono al primo click perché i link interni non li portano.
+        function propagaUtm() {
+          var utm = window.tcaGetUtm();
+          var chiavi = Object.keys(utm);
+          if (!chiavi.length) return;
+
+          try {
+            var qui = new URL(location.href);
+            var mancano = chiavi.some(function (k) { return qui.searchParams.get(k) !== utm[k]; });
+            if (mancano) {
+              chiavi.forEach(function (k) { qui.searchParams.set(k, utm[k]); });
+              history.replaceState(history.state, '', qui.toString());
+            }
+          } catch (e) {}
+
+          document.addEventListener('click', function (ev) {
+            var a = ev.target && ev.target.closest ? ev.target.closest('a[href]') : null;
+            if (!a) return;
+            var href = a.getAttribute('href') || '';
+            if (!href || href.charAt(0) === '#' || /^(mailto:|tel:|javascript:)/i.test(href)) return;
+            try {
+              var dest = new URL(a.href, location.href);
+              if (dest.origin !== location.origin) return;
+              var cambia = false;
+              chiavi.forEach(function (k) {
+                if (dest.searchParams.get(k) !== utm[k]) { dest.searchParams.set(k, utm[k]); cambia = true; }
+              });
+              if (cambia) a.href = dest.toString();
+            } catch (e) {}
+          }, true);
+        }
+        propagaUtm();
+
         // Memorizzare, invece, è archiviazione nel terminale: resta
         // subordinato al consenso analytics, come il vid e il beacon.
         function catturaUtm() {
