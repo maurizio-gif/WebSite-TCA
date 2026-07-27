@@ -24,6 +24,7 @@ pnpm-debug.log*
 
 # macOS / editor
 .DS_Store
+._*
 .vscode/*
 !.vscode/extensions.json
 .idea/
