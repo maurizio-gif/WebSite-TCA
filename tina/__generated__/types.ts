@@ -307,7 +307,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder;
+export type DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -479,15 +479,21 @@ export type MembershipCategorieRighe = {
   feature_tooltip?: Maybe<Scalars['String']['output']>;
   silver_tipo: Scalars['String']['output'];
   silver_valore?: Maybe<Scalars['String']['output']>;
+  silver_valore_tooltip?: Maybe<Scalars['String']['output']>;
   gold_tipo: Scalars['String']['output'];
   gold_valore?: Maybe<Scalars['String']['output']>;
+  gold_valore_tooltip?: Maybe<Scalars['String']['output']>;
   platinum_tipo: Scalars['String']['output'];
   platinum_valore?: Maybe<Scalars['String']['output']>;
+  platinum_valore_tooltip?: Maybe<Scalars['String']['output']>;
   feature_en?: Maybe<Scalars['String']['output']>;
   feature_tooltip_en?: Maybe<Scalars['String']['output']>;
   silver_valore_en?: Maybe<Scalars['String']['output']>;
+  silver_valore_tooltip_en?: Maybe<Scalars['String']['output']>;
   gold_valore_en?: Maybe<Scalars['String']['output']>;
+  gold_valore_tooltip_en?: Maybe<Scalars['String']['output']>;
   platinum_valore_en?: Maybe<Scalars['String']['output']>;
+  platinum_valore_tooltip_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type MembershipCategorie = {
@@ -507,12 +513,21 @@ export type Membership = Node & Document & {
   platinum_nome: Scalars['String']['output'];
   platinum_badge: Scalars['String']['output'];
   cta_label: Scalars['String']['output'];
+  silver_prezzo?: Maybe<Scalars['String']['output']>;
+  gold_prezzo?: Maybe<Scalars['String']['output']>;
+  platinum_prezzo?: Maybe<Scalars['String']['output']>;
+  prezzo_suffisso?: Maybe<Scalars['String']['output']>;
+  prezzo_tooltip?: Maybe<Scalars['String']['output']>;
+  nota_finale?: Maybe<Scalars['String']['output']>;
   categorie: Array<MembershipCategorie>;
   titolo_en?: Maybe<Scalars['String']['output']>;
   titolo_accent_en?: Maybe<Scalars['String']['output']>;
   sottotitolo_en?: Maybe<Scalars['String']['output']>;
   platinum_badge_en?: Maybe<Scalars['String']['output']>;
   cta_label_en?: Maybe<Scalars['String']['output']>;
+  prezzo_suffisso_en?: Maybe<Scalars['String']['output']>;
+  prezzo_tooltip_en?: Maybe<Scalars['String']['output']>;
+  nota_finale_en?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -523,15 +538,21 @@ export type MembershipCategorieRigheFilter = {
   feature_tooltip?: InputMaybe<StringFilter>;
   silver_tipo?: InputMaybe<StringFilter>;
   silver_valore?: InputMaybe<StringFilter>;
+  silver_valore_tooltip?: InputMaybe<StringFilter>;
   gold_tipo?: InputMaybe<StringFilter>;
   gold_valore?: InputMaybe<StringFilter>;
+  gold_valore_tooltip?: InputMaybe<StringFilter>;
   platinum_tipo?: InputMaybe<StringFilter>;
   platinum_valore?: InputMaybe<StringFilter>;
+  platinum_valore_tooltip?: InputMaybe<StringFilter>;
   feature_en?: InputMaybe<StringFilter>;
   feature_tooltip_en?: InputMaybe<StringFilter>;
   silver_valore_en?: InputMaybe<StringFilter>;
+  silver_valore_tooltip_en?: InputMaybe<StringFilter>;
   gold_valore_en?: InputMaybe<StringFilter>;
+  gold_valore_tooltip_en?: InputMaybe<StringFilter>;
   platinum_valore_en?: InputMaybe<StringFilter>;
+  platinum_valore_tooltip_en?: InputMaybe<StringFilter>;
 };
 
 export type MembershipCategorieFilter = {
@@ -549,12 +570,21 @@ export type MembershipFilter = {
   platinum_nome?: InputMaybe<StringFilter>;
   platinum_badge?: InputMaybe<StringFilter>;
   cta_label?: InputMaybe<StringFilter>;
+  silver_prezzo?: InputMaybe<StringFilter>;
+  gold_prezzo?: InputMaybe<StringFilter>;
+  platinum_prezzo?: InputMaybe<StringFilter>;
+  prezzo_suffisso?: InputMaybe<StringFilter>;
+  prezzo_tooltip?: InputMaybe<StringFilter>;
+  nota_finale?: InputMaybe<StringFilter>;
   categorie?: InputMaybe<MembershipCategorieFilter>;
   titolo_en?: InputMaybe<StringFilter>;
   titolo_accent_en?: InputMaybe<StringFilter>;
   sottotitolo_en?: InputMaybe<StringFilter>;
   platinum_badge_en?: InputMaybe<StringFilter>;
   cta_label_en?: InputMaybe<StringFilter>;
+  prezzo_suffisso_en?: InputMaybe<StringFilter>;
+  prezzo_tooltip_en?: InputMaybe<StringFilter>;
+  nota_finale_en?: InputMaybe<StringFilter>;
 };
 
 export type MembershipConnectionEdges = {
@@ -739,6 +769,14 @@ export type NewsConnection = Connection & {
   edges?: Maybe<Array<Maybe<NewsConnectionEdges>>>;
 };
 
+export type PagineGenericaFaq = {
+  __typename?: 'PagineGenericaFaq';
+  domanda: Scalars['String']['output'];
+  risposta: Scalars['String']['output'];
+  domanda_en?: Maybe<Scalars['String']['output']>;
+  risposta_en?: Maybe<Scalars['String']['output']>;
+};
+
 export type PagineGenerica = Node & Document & {
   __typename?: 'PagineGenerica';
   title: Scalars['String']['output'];
@@ -756,6 +794,7 @@ export type PagineGenerica = Node & Document & {
   hero_titolo_accent_en?: Maybe<Scalars['String']['output']>;
   hero_sottotitolo_en?: Maybe<Scalars['String']['output']>;
   hero_immagine_alt_en?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Array<Maybe<PagineGenericaFaq>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -822,12 +861,48 @@ export type PagineSummer_CampsCamps_Features = {
   testo_en?: Maybe<Scalars['String']['output']>;
 };
 
-export type PagineSummer_CampsCamps_Settimane = {
-  __typename?: 'PagineSummer_campsCamps_settimane';
-  settimana: Scalars['String']['output'];
-  date: Scalars['String']['output'];
-  settimana_en?: Maybe<Scalars['String']['output']>;
-  date_en?: Maybe<Scalars['String']['output']>;
+export type PagineSummer_CampsCamps_Info_Rapide = {
+  __typename?: 'PagineSummer_campsCamps_info_rapide';
+  label: Scalars['String']['output'];
+  valore: Scalars['String']['output'];
+  label_en?: Maybe<Scalars['String']['output']>;
+  valore_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineSummer_CampsCamps_Giornata = {
+  __typename?: 'PagineSummer_campsCamps_giornata';
+  orario: Scalars['String']['output'];
+  titolo: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineSummer_CampsCamps_Settimanale = {
+  __typename?: 'PagineSummer_campsCamps_settimanale';
+  giorno: Scalars['String']['output'];
+  colpo: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  giorno_en?: Maybe<Scalars['String']['output']>;
+  colpo_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineSummer_CampsCamps_Quote_Righe = {
+  __typename?: 'PagineSummer_campsCamps_quote_righe';
+  categoria: Scalars['String']['output'];
+  prezzo_settimana: Scalars['String']['output'];
+  prezzo_dal2: Scalars['String']['output'];
+  prezzo_fratelli: Scalars['String']['output'];
+  categoria_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineSummer_CampsFaq = {
+  __typename?: 'PagineSummer_campsFaq';
+  domanda: Scalars['String']['output'];
+  risposta: Scalars['String']['output'];
+  domanda_en?: Maybe<Scalars['String']['output']>;
+  risposta_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type PagineSummer_Camps = Node & Document & {
@@ -858,7 +933,22 @@ export type PagineSummer_Camps = Node & Document & {
   camps_sezione2_eyebrow: Scalars['String']['output'];
   camps_sezione2_titolo: Scalars['String']['output'];
   camps_sezione2_titolo_accent: Scalars['String']['output'];
-  camps_settimane: Array<PagineSummer_CampsCamps_Settimane>;
+  camps_info_rapide: Array<PagineSummer_CampsCamps_Info_Rapide>;
+  camps_giornata_eyebrow: Scalars['String']['output'];
+  camps_giornata_titolo: Scalars['String']['output'];
+  camps_giornata: Array<PagineSummer_CampsCamps_Giornata>;
+  camps_settimanale_eyebrow: Scalars['String']['output'];
+  camps_settimanale_titolo: Scalars['String']['output'];
+  camps_settimanale: Array<PagineSummer_CampsCamps_Settimanale>;
+  camps_cosa_portare_titolo: Scalars['String']['output'];
+  camps_cosa_portare: Array<Scalars['String']['output']>;
+  camps_obbligatorio: Scalars['String']['output'];
+  camps_kit_benvenuto: Scalars['String']['output'];
+  camps_quote_eyebrow: Scalars['String']['output'];
+  camps_quote_titolo: Scalars['String']['output'];
+  camps_quote_righe: Array<PagineSummer_CampsCamps_Quote_Righe>;
+  camps_quote_note: Array<Scalars['String']['output']>;
+  camps_cta_label: Scalars['String']['output'];
   camps_sezione1_eyebrow_en?: Maybe<Scalars['String']['output']>;
   camps_sezione1_titolo_en?: Maybe<Scalars['String']['output']>;
   camps_sezione1_titolo_accent_en?: Maybe<Scalars['String']['output']>;
@@ -867,6 +957,19 @@ export type PagineSummer_Camps = Node & Document & {
   camps_sezione2_eyebrow_en?: Maybe<Scalars['String']['output']>;
   camps_sezione2_titolo_en?: Maybe<Scalars['String']['output']>;
   camps_sezione2_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  camps_giornata_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  camps_giornata_titolo_en?: Maybe<Scalars['String']['output']>;
+  camps_settimanale_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  camps_settimanale_titolo_en?: Maybe<Scalars['String']['output']>;
+  camps_cosa_portare_titolo_en?: Maybe<Scalars['String']['output']>;
+  camps_cosa_portare_en?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  camps_obbligatorio_en?: Maybe<Scalars['String']['output']>;
+  camps_kit_benvenuto_en?: Maybe<Scalars['String']['output']>;
+  camps_quote_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  camps_quote_titolo_en?: Maybe<Scalars['String']['output']>;
+  camps_quote_note_en?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  camps_cta_label_en?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Array<Maybe<PagineSummer_CampsFaq>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -903,6 +1006,29 @@ export type PagineScuola_TennisScuola_Tornei = {
   quando_en?: Maybe<Scalars['String']['output']>;
   nome_en?: Maybe<Scalars['String']['output']>;
   testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineScuola_TennisScuola_Sezione5_Info_Rapide = {
+  __typename?: 'PagineScuola_tennisScuola_sezione5_info_rapide';
+  label: Scalars['String']['output'];
+  valore: Scalars['String']['output'];
+  label_en?: Maybe<Scalars['String']['output']>;
+  valore_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineScuola_TennisScuola_Sezione5_Quote_Righe = {
+  __typename?: 'PagineScuola_tennisScuola_sezione5_quote_righe';
+  categoria: Scalars['String']['output'];
+  prezzo: Scalars['String']['output'];
+  categoria_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineScuola_TennisFaq = {
+  __typename?: 'PagineScuola_tennisFaq';
+  domanda: Scalars['String']['output'];
+  risposta: Scalars['String']['output'];
+  domanda_en?: Maybe<Scalars['String']['output']>;
+  risposta_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type PagineScuola_Tennis = Node & Document & {
@@ -948,6 +1074,14 @@ export type PagineScuola_Tennis = Node & Document & {
   scuola_sezione4_titolo_accent: Scalars['String']['output'];
   scuola_tornei: Array<PagineScuola_TennisScuola_Tornei>;
   scuola_sezione4_footer_testo: Scalars['String']['output'];
+  scuola_sezione5_eyebrow: Scalars['String']['output'];
+  scuola_sezione5_titolo: Scalars['String']['output'];
+  scuola_sezione5_titolo_accent: Scalars['String']['output'];
+  scuola_sezione5_testo: Scalars['String']['output'];
+  scuola_sezione5_info_rapide: Array<PagineScuola_TennisScuola_Sezione5_Info_Rapide>;
+  scuola_sezione5_quote_righe: Array<PagineScuola_TennisScuola_Sezione5_Quote_Righe>;
+  scuola_sezione5_note: Array<Scalars['String']['output']>;
+  scuola_sezione5_cta_label: Scalars['String']['output'];
   scuola_sezione1_eyebrow_en?: Maybe<Scalars['String']['output']>;
   scuola_sezione1_titolo_en?: Maybe<Scalars['String']['output']>;
   scuola_sezione1_titolo_accent_en?: Maybe<Scalars['String']['output']>;
@@ -970,6 +1104,13 @@ export type PagineScuola_Tennis = Node & Document & {
   scuola_sezione4_titolo_en?: Maybe<Scalars['String']['output']>;
   scuola_sezione4_titolo_accent_en?: Maybe<Scalars['String']['output']>;
   scuola_sezione4_footer_testo_en?: Maybe<Scalars['String']['output']>;
+  scuola_sezione5_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  scuola_sezione5_titolo_en?: Maybe<Scalars['String']['output']>;
+  scuola_sezione5_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  scuola_sezione5_testo_en?: Maybe<Scalars['String']['output']>;
+  scuola_sezione5_note_en?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  scuola_sezione5_cta_label_en?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Array<Maybe<PagineScuola_TennisFaq>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -1000,6 +1141,14 @@ export type PaginePersonal_TrainerPt_Steps = {
   testo: Scalars['String']['output'];
   titolo_en?: Maybe<Scalars['String']['output']>;
   testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PaginePersonal_TrainerFaq = {
+  __typename?: 'PaginePersonal_trainerFaq';
+  domanda: Scalars['String']['output'];
+  risposta: Scalars['String']['output'];
+  domanda_en?: Maybe<Scalars['String']['output']>;
+  risposta_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type PaginePersonal_Trainer = Node & Document & {
@@ -1050,6 +1199,7 @@ export type PaginePersonal_Trainer = Node & Document & {
   pt_sezione4_titolo_en?: Maybe<Scalars['String']['output']>;
   pt_sezione4_sottotitolo_en?: Maybe<Scalars['String']['output']>;
   pt_sezione4_cta_label_en?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Array<Maybe<PaginePersonal_TrainerFaq>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -1091,6 +1241,14 @@ export type PaginePreparazione_AtleticaPrep_Categorie = {
   color: Scalars['String']['output'];
   desc_en?: Maybe<Scalars['String']['output']>;
   corsi: Array<PaginePreparazione_AtleticaPrep_CategorieCorsi>;
+};
+
+export type PaginePreparazione_AtleticaFaq = {
+  __typename?: 'PaginePreparazione_atleticaFaq';
+  domanda: Scalars['String']['output'];
+  risposta: Scalars['String']['output'];
+  domanda_en?: Maybe<Scalars['String']['output']>;
+  risposta_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type PaginePreparazione_Atletica = Node & Document & {
@@ -1141,6 +1299,7 @@ export type PaginePreparazione_Atletica = Node & Document & {
   prep_calendario_titolo_en?: Maybe<Scalars['String']['output']>;
   prep_calendario_titolo_accent_en?: Maybe<Scalars['String']['output']>;
   prep_calendario_sub_en?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Array<Maybe<PaginePreparazione_AtleticaFaq>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -1160,6 +1319,14 @@ export type PagineTennisTennis_Corsi_Livelli = {
   testo: Scalars['String']['output'];
   titolo_en?: Maybe<Scalars['String']['output']>;
   testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineTennisFaq = {
+  __typename?: 'PagineTennisFaq';
+  domanda: Scalars['String']['output'];
+  risposta: Scalars['String']['output'];
+  domanda_en?: Maybe<Scalars['String']['output']>;
+  risposta_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type PagineTennis = Node & Document & {
@@ -1205,9 +1372,74 @@ export type PagineTennis = Node & Document & {
   tennis_corsi_titolo_accent_en?: Maybe<Scalars['String']['output']>;
   tennis_corsi_intro_en?: Maybe<Scalars['String']['output']>;
   tennis_corsi_cta_label_en?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Array<Maybe<PagineTennisFaq>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
+};
+
+export type PaginePadelPadel_Corsi_Livelli = {
+  __typename?: 'PaginePadelPadel_corsi_livelli';
+  titolo: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PaginePadelFaq = {
+  __typename?: 'PaginePadelFaq';
+  domanda: Scalars['String']['output'];
+  risposta: Scalars['String']['output'];
+  domanda_en?: Maybe<Scalars['String']['output']>;
+  risposta_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PaginePadel = Node & Document & {
+  __typename?: 'PaginePadel';
+  title: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  hero_eyebrow?: Maybe<Scalars['String']['output']>;
+  hero_titolo?: Maybe<Scalars['String']['output']>;
+  hero_titolo_accent?: Maybe<Scalars['String']['output']>;
+  hero_sottotitolo?: Maybe<Scalars['String']['output']>;
+  hero_immagine?: Maybe<Scalars['String']['output']>;
+  hero_immagine_alt?: Maybe<Scalars['String']['output']>;
+  title_en?: Maybe<Scalars['String']['output']>;
+  description_en?: Maybe<Scalars['String']['output']>;
+  hero_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  hero_titolo_en?: Maybe<Scalars['String']['output']>;
+  hero_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  hero_sottotitolo_en?: Maybe<Scalars['String']['output']>;
+  hero_immagine_alt_en?: Maybe<Scalars['String']['output']>;
+  padel_corsi_eyebrow: Scalars['String']['output'];
+  padel_corsi_titolo: Scalars['String']['output'];
+  padel_corsi_titolo_accent: Scalars['String']['output'];
+  padel_corsi_intro: Scalars['String']['output'];
+  padel_corsi_livelli: Array<PaginePadelPadel_Corsi_Livelli>;
+  padel_corsi_cta_label: Scalars['String']['output'];
+  padel_corsi_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  padel_corsi_titolo_en?: Maybe<Scalars['String']['output']>;
+  padel_corsi_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  padel_corsi_intro_en?: Maybe<Scalars['String']['output']>;
+  padel_corsi_cta_label_en?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Array<Maybe<PaginePadelFaq>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type PagineAgonisticaAgonistica_Metodo_Pillars = {
+  __typename?: 'PagineAgonisticaAgonistica_metodo_pillars';
+  titolo: Scalars['String']['output'];
+  testo: Scalars['String']['output'];
+  titolo_en?: Maybe<Scalars['String']['output']>;
+  testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineAgonisticaAgonistica_Punti_Chiave = {
+  __typename?: 'PagineAgonisticaAgonistica_punti_chiave';
+  testo: Scalars['String']['output'];
+  testo_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type PagineAgonisticaAgonistica_Step = {
@@ -1216,6 +1448,14 @@ export type PagineAgonisticaAgonistica_Step = {
   testo: Scalars['String']['output'];
   titolo_en?: Maybe<Scalars['String']['output']>;
   testo_en?: Maybe<Scalars['String']['output']>;
+};
+
+export type PagineAgonisticaFaq = {
+  __typename?: 'PagineAgonisticaFaq';
+  domanda: Scalars['String']['output'];
+  risposta: Scalars['String']['output'];
+  domanda_en?: Maybe<Scalars['String']['output']>;
+  risposta_en?: Maybe<Scalars['String']['output']>;
 };
 
 export type PagineAgonistica = Node & Document & {
@@ -1235,6 +1475,26 @@ export type PagineAgonistica = Node & Document & {
   hero_titolo_accent_en?: Maybe<Scalars['String']['output']>;
   hero_sottotitolo_en?: Maybe<Scalars['String']['output']>;
   hero_immagine_alt_en?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_eyebrow?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_titolo?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_titolo_accent?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_lead?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_immagine1?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_immagine1_alt?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_immagine2?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_immagine2_alt?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_pillars?: Maybe<Array<Maybe<PagineAgonisticaAgonistica_Metodo_Pillars>>>;
+  agonistica_metodo_quote?: Maybe<Scalars['String']['output']>;
+  agonistica_punti_chiave_titolo?: Maybe<Scalars['String']['output']>;
+  agonistica_punti_chiave?: Maybe<Array<Maybe<PagineAgonisticaAgonistica_Punti_Chiave>>>;
+  agonistica_metodo_eyebrow_en?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_titolo_en?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_lead_en?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_immagine1_alt_en?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_immagine2_alt_en?: Maybe<Scalars['String']['output']>;
+  agonistica_metodo_quote_en?: Maybe<Scalars['String']['output']>;
+  agonistica_punti_chiave_titolo_en?: Maybe<Scalars['String']['output']>;
   agonistica_eyebrow: Scalars['String']['output'];
   agonistica_titolo: Scalars['String']['output'];
   agonistica_titolo_accent: Scalars['String']['output'];
@@ -1242,6 +1502,7 @@ export type PagineAgonistica = Node & Document & {
   agonistica_eyebrow_en?: Maybe<Scalars['String']['output']>;
   agonistica_titolo_en?: Maybe<Scalars['String']['output']>;
   agonistica_titolo_accent_en?: Maybe<Scalars['String']['output']>;
+  faq?: Maybe<Array<Maybe<PagineAgonisticaFaq>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -1393,7 +1654,14 @@ export type PaginePartners = Node & Document & {
   _values: Scalars['JSON']['output'];
 };
 
-export type Pagine = PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | PaginePrivacy | PaginePartners;
+export type Pagine = PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | PaginePrivacy | PaginePartners;
+
+export type PagineGenericaFaqFilter = {
+  domanda?: InputMaybe<StringFilter>;
+  risposta?: InputMaybe<StringFilter>;
+  domanda_en?: InputMaybe<StringFilter>;
+  risposta_en?: InputMaybe<StringFilter>;
+};
 
 export type PagineGenericaFilter = {
   title?: InputMaybe<StringFilter>;
@@ -1411,6 +1679,7 @@ export type PagineGenericaFilter = {
   hero_titolo_accent_en?: InputMaybe<StringFilter>;
   hero_sottotitolo_en?: InputMaybe<StringFilter>;
   hero_immagine_alt_en?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<PagineGenericaFaqFilter>;
 };
 
 export type PagineStoriaStoria_TimelineFilter = {
@@ -1467,11 +1736,43 @@ export type PagineSummer_CampsCamps_FeaturesFilter = {
   testo_en?: InputMaybe<StringFilter>;
 };
 
-export type PagineSummer_CampsCamps_SettimaneFilter = {
-  settimana?: InputMaybe<StringFilter>;
-  date?: InputMaybe<StringFilter>;
-  settimana_en?: InputMaybe<StringFilter>;
-  date_en?: InputMaybe<StringFilter>;
+export type PagineSummer_CampsCamps_Info_RapideFilter = {
+  label?: InputMaybe<StringFilter>;
+  valore?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  valore_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineSummer_CampsCamps_GiornataFilter = {
+  orario?: InputMaybe<StringFilter>;
+  titolo?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineSummer_CampsCamps_SettimanaleFilter = {
+  giorno?: InputMaybe<StringFilter>;
+  colpo?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  giorno_en?: InputMaybe<StringFilter>;
+  colpo_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineSummer_CampsCamps_Quote_RigheFilter = {
+  categoria?: InputMaybe<StringFilter>;
+  prezzo_settimana?: InputMaybe<StringFilter>;
+  prezzo_dal2?: InputMaybe<StringFilter>;
+  prezzo_fratelli?: InputMaybe<StringFilter>;
+  categoria_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineSummer_CampsFaqFilter = {
+  domanda?: InputMaybe<StringFilter>;
+  risposta?: InputMaybe<StringFilter>;
+  domanda_en?: InputMaybe<StringFilter>;
+  risposta_en?: InputMaybe<StringFilter>;
 };
 
 export type PagineSummer_CampsFilter = {
@@ -1501,7 +1802,22 @@ export type PagineSummer_CampsFilter = {
   camps_sezione2_eyebrow?: InputMaybe<StringFilter>;
   camps_sezione2_titolo?: InputMaybe<StringFilter>;
   camps_sezione2_titolo_accent?: InputMaybe<StringFilter>;
-  camps_settimane?: InputMaybe<PagineSummer_CampsCamps_SettimaneFilter>;
+  camps_info_rapide?: InputMaybe<PagineSummer_CampsCamps_Info_RapideFilter>;
+  camps_giornata_eyebrow?: InputMaybe<StringFilter>;
+  camps_giornata_titolo?: InputMaybe<StringFilter>;
+  camps_giornata?: InputMaybe<PagineSummer_CampsCamps_GiornataFilter>;
+  camps_settimanale_eyebrow?: InputMaybe<StringFilter>;
+  camps_settimanale_titolo?: InputMaybe<StringFilter>;
+  camps_settimanale?: InputMaybe<PagineSummer_CampsCamps_SettimanaleFilter>;
+  camps_cosa_portare_titolo?: InputMaybe<StringFilter>;
+  camps_cosa_portare?: InputMaybe<StringFilter>;
+  camps_obbligatorio?: InputMaybe<StringFilter>;
+  camps_kit_benvenuto?: InputMaybe<StringFilter>;
+  camps_quote_eyebrow?: InputMaybe<StringFilter>;
+  camps_quote_titolo?: InputMaybe<StringFilter>;
+  camps_quote_righe?: InputMaybe<PagineSummer_CampsCamps_Quote_RigheFilter>;
+  camps_quote_note?: InputMaybe<StringFilter>;
+  camps_cta_label?: InputMaybe<StringFilter>;
   camps_sezione1_eyebrow_en?: InputMaybe<StringFilter>;
   camps_sezione1_titolo_en?: InputMaybe<StringFilter>;
   camps_sezione1_titolo_accent_en?: InputMaybe<StringFilter>;
@@ -1510,6 +1826,19 @@ export type PagineSummer_CampsFilter = {
   camps_sezione2_eyebrow_en?: InputMaybe<StringFilter>;
   camps_sezione2_titolo_en?: InputMaybe<StringFilter>;
   camps_sezione2_titolo_accent_en?: InputMaybe<StringFilter>;
+  camps_giornata_eyebrow_en?: InputMaybe<StringFilter>;
+  camps_giornata_titolo_en?: InputMaybe<StringFilter>;
+  camps_settimanale_eyebrow_en?: InputMaybe<StringFilter>;
+  camps_settimanale_titolo_en?: InputMaybe<StringFilter>;
+  camps_cosa_portare_titolo_en?: InputMaybe<StringFilter>;
+  camps_cosa_portare_en?: InputMaybe<StringFilter>;
+  camps_obbligatorio_en?: InputMaybe<StringFilter>;
+  camps_kit_benvenuto_en?: InputMaybe<StringFilter>;
+  camps_quote_eyebrow_en?: InputMaybe<StringFilter>;
+  camps_quote_titolo_en?: InputMaybe<StringFilter>;
+  camps_quote_note_en?: InputMaybe<StringFilter>;
+  camps_cta_label_en?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<PagineSummer_CampsFaqFilter>;
 };
 
 export type PagineScuola_TennisScuola_LivelliFilter = {
@@ -1540,6 +1869,26 @@ export type PagineScuola_TennisScuola_TorneiFilter = {
   quando_en?: InputMaybe<StringFilter>;
   nome_en?: InputMaybe<StringFilter>;
   testo_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineScuola_TennisScuola_Sezione5_Info_RapideFilter = {
+  label?: InputMaybe<StringFilter>;
+  valore?: InputMaybe<StringFilter>;
+  label_en?: InputMaybe<StringFilter>;
+  valore_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineScuola_TennisScuola_Sezione5_Quote_RigheFilter = {
+  categoria?: InputMaybe<StringFilter>;
+  prezzo?: InputMaybe<StringFilter>;
+  categoria_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineScuola_TennisFaqFilter = {
+  domanda?: InputMaybe<StringFilter>;
+  risposta?: InputMaybe<StringFilter>;
+  domanda_en?: InputMaybe<StringFilter>;
+  risposta_en?: InputMaybe<StringFilter>;
 };
 
 export type PagineScuola_TennisFilter = {
@@ -1584,6 +1933,14 @@ export type PagineScuola_TennisFilter = {
   scuola_sezione4_titolo_accent?: InputMaybe<StringFilter>;
   scuola_tornei?: InputMaybe<PagineScuola_TennisScuola_TorneiFilter>;
   scuola_sezione4_footer_testo?: InputMaybe<StringFilter>;
+  scuola_sezione5_eyebrow?: InputMaybe<StringFilter>;
+  scuola_sezione5_titolo?: InputMaybe<StringFilter>;
+  scuola_sezione5_titolo_accent?: InputMaybe<StringFilter>;
+  scuola_sezione5_testo?: InputMaybe<StringFilter>;
+  scuola_sezione5_info_rapide?: InputMaybe<PagineScuola_TennisScuola_Sezione5_Info_RapideFilter>;
+  scuola_sezione5_quote_righe?: InputMaybe<PagineScuola_TennisScuola_Sezione5_Quote_RigheFilter>;
+  scuola_sezione5_note?: InputMaybe<StringFilter>;
+  scuola_sezione5_cta_label?: InputMaybe<StringFilter>;
   scuola_sezione1_eyebrow_en?: InputMaybe<StringFilter>;
   scuola_sezione1_titolo_en?: InputMaybe<StringFilter>;
   scuola_sezione1_titolo_accent_en?: InputMaybe<StringFilter>;
@@ -1606,6 +1963,13 @@ export type PagineScuola_TennisFilter = {
   scuola_sezione4_titolo_en?: InputMaybe<StringFilter>;
   scuola_sezione4_titolo_accent_en?: InputMaybe<StringFilter>;
   scuola_sezione4_footer_testo_en?: InputMaybe<StringFilter>;
+  scuola_sezione5_eyebrow_en?: InputMaybe<StringFilter>;
+  scuola_sezione5_titolo_en?: InputMaybe<StringFilter>;
+  scuola_sezione5_titolo_accent_en?: InputMaybe<StringFilter>;
+  scuola_sezione5_testo_en?: InputMaybe<StringFilter>;
+  scuola_sezione5_note_en?: InputMaybe<StringFilter>;
+  scuola_sezione5_cta_label_en?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<PagineScuola_TennisFaqFilter>;
 };
 
 export type PaginePersonal_TrainerPt_StatsFilter = {
@@ -1630,6 +1994,13 @@ export type PaginePersonal_TrainerPt_StepsFilter = {
   testo?: InputMaybe<StringFilter>;
   titolo_en?: InputMaybe<StringFilter>;
   testo_en?: InputMaybe<StringFilter>;
+};
+
+export type PaginePersonal_TrainerFaqFilter = {
+  domanda?: InputMaybe<StringFilter>;
+  risposta?: InputMaybe<StringFilter>;
+  domanda_en?: InputMaybe<StringFilter>;
+  risposta_en?: InputMaybe<StringFilter>;
 };
 
 export type PaginePersonal_TrainerFilter = {
@@ -1679,6 +2050,7 @@ export type PaginePersonal_TrainerFilter = {
   pt_sezione4_titolo_en?: InputMaybe<StringFilter>;
   pt_sezione4_sottotitolo_en?: InputMaybe<StringFilter>;
   pt_sezione4_cta_label_en?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<PaginePersonal_TrainerFaqFilter>;
 };
 
 export type PaginePreparazione_AtleticaPrep_Sala_SlideshowFilter = {
@@ -1713,6 +2085,13 @@ export type PaginePreparazione_AtleticaPrep_CategorieFilter = {
   color?: InputMaybe<StringFilter>;
   desc_en?: InputMaybe<StringFilter>;
   corsi?: InputMaybe<PaginePreparazione_AtleticaPrep_CategorieCorsiFilter>;
+};
+
+export type PaginePreparazione_AtleticaFaqFilter = {
+  domanda?: InputMaybe<StringFilter>;
+  risposta?: InputMaybe<StringFilter>;
+  domanda_en?: InputMaybe<StringFilter>;
+  risposta_en?: InputMaybe<StringFilter>;
 };
 
 export type PaginePreparazione_AtleticaFilter = {
@@ -1762,6 +2141,7 @@ export type PaginePreparazione_AtleticaFilter = {
   prep_calendario_titolo_en?: InputMaybe<StringFilter>;
   prep_calendario_titolo_accent_en?: InputMaybe<StringFilter>;
   prep_calendario_sub_en?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<PaginePreparazione_AtleticaFaqFilter>;
 };
 
 export type PagineTennisTennis_CampiFilter = {
@@ -1776,6 +2156,13 @@ export type PagineTennisTennis_Corsi_LivelliFilter = {
   testo?: InputMaybe<StringFilter>;
   titolo_en?: InputMaybe<StringFilter>;
   testo_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineTennisFaqFilter = {
+  domanda?: InputMaybe<StringFilter>;
+  risposta?: InputMaybe<StringFilter>;
+  domanda_en?: InputMaybe<StringFilter>;
+  risposta_en?: InputMaybe<StringFilter>;
 };
 
 export type PagineTennisFilter = {
@@ -1820,6 +2207,63 @@ export type PagineTennisFilter = {
   tennis_corsi_titolo_accent_en?: InputMaybe<StringFilter>;
   tennis_corsi_intro_en?: InputMaybe<StringFilter>;
   tennis_corsi_cta_label_en?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<PagineTennisFaqFilter>;
+};
+
+export type PaginePadelPadel_Corsi_LivelliFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type PaginePadelFaqFilter = {
+  domanda?: InputMaybe<StringFilter>;
+  risposta?: InputMaybe<StringFilter>;
+  domanda_en?: InputMaybe<StringFilter>;
+  risposta_en?: InputMaybe<StringFilter>;
+};
+
+export type PaginePadelFilter = {
+  title?: InputMaybe<StringFilter>;
+  description?: InputMaybe<StringFilter>;
+  hero_eyebrow?: InputMaybe<StringFilter>;
+  hero_titolo?: InputMaybe<StringFilter>;
+  hero_titolo_accent?: InputMaybe<StringFilter>;
+  hero_sottotitolo?: InputMaybe<StringFilter>;
+  hero_immagine?: InputMaybe<StringFilter>;
+  hero_immagine_alt?: InputMaybe<StringFilter>;
+  title_en?: InputMaybe<StringFilter>;
+  description_en?: InputMaybe<StringFilter>;
+  hero_eyebrow_en?: InputMaybe<StringFilter>;
+  hero_titolo_en?: InputMaybe<StringFilter>;
+  hero_titolo_accent_en?: InputMaybe<StringFilter>;
+  hero_sottotitolo_en?: InputMaybe<StringFilter>;
+  hero_immagine_alt_en?: InputMaybe<StringFilter>;
+  padel_corsi_eyebrow?: InputMaybe<StringFilter>;
+  padel_corsi_titolo?: InputMaybe<StringFilter>;
+  padel_corsi_titolo_accent?: InputMaybe<StringFilter>;
+  padel_corsi_intro?: InputMaybe<StringFilter>;
+  padel_corsi_livelli?: InputMaybe<PaginePadelPadel_Corsi_LivelliFilter>;
+  padel_corsi_cta_label?: InputMaybe<StringFilter>;
+  padel_corsi_eyebrow_en?: InputMaybe<StringFilter>;
+  padel_corsi_titolo_en?: InputMaybe<StringFilter>;
+  padel_corsi_titolo_accent_en?: InputMaybe<StringFilter>;
+  padel_corsi_intro_en?: InputMaybe<StringFilter>;
+  padel_corsi_cta_label_en?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<PaginePadelFaqFilter>;
+};
+
+export type PagineAgonisticaAgonistica_Metodo_PillarsFilter = {
+  titolo?: InputMaybe<StringFilter>;
+  testo?: InputMaybe<StringFilter>;
+  titolo_en?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineAgonisticaAgonistica_Punti_ChiaveFilter = {
+  testo?: InputMaybe<StringFilter>;
+  testo_en?: InputMaybe<StringFilter>;
 };
 
 export type PagineAgonisticaAgonistica_StepFilter = {
@@ -1827,6 +2271,13 @@ export type PagineAgonisticaAgonistica_StepFilter = {
   testo?: InputMaybe<StringFilter>;
   titolo_en?: InputMaybe<StringFilter>;
   testo_en?: InputMaybe<StringFilter>;
+};
+
+export type PagineAgonisticaFaqFilter = {
+  domanda?: InputMaybe<StringFilter>;
+  risposta?: InputMaybe<StringFilter>;
+  domanda_en?: InputMaybe<StringFilter>;
+  risposta_en?: InputMaybe<StringFilter>;
 };
 
 export type PagineAgonisticaFilter = {
@@ -1845,6 +2296,26 @@ export type PagineAgonisticaFilter = {
   hero_titolo_accent_en?: InputMaybe<StringFilter>;
   hero_sottotitolo_en?: InputMaybe<StringFilter>;
   hero_immagine_alt_en?: InputMaybe<StringFilter>;
+  agonistica_metodo_eyebrow?: InputMaybe<StringFilter>;
+  agonistica_metodo_titolo?: InputMaybe<StringFilter>;
+  agonistica_metodo_titolo_accent?: InputMaybe<StringFilter>;
+  agonistica_metodo_lead?: InputMaybe<StringFilter>;
+  agonistica_metodo_immagine1?: InputMaybe<ImageFilter>;
+  agonistica_metodo_immagine1_alt?: InputMaybe<StringFilter>;
+  agonistica_metodo_immagine2?: InputMaybe<ImageFilter>;
+  agonistica_metodo_immagine2_alt?: InputMaybe<StringFilter>;
+  agonistica_metodo_pillars?: InputMaybe<PagineAgonisticaAgonistica_Metodo_PillarsFilter>;
+  agonistica_metodo_quote?: InputMaybe<StringFilter>;
+  agonistica_punti_chiave_titolo?: InputMaybe<StringFilter>;
+  agonistica_punti_chiave?: InputMaybe<PagineAgonisticaAgonistica_Punti_ChiaveFilter>;
+  agonistica_metodo_eyebrow_en?: InputMaybe<StringFilter>;
+  agonistica_metodo_titolo_en?: InputMaybe<StringFilter>;
+  agonistica_metodo_titolo_accent_en?: InputMaybe<StringFilter>;
+  agonistica_metodo_lead_en?: InputMaybe<StringFilter>;
+  agonistica_metodo_immagine1_alt_en?: InputMaybe<StringFilter>;
+  agonistica_metodo_immagine2_alt_en?: InputMaybe<StringFilter>;
+  agonistica_metodo_quote_en?: InputMaybe<StringFilter>;
+  agonistica_punti_chiave_titolo_en?: InputMaybe<StringFilter>;
   agonistica_eyebrow?: InputMaybe<StringFilter>;
   agonistica_titolo?: InputMaybe<StringFilter>;
   agonistica_titolo_accent?: InputMaybe<StringFilter>;
@@ -1852,6 +2323,7 @@ export type PagineAgonisticaFilter = {
   agonistica_eyebrow_en?: InputMaybe<StringFilter>;
   agonistica_titolo_en?: InputMaybe<StringFilter>;
   agonistica_titolo_accent_en?: InputMaybe<StringFilter>;
+  faq?: InputMaybe<PagineAgonisticaFaqFilter>;
 };
 
 export type PagineTorneo_AvvenireTorneo_StatsFilter = {
@@ -1990,6 +2462,7 @@ export type PagineFilter = {
   personal_trainer?: InputMaybe<PaginePersonal_TrainerFilter>;
   preparazione_atletica?: InputMaybe<PaginePreparazione_AtleticaFilter>;
   tennis?: InputMaybe<PagineTennisFilter>;
+  padel?: InputMaybe<PaginePadelFilter>;
   agonistica?: InputMaybe<PagineAgonisticaFilter>;
   torneo_avvenire?: InputMaybe<PagineTorneo_AvvenireFilter>;
   regolamento?: InputMaybe<PagineRegolamentoFilter>;
@@ -2246,15 +2719,21 @@ export type MembershipCategorieRigheMutation = {
   feature_tooltip?: InputMaybe<Scalars['String']['input']>;
   silver_tipo?: InputMaybe<Scalars['String']['input']>;
   silver_valore?: InputMaybe<Scalars['String']['input']>;
+  silver_valore_tooltip?: InputMaybe<Scalars['String']['input']>;
   gold_tipo?: InputMaybe<Scalars['String']['input']>;
   gold_valore?: InputMaybe<Scalars['String']['input']>;
+  gold_valore_tooltip?: InputMaybe<Scalars['String']['input']>;
   platinum_tipo?: InputMaybe<Scalars['String']['input']>;
   platinum_valore?: InputMaybe<Scalars['String']['input']>;
+  platinum_valore_tooltip?: InputMaybe<Scalars['String']['input']>;
   feature_en?: InputMaybe<Scalars['String']['input']>;
   feature_tooltip_en?: InputMaybe<Scalars['String']['input']>;
   silver_valore_en?: InputMaybe<Scalars['String']['input']>;
+  silver_valore_tooltip_en?: InputMaybe<Scalars['String']['input']>;
   gold_valore_en?: InputMaybe<Scalars['String']['input']>;
+  gold_valore_tooltip_en?: InputMaybe<Scalars['String']['input']>;
   platinum_valore_en?: InputMaybe<Scalars['String']['input']>;
+  platinum_valore_tooltip_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MembershipCategorieMutation = {
@@ -2272,12 +2751,21 @@ export type MembershipMutation = {
   platinum_nome?: InputMaybe<Scalars['String']['input']>;
   platinum_badge?: InputMaybe<Scalars['String']['input']>;
   cta_label?: InputMaybe<Scalars['String']['input']>;
+  silver_prezzo?: InputMaybe<Scalars['String']['input']>;
+  gold_prezzo?: InputMaybe<Scalars['String']['input']>;
+  platinum_prezzo?: InputMaybe<Scalars['String']['input']>;
+  prezzo_suffisso?: InputMaybe<Scalars['String']['input']>;
+  prezzo_tooltip?: InputMaybe<Scalars['String']['input']>;
+  nota_finale?: InputMaybe<Scalars['String']['input']>;
   categorie?: InputMaybe<Array<InputMaybe<MembershipCategorieMutation>>>;
   titolo_en?: InputMaybe<Scalars['String']['input']>;
   titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
   sottotitolo_en?: InputMaybe<Scalars['String']['input']>;
   platinum_badge_en?: InputMaybe<Scalars['String']['input']>;
   cta_label_en?: InputMaybe<Scalars['String']['input']>;
+  prezzo_suffisso_en?: InputMaybe<Scalars['String']['input']>;
+  prezzo_tooltip_en?: InputMaybe<Scalars['String']['input']>;
+  nota_finale_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type InfoMutation = {
@@ -2327,6 +2815,13 @@ export type NewsMutation = {
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
+export type PagineGenericaFaqMutation = {
+  domanda?: InputMaybe<Scalars['String']['input']>;
+  risposta?: InputMaybe<Scalars['String']['input']>;
+  domanda_en?: InputMaybe<Scalars['String']['input']>;
+  risposta_en?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type PagineGenericaMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
@@ -2343,6 +2838,7 @@ export type PagineGenericaMutation = {
   hero_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
   hero_sottotitolo_en?: InputMaybe<Scalars['String']['input']>;
   hero_immagine_alt_en?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Array<InputMaybe<PagineGenericaFaqMutation>>>;
 };
 
 export type PagineStoriaStoria_TimelineMutation = {
@@ -2399,11 +2895,43 @@ export type PagineSummer_CampsCamps_FeaturesMutation = {
   testo_en?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type PagineSummer_CampsCamps_SettimaneMutation = {
-  settimana?: InputMaybe<Scalars['String']['input']>;
-  date?: InputMaybe<Scalars['String']['input']>;
-  settimana_en?: InputMaybe<Scalars['String']['input']>;
-  date_en?: InputMaybe<Scalars['String']['input']>;
+export type PagineSummer_CampsCamps_Info_RapideMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  valore?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  valore_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineSummer_CampsCamps_GiornataMutation = {
+  orario?: InputMaybe<Scalars['String']['input']>;
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineSummer_CampsCamps_SettimanaleMutation = {
+  giorno?: InputMaybe<Scalars['String']['input']>;
+  colpo?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  giorno_en?: InputMaybe<Scalars['String']['input']>;
+  colpo_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineSummer_CampsCamps_Quote_RigheMutation = {
+  categoria?: InputMaybe<Scalars['String']['input']>;
+  prezzo_settimana?: InputMaybe<Scalars['String']['input']>;
+  prezzo_dal2?: InputMaybe<Scalars['String']['input']>;
+  prezzo_fratelli?: InputMaybe<Scalars['String']['input']>;
+  categoria_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineSummer_CampsFaqMutation = {
+  domanda?: InputMaybe<Scalars['String']['input']>;
+  risposta?: InputMaybe<Scalars['String']['input']>;
+  domanda_en?: InputMaybe<Scalars['String']['input']>;
+  risposta_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PagineSummer_CampsMutation = {
@@ -2433,7 +2961,22 @@ export type PagineSummer_CampsMutation = {
   camps_sezione2_eyebrow?: InputMaybe<Scalars['String']['input']>;
   camps_sezione2_titolo?: InputMaybe<Scalars['String']['input']>;
   camps_sezione2_titolo_accent?: InputMaybe<Scalars['String']['input']>;
-  camps_settimane?: InputMaybe<Array<InputMaybe<PagineSummer_CampsCamps_SettimaneMutation>>>;
+  camps_info_rapide?: InputMaybe<Array<InputMaybe<PagineSummer_CampsCamps_Info_RapideMutation>>>;
+  camps_giornata_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  camps_giornata_titolo?: InputMaybe<Scalars['String']['input']>;
+  camps_giornata?: InputMaybe<Array<InputMaybe<PagineSummer_CampsCamps_GiornataMutation>>>;
+  camps_settimanale_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  camps_settimanale_titolo?: InputMaybe<Scalars['String']['input']>;
+  camps_settimanale?: InputMaybe<Array<InputMaybe<PagineSummer_CampsCamps_SettimanaleMutation>>>;
+  camps_cosa_portare_titolo?: InputMaybe<Scalars['String']['input']>;
+  camps_cosa_portare?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  camps_obbligatorio?: InputMaybe<Scalars['String']['input']>;
+  camps_kit_benvenuto?: InputMaybe<Scalars['String']['input']>;
+  camps_quote_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  camps_quote_titolo?: InputMaybe<Scalars['String']['input']>;
+  camps_quote_righe?: InputMaybe<Array<InputMaybe<PagineSummer_CampsCamps_Quote_RigheMutation>>>;
+  camps_quote_note?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  camps_cta_label?: InputMaybe<Scalars['String']['input']>;
   camps_sezione1_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   camps_sezione1_titolo_en?: InputMaybe<Scalars['String']['input']>;
   camps_sezione1_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
@@ -2442,6 +2985,19 @@ export type PagineSummer_CampsMutation = {
   camps_sezione2_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   camps_sezione2_titolo_en?: InputMaybe<Scalars['String']['input']>;
   camps_sezione2_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  camps_giornata_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  camps_giornata_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  camps_settimanale_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  camps_settimanale_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  camps_cosa_portare_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  camps_cosa_portare_en?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  camps_obbligatorio_en?: InputMaybe<Scalars['String']['input']>;
+  camps_kit_benvenuto_en?: InputMaybe<Scalars['String']['input']>;
+  camps_quote_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  camps_quote_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  camps_quote_note_en?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  camps_cta_label_en?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Array<InputMaybe<PagineSummer_CampsFaqMutation>>>;
 };
 
 export type PagineScuola_TennisScuola_LivelliMutation = {
@@ -2472,6 +3028,26 @@ export type PagineScuola_TennisScuola_TorneiMutation = {
   quando_en?: InputMaybe<Scalars['String']['input']>;
   nome_en?: InputMaybe<Scalars['String']['input']>;
   testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineScuola_TennisScuola_Sezione5_Info_RapideMutation = {
+  label?: InputMaybe<Scalars['String']['input']>;
+  valore?: InputMaybe<Scalars['String']['input']>;
+  label_en?: InputMaybe<Scalars['String']['input']>;
+  valore_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineScuola_TennisScuola_Sezione5_Quote_RigheMutation = {
+  categoria?: InputMaybe<Scalars['String']['input']>;
+  prezzo?: InputMaybe<Scalars['String']['input']>;
+  categoria_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineScuola_TennisFaqMutation = {
+  domanda?: InputMaybe<Scalars['String']['input']>;
+  risposta?: InputMaybe<Scalars['String']['input']>;
+  domanda_en?: InputMaybe<Scalars['String']['input']>;
+  risposta_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PagineScuola_TennisMutation = {
@@ -2516,6 +3092,14 @@ export type PagineScuola_TennisMutation = {
   scuola_sezione4_titolo_accent?: InputMaybe<Scalars['String']['input']>;
   scuola_tornei?: InputMaybe<Array<InputMaybe<PagineScuola_TennisScuola_TorneiMutation>>>;
   scuola_sezione4_footer_testo?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_titolo?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_testo?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_info_rapide?: InputMaybe<Array<InputMaybe<PagineScuola_TennisScuola_Sezione5_Info_RapideMutation>>>;
+  scuola_sezione5_quote_righe?: InputMaybe<Array<InputMaybe<PagineScuola_TennisScuola_Sezione5_Quote_RigheMutation>>>;
+  scuola_sezione5_note?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  scuola_sezione5_cta_label?: InputMaybe<Scalars['String']['input']>;
   scuola_sezione1_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   scuola_sezione1_titolo_en?: InputMaybe<Scalars['String']['input']>;
   scuola_sezione1_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
@@ -2538,6 +3122,13 @@ export type PagineScuola_TennisMutation = {
   scuola_sezione4_titolo_en?: InputMaybe<Scalars['String']['input']>;
   scuola_sezione4_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
   scuola_sezione4_footer_testo_en?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_testo_en?: InputMaybe<Scalars['String']['input']>;
+  scuola_sezione5_note_en?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  scuola_sezione5_cta_label_en?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Array<InputMaybe<PagineScuola_TennisFaqMutation>>>;
 };
 
 export type PaginePersonal_TrainerPt_StatsMutation = {
@@ -2562,6 +3153,13 @@ export type PaginePersonal_TrainerPt_StepsMutation = {
   testo?: InputMaybe<Scalars['String']['input']>;
   titolo_en?: InputMaybe<Scalars['String']['input']>;
   testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PaginePersonal_TrainerFaqMutation = {
+  domanda?: InputMaybe<Scalars['String']['input']>;
+  risposta?: InputMaybe<Scalars['String']['input']>;
+  domanda_en?: InputMaybe<Scalars['String']['input']>;
+  risposta_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PaginePersonal_TrainerMutation = {
@@ -2611,6 +3209,7 @@ export type PaginePersonal_TrainerMutation = {
   pt_sezione4_titolo_en?: InputMaybe<Scalars['String']['input']>;
   pt_sezione4_sottotitolo_en?: InputMaybe<Scalars['String']['input']>;
   pt_sezione4_cta_label_en?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Array<InputMaybe<PaginePersonal_TrainerFaqMutation>>>;
 };
 
 export type PaginePreparazione_AtleticaPrep_Sala_SlideshowMutation = {
@@ -2645,6 +3244,13 @@ export type PaginePreparazione_AtleticaPrep_CategorieMutation = {
   color?: InputMaybe<Scalars['String']['input']>;
   desc_en?: InputMaybe<Scalars['String']['input']>;
   corsi?: InputMaybe<Array<InputMaybe<PaginePreparazione_AtleticaPrep_CategorieCorsiMutation>>>;
+};
+
+export type PaginePreparazione_AtleticaFaqMutation = {
+  domanda?: InputMaybe<Scalars['String']['input']>;
+  risposta?: InputMaybe<Scalars['String']['input']>;
+  domanda_en?: InputMaybe<Scalars['String']['input']>;
+  risposta_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PaginePreparazione_AtleticaMutation = {
@@ -2694,6 +3300,7 @@ export type PaginePreparazione_AtleticaMutation = {
   prep_calendario_titolo_en?: InputMaybe<Scalars['String']['input']>;
   prep_calendario_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
   prep_calendario_sub_en?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Array<InputMaybe<PaginePreparazione_AtleticaFaqMutation>>>;
 };
 
 export type PagineTennisTennis_CampiMutation = {
@@ -2708,6 +3315,13 @@ export type PagineTennisTennis_Corsi_LivelliMutation = {
   testo?: InputMaybe<Scalars['String']['input']>;
   titolo_en?: InputMaybe<Scalars['String']['input']>;
   testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineTennisFaqMutation = {
+  domanda?: InputMaybe<Scalars['String']['input']>;
+  risposta?: InputMaybe<Scalars['String']['input']>;
+  domanda_en?: InputMaybe<Scalars['String']['input']>;
+  risposta_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PagineTennisMutation = {
@@ -2752,6 +3366,63 @@ export type PagineTennisMutation = {
   tennis_corsi_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
   tennis_corsi_intro_en?: InputMaybe<Scalars['String']['input']>;
   tennis_corsi_cta_label_en?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Array<InputMaybe<PagineTennisFaqMutation>>>;
+};
+
+export type PaginePadelPadel_Corsi_LivelliMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PaginePadelFaqMutation = {
+  domanda?: InputMaybe<Scalars['String']['input']>;
+  risposta?: InputMaybe<Scalars['String']['input']>;
+  domanda_en?: InputMaybe<Scalars['String']['input']>;
+  risposta_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PaginePadelMutation = {
+  title?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  hero_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  hero_titolo?: InputMaybe<Scalars['String']['input']>;
+  hero_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  hero_sottotitolo?: InputMaybe<Scalars['String']['input']>;
+  hero_immagine?: InputMaybe<Scalars['String']['input']>;
+  hero_immagine_alt?: InputMaybe<Scalars['String']['input']>;
+  title_en?: InputMaybe<Scalars['String']['input']>;
+  description_en?: InputMaybe<Scalars['String']['input']>;
+  hero_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  hero_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  hero_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  hero_sottotitolo_en?: InputMaybe<Scalars['String']['input']>;
+  hero_immagine_alt_en?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_titolo?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_intro?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_livelli?: InputMaybe<Array<InputMaybe<PaginePadelPadel_Corsi_LivelliMutation>>>;
+  padel_corsi_cta_label?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_intro_en?: InputMaybe<Scalars['String']['input']>;
+  padel_corsi_cta_label_en?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Array<InputMaybe<PaginePadelFaqMutation>>>;
+};
+
+export type PagineAgonisticaAgonistica_Metodo_PillarsMutation = {
+  titolo?: InputMaybe<Scalars['String']['input']>;
+  testo?: InputMaybe<Scalars['String']['input']>;
+  titolo_en?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineAgonisticaAgonistica_Punti_ChiaveMutation = {
+  testo?: InputMaybe<Scalars['String']['input']>;
+  testo_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PagineAgonisticaAgonistica_StepMutation = {
@@ -2759,6 +3430,13 @@ export type PagineAgonisticaAgonistica_StepMutation = {
   testo?: InputMaybe<Scalars['String']['input']>;
   titolo_en?: InputMaybe<Scalars['String']['input']>;
   testo_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PagineAgonisticaFaqMutation = {
+  domanda?: InputMaybe<Scalars['String']['input']>;
+  risposta?: InputMaybe<Scalars['String']['input']>;
+  domanda_en?: InputMaybe<Scalars['String']['input']>;
+  risposta_en?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type PagineAgonisticaMutation = {
@@ -2777,6 +3455,26 @@ export type PagineAgonisticaMutation = {
   hero_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
   hero_sottotitolo_en?: InputMaybe<Scalars['String']['input']>;
   hero_immagine_alt_en?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_eyebrow?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_titolo?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_titolo_accent?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_lead?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_immagine1?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_immagine1_alt?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_immagine2?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_immagine2_alt?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_pillars?: InputMaybe<Array<InputMaybe<PagineAgonisticaAgonistica_Metodo_PillarsMutation>>>;
+  agonistica_metodo_quote?: InputMaybe<Scalars['String']['input']>;
+  agonistica_punti_chiave_titolo?: InputMaybe<Scalars['String']['input']>;
+  agonistica_punti_chiave?: InputMaybe<Array<InputMaybe<PagineAgonisticaAgonistica_Punti_ChiaveMutation>>>;
+  agonistica_metodo_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_titolo_en?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_lead_en?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_immagine1_alt_en?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_immagine2_alt_en?: InputMaybe<Scalars['String']['input']>;
+  agonistica_metodo_quote_en?: InputMaybe<Scalars['String']['input']>;
+  agonistica_punti_chiave_titolo_en?: InputMaybe<Scalars['String']['input']>;
   agonistica_eyebrow?: InputMaybe<Scalars['String']['input']>;
   agonistica_titolo?: InputMaybe<Scalars['String']['input']>;
   agonistica_titolo_accent?: InputMaybe<Scalars['String']['input']>;
@@ -2784,6 +3482,7 @@ export type PagineAgonisticaMutation = {
   agonistica_eyebrow_en?: InputMaybe<Scalars['String']['input']>;
   agonistica_titolo_en?: InputMaybe<Scalars['String']['input']>;
   agonistica_titolo_accent_en?: InputMaybe<Scalars['String']['input']>;
+  faq?: InputMaybe<Array<InputMaybe<PagineAgonisticaFaqMutation>>>;
 };
 
 export type PagineTorneo_AvvenireTorneo_StatsMutation = {
@@ -2922,6 +3621,7 @@ export type PagineMutation = {
   personal_trainer?: InputMaybe<PaginePersonal_TrainerMutation>;
   preparazione_atletica?: InputMaybe<PaginePreparazione_AtleticaMutation>;
   tennis?: InputMaybe<PagineTennisMutation>;
+  padel?: InputMaybe<PaginePadelMutation>;
   agonistica?: InputMaybe<PagineAgonisticaMutation>;
   torneo_avvenire?: InputMaybe<PagineTorneo_AvvenireMutation>;
   regolamento?: InputMaybe<PagineRegolamentoMutation>;
@@ -2935,7 +3635,7 @@ export type ServiziPartsFragment = { __typename: 'Servizi', titolo: string, ordi
 
 export type PlanningPartsFragment = { __typename: 'Planning', lezioni?: Array<{ __typename: 'PlanningLezioni', giorno: string, ora: string, categoria: string, nome: string } | null> | null };
 
-export type MembershipPartsFragment = { __typename: 'Membership', titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, gold_tipo: string, gold_valore?: string | null, platinum_tipo: string, platinum_valore?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, gold_valore_en?: string | null, platinum_valore_en?: string | null }> }> };
+export type MembershipPartsFragment = { __typename: 'Membership', titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, silver_prezzo?: string | null, gold_prezzo?: string | null, platinum_prezzo?: string | null, prezzo_suffisso?: string | null, prezzo_tooltip?: string | null, nota_finale?: string | null, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, prezzo_suffisso_en?: string | null, prezzo_tooltip_en?: string | null, nota_finale_en?: string | null, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, silver_valore_tooltip?: string | null, gold_tipo: string, gold_valore?: string | null, gold_valore_tooltip?: string | null, platinum_tipo: string, platinum_valore?: string | null, platinum_valore_tooltip?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, silver_valore_tooltip_en?: string | null, gold_valore_en?: string | null, gold_valore_tooltip_en?: string | null, platinum_valore_en?: string | null, platinum_valore_tooltip_en?: string | null }> }> };
 
 export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_arrivare: string, come_arrivare_en: string, orari: string, orari_en: string, telefono: string, email: string };
 
@@ -2945,21 +3645,23 @@ export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, ca
 
 export type NewsPartsFragment = { __typename: 'News', titolo: string, data: string, categoria: string, sintesi: string, immagine: string, immagine_alt: string, pubblicato?: boolean | null, cta_label?: string | null, cta_href?: string | null, titolo_en?: string | null, categoria_en?: string | null, cta_label_en?: string | null, sintesi_en?: string | null, immagine_alt_en?: string | null, corpo_en?: string | null, body?: any | null };
 
-type PagineParts_PagineGenerica_Fragment = { __typename: 'PagineGenerica', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null };
+type PagineParts_PagineGenerica_Fragment = { __typename: 'PagineGenerica', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, faq?: Array<{ __typename: 'PagineGenericaFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null };
 
 type PagineParts_PagineStoria_Fragment = { __typename: 'PagineStoria', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, storia_sezione1_eyebrow: string, storia_sezione1_titolo: string, storia_sezione1_titolo_accent: string, storia_sezione2_eyebrow: string, storia_sezione2_titolo: string, storia_sezione2_titolo_accent: string, storia_paragrafo1: string, storia_paragrafo2: string, storia_sezione1_eyebrow_en?: string | null, storia_sezione1_titolo_en?: string | null, storia_sezione1_titolo_accent_en?: string | null, storia_sezione2_eyebrow_en?: string | null, storia_sezione2_titolo_en?: string | null, storia_sezione2_titolo_accent_en?: string | null, storia_paragrafo1_en?: string | null, storia_paragrafo2_en?: string | null, storia_timeline: Array<{ __typename: 'PagineStoriaStoria_timeline', anno: string, testo: string, testo_en?: string | null }>, storia_galleria: Array<{ __typename: 'PagineStoriaStoria_galleria', immagine: string, alt: string }> };
 
-type PagineParts_PagineSummer_Camps_Fragment = { __typename: 'PagineSummer_camps', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, camps_sezione1_eyebrow: string, camps_sezione1_titolo: string, camps_sezione1_titolo_accent: string, camps_immagine1: string, camps_immagine1_alt: string, camps_immagine2: string, camps_immagine2_alt: string, camps_sezione2_eyebrow: string, camps_sezione2_titolo: string, camps_sezione2_titolo_accent: string, camps_sezione1_eyebrow_en?: string | null, camps_sezione1_titolo_en?: string | null, camps_sezione1_titolo_accent_en?: string | null, camps_immagine1_alt_en?: string | null, camps_immagine2_alt_en?: string | null, camps_sezione2_eyebrow_en?: string | null, camps_sezione2_titolo_en?: string | null, camps_sezione2_titolo_accent_en?: string | null, camps_features: Array<{ __typename: 'PagineSummer_campsCamps_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, camps_settimane: Array<{ __typename: 'PagineSummer_campsCamps_settimane', settimana: string, date: string, settimana_en?: string | null, date_en?: string | null }> };
+type PagineParts_PagineSummer_Camps_Fragment = { __typename: 'PagineSummer_camps', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, camps_sezione1_eyebrow: string, camps_sezione1_titolo: string, camps_sezione1_titolo_accent: string, camps_immagine1: string, camps_immagine1_alt: string, camps_immagine2: string, camps_immagine2_alt: string, camps_sezione2_eyebrow: string, camps_sezione2_titolo: string, camps_sezione2_titolo_accent: string, camps_giornata_eyebrow: string, camps_giornata_titolo: string, camps_settimanale_eyebrow: string, camps_settimanale_titolo: string, camps_cosa_portare_titolo: string, camps_cosa_portare: Array<string>, camps_obbligatorio: string, camps_kit_benvenuto: string, camps_quote_eyebrow: string, camps_quote_titolo: string, camps_quote_note: Array<string>, camps_cta_label: string, camps_sezione1_eyebrow_en?: string | null, camps_sezione1_titolo_en?: string | null, camps_sezione1_titolo_accent_en?: string | null, camps_immagine1_alt_en?: string | null, camps_immagine2_alt_en?: string | null, camps_sezione2_eyebrow_en?: string | null, camps_sezione2_titolo_en?: string | null, camps_sezione2_titolo_accent_en?: string | null, camps_giornata_eyebrow_en?: string | null, camps_giornata_titolo_en?: string | null, camps_settimanale_eyebrow_en?: string | null, camps_settimanale_titolo_en?: string | null, camps_cosa_portare_titolo_en?: string | null, camps_cosa_portare_en?: Array<string | null> | null, camps_obbligatorio_en?: string | null, camps_kit_benvenuto_en?: string | null, camps_quote_eyebrow_en?: string | null, camps_quote_titolo_en?: string | null, camps_quote_note_en?: Array<string | null> | null, camps_cta_label_en?: string | null, camps_features: Array<{ __typename: 'PagineSummer_campsCamps_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, camps_info_rapide: Array<{ __typename: 'PagineSummer_campsCamps_info_rapide', label: string, valore: string, label_en?: string | null, valore_en?: string | null }>, camps_giornata: Array<{ __typename: 'PagineSummer_campsCamps_giornata', orario: string, titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, camps_settimanale: Array<{ __typename: 'PagineSummer_campsCamps_settimanale', giorno: string, colpo: string, testo: string, giorno_en?: string | null, colpo_en?: string | null, testo_en?: string | null }>, camps_quote_righe: Array<{ __typename: 'PagineSummer_campsCamps_quote_righe', categoria: string, prezzo_settimana: string, prezzo_dal2: string, prezzo_fratelli: string, categoria_en?: string | null }>, faq?: Array<{ __typename: 'PagineSummer_campsFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null };
 
-type PagineParts_PagineScuola_Tennis_Fragment = { __typename: 'PagineScuola_tennis', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, scuola_sezione1_eyebrow: string, scuola_sezione1_titolo: string, scuola_sezione1_titolo_accent: string, scuola_sezione1_lead: string, scuola_livelli_footer_testo: string, scuola_livelli_footer_link_label: string, scuola_sezione2_eyebrow: string, scuola_sezione2_titolo: string, scuola_sezione2_titolo_accent: string, scuola_iscrizione_cta_label: string, scuola_sezione3_eyebrow: string, scuola_sezione3_titolo: string, scuola_sezione3_titolo_accent: string, scuola_sezione3_badge: string, scuola_sezione3_paragrafo1: string, scuola_sezione3_paragrafo2: string, scuola_sezione3_paragrafo3: string, scuola_sezione3_immagine: string, scuola_sezione3_immagine_alt: string, scuola_sezione4_eyebrow: string, scuola_sezione4_titolo: string, scuola_sezione4_titolo_accent: string, scuola_sezione4_footer_testo: string, scuola_sezione1_eyebrow_en?: string | null, scuola_sezione1_titolo_en?: string | null, scuola_sezione1_titolo_accent_en?: string | null, scuola_sezione1_lead_en?: string | null, scuola_livelli_footer_testo_en?: string | null, scuola_livelli_footer_link_label_en?: string | null, scuola_sezione2_eyebrow_en?: string | null, scuola_sezione2_titolo_en?: string | null, scuola_sezione2_titolo_accent_en?: string | null, scuola_iscrizione_cta_label_en?: string | null, scuola_sezione3_eyebrow_en?: string | null, scuola_sezione3_titolo_en?: string | null, scuola_sezione3_titolo_accent_en?: string | null, scuola_sezione3_badge_en?: string | null, scuola_sezione3_paragrafo1_en?: string | null, scuola_sezione3_paragrafo2_en?: string | null, scuola_sezione3_paragrafo3_en?: string | null, scuola_sezione3_immagine_alt_en?: string | null, scuola_sezione4_eyebrow_en?: string | null, scuola_sezione4_titolo_en?: string | null, scuola_sezione4_titolo_accent_en?: string | null, scuola_sezione4_footer_testo_en?: string | null, scuola_livelli: Array<{ __typename: 'PagineScuola_tennisScuola_livelli', dot: string, nome: string, tag: string, range: string, testo: string, nome_en?: string | null, tag_en?: string | null, range_en?: string | null, testo_en?: string | null }>, scuola_iscrizione_cards: Array<{ __typename: 'PagineScuola_tennisScuola_iscrizione_cards', titolo: string, tag: string, testo: string, titolo_en?: string | null, tag_en?: string | null, testo_en?: string | null }>, scuola_tornei: Array<{ __typename: 'PagineScuola_tennisScuola_tornei', quando: string, nome: string, testo: string, quando_en?: string | null, nome_en?: string | null, testo_en?: string | null }> };
+type PagineParts_PagineScuola_Tennis_Fragment = { __typename: 'PagineScuola_tennis', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, scuola_sezione1_eyebrow: string, scuola_sezione1_titolo: string, scuola_sezione1_titolo_accent: string, scuola_sezione1_lead: string, scuola_livelli_footer_testo: string, scuola_livelli_footer_link_label: string, scuola_sezione2_eyebrow: string, scuola_sezione2_titolo: string, scuola_sezione2_titolo_accent: string, scuola_iscrizione_cta_label: string, scuola_sezione3_eyebrow: string, scuola_sezione3_titolo: string, scuola_sezione3_titolo_accent: string, scuola_sezione3_badge: string, scuola_sezione3_paragrafo1: string, scuola_sezione3_paragrafo2: string, scuola_sezione3_paragrafo3: string, scuola_sezione3_immagine: string, scuola_sezione3_immagine_alt: string, scuola_sezione4_eyebrow: string, scuola_sezione4_titolo: string, scuola_sezione4_titolo_accent: string, scuola_sezione4_footer_testo: string, scuola_sezione5_eyebrow: string, scuola_sezione5_titolo: string, scuola_sezione5_titolo_accent: string, scuola_sezione5_testo: string, scuola_sezione5_note: Array<string>, scuola_sezione5_cta_label: string, scuola_sezione1_eyebrow_en?: string | null, scuola_sezione1_titolo_en?: string | null, scuola_sezione1_titolo_accent_en?: string | null, scuola_sezione1_lead_en?: string | null, scuola_livelli_footer_testo_en?: string | null, scuola_livelli_footer_link_label_en?: string | null, scuola_sezione2_eyebrow_en?: string | null, scuola_sezione2_titolo_en?: string | null, scuola_sezione2_titolo_accent_en?: string | null, scuola_iscrizione_cta_label_en?: string | null, scuola_sezione3_eyebrow_en?: string | null, scuola_sezione3_titolo_en?: string | null, scuola_sezione3_titolo_accent_en?: string | null, scuola_sezione3_badge_en?: string | null, scuola_sezione3_paragrafo1_en?: string | null, scuola_sezione3_paragrafo2_en?: string | null, scuola_sezione3_paragrafo3_en?: string | null, scuola_sezione3_immagine_alt_en?: string | null, scuola_sezione4_eyebrow_en?: string | null, scuola_sezione4_titolo_en?: string | null, scuola_sezione4_titolo_accent_en?: string | null, scuola_sezione4_footer_testo_en?: string | null, scuola_sezione5_eyebrow_en?: string | null, scuola_sezione5_titolo_en?: string | null, scuola_sezione5_titolo_accent_en?: string | null, scuola_sezione5_testo_en?: string | null, scuola_sezione5_note_en?: Array<string | null> | null, scuola_sezione5_cta_label_en?: string | null, scuola_livelli: Array<{ __typename: 'PagineScuola_tennisScuola_livelli', dot: string, nome: string, tag: string, range: string, testo: string, nome_en?: string | null, tag_en?: string | null, range_en?: string | null, testo_en?: string | null }>, scuola_iscrizione_cards: Array<{ __typename: 'PagineScuola_tennisScuola_iscrizione_cards', titolo: string, tag: string, testo: string, titolo_en?: string | null, tag_en?: string | null, testo_en?: string | null }>, scuola_tornei: Array<{ __typename: 'PagineScuola_tennisScuola_tornei', quando: string, nome: string, testo: string, quando_en?: string | null, nome_en?: string | null, testo_en?: string | null }>, scuola_sezione5_info_rapide: Array<{ __typename: 'PagineScuola_tennisScuola_sezione5_info_rapide', label: string, valore: string, label_en?: string | null, valore_en?: string | null }>, scuola_sezione5_quote_righe: Array<{ __typename: 'PagineScuola_tennisScuola_sezione5_quote_righe', categoria: string, prezzo: string, categoria_en?: string | null }>, faq?: Array<{ __typename: 'PagineScuola_tennisFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null };
 
-type PagineParts_PaginePersonal_Trainer_Fragment = { __typename: 'PaginePersonal_trainer', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, pt_sezione1_eyebrow: string, pt_sezione1_titolo: string, pt_sezione1_titolo_accent: string, pt_sezione1_paragrafo1: string, pt_sezione1_paragrafo2: string, pt_sezione2_eyebrow: string, pt_sezione2_titolo: string, pt_sezione2_titolo_accent: string, pt_sezione3_eyebrow: string, pt_sezione3_titolo: string, pt_sezione3_titolo_accent: string, pt_sezione4_titolo: string, pt_sezione4_sottotitolo: string, pt_sezione4_cta_label: string, pt_sezione1_eyebrow_en?: string | null, pt_sezione1_titolo_en?: string | null, pt_sezione1_titolo_accent_en?: string | null, pt_sezione1_paragrafo1_en?: string | null, pt_sezione1_paragrafo2_en?: string | null, pt_sezione2_eyebrow_en?: string | null, pt_sezione2_titolo_en?: string | null, pt_sezione2_titolo_accent_en?: string | null, pt_sezione3_eyebrow_en?: string | null, pt_sezione3_titolo_en?: string | null, pt_sezione3_titolo_accent_en?: string | null, pt_sezione4_titolo_en?: string | null, pt_sezione4_sottotitolo_en?: string | null, pt_sezione4_cta_label_en?: string | null, pt_stats: Array<{ __typename: 'PaginePersonal_trainerPt_stats', numero: string, etichetta: string, etichetta_en?: string | null }>, pt_trainers: Array<{ __typename: 'PaginePersonal_trainerPt_trainers', nome: string, foto?: string | null, specializzazioni: Array<string>, qualifiche: Array<string>, lingue?: Array<string | null> | null, specializzazioni_en?: Array<string | null> | null, qualifiche_en?: Array<string | null> | null, lingue_en?: Array<string | null> | null }>, pt_steps: Array<{ __typename: 'PaginePersonal_trainerPt_steps', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> };
+type PagineParts_PaginePersonal_Trainer_Fragment = { __typename: 'PaginePersonal_trainer', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, pt_sezione1_eyebrow: string, pt_sezione1_titolo: string, pt_sezione1_titolo_accent: string, pt_sezione1_paragrafo1: string, pt_sezione1_paragrafo2: string, pt_sezione2_eyebrow: string, pt_sezione2_titolo: string, pt_sezione2_titolo_accent: string, pt_sezione3_eyebrow: string, pt_sezione3_titolo: string, pt_sezione3_titolo_accent: string, pt_sezione4_titolo: string, pt_sezione4_sottotitolo: string, pt_sezione4_cta_label: string, pt_sezione1_eyebrow_en?: string | null, pt_sezione1_titolo_en?: string | null, pt_sezione1_titolo_accent_en?: string | null, pt_sezione1_paragrafo1_en?: string | null, pt_sezione1_paragrafo2_en?: string | null, pt_sezione2_eyebrow_en?: string | null, pt_sezione2_titolo_en?: string | null, pt_sezione2_titolo_accent_en?: string | null, pt_sezione3_eyebrow_en?: string | null, pt_sezione3_titolo_en?: string | null, pt_sezione3_titolo_accent_en?: string | null, pt_sezione4_titolo_en?: string | null, pt_sezione4_sottotitolo_en?: string | null, pt_sezione4_cta_label_en?: string | null, pt_stats: Array<{ __typename: 'PaginePersonal_trainerPt_stats', numero: string, etichetta: string, etichetta_en?: string | null }>, pt_trainers: Array<{ __typename: 'PaginePersonal_trainerPt_trainers', nome: string, foto?: string | null, specializzazioni: Array<string>, qualifiche: Array<string>, lingue?: Array<string | null> | null, specializzazioni_en?: Array<string | null> | null, qualifiche_en?: Array<string | null> | null, lingue_en?: Array<string | null> | null }>, pt_steps: Array<{ __typename: 'PaginePersonal_trainerPt_steps', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PaginePersonal_trainerFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null };
 
-type PagineParts_PaginePreparazione_Atletica_Fragment = { __typename: 'PaginePreparazione_atletica', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, prep_sala_eyebrow: string, prep_sala_titolo: string, prep_sala_titolo_accent: string, prep_sala_paragrafo1: string, prep_sala_paragrafo2: string, prep_sala_cta_label: string, prep_corsi_eyebrow: string, prep_corsi_titolo: string, prep_corsi_titolo_accent: string, prep_corsi_sub: string, prep_calendario_eyebrow: string, prep_calendario_titolo: string, prep_calendario_titolo_accent: string, prep_calendario_sub: string, prep_sala_eyebrow_en?: string | null, prep_sala_titolo_en?: string | null, prep_sala_titolo_accent_en?: string | null, prep_sala_paragrafo1_en?: string | null, prep_sala_paragrafo2_en?: string | null, prep_sala_cta_label_en?: string | null, prep_corsi_eyebrow_en?: string | null, prep_corsi_titolo_en?: string | null, prep_corsi_titolo_accent_en?: string | null, prep_corsi_sub_en?: string | null, prep_calendario_eyebrow_en?: string | null, prep_calendario_titolo_en?: string | null, prep_calendario_titolo_accent_en?: string | null, prep_calendario_sub_en?: string | null, prep_sala_slideshow: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_slideshow', immagine: string, alt: string, alt_en?: string | null }>, prep_sala_features: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, prep_categorie: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorie', id: string, label: string, desc: string, color: string, desc_en?: string | null, corsi: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorieCorsi', nome: string, durata: string, intensita: number, livello: string, desc: string, immagine: string, nome_en?: string | null, livello_en?: string | null, desc_en?: string | null }> }> };
+type PagineParts_PaginePreparazione_Atletica_Fragment = { __typename: 'PaginePreparazione_atletica', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, prep_sala_eyebrow: string, prep_sala_titolo: string, prep_sala_titolo_accent: string, prep_sala_paragrafo1: string, prep_sala_paragrafo2: string, prep_sala_cta_label: string, prep_corsi_eyebrow: string, prep_corsi_titolo: string, prep_corsi_titolo_accent: string, prep_corsi_sub: string, prep_calendario_eyebrow: string, prep_calendario_titolo: string, prep_calendario_titolo_accent: string, prep_calendario_sub: string, prep_sala_eyebrow_en?: string | null, prep_sala_titolo_en?: string | null, prep_sala_titolo_accent_en?: string | null, prep_sala_paragrafo1_en?: string | null, prep_sala_paragrafo2_en?: string | null, prep_sala_cta_label_en?: string | null, prep_corsi_eyebrow_en?: string | null, prep_corsi_titolo_en?: string | null, prep_corsi_titolo_accent_en?: string | null, prep_corsi_sub_en?: string | null, prep_calendario_eyebrow_en?: string | null, prep_calendario_titolo_en?: string | null, prep_calendario_titolo_accent_en?: string | null, prep_calendario_sub_en?: string | null, prep_sala_slideshow: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_slideshow', immagine: string, alt: string, alt_en?: string | null }>, prep_sala_features: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, prep_categorie: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorie', id: string, label: string, desc: string, color: string, desc_en?: string | null, corsi: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorieCorsi', nome: string, durata: string, intensita: number, livello: string, desc: string, immagine: string, nome_en?: string | null, livello_en?: string | null, desc_en?: string | null }> }>, faq?: Array<{ __typename: 'PaginePreparazione_atleticaFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null };
 
-type PagineParts_PagineTennis_Fragment = { __typename: 'PagineTennis', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, tennis_campi_eyebrow: string, tennis_campi_titolo: string, tennis_campi_titolo_accent: string, tennis_soci_eyebrow: string, tennis_soci_titolo: string, tennis_soci_titolo_accent: string, tennis_soci_testo: string, tennis_corsi_eyebrow: string, tennis_corsi_titolo: string, tennis_corsi_titolo_accent: string, tennis_corsi_intro: string, tennis_corsi_cta_label: string, tennis_campi_eyebrow_en?: string | null, tennis_campi_titolo_en?: string | null, tennis_campi_titolo_accent_en?: string | null, tennis_soci_eyebrow_en?: string | null, tennis_soci_titolo_en?: string | null, tennis_soci_titolo_accent_en?: string | null, tennis_soci_testo_en?: string | null, tennis_corsi_eyebrow_en?: string | null, tennis_corsi_titolo_en?: string | null, tennis_corsi_titolo_accent_en?: string | null, tennis_corsi_intro_en?: string | null, tennis_corsi_cta_label_en?: string | null, tennis_campi: Array<{ __typename: 'PagineTennisTennis_campi', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, tennis_corsi_livelli: Array<{ __typename: 'PagineTennisTennis_corsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> };
+type PagineParts_PagineTennis_Fragment = { __typename: 'PagineTennis', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, tennis_campi_eyebrow: string, tennis_campi_titolo: string, tennis_campi_titolo_accent: string, tennis_soci_eyebrow: string, tennis_soci_titolo: string, tennis_soci_titolo_accent: string, tennis_soci_testo: string, tennis_corsi_eyebrow: string, tennis_corsi_titolo: string, tennis_corsi_titolo_accent: string, tennis_corsi_intro: string, tennis_corsi_cta_label: string, tennis_campi_eyebrow_en?: string | null, tennis_campi_titolo_en?: string | null, tennis_campi_titolo_accent_en?: string | null, tennis_soci_eyebrow_en?: string | null, tennis_soci_titolo_en?: string | null, tennis_soci_titolo_accent_en?: string | null, tennis_soci_testo_en?: string | null, tennis_corsi_eyebrow_en?: string | null, tennis_corsi_titolo_en?: string | null, tennis_corsi_titolo_accent_en?: string | null, tennis_corsi_intro_en?: string | null, tennis_corsi_cta_label_en?: string | null, tennis_campi: Array<{ __typename: 'PagineTennisTennis_campi', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, tennis_corsi_livelli: Array<{ __typename: 'PagineTennisTennis_corsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PagineTennisFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null };
 
-type PagineParts_PagineAgonistica_Fragment = { __typename: 'PagineAgonistica', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, agonistica_eyebrow: string, agonistica_titolo: string, agonistica_titolo_accent: string, agonistica_eyebrow_en?: string | null, agonistica_titolo_en?: string | null, agonistica_titolo_accent_en?: string | null, agonistica_step: Array<{ __typename: 'PagineAgonisticaAgonistica_step', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> };
+type PagineParts_PaginePadel_Fragment = { __typename: 'PaginePadel', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, padel_corsi_eyebrow: string, padel_corsi_titolo: string, padel_corsi_titolo_accent: string, padel_corsi_intro: string, padel_corsi_cta_label: string, padel_corsi_eyebrow_en?: string | null, padel_corsi_titolo_en?: string | null, padel_corsi_titolo_accent_en?: string | null, padel_corsi_intro_en?: string | null, padel_corsi_cta_label_en?: string | null, padel_corsi_livelli: Array<{ __typename: 'PaginePadelPadel_corsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PaginePadelFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null };
+
+type PagineParts_PagineAgonistica_Fragment = { __typename: 'PagineAgonistica', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, agonistica_metodo_eyebrow?: string | null, agonistica_metodo_titolo?: string | null, agonistica_metodo_titolo_accent?: string | null, agonistica_metodo_lead?: string | null, agonistica_metodo_immagine1?: string | null, agonistica_metodo_immagine1_alt?: string | null, agonistica_metodo_immagine2?: string | null, agonistica_metodo_immagine2_alt?: string | null, agonistica_metodo_quote?: string | null, agonistica_punti_chiave_titolo?: string | null, agonistica_metodo_eyebrow_en?: string | null, agonistica_metodo_titolo_en?: string | null, agonistica_metodo_titolo_accent_en?: string | null, agonistica_metodo_lead_en?: string | null, agonistica_metodo_immagine1_alt_en?: string | null, agonistica_metodo_immagine2_alt_en?: string | null, agonistica_metodo_quote_en?: string | null, agonistica_punti_chiave_titolo_en?: string | null, agonistica_eyebrow: string, agonistica_titolo: string, agonistica_titolo_accent: string, agonistica_eyebrow_en?: string | null, agonistica_titolo_en?: string | null, agonistica_titolo_accent_en?: string | null, agonistica_metodo_pillars?: Array<{ __typename: 'PagineAgonisticaAgonistica_metodo_pillars', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null } | null> | null, agonistica_punti_chiave?: Array<{ __typename: 'PagineAgonisticaAgonistica_punti_chiave', testo: string, testo_en?: string | null } | null> | null, agonistica_step: Array<{ __typename: 'PagineAgonisticaAgonistica_step', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PagineAgonisticaFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null };
 
 type PagineParts_PagineTorneo_Avvenire_Fragment = { __typename: 'PagineTorneo_avvenire', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, torneo_quote_testo: string, torneo_quote_autore: string, torneo_storia_eyebrow: string, torneo_storia_titolo: string, torneo_storia_titolo_accent: string, torneo_storia_paragrafo1: string, torneo_storia_paragrafo2: string, torneo_alumni_eyebrow: string, torneo_alumni_titolo: string, torneo_alumni_titolo_accent: string, torneo_alumni_intro: string, torneo_galleria_eyebrow: string, torneo_galleria_titolo: string, torneo_galleria_titolo_accent: string, torneo_prossima_eyebrow: string, torneo_prossima_titolo: string, torneo_prossima_titolo_accent: string, torneo_prossima_testo: string, torneo_quote_testo_en?: string | null, torneo_quote_autore_en?: string | null, torneo_storia_eyebrow_en?: string | null, torneo_storia_titolo_en?: string | null, torneo_storia_titolo_accent_en?: string | null, torneo_storia_paragrafo1_en?: string | null, torneo_storia_paragrafo2_en?: string | null, torneo_alumni_eyebrow_en?: string | null, torneo_alumni_titolo_en?: string | null, torneo_alumni_titolo_accent_en?: string | null, torneo_alumni_intro_en?: string | null, torneo_galleria_eyebrow_en?: string | null, torneo_galleria_titolo_en?: string | null, torneo_galleria_titolo_accent_en?: string | null, torneo_prossima_eyebrow_en?: string | null, torneo_prossima_titolo_en?: string | null, torneo_prossima_titolo_accent_en?: string | null, torneo_prossima_testo_en?: string | null, torneo_stats: Array<{ __typename: 'PagineTorneo_avvenireTorneo_stats', numero: string, label: string, label_en?: string | null }> };
 
@@ -2969,7 +3671,7 @@ type PagineParts_PaginePrivacy_Fragment = { __typename: 'PaginePrivacy', title: 
 
 type PagineParts_PaginePartners_Fragment = { __typename: 'PaginePartners', title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, partners_lista: Array<{ __typename: 'PaginePartnersPartners_lista', nome: string, descrizione: string, descrizione_en?: string | null, logo: string, sito: string }> };
 
-export type PaginePartsFragment = PagineParts_PagineGenerica_Fragment | PagineParts_PagineStoria_Fragment | PagineParts_PagineSummer_Camps_Fragment | PagineParts_PagineScuola_Tennis_Fragment | PagineParts_PaginePersonal_Trainer_Fragment | PagineParts_PaginePreparazione_Atletica_Fragment | PagineParts_PagineTennis_Fragment | PagineParts_PagineAgonistica_Fragment | PagineParts_PagineTorneo_Avvenire_Fragment | PagineParts_PagineRegolamento_Fragment | PagineParts_PaginePrivacy_Fragment | PagineParts_PaginePartners_Fragment;
+export type PaginePartsFragment = PagineParts_PagineGenerica_Fragment | PagineParts_PagineStoria_Fragment | PagineParts_PagineSummer_Camps_Fragment | PagineParts_PagineScuola_Tennis_Fragment | PagineParts_PaginePersonal_Trainer_Fragment | PagineParts_PaginePreparazione_Atletica_Fragment | PagineParts_PagineTennis_Fragment | PagineParts_PaginePadel_Fragment | PagineParts_PagineAgonistica_Fragment | PagineParts_PagineTorneo_Avvenire_Fragment | PagineParts_PagineRegolamento_Fragment | PagineParts_PaginePrivacy_Fragment | PagineParts_PaginePartners_Fragment;
 
 export type EventiQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3033,7 +3735,7 @@ export type MembershipQueryVariables = Exact<{
 }>;
 
 
-export type MembershipQuery = { __typename?: 'Query', membership: { __typename: 'Membership', id: string, titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, gold_tipo: string, gold_valore?: string | null, platinum_tipo: string, platinum_valore?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, gold_valore_en?: string | null, platinum_valore_en?: string | null }> }> } };
+export type MembershipQuery = { __typename?: 'Query', membership: { __typename: 'Membership', id: string, titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, silver_prezzo?: string | null, gold_prezzo?: string | null, platinum_prezzo?: string | null, prezzo_suffisso?: string | null, prezzo_tooltip?: string | null, nota_finale?: string | null, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, prezzo_suffisso_en?: string | null, prezzo_tooltip_en?: string | null, nota_finale_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, silver_valore_tooltip?: string | null, gold_tipo: string, gold_valore?: string | null, gold_valore_tooltip?: string | null, platinum_tipo: string, platinum_valore?: string | null, platinum_valore_tooltip?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, silver_valore_tooltip_en?: string | null, gold_valore_en?: string | null, gold_valore_tooltip_en?: string | null, platinum_valore_en?: string | null, platinum_valore_tooltip_en?: string | null }> }> } };
 
 export type MembershipConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3045,7 +3747,7 @@ export type MembershipConnectionQueryVariables = Exact<{
 }>;
 
 
-export type MembershipConnectionQuery = { __typename?: 'Query', membershipConnection: { __typename?: 'MembershipConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'MembershipConnectionEdges', cursor: string, node?: { __typename: 'Membership', id: string, titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, gold_tipo: string, gold_valore?: string | null, platinum_tipo: string, platinum_valore?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, gold_valore_en?: string | null, platinum_valore_en?: string | null }> }> } | null } | null> | null } };
+export type MembershipConnectionQuery = { __typename?: 'Query', membershipConnection: { __typename?: 'MembershipConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'MembershipConnectionEdges', cursor: string, node?: { __typename: 'Membership', id: string, titolo: string, titolo_accent: string, sottotitolo: string, silver_nome: string, gold_nome: string, platinum_nome: string, platinum_badge: string, cta_label: string, silver_prezzo?: string | null, gold_prezzo?: string | null, platinum_prezzo?: string | null, prezzo_suffisso?: string | null, prezzo_tooltip?: string | null, nota_finale?: string | null, titolo_en?: string | null, titolo_accent_en?: string | null, sottotitolo_en?: string | null, platinum_badge_en?: string | null, cta_label_en?: string | null, prezzo_suffisso_en?: string | null, prezzo_tooltip_en?: string | null, nota_finale_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, categorie: Array<{ __typename: 'MembershipCategorie', label: string, label_en?: string | null, righe: Array<{ __typename: 'MembershipCategorieRighe', feature: string, feature_tooltip?: string | null, silver_tipo: string, silver_valore?: string | null, silver_valore_tooltip?: string | null, gold_tipo: string, gold_valore?: string | null, gold_valore_tooltip?: string | null, platinum_tipo: string, platinum_valore?: string | null, platinum_valore_tooltip?: string | null, feature_en?: string | null, feature_tooltip_en?: string | null, silver_valore_en?: string | null, silver_valore_tooltip_en?: string | null, gold_valore_en?: string | null, gold_valore_tooltip_en?: string | null, platinum_valore_en?: string | null, platinum_valore_tooltip_en?: string | null }> }> } | null } | null> | null } };
 
 export type InfoQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -3128,7 +3830,7 @@ export type PagineQueryVariables = Exact<{
 }>;
 
 
-export type PagineQuery = { __typename?: 'Query', pagine: { __typename: 'PagineGenerica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PagineStoria', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, storia_sezione1_eyebrow: string, storia_sezione1_titolo: string, storia_sezione1_titolo_accent: string, storia_sezione2_eyebrow: string, storia_sezione2_titolo: string, storia_sezione2_titolo_accent: string, storia_paragrafo1: string, storia_paragrafo2: string, storia_sezione1_eyebrow_en?: string | null, storia_sezione1_titolo_en?: string | null, storia_sezione1_titolo_accent_en?: string | null, storia_sezione2_eyebrow_en?: string | null, storia_sezione2_titolo_en?: string | null, storia_sezione2_titolo_accent_en?: string | null, storia_paragrafo1_en?: string | null, storia_paragrafo2_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, storia_timeline: Array<{ __typename: 'PagineStoriaStoria_timeline', anno: string, testo: string, testo_en?: string | null }>, storia_galleria: Array<{ __typename: 'PagineStoriaStoria_galleria', immagine: string, alt: string }> } | { __typename: 'PagineSummer_camps', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, camps_sezione1_eyebrow: string, camps_sezione1_titolo: string, camps_sezione1_titolo_accent: string, camps_immagine1: string, camps_immagine1_alt: string, camps_immagine2: string, camps_immagine2_alt: string, camps_sezione2_eyebrow: string, camps_sezione2_titolo: string, camps_sezione2_titolo_accent: string, camps_sezione1_eyebrow_en?: string | null, camps_sezione1_titolo_en?: string | null, camps_sezione1_titolo_accent_en?: string | null, camps_immagine1_alt_en?: string | null, camps_immagine2_alt_en?: string | null, camps_sezione2_eyebrow_en?: string | null, camps_sezione2_titolo_en?: string | null, camps_sezione2_titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camps_features: Array<{ __typename: 'PagineSummer_campsCamps_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, camps_settimane: Array<{ __typename: 'PagineSummer_campsCamps_settimane', settimana: string, date: string, settimana_en?: string | null, date_en?: string | null }> } | { __typename: 'PagineScuola_tennis', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, scuola_sezione1_eyebrow: string, scuola_sezione1_titolo: string, scuola_sezione1_titolo_accent: string, scuola_sezione1_lead: string, scuola_livelli_footer_testo: string, scuola_livelli_footer_link_label: string, scuola_sezione2_eyebrow: string, scuola_sezione2_titolo: string, scuola_sezione2_titolo_accent: string, scuola_iscrizione_cta_label: string, scuola_sezione3_eyebrow: string, scuola_sezione3_titolo: string, scuola_sezione3_titolo_accent: string, scuola_sezione3_badge: string, scuola_sezione3_paragrafo1: string, scuola_sezione3_paragrafo2: string, scuola_sezione3_paragrafo3: string, scuola_sezione3_immagine: string, scuola_sezione3_immagine_alt: string, scuola_sezione4_eyebrow: string, scuola_sezione4_titolo: string, scuola_sezione4_titolo_accent: string, scuola_sezione4_footer_testo: string, scuola_sezione1_eyebrow_en?: string | null, scuola_sezione1_titolo_en?: string | null, scuola_sezione1_titolo_accent_en?: string | null, scuola_sezione1_lead_en?: string | null, scuola_livelli_footer_testo_en?: string | null, scuola_livelli_footer_link_label_en?: string | null, scuola_sezione2_eyebrow_en?: string | null, scuola_sezione2_titolo_en?: string | null, scuola_sezione2_titolo_accent_en?: string | null, scuola_iscrizione_cta_label_en?: string | null, scuola_sezione3_eyebrow_en?: string | null, scuola_sezione3_titolo_en?: string | null, scuola_sezione3_titolo_accent_en?: string | null, scuola_sezione3_badge_en?: string | null, scuola_sezione3_paragrafo1_en?: string | null, scuola_sezione3_paragrafo2_en?: string | null, scuola_sezione3_paragrafo3_en?: string | null, scuola_sezione3_immagine_alt_en?: string | null, scuola_sezione4_eyebrow_en?: string | null, scuola_sezione4_titolo_en?: string | null, scuola_sezione4_titolo_accent_en?: string | null, scuola_sezione4_footer_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, scuola_livelli: Array<{ __typename: 'PagineScuola_tennisScuola_livelli', dot: string, nome: string, tag: string, range: string, testo: string, nome_en?: string | null, tag_en?: string | null, range_en?: string | null, testo_en?: string | null }>, scuola_iscrizione_cards: Array<{ __typename: 'PagineScuola_tennisScuola_iscrizione_cards', titolo: string, tag: string, testo: string, titolo_en?: string | null, tag_en?: string | null, testo_en?: string | null }>, scuola_tornei: Array<{ __typename: 'PagineScuola_tennisScuola_tornei', quando: string, nome: string, testo: string, quando_en?: string | null, nome_en?: string | null, testo_en?: string | null }> } | { __typename: 'PaginePersonal_trainer', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, pt_sezione1_eyebrow: string, pt_sezione1_titolo: string, pt_sezione1_titolo_accent: string, pt_sezione1_paragrafo1: string, pt_sezione1_paragrafo2: string, pt_sezione2_eyebrow: string, pt_sezione2_titolo: string, pt_sezione2_titolo_accent: string, pt_sezione3_eyebrow: string, pt_sezione3_titolo: string, pt_sezione3_titolo_accent: string, pt_sezione4_titolo: string, pt_sezione4_sottotitolo: string, pt_sezione4_cta_label: string, pt_sezione1_eyebrow_en?: string | null, pt_sezione1_titolo_en?: string | null, pt_sezione1_titolo_accent_en?: string | null, pt_sezione1_paragrafo1_en?: string | null, pt_sezione1_paragrafo2_en?: string | null, pt_sezione2_eyebrow_en?: string | null, pt_sezione2_titolo_en?: string | null, pt_sezione2_titolo_accent_en?: string | null, pt_sezione3_eyebrow_en?: string | null, pt_sezione3_titolo_en?: string | null, pt_sezione3_titolo_accent_en?: string | null, pt_sezione4_titolo_en?: string | null, pt_sezione4_sottotitolo_en?: string | null, pt_sezione4_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pt_stats: Array<{ __typename: 'PaginePersonal_trainerPt_stats', numero: string, etichetta: string, etichetta_en?: string | null }>, pt_trainers: Array<{ __typename: 'PaginePersonal_trainerPt_trainers', nome: string, foto?: string | null, specializzazioni: Array<string>, qualifiche: Array<string>, lingue?: Array<string | null> | null, specializzazioni_en?: Array<string | null> | null, qualifiche_en?: Array<string | null> | null, lingue_en?: Array<string | null> | null }>, pt_steps: Array<{ __typename: 'PaginePersonal_trainerPt_steps', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } | { __typename: 'PaginePreparazione_atletica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, prep_sala_eyebrow: string, prep_sala_titolo: string, prep_sala_titolo_accent: string, prep_sala_paragrafo1: string, prep_sala_paragrafo2: string, prep_sala_cta_label: string, prep_corsi_eyebrow: string, prep_corsi_titolo: string, prep_corsi_titolo_accent: string, prep_corsi_sub: string, prep_calendario_eyebrow: string, prep_calendario_titolo: string, prep_calendario_titolo_accent: string, prep_calendario_sub: string, prep_sala_eyebrow_en?: string | null, prep_sala_titolo_en?: string | null, prep_sala_titolo_accent_en?: string | null, prep_sala_paragrafo1_en?: string | null, prep_sala_paragrafo2_en?: string | null, prep_sala_cta_label_en?: string | null, prep_corsi_eyebrow_en?: string | null, prep_corsi_titolo_en?: string | null, prep_corsi_titolo_accent_en?: string | null, prep_corsi_sub_en?: string | null, prep_calendario_eyebrow_en?: string | null, prep_calendario_titolo_en?: string | null, prep_calendario_titolo_accent_en?: string | null, prep_calendario_sub_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, prep_sala_slideshow: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_slideshow', immagine: string, alt: string, alt_en?: string | null }>, prep_sala_features: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, prep_categorie: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorie', id: string, label: string, desc: string, color: string, desc_en?: string | null, corsi: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorieCorsi', nome: string, durata: string, intensita: number, livello: string, desc: string, immagine: string, nome_en?: string | null, livello_en?: string | null, desc_en?: string | null }> }> } | { __typename: 'PagineTennis', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, tennis_campi_eyebrow: string, tennis_campi_titolo: string, tennis_campi_titolo_accent: string, tennis_soci_eyebrow: string, tennis_soci_titolo: string, tennis_soci_titolo_accent: string, tennis_soci_testo: string, tennis_corsi_eyebrow: string, tennis_corsi_titolo: string, tennis_corsi_titolo_accent: string, tennis_corsi_intro: string, tennis_corsi_cta_label: string, tennis_campi_eyebrow_en?: string | null, tennis_campi_titolo_en?: string | null, tennis_campi_titolo_accent_en?: string | null, tennis_soci_eyebrow_en?: string | null, tennis_soci_titolo_en?: string | null, tennis_soci_titolo_accent_en?: string | null, tennis_soci_testo_en?: string | null, tennis_corsi_eyebrow_en?: string | null, tennis_corsi_titolo_en?: string | null, tennis_corsi_titolo_accent_en?: string | null, tennis_corsi_intro_en?: string | null, tennis_corsi_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, tennis_campi: Array<{ __typename: 'PagineTennisTennis_campi', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, tennis_corsi_livelli: Array<{ __typename: 'PagineTennisTennis_corsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } | { __typename: 'PagineAgonistica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, agonistica_eyebrow: string, agonistica_titolo: string, agonistica_titolo_accent: string, agonistica_eyebrow_en?: string | null, agonistica_titolo_en?: string | null, agonistica_titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, agonistica_step: Array<{ __typename: 'PagineAgonisticaAgonistica_step', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } | { __typename: 'PagineTorneo_avvenire', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, torneo_quote_testo: string, torneo_quote_autore: string, torneo_storia_eyebrow: string, torneo_storia_titolo: string, torneo_storia_titolo_accent: string, torneo_storia_paragrafo1: string, torneo_storia_paragrafo2: string, torneo_alumni_eyebrow: string, torneo_alumni_titolo: string, torneo_alumni_titolo_accent: string, torneo_alumni_intro: string, torneo_galleria_eyebrow: string, torneo_galleria_titolo: string, torneo_galleria_titolo_accent: string, torneo_prossima_eyebrow: string, torneo_prossima_titolo: string, torneo_prossima_titolo_accent: string, torneo_prossima_testo: string, torneo_quote_testo_en?: string | null, torneo_quote_autore_en?: string | null, torneo_storia_eyebrow_en?: string | null, torneo_storia_titolo_en?: string | null, torneo_storia_titolo_accent_en?: string | null, torneo_storia_paragrafo1_en?: string | null, torneo_storia_paragrafo2_en?: string | null, torneo_alumni_eyebrow_en?: string | null, torneo_alumni_titolo_en?: string | null, torneo_alumni_titolo_accent_en?: string | null, torneo_alumni_intro_en?: string | null, torneo_galleria_eyebrow_en?: string | null, torneo_galleria_titolo_en?: string | null, torneo_galleria_titolo_accent_en?: string | null, torneo_prossima_eyebrow_en?: string | null, torneo_prossima_titolo_en?: string | null, torneo_prossima_titolo_accent_en?: string | null, torneo_prossima_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, torneo_stats: Array<{ __typename: 'PagineTorneo_avvenireTorneo_stats', numero: string, label: string, label_en?: string | null }> } | { __typename: 'PagineRegolamento', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, regolamento_body: string, regolamento_body_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PaginePrivacy', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, privacy_body: string, privacy_body_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PaginePartners', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, partners_lista: Array<{ __typename: 'PaginePartnersPartners_lista', nome: string, descrizione: string, descrizione_en?: string | null, logo: string, sito: string }> } };
+export type PagineQuery = { __typename?: 'Query', pagine: { __typename: 'PagineGenerica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, faq?: Array<{ __typename: 'PagineGenericaFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineStoria', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, storia_sezione1_eyebrow: string, storia_sezione1_titolo: string, storia_sezione1_titolo_accent: string, storia_sezione2_eyebrow: string, storia_sezione2_titolo: string, storia_sezione2_titolo_accent: string, storia_paragrafo1: string, storia_paragrafo2: string, storia_sezione1_eyebrow_en?: string | null, storia_sezione1_titolo_en?: string | null, storia_sezione1_titolo_accent_en?: string | null, storia_sezione2_eyebrow_en?: string | null, storia_sezione2_titolo_en?: string | null, storia_sezione2_titolo_accent_en?: string | null, storia_paragrafo1_en?: string | null, storia_paragrafo2_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, storia_timeline: Array<{ __typename: 'PagineStoriaStoria_timeline', anno: string, testo: string, testo_en?: string | null }>, storia_galleria: Array<{ __typename: 'PagineStoriaStoria_galleria', immagine: string, alt: string }> } | { __typename: 'PagineSummer_camps', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, camps_sezione1_eyebrow: string, camps_sezione1_titolo: string, camps_sezione1_titolo_accent: string, camps_immagine1: string, camps_immagine1_alt: string, camps_immagine2: string, camps_immagine2_alt: string, camps_sezione2_eyebrow: string, camps_sezione2_titolo: string, camps_sezione2_titolo_accent: string, camps_giornata_eyebrow: string, camps_giornata_titolo: string, camps_settimanale_eyebrow: string, camps_settimanale_titolo: string, camps_cosa_portare_titolo: string, camps_cosa_portare: Array<string>, camps_obbligatorio: string, camps_kit_benvenuto: string, camps_quote_eyebrow: string, camps_quote_titolo: string, camps_quote_note: Array<string>, camps_cta_label: string, camps_sezione1_eyebrow_en?: string | null, camps_sezione1_titolo_en?: string | null, camps_sezione1_titolo_accent_en?: string | null, camps_immagine1_alt_en?: string | null, camps_immagine2_alt_en?: string | null, camps_sezione2_eyebrow_en?: string | null, camps_sezione2_titolo_en?: string | null, camps_sezione2_titolo_accent_en?: string | null, camps_giornata_eyebrow_en?: string | null, camps_giornata_titolo_en?: string | null, camps_settimanale_eyebrow_en?: string | null, camps_settimanale_titolo_en?: string | null, camps_cosa_portare_titolo_en?: string | null, camps_cosa_portare_en?: Array<string | null> | null, camps_obbligatorio_en?: string | null, camps_kit_benvenuto_en?: string | null, camps_quote_eyebrow_en?: string | null, camps_quote_titolo_en?: string | null, camps_quote_note_en?: Array<string | null> | null, camps_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camps_features: Array<{ __typename: 'PagineSummer_campsCamps_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, camps_info_rapide: Array<{ __typename: 'PagineSummer_campsCamps_info_rapide', label: string, valore: string, label_en?: string | null, valore_en?: string | null }>, camps_giornata: Array<{ __typename: 'PagineSummer_campsCamps_giornata', orario: string, titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, camps_settimanale: Array<{ __typename: 'PagineSummer_campsCamps_settimanale', giorno: string, colpo: string, testo: string, giorno_en?: string | null, colpo_en?: string | null, testo_en?: string | null }>, camps_quote_righe: Array<{ __typename: 'PagineSummer_campsCamps_quote_righe', categoria: string, prezzo_settimana: string, prezzo_dal2: string, prezzo_fratelli: string, categoria_en?: string | null }>, faq?: Array<{ __typename: 'PagineSummer_campsFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineScuola_tennis', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, scuola_sezione1_eyebrow: string, scuola_sezione1_titolo: string, scuola_sezione1_titolo_accent: string, scuola_sezione1_lead: string, scuola_livelli_footer_testo: string, scuola_livelli_footer_link_label: string, scuola_sezione2_eyebrow: string, scuola_sezione2_titolo: string, scuola_sezione2_titolo_accent: string, scuola_iscrizione_cta_label: string, scuola_sezione3_eyebrow: string, scuola_sezione3_titolo: string, scuola_sezione3_titolo_accent: string, scuola_sezione3_badge: string, scuola_sezione3_paragrafo1: string, scuola_sezione3_paragrafo2: string, scuola_sezione3_paragrafo3: string, scuola_sezione3_immagine: string, scuola_sezione3_immagine_alt: string, scuola_sezione4_eyebrow: string, scuola_sezione4_titolo: string, scuola_sezione4_titolo_accent: string, scuola_sezione4_footer_testo: string, scuola_sezione5_eyebrow: string, scuola_sezione5_titolo: string, scuola_sezione5_titolo_accent: string, scuola_sezione5_testo: string, scuola_sezione5_note: Array<string>, scuola_sezione5_cta_label: string, scuola_sezione1_eyebrow_en?: string | null, scuola_sezione1_titolo_en?: string | null, scuola_sezione1_titolo_accent_en?: string | null, scuola_sezione1_lead_en?: string | null, scuola_livelli_footer_testo_en?: string | null, scuola_livelli_footer_link_label_en?: string | null, scuola_sezione2_eyebrow_en?: string | null, scuola_sezione2_titolo_en?: string | null, scuola_sezione2_titolo_accent_en?: string | null, scuola_iscrizione_cta_label_en?: string | null, scuola_sezione3_eyebrow_en?: string | null, scuola_sezione3_titolo_en?: string | null, scuola_sezione3_titolo_accent_en?: string | null, scuola_sezione3_badge_en?: string | null, scuola_sezione3_paragrafo1_en?: string | null, scuola_sezione3_paragrafo2_en?: string | null, scuola_sezione3_paragrafo3_en?: string | null, scuola_sezione3_immagine_alt_en?: string | null, scuola_sezione4_eyebrow_en?: string | null, scuola_sezione4_titolo_en?: string | null, scuola_sezione4_titolo_accent_en?: string | null, scuola_sezione4_footer_testo_en?: string | null, scuola_sezione5_eyebrow_en?: string | null, scuola_sezione5_titolo_en?: string | null, scuola_sezione5_titolo_accent_en?: string | null, scuola_sezione5_testo_en?: string | null, scuola_sezione5_note_en?: Array<string | null> | null, scuola_sezione5_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, scuola_livelli: Array<{ __typename: 'PagineScuola_tennisScuola_livelli', dot: string, nome: string, tag: string, range: string, testo: string, nome_en?: string | null, tag_en?: string | null, range_en?: string | null, testo_en?: string | null }>, scuola_iscrizione_cards: Array<{ __typename: 'PagineScuola_tennisScuola_iscrizione_cards', titolo: string, tag: string, testo: string, titolo_en?: string | null, tag_en?: string | null, testo_en?: string | null }>, scuola_tornei: Array<{ __typename: 'PagineScuola_tennisScuola_tornei', quando: string, nome: string, testo: string, quando_en?: string | null, nome_en?: string | null, testo_en?: string | null }>, scuola_sezione5_info_rapide: Array<{ __typename: 'PagineScuola_tennisScuola_sezione5_info_rapide', label: string, valore: string, label_en?: string | null, valore_en?: string | null }>, scuola_sezione5_quote_righe: Array<{ __typename: 'PagineScuola_tennisScuola_sezione5_quote_righe', categoria: string, prezzo: string, categoria_en?: string | null }>, faq?: Array<{ __typename: 'PagineScuola_tennisFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PaginePersonal_trainer', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, pt_sezione1_eyebrow: string, pt_sezione1_titolo: string, pt_sezione1_titolo_accent: string, pt_sezione1_paragrafo1: string, pt_sezione1_paragrafo2: string, pt_sezione2_eyebrow: string, pt_sezione2_titolo: string, pt_sezione2_titolo_accent: string, pt_sezione3_eyebrow: string, pt_sezione3_titolo: string, pt_sezione3_titolo_accent: string, pt_sezione4_titolo: string, pt_sezione4_sottotitolo: string, pt_sezione4_cta_label: string, pt_sezione1_eyebrow_en?: string | null, pt_sezione1_titolo_en?: string | null, pt_sezione1_titolo_accent_en?: string | null, pt_sezione1_paragrafo1_en?: string | null, pt_sezione1_paragrafo2_en?: string | null, pt_sezione2_eyebrow_en?: string | null, pt_sezione2_titolo_en?: string | null, pt_sezione2_titolo_accent_en?: string | null, pt_sezione3_eyebrow_en?: string | null, pt_sezione3_titolo_en?: string | null, pt_sezione3_titolo_accent_en?: string | null, pt_sezione4_titolo_en?: string | null, pt_sezione4_sottotitolo_en?: string | null, pt_sezione4_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pt_stats: Array<{ __typename: 'PaginePersonal_trainerPt_stats', numero: string, etichetta: string, etichetta_en?: string | null }>, pt_trainers: Array<{ __typename: 'PaginePersonal_trainerPt_trainers', nome: string, foto?: string | null, specializzazioni: Array<string>, qualifiche: Array<string>, lingue?: Array<string | null> | null, specializzazioni_en?: Array<string | null> | null, qualifiche_en?: Array<string | null> | null, lingue_en?: Array<string | null> | null }>, pt_steps: Array<{ __typename: 'PaginePersonal_trainerPt_steps', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PaginePersonal_trainerFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PaginePreparazione_atletica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, prep_sala_eyebrow: string, prep_sala_titolo: string, prep_sala_titolo_accent: string, prep_sala_paragrafo1: string, prep_sala_paragrafo2: string, prep_sala_cta_label: string, prep_corsi_eyebrow: string, prep_corsi_titolo: string, prep_corsi_titolo_accent: string, prep_corsi_sub: string, prep_calendario_eyebrow: string, prep_calendario_titolo: string, prep_calendario_titolo_accent: string, prep_calendario_sub: string, prep_sala_eyebrow_en?: string | null, prep_sala_titolo_en?: string | null, prep_sala_titolo_accent_en?: string | null, prep_sala_paragrafo1_en?: string | null, prep_sala_paragrafo2_en?: string | null, prep_sala_cta_label_en?: string | null, prep_corsi_eyebrow_en?: string | null, prep_corsi_titolo_en?: string | null, prep_corsi_titolo_accent_en?: string | null, prep_corsi_sub_en?: string | null, prep_calendario_eyebrow_en?: string | null, prep_calendario_titolo_en?: string | null, prep_calendario_titolo_accent_en?: string | null, prep_calendario_sub_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, prep_sala_slideshow: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_slideshow', immagine: string, alt: string, alt_en?: string | null }>, prep_sala_features: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, prep_categorie: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorie', id: string, label: string, desc: string, color: string, desc_en?: string | null, corsi: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorieCorsi', nome: string, durata: string, intensita: number, livello: string, desc: string, immagine: string, nome_en?: string | null, livello_en?: string | null, desc_en?: string | null }> }>, faq?: Array<{ __typename: 'PaginePreparazione_atleticaFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineTennis', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, tennis_campi_eyebrow: string, tennis_campi_titolo: string, tennis_campi_titolo_accent: string, tennis_soci_eyebrow: string, tennis_soci_titolo: string, tennis_soci_titolo_accent: string, tennis_soci_testo: string, tennis_corsi_eyebrow: string, tennis_corsi_titolo: string, tennis_corsi_titolo_accent: string, tennis_corsi_intro: string, tennis_corsi_cta_label: string, tennis_campi_eyebrow_en?: string | null, tennis_campi_titolo_en?: string | null, tennis_campi_titolo_accent_en?: string | null, tennis_soci_eyebrow_en?: string | null, tennis_soci_titolo_en?: string | null, tennis_soci_titolo_accent_en?: string | null, tennis_soci_testo_en?: string | null, tennis_corsi_eyebrow_en?: string | null, tennis_corsi_titolo_en?: string | null, tennis_corsi_titolo_accent_en?: string | null, tennis_corsi_intro_en?: string | null, tennis_corsi_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, tennis_campi: Array<{ __typename: 'PagineTennisTennis_campi', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, tennis_corsi_livelli: Array<{ __typename: 'PagineTennisTennis_corsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PagineTennisFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PaginePadel', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, padel_corsi_eyebrow: string, padel_corsi_titolo: string, padel_corsi_titolo_accent: string, padel_corsi_intro: string, padel_corsi_cta_label: string, padel_corsi_eyebrow_en?: string | null, padel_corsi_titolo_en?: string | null, padel_corsi_titolo_accent_en?: string | null, padel_corsi_intro_en?: string | null, padel_corsi_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, padel_corsi_livelli: Array<{ __typename: 'PaginePadelPadel_corsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PaginePadelFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineAgonistica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, agonistica_metodo_eyebrow?: string | null, agonistica_metodo_titolo?: string | null, agonistica_metodo_titolo_accent?: string | null, agonistica_metodo_lead?: string | null, agonistica_metodo_immagine1?: string | null, agonistica_metodo_immagine1_alt?: string | null, agonistica_metodo_immagine2?: string | null, agonistica_metodo_immagine2_alt?: string | null, agonistica_metodo_quote?: string | null, agonistica_punti_chiave_titolo?: string | null, agonistica_metodo_eyebrow_en?: string | null, agonistica_metodo_titolo_en?: string | null, agonistica_metodo_titolo_accent_en?: string | null, agonistica_metodo_lead_en?: string | null, agonistica_metodo_immagine1_alt_en?: string | null, agonistica_metodo_immagine2_alt_en?: string | null, agonistica_metodo_quote_en?: string | null, agonistica_punti_chiave_titolo_en?: string | null, agonistica_eyebrow: string, agonistica_titolo: string, agonistica_titolo_accent: string, agonistica_eyebrow_en?: string | null, agonistica_titolo_en?: string | null, agonistica_titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, agonistica_metodo_pillars?: Array<{ __typename: 'PagineAgonisticaAgonistica_metodo_pillars', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null } | null> | null, agonistica_punti_chiave?: Array<{ __typename: 'PagineAgonisticaAgonistica_punti_chiave', testo: string, testo_en?: string | null } | null> | null, agonistica_step: Array<{ __typename: 'PagineAgonisticaAgonistica_step', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PagineAgonisticaFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineTorneo_avvenire', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, torneo_quote_testo: string, torneo_quote_autore: string, torneo_storia_eyebrow: string, torneo_storia_titolo: string, torneo_storia_titolo_accent: string, torneo_storia_paragrafo1: string, torneo_storia_paragrafo2: string, torneo_alumni_eyebrow: string, torneo_alumni_titolo: string, torneo_alumni_titolo_accent: string, torneo_alumni_intro: string, torneo_galleria_eyebrow: string, torneo_galleria_titolo: string, torneo_galleria_titolo_accent: string, torneo_prossima_eyebrow: string, torneo_prossima_titolo: string, torneo_prossima_titolo_accent: string, torneo_prossima_testo: string, torneo_quote_testo_en?: string | null, torneo_quote_autore_en?: string | null, torneo_storia_eyebrow_en?: string | null, torneo_storia_titolo_en?: string | null, torneo_storia_titolo_accent_en?: string | null, torneo_storia_paragrafo1_en?: string | null, torneo_storia_paragrafo2_en?: string | null, torneo_alumni_eyebrow_en?: string | null, torneo_alumni_titolo_en?: string | null, torneo_alumni_titolo_accent_en?: string | null, torneo_alumni_intro_en?: string | null, torneo_galleria_eyebrow_en?: string | null, torneo_galleria_titolo_en?: string | null, torneo_galleria_titolo_accent_en?: string | null, torneo_prossima_eyebrow_en?: string | null, torneo_prossima_titolo_en?: string | null, torneo_prossima_titolo_accent_en?: string | null, torneo_prossima_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, torneo_stats: Array<{ __typename: 'PagineTorneo_avvenireTorneo_stats', numero: string, label: string, label_en?: string | null }> } | { __typename: 'PagineRegolamento', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, regolamento_body: string, regolamento_body_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PaginePrivacy', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, privacy_body: string, privacy_body_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PaginePartners', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, partners_lista: Array<{ __typename: 'PaginePartnersPartners_lista', nome: string, descrizione: string, descrizione_en?: string | null, logo: string, sito: string }> } };
 
 export type PagineConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3140,7 +3842,7 @@ export type PagineConnectionQueryVariables = Exact<{
 }>;
 
 
-export type PagineConnectionQuery = { __typename?: 'Query', pagineConnection: { __typename?: 'PagineConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PagineConnectionEdges', cursor: string, node?: { __typename: 'PagineGenerica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PagineStoria', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, storia_sezione1_eyebrow: string, storia_sezione1_titolo: string, storia_sezione1_titolo_accent: string, storia_sezione2_eyebrow: string, storia_sezione2_titolo: string, storia_sezione2_titolo_accent: string, storia_paragrafo1: string, storia_paragrafo2: string, storia_sezione1_eyebrow_en?: string | null, storia_sezione1_titolo_en?: string | null, storia_sezione1_titolo_accent_en?: string | null, storia_sezione2_eyebrow_en?: string | null, storia_sezione2_titolo_en?: string | null, storia_sezione2_titolo_accent_en?: string | null, storia_paragrafo1_en?: string | null, storia_paragrafo2_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, storia_timeline: Array<{ __typename: 'PagineStoriaStoria_timeline', anno: string, testo: string, testo_en?: string | null }>, storia_galleria: Array<{ __typename: 'PagineStoriaStoria_galleria', immagine: string, alt: string }> } | { __typename: 'PagineSummer_camps', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, camps_sezione1_eyebrow: string, camps_sezione1_titolo: string, camps_sezione1_titolo_accent: string, camps_immagine1: string, camps_immagine1_alt: string, camps_immagine2: string, camps_immagine2_alt: string, camps_sezione2_eyebrow: string, camps_sezione2_titolo: string, camps_sezione2_titolo_accent: string, camps_sezione1_eyebrow_en?: string | null, camps_sezione1_titolo_en?: string | null, camps_sezione1_titolo_accent_en?: string | null, camps_immagine1_alt_en?: string | null, camps_immagine2_alt_en?: string | null, camps_sezione2_eyebrow_en?: string | null, camps_sezione2_titolo_en?: string | null, camps_sezione2_titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camps_features: Array<{ __typename: 'PagineSummer_campsCamps_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, camps_settimane: Array<{ __typename: 'PagineSummer_campsCamps_settimane', settimana: string, date: string, settimana_en?: string | null, date_en?: string | null }> } | { __typename: 'PagineScuola_tennis', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, scuola_sezione1_eyebrow: string, scuola_sezione1_titolo: string, scuola_sezione1_titolo_accent: string, scuola_sezione1_lead: string, scuola_livelli_footer_testo: string, scuola_livelli_footer_link_label: string, scuola_sezione2_eyebrow: string, scuola_sezione2_titolo: string, scuola_sezione2_titolo_accent: string, scuola_iscrizione_cta_label: string, scuola_sezione3_eyebrow: string, scuola_sezione3_titolo: string, scuola_sezione3_titolo_accent: string, scuola_sezione3_badge: string, scuola_sezione3_paragrafo1: string, scuola_sezione3_paragrafo2: string, scuola_sezione3_paragrafo3: string, scuola_sezione3_immagine: string, scuola_sezione3_immagine_alt: string, scuola_sezione4_eyebrow: string, scuola_sezione4_titolo: string, scuola_sezione4_titolo_accent: string, scuola_sezione4_footer_testo: string, scuola_sezione1_eyebrow_en?: string | null, scuola_sezione1_titolo_en?: string | null, scuola_sezione1_titolo_accent_en?: string | null, scuola_sezione1_lead_en?: string | null, scuola_livelli_footer_testo_en?: string | null, scuola_livelli_footer_link_label_en?: string | null, scuola_sezione2_eyebrow_en?: string | null, scuola_sezione2_titolo_en?: string | null, scuola_sezione2_titolo_accent_en?: string | null, scuola_iscrizione_cta_label_en?: string | null, scuola_sezione3_eyebrow_en?: string | null, scuola_sezione3_titolo_en?: string | null, scuola_sezione3_titolo_accent_en?: string | null, scuola_sezione3_badge_en?: string | null, scuola_sezione3_paragrafo1_en?: string | null, scuola_sezione3_paragrafo2_en?: string | null, scuola_sezione3_paragrafo3_en?: string | null, scuola_sezione3_immagine_alt_en?: string | null, scuola_sezione4_eyebrow_en?: string | null, scuola_sezione4_titolo_en?: string | null, scuola_sezione4_titolo_accent_en?: string | null, scuola_sezione4_footer_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, scuola_livelli: Array<{ __typename: 'PagineScuola_tennisScuola_livelli', dot: string, nome: string, tag: string, range: string, testo: string, nome_en?: string | null, tag_en?: string | null, range_en?: string | null, testo_en?: string | null }>, scuola_iscrizione_cards: Array<{ __typename: 'PagineScuola_tennisScuola_iscrizione_cards', titolo: string, tag: string, testo: string, titolo_en?: string | null, tag_en?: string | null, testo_en?: string | null }>, scuola_tornei: Array<{ __typename: 'PagineScuola_tennisScuola_tornei', quando: string, nome: string, testo: string, quando_en?: string | null, nome_en?: string | null, testo_en?: string | null }> } | { __typename: 'PaginePersonal_trainer', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, pt_sezione1_eyebrow: string, pt_sezione1_titolo: string, pt_sezione1_titolo_accent: string, pt_sezione1_paragrafo1: string, pt_sezione1_paragrafo2: string, pt_sezione2_eyebrow: string, pt_sezione2_titolo: string, pt_sezione2_titolo_accent: string, pt_sezione3_eyebrow: string, pt_sezione3_titolo: string, pt_sezione3_titolo_accent: string, pt_sezione4_titolo: string, pt_sezione4_sottotitolo: string, pt_sezione4_cta_label: string, pt_sezione1_eyebrow_en?: string | null, pt_sezione1_titolo_en?: string | null, pt_sezione1_titolo_accent_en?: string | null, pt_sezione1_paragrafo1_en?: string | null, pt_sezione1_paragrafo2_en?: string | null, pt_sezione2_eyebrow_en?: string | null, pt_sezione2_titolo_en?: string | null, pt_sezione2_titolo_accent_en?: string | null, pt_sezione3_eyebrow_en?: string | null, pt_sezione3_titolo_en?: string | null, pt_sezione3_titolo_accent_en?: string | null, pt_sezione4_titolo_en?: string | null, pt_sezione4_sottotitolo_en?: string | null, pt_sezione4_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pt_stats: Array<{ __typename: 'PaginePersonal_trainerPt_stats', numero: string, etichetta: string, etichetta_en?: string | null }>, pt_trainers: Array<{ __typename: 'PaginePersonal_trainerPt_trainers', nome: string, foto?: string | null, specializzazioni: Array<string>, qualifiche: Array<string>, lingue?: Array<string | null> | null, specializzazioni_en?: Array<string | null> | null, qualifiche_en?: Array<string | null> | null, lingue_en?: Array<string | null> | null }>, pt_steps: Array<{ __typename: 'PaginePersonal_trainerPt_steps', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } | { __typename: 'PaginePreparazione_atletica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, prep_sala_eyebrow: string, prep_sala_titolo: string, prep_sala_titolo_accent: string, prep_sala_paragrafo1: string, prep_sala_paragrafo2: string, prep_sala_cta_label: string, prep_corsi_eyebrow: string, prep_corsi_titolo: string, prep_corsi_titolo_accent: string, prep_corsi_sub: string, prep_calendario_eyebrow: string, prep_calendario_titolo: string, prep_calendario_titolo_accent: string, prep_calendario_sub: string, prep_sala_eyebrow_en?: string | null, prep_sala_titolo_en?: string | null, prep_sala_titolo_accent_en?: string | null, prep_sala_paragrafo1_en?: string | null, prep_sala_paragrafo2_en?: string | null, prep_sala_cta_label_en?: string | null, prep_corsi_eyebrow_en?: string | null, prep_corsi_titolo_en?: string | null, prep_corsi_titolo_accent_en?: string | null, prep_corsi_sub_en?: string | null, prep_calendario_eyebrow_en?: string | null, prep_calendario_titolo_en?: string | null, prep_calendario_titolo_accent_en?: string | null, prep_calendario_sub_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, prep_sala_slideshow: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_slideshow', immagine: string, alt: string, alt_en?: string | null }>, prep_sala_features: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, prep_categorie: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorie', id: string, label: string, desc: string, color: string, desc_en?: string | null, corsi: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorieCorsi', nome: string, durata: string, intensita: number, livello: string, desc: string, immagine: string, nome_en?: string | null, livello_en?: string | null, desc_en?: string | null }> }> } | { __typename: 'PagineTennis', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, tennis_campi_eyebrow: string, tennis_campi_titolo: string, tennis_campi_titolo_accent: string, tennis_soci_eyebrow: string, tennis_soci_titolo: string, tennis_soci_titolo_accent: string, tennis_soci_testo: string, tennis_corsi_eyebrow: string, tennis_corsi_titolo: string, tennis_corsi_titolo_accent: string, tennis_corsi_intro: string, tennis_corsi_cta_label: string, tennis_campi_eyebrow_en?: string | null, tennis_campi_titolo_en?: string | null, tennis_campi_titolo_accent_en?: string | null, tennis_soci_eyebrow_en?: string | null, tennis_soci_titolo_en?: string | null, tennis_soci_titolo_accent_en?: string | null, tennis_soci_testo_en?: string | null, tennis_corsi_eyebrow_en?: string | null, tennis_corsi_titolo_en?: string | null, tennis_corsi_titolo_accent_en?: string | null, tennis_corsi_intro_en?: string | null, tennis_corsi_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, tennis_campi: Array<{ __typename: 'PagineTennisTennis_campi', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, tennis_corsi_livelli: Array<{ __typename: 'PagineTennisTennis_corsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } | { __typename: 'PagineAgonistica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, agonistica_eyebrow: string, agonistica_titolo: string, agonistica_titolo_accent: string, agonistica_eyebrow_en?: string | null, agonistica_titolo_en?: string | null, agonistica_titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, agonistica_step: Array<{ __typename: 'PagineAgonisticaAgonistica_step', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }> } | { __typename: 'PagineTorneo_avvenire', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, torneo_quote_testo: string, torneo_quote_autore: string, torneo_storia_eyebrow: string, torneo_storia_titolo: string, torneo_storia_titolo_accent: string, torneo_storia_paragrafo1: string, torneo_storia_paragrafo2: string, torneo_alumni_eyebrow: string, torneo_alumni_titolo: string, torneo_alumni_titolo_accent: string, torneo_alumni_intro: string, torneo_galleria_eyebrow: string, torneo_galleria_titolo: string, torneo_galleria_titolo_accent: string, torneo_prossima_eyebrow: string, torneo_prossima_titolo: string, torneo_prossima_titolo_accent: string, torneo_prossima_testo: string, torneo_quote_testo_en?: string | null, torneo_quote_autore_en?: string | null, torneo_storia_eyebrow_en?: string | null, torneo_storia_titolo_en?: string | null, torneo_storia_titolo_accent_en?: string | null, torneo_storia_paragrafo1_en?: string | null, torneo_storia_paragrafo2_en?: string | null, torneo_alumni_eyebrow_en?: string | null, torneo_alumni_titolo_en?: string | null, torneo_alumni_titolo_accent_en?: string | null, torneo_alumni_intro_en?: string | null, torneo_galleria_eyebrow_en?: string | null, torneo_galleria_titolo_en?: string | null, torneo_galleria_titolo_accent_en?: string | null, torneo_prossima_eyebrow_en?: string | null, torneo_prossima_titolo_en?: string | null, torneo_prossima_titolo_accent_en?: string | null, torneo_prossima_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, torneo_stats: Array<{ __typename: 'PagineTorneo_avvenireTorneo_stats', numero: string, label: string, label_en?: string | null }> } | { __typename: 'PagineRegolamento', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, regolamento_body: string, regolamento_body_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PaginePrivacy', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, privacy_body: string, privacy_body_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PaginePartners', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, partners_lista: Array<{ __typename: 'PaginePartnersPartners_lista', nome: string, descrizione: string, descrizione_en?: string | null, logo: string, sito: string }> } | null } | null> | null } };
+export type PagineConnectionQuery = { __typename?: 'Query', pagineConnection: { __typename?: 'PagineConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PagineConnectionEdges', cursor: string, node?: { __typename: 'PagineGenerica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, faq?: Array<{ __typename: 'PagineGenericaFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineStoria', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, storia_sezione1_eyebrow: string, storia_sezione1_titolo: string, storia_sezione1_titolo_accent: string, storia_sezione2_eyebrow: string, storia_sezione2_titolo: string, storia_sezione2_titolo_accent: string, storia_paragrafo1: string, storia_paragrafo2: string, storia_sezione1_eyebrow_en?: string | null, storia_sezione1_titolo_en?: string | null, storia_sezione1_titolo_accent_en?: string | null, storia_sezione2_eyebrow_en?: string | null, storia_sezione2_titolo_en?: string | null, storia_sezione2_titolo_accent_en?: string | null, storia_paragrafo1_en?: string | null, storia_paragrafo2_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, storia_timeline: Array<{ __typename: 'PagineStoriaStoria_timeline', anno: string, testo: string, testo_en?: string | null }>, storia_galleria: Array<{ __typename: 'PagineStoriaStoria_galleria', immagine: string, alt: string }> } | { __typename: 'PagineSummer_camps', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, camps_sezione1_eyebrow: string, camps_sezione1_titolo: string, camps_sezione1_titolo_accent: string, camps_immagine1: string, camps_immagine1_alt: string, camps_immagine2: string, camps_immagine2_alt: string, camps_sezione2_eyebrow: string, camps_sezione2_titolo: string, camps_sezione2_titolo_accent: string, camps_giornata_eyebrow: string, camps_giornata_titolo: string, camps_settimanale_eyebrow: string, camps_settimanale_titolo: string, camps_cosa_portare_titolo: string, camps_cosa_portare: Array<string>, camps_obbligatorio: string, camps_kit_benvenuto: string, camps_quote_eyebrow: string, camps_quote_titolo: string, camps_quote_note: Array<string>, camps_cta_label: string, camps_sezione1_eyebrow_en?: string | null, camps_sezione1_titolo_en?: string | null, camps_sezione1_titolo_accent_en?: string | null, camps_immagine1_alt_en?: string | null, camps_immagine2_alt_en?: string | null, camps_sezione2_eyebrow_en?: string | null, camps_sezione2_titolo_en?: string | null, camps_sezione2_titolo_accent_en?: string | null, camps_giornata_eyebrow_en?: string | null, camps_giornata_titolo_en?: string | null, camps_settimanale_eyebrow_en?: string | null, camps_settimanale_titolo_en?: string | null, camps_cosa_portare_titolo_en?: string | null, camps_cosa_portare_en?: Array<string | null> | null, camps_obbligatorio_en?: string | null, camps_kit_benvenuto_en?: string | null, camps_quote_eyebrow_en?: string | null, camps_quote_titolo_en?: string | null, camps_quote_note_en?: Array<string | null> | null, camps_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camps_features: Array<{ __typename: 'PagineSummer_campsCamps_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, camps_info_rapide: Array<{ __typename: 'PagineSummer_campsCamps_info_rapide', label: string, valore: string, label_en?: string | null, valore_en?: string | null }>, camps_giornata: Array<{ __typename: 'PagineSummer_campsCamps_giornata', orario: string, titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, camps_settimanale: Array<{ __typename: 'PagineSummer_campsCamps_settimanale', giorno: string, colpo: string, testo: string, giorno_en?: string | null, colpo_en?: string | null, testo_en?: string | null }>, camps_quote_righe: Array<{ __typename: 'PagineSummer_campsCamps_quote_righe', categoria: string, prezzo_settimana: string, prezzo_dal2: string, prezzo_fratelli: string, categoria_en?: string | null }>, faq?: Array<{ __typename: 'PagineSummer_campsFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineScuola_tennis', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, scuola_sezione1_eyebrow: string, scuola_sezione1_titolo: string, scuola_sezione1_titolo_accent: string, scuola_sezione1_lead: string, scuola_livelli_footer_testo: string, scuola_livelli_footer_link_label: string, scuola_sezione2_eyebrow: string, scuola_sezione2_titolo: string, scuola_sezione2_titolo_accent: string, scuola_iscrizione_cta_label: string, scuola_sezione3_eyebrow: string, scuola_sezione3_titolo: string, scuola_sezione3_titolo_accent: string, scuola_sezione3_badge: string, scuola_sezione3_paragrafo1: string, scuola_sezione3_paragrafo2: string, scuola_sezione3_paragrafo3: string, scuola_sezione3_immagine: string, scuola_sezione3_immagine_alt: string, scuola_sezione4_eyebrow: string, scuola_sezione4_titolo: string, scuola_sezione4_titolo_accent: string, scuola_sezione4_footer_testo: string, scuola_sezione5_eyebrow: string, scuola_sezione5_titolo: string, scuola_sezione5_titolo_accent: string, scuola_sezione5_testo: string, scuola_sezione5_note: Array<string>, scuola_sezione5_cta_label: string, scuola_sezione1_eyebrow_en?: string | null, scuola_sezione1_titolo_en?: string | null, scuola_sezione1_titolo_accent_en?: string | null, scuola_sezione1_lead_en?: string | null, scuola_livelli_footer_testo_en?: string | null, scuola_livelli_footer_link_label_en?: string | null, scuola_sezione2_eyebrow_en?: string | null, scuola_sezione2_titolo_en?: string | null, scuola_sezione2_titolo_accent_en?: string | null, scuola_iscrizione_cta_label_en?: string | null, scuola_sezione3_eyebrow_en?: string | null, scuola_sezione3_titolo_en?: string | null, scuola_sezione3_titolo_accent_en?: string | null, scuola_sezione3_badge_en?: string | null, scuola_sezione3_paragrafo1_en?: string | null, scuola_sezione3_paragrafo2_en?: string | null, scuola_sezione3_paragrafo3_en?: string | null, scuola_sezione3_immagine_alt_en?: string | null, scuola_sezione4_eyebrow_en?: string | null, scuola_sezione4_titolo_en?: string | null, scuola_sezione4_titolo_accent_en?: string | null, scuola_sezione4_footer_testo_en?: string | null, scuola_sezione5_eyebrow_en?: string | null, scuola_sezione5_titolo_en?: string | null, scuola_sezione5_titolo_accent_en?: string | null, scuola_sezione5_testo_en?: string | null, scuola_sezione5_note_en?: Array<string | null> | null, scuola_sezione5_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, scuola_livelli: Array<{ __typename: 'PagineScuola_tennisScuola_livelli', dot: string, nome: string, tag: string, range: string, testo: string, nome_en?: string | null, tag_en?: string | null, range_en?: string | null, testo_en?: string | null }>, scuola_iscrizione_cards: Array<{ __typename: 'PagineScuola_tennisScuola_iscrizione_cards', titolo: string, tag: string, testo: string, titolo_en?: string | null, tag_en?: string | null, testo_en?: string | null }>, scuola_tornei: Array<{ __typename: 'PagineScuola_tennisScuola_tornei', quando: string, nome: string, testo: string, quando_en?: string | null, nome_en?: string | null, testo_en?: string | null }>, scuola_sezione5_info_rapide: Array<{ __typename: 'PagineScuola_tennisScuola_sezione5_info_rapide', label: string, valore: string, label_en?: string | null, valore_en?: string | null }>, scuola_sezione5_quote_righe: Array<{ __typename: 'PagineScuola_tennisScuola_sezione5_quote_righe', categoria: string, prezzo: string, categoria_en?: string | null }>, faq?: Array<{ __typename: 'PagineScuola_tennisFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PaginePersonal_trainer', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, pt_sezione1_eyebrow: string, pt_sezione1_titolo: string, pt_sezione1_titolo_accent: string, pt_sezione1_paragrafo1: string, pt_sezione1_paragrafo2: string, pt_sezione2_eyebrow: string, pt_sezione2_titolo: string, pt_sezione2_titolo_accent: string, pt_sezione3_eyebrow: string, pt_sezione3_titolo: string, pt_sezione3_titolo_accent: string, pt_sezione4_titolo: string, pt_sezione4_sottotitolo: string, pt_sezione4_cta_label: string, pt_sezione1_eyebrow_en?: string | null, pt_sezione1_titolo_en?: string | null, pt_sezione1_titolo_accent_en?: string | null, pt_sezione1_paragrafo1_en?: string | null, pt_sezione1_paragrafo2_en?: string | null, pt_sezione2_eyebrow_en?: string | null, pt_sezione2_titolo_en?: string | null, pt_sezione2_titolo_accent_en?: string | null, pt_sezione3_eyebrow_en?: string | null, pt_sezione3_titolo_en?: string | null, pt_sezione3_titolo_accent_en?: string | null, pt_sezione4_titolo_en?: string | null, pt_sezione4_sottotitolo_en?: string | null, pt_sezione4_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, pt_stats: Array<{ __typename: 'PaginePersonal_trainerPt_stats', numero: string, etichetta: string, etichetta_en?: string | null }>, pt_trainers: Array<{ __typename: 'PaginePersonal_trainerPt_trainers', nome: string, foto?: string | null, specializzazioni: Array<string>, qualifiche: Array<string>, lingue?: Array<string | null> | null, specializzazioni_en?: Array<string | null> | null, qualifiche_en?: Array<string | null> | null, lingue_en?: Array<string | null> | null }>, pt_steps: Array<{ __typename: 'PaginePersonal_trainerPt_steps', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PaginePersonal_trainerFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PaginePreparazione_atletica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, prep_sala_eyebrow: string, prep_sala_titolo: string, prep_sala_titolo_accent: string, prep_sala_paragrafo1: string, prep_sala_paragrafo2: string, prep_sala_cta_label: string, prep_corsi_eyebrow: string, prep_corsi_titolo: string, prep_corsi_titolo_accent: string, prep_corsi_sub: string, prep_calendario_eyebrow: string, prep_calendario_titolo: string, prep_calendario_titolo_accent: string, prep_calendario_sub: string, prep_sala_eyebrow_en?: string | null, prep_sala_titolo_en?: string | null, prep_sala_titolo_accent_en?: string | null, prep_sala_paragrafo1_en?: string | null, prep_sala_paragrafo2_en?: string | null, prep_sala_cta_label_en?: string | null, prep_corsi_eyebrow_en?: string | null, prep_corsi_titolo_en?: string | null, prep_corsi_titolo_accent_en?: string | null, prep_corsi_sub_en?: string | null, prep_calendario_eyebrow_en?: string | null, prep_calendario_titolo_en?: string | null, prep_calendario_titolo_accent_en?: string | null, prep_calendario_sub_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, prep_sala_slideshow: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_slideshow', immagine: string, alt: string, alt_en?: string | null }>, prep_sala_features: Array<{ __typename: 'PaginePreparazione_atleticaPrep_sala_features', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, prep_categorie: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorie', id: string, label: string, desc: string, color: string, desc_en?: string | null, corsi: Array<{ __typename: 'PaginePreparazione_atleticaPrep_categorieCorsi', nome: string, durata: string, intensita: number, livello: string, desc: string, immagine: string, nome_en?: string | null, livello_en?: string | null, desc_en?: string | null }> }>, faq?: Array<{ __typename: 'PaginePreparazione_atleticaFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineTennis', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, tennis_campi_eyebrow: string, tennis_campi_titolo: string, tennis_campi_titolo_accent: string, tennis_soci_eyebrow: string, tennis_soci_titolo: string, tennis_soci_titolo_accent: string, tennis_soci_testo: string, tennis_corsi_eyebrow: string, tennis_corsi_titolo: string, tennis_corsi_titolo_accent: string, tennis_corsi_intro: string, tennis_corsi_cta_label: string, tennis_campi_eyebrow_en?: string | null, tennis_campi_titolo_en?: string | null, tennis_campi_titolo_accent_en?: string | null, tennis_soci_eyebrow_en?: string | null, tennis_soci_titolo_en?: string | null, tennis_soci_titolo_accent_en?: string | null, tennis_soci_testo_en?: string | null, tennis_corsi_eyebrow_en?: string | null, tennis_corsi_titolo_en?: string | null, tennis_corsi_titolo_accent_en?: string | null, tennis_corsi_intro_en?: string | null, tennis_corsi_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, tennis_campi: Array<{ __typename: 'PagineTennisTennis_campi', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, tennis_corsi_livelli: Array<{ __typename: 'PagineTennisTennis_corsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PagineTennisFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PaginePadel', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, padel_corsi_eyebrow: string, padel_corsi_titolo: string, padel_corsi_titolo_accent: string, padel_corsi_intro: string, padel_corsi_cta_label: string, padel_corsi_eyebrow_en?: string | null, padel_corsi_titolo_en?: string | null, padel_corsi_titolo_accent_en?: string | null, padel_corsi_intro_en?: string | null, padel_corsi_cta_label_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, padel_corsi_livelli: Array<{ __typename: 'PaginePadelPadel_corsi_livelli', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PaginePadelFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineAgonistica', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, agonistica_metodo_eyebrow?: string | null, agonistica_metodo_titolo?: string | null, agonistica_metodo_titolo_accent?: string | null, agonistica_metodo_lead?: string | null, agonistica_metodo_immagine1?: string | null, agonistica_metodo_immagine1_alt?: string | null, agonistica_metodo_immagine2?: string | null, agonistica_metodo_immagine2_alt?: string | null, agonistica_metodo_quote?: string | null, agonistica_punti_chiave_titolo?: string | null, agonistica_metodo_eyebrow_en?: string | null, agonistica_metodo_titolo_en?: string | null, agonistica_metodo_titolo_accent_en?: string | null, agonistica_metodo_lead_en?: string | null, agonistica_metodo_immagine1_alt_en?: string | null, agonistica_metodo_immagine2_alt_en?: string | null, agonistica_metodo_quote_en?: string | null, agonistica_punti_chiave_titolo_en?: string | null, agonistica_eyebrow: string, agonistica_titolo: string, agonistica_titolo_accent: string, agonistica_eyebrow_en?: string | null, agonistica_titolo_en?: string | null, agonistica_titolo_accent_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, agonistica_metodo_pillars?: Array<{ __typename: 'PagineAgonisticaAgonistica_metodo_pillars', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null } | null> | null, agonistica_punti_chiave?: Array<{ __typename: 'PagineAgonisticaAgonistica_punti_chiave', testo: string, testo_en?: string | null } | null> | null, agonistica_step: Array<{ __typename: 'PagineAgonisticaAgonistica_step', titolo: string, testo: string, titolo_en?: string | null, testo_en?: string | null }>, faq?: Array<{ __typename: 'PagineAgonisticaFaq', domanda: string, risposta: string, domanda_en?: string | null, risposta_en?: string | null } | null> | null } | { __typename: 'PagineTorneo_avvenire', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, torneo_quote_testo: string, torneo_quote_autore: string, torneo_storia_eyebrow: string, torneo_storia_titolo: string, torneo_storia_titolo_accent: string, torneo_storia_paragrafo1: string, torneo_storia_paragrafo2: string, torneo_alumni_eyebrow: string, torneo_alumni_titolo: string, torneo_alumni_titolo_accent: string, torneo_alumni_intro: string, torneo_galleria_eyebrow: string, torneo_galleria_titolo: string, torneo_galleria_titolo_accent: string, torneo_prossima_eyebrow: string, torneo_prossima_titolo: string, torneo_prossima_titolo_accent: string, torneo_prossima_testo: string, torneo_quote_testo_en?: string | null, torneo_quote_autore_en?: string | null, torneo_storia_eyebrow_en?: string | null, torneo_storia_titolo_en?: string | null, torneo_storia_titolo_accent_en?: string | null, torneo_storia_paragrafo1_en?: string | null, torneo_storia_paragrafo2_en?: string | null, torneo_alumni_eyebrow_en?: string | null, torneo_alumni_titolo_en?: string | null, torneo_alumni_titolo_accent_en?: string | null, torneo_alumni_intro_en?: string | null, torneo_galleria_eyebrow_en?: string | null, torneo_galleria_titolo_en?: string | null, torneo_galleria_titolo_accent_en?: string | null, torneo_prossima_eyebrow_en?: string | null, torneo_prossima_titolo_en?: string | null, torneo_prossima_titolo_accent_en?: string | null, torneo_prossima_testo_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, torneo_stats: Array<{ __typename: 'PagineTorneo_avvenireTorneo_stats', numero: string, label: string, label_en?: string | null }> } | { __typename: 'PagineRegolamento', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, regolamento_body: string, regolamento_body_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PaginePrivacy', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, privacy_body: string, privacy_body_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | { __typename: 'PaginePartners', id: string, title: string, description: string, hero_eyebrow?: string | null, hero_titolo?: string | null, hero_titolo_accent?: string | null, hero_sottotitolo?: string | null, hero_immagine?: string | null, hero_immagine_alt?: string | null, title_en?: string | null, description_en?: string | null, hero_eyebrow_en?: string | null, hero_titolo_en?: string | null, hero_titolo_accent_en?: string | null, hero_sottotitolo_en?: string | null, hero_immagine_alt_en?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, partners_lista: Array<{ __typename: 'PaginePartnersPartners_lista', nome: string, descrizione: string, descrizione_en?: string | null, logo: string, sito: string }> } | null } | null> | null } };
 
 export const EventiPartsFragmentDoc = gql`
     fragment EventiParts on Eventi {
@@ -3196,6 +3898,12 @@ export const MembershipPartsFragmentDoc = gql`
   platinum_nome
   platinum_badge
   cta_label
+  silver_prezzo
+  gold_prezzo
+  platinum_prezzo
+  prezzo_suffisso
+  prezzo_tooltip
+  nota_finale
   categorie {
     __typename
     label
@@ -3206,15 +3914,21 @@ export const MembershipPartsFragmentDoc = gql`
       feature_tooltip
       silver_tipo
       silver_valore
+      silver_valore_tooltip
       gold_tipo
       gold_valore
+      gold_valore_tooltip
       platinum_tipo
       platinum_valore
+      platinum_valore_tooltip
       feature_en
       feature_tooltip_en
       silver_valore_en
+      silver_valore_tooltip_en
       gold_valore_en
+      gold_valore_tooltip_en
       platinum_valore_en
+      platinum_valore_tooltip_en
     }
   }
   titolo_en
@@ -3222,6 +3936,9 @@ export const MembershipPartsFragmentDoc = gql`
   sottotitolo_en
   platinum_badge_en
   cta_label_en
+  prezzo_suffisso_en
+  prezzo_tooltip_en
+  nota_finale_en
 }
     `;
 export const InfoPartsFragmentDoc = gql`
@@ -3298,6 +4015,13 @@ export const PaginePartsFragmentDoc = gql`
     hero_titolo_accent_en
     hero_sottotitolo_en
     hero_immagine_alt_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineStoria {
     title
@@ -3376,13 +4100,50 @@ export const PaginePartsFragmentDoc = gql`
     camps_sezione2_eyebrow
     camps_sezione2_titolo
     camps_sezione2_titolo_accent
-    camps_settimane {
+    camps_info_rapide {
       __typename
-      settimana
-      date
-      settimana_en
-      date_en
+      label
+      valore
+      label_en
+      valore_en
     }
+    camps_giornata_eyebrow
+    camps_giornata_titolo
+    camps_giornata {
+      __typename
+      orario
+      titolo
+      testo
+      titolo_en
+      testo_en
+    }
+    camps_settimanale_eyebrow
+    camps_settimanale_titolo
+    camps_settimanale {
+      __typename
+      giorno
+      colpo
+      testo
+      giorno_en
+      colpo_en
+      testo_en
+    }
+    camps_cosa_portare_titolo
+    camps_cosa_portare
+    camps_obbligatorio
+    camps_kit_benvenuto
+    camps_quote_eyebrow
+    camps_quote_titolo
+    camps_quote_righe {
+      __typename
+      categoria
+      prezzo_settimana
+      prezzo_dal2
+      prezzo_fratelli
+      categoria_en
+    }
+    camps_quote_note
+    camps_cta_label
     camps_sezione1_eyebrow_en
     camps_sezione1_titolo_en
     camps_sezione1_titolo_accent_en
@@ -3391,6 +4152,25 @@ export const PaginePartsFragmentDoc = gql`
     camps_sezione2_eyebrow_en
     camps_sezione2_titolo_en
     camps_sezione2_titolo_accent_en
+    camps_giornata_eyebrow_en
+    camps_giornata_titolo_en
+    camps_settimanale_eyebrow_en
+    camps_settimanale_titolo_en
+    camps_cosa_portare_titolo_en
+    camps_cosa_portare_en
+    camps_obbligatorio_en
+    camps_kit_benvenuto_en
+    camps_quote_eyebrow_en
+    camps_quote_titolo_en
+    camps_quote_note_en
+    camps_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineScuola_tennis {
     title
@@ -3461,6 +4241,25 @@ export const PaginePartsFragmentDoc = gql`
       testo_en
     }
     scuola_sezione4_footer_testo
+    scuola_sezione5_eyebrow
+    scuola_sezione5_titolo
+    scuola_sezione5_titolo_accent
+    scuola_sezione5_testo
+    scuola_sezione5_info_rapide {
+      __typename
+      label
+      valore
+      label_en
+      valore_en
+    }
+    scuola_sezione5_quote_righe {
+      __typename
+      categoria
+      prezzo
+      categoria_en
+    }
+    scuola_sezione5_note
+    scuola_sezione5_cta_label
     scuola_sezione1_eyebrow_en
     scuola_sezione1_titolo_en
     scuola_sezione1_titolo_accent_en
@@ -3483,6 +4282,19 @@ export const PaginePartsFragmentDoc = gql`
     scuola_sezione4_titolo_en
     scuola_sezione4_titolo_accent_en
     scuola_sezione4_footer_testo_en
+    scuola_sezione5_eyebrow_en
+    scuola_sezione5_titolo_en
+    scuola_sezione5_titolo_accent_en
+    scuola_sezione5_testo_en
+    scuola_sezione5_note_en
+    scuola_sezione5_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PaginePersonal_trainer {
     title
@@ -3552,6 +4364,13 @@ export const PaginePartsFragmentDoc = gql`
     pt_sezione4_titolo_en
     pt_sezione4_sottotitolo_en
     pt_sezione4_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PaginePreparazione_atletica {
     title
@@ -3630,6 +4449,13 @@ export const PaginePartsFragmentDoc = gql`
     prep_calendario_titolo_en
     prep_calendario_titolo_accent_en
     prep_calendario_sub_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineTennis {
     title
@@ -3685,6 +4511,54 @@ export const PaginePartsFragmentDoc = gql`
     tennis_corsi_titolo_accent_en
     tennis_corsi_intro_en
     tennis_corsi_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
+  }
+  ... on PaginePadel {
+    title
+    description
+    hero_eyebrow
+    hero_titolo
+    hero_titolo_accent
+    hero_sottotitolo
+    hero_immagine
+    hero_immagine_alt
+    title_en
+    description_en
+    hero_eyebrow_en
+    hero_titolo_en
+    hero_titolo_accent_en
+    hero_sottotitolo_en
+    hero_immagine_alt_en
+    padel_corsi_eyebrow
+    padel_corsi_titolo
+    padel_corsi_titolo_accent
+    padel_corsi_intro
+    padel_corsi_livelli {
+      __typename
+      titolo
+      testo
+      titolo_en
+      testo_en
+    }
+    padel_corsi_cta_label
+    padel_corsi_eyebrow_en
+    padel_corsi_titolo_en
+    padel_corsi_titolo_accent_en
+    padel_corsi_intro_en
+    padel_corsi_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineAgonistica {
     title
@@ -3702,6 +4576,36 @@ export const PaginePartsFragmentDoc = gql`
     hero_titolo_accent_en
     hero_sottotitolo_en
     hero_immagine_alt_en
+    agonistica_metodo_eyebrow
+    agonistica_metodo_titolo
+    agonistica_metodo_titolo_accent
+    agonistica_metodo_lead
+    agonistica_metodo_immagine1
+    agonistica_metodo_immagine1_alt
+    agonistica_metodo_immagine2
+    agonistica_metodo_immagine2_alt
+    agonistica_metodo_pillars {
+      __typename
+      titolo
+      testo
+      titolo_en
+      testo_en
+    }
+    agonistica_metodo_quote
+    agonistica_punti_chiave_titolo
+    agonistica_punti_chiave {
+      __typename
+      testo
+      testo_en
+    }
+    agonistica_metodo_eyebrow_en
+    agonistica_metodo_titolo_en
+    agonistica_metodo_titolo_accent_en
+    agonistica_metodo_lead_en
+    agonistica_metodo_immagine1_alt_en
+    agonistica_metodo_immagine2_alt_en
+    agonistica_metodo_quote_en
+    agonistica_punti_chiave_titolo_en
     agonistica_eyebrow
     agonistica_titolo
     agonistica_titolo_accent
@@ -3715,6 +4619,13 @@ export const PaginePartsFragmentDoc = gql`
     agonistica_eyebrow_en
     agonistica_titolo_en
     agonistica_titolo_accent_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineTorneo_avvenire {
     title

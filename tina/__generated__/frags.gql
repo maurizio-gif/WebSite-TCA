@@ -48,6 +48,12 @@ fragment MembershipParts on Membership {
   platinum_nome
   platinum_badge
   cta_label
+  silver_prezzo
+  gold_prezzo
+  platinum_prezzo
+  prezzo_suffisso
+  prezzo_tooltip
+  nota_finale
   categorie {
     __typename
     label
@@ -58,15 +64,21 @@ fragment MembershipParts on Membership {
       feature_tooltip
       silver_tipo
       silver_valore
+      silver_valore_tooltip
       gold_tipo
       gold_valore
+      gold_valore_tooltip
       platinum_tipo
       platinum_valore
+      platinum_valore_tooltip
       feature_en
       feature_tooltip_en
       silver_valore_en
+      silver_valore_tooltip_en
       gold_valore_en
+      gold_valore_tooltip_en
       platinum_valore_en
+      platinum_valore_tooltip_en
     }
   }
   titolo_en
@@ -74,6 +86,9 @@ fragment MembershipParts on Membership {
   sottotitolo_en
   platinum_badge_en
   cta_label_en
+  prezzo_suffisso_en
+  prezzo_tooltip_en
+  nota_finale_en
 }
 
 fragment InfoParts on Info {
@@ -145,6 +160,13 @@ fragment PagineParts on Pagine {
     hero_titolo_accent_en
     hero_sottotitolo_en
     hero_immagine_alt_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineStoria {
     title
@@ -223,13 +245,50 @@ fragment PagineParts on Pagine {
     camps_sezione2_eyebrow
     camps_sezione2_titolo
     camps_sezione2_titolo_accent
-    camps_settimane {
+    camps_info_rapide {
       __typename
-      settimana
-      date
-      settimana_en
-      date_en
+      label
+      valore
+      label_en
+      valore_en
     }
+    camps_giornata_eyebrow
+    camps_giornata_titolo
+    camps_giornata {
+      __typename
+      orario
+      titolo
+      testo
+      titolo_en
+      testo_en
+    }
+    camps_settimanale_eyebrow
+    camps_settimanale_titolo
+    camps_settimanale {
+      __typename
+      giorno
+      colpo
+      testo
+      giorno_en
+      colpo_en
+      testo_en
+    }
+    camps_cosa_portare_titolo
+    camps_cosa_portare
+    camps_obbligatorio
+    camps_kit_benvenuto
+    camps_quote_eyebrow
+    camps_quote_titolo
+    camps_quote_righe {
+      __typename
+      categoria
+      prezzo_settimana
+      prezzo_dal2
+      prezzo_fratelli
+      categoria_en
+    }
+    camps_quote_note
+    camps_cta_label
     camps_sezione1_eyebrow_en
     camps_sezione1_titolo_en
     camps_sezione1_titolo_accent_en
@@ -238,6 +297,25 @@ fragment PagineParts on Pagine {
     camps_sezione2_eyebrow_en
     camps_sezione2_titolo_en
     camps_sezione2_titolo_accent_en
+    camps_giornata_eyebrow_en
+    camps_giornata_titolo_en
+    camps_settimanale_eyebrow_en
+    camps_settimanale_titolo_en
+    camps_cosa_portare_titolo_en
+    camps_cosa_portare_en
+    camps_obbligatorio_en
+    camps_kit_benvenuto_en
+    camps_quote_eyebrow_en
+    camps_quote_titolo_en
+    camps_quote_note_en
+    camps_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineScuola_tennis {
     title
@@ -308,6 +386,25 @@ fragment PagineParts on Pagine {
       testo_en
     }
     scuola_sezione4_footer_testo
+    scuola_sezione5_eyebrow
+    scuola_sezione5_titolo
+    scuola_sezione5_titolo_accent
+    scuola_sezione5_testo
+    scuola_sezione5_info_rapide {
+      __typename
+      label
+      valore
+      label_en
+      valore_en
+    }
+    scuola_sezione5_quote_righe {
+      __typename
+      categoria
+      prezzo
+      categoria_en
+    }
+    scuola_sezione5_note
+    scuola_sezione5_cta_label
     scuola_sezione1_eyebrow_en
     scuola_sezione1_titolo_en
     scuola_sezione1_titolo_accent_en
@@ -330,6 +427,19 @@ fragment PagineParts on Pagine {
     scuola_sezione4_titolo_en
     scuola_sezione4_titolo_accent_en
     scuola_sezione4_footer_testo_en
+    scuola_sezione5_eyebrow_en
+    scuola_sezione5_titolo_en
+    scuola_sezione5_titolo_accent_en
+    scuola_sezione5_testo_en
+    scuola_sezione5_note_en
+    scuola_sezione5_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PaginePersonal_trainer {
     title
@@ -399,6 +509,13 @@ fragment PagineParts on Pagine {
     pt_sezione4_titolo_en
     pt_sezione4_sottotitolo_en
     pt_sezione4_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PaginePreparazione_atletica {
     title
@@ -477,6 +594,13 @@ fragment PagineParts on Pagine {
     prep_calendario_titolo_en
     prep_calendario_titolo_accent_en
     prep_calendario_sub_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineTennis {
     title
@@ -532,6 +656,54 @@ fragment PagineParts on Pagine {
     tennis_corsi_titolo_accent_en
     tennis_corsi_intro_en
     tennis_corsi_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
+  }
+  ... on PaginePadel {
+    title
+    description
+    hero_eyebrow
+    hero_titolo
+    hero_titolo_accent
+    hero_sottotitolo
+    hero_immagine
+    hero_immagine_alt
+    title_en
+    description_en
+    hero_eyebrow_en
+    hero_titolo_en
+    hero_titolo_accent_en
+    hero_sottotitolo_en
+    hero_immagine_alt_en
+    padel_corsi_eyebrow
+    padel_corsi_titolo
+    padel_corsi_titolo_accent
+    padel_corsi_intro
+    padel_corsi_livelli {
+      __typename
+      titolo
+      testo
+      titolo_en
+      testo_en
+    }
+    padel_corsi_cta_label
+    padel_corsi_eyebrow_en
+    padel_corsi_titolo_en
+    padel_corsi_titolo_accent_en
+    padel_corsi_intro_en
+    padel_corsi_cta_label_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineAgonistica {
     title
@@ -549,6 +721,36 @@ fragment PagineParts on Pagine {
     hero_titolo_accent_en
     hero_sottotitolo_en
     hero_immagine_alt_en
+    agonistica_metodo_eyebrow
+    agonistica_metodo_titolo
+    agonistica_metodo_titolo_accent
+    agonistica_metodo_lead
+    agonistica_metodo_immagine1
+    agonistica_metodo_immagine1_alt
+    agonistica_metodo_immagine2
+    agonistica_metodo_immagine2_alt
+    agonistica_metodo_pillars {
+      __typename
+      titolo
+      testo
+      titolo_en
+      testo_en
+    }
+    agonistica_metodo_quote
+    agonistica_punti_chiave_titolo
+    agonistica_punti_chiave {
+      __typename
+      testo
+      testo_en
+    }
+    agonistica_metodo_eyebrow_en
+    agonistica_metodo_titolo_en
+    agonistica_metodo_titolo_accent_en
+    agonistica_metodo_lead_en
+    agonistica_metodo_immagine1_alt_en
+    agonistica_metodo_immagine2_alt_en
+    agonistica_metodo_quote_en
+    agonistica_punti_chiave_titolo_en
     agonistica_eyebrow
     agonistica_titolo
     agonistica_titolo_accent
@@ -562,6 +764,13 @@ fragment PagineParts on Pagine {
     agonistica_eyebrow_en
     agonistica_titolo_en
     agonistica_titolo_accent_en
+    faq {
+      __typename
+      domanda
+      risposta
+      domanda_en
+      risposta_en
+    }
   }
   ... on PagineTorneo_avvenire {
     title

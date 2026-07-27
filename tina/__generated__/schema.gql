@@ -109,7 +109,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder
+union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -270,15 +270,21 @@ type MembershipCategorieRighe {
   feature_tooltip: String
   silver_tipo: String!
   silver_valore: String
+  silver_valore_tooltip: String
   gold_tipo: String!
   gold_valore: String
+  gold_valore_tooltip: String
   platinum_tipo: String!
   platinum_valore: String
+  platinum_valore_tooltip: String
   feature_en: String
   feature_tooltip_en: String
   silver_valore_en: String
+  silver_valore_tooltip_en: String
   gold_valore_en: String
+  gold_valore_tooltip_en: String
   platinum_valore_en: String
+  platinum_valore_tooltip_en: String
 }
 
 type MembershipCategorie {
@@ -296,12 +302,21 @@ type Membership implements Node & Document {
   platinum_nome: String!
   platinum_badge: String!
   cta_label: String!
+  silver_prezzo: String
+  gold_prezzo: String
+  platinum_prezzo: String
+  prezzo_suffisso: String
+  prezzo_tooltip: String
+  nota_finale: String
   categorie: [MembershipCategorie!]!
   titolo_en: String
   titolo_accent_en: String
   sottotitolo_en: String
   platinum_badge_en: String
   cta_label_en: String
+  prezzo_suffisso_en: String
+  prezzo_tooltip_en: String
+  nota_finale_en: String
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -312,15 +327,21 @@ input MembershipCategorieRigheFilter {
   feature_tooltip: StringFilter
   silver_tipo: StringFilter
   silver_valore: StringFilter
+  silver_valore_tooltip: StringFilter
   gold_tipo: StringFilter
   gold_valore: StringFilter
+  gold_valore_tooltip: StringFilter
   platinum_tipo: StringFilter
   platinum_valore: StringFilter
+  platinum_valore_tooltip: StringFilter
   feature_en: StringFilter
   feature_tooltip_en: StringFilter
   silver_valore_en: StringFilter
+  silver_valore_tooltip_en: StringFilter
   gold_valore_en: StringFilter
+  gold_valore_tooltip_en: StringFilter
   platinum_valore_en: StringFilter
+  platinum_valore_tooltip_en: StringFilter
 }
 
 input MembershipCategorieFilter {
@@ -338,12 +359,21 @@ input MembershipFilter {
   platinum_nome: StringFilter
   platinum_badge: StringFilter
   cta_label: StringFilter
+  silver_prezzo: StringFilter
+  gold_prezzo: StringFilter
+  platinum_prezzo: StringFilter
+  prezzo_suffisso: StringFilter
+  prezzo_tooltip: StringFilter
+  nota_finale: StringFilter
   categorie: MembershipCategorieFilter
   titolo_en: StringFilter
   titolo_accent_en: StringFilter
   sottotitolo_en: StringFilter
   platinum_badge_en: StringFilter
   cta_label_en: StringFilter
+  prezzo_suffisso_en: StringFilter
+  prezzo_tooltip_en: StringFilter
+  nota_finale_en: StringFilter
 }
 
 type MembershipConnectionEdges {
@@ -514,6 +544,13 @@ type NewsConnection implements Connection {
   edges: [NewsConnectionEdges]
 }
 
+type PagineGenericaFaq {
+  domanda: String!
+  risposta: String!
+  domanda_en: String
+  risposta_en: String
+}
+
 type PagineGenerica implements Node & Document {
   title: String!
   description: String!
@@ -530,6 +567,7 @@ type PagineGenerica implements Node & Document {
   hero_titolo_accent_en: String
   hero_sottotitolo_en: String
   hero_immagine_alt_en: String
+  faq: [PagineGenericaFaq]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -592,11 +630,43 @@ type PagineSummer_campsCamps_features {
   testo_en: String
 }
 
-type PagineSummer_campsCamps_settimane {
-  settimana: String!
-  date: String!
-  settimana_en: String
-  date_en: String
+type PagineSummer_campsCamps_info_rapide {
+  label: String!
+  valore: String!
+  label_en: String
+  valore_en: String
+}
+
+type PagineSummer_campsCamps_giornata {
+  orario: String!
+  titolo: String!
+  testo: String!
+  titolo_en: String
+  testo_en: String
+}
+
+type PagineSummer_campsCamps_settimanale {
+  giorno: String!
+  colpo: String!
+  testo: String!
+  giorno_en: String
+  colpo_en: String
+  testo_en: String
+}
+
+type PagineSummer_campsCamps_quote_righe {
+  categoria: String!
+  prezzo_settimana: String!
+  prezzo_dal2: String!
+  prezzo_fratelli: String!
+  categoria_en: String
+}
+
+type PagineSummer_campsFaq {
+  domanda: String!
+  risposta: String!
+  domanda_en: String
+  risposta_en: String
 }
 
 type PagineSummer_camps implements Node & Document {
@@ -626,7 +696,22 @@ type PagineSummer_camps implements Node & Document {
   camps_sezione2_eyebrow: String!
   camps_sezione2_titolo: String!
   camps_sezione2_titolo_accent: String!
-  camps_settimane: [PagineSummer_campsCamps_settimane!]!
+  camps_info_rapide: [PagineSummer_campsCamps_info_rapide!]!
+  camps_giornata_eyebrow: String!
+  camps_giornata_titolo: String!
+  camps_giornata: [PagineSummer_campsCamps_giornata!]!
+  camps_settimanale_eyebrow: String!
+  camps_settimanale_titolo: String!
+  camps_settimanale: [PagineSummer_campsCamps_settimanale!]!
+  camps_cosa_portare_titolo: String!
+  camps_cosa_portare: [String!]!
+  camps_obbligatorio: String!
+  camps_kit_benvenuto: String!
+  camps_quote_eyebrow: String!
+  camps_quote_titolo: String!
+  camps_quote_righe: [PagineSummer_campsCamps_quote_righe!]!
+  camps_quote_note: [String!]!
+  camps_cta_label: String!
   camps_sezione1_eyebrow_en: String
   camps_sezione1_titolo_en: String
   camps_sezione1_titolo_accent_en: String
@@ -635,6 +720,19 @@ type PagineSummer_camps implements Node & Document {
   camps_sezione2_eyebrow_en: String
   camps_sezione2_titolo_en: String
   camps_sezione2_titolo_accent_en: String
+  camps_giornata_eyebrow_en: String
+  camps_giornata_titolo_en: String
+  camps_settimanale_eyebrow_en: String
+  camps_settimanale_titolo_en: String
+  camps_cosa_portare_titolo_en: String
+  camps_cosa_portare_en: [String]
+  camps_obbligatorio_en: String
+  camps_kit_benvenuto_en: String
+  camps_quote_eyebrow_en: String
+  camps_quote_titolo_en: String
+  camps_quote_note_en: [String]
+  camps_cta_label_en: String
+  faq: [PagineSummer_campsFaq]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -668,6 +766,26 @@ type PagineScuola_tennisScuola_tornei {
   quando_en: String
   nome_en: String
   testo_en: String
+}
+
+type PagineScuola_tennisScuola_sezione5_info_rapide {
+  label: String!
+  valore: String!
+  label_en: String
+  valore_en: String
+}
+
+type PagineScuola_tennisScuola_sezione5_quote_righe {
+  categoria: String!
+  prezzo: String!
+  categoria_en: String
+}
+
+type PagineScuola_tennisFaq {
+  domanda: String!
+  risposta: String!
+  domanda_en: String
+  risposta_en: String
 }
 
 type PagineScuola_tennis implements Node & Document {
@@ -712,6 +830,14 @@ type PagineScuola_tennis implements Node & Document {
   scuola_sezione4_titolo_accent: String!
   scuola_tornei: [PagineScuola_tennisScuola_tornei!]!
   scuola_sezione4_footer_testo: String!
+  scuola_sezione5_eyebrow: String!
+  scuola_sezione5_titolo: String!
+  scuola_sezione5_titolo_accent: String!
+  scuola_sezione5_testo: String!
+  scuola_sezione5_info_rapide: [PagineScuola_tennisScuola_sezione5_info_rapide!]!
+  scuola_sezione5_quote_righe: [PagineScuola_tennisScuola_sezione5_quote_righe!]!
+  scuola_sezione5_note: [String!]!
+  scuola_sezione5_cta_label: String!
   scuola_sezione1_eyebrow_en: String
   scuola_sezione1_titolo_en: String
   scuola_sezione1_titolo_accent_en: String
@@ -734,6 +860,13 @@ type PagineScuola_tennis implements Node & Document {
   scuola_sezione4_titolo_en: String
   scuola_sezione4_titolo_accent_en: String
   scuola_sezione4_footer_testo_en: String
+  scuola_sezione5_eyebrow_en: String
+  scuola_sezione5_titolo_en: String
+  scuola_sezione5_titolo_accent_en: String
+  scuola_sezione5_testo_en: String
+  scuola_sezione5_note_en: [String]
+  scuola_sezione5_cta_label_en: String
+  faq: [PagineScuola_tennisFaq]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -761,6 +894,13 @@ type PaginePersonal_trainerPt_steps {
   testo: String!
   titolo_en: String
   testo_en: String
+}
+
+type PaginePersonal_trainerFaq {
+  domanda: String!
+  risposta: String!
+  domanda_en: String
+  risposta_en: String
 }
 
 type PaginePersonal_trainer implements Node & Document {
@@ -810,6 +950,7 @@ type PaginePersonal_trainer implements Node & Document {
   pt_sezione4_titolo_en: String
   pt_sezione4_sottotitolo_en: String
   pt_sezione4_cta_label_en: String
+  faq: [PaginePersonal_trainerFaq]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -847,6 +988,13 @@ type PaginePreparazione_atleticaPrep_categorie {
   color: String!
   desc_en: String
   corsi: [PaginePreparazione_atleticaPrep_categorieCorsi!]!
+}
+
+type PaginePreparazione_atleticaFaq {
+  domanda: String!
+  risposta: String!
+  domanda_en: String
+  risposta_en: String
 }
 
 type PaginePreparazione_atletica implements Node & Document {
@@ -896,6 +1044,7 @@ type PaginePreparazione_atletica implements Node & Document {
   prep_calendario_titolo_en: String
   prep_calendario_titolo_accent_en: String
   prep_calendario_sub_en: String
+  faq: [PaginePreparazione_atleticaFaq]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -913,6 +1062,13 @@ type PagineTennisTennis_corsi_livelli {
   testo: String!
   titolo_en: String
   testo_en: String
+}
+
+type PagineTennisFaq {
+  domanda: String!
+  risposta: String!
+  domanda_en: String
+  risposta_en: String
 }
 
 type PagineTennis implements Node & Document {
@@ -957,9 +1113,69 @@ type PagineTennis implements Node & Document {
   tennis_corsi_titolo_accent_en: String
   tennis_corsi_intro_en: String
   tennis_corsi_cta_label_en: String
+  faq: [PagineTennisFaq]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
+}
+
+type PaginePadelPadel_corsi_livelli {
+  titolo: String!
+  testo: String!
+  titolo_en: String
+  testo_en: String
+}
+
+type PaginePadelFaq {
+  domanda: String!
+  risposta: String!
+  domanda_en: String
+  risposta_en: String
+}
+
+type PaginePadel implements Node & Document {
+  title: String!
+  description: String!
+  hero_eyebrow: String
+  hero_titolo: String
+  hero_titolo_accent: String
+  hero_sottotitolo: String
+  hero_immagine: String
+  hero_immagine_alt: String
+  title_en: String
+  description_en: String
+  hero_eyebrow_en: String
+  hero_titolo_en: String
+  hero_titolo_accent_en: String
+  hero_sottotitolo_en: String
+  hero_immagine_alt_en: String
+  padel_corsi_eyebrow: String!
+  padel_corsi_titolo: String!
+  padel_corsi_titolo_accent: String!
+  padel_corsi_intro: String!
+  padel_corsi_livelli: [PaginePadelPadel_corsi_livelli!]!
+  padel_corsi_cta_label: String!
+  padel_corsi_eyebrow_en: String
+  padel_corsi_titolo_en: String
+  padel_corsi_titolo_accent_en: String
+  padel_corsi_intro_en: String
+  padel_corsi_cta_label_en: String
+  faq: [PaginePadelFaq]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+type PagineAgonisticaAgonistica_metodo_pillars {
+  titolo: String!
+  testo: String!
+  titolo_en: String
+  testo_en: String
+}
+
+type PagineAgonisticaAgonistica_punti_chiave {
+  testo: String!
+  testo_en: String
 }
 
 type PagineAgonisticaAgonistica_step {
@@ -967,6 +1183,13 @@ type PagineAgonisticaAgonistica_step {
   testo: String!
   titolo_en: String
   testo_en: String
+}
+
+type PagineAgonisticaFaq {
+  domanda: String!
+  risposta: String!
+  domanda_en: String
+  risposta_en: String
 }
 
 type PagineAgonistica implements Node & Document {
@@ -985,6 +1208,26 @@ type PagineAgonistica implements Node & Document {
   hero_titolo_accent_en: String
   hero_sottotitolo_en: String
   hero_immagine_alt_en: String
+  agonistica_metodo_eyebrow: String
+  agonistica_metodo_titolo: String
+  agonistica_metodo_titolo_accent: String
+  agonistica_metodo_lead: String
+  agonistica_metodo_immagine1: String
+  agonistica_metodo_immagine1_alt: String
+  agonistica_metodo_immagine2: String
+  agonistica_metodo_immagine2_alt: String
+  agonistica_metodo_pillars: [PagineAgonisticaAgonistica_metodo_pillars]
+  agonistica_metodo_quote: String
+  agonistica_punti_chiave_titolo: String
+  agonistica_punti_chiave: [PagineAgonisticaAgonistica_punti_chiave]
+  agonistica_metodo_eyebrow_en: String
+  agonistica_metodo_titolo_en: String
+  agonistica_metodo_titolo_accent_en: String
+  agonistica_metodo_lead_en: String
+  agonistica_metodo_immagine1_alt_en: String
+  agonistica_metodo_immagine2_alt_en: String
+  agonistica_metodo_quote_en: String
+  agonistica_punti_chiave_titolo_en: String
   agonistica_eyebrow: String!
   agonistica_titolo: String!
   agonistica_titolo_accent: String!
@@ -992,6 +1235,7 @@ type PagineAgonistica implements Node & Document {
   agonistica_eyebrow_en: String
   agonistica_titolo_en: String
   agonistica_titolo_accent_en: String
+  faq: [PagineAgonisticaFaq]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -1137,7 +1381,14 @@ type PaginePartners implements Node & Document {
   _values: JSON!
 }
 
-union Pagine = PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners
+union Pagine = PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners
+
+input PagineGenericaFaqFilter {
+  domanda: StringFilter
+  risposta: StringFilter
+  domanda_en: StringFilter
+  risposta_en: StringFilter
+}
 
 input PagineGenericaFilter {
   title: StringFilter
@@ -1155,6 +1406,7 @@ input PagineGenericaFilter {
   hero_titolo_accent_en: StringFilter
   hero_sottotitolo_en: StringFilter
   hero_immagine_alt_en: StringFilter
+  faq: PagineGenericaFaqFilter
 }
 
 input PagineStoriaStoria_timelineFilter {
@@ -1211,11 +1463,43 @@ input PagineSummer_campsCamps_featuresFilter {
   testo_en: StringFilter
 }
 
-input PagineSummer_campsCamps_settimaneFilter {
-  settimana: StringFilter
-  date: StringFilter
-  settimana_en: StringFilter
-  date_en: StringFilter
+input PagineSummer_campsCamps_info_rapideFilter {
+  label: StringFilter
+  valore: StringFilter
+  label_en: StringFilter
+  valore_en: StringFilter
+}
+
+input PagineSummer_campsCamps_giornataFilter {
+  orario: StringFilter
+  titolo: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input PagineSummer_campsCamps_settimanaleFilter {
+  giorno: StringFilter
+  colpo: StringFilter
+  testo: StringFilter
+  giorno_en: StringFilter
+  colpo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input PagineSummer_campsCamps_quote_righeFilter {
+  categoria: StringFilter
+  prezzo_settimana: StringFilter
+  prezzo_dal2: StringFilter
+  prezzo_fratelli: StringFilter
+  categoria_en: StringFilter
+}
+
+input PagineSummer_campsFaqFilter {
+  domanda: StringFilter
+  risposta: StringFilter
+  domanda_en: StringFilter
+  risposta_en: StringFilter
 }
 
 input PagineSummer_campsFilter {
@@ -1245,7 +1529,22 @@ input PagineSummer_campsFilter {
   camps_sezione2_eyebrow: StringFilter
   camps_sezione2_titolo: StringFilter
   camps_sezione2_titolo_accent: StringFilter
-  camps_settimane: PagineSummer_campsCamps_settimaneFilter
+  camps_info_rapide: PagineSummer_campsCamps_info_rapideFilter
+  camps_giornata_eyebrow: StringFilter
+  camps_giornata_titolo: StringFilter
+  camps_giornata: PagineSummer_campsCamps_giornataFilter
+  camps_settimanale_eyebrow: StringFilter
+  camps_settimanale_titolo: StringFilter
+  camps_settimanale: PagineSummer_campsCamps_settimanaleFilter
+  camps_cosa_portare_titolo: StringFilter
+  camps_cosa_portare: StringFilter
+  camps_obbligatorio: StringFilter
+  camps_kit_benvenuto: StringFilter
+  camps_quote_eyebrow: StringFilter
+  camps_quote_titolo: StringFilter
+  camps_quote_righe: PagineSummer_campsCamps_quote_righeFilter
+  camps_quote_note: StringFilter
+  camps_cta_label: StringFilter
   camps_sezione1_eyebrow_en: StringFilter
   camps_sezione1_titolo_en: StringFilter
   camps_sezione1_titolo_accent_en: StringFilter
@@ -1254,6 +1553,19 @@ input PagineSummer_campsFilter {
   camps_sezione2_eyebrow_en: StringFilter
   camps_sezione2_titolo_en: StringFilter
   camps_sezione2_titolo_accent_en: StringFilter
+  camps_giornata_eyebrow_en: StringFilter
+  camps_giornata_titolo_en: StringFilter
+  camps_settimanale_eyebrow_en: StringFilter
+  camps_settimanale_titolo_en: StringFilter
+  camps_cosa_portare_titolo_en: StringFilter
+  camps_cosa_portare_en: StringFilter
+  camps_obbligatorio_en: StringFilter
+  camps_kit_benvenuto_en: StringFilter
+  camps_quote_eyebrow_en: StringFilter
+  camps_quote_titolo_en: StringFilter
+  camps_quote_note_en: StringFilter
+  camps_cta_label_en: StringFilter
+  faq: PagineSummer_campsFaqFilter
 }
 
 input PagineScuola_tennisScuola_livelliFilter {
@@ -1284,6 +1596,26 @@ input PagineScuola_tennisScuola_torneiFilter {
   quando_en: StringFilter
   nome_en: StringFilter
   testo_en: StringFilter
+}
+
+input PagineScuola_tennisScuola_sezione5_info_rapideFilter {
+  label: StringFilter
+  valore: StringFilter
+  label_en: StringFilter
+  valore_en: StringFilter
+}
+
+input PagineScuola_tennisScuola_sezione5_quote_righeFilter {
+  categoria: StringFilter
+  prezzo: StringFilter
+  categoria_en: StringFilter
+}
+
+input PagineScuola_tennisFaqFilter {
+  domanda: StringFilter
+  risposta: StringFilter
+  domanda_en: StringFilter
+  risposta_en: StringFilter
 }
 
 input PagineScuola_tennisFilter {
@@ -1328,6 +1660,14 @@ input PagineScuola_tennisFilter {
   scuola_sezione4_titolo_accent: StringFilter
   scuola_tornei: PagineScuola_tennisScuola_torneiFilter
   scuola_sezione4_footer_testo: StringFilter
+  scuola_sezione5_eyebrow: StringFilter
+  scuola_sezione5_titolo: StringFilter
+  scuola_sezione5_titolo_accent: StringFilter
+  scuola_sezione5_testo: StringFilter
+  scuola_sezione5_info_rapide: PagineScuola_tennisScuola_sezione5_info_rapideFilter
+  scuola_sezione5_quote_righe: PagineScuola_tennisScuola_sezione5_quote_righeFilter
+  scuola_sezione5_note: StringFilter
+  scuola_sezione5_cta_label: StringFilter
   scuola_sezione1_eyebrow_en: StringFilter
   scuola_sezione1_titolo_en: StringFilter
   scuola_sezione1_titolo_accent_en: StringFilter
@@ -1350,6 +1690,13 @@ input PagineScuola_tennisFilter {
   scuola_sezione4_titolo_en: StringFilter
   scuola_sezione4_titolo_accent_en: StringFilter
   scuola_sezione4_footer_testo_en: StringFilter
+  scuola_sezione5_eyebrow_en: StringFilter
+  scuola_sezione5_titolo_en: StringFilter
+  scuola_sezione5_titolo_accent_en: StringFilter
+  scuola_sezione5_testo_en: StringFilter
+  scuola_sezione5_note_en: StringFilter
+  scuola_sezione5_cta_label_en: StringFilter
+  faq: PagineScuola_tennisFaqFilter
 }
 
 input PaginePersonal_trainerPt_statsFilter {
@@ -1374,6 +1721,13 @@ input PaginePersonal_trainerPt_stepsFilter {
   testo: StringFilter
   titolo_en: StringFilter
   testo_en: StringFilter
+}
+
+input PaginePersonal_trainerFaqFilter {
+  domanda: StringFilter
+  risposta: StringFilter
+  domanda_en: StringFilter
+  risposta_en: StringFilter
 }
 
 input PaginePersonal_trainerFilter {
@@ -1423,6 +1777,7 @@ input PaginePersonal_trainerFilter {
   pt_sezione4_titolo_en: StringFilter
   pt_sezione4_sottotitolo_en: StringFilter
   pt_sezione4_cta_label_en: StringFilter
+  faq: PaginePersonal_trainerFaqFilter
 }
 
 input PaginePreparazione_atleticaPrep_sala_slideshowFilter {
@@ -1457,6 +1812,13 @@ input PaginePreparazione_atleticaPrep_categorieFilter {
   color: StringFilter
   desc_en: StringFilter
   corsi: PaginePreparazione_atleticaPrep_categorieCorsiFilter
+}
+
+input PaginePreparazione_atleticaFaqFilter {
+  domanda: StringFilter
+  risposta: StringFilter
+  domanda_en: StringFilter
+  risposta_en: StringFilter
 }
 
 input PaginePreparazione_atleticaFilter {
@@ -1506,6 +1868,7 @@ input PaginePreparazione_atleticaFilter {
   prep_calendario_titolo_en: StringFilter
   prep_calendario_titolo_accent_en: StringFilter
   prep_calendario_sub_en: StringFilter
+  faq: PaginePreparazione_atleticaFaqFilter
 }
 
 input PagineTennisTennis_campiFilter {
@@ -1520,6 +1883,13 @@ input PagineTennisTennis_corsi_livelliFilter {
   testo: StringFilter
   titolo_en: StringFilter
   testo_en: StringFilter
+}
+
+input PagineTennisFaqFilter {
+  domanda: StringFilter
+  risposta: StringFilter
+  domanda_en: StringFilter
+  risposta_en: StringFilter
 }
 
 input PagineTennisFilter {
@@ -1564,6 +1934,63 @@ input PagineTennisFilter {
   tennis_corsi_titolo_accent_en: StringFilter
   tennis_corsi_intro_en: StringFilter
   tennis_corsi_cta_label_en: StringFilter
+  faq: PagineTennisFaqFilter
+}
+
+input PaginePadelPadel_corsi_livelliFilter {
+  titolo: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input PaginePadelFaqFilter {
+  domanda: StringFilter
+  risposta: StringFilter
+  domanda_en: StringFilter
+  risposta_en: StringFilter
+}
+
+input PaginePadelFilter {
+  title: StringFilter
+  description: StringFilter
+  hero_eyebrow: StringFilter
+  hero_titolo: StringFilter
+  hero_titolo_accent: StringFilter
+  hero_sottotitolo: StringFilter
+  hero_immagine: StringFilter
+  hero_immagine_alt: StringFilter
+  title_en: StringFilter
+  description_en: StringFilter
+  hero_eyebrow_en: StringFilter
+  hero_titolo_en: StringFilter
+  hero_titolo_accent_en: StringFilter
+  hero_sottotitolo_en: StringFilter
+  hero_immagine_alt_en: StringFilter
+  padel_corsi_eyebrow: StringFilter
+  padel_corsi_titolo: StringFilter
+  padel_corsi_titolo_accent: StringFilter
+  padel_corsi_intro: StringFilter
+  padel_corsi_livelli: PaginePadelPadel_corsi_livelliFilter
+  padel_corsi_cta_label: StringFilter
+  padel_corsi_eyebrow_en: StringFilter
+  padel_corsi_titolo_en: StringFilter
+  padel_corsi_titolo_accent_en: StringFilter
+  padel_corsi_intro_en: StringFilter
+  padel_corsi_cta_label_en: StringFilter
+  faq: PaginePadelFaqFilter
+}
+
+input PagineAgonisticaAgonistica_metodo_pillarsFilter {
+  titolo: StringFilter
+  testo: StringFilter
+  titolo_en: StringFilter
+  testo_en: StringFilter
+}
+
+input PagineAgonisticaAgonistica_punti_chiaveFilter {
+  testo: StringFilter
+  testo_en: StringFilter
 }
 
 input PagineAgonisticaAgonistica_stepFilter {
@@ -1571,6 +1998,13 @@ input PagineAgonisticaAgonistica_stepFilter {
   testo: StringFilter
   titolo_en: StringFilter
   testo_en: StringFilter
+}
+
+input PagineAgonisticaFaqFilter {
+  domanda: StringFilter
+  risposta: StringFilter
+  domanda_en: StringFilter
+  risposta_en: StringFilter
 }
 
 input PagineAgonisticaFilter {
@@ -1589,6 +2023,26 @@ input PagineAgonisticaFilter {
   hero_titolo_accent_en: StringFilter
   hero_sottotitolo_en: StringFilter
   hero_immagine_alt_en: StringFilter
+  agonistica_metodo_eyebrow: StringFilter
+  agonistica_metodo_titolo: StringFilter
+  agonistica_metodo_titolo_accent: StringFilter
+  agonistica_metodo_lead: StringFilter
+  agonistica_metodo_immagine1: ImageFilter
+  agonistica_metodo_immagine1_alt: StringFilter
+  agonistica_metodo_immagine2: ImageFilter
+  agonistica_metodo_immagine2_alt: StringFilter
+  agonistica_metodo_pillars: PagineAgonisticaAgonistica_metodo_pillarsFilter
+  agonistica_metodo_quote: StringFilter
+  agonistica_punti_chiave_titolo: StringFilter
+  agonistica_punti_chiave: PagineAgonisticaAgonistica_punti_chiaveFilter
+  agonistica_metodo_eyebrow_en: StringFilter
+  agonistica_metodo_titolo_en: StringFilter
+  agonistica_metodo_titolo_accent_en: StringFilter
+  agonistica_metodo_lead_en: StringFilter
+  agonistica_metodo_immagine1_alt_en: StringFilter
+  agonistica_metodo_immagine2_alt_en: StringFilter
+  agonistica_metodo_quote_en: StringFilter
+  agonistica_punti_chiave_titolo_en: StringFilter
   agonistica_eyebrow: StringFilter
   agonistica_titolo: StringFilter
   agonistica_titolo_accent: StringFilter
@@ -1596,6 +2050,7 @@ input PagineAgonisticaFilter {
   agonistica_eyebrow_en: StringFilter
   agonistica_titolo_en: StringFilter
   agonistica_titolo_accent_en: StringFilter
+  faq: PagineAgonisticaFaqFilter
 }
 
 input PagineTorneo_avvenireTorneo_statsFilter {
@@ -1734,6 +2189,7 @@ input PagineFilter {
   personal_trainer: PaginePersonal_trainerFilter
   preparazione_atletica: PaginePreparazione_atleticaFilter
   tennis: PagineTennisFilter
+  padel: PaginePadelFilter
   agonistica: PagineAgonisticaFilter
   torneo_avvenire: PagineTorneo_avvenireFilter
   regolamento: PagineRegolamentoFilter
@@ -1846,15 +2302,21 @@ input MembershipCategorieRigheMutation {
   feature_tooltip: String
   silver_tipo: String
   silver_valore: String
+  silver_valore_tooltip: String
   gold_tipo: String
   gold_valore: String
+  gold_valore_tooltip: String
   platinum_tipo: String
   platinum_valore: String
+  platinum_valore_tooltip: String
   feature_en: String
   feature_tooltip_en: String
   silver_valore_en: String
+  silver_valore_tooltip_en: String
   gold_valore_en: String
+  gold_valore_tooltip_en: String
   platinum_valore_en: String
+  platinum_valore_tooltip_en: String
 }
 
 input MembershipCategorieMutation {
@@ -1872,12 +2334,21 @@ input MembershipMutation {
   platinum_nome: String
   platinum_badge: String
   cta_label: String
+  silver_prezzo: String
+  gold_prezzo: String
+  platinum_prezzo: String
+  prezzo_suffisso: String
+  prezzo_tooltip: String
+  nota_finale: String
   categorie: [MembershipCategorieMutation]
   titolo_en: String
   titolo_accent_en: String
   sottotitolo_en: String
   platinum_badge_en: String
   cta_label_en: String
+  prezzo_suffisso_en: String
+  prezzo_tooltip_en: String
+  nota_finale_en: String
 }
 
 input InfoMutation {
@@ -1927,6 +2398,13 @@ input NewsMutation {
   body: JSON
 }
 
+input PagineGenericaFaqMutation {
+  domanda: String
+  risposta: String
+  domanda_en: String
+  risposta_en: String
+}
+
 input PagineGenericaMutation {
   title: String
   description: String
@@ -1943,6 +2421,7 @@ input PagineGenericaMutation {
   hero_titolo_accent_en: String
   hero_sottotitolo_en: String
   hero_immagine_alt_en: String
+  faq: [PagineGenericaFaqMutation]
 }
 
 input PagineStoriaStoria_timelineMutation {
@@ -1999,11 +2478,43 @@ input PagineSummer_campsCamps_featuresMutation {
   testo_en: String
 }
 
-input PagineSummer_campsCamps_settimaneMutation {
-  settimana: String
-  date: String
-  settimana_en: String
-  date_en: String
+input PagineSummer_campsCamps_info_rapideMutation {
+  label: String
+  valore: String
+  label_en: String
+  valore_en: String
+}
+
+input PagineSummer_campsCamps_giornataMutation {
+  orario: String
+  titolo: String
+  testo: String
+  titolo_en: String
+  testo_en: String
+}
+
+input PagineSummer_campsCamps_settimanaleMutation {
+  giorno: String
+  colpo: String
+  testo: String
+  giorno_en: String
+  colpo_en: String
+  testo_en: String
+}
+
+input PagineSummer_campsCamps_quote_righeMutation {
+  categoria: String
+  prezzo_settimana: String
+  prezzo_dal2: String
+  prezzo_fratelli: String
+  categoria_en: String
+}
+
+input PagineSummer_campsFaqMutation {
+  domanda: String
+  risposta: String
+  domanda_en: String
+  risposta_en: String
 }
 
 input PagineSummer_campsMutation {
@@ -2033,7 +2544,22 @@ input PagineSummer_campsMutation {
   camps_sezione2_eyebrow: String
   camps_sezione2_titolo: String
   camps_sezione2_titolo_accent: String
-  camps_settimane: [PagineSummer_campsCamps_settimaneMutation]
+  camps_info_rapide: [PagineSummer_campsCamps_info_rapideMutation]
+  camps_giornata_eyebrow: String
+  camps_giornata_titolo: String
+  camps_giornata: [PagineSummer_campsCamps_giornataMutation]
+  camps_settimanale_eyebrow: String
+  camps_settimanale_titolo: String
+  camps_settimanale: [PagineSummer_campsCamps_settimanaleMutation]
+  camps_cosa_portare_titolo: String
+  camps_cosa_portare: [String]
+  camps_obbligatorio: String
+  camps_kit_benvenuto: String
+  camps_quote_eyebrow: String
+  camps_quote_titolo: String
+  camps_quote_righe: [PagineSummer_campsCamps_quote_righeMutation]
+  camps_quote_note: [String]
+  camps_cta_label: String
   camps_sezione1_eyebrow_en: String
   camps_sezione1_titolo_en: String
   camps_sezione1_titolo_accent_en: String
@@ -2042,6 +2568,19 @@ input PagineSummer_campsMutation {
   camps_sezione2_eyebrow_en: String
   camps_sezione2_titolo_en: String
   camps_sezione2_titolo_accent_en: String
+  camps_giornata_eyebrow_en: String
+  camps_giornata_titolo_en: String
+  camps_settimanale_eyebrow_en: String
+  camps_settimanale_titolo_en: String
+  camps_cosa_portare_titolo_en: String
+  camps_cosa_portare_en: [String]
+  camps_obbligatorio_en: String
+  camps_kit_benvenuto_en: String
+  camps_quote_eyebrow_en: String
+  camps_quote_titolo_en: String
+  camps_quote_note_en: [String]
+  camps_cta_label_en: String
+  faq: [PagineSummer_campsFaqMutation]
 }
 
 input PagineScuola_tennisScuola_livelliMutation {
@@ -2072,6 +2611,26 @@ input PagineScuola_tennisScuola_torneiMutation {
   quando_en: String
   nome_en: String
   testo_en: String
+}
+
+input PagineScuola_tennisScuola_sezione5_info_rapideMutation {
+  label: String
+  valore: String
+  label_en: String
+  valore_en: String
+}
+
+input PagineScuola_tennisScuola_sezione5_quote_righeMutation {
+  categoria: String
+  prezzo: String
+  categoria_en: String
+}
+
+input PagineScuola_tennisFaqMutation {
+  domanda: String
+  risposta: String
+  domanda_en: String
+  risposta_en: String
 }
 
 input PagineScuola_tennisMutation {
@@ -2116,6 +2675,14 @@ input PagineScuola_tennisMutation {
   scuola_sezione4_titolo_accent: String
   scuola_tornei: [PagineScuola_tennisScuola_torneiMutation]
   scuola_sezione4_footer_testo: String
+  scuola_sezione5_eyebrow: String
+  scuola_sezione5_titolo: String
+  scuola_sezione5_titolo_accent: String
+  scuola_sezione5_testo: String
+  scuola_sezione5_info_rapide: [PagineScuola_tennisScuola_sezione5_info_rapideMutation]
+  scuola_sezione5_quote_righe: [PagineScuola_tennisScuola_sezione5_quote_righeMutation]
+  scuola_sezione5_note: [String]
+  scuola_sezione5_cta_label: String
   scuola_sezione1_eyebrow_en: String
   scuola_sezione1_titolo_en: String
   scuola_sezione1_titolo_accent_en: String
@@ -2138,6 +2705,13 @@ input PagineScuola_tennisMutation {
   scuola_sezione4_titolo_en: String
   scuola_sezione4_titolo_accent_en: String
   scuola_sezione4_footer_testo_en: String
+  scuola_sezione5_eyebrow_en: String
+  scuola_sezione5_titolo_en: String
+  scuola_sezione5_titolo_accent_en: String
+  scuola_sezione5_testo_en: String
+  scuola_sezione5_note_en: [String]
+  scuola_sezione5_cta_label_en: String
+  faq: [PagineScuola_tennisFaqMutation]
 }
 
 input PaginePersonal_trainerPt_statsMutation {
@@ -2162,6 +2736,13 @@ input PaginePersonal_trainerPt_stepsMutation {
   testo: String
   titolo_en: String
   testo_en: String
+}
+
+input PaginePersonal_trainerFaqMutation {
+  domanda: String
+  risposta: String
+  domanda_en: String
+  risposta_en: String
 }
 
 input PaginePersonal_trainerMutation {
@@ -2211,6 +2792,7 @@ input PaginePersonal_trainerMutation {
   pt_sezione4_titolo_en: String
   pt_sezione4_sottotitolo_en: String
   pt_sezione4_cta_label_en: String
+  faq: [PaginePersonal_trainerFaqMutation]
 }
 
 input PaginePreparazione_atleticaPrep_sala_slideshowMutation {
@@ -2245,6 +2827,13 @@ input PaginePreparazione_atleticaPrep_categorieMutation {
   color: String
   desc_en: String
   corsi: [PaginePreparazione_atleticaPrep_categorieCorsiMutation]
+}
+
+input PaginePreparazione_atleticaFaqMutation {
+  domanda: String
+  risposta: String
+  domanda_en: String
+  risposta_en: String
 }
 
 input PaginePreparazione_atleticaMutation {
@@ -2294,6 +2883,7 @@ input PaginePreparazione_atleticaMutation {
   prep_calendario_titolo_en: String
   prep_calendario_titolo_accent_en: String
   prep_calendario_sub_en: String
+  faq: [PaginePreparazione_atleticaFaqMutation]
 }
 
 input PagineTennisTennis_campiMutation {
@@ -2308,6 +2898,13 @@ input PagineTennisTennis_corsi_livelliMutation {
   testo: String
   titolo_en: String
   testo_en: String
+}
+
+input PagineTennisFaqMutation {
+  domanda: String
+  risposta: String
+  domanda_en: String
+  risposta_en: String
 }
 
 input PagineTennisMutation {
@@ -2352,6 +2949,63 @@ input PagineTennisMutation {
   tennis_corsi_titolo_accent_en: String
   tennis_corsi_intro_en: String
   tennis_corsi_cta_label_en: String
+  faq: [PagineTennisFaqMutation]
+}
+
+input PaginePadelPadel_corsi_livelliMutation {
+  titolo: String
+  testo: String
+  titolo_en: String
+  testo_en: String
+}
+
+input PaginePadelFaqMutation {
+  domanda: String
+  risposta: String
+  domanda_en: String
+  risposta_en: String
+}
+
+input PaginePadelMutation {
+  title: String
+  description: String
+  hero_eyebrow: String
+  hero_titolo: String
+  hero_titolo_accent: String
+  hero_sottotitolo: String
+  hero_immagine: String
+  hero_immagine_alt: String
+  title_en: String
+  description_en: String
+  hero_eyebrow_en: String
+  hero_titolo_en: String
+  hero_titolo_accent_en: String
+  hero_sottotitolo_en: String
+  hero_immagine_alt_en: String
+  padel_corsi_eyebrow: String
+  padel_corsi_titolo: String
+  padel_corsi_titolo_accent: String
+  padel_corsi_intro: String
+  padel_corsi_livelli: [PaginePadelPadel_corsi_livelliMutation]
+  padel_corsi_cta_label: String
+  padel_corsi_eyebrow_en: String
+  padel_corsi_titolo_en: String
+  padel_corsi_titolo_accent_en: String
+  padel_corsi_intro_en: String
+  padel_corsi_cta_label_en: String
+  faq: [PaginePadelFaqMutation]
+}
+
+input PagineAgonisticaAgonistica_metodo_pillarsMutation {
+  titolo: String
+  testo: String
+  titolo_en: String
+  testo_en: String
+}
+
+input PagineAgonisticaAgonistica_punti_chiaveMutation {
+  testo: String
+  testo_en: String
 }
 
 input PagineAgonisticaAgonistica_stepMutation {
@@ -2359,6 +3013,13 @@ input PagineAgonisticaAgonistica_stepMutation {
   testo: String
   titolo_en: String
   testo_en: String
+}
+
+input PagineAgonisticaFaqMutation {
+  domanda: String
+  risposta: String
+  domanda_en: String
+  risposta_en: String
 }
 
 input PagineAgonisticaMutation {
@@ -2377,6 +3038,26 @@ input PagineAgonisticaMutation {
   hero_titolo_accent_en: String
   hero_sottotitolo_en: String
   hero_immagine_alt_en: String
+  agonistica_metodo_eyebrow: String
+  agonistica_metodo_titolo: String
+  agonistica_metodo_titolo_accent: String
+  agonistica_metodo_lead: String
+  agonistica_metodo_immagine1: String
+  agonistica_metodo_immagine1_alt: String
+  agonistica_metodo_immagine2: String
+  agonistica_metodo_immagine2_alt: String
+  agonistica_metodo_pillars: [PagineAgonisticaAgonistica_metodo_pillarsMutation]
+  agonistica_metodo_quote: String
+  agonistica_punti_chiave_titolo: String
+  agonistica_punti_chiave: [PagineAgonisticaAgonistica_punti_chiaveMutation]
+  agonistica_metodo_eyebrow_en: String
+  agonistica_metodo_titolo_en: String
+  agonistica_metodo_titolo_accent_en: String
+  agonistica_metodo_lead_en: String
+  agonistica_metodo_immagine1_alt_en: String
+  agonistica_metodo_immagine2_alt_en: String
+  agonistica_metodo_quote_en: String
+  agonistica_punti_chiave_titolo_en: String
   agonistica_eyebrow: String
   agonistica_titolo: String
   agonistica_titolo_accent: String
@@ -2384,6 +3065,7 @@ input PagineAgonisticaMutation {
   agonistica_eyebrow_en: String
   agonistica_titolo_en: String
   agonistica_titolo_accent_en: String
+  faq: [PagineAgonisticaFaqMutation]
 }
 
 input PagineTorneo_avvenireTorneo_statsMutation {
@@ -2522,6 +3204,7 @@ input PagineMutation {
   personal_trainer: PaginePersonal_trainerMutation
   preparazione_atletica: PaginePreparazione_atleticaMutation
   tennis: PagineTennisMutation
+  padel: PaginePadelMutation
   agonistica: PagineAgonisticaMutation
   torneo_avvenire: PagineTorneo_avvenireMutation
   regolamento: PagineRegolamentoMutation

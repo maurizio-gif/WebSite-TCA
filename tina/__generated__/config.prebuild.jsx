@@ -89,7 +89,7 @@ var config_default = defineConfig({
           {
             type: "string",
             name: "corpo_en",
-            label: "\u{1F1EC}\u{1F1E7} Dettagli evento (inglese)",
+            label: "\u{1F1EC}\u{1F1E7} Dettagli evento (inglese) \u2014 un paragrafo per riga vuota, grassetto con **doppi asterischi**",
             ui: { component: "textarea" }
           },
           {
@@ -264,6 +264,12 @@ var config_default = defineConfig({
           { type: "string", name: "platinum_nome", label: 'Nome livello 3 (es. "Platinum")', required: true },
           { type: "string", name: "platinum_badge", label: 'Badge sul livello 3 (es. "Pi\xF9 completo")', required: true },
           { type: "string", name: "cta_label", label: "Testo pulsante (in ogni colonna)", required: true },
+          { type: "string", name: "silver_prezzo", label: 'Livello 1 \u2014 prezzo mensile (solo numero, es. "45")' },
+          { type: "string", name: "gold_prezzo", label: 'Livello 2 \u2014 prezzo mensile (solo numero, es. "55")' },
+          { type: "string", name: "platinum_prezzo", label: 'Livello 3 \u2014 prezzo mensile (solo numero, es. "100")' },
+          { type: "string", name: "prezzo_suffisso", label: 'Suffisso prezzo (es. "/mese")' },
+          { type: "string", name: "prezzo_tooltip", label: "Tooltip sul prezzo (icona info)", ui: { component: "textarea" } },
+          { type: "string", name: "nota_finale", label: "Nota generica sotto la tabella", ui: { component: "textarea" } },
           {
             type: "object",
             name: "categorie",
@@ -301,6 +307,7 @@ var config_default = defineConfig({
                     ]
                   },
                   { type: "string", name: "silver_valore", label: 'Livello 1 \u2014 testo cella (non serve per "check")' },
+                  { type: "string", name: "silver_valore_tooltip", label: "Livello 1 \u2014 tooltip sul valore (opzionale, icona info)" },
                   {
                     type: "string",
                     name: "gold_tipo",
@@ -314,6 +321,7 @@ var config_default = defineConfig({
                     ]
                   },
                   { type: "string", name: "gold_valore", label: 'Livello 2 \u2014 testo cella (non serve per "check")' },
+                  { type: "string", name: "gold_valore_tooltip", label: "Livello 2 \u2014 tooltip sul valore (opzionale, icona info)" },
                   {
                     type: "string",
                     name: "platinum_tipo",
@@ -327,11 +335,15 @@ var config_default = defineConfig({
                     ]
                   },
                   { type: "string", name: "platinum_valore", label: 'Livello 3 \u2014 testo cella (non serve per "check")' },
+                  { type: "string", name: "platinum_valore_tooltip", label: "Livello 3 \u2014 tooltip sul valore (opzionale, icona info)" },
                   { type: "string", name: "feature_en", label: "\u{1F1EC}\u{1F1E7} Nome caratteristica (inglese)" },
                   { type: "string", name: "feature_tooltip_en", label: "\u{1F1EC}\u{1F1E7} Tooltip (inglese)" },
                   { type: "string", name: "silver_valore_en", label: "\u{1F1EC}\u{1F1E7} Livello 1 \u2014 testo cella (inglese)" },
+                  { type: "string", name: "silver_valore_tooltip_en", label: "\u{1F1EC}\u{1F1E7} Livello 1 \u2014 tooltip sul valore (inglese)" },
                   { type: "string", name: "gold_valore_en", label: "\u{1F1EC}\u{1F1E7} Livello 2 \u2014 testo cella (inglese)" },
-                  { type: "string", name: "platinum_valore_en", label: "\u{1F1EC}\u{1F1E7} Livello 3 \u2014 testo cella (inglese)" }
+                  { type: "string", name: "gold_valore_tooltip_en", label: "\u{1F1EC}\u{1F1E7} Livello 2 \u2014 tooltip sul valore (inglese)" },
+                  { type: "string", name: "platinum_valore_en", label: "\u{1F1EC}\u{1F1E7} Livello 3 \u2014 testo cella (inglese)" },
+                  { type: "string", name: "platinum_valore_tooltip_en", label: "\u{1F1EC}\u{1F1E7} Livello 3 \u2014 tooltip sul valore (inglese)" }
                 ]
               }
             ]
@@ -340,7 +352,10 @@ var config_default = defineConfig({
           { type: "string", name: "titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Titolo evidenziato (inglese)" },
           { type: "string", name: "sottotitolo_en", label: "\u{1F1EC}\u{1F1E7} Sottotitolo (inglese)", ui: { component: "textarea" } },
           { type: "string", name: "platinum_badge_en", label: "\u{1F1EC}\u{1F1E7} Badge livello 3 (inglese)" },
-          { type: "string", name: "cta_label_en", label: "\u{1F1EC}\u{1F1E7} Testo pulsante (inglese)" }
+          { type: "string", name: "cta_label_en", label: "\u{1F1EC}\u{1F1E7} Testo pulsante (inglese)" },
+          { type: "string", name: "prezzo_suffisso_en", label: "\u{1F1EC}\u{1F1E7} Suffisso prezzo (inglese)" },
+          { type: "string", name: "prezzo_tooltip_en", label: "\u{1F1EC}\u{1F1E7} Tooltip sul prezzo (inglese)", ui: { component: "textarea" } },
+          { type: "string", name: "nota_finale_en", label: "\u{1F1EC}\u{1F1E7} Nota generica sotto la tabella (inglese)", ui: { component: "textarea" } }
         ]
       },
       // ─── INFO CLUB ─────────────────────────────────────────────────────────
@@ -603,7 +618,7 @@ var config_default = defineConfig({
           {
             type: "string",
             name: "corpo_en",
-            label: "\u{1F1EC}\u{1F1E7} Testo articolo (inglese) \u2014 un paragrafo per riga vuota",
+            label: "\u{1F1EC}\u{1F1E7} Testo articolo (inglese) \u2014 un paragrafo per riga vuota, grassetto con **doppi asterischi**",
             ui: { component: "textarea" }
           },
           {
@@ -637,6 +652,21 @@ var config_default = defineConfig({
           { type: "string", name: "hero_sottotitolo_en", label: "\u{1F1EC}\u{1F1E7} Hero \u2014 sottotitolo (inglese)", ui: { component: "textarea" } },
           { type: "string", name: "hero_immagine_alt_en", label: "\u{1F1EC}\u{1F1E7} Hero \u2014 testo alternativo immagine (inglese)" }
         ];
+        const faqFields = [
+          {
+            type: "object",
+            name: "faq",
+            label: "FAQ (domande frequenti in fondo alla pagina)",
+            list: true,
+            ui: { itemProps: (item) => ({ label: item?.domanda || "Nuova domanda" }) },
+            fields: [
+              { type: "string", name: "domanda", label: "Domanda", required: true },
+              { type: "string", name: "risposta", label: 'Risposta \u2014 HTML consentito: <strong>grassetto</strong>, <a href="/pagina">link</a>', required: true, ui: { component: "textarea" } },
+              { type: "string", name: "domanda_en", label: "\u{1F1EC}\u{1F1E7} Domanda (inglese)" },
+              { type: "string", name: "risposta_en", label: "\u{1F1EC}\u{1F1E7} Risposta (inglese) \u2014 HTML consentito come sopra", ui: { component: "textarea" } }
+            ]
+          }
+        ];
         return {
           name: "pagine",
           label: "Pagine",
@@ -646,7 +676,7 @@ var config_default = defineConfig({
             {
               name: "generica",
               label: "Pagina generica (solo SEO + Hero)",
-              fields: [...heroSeoFields]
+              fields: [...heroSeoFields, ...faqFields]
             },
             {
               name: "storia",
@@ -727,18 +757,76 @@ var config_default = defineConfig({
                 { type: "string", name: "camps_sezione2_titolo_accent", label: "Sezione 2 \u2014 titolo evidenziato", required: true },
                 {
                   type: "object",
-                  name: "camps_settimane",
-                  label: "Settimane disponibili",
+                  name: "camps_info_rapide",
+                  label: "Info rapide (Quando, Orari, Et\xE0...)",
                   list: true,
                   required: true,
-                  ui: { itemProps: (item) => ({ label: item?.settimana ? `${item.settimana} \u2014 ${item.date || ""}` : "Nuova settimana" }) },
+                  ui: { itemProps: (item) => ({ label: item?.label || "Nuova info" }) },
                   fields: [
-                    { type: "string", name: "settimana", label: 'Settimana (es. "1\xAA Settimana")', required: true },
-                    { type: "string", name: "date", label: 'Date (es. "8 \u2013 12 Giugno 2026")', required: true },
-                    { type: "string", name: "settimana_en", label: '\u{1F1EC}\u{1F1E7} Settimana (inglese, es. "Week 1")' },
-                    { type: "string", name: "date_en", label: "\u{1F1EC}\u{1F1E7} Date (inglese)" }
+                    { type: "string", name: "label", label: 'Etichetta (es. "Quando")', required: true },
+                    { type: "string", name: "valore", label: "Valore", required: true, ui: { component: "textarea" } },
+                    { type: "string", name: "label_en", label: "\u{1F1EC}\u{1F1E7} Etichetta (inglese)" },
+                    { type: "string", name: "valore_en", label: "\u{1F1EC}\u{1F1E7} Valore (inglese)", ui: { component: "textarea" } }
                   ]
                 },
+                { type: "string", name: "camps_giornata_eyebrow", label: "Giornata tipo \u2014 eyebrow", required: true },
+                { type: "string", name: "camps_giornata_titolo", label: "Giornata tipo \u2014 titolo", required: true },
+                {
+                  type: "object",
+                  name: "camps_giornata",
+                  label: "Giornata tipo \u2014 fasce orarie",
+                  list: true,
+                  required: true,
+                  ui: { itemProps: (item) => ({ label: item?.orario ? `${item.orario} \u2014 ${item.titolo || ""}` : "Nuova fascia oraria" }) },
+                  fields: [
+                    { type: "string", name: "orario", label: 'Orario (es. "8.30 \u2013 9.00")', required: true },
+                    { type: "string", name: "titolo", label: "Titolo", required: true },
+                    { type: "string", name: "testo", label: "Testo", required: true, ui: { component: "textarea" } },
+                    { type: "string", name: "titolo_en", label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)" },
+                    { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)", ui: { component: "textarea" } }
+                  ]
+                },
+                { type: "string", name: "camps_settimanale_eyebrow", label: "Programma settimanale \u2014 eyebrow", required: true },
+                { type: "string", name: "camps_settimanale_titolo", label: "Programma settimanale \u2014 titolo", required: true },
+                {
+                  type: "object",
+                  name: "camps_settimanale",
+                  label: "Programma tecnico settimanale",
+                  list: true,
+                  required: true,
+                  ui: { itemProps: (item) => ({ label: item?.giorno ? `${item.giorno} \u2014 ${item.colpo || ""}` : "Nuovo giorno" }) },
+                  fields: [
+                    { type: "string", name: "giorno", label: 'Giorno (es. "Luned\xEC")', required: true },
+                    { type: "string", name: "colpo", label: 'Colpo (es. "Dritto")', required: true },
+                    { type: "string", name: "testo", label: "Testo", required: true, ui: { component: "textarea" } },
+                    { type: "string", name: "giorno_en", label: "\u{1F1EC}\u{1F1E7} Giorno (inglese)" },
+                    { type: "string", name: "colpo_en", label: "\u{1F1EC}\u{1F1E7} Colpo (inglese)" },
+                    { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)", ui: { component: "textarea" } }
+                  ]
+                },
+                { type: "string", name: "camps_cosa_portare_titolo", label: "Cosa portare \u2014 titolo", required: true },
+                { type: "string", name: "camps_cosa_portare", label: "Cosa portare \u2014 elenco", list: true, required: true },
+                { type: "string", name: "camps_obbligatorio", label: "Nota obbligatoria (es. certificato medico)", required: true },
+                { type: "string", name: "camps_kit_benvenuto", label: "Kit di benvenuto", required: true, ui: { component: "textarea" } },
+                { type: "string", name: "camps_quote_eyebrow", label: "Quote \u2014 eyebrow", required: true },
+                { type: "string", name: "camps_quote_titolo", label: "Quote \u2014 titolo", required: true },
+                {
+                  type: "object",
+                  name: "camps_quote_righe",
+                  label: "Tabella quote",
+                  list: true,
+                  required: true,
+                  ui: { itemProps: (item) => ({ label: item?.categoria || "Nuova riga" }) },
+                  fields: [
+                    { type: "string", name: "categoria", label: 'Categoria (es. "Soci")', required: true },
+                    { type: "string", name: "prezzo_settimana", label: "Prezzo a settimana", required: true },
+                    { type: "string", name: "prezzo_dal2", label: "Prezzo dalla 2\xAA settimana", required: true },
+                    { type: "string", name: "prezzo_fratelli", label: "Prezzo fratelli", required: true },
+                    { type: "string", name: "categoria_en", label: "\u{1F1EC}\u{1F1E7} Categoria (inglese)" }
+                  ]
+                },
+                { type: "string", name: "camps_quote_note", label: "Note quote/condizioni", list: true, required: true, ui: { component: "textarea" } },
+                { type: "string", name: "camps_cta_label", label: "Etichetta bottone iscrizione", required: true },
                 { type: "string", name: "camps_sezione1_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 eyebrow (inglese)" },
                 { type: "string", name: "camps_sezione1_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo (inglese)" },
                 { type: "string", name: "camps_sezione1_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo evidenziato (inglese)" },
@@ -746,7 +834,20 @@ var config_default = defineConfig({
                 { type: "string", name: "camps_immagine2_alt_en", label: "\u{1F1EC}\u{1F1E7} Immagine 2 \u2014 alt (inglese)" },
                 { type: "string", name: "camps_sezione2_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 eyebrow (inglese)" },
                 { type: "string", name: "camps_sezione2_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo (inglese)" },
-                { type: "string", name: "camps_sezione2_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo evidenziato (inglese)" }
+                { type: "string", name: "camps_sezione2_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 2 \u2014 titolo evidenziato (inglese)" },
+                { type: "string", name: "camps_giornata_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Giornata tipo \u2014 eyebrow (inglese)" },
+                { type: "string", name: "camps_giornata_titolo_en", label: "\u{1F1EC}\u{1F1E7} Giornata tipo \u2014 titolo (inglese)" },
+                { type: "string", name: "camps_settimanale_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Programma settimanale \u2014 eyebrow (inglese)" },
+                { type: "string", name: "camps_settimanale_titolo_en", label: "\u{1F1EC}\u{1F1E7} Programma settimanale \u2014 titolo (inglese)" },
+                { type: "string", name: "camps_cosa_portare_titolo_en", label: "\u{1F1EC}\u{1F1E7} Cosa portare \u2014 titolo (inglese)" },
+                { type: "string", name: "camps_cosa_portare_en", label: "\u{1F1EC}\u{1F1E7} Cosa portare \u2014 elenco (inglese)", list: true },
+                { type: "string", name: "camps_obbligatorio_en", label: "\u{1F1EC}\u{1F1E7} Nota obbligatoria (inglese)" },
+                { type: "string", name: "camps_kit_benvenuto_en", label: "\u{1F1EC}\u{1F1E7} Kit di benvenuto (inglese)", ui: { component: "textarea" } },
+                { type: "string", name: "camps_quote_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Quote \u2014 eyebrow (inglese)" },
+                { type: "string", name: "camps_quote_titolo_en", label: "\u{1F1EC}\u{1F1E7} Quote \u2014 titolo (inglese)" },
+                { type: "string", name: "camps_quote_note_en", label: "\u{1F1EC}\u{1F1E7} Note quote/condizioni (inglese)", list: true, ui: { component: "textarea" } },
+                { type: "string", name: "camps_cta_label_en", label: "\u{1F1EC}\u{1F1E7} Etichetta bottone iscrizione (inglese)" },
+                ...faqFields
               ]
             },
             {
@@ -839,6 +940,39 @@ var config_default = defineConfig({
                   ]
                 },
                 { type: "string", name: "scuola_sezione4_footer_testo", label: "Testo finale (FITP Junior Program, **grassetto**)", required: true, ui: { component: "textarea" } },
+                { type: "string", name: "scuola_sezione5_eyebrow", label: "Sezione 5 (Scuola Tennis Estiva) \u2014 eyebrow", required: true },
+                { type: "string", name: "scuola_sezione5_titolo", label: "Sezione 5 \u2014 titolo", required: true },
+                { type: "string", name: "scuola_sezione5_titolo_accent", label: "Sezione 5 \u2014 titolo evidenziato", required: true },
+                { type: "string", name: "scuola_sezione5_testo", label: "Sezione 5 \u2014 testo introduttivo", required: true, ui: { component: "textarea" } },
+                {
+                  type: "object",
+                  name: "scuola_sezione5_info_rapide",
+                  label: "Sezione 5 \u2014 info rapide",
+                  list: true,
+                  required: true,
+                  ui: { itemProps: (item) => ({ label: item?.label || "Nuova info" }) },
+                  fields: [
+                    { type: "string", name: "label", label: "Etichetta", required: true },
+                    { type: "string", name: "valore", label: "Valore", required: true, ui: { component: "textarea" } },
+                    { type: "string", name: "label_en", label: "\u{1F1EC}\u{1F1E7} Etichetta (inglese)" },
+                    { type: "string", name: "valore_en", label: "\u{1F1EC}\u{1F1E7} Valore (inglese)", ui: { component: "textarea" } }
+                  ]
+                },
+                {
+                  type: "object",
+                  name: "scuola_sezione5_quote_righe",
+                  label: "Sezione 5 \u2014 tabella quote",
+                  list: true,
+                  required: true,
+                  ui: { itemProps: (item) => ({ label: item?.categoria || "Nuova riga" }) },
+                  fields: [
+                    { type: "string", name: "categoria", label: "Categoria", required: true },
+                    { type: "string", name: "prezzo", label: "Prezzo a settimana", required: true },
+                    { type: "string", name: "categoria_en", label: "\u{1F1EC}\u{1F1E7} Categoria (inglese)" }
+                  ]
+                },
+                { type: "string", name: "scuola_sezione5_note", label: "Sezione 5 \u2014 note/condizioni", list: true, required: true, ui: { component: "textarea" } },
+                { type: "string", name: "scuola_sezione5_cta_label", label: "Sezione 5 \u2014 etichetta bottone iscrizione", required: true },
                 { type: "string", name: "scuola_sezione1_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 eyebrow (inglese)" },
                 { type: "string", name: "scuola_sezione1_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo (inglese)" },
                 { type: "string", name: "scuola_sezione1_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 1 \u2014 titolo evidenziato (inglese)" },
@@ -860,7 +994,14 @@ var config_default = defineConfig({
                 { type: "string", name: "scuola_sezione4_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 4 \u2014 eyebrow (inglese)" },
                 { type: "string", name: "scuola_sezione4_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 4 \u2014 titolo (inglese)" },
                 { type: "string", name: "scuola_sezione4_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 4 \u2014 titolo evidenziato (inglese)" },
-                { type: "string", name: "scuola_sezione4_footer_testo_en", label: "\u{1F1EC}\u{1F1E7} Testo finale (inglese)", ui: { component: "textarea" } }
+                { type: "string", name: "scuola_sezione4_footer_testo_en", label: "\u{1F1EC}\u{1F1E7} Testo finale (inglese)", ui: { component: "textarea" } },
+                { type: "string", name: "scuola_sezione5_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione 5 \u2014 eyebrow (inglese)" },
+                { type: "string", name: "scuola_sezione5_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 5 \u2014 titolo (inglese)" },
+                { type: "string", name: "scuola_sezione5_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 5 \u2014 titolo evidenziato (inglese)" },
+                { type: "string", name: "scuola_sezione5_testo_en", label: "\u{1F1EC}\u{1F1E7} Sezione 5 \u2014 testo introduttivo (inglese)", ui: { component: "textarea" } },
+                { type: "string", name: "scuola_sezione5_note_en", label: "\u{1F1EC}\u{1F1E7} Sezione 5 \u2014 note/condizioni (inglese)", list: true, ui: { component: "textarea" } },
+                { type: "string", name: "scuola_sezione5_cta_label_en", label: "\u{1F1EC}\u{1F1E7} Sezione 5 \u2014 etichetta bottone iscrizione (inglese)" },
+                ...faqFields
               ]
             },
             {
@@ -940,7 +1081,8 @@ var config_default = defineConfig({
                 { type: "string", name: "pt_sezione3_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione 3 \u2014 titolo evidenziato (inglese)" },
                 { type: "string", name: "pt_sezione4_titolo_en", label: "\u{1F1EC}\u{1F1E7} CTA finale \u2014 titolo (inglese)" },
                 { type: "string", name: "pt_sezione4_sottotitolo_en", label: "\u{1F1EC}\u{1F1E7} CTA finale \u2014 sottotitolo (inglese)", ui: { component: "textarea" } },
-                { type: "string", name: "pt_sezione4_cta_label_en", label: "\u{1F1EC}\u{1F1E7} CTA finale \u2014 testo pulsante (inglese)" }
+                { type: "string", name: "pt_sezione4_cta_label_en", label: "\u{1F1EC}\u{1F1E7} CTA finale \u2014 testo pulsante (inglese)" },
+                ...faqFields
               ]
             },
             {
@@ -1046,7 +1188,8 @@ var config_default = defineConfig({
                 { type: "string", name: "prep_calendario_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Calendario \u2014 eyebrow (inglese)" },
                 { type: "string", name: "prep_calendario_titolo_en", label: "\u{1F1EC}\u{1F1E7} Calendario \u2014 titolo (inglese)" },
                 { type: "string", name: "prep_calendario_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Calendario \u2014 titolo evidenziato (inglese)" },
-                { type: "string", name: "prep_calendario_sub_en", label: "\u{1F1EC}\u{1F1E7} Calendario \u2014 testo introduttivo (inglese)" }
+                { type: "string", name: "prep_calendario_sub_en", label: "\u{1F1EC}\u{1F1E7} Calendario \u2014 testo introduttivo (inglese)" },
+                ...faqFields
               ]
             },
             {
@@ -1105,7 +1248,40 @@ var config_default = defineConfig({
                 { type: "string", name: "tennis_corsi_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 titolo (inglese)" },
                 { type: "string", name: "tennis_corsi_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 titolo evidenziato (inglese)" },
                 { type: "string", name: "tennis_corsi_intro_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 testo introduttivo (inglese)", ui: { component: "textarea" } },
-                { type: "string", name: "tennis_corsi_cta_label_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 testo pulsante (inglese)" }
+                { type: "string", name: "tennis_corsi_cta_label_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 testo pulsante (inglese)" },
+                ...faqFields
+              ]
+            },
+            {
+              name: "padel",
+              label: "Padel",
+              fields: [
+                ...heroSeoFields,
+                { type: "string", name: "padel_corsi_eyebrow", label: "Sezione Corsi \u2014 eyebrow", required: true },
+                { type: "string", name: "padel_corsi_titolo", label: "Sezione Corsi \u2014 titolo", required: true },
+                { type: "string", name: "padel_corsi_titolo_accent", label: "Sezione Corsi \u2014 titolo evidenziato", required: true },
+                { type: "string", name: "padel_corsi_intro", label: "Sezione Corsi \u2014 testo introduttivo (**grassetto**)", required: true, ui: { component: "textarea" } },
+                {
+                  type: "object",
+                  name: "padel_corsi_livelli",
+                  label: "Sezione Corsi \u2014 livelli",
+                  list: true,
+                  required: true,
+                  ui: { itemProps: (item) => ({ label: item?.titolo || "Nuovo livello" }) },
+                  fields: [
+                    { type: "string", name: "titolo", label: "Titolo", required: true },
+                    { type: "string", name: "testo", label: "Testo", required: true },
+                    { type: "string", name: "titolo_en", label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)" },
+                    { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)" }
+                  ]
+                },
+                { type: "string", name: "padel_corsi_cta_label", label: "Sezione Corsi \u2014 testo pulsante", required: true },
+                { type: "string", name: "padel_corsi_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 eyebrow (inglese)" },
+                { type: "string", name: "padel_corsi_titolo_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 titolo (inglese)" },
+                { type: "string", name: "padel_corsi_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 titolo evidenziato (inglese)" },
+                { type: "string", name: "padel_corsi_intro_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 testo introduttivo (inglese)", ui: { component: "textarea" } },
+                { type: "string", name: "padel_corsi_cta_label_en", label: "\u{1F1EC}\u{1F1E7} Sezione Corsi \u2014 testo pulsante (inglese)" },
+                ...faqFields
               ]
             },
             {
@@ -1113,6 +1289,48 @@ var config_default = defineConfig({
               label: "Agonistica",
               fields: [
                 ...heroSeoFields,
+                { type: "string", name: "agonistica_metodo_eyebrow", label: "Metodo \u2014 Eyebrow" },
+                { type: "string", name: "agonistica_metodo_titolo", label: "Metodo \u2014 Titolo" },
+                { type: "string", name: "agonistica_metodo_titolo_accent", label: "Metodo \u2014 Titolo evidenziato" },
+                { type: "string", name: "agonistica_metodo_lead", label: "Metodo \u2014 Testo introduttivo", ui: { component: "textarea" } },
+                { type: "image", name: "agonistica_metodo_immagine1", label: "Metodo \u2014 Immagine 1" },
+                { type: "string", name: "agonistica_metodo_immagine1_alt", label: "Metodo \u2014 Immagine 1 (alt)" },
+                { type: "image", name: "agonistica_metodo_immagine2", label: "Metodo \u2014 Immagine 2" },
+                { type: "string", name: "agonistica_metodo_immagine2_alt", label: "Metodo \u2014 Immagine 2 (alt)" },
+                {
+                  type: "object",
+                  name: "agonistica_metodo_pillars",
+                  label: "Metodo \u2014 Colonne",
+                  list: true,
+                  ui: { itemProps: (item) => ({ label: item?.titolo || "Nuova colonna" }) },
+                  fields: [
+                    { type: "string", name: "titolo", label: "Titolo", required: true },
+                    { type: "string", name: "testo", label: "Testo", required: true, ui: { component: "textarea" } },
+                    { type: "string", name: "titolo_en", label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)" },
+                    { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)", ui: { component: "textarea" } }
+                  ]
+                },
+                { type: "string", name: "agonistica_metodo_quote", label: "Metodo \u2014 Citazione finale", ui: { component: "textarea" } },
+                { type: "string", name: "agonistica_punti_chiave_titolo", label: "Punti chiave \u2014 Titolo box" },
+                {
+                  type: "object",
+                  name: "agonistica_punti_chiave",
+                  label: "Punti chiave \u2014 Elenco",
+                  list: true,
+                  ui: { itemProps: (item) => ({ label: item?.testo || "Nuovo punto" }) },
+                  fields: [
+                    { type: "string", name: "testo", label: "Testo", required: true },
+                    { type: "string", name: "testo_en", label: "\u{1F1EC}\u{1F1E7} Testo (inglese)" }
+                  ]
+                },
+                { type: "string", name: "agonistica_metodo_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Metodo \u2014 Eyebrow (inglese)" },
+                { type: "string", name: "agonistica_metodo_titolo_en", label: "\u{1F1EC}\u{1F1E7} Metodo \u2014 Titolo (inglese)" },
+                { type: "string", name: "agonistica_metodo_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Metodo \u2014 Titolo evidenziato (inglese)" },
+                { type: "string", name: "agonistica_metodo_lead_en", label: "\u{1F1EC}\u{1F1E7} Metodo \u2014 Testo introduttivo (inglese)", ui: { component: "textarea" } },
+                { type: "string", name: "agonistica_metodo_immagine1_alt_en", label: "\u{1F1EC}\u{1F1E7} Metodo \u2014 Immagine 1 (alt, inglese)" },
+                { type: "string", name: "agonistica_metodo_immagine2_alt_en", label: "\u{1F1EC}\u{1F1E7} Metodo \u2014 Immagine 2 (alt, inglese)" },
+                { type: "string", name: "agonistica_metodo_quote_en", label: "\u{1F1EC}\u{1F1E7} Metodo \u2014 Citazione finale (inglese)", ui: { component: "textarea" } },
+                { type: "string", name: "agonistica_punti_chiave_titolo_en", label: "\u{1F1EC}\u{1F1E7} Punti chiave \u2014 Titolo box (inglese)" },
                 { type: "string", name: "agonistica_eyebrow", label: "Eyebrow", required: true },
                 { type: "string", name: "agonistica_titolo", label: "Titolo", required: true },
                 { type: "string", name: "agonistica_titolo_accent", label: "Titolo evidenziato", required: true },
@@ -1132,7 +1350,8 @@ var config_default = defineConfig({
                 },
                 { type: "string", name: "agonistica_eyebrow_en", label: "\u{1F1EC}\u{1F1E7} Eyebrow (inglese)" },
                 { type: "string", name: "agonistica_titolo_en", label: "\u{1F1EC}\u{1F1E7} Titolo (inglese)" },
-                { type: "string", name: "agonistica_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Titolo evidenziato (inglese)" }
+                { type: "string", name: "agonistica_titolo_accent_en", label: "\u{1F1EC}\u{1F1E7} Titolo evidenziato (inglese)" },
+                ...faqFields
               ]
             },
             {
