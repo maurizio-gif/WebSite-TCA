@@ -82,10 +82,6 @@ lezioni:
     nome: Ginnastica Dolce
   - giorno: mar
     ora: '11:00'
-    categoria: S
-    nome: Total Body
-  - giorno: mar
-    ora: '11:00'
     categoria: B
     nome: Postural
   - giorno: mar
@@ -99,7 +95,7 @@ lezioni:
   - giorno: mar
     ora: '17:15'
     categoria: S
-    nome: Suspension Training
+    nome: Circuit
   - giorno: mar
     ora: '18:00'
     categoria: E
@@ -109,7 +105,7 @@ lezioni:
     categoria: S
     nome: Circuit
   - giorno: mar
-    ora: '18:30'
+    ora: '18:15'
     categoria: B
     nome: Pilates
   - giorno: mar
@@ -117,11 +113,7 @@ lezioni:
     categoria: S
     nome: Funracket
   - giorno: mar
-    ora: '19:15'
-    categoria: B
-    nome: Flexability
-  - giorno: mar
-    ora: '19:45'
+    ora: '19:00'
     categoria: B
     nome: Pilates
   - giorno: mar
@@ -132,6 +124,10 @@ lezioni:
     ora: '20:00'
     categoria: S
     nome: Circuit
+  - giorno: mar
+    ora: '20:00'
+    categoria: E
+    nome: Twist and Shout
   - giorno: mer
     ora: '07:00'
     categoria: S
@@ -169,13 +165,17 @@ lezioni:
     categoria: B
     nome: Power Yoga
   - giorno: mer
+    ora: '19:00'
+    categoria: S
+    nome: Total Body
+  - giorno: mer
     ora: '19:05'
     categoria: S
     nome: Funracket
   - giorno: mer
     ora: '20:00'
-    categoria: B
-    nome: Power Yoga
+    categoria: E
+    nome: Twist and Shout
   - giorno: mer
     ora: '20:15'
     categoria: E
@@ -196,6 +196,10 @@ lezioni:
     ora: '10:30'
     categoria: B
     nome: Postural
+  - giorno: gio
+    ora: '11:00'
+    categoria: S
+    nome: High Performance
   - giorno: gio
     ora: '11:45'
     categoria: B
@@ -225,6 +229,10 @@ lezioni:
     categoria: S
     nome: Circuit
   - giorno: gio
+    ora: '19:15'
+    categoria: E
+    nome: Running Club
+  - giorno: gio
     ora: '19:30'
     categoria: S
     nome: Functional
@@ -232,6 +240,10 @@ lezioni:
     ora: '19:45'
     categoria: B
     nome: Pilates
+  - giorno: gio
+    ora: '20:30'
+    categoria: S
+    nome: Active Pump
   - giorno: ven
     ora: '07:00'
     categoria: S
@@ -240,6 +252,10 @@ lezioni:
     ora: '08:15'
     categoria: B
     nome: Pilates Circle
+  - giorno: ven
+    ora: '09:00'
+    categoria: S
+    nome: Total Body
   - giorno: ven
     ora: '09:00'
     categoria: B
@@ -301,12 +317,43 @@ lezioni:
     categoria: E
     nome: Aeroboxe
   - giorno: sab
+    ora: '10:30'
+    categoria: B
+    nome: Pilates Funzionale
+  - giorno: sab
     ora: '11:30'
     categoria: S
     nome: Functional
   - giorno: sab
+    ora: '11:30'
+    categoria: B
+    nome: Pilates Funzionale
+  - giorno: sab
     ora: '12:30'
     categoria: S
     nome: Functional
+  - giorno: sab
+    ora: '12:30'
+    categoria: B
+    nome: Flexability
+  - giorno: sab
+    ora: '14:30'
+    categoria: E
+    nome: Functional Step
+  - giorno: dom
+    ora: '10:00'
+    categoria: S
+    nome: Functional
+  - giorno: dom
+    ora: '11:15'
+    categoria: E
+    nome: Cycling
+  - giorno: dom
+    ora: '11:15'
+    categoria: S
+    nome: Circuit
+  - giorno: dom
+    ora: '12:00'
+    categoria: S
+    nome: Tribal-x
 ---
-

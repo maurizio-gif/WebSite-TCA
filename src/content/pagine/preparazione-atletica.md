@@ -288,7 +288,7 @@ prep_categorie:
 prep_calendario_eyebrow: "Calendario"
 prep_calendario_titolo: "Prenota il tuo"
 prep_calendario_titolo_accent: "corso."
-prep_calendario_sub: "Controlla il calendario settimanale e riserva il tuo posto direttamente su PerfectGym."
+prep_calendario_sub: "Controlla il calendario settimanale e riserva il tuo posto direttamente sulla nostra APP."
 prep_corsi_eyebrow_en: "Group Classes"
 prep_corsi_titolo_en: "Train with"
 prep_corsi_titolo_accent_en: "others."
