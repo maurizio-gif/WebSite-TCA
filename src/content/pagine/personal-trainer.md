@@ -1,7 +1,7 @@
 ---
 _template: personal_trainer
 title: "Personal Trainer e Allenamento Su Misura | TCA Milano"
-description: "Personal trainer certificati per programmi di allenamento su misura, potenziamento e preparazione atletica in palestra. Al Tennis Club Ambrosiano di Milano."
+description: "Personal trainer certificati per programmi di allenamento su misura, potenziamento e preparazione atletica in palestra. Al TC Ambrosiano di Milano."
 hero_eyebrow: "Adulti · Preparazione Atletica"
 hero_titolo: "Personal"
 hero_titolo_accent: "Trainer"
@@ -9,7 +9,7 @@ hero_sottotitolo: "Professionisti certificati che costruiscono il tuo programma 
 hero_immagine: "/Sala%20Attrezzi%202.avif"
 hero_immagine_alt: "Personal trainer TCA"
 title_en: "Personal Trainers & Tailored Training | TCA Milan"
-description_en: "Certified personal trainers for tailored training programmes, strength building and athletic preparation in our gym. At Tennis Club Ambrosiano in Milan."
+description_en: "Certified personal trainers for tailored training programmes, strength building and athletic preparation in our gym. At TC Ambrosiano in Milan."
 hero_eyebrow_en: "Adults · Athletic Training"
 hero_titolo_en: "Personal"
 hero_titolo_accent_en: "Trainer"

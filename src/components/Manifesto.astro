@@ -6,16 +6,16 @@ const p = (path: string) => getLocalePath(lang, path);
 
 const copy = lang === 'en' ? {
   title:  'A club built on tradition,<br>made for today.',
-  p1:     'Tennis Club Ambrosiano is home to the <strong>Avvenire Tournament</strong>, the competition that since 1965 has discovered the next generation of tennis talent. From that same calling — the future training every day — everything we do today was born.',
-  p2:     "Here you'll find some of the finest facilities in east Milan: <strong>tennis courts, padel, athletic training spaces</strong> and an activity calendar for every age. Whether you want to get back on court, raise a child through sport, or simply take care of yourself, the Club makes it easy.",
+  p1:     "TC Ambrosiano has been promoting sporting excellence and healthy activity for experts and beginners alike for more than 60 years. Home to the <strong>Avvenire Tournament</strong>, TCA has hosted one of the world's top junior tennis competitions since 1965 and produced many champions. From that same calling, our passion to deliver the best training for everyone, every day, was born.",
+  p2:     "Here you'll find some of the finest racquets, sporting facilities and healthy activities in east Milan: <strong>tennis courts, padel courts, pickleball, athletic training spaces</strong> and an activity and social calendar for every age. Whether you want to get back on court, raise a child through sport, or simply take care of yourself following a wide range of courses and programmes for every age and ability, the Club makes it easy. Our expert team make sport and healthy activity of all types rewarding, effective and fun.",
   cta:    'Discover our history →',
-  quote:  'Sport and Tradition.',
+  cta2:   'Discover our programmes →',
 } : {
   title:  'Un club fondato<br>sulla tradizione,<br><em>costruito per il presente.</em>',
-  p1:     'Il Tennis Club Ambrosiano è la casa del <strong>Torneo Avvenire</strong>, la gara che dal 1965 scopre i talenti del tennis di domani. Da quella stessa vocazione — il futuro che si allena ogni giorno — nasce tutto ciò che facciamo oggi.',
-  p2:     "Qui trovi alcuni dei migliori impianti della zona est di Milano: <strong>campi da tennis, padel, spazi per la preparazione atletica</strong> e un calendario di attività che accompagna ogni età. Che tu voglia tornare a giocare, far crescere un figlio nello sport o semplicemente prenderti cura di te, il Club è pensato per renderlo semplice.",
+  p1:     "TC Ambrosiano promuove l'eccellenza sportiva e l'attività motoria, per esperti e principianti, da oltre 60 anni. Casa del <strong>Torneo Avvenire</strong>, il TCA ospita dal 1965 una delle competizioni giovanili di tennis più prestigiose al mondo e ha formato numerosi campioni. Da quella stessa vocazione nasce la nostra passione: offrire il miglior allenamento a tutti, ogni giorno.",
+  p2:     "Qui trovi alcune delle migliori racchette, strutture sportive e attività per il benessere della zona est di Milano: <strong>campi da tennis, campi da padel, pickleball, spazi per la preparazione atletica</strong> e un calendario di attività ed eventi sociali per ogni età. Che tu voglia tornare in campo, far crescere un figlio nello sport o semplicemente prenderti cura di te seguendo un'ampia offerta di corsi e programmi per ogni età e livello, il Club te lo rende semplice. Il nostro team di esperti rende lo sport e l'attività motoria di ogni tipo gratificanti, efficaci e divertenti.",
   cta:    'Scopri la nostra storia →',
-  quote:  'Sport e Tradizione.',
+  cta2:   'Scopri i nostri programmi →',
 };
 ---
 
@@ -28,12 +28,15 @@ const copy = lang === 'en' ? {
         <p set:html={copy.p1} />
         <p set:html={copy.p2} />
       </div>
-      <a class="btn btn-red manifesto__cta" href={p('/storia')} data-anim="from-left" data-anim-delay="280">
-        {copy.cta}
-      </a>
+      <div class="manifesto__ctas">
+        <a class="btn btn-red manifesto__cta" href={p('/storia')} data-anim="from-left" data-anim-delay="280">
+          {copy.cta}
+        </a>
+        <a class="btn btn-outline--dark manifesto__cta" href={p('/planning')} data-anim="from-left" data-anim-delay="320">
+          {copy.cta2}
+        </a>
+      </div>
     </div>
-
-    <p class="manifesto__quote" data-anim="reveal" data-anim-delay="200">{copy.quote}</p>
   </div>
 </section>
 
@@ -77,33 +80,16 @@ const copy = lang === 'en' ? {
     color: var(--color-text-light);
   }
 
-  .manifesto__cta {
-    align-self: flex-start;
-  }
-
-  .manifesto__quote {
-    grid-column: 1 / -1;
-    font-family: var(--font-display);
-    font-size: clamp(2.2rem, 4vw, 4rem);
-    font-weight: 800;
-    text-transform: uppercase;
-    line-height: 0.95;
-    color: var(--color-accent);
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-border);
+  .manifesto__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   @media (max-width: 860px) {
     .manifesto__inner {
       grid-template-columns: 1fr;
       gap: 2rem;
-    }
-
-    .manifesto__quote {
-      grid-column: 1;
-      border-top: 3px solid var(--color-accent);
-      padding-top: 2rem;
-      margin-top: 0.5rem;
     }
   }
 </style>

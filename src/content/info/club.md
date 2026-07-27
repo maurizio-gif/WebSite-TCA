@@ -1,7 +1,7 @@
 ---
 indirizzo: "Via Feltre 33, 20134 Milano"
-come_arrivare: "Metro Udine (linea M2), a pochi minuti a piedi."
-come_arrivare_en: "Metro Udine (line M2), a few minutes' walk."
+come_arrivare: "Metro Udine (linea M2), a soli 200m dal Club."
+come_arrivare_en: "Metro Udine (line M2), just 200m from TCA."
 orari: |-
   Lun–Ven 7:00–24:00
   Sab–Dom 8:00–21:00

@@ -1,6 +1,6 @@
 ---
 _template: summer_camps
-title: "Summer Camps Tennis a Milano | Tennis Club Ambrosiano"
+title: "Summer Camps Tennis a Milano | TC Ambrosiano"
 description: "Summer Camp e Scuola Tennis Estiva TCA: 3 ore di tennis al giorno, padel, pickleball e preparazione fisica. Da giugno a settembre, dai 5 ai 17 anni."
 hero_eyebrow: "Junior · Summer Camps"
 hero_titolo: "Summer"
@@ -8,7 +8,7 @@ hero_titolo_accent: "Camps 2026"
 hero_sottotitolo: "Tennis, padel, pickleball e preparazione fisica per bambini e ragazzi dai 5 ai 13 anni. Dall'8 giugno al 7 agosto e dal 24 agosto all'11 settembre."
 hero_immagine: "/summer-camp-hero.avif"
 hero_immagine_alt: "Summer Camps TCA 2026"
-title_en: "Tennis Summer Camps in Milan | Tennis Club Ambrosiano"
+title_en: "Tennis Summer Camps in Milan | TC Ambrosiano"
 description_en: "TCA Summer Camp and Summer Tennis School: 3 hours of tennis a day, padel, pickleball and physical training. June to September, ages 5 to 17."
 hero_eyebrow_en: "Junior · Summer Camps"
 hero_titolo_en: "Summer"
@@ -219,7 +219,7 @@ faq:
     domanda_en: "Can I enrol my child for just a few weeks?"
     risposta_en: "Yes, enrolment is by full weeks, for as many as you like. Weeks cannot be split and unused days cannot be made up. Discounts apply from the second week and for siblings."
   - domanda: "Come si iscrive un bambino al Summer Camp?"
-    risposta: "L'iscrizione si effettua direttamente online tramite il modulo presente su questa pagina; per qualsiasi domanda puoi contattare la segreteria del Tennis Club Ambrosiano."
+    risposta: "L'iscrizione si effettua direttamente online tramite il modulo presente su questa pagina; per qualsiasi domanda puoi contattare la segreteria del TC Ambrosiano."
     domanda_en: "How do I sign my child up for the Summer Camp?"
-    risposta_en: "You can enrol directly online using the form on this page; for any questions, contact the Tennis Club Ambrosiano front desk."
+    risposta_en: "You can enrol directly online using the form on this page; for any questions, contact the TC Ambrosiano front desk."
 ---

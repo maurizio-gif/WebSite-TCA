@@ -1,17 +1,17 @@
 ---
 _template: regolamento
-title: "Regolamento del Club | Tennis Club Ambrosiano Milano"
-description: "Il regolamento del Tennis Club Ambrosiano: accesso al Club, campi da tennis e padel, palestra e corsi, spogliatoi, segreteria e norme generali."
+title: "Regolamento del Club | TC Ambrosiano Milano"
+description: "Il regolamento del TC Ambrosiano: accesso al Club, campi da tennis e padel, palestra e corsi, spogliatoi, segreteria e norme generali."
 hero_eyebrow: "Aggiornato a giugno 2026"
 hero_titolo: "Regolamento"
 hero_titolo_accent: "del Club"
-hero_sottotitolo: "Le regole di accesso e utilizzo degli spazi del Tennis Club Ambrosiano: campi, palestra, corsi, spogliatoi e servizi."
-title_en: "Club Regulations | Tennis Club Ambrosiano Milan"
-description_en: "The Tennis Club Ambrosiano regulations: club access, tennis and padel courts, gym and classes, changing rooms, secretariat and general rules."
+hero_sottotitolo: "Le regole di accesso e utilizzo degli spazi del TC Ambrosiano: campi, palestra, corsi, spogliatoi e servizi."
+title_en: "Club Regulations | TC Ambrosiano Milan"
+description_en: "The TC Ambrosiano regulations: club access, tennis and padel courts, gym and classes, changing rooms, secretariat and general rules."
 hero_eyebrow_en: "Updated June 2026"
 hero_titolo_en: "Club"
 hero_titolo_accent_en: "Regulations"
-hero_sottotitolo_en: "The access and usage rules for Tennis Club Ambrosiano's spaces: courts, gym, classes, changing rooms and services."
+hero_sottotitolo_en: "The access and usage rules for TC Ambrosiano's spaces: courts, gym, classes, changing rooms and services."
 regolamento_body: |
   ## Accesso al Centro
 
