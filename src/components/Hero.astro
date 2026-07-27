@@ -14,6 +14,8 @@ const p = (path: string) => getLocalePath(lang, path);
   <div class="hero__bg">
     <img
       src={publicUrl('/HERO.avif')}
+      srcset={`${publicUrl('/HERO-800.avif')} 800w, ${publicUrl('/HERO-1440.avif')} 1440w, ${publicUrl('/HERO.avif')} 1920w`}
+      sizes="100vw"
       alt="TC Ambrosiano — vista aerea dei campi"
       class="hero__img"
       fetchpriority="high"
