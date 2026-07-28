@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Pagina non trovata | TC Ambrosiano"
+  description="La pagina che cerchi non esiste o è stata spostata."
+>
+  <div class="not-found">
+    <div class="not-found__inner">
+      <span class="eyebrow">Errore 404</span>
+      <h1 class="not-found__title">Pagina non trovata</h1>
+      <p class="not-found__sub">
+        Il link che hai seguito potrebbe essere vecchio o la pagina è stata spostata.
+        Prova a ripartire da qui:
+      </p>
+      <div class="not-found__actions">
+        <a class="btn btn-red" href="/">Torna alla Home</a>
+        <a class="btn btn-outline--dark" href="/contatti">Contattaci</a>
+      </div>
+      <ul class="not-found__links">
+        <li><a href="/tennis">Tennis</a></li>
+        <li><a href="/padel">Padel e Pickleball</a></li>
+        <li><a href="/summer-camps">Summer Camps</a></li>
+        <li><a href="/preparazione-atletica">Preparazione Atletica</a></li>
+        <li><a href="/torneo-avvenire">Torneo Avvenire</a></li>
+      </ul>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    padding: calc(var(--header-h) + 6vh) var(--pad-x) 8vh;
+    background: var(--color-off-white);
+  }
+
+  .not-found__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+  }
+
+  .not-found__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin: 1.5vh 0;
+    color: var(--color-accent);
+  }
+
+  .not-found__sub {
+    font-family: var(--font-body);
+    font-size: clamp(16px, 1.1vw, 20px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--color-text-light);
+    max-width: 560px;
+    margin: 0 auto 4vh;
+  }
+
+  .not-found__actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 5vh;
+  }
+
+  .not-found__links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--color-border);
+    padding-top: 4vh;
+  }
+
+  .not-found__links a {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--color-text-light);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .not-found__links a:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+</style>
