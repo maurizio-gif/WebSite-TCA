@@ -65,6 +65,6 @@
     { "source": "/it/milan/club-ambrosiano/:path*", "destination": "/", "permanent": true },
     { "source": "/en/milan/club-ambrosiano/:path*", "destination": "/en", "permanent": true },
     { "source": "/it/:path*", "destination": "/", "permanent": true },
-    { "source": "/en/:path*", "destination": "/en", "permanent": true }
+    { "source": "/en/:path+", "destination": "/en", "permanent": true }
   ]
 }
