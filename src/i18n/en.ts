@@ -165,6 +165,7 @@ export const en: UI = {
     newsTitle:     'Latest news',
     newsReadMore:  'Read More',
     newsClose:     'Close',
+    newsPermalink: 'View as page',
 
     helpDeskEyebrow: 'Help Desk',
     helpDeskTitle:   'How can we help you?',
