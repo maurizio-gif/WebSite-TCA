@@ -59,7 +59,6 @@
     { "source": "/struttura/:path*", "destination": "/", "permanent": true },
     { "source": "/business/:path*", "destination": "/", "permanent": true },
     { "source": "/blog/:path*", "destination": "/club-life", "permanent": true },
-    { "source": "/news/:path*", "destination": "/club-life", "permanent": true },
     { "source": "/senza-categoria/:path*", "destination": "/club-life", "permanent": true },
 
     { "source": "/it/milan/club-ambrosiano/:path*", "destination": "/", "permanent": true },
