@@ -564,6 +564,17 @@ const lm = lang === 'en' ? {
 
   function pad2(n) { return String(n).padStart(2,'0'); }
 
+  // Data del calendario come stringa "YYYY-MM-DD" nel fuso locale del
+  // visitatore (Europe/Rome). JSON.stringify(Date) chiama toISOString(),
+  // che converte in UTC: una mezzanotte locale (es. 29 luglio 00:00 CEST)
+  // diventa "28 luglio 22:00Z", e chi legge il payload senza riconvertire
+  // al fuso locale vede la data sbagliata, un giorno indietro. Inviare una
+  // data pura (senza ora né fuso) elimina l'ambiguità a monte.
+  function isoDateLocal(d) {
+    if (!d) return null;
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+
   function esc(str) {
     return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;')
                       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -1002,7 +1013,7 @@ const lm = lang === 'en' ? {
     state.callbackReason = r.value.trim();
 
     if (WEBHOOK_LEAD) {
-      try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'richiamami',attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))}); } catch(e){}
+      try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'richiamami',callbackDate:isoDateLocal(state.callbackDate),attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))}); } catch(e){}
     }
 
     // Conversione per GTM/Google Ads (vedi tcaTrack in BaseLayout).
@@ -1033,7 +1044,7 @@ const lm = lang === 'en' ? {
     state.visitReason = r.value.trim();
 
     if (WEBHOOK_LEAD) {
-      try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'visita',attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))}); } catch(e){}
+      try { await fetch(WEBHOOK_LEAD,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},state,{tipo:'visita',visitDate:isoDateLocal(state.visitDate),attivita:attivitaLabels(),utm:getUtm(),vid:getVid()}))}); } catch(e){}
     }
 
     // Conversione per GTM/Google Ads (vedi tcaTrack in BaseLayout).
