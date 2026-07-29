@@ -46,8 +46,20 @@ const dataFormattata =
   image={nw.immagine}
   imageAlt={nw.immagine_alt_en ?? nw.immagine_alt}
 >
-  <!-- News hero -->
+  <!-- News hero: full-width photo behind the title -->
   <section class="nw-hero">
+    <div class="nw-hero__bg">
+      <img
+        src={publicUrl(nw.immagine)}
+        alt={nw.immagine_alt_en ?? nw.immagine_alt}
+        class="nw-hero__img"
+        fetchpriority="high"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+    <div class="nw-hero__grad"></div>
+
     <div class="nw-hero__inner">
       <nav class="nw-hero__breadcrumb" aria-label="Breadcrumb">
         <a href={`${p('/club-life')}#news`}>← Club Life</a>
@@ -55,11 +67,10 @@ const dataFormattata =
 
       <div class="nw-hero__meta">
         <span class="nw-hero__cat">{categoria}</span>
+        <time class="nw-hero__date" datetime={nw.data.toISOString().split('T')[0]}>
+          {dataFormattata}
+        </time>
       </div>
-
-      <time class="nw-hero__date" datetime={nw.data.toISOString().split('T')[0]}>
-        {dataFormattata}
-      </time>
 
       <h1 class="nw-hero__title">{titolo}</h1>
 
@@ -70,11 +81,7 @@ const dataFormattata =
   <!-- News content -->
   <section class="nw-body">
     <div class="nw-body__inner">
-      <div class="nw-body__media">
-        <img src={publicUrl(nw.immagine)} alt={nw.immagine_alt_en ?? nw.immagine_alt} class="nw-body__img" />
-      </div>
-
-      <div class="nw-body__content prose">
+      <div class="nw-body__content prose rich-body">
         {paragrafiEn
           ? paragrafiEn.map((par) => <p set:html={par} />)
           : <Content />}
@@ -112,16 +119,44 @@ const dataFormattata =
 </BaseLayout>
 
 <style>
-  /* ── Hero ── */
+  /* ── Hero: full-width photo with overlay, title on top ── */
   .nw-hero {
-    background: #0f1013;
-    padding: calc(var(--header-h) + 5vh) var(--pad-x) 6vh;
+    position: relative;
+    min-height: 52vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding-top: var(--header-h);
     border-bottom: 3px solid var(--color-accent);
   }
 
+  .nw-hero__bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #0f1013;
+  }
+
+  .nw-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .nw-hero__grad {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15,15,18,0.35) 0%, rgba(15,15,18,0.72) 60%, rgba(15,15,18,0.92) 100%);
+  }
+
   .nw-hero__inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
     max-width: var(--max-width);
     margin: 0 auto;
+    padding: 6vh var(--pad-x) 5vh;
     color: #ffffff;
   }
 
@@ -133,12 +168,12 @@ const dataFormattata =
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.4);
+    color: rgba(255,255,255,.55);
     text-decoration: none;
     transition: color 0.18s;
   }
 
-  .nw-hero__breadcrumb a:hover { color: rgba(255,255,255,.8); }
+  .nw-hero__breadcrumb a:hover { color: rgba(255,255,255,.9); }
 
   .nw-hero__meta {
     display: flex;
@@ -155,40 +190,39 @@ const dataFormattata =
     letter-spacing: 0.14em;
     text-transform: uppercase;
     padding: 0.3em 0.8em;
-    background: rgba(255,255,255,.07);
-    color: rgba(255,255,255,.7);
+    background: rgba(255,255,255,.1);
+    color: #ffffff;
     border-left: 3px solid var(--color-accent);
   }
 
   .nw-hero__date {
-    display: block;
     font-family: var(--font-body);
     font-size: clamp(12px, 0.9vw, 14px);
     font-weight: 300;
-    color: rgba(255,255,255,.4);
+    color: rgba(255,255,255,.7);
     letter-spacing: 0.06em;
-    margin-bottom: 1rem;
   }
 
   .nw-hero__title {
     font-family: var(--font-display);
-    font-size: clamp(2.2rem, 5.5vw, 6rem);
+    font-size: clamp(2.2rem, 5.5vw, 5.5rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
-    line-height: 0.9;
+    line-height: 0.95;
     color: #ffffff;
-    margin-bottom: 2rem;
+    margin-bottom: 1.6rem;
     max-width: 24ch;
+    text-wrap: balance;
   }
 
   .nw-hero__desc {
     font-family: var(--font-body);
-    font-size: clamp(17px, 1.2vw, 21px);
+    font-size: clamp(16px, 1.2vw, 20px);
     font-weight: 300;
-    line-height: 1.8;
-    color: rgba(255,255,255,.62);
-    max-width: 60ch;
+    line-height: 1.75;
+    color: rgba(255,255,255,.82);
+    max-width: 62ch;
   }
 
   /* ── Body ── */
@@ -206,19 +240,8 @@ const dataFormattata =
     align-items: start;
   }
 
-  .nw-body__media {
-    grid-column: 1;
-    margin-bottom: 1rem;
-  }
-
-  .nw-body__img {
-    width: 100%;
-    aspect-ratio: 16/8;
-    object-fit: cover;
-    display: block;
-  }
-
-  /* Prose */
+  /* Prose: base typography — spacing/bold/links handled by the global
+     .rich-body class (see src/styles/global.css) */
   .prose {
     font-family: var(--font-body);
     font-size: clamp(17px, 1.1vw, 20px);
@@ -226,24 +249,6 @@ const dataFormattata =
     line-height: 1.85;
     color: var(--color-text-light);
   }
-
-  .prose p { margin-bottom: 1.2em; }
-
-  .prose h2, .prose h3 {
-    font-family: var(--font-display);
-    font-weight: 800;
-    text-transform: uppercase;
-    color: var(--color-text);
-    margin-top: 1.8em;
-    margin-bottom: 0.6em;
-    letter-spacing: -0.01em;
-  }
-
-  .prose h2 { font-size: clamp(1.3rem, 2vw, 1.8rem); }
-  .prose h3 { font-size: clamp(1.1rem, 1.5vw, 1.4rem); }
-
-  .prose ul, .prose ol { padding-left: 1.5em; margin-bottom: 1em; }
-  .prose li { margin-bottom: 0.4em; }
 
   /* Sidebar */
   .nw-body__sidebar {
@@ -307,7 +312,7 @@ const dataFormattata =
   }
 
   @media (max-width: 560px) {
-    .nw-hero { padding-top: calc(var(--header-h) + 3vh); }
+    .nw-hero { min-height: 42vh; }
     .nw-hero__title { font-size: clamp(1.8rem, 8vw, 3rem); }
   }
 </style>
