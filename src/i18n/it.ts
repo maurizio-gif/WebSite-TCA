@@ -156,6 +156,7 @@ export const it = {
     newsTitle:     'Le ultime notizie',
     newsReadMore:  'Leggi tutto',
     newsClose:     'Chiudi',
+    newsPermalink: 'Apri come pagina',
 
     helpDeskEyebrow: 'Help Desk',
     helpDeskTitle:   'Come possiamo aiutarti?',

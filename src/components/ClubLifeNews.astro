@@ -30,6 +30,7 @@ const newsArticles = await Promise.all(entries.map(async (entry) => {
   const d = entry.data;
   return {
     slug: entry.slug,
+    permalinkHref: getLocalePath(lang, `/news/${entry.slug}`),
     categoria: tx(d.categoria, d.categoria_en),
     dataLabel: formatData(d.data),
     titolo: tx(d.titolo, d.titolo_en),
@@ -118,6 +119,9 @@ const newsArticles = await Promise.all(entries.map(async (entry) => {
             >{art.ctaLabel}</a>
           </div>
         )}
+        <div class="cl-news-modal__permalink">
+          <a href={art.permalinkHref}>{t.clubLife.newsPermalink} <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </div>
   </dialog>
@@ -378,6 +382,25 @@ const newsArticles = await Promise.all(entries.map(async (entry) => {
   .cl-news-modal__actions {
     margin-top: 1.5rem;
   }
+
+  .cl-news-modal__permalink {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cl-news-modal__permalink a {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: color 0.18s;
+  }
+
+  .cl-news-modal__permalink a:hover { color: var(--color-accent); }
 
   .cl-news-modal__prose :global(p) { margin-bottom: 1em; }
 
