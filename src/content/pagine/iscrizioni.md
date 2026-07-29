@@ -1,7 +1,7 @@
 ---
 _template: generica
-title: "Iscrizioni e Membership | TC Ambrosiano Milano"
-description: "Diventa socio del TC Ambrosiano: scopri le membership Silver, Gold e Platinum con i relativi prezzi e vantaggi. Iscriviti online in pochi minuti."
+title: "Iscrizioni e Membership | TC Ambrosiano Sport Club"
+description: "Diventa socio del TC Ambrosiano, sport club di Milano con tennis, padel, pickleball e preparazione atletica: scopri le membership Silver, Gold e Platinum. Iscriviti online."
 hero_eyebrow: "Diventa socio"
 hero_titolo: "Iscrizioni"
 hero_titolo_accent: "al TCA"
@@ -9,8 +9,8 @@ hero_sottotitolo: "Scegli la membership più adatta a te: campi, palestra, corsi
 hero_immagine: "/Tennis%20Adulti.avif"
 hero_immagine_alt: "Soci del TC Ambrosiano dopo una partita"
 hero_immagine_alt_en: "TCA members after a match"
-title_en: "Membership & Registration | TC Ambrosiano Milan"
-description_en: "Become a member of TC Ambrosiano: discover the Silver, Gold and Platinum memberships with prices and benefits. Sign up online in minutes."
+title_en: "Membership & Registration | TC Ambrosiano Sport Club"
+description_en: "Become a member of TC Ambrosiano, Milan's sport club for tennis, padel, pickleball and athletic training: discover the Silver, Gold and Platinum memberships. Sign up online."
 hero_eyebrow_en: "Become a member"
 hero_titolo_en: "Join"
 hero_titolo_accent_en: "TCA"

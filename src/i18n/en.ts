@@ -188,7 +188,7 @@ export const en: UI = {
     helpFormSub:     "Send us a message and we'll get back to you as soon as possible.",
   },
   meta: {
-    defaultDescription: 'Since 1963, home of the Avvenire Tournament, played on our courts since 1965. Sixteen courts, tennis school, padel, athletic training and activities for the whole family, close to Udine metro station in Milan.',
+    defaultDescription: "Milan's sport club since 1963: tennis, padel, pickleball, athletic training and conditioning for the whole family. Home of the Avvenire Tournament, close to Udine metro station.",
     switchLang:      'IT',
     switchLangLabel: "Passa all'italiano",
   },

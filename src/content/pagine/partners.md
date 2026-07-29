@@ -1,7 +1,7 @@
 ---
 _template: partners
-title: "Partner | TC Ambrosiano Milano"
-description: "I partner del TC Ambrosiano: CUPRA Lombarda Motori, Joma, HEAD e The Athlete Architects, in una location di grande tradizione tennistica."
+title: "Partner | TC Ambrosiano Sport Club"
+description: "I partner del TC Ambrosiano: CUPRA Lombarda Motori, Joma, HEAD e The Athlete Architects, nel nostro sport club di tennis, padel e preparazione atletica a Milano."
 hero_eyebrow: "Il Club"
 hero_titolo: "Partner"
 hero_titolo_accent: "del TCA"
@@ -9,8 +9,8 @@ hero_sottotitolo: "Essere partner del TC Ambrosiano è garanzia di vantaggi comm
 hero_immagine: "/0cd25eb6-cb2a-48cf-a65e-2a7107787fba_Web_Square-1PA_1811.avif"
 hero_immagine_alt: "Match con pubblico e banner sponsor al TC Ambrosiano"
 hero_immagine_alt_en: "Match with crowd and sponsor banners at TC Ambrosiano"
-title_en: "Partners | TC Ambrosiano Milan"
-description_en: "TC Ambrosiano's partners: CUPRA Lombarda Motori, Joma, HEAD and The Athlete Architects, in a location steeped in tennis tradition."
+title_en: "Partners | TC Ambrosiano Sport Club"
+description_en: "TC Ambrosiano's partners: CUPRA Lombarda Motori, Joma, HEAD and The Athlete Architects, at our tennis, padel and athletic training sport club in Milan."
 hero_eyebrow_en: "The Club"
 hero_titolo_en: "TCA"
 hero_titolo_accent_en: "Partners"
