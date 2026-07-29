@@ -179,7 +179,7 @@ export const it = {
     helpFormSub:     'Scrivici la tua richiesta: ti risponderemo il prima possibile.',
   },
   meta: {
-    defaultDescription: 'Dal 1963, il club del Torneo Avvenire, in campo dal 1965. 16 campi, scuola tennis, padel, preparazione atletica e attività per tutta la famiglia, a pochi passi dalla metro Udine.',
+    defaultDescription: 'Lo sport club di Milano dal 1963: tennis, padel, pickleball, preparazione atletica e training per tutta la famiglia. Il club del Torneo Avvenire, a pochi passi dalla metro Udine.',
     switchLang:      'EN',
     switchLangLabel: 'Switch to English',
   },
