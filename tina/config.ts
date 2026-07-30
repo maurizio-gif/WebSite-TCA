@@ -444,6 +444,67 @@ export default defineConfig({
           },
         ],
       },
+      // ─── DATI STAGIONALI DEI FORM ──────────────────────────────────────────
+      // File unico con quote, date e scadenze usate nei form di iscrizione
+      // Summer Camp e Scuola Tennis. Le etichette dei campi (nomi, testi
+      // fissi) restano nel codice: qui si modificano solo i valori che
+      // cambiano ogni stagione — così non serve un developer per aggiornare
+      // un prezzo o una data.
+      // ─────────────────────────────────────────────────────────────────────
+      {
+        name: 'moduli',
+        label: 'Dati Stagionali Form',
+        path: 'src/content/moduli',
+        format: 'md',
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          {
+            type: 'object',
+            name: 'camp_settimane',
+            label: 'Summer Camp — Settimane',
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.range || 'Settimana' }),
+            },
+            fields: [
+              { type: 'string', name: 'id', label: 'ID interno (es. w1) — non modificare', required: true },
+              { type: 'string', name: 'range', label: 'Intervallo date mostrato in tabella (es. "8/06 – 12/06")', required: true },
+              {
+                type: 'datetime',
+                name: 'fine',
+                label: 'Ultimo giorno della settimana',
+                required: true,
+                ui: { dateFormat: 'DD/MM/YYYY' },
+              },
+            ],
+          },
+          { type: 'string', name: 'camp_quota_soci', label: 'Summer Camp — Quota Soci (€/settimana)', required: true },
+          { type: 'string', name: 'camp_quota_soci_dal2', label: 'Summer Camp — Quota Soci dalla 2ª settimana o fratelli (€)', required: true },
+          { type: 'string', name: 'camp_quota_scuola', label: 'Summer Camp — Quota Scuola Tennis (€/settimana)', required: true },
+          { type: 'string', name: 'camp_quota_scuola_dal2', label: 'Summer Camp — Quota Scuola Tennis dalla 2ª settimana (€)', required: true },
+          { type: 'string', name: 'camp_quota_non_soci', label: 'Summer Camp — Quota Non Soci (€/settimana)', required: true },
+          { type: 'string', name: 'camp_quota_non_soci_dal2', label: 'Summer Camp — Quota Non Soci dalla 2ª settimana (€)', required: true },
+          { type: 'string', name: 'camp_pre_camp', label: 'Summer Camp — Costo Pre-Camp (€/settimana)', required: true },
+          { type: 'string', name: 'camp_caparra', label: 'Summer Camp — Caparra richiesta (€)', required: true },
+          { type: 'string', name: 'camp_csain', label: 'Summer Camp — Assicurazione CSAIN per non soci (€)', required: true },
+
+          { type: 'string', name: 'scuola_scadenza_preiscrizione', label: 'Scuola Tennis — Scadenza preiscrizione', required: true },
+          { type: 'string', name: 'scuola_scadenza_preiscrizione_en', label: '🇬🇧 Scadenza preiscrizione (inglese)', required: true },
+          { type: 'string', name: 'scuola_acconto', label: 'Scuola Tennis — Acconto richiesto (€)', required: true },
+          { type: 'string', name: 'scuola_prove_periodo1', label: 'Scuola Tennis — Prove, primo periodo', required: true },
+          { type: 'string', name: 'scuola_prove_periodo1_en', label: '🇬🇧 Prove, primo periodo (inglese)', required: true },
+          { type: 'string', name: 'scuola_prove_periodo2', label: 'Scuola Tennis — Prove, secondo periodo', required: true },
+          { type: 'string', name: 'scuola_prove_periodo2_en', label: '🇬🇧 Prove, secondo periodo (inglese)', required: true },
+          { type: 'string', name: 'scuola_inizio_corsi', label: 'Scuola Tennis — Inizio corsi', required: true },
+          { type: 'string', name: 'scuola_inizio_corsi_en', label: '🇬🇧 Inizio corsi (inglese)', required: true },
+          { type: 'string', name: 'scuola_mini_tennis_nati', label: 'Scuola Tennis — Mini Tennis, anni di nascita ammessi', required: true },
+          { type: 'string', name: 'scuola_mini_tennis_nati_en', label: '🇬🇧 Mini Tennis, anni di nascita (inglese)', required: true },
+          { type: 'string', name: 'scuola_tennis_nati', label: 'Scuola Tennis — Scuola Tennis, anni di nascita ammessi', required: true },
+          { type: 'string', name: 'scuola_tennis_nati_en', label: '🇬🇧 Scuola Tennis, anni di nascita (inglese)', required: true },
+        ],
+      },
       // ─── HELP DESK ─────────────────────────────────────────────────────────
       // Guide della knowledge base Club Life (sezione Help Desk).
       // Ogni guida è un file .md in src/content/helpdesk/
