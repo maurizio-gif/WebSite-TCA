@@ -451,7 +451,7 @@ const t = lang === 'en' ? {
   choice: t.errChoice,
   check: t.errCheck,
   consent: t.errConsent,
-}, WEEK_IDS: WEEKS.map((w) => w.id) }}>
+}, WEEK_IDS: WEEKS.map((w) => w.id), WEEK_LABELS: Object.fromEntries(WEEKS.map((w) => [w.id, w.range])) }}>
   const root = document.getElementById('sc-form-root');
 
   const WEBHOOK_ISCRIZIONE = 'https://automazione.n8ndevelop.it/webhook/tca-summer-camp';
@@ -553,8 +553,9 @@ const t = lang === 'en' ? {
   function collectPayload() {
     const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
     const radioVal = (name) => { const el = root.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; };
-    const weeks = Array.from(root.querySelectorAll('input[name="sc-week"]:checked')).map((el) => el.value);
-    const preCamp = Array.from(root.querySelectorAll('input[name="sc-precamp"]:checked')).map((el) => el.value);
+    // Invia la data della settimana (es. "20/07 – 24/07"), non l'id interno (es. "w7")
+    const weeks = Array.from(root.querySelectorAll('input[name="sc-week"]:checked')).map((el) => WEEK_LABELS[el.value] || el.value);
+    const preCamp = Array.from(root.querySelectorAll('input[name="sc-precamp"]:checked')).map((el) => WEEK_LABELS[el.value] || el.value);
 
     return {
       minore: {
