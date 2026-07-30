@@ -1,25 +1,20 @@
 ---
 import type { Lang } from '../i18n/utils';
 import prefissi from '../data/prefissi-telefonici';
+import { getEntry } from 'astro:content';
 
 interface Props { lang?: Lang; backHref?: string; }
 const { lang = 'it', backHref = '/summer-camps' } = Astro.props;
 
-// endISO = ultimo giorno della settimana (2026), usato lato client per nascondere le settimane già trascorse
-const WEEKS = [
-  { id: 'w1', range: '8/06 – 12/06', endISO: '2026-06-12' },
-  { id: 'w2', range: '15/06 – 19/06', endISO: '2026-06-19' },
-  { id: 'w3', range: '22/06 – 26/06', endISO: '2026-06-26' },
-  { id: 'w4', range: '29/06 – 3/07', endISO: '2026-07-03' },
-  { id: 'w5', range: '6/07 – 10/07', endISO: '2026-07-10' },
-  { id: 'w6', range: '13/07 – 17/07', endISO: '2026-07-17' },
-  { id: 'w7', range: '20/07 – 24/07', endISO: '2026-07-24' },
-  { id: 'w8', range: '27/07 – 31/07', endISO: '2026-07-31' },
-  { id: 'w9', range: '3/08 – 7/08', endISO: '2026-08-07' },
-  { id: 'w10', range: '24/08 – 28/08', endISO: '2026-08-28' },
-  { id: 'w11', range: '31/08 – 4/09', endISO: '2026-09-04' },
-  { id: 'w12', range: '7/09 – 11/09', endISO: '2026-09-11' },
-];
+// Quote, settimane e scadenze gestibili da TinaCMS → src/content/moduli/dati-stagionali.md
+const d = (await getEntry('moduli', 'dati-stagionali'))!.data;
+
+// endISO = ultimo giorno della settimana, usato lato client per nascondere le settimane già trascorse
+const WEEKS = d.camp_settimane.map((w) => ({
+  id: w.id,
+  range: w.range,
+  endISO: w.fine.toISOString().split('T')[0],
+}));
 
 const t = lang === 'en' ? {
   minorTitle: "Child's details",
@@ -54,8 +49,8 @@ const t = lang === 'en' ? {
   weeksSub: 'Choose the weeks of Summer Camp you want to enrol for, and add Pre-Camp where needed (from 8.00am).',
   weeksHeadWeek: 'Week',
   weeksHeadCamp: 'Summer Camp',
-  weeksHeadPre: 'Pre-Camp (+€25/week)',
-  quoteNotice: 'Rates: Members €260/week (€250 from the 2nd week or for siblings) · Tennis School students €270/week (€260) · Non-Members €295/week (€285). Member rates apply only to children regularly enrolled with a kids membership.',
+  weeksHeadPre: `Pre-Camp (+€${d.camp_pre_camp}/week)`,
+  quoteNotice: `Rates: Members €${d.camp_quota_soci}/week (€${d.camp_quota_soci_dal2} from the 2nd week or for siblings) · Tennis School students €${d.camp_quota_scuola}/week (€${d.camp_quota_scuola_dal2}) · Non-Members €${d.camp_quota_non_soci}/week (€${d.camp_quota_non_soci_dal2}). Member rates apply only to children regularly enrolled with a kids membership.`,
 
   healthTitle: 'Health & consents',
   healthLabel: 'Heart conditions / medication / intolerances / allergies / special diets',
@@ -63,7 +58,7 @@ const t = lang === 'en' ? {
   medicalCert: 'I confirm that I will submit a valid medical certificate at enrolment, as required.',
   termsNote: [
     'No refunds are given for cancellations or withdrawals.',
-    'At payment, a €50 deposit is required; non-members also pay a one-time €10 CSAIN insurance/membership fee.',
+    `At payment, a €${d.camp_caparra} deposit is required; non-members also pay a one-time €${d.camp_csain} CSAIN insurance/membership fee.`,
     'Weeks cannot be split.',
     'The welcome kit, lunch and snacks (in-house catering) are included in the price.',
     'Enrolment is considered valid once payment is received by the Club.',
@@ -81,7 +76,7 @@ const t = lang === 'en' ? {
 
   confirmTitle: 'Thank<br><em>you!</em>',
   confirmNote: 'Thank you for your interest — we’ve received your enrolment request.',
-  confirmPayNote: "A €50 deposit (+€10 CSAIN fee for non-members) is required to confirm your spot. Payment can be made at reception or by bank transfer within 10 days of the camp start date, indicating in the description: <strong>Summer Camp deposit and the child's first and last name.</strong>",
+  confirmPayNote: `A €${d.camp_caparra} deposit (+€${d.camp_csain} CSAIN fee for non-members) is required to confirm your spot. Payment can be made at reception or by bank transfer within 10 days of the camp start date, indicating in the description: <strong>Summer Camp deposit and the child's first and last name.</strong>`,
   payName: 'Name',
   payIban: 'IBAN',
   payBic: 'BIC',
@@ -126,8 +121,8 @@ const t = lang === 'en' ? {
   weeksSub: 'Scegli le settimane di Summer Camp a cui iscriverti, e aggiungi il Pre-Camp dove serve (dalle 8.00).',
   weeksHeadWeek: 'Settimana',
   weeksHeadCamp: 'Summer Camp',
-  weeksHeadPre: 'Pre-Camp (+25€/sett.)',
-  quoteNotice: 'Quote: Soci 260€/sett. (250€ dalla 2ª settimana o per fratelli) · Scuola Tennis 270€/sett. (260€) · Non Soci 295€/sett. (285€). Le quote Soci si applicano solo ai bambini regolarmente iscritti con membership kids.',
+  weeksHeadPre: `Pre-Camp (+${d.camp_pre_camp}€/sett.)`,
+  quoteNotice: `Quote: Soci ${d.camp_quota_soci}€/sett. (${d.camp_quota_soci_dal2}€ dalla 2ª settimana o per fratelli) · Scuola Tennis ${d.camp_quota_scuola}€/sett. (${d.camp_quota_scuola_dal2}€) · Non Soci ${d.camp_quota_non_soci}€/sett. (${d.camp_quota_non_soci_dal2}€). Le quote Soci si applicano solo ai bambini regolarmente iscritti con membership kids.`,
 
   healthTitle: 'Salute e consensi',
   healthLabel: 'Cardiopatie / uso farmaci / intolleranze / allergie / diete speciali',
@@ -135,7 +130,7 @@ const t = lang === 'en' ? {
   medicalCert: 'Confermo che presenterò un certificato medico in corso di validità al momento dell’iscrizione, come richiesto.',
   termsNote: [
     'Non sono previsti rimborsi per rinunce o disdette;',
-    'al momento del pagamento è richiesto il versamento di una caparra di 50€; per i non soci è previsto inoltre un contributo di 10€ per l’assicurazione CSAIN;',
+    `al momento del pagamento è richiesto il versamento di una caparra di ${d.camp_caparra}€; per i non soci è previsto inoltre un contributo di ${d.camp_csain}€ per l’assicurazione CSAIN;`,
     'la settimana non è frazionabile;',
     'il kit di benvenuto, il pranzo e le merende, con ristorazione interna, sono inclusi nel prezzo;',
     'l’iscrizione verrà considerata effettiva al ricevimento del pagamento da parte del Club;',
@@ -153,7 +148,7 @@ const t = lang === 'en' ? {
 
   confirmTitle: 'Grazie!',
   confirmNote: 'Ti ringraziamo per l’interesse: abbiamo ricevuto la tua richiesta di iscrizione.',
-  confirmPayNote: 'Per confermare il posto è richiesta una caparra di 50€ (+10€ assicurazione CSAIN per i non soci). Il pagamento può essere effettuato in Reception oppure tramite bonifico bancario entro 10 giorni dall’inizio del camp, indicando nella causale: <strong>Acconto Summer Camp e nome e cognome del bambino.</strong>',
+  confirmPayNote: `Per confermare il posto è richiesta una caparra di ${d.camp_caparra}€ (+${d.camp_csain}€ assicurazione CSAIN per i non soci). Il pagamento può essere effettuato in Reception oppure tramite bonifico bancario entro 10 giorni dall’inizio del camp, indicando nella causale: <strong>Acconto Summer Camp e nome e cognome del bambino.</strong>`,
   payName: 'Nome',
   payIban: 'IBAN',
   payBic: 'BIC',

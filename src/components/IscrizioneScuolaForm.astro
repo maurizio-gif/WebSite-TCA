@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '../i18n/utils';
 import prefissi from '../data/prefissi-telefonici';
+import { getEntry } from 'astro:content';
 
 interface Props { lang?: Lang; backHref?: string; }
 const { lang = 'it', backHref = '/scuola-tennis' } = Astro.props;
@@ -8,10 +9,13 @@ const { lang = 'it', backHref = '/scuola-tennis' } = Astro.props;
 const SIZES = ['6XS','5XS','4XS','3XS','2XS','XS','S','M','L','XL'];
 const PREP_SLOTS = ['14:30','15:30','16:30','17:30','18:30'];
 
+// Scadenze, acconto e fasce d'età gestibili da TinaCMS → src/content/moduli/dati-stagionali.md
+const d = (await getEntry('moduli', 'dati-stagionali'))!.data;
+
 const t = lang === 'en' ? {
-  intro: 'Pre-enrolment is possible until <strong>15 August 2026</strong> and is considered valid upon payment of a deposit of <strong>€300</strong>.',
-  introTrials: 'Trials: from 1 to 4 September (reserved for pre-enrolled students) and from 7 to 18 September (for new enrolments), 15.00–18.30, Monday to Friday.',
-  introStart: 'Courses start: 21 September.',
+  intro: `Pre-enrolment is possible until <strong>${d.scuola_scadenza_preiscrizione_en}</strong> and is considered valid upon payment of a deposit of <strong>€${d.scuola_acconto}</strong>.`,
+  introTrials: `Trials: ${d.scuola_prove_periodo1_en} (reserved for pre-enrolled students) and ${d.scuola_prove_periodo2_en} (for new enrolments), 15.00–18.30, Monday to Friday.`,
+  introStart: `Courses start: ${d.scuola_inizio_corsi_en}.`,
 
   minorTitle: "Minor's details",
   minorSub: 'Enter the details of the child/teenager to be enrolled.',
@@ -38,10 +42,10 @@ const t = lang === 'en' ? {
 
   detailsTitle: 'Enrolment details',
   miniLabel: 'Mini-Tennis School',
-  miniAge: '(born in 2020 and 2021)',
+  miniAge: `(born in ${d.scuola_mini_tennis_nati_en})`,
   miniDesc: '60-minute lessons, tennis only. Frequency: 1 or 2 times a week.',
   tennisLabel: 'Tennis School',
-  tennisAge: '(born in 2019 and earlier)',
+  tennisAge: `(born in ${d.scuola_tennis_nati_en})`,
   tennisDesc: '60 minutes of tennis + 30 minutes of athletics. Frequency: 1, 2 or 3 times a week.',
   warnSaldo: 'To consider the enrolment valid, the full fee must be paid before the activities begin.',
   warnFitp: 'Please note that a valid FITP membership card is required (the fee is needed to complete enrolment). A valid medical certificate must also be provided.',
@@ -83,7 +87,7 @@ const t = lang === 'en' ? {
 
   termsTitle: 'Terms & Conditions',
   termsList: [
-    'This pre-enrolment is considered valid subject to payment of the €300 deposit by secure online payment or bank transfer by 15 August 2026;',
+    `This pre-enrolment is considered valid subject to payment of the €${d.scuola_acconto} deposit by secure online payment or bank transfer by ${d.scuola_scadenza_preiscrizione_en};`,
     'the enrolment is to be considered a confirmatory deposit, therefore non-refundable in case of cancellation or non-attendance;',
     'failure to pay fees by the due dates will be considered a withdrawal from the course, and previously paid fees will not be refunded in any way;',
     'withdrawal from the courses during the year, for any reason, does not give the right to any refund, not even partial;',
@@ -116,9 +120,9 @@ const t = lang === 'en' ? {
   errCheck: 'Please select at least one option.',
   errConsent: 'This consent is required.',
 } : {
-  intro: 'La preiscrizione sarà possibile fino al <strong>15 agosto 2026</strong> e si intenderà valida a fronte del versamento di un acconto pari a <strong>€300</strong>.',
-  introTrials: 'Provini: dall’1 al 4 settembre (riservati alle preiscrizioni) e dal 7 al 18 settembre (per le nuove iscrizioni), 15.00–18.30, dal lunedì al venerdì.',
-  introStart: 'Inizio dei corsi: 21 settembre.',
+  intro: `La preiscrizione sarà possibile fino al <strong>${d.scuola_scadenza_preiscrizione}</strong> e si intenderà valida a fronte del versamento di un acconto pari a <strong>€${d.scuola_acconto}</strong>.`,
+  introTrials: `Provini: ${d.scuola_prove_periodo1} (riservati alle preiscrizioni) e ${d.scuola_prove_periodo2} (per le nuove iscrizioni), 15.00–18.30, dal lunedì al venerdì.`,
+  introStart: `Inizio dei corsi: ${d.scuola_inizio_corsi}.`,
 
   minorTitle: 'Dati del minore',
   minorSub: 'Inserisci di seguito i dati del bambino/ragazzo da iscrivere.',
@@ -145,10 +149,10 @@ const t = lang === 'en' ? {
 
   detailsTitle: 'Dettagli iscrizione',
   miniLabel: 'Scuola mini-tennis',
-  miniAge: '(nati nel 2020 e 2021)',
+  miniAge: `(nati nel ${d.scuola_mini_tennis_nati})`,
   miniDesc: 'Lezioni di 60 minuti, solo tennis. Frequenza: 1 o 2 volte a settimana.',
   tennisLabel: 'Scuola tennis',
-  tennisAge: '(nati nel 2019 e anni precedenti)',
+  tennisAge: `(nati nel ${d.scuola_tennis_nati})`,
   tennisDesc: 'Lezioni di 60 minuti di tennis + 30 minuti di atletica. Frequenza: 1, 2 o 3 volte a settimana.',
   warnSaldo: "Per considerare valida l'iscrizione, sarà necessario provvedere al saldo dell'intera quota prima dell'inizio delle attività.",
   warnFitp: "Si prega di notare che è richiesto il possesso della tessera FITP (in corso di validità), la cui quota è necessaria per completare l'iscrizione. Inoltre, è obbligatorio presentare un certificato medico in corso di validità.",
@@ -190,7 +194,7 @@ const t = lang === 'en' ? {
 
   termsTitle: 'Termini e condizioni',
   termsList: [
-    'la presente preiscrizione è ritenuta valida subordinatamente al versamento dell’acconto di €300 tramite pagamento sicuro online oppure bonifico bancario entro il 15 agosto 2026;',
+    `la presente preiscrizione è ritenuta valida subordinatamente al versamento dell’acconto di €${d.scuola_acconto} tramite pagamento sicuro online oppure bonifico bancario entro il ${d.scuola_scadenza_preiscrizione};`,
     'l’iscrizione è da intendersi quale caparra confirmatoria, quindi non rimborsabile nel caso di disdetta dell’iscrizione o di mancata frequenza del corso;',
     'il mancato pagamento delle quote alle scadenze previste sarà considerato quale rinuncia al corso e le quote precedentemente versate non verranno in alcun modo rimborsate;',
     'l’eventuale ritiro dai corsi durante l’anno, per qualsiasi motivo, non dà diritto ad alcun rimborso, neppure parziale;',

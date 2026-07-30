@@ -722,4 +722,45 @@ const legal = defineCollection({
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, planning, membership, info, legal };
+// ─── DATI STAGIONALI DEI FORM ──────────────────────────────────────────────────
+// File unico (dati-stagionali.md) con quote, date e scadenze usate nei form di
+// iscrizione Summer Camp e Scuola Tennis (SummerCampForm.astro,
+// IscrizioneScuolaForm.astro). Le etichette dei campi restano nel codice: qui
+// vive solo ciò che cambia ogni stagione. Gestibile da TinaCMS → collection
+// 'moduli'.
+// ─────────────────────────────────────────────────────────────────────────────
+const moduli = defineCollection({
+  type: 'content',
+  schema: z.object({
+    camp_settimane: z.array(z.object({
+      id: z.string(),
+      range: z.string(),
+      fine: z.date(),
+    })),
+    camp_quota_soci: z.string(),
+    camp_quota_soci_dal2: z.string(),
+    camp_quota_scuola: z.string(),
+    camp_quota_scuola_dal2: z.string(),
+    camp_quota_non_soci: z.string(),
+    camp_quota_non_soci_dal2: z.string(),
+    camp_pre_camp: z.string(),
+    camp_caparra: z.string(),
+    camp_csain: z.string(),
+
+    scuola_scadenza_preiscrizione: z.string(),
+    scuola_scadenza_preiscrizione_en: z.string(),
+    scuola_acconto: z.string(),
+    scuola_prove_periodo1: z.string(),
+    scuola_prove_periodo1_en: z.string(),
+    scuola_prove_periodo2: z.string(),
+    scuola_prove_periodo2_en: z.string(),
+    scuola_inizio_corsi: z.string(),
+    scuola_inizio_corsi_en: z.string(),
+    scuola_mini_tennis_nati: z.string(),
+    scuola_mini_tennis_nati_en: z.string(),
+    scuola_tennis_nati: z.string(),
+    scuola_tennis_nati_en: z.string(),
+  }),
+});
+
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, membership, info, legal, moduli };
