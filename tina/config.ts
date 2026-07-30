@@ -1,4 +1,5 @@
 import { defineConfig } from 'tinacms';
+import type { Collection, TinaField } from 'tinacms';
 
 // Credenziali TinaCloud — aggiungile come variabili d'ambiente:
 //   TINA_CLIENT_ID  →  Vercel: Project Settings > Environment Variables
@@ -696,9 +697,9 @@ export default defineConfig({
       // l'elenco di tutte le pagine del sito, ognuna con SEO + hero (comuni a
       // tutte) più i propri campi di corpo pagina, dove presenti.
       // ───────────────────────────────────────────────────────────────────────
-      (() => {
+      ((): Collection => {
         // Campi comuni a ogni pagina (SEO + hero): riusati in ogni template.
-        const heroSeoFields = [
+        const heroSeoFields: TinaField[] = [
           { type: 'string', name: 'title', label: 'Titolo SEO', isTitle: true, required: true },
           { type: 'string', name: 'description', label: 'Descrizione SEO', required: true, ui: { component: 'textarea' } },
           { type: 'string', name: 'hero_eyebrow', label: 'Hero — eyebrow' },
@@ -719,7 +720,7 @@ export default defineConfig({
         // FAQ in fondo alle pagine attività (accordion + schema FAQPage per
         // Google e assistenti AI). Le risposte possono contenere HTML:
         // grassetto con <strong>testo</strong> e link con <a href="/pagina">testo</a>.
-        const faqFields = [
+        const faqFields: TinaField[] = [
           {
             type: 'object', name: 'faq', label: 'FAQ (domande frequenti in fondo alla pagina)', list: true,
             ui: { itemProps: (item) => ({ label: item?.domanda || 'Nuova domanda' }) },

@@ -1,0 +1,37 @@
+name: CI
+
+# Verifica ogni PR e ogni push su main prima che raggiunga la produzione:
+# tipi Astro, build completa e assenza di redirect self-loop in vercel.json
+# (il bug che ha reso /agonistica, /tennis e le pagine /news irraggiungibili
+# in produzione — vedi scripts/check-vercel-redirects.mjs).
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Controlla redirect vercel.json (self-loop)
+        run: npm run check:redirects
+
+      - name: Type check
+        run: npm run check
+
+      - name: Build
+        run: npm run build

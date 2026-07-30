@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '../i18n/utils';
 import prefissi from '../data/prefissi-telefonici';
+import { bankDetails } from '../data/bankDetails';
 import { getEntry } from 'astro:content';
 
 interface Props { lang?: Lang; backHref?: string; }
@@ -490,9 +491,9 @@ const t = lang === 'en' ? {
     <p class="lm__confirm-note">{t.confirmNote}</p>
     <p class="lm__confirm-note" set:html={t.confirmPayNote} />
     <div class="lm__confirm-summary">
-      <div class="lm__confirm-row"><span>{t.payName}</span><span>Tennis Club Ambrosiano SSD a R.L.</span></div>
-      <div class="lm__confirm-row"><span>{t.payIban}</span><span>IE50SUMU99036511541465</span></div>
-      <div class="lm__confirm-row"><span>{t.payBic}</span><span>SUMUIE22XXX</span></div>
+      <div class="lm__confirm-row"><span>{t.payName}</span><span>{bankDetails.intestatario}</span></div>
+      <div class="lm__confirm-row"><span>{t.payIban}</span><span>{bankDetails.iban}</span></div>
+      <div class="lm__confirm-row"><span>{t.payBic}</span><span>{bankDetails.bic}</span></div>
       <div class="lm__confirm-row"><span>{t.payReason}</span><span>{t.payReasonVal}</span></div>
     </div>
     <a class="btn btn-red lm__confirm-cta" href={backHref}>{t.backToPage}</a>
