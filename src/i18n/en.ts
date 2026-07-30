@@ -151,13 +151,6 @@ export const en: UI = {
     inviteText:       'Invite anyone to discover the Club: courts, classes and community.',
     inviteCta:        'Invite a Friend',
 
-    featuredEyebrow: 'Featured',
-    featuredTitle:   "What's happening at the Club",
-    featuredEvento:      'Event',
-    featuredIscrizione:  'Membership',
-    featuredHelpdesk:    'Guide',
-    featuredCta:     'Find Out More',
-
     eventiEyebrow: 'On the calendar',
     eventiTitle:   'Upcoming events',
 

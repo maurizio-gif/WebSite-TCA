@@ -774,7 +774,7 @@ const communityFeatures = [
     var track = document.querySelector('[data-lp-gallery-track]');
     if (!track) return;
 
-    var lightbox = document.querySelector('[data-lp-lightbox]');
+    var lightbox = document.querySelector<HTMLElement>('[data-lp-lightbox]');
     var lightboxImg = lightbox ? lightbox.querySelector('[data-lightbox-img]') : null;
     var closeBtn = lightbox ? lightbox.querySelector('[data-lightbox-close]') : null;
 

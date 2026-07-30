@@ -37,8 +37,8 @@ const related = (await getCollection('helpdesk', (g) => g.data.categoria === d.c
 
 <BaseLayout
   lang={lang}
-  title={`${entry.titolo} — Help Desk | TC Ambrosiano`}
-  description={entry.sintesi}
+  title={`${d.titolo} — Help Desk | TC Ambrosiano`}
+  description={d.sintesi}
   hideChrome
 >
   <ClubLifeLangSwitch lang={lang} />

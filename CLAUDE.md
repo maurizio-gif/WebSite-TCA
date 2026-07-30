@@ -10,7 +10,7 @@ fonte di verità per stack, flusso di lavoro, struttura e regole.
 - **CSS puro / CSS custom properties** — nessun framework CSS, nessuna libreria UI
 - **TinaCMS** — CMS headless (scaffold pronto; attivare con credenziali TinaCloud)
 - **GitHub** — versioning (`origin` → github.com/maurizio-gif/WebSite-TCA.git)
-- **Netlify** — deploy produzione (build: `npm run build`, publish: `dist`)
+- **Vercel** — deploy produzione (`vercel.json` in root: redirect e config reali di tcambrosiano.com)
 - **GitHub Pages** — deploy preview (`maurizio-gif.github.io/WebSite-TCA/`)
 
 ---
