@@ -386,12 +386,13 @@ export function initLeadForm(root, options) {
     return slots;
   }
 
+  // Visita in sede: slot ogni 30 minuti (la richiamata resta a 20)
   function slotsVisit(date) {
     var day=date.getDay(), isWE=(day===0||day===6), slots=[];
-    if(isWE){ for(var h=9;h<19;h++) for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m)); }
+    if(isWE){ for(var h=9;h<19;h++) for(var m=0;m<60;m+=30) slots.push(pad2(h)+':'+pad2(m)); }
     else {
-      for(var h=9;h<13;h++)  for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m));
-      for(var h=15;h<20;h++) for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m));
+      for(var h=9;h<13;h++)  for(var m=0;m<60;m+=30) slots.push(pad2(h)+':'+pad2(m));
+      for(var h=15;h<20;h++) for(var m=0;m<60;m+=30) slots.push(pad2(h)+':'+pad2(m));
     }
     return slots;
   }
