@@ -1,9 +1,9 @@
 ---
 import LeadFormBody from "./LeadFormBody.astro";
-import type { Lang } from '../i18n/utils';
+import { publicUrl, type Lang } from '../i18n/utils';
 
-interface Props { lang?: Lang; standalone?: boolean; standaloneTitle?: string; }
-const { lang = 'it', standalone = false, standaloneTitle } = Astro.props;
+interface Props { lang?: Lang; standalone?: boolean; standaloneTitle?: string; standaloneEyebrow?: string; }
+const { lang = 'it', standalone = false, standaloneTitle, standaloneEyebrow } = Astro.props;
 
 const WEBHOOK_CHECK = '';
 const WEBHOOK_LEAD  = '';
@@ -20,6 +20,22 @@ const lfi = lang === 'en' ? {
 ---
 
 <section class={standalone ? "lfi lfi--standalone" : "lfi"}>
+
+  <!-- Masthead: logo + titolo, solo in modalità standalone (landing da QR/link diretto) -->
+  {standalone && (
+    <div class="lfi__masthead">
+      <img
+        src={publicUrl('/logos/tca-logo.png')}
+        alt="TC Ambrosiano"
+        class="lfi__masthead-logo"
+        width="225"
+        height="224"
+      />
+      {standaloneEyebrow && <span class="lfi__masthead-eyebrow">{standaloneEyebrow}</span>}
+      {standaloneTitle && <h1 class="lfi__standalone-title">{standaloneTitle}</h1>}
+    </div>
+  )}
+
   <div class="lfi__inner">
 
     <!-- Left: intro (nascosta in modalità standalone: solo form) -->
@@ -29,10 +45,6 @@ const lfi = lang === 'en' ? {
         <h2 class="lfi__title" set:html={lfi.title} />
         <p class="lfi__sub">{lfi.sub}</p>
       </div>
-    )}
-
-    {standalone && standaloneTitle && (
-      <h1 class="lfi__standalone-title">{standaloneTitle}</h1>
     )}
 
     <!-- Right: form panel -->
@@ -114,38 +126,71 @@ const lfi = lang === 'en' ? {
     .lfi__sub { max-width: 100%; }
   }
 
-  /* ── Standalone: solo il form, a schermo intero (es. landing da QR code) ── */
+  /* ══════════════════════════════════════════════════════════════
+     Standalone: pagina a schermo intero, solo logo + titolo + form
+     (landing da QR code/link diretto, pensata per smartphone)
+  ══════════════════════════════════════════════════════════════ */
   .lfi--standalone {
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 4vh var(--pad-x);
+    padding: 0;
     border-top: none;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% 0%, rgba(139, 26, 26, 0.5), transparent 65%),
+      #0f1013;
   }
 
-  .lfi--standalone .lfi__inner {
-    grid-template-columns: 1fr;
-    max-width: 620px;
-    width: 100%;
-    margin: 0 auto;
+  .lfi__masthead {
+    text-align: center;
+    padding: 7vh var(--pad-x) 9vh;
+  }
+
+  .lfi__masthead-logo {
+    height: 46px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.95;
+    margin: 0 auto 18px;
+  }
+
+  .lfi__masthead-eyebrow {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 12px;
   }
 
   .lfi__standalone-title {
     font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-size: clamp(1.9rem, 8vw, 2.7rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
     line-height: 1;
-    color: var(--color-text);
-    text-align: center;
-    margin: 0 0 1.5rem;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .lfi--standalone .lfi__inner {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+    width: 100%;
+    margin: -7vh auto 0;
+    padding: 0 var(--pad-x) 6vh;
+    position: relative;
+    z-index: 2;
+  }
+
+  .lfi--standalone .lfi__panel {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
   }
 
   @media (max-width: 560px) {
-    .lfi--standalone {
-      padding: 3vh 16px;
-    }
+    .lfi__masthead { padding: 6vh 20px 8vh; }
+    .lfi--standalone .lfi__inner { padding: 0 16px 5vh; margin-top: -6vh; }
   }
 </style>
 
