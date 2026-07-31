@@ -16,9 +16,10 @@ interface Props {
   lang?: Lang;
   hideLeadFormInline?: boolean;
   hideChrome?: boolean;
+  leadFormStandalone?: boolean;
 }
 
-const { title, description, image, imageAlt, lang: langProp, hideLeadFormInline = false, hideChrome = false } = Astro.props;
+const { title, description, image, imageAlt, lang: langProp, hideLeadFormInline = false, hideChrome = false, leadFormStandalone = false } = Astro.props;
 
 const lang: Lang = langProp ?? getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -420,7 +421,7 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
     <main class="site-main">
       <slot />
     </main>
-    {!hideLeadFormInline && <LeadFormInline lang={lang} />}
+    {!hideLeadFormInline && <LeadFormInline lang={lang} standalone={leadFormStandalone} />}
     {!hideChrome && <InfoPratiche lang={lang} />}
     {!hideChrome && <AffiliazioniSlider lang={lang} />}
     {!hideChrome && <Footer lang={lang} />}
