@@ -2,7 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getEntry } from "astro:content";
 
-// SEO + intestazione gestibili da TinaCMS → src/content/pagine/contatti.md
+// SEO gestibile da TinaCMS → src/content/pagine/contatti.md
+// Pagina landing a schermo intero (usata per link diretti/QR code): solo
+// il form, senza navbar/footer né testo introduttivo. Vedi hideChrome e
+// leadFormStandalone su BaseLayout.
 const d = (await getEntry("pagine", "contatti"))!.data;
 ---
 
@@ -11,44 +14,7 @@ const d = (await getEntry("pagine", "contatti"))!.data;
   description={d.description}
   image={d.hero_immagine}
   imageAlt={d.hero_immagine_alt}
+  hideChrome
+  leadFormStandalone
 >
-  <div class="page-header">
-    <div class="page-header__inner">
-      <span class="eyebrow">{d.hero_eyebrow}</span>
-      <h1 class="page-header__title">{d.hero_titolo}</h1>
-      <p class="page-header__sub">{d.hero_sottotitolo}</p>
-    </div>
-  </div>
-
 </BaseLayout>
-
-<style>
-  .page-header {
-    padding: calc(var(--header-h) + 6vh) var(--pad-x) 5vh;
-    background: var(--color-off-white);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .page-header__inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-  }
-
-  .page-header__title {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 7vw, 7rem);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: -0.01em;
-    line-height: 0.92;
-    margin-bottom: 1.5vh;
-  }
-
-  .page-header__sub {
-    font-family: var(--font-body);
-    font-size: clamp(16px, 1.1vw, 20px);
-    font-weight: 300;
-    line-height: 1.7;
-    color: var(--color-text-light);
-  }
-</style>
