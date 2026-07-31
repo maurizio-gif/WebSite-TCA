@@ -2,8 +2,8 @@
 import LeadFormBody from "./LeadFormBody.astro";
 import type { Lang } from '../i18n/utils';
 
-interface Props { lang?: Lang; standalone?: boolean; }
-const { lang = 'it', standalone = false } = Astro.props;
+interface Props { lang?: Lang; standalone?: boolean; standaloneTitle?: string; }
+const { lang = 'it', standalone = false, standaloneTitle } = Astro.props;
 
 const WEBHOOK_CHECK = '';
 const WEBHOOK_LEAD  = '';
@@ -29,6 +29,10 @@ const lfi = lang === 'en' ? {
         <h2 class="lfi__title" set:html={lfi.title} />
         <p class="lfi__sub">{lfi.sub}</p>
       </div>
+    )}
+
+    {standalone && standaloneTitle && (
+      <h1 class="lfi__standalone-title">{standaloneTitle}</h1>
     )}
 
     <!-- Right: form panel -->
@@ -124,6 +128,18 @@ const lfi = lang === 'en' ? {
     max-width: 620px;
     width: 100%;
     margin: 0 auto;
+  }
+
+  .lfi__standalone-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: var(--color-text);
+    text-align: center;
+    margin: 0 0 1.5rem;
   }
 
   @media (max-width: 560px) {
