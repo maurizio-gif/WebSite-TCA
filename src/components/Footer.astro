@@ -127,6 +127,20 @@ const columns = [
   </div>
 </footer>
 
+<div class="powered-by">
+  <a class="powered-by__link" href="https://www.ready2digital.it" target="_blank" rel="noopener">
+    <span class="powered-by__text">Powered by</span>
+    <img
+      src={publicUrl('/logos/ready2digital.png')}
+      alt="Ready2Digital"
+      class="powered-by__logo"
+      width="993"
+      height="192"
+      loading="lazy"
+    />
+  </a>
+</div>
+
 <style>
   .footer {
     background: #0f1013;
@@ -278,5 +292,34 @@ const columns = [
 
   @media (max-width: 400px) {
     .footer__inner { grid-template-columns: 1fr; }
+  }
+
+  .powered-by {
+    background: var(--color-bg);
+    padding: 0.9rem var(--pad-x);
+    display: flex;
+    justify-content: center;
+  }
+
+  .powered-by__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.18s;
+  }
+  .powered-by__link:hover { opacity: 1; }
+
+  .powered-by__text {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--color-text-light);
+  }
+
+  .powered-by__logo {
+    height: 14px;
+    width: auto;
   }
 </style>
