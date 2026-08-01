@@ -41,7 +41,6 @@
     { "source": "/en/tennis-padel", "destination": "/en/tennis", "permanent": true },
     { "source": "/en/fitness-group-exercise", "destination": "/en/preparazione-atletica", "permanent": true },
     { "source": "/en/join-now", "destination": "/en/iscrizioni", "permanent": true },
-    { "source": "/en/news/:path*", "destination": "/en/club-life", "permanent": true },
     { "source": "/en/news", "destination": "/en/club-life", "permanent": true },
     { "source": "/en/terms-conditions", "destination": "/en/regolamento", "permanent": true },
 
@@ -63,7 +62,6 @@
 
     { "source": "/it/milan/club-ambrosiano/:path*", "destination": "/", "permanent": true },
     { "source": "/en/milan/club-ambrosiano/:path*", "destination": "/en", "permanent": true },
-    { "source": "/it/:path*", "destination": "/", "permanent": true },
-    { "source": "/en/:path+", "destination": "/en", "permanent": true }
+    { "source": "/it/:path*", "destination": "/", "permanent": true }
   ]
 }
