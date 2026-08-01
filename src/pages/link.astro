@@ -63,9 +63,17 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
 </BaseLayout>
 
 <style>
+  /* Tutto il contenuto sta in una sola schermata di smartphone, senza
+     scroll: 100svh (non 100vh) tiene conto della barra degli indirizzi
+     del browser mobile, e ogni spaziatura qui sotto è tarata stretta
+     apposta per stare nell'altezza utile reale di un telefono. */
   .linkbio {
-    min-height: 100vh;
+    height: 100svh;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
     background:
       radial-gradient(ellipse 120% 60% at 50% 0%, rgba(139, 26, 26, 0.5), transparent 65%),
       #0f1013;
@@ -73,31 +81,32 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
 
   .linkbio__masthead {
     text-align: center;
-    padding: 7vh var(--pad-x) 6vh;
+    padding: 1.5svh var(--pad-x) 2svh;
+    flex-shrink: 0;
   }
 
   .linkbio__logo {
-    height: 46px;
+    height: clamp(26px, 6svh, 38px);
     width: auto;
     filter: brightness(0) invert(1);
     opacity: 0.95;
-    margin: 0 auto 18px;
+    margin: 0 auto clamp(6px, 1.4svh, 12px);
   }
 
   .linkbio__eyebrow {
     display: block;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 12px;
+    margin-bottom: clamp(4px, 1svh, 8px);
   }
 
   .linkbio__title {
     font-family: var(--font-display);
-    font-size: clamp(1.9rem, 8vw, 2.4rem);
+    font-size: clamp(1.3rem, 6.5svh, 2rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
@@ -110,10 +119,12 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
     max-width: 480px;
     width: 100%;
     margin: 0 auto;
-    padding: 0 var(--pad-x) 8vh;
+    padding: 0 var(--pad-x) 1.5svh;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: clamp(6px, 1.2svh, 10px);
+    flex-shrink: 1;
+    min-height: 0;
   }
 
   .linkbio__link {
@@ -121,7 +132,7 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 1.15rem 1.4rem;
+    padding: clamp(0.5rem, 1.6svh, 0.85rem) 1.2rem;
     background: #fbf7f5;
     border: 1px solid rgba(139, 26, 26, 0.18);
     border-left: 3px solid var(--color-accent);
@@ -137,7 +148,7 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
 
   .linkbio__link-label {
     font-family: var(--font-display);
-    font-size: clamp(1rem, 4vw, 1.15rem);
+    font-size: clamp(0.85rem, 3.4svh, 1.05rem);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: -0.01em;
@@ -146,7 +157,7 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
 
   .linkbio__link-arrow {
     font-family: var(--font-display);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--color-accent);
     flex-shrink: 0;
@@ -157,15 +168,16 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3px;
-    margin-top: 10px;
-    padding: 1rem 1.4rem;
+    gap: 2px;
+    margin-top: clamp(2px, 0.6svh, 6px);
+    padding: clamp(0.4rem, 1.2svh, 0.7rem) 1.2rem;
     background: transparent;
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     border-radius: 999px;
     text-align: center;
     text-decoration: none;
     transition: border-color 0.18s, background 0.18s;
+    flex-shrink: 0;
   }
 
   .linkbio__home:hover,
@@ -176,7 +188,7 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
 
   .linkbio__home-label {
     font-family: var(--font-display);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -185,13 +197,13 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
 
   .linkbio__home-sub {
     font-family: var(--font-body);
-    font-size: 11.5px;
+    font-size: 10.5px;
     font-weight: 300;
     color: rgba(255, 255, 255, 0.55);
   }
 
   @media (max-width: 560px) {
-    .linkbio__masthead { padding: 6vh 20px 5vh; }
-    .linkbio__list { padding: 0 16px 6vh; }
+    .linkbio__masthead { padding: 1.5svh 16px 2svh; }
+    .linkbio__list { padding: 0 16px 1.5svh; }
   }
 </style>
