@@ -115,7 +115,7 @@ const communityFeatures = [
 
       <div class="lp-hero__content">
         <span class="eyebrow eyebrow--light">Dal 1963, il tennis a Milano</span>
-        <h1 class="lp-hero__title">Gioca a tennis dove è nata<br><em>la tradizione milanese</em></h1>
+        <h1 class="lp-hero__title">Gioca a tennis <br class="lp-hero__break--mobile" />dove è nata<br><em>la tradizione milanese</em></h1>
         <p class="lp-hero__sub">
           Sedici campi su ogni superficie, maestri federali FITP e oltre 30.000 mq
           di sport a due passi dalla metro Udine. E il tennis è solo l'inizio: la
@@ -428,6 +428,7 @@ const communityFeatures = [
     margin: 0.6rem 0 2.5vh; max-width: 20ch;
   }
   .lp-hero__title em { color: var(--color-accent); font-style: normal; }
+  .lp-hero__break--mobile { display: none; }
   .lp-hero__sub {
     font-family: var(--font-body);
     font-size: clamp(17px, 1.3vw, 21px);
@@ -760,6 +761,7 @@ const communityFeatures = [
     .lp-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.12); }
     .lp-stat:last-child { border-bottom: none; }
     .lp-hero { align-items: center; min-height: 100svh; }
+    .lp-hero__break--mobile { display: block; }
     .lp-hero__actions .btn,
     .lp-actions .btn { flex: 1 1 100%; text-align: center; }
     .lp-tennis__media img,
