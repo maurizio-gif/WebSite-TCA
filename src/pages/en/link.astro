@@ -1,24 +1,21 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import ClubLifeLangSwitch from "../components/ClubLifeLangSwitch.astro";
-import { publicUrl, getLocalePath, type Lang } from "../i18n/utils";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ClubLifeLangSwitch from "../../components/ClubLifeLangSwitch.astro";
+import { publicUrl, getLocalePath, type Lang } from "../../i18n/utils";
 
-const lang: Lang = 'it';
+const lang: Lang = 'en';
 const p = (path: string) => getLocalePath(lang, path);
 
-// Pagina "link in bio" per Instagram: un solo link da mettere in bio,
-// da qui si smista verso le sezioni del sito che vogliamo promuovere.
-// Ogni voce porta i suoi UTM: utm_campaign cambia per ogni link così
-// da poter confrontare quale performa meglio.
+// Pagina "link in bio" per Instagram (versione inglese) — vedi src/pages/link.astro
 const UTM_BASE = "utm_source=instagram&utm_medium=bio";
 
 const links = [
-  { label: "Tennis Adulti", href: `${p('/tennis')}?${UTM_BASE}&utm_campaign=bio_tennis_adulti` },
-  { label: "Tennis Junior", href: `${p('/scuola-tennis')}?${UTM_BASE}&utm_campaign=bio_tennis_junior` },
-  { label: "Preparazione Atletica", href: `${p('/preparazione-atletica')}?${UTM_BASE}&utm_campaign=bio_prep_atletica` },
-  { label: "Planning Corsi", href: `${p('/planning')}?${UTM_BASE}&utm_campaign=bio_planning` },
-  { label: "Abbonamenti", href: `${p('/iscrizioni')}?${UTM_BASE}&utm_campaign=bio_abbonamenti` },
-  { label: "Eventi", href: `${p('/eventi')}?${UTM_BASE}&utm_campaign=bio_eventi` },
+  { label: "Adult Tennis", href: `${p('/tennis')}?${UTM_BASE}&utm_campaign=bio_tennis_adulti` },
+  { label: "Junior Tennis", href: `${p('/scuola-tennis')}?${UTM_BASE}&utm_campaign=bio_tennis_junior` },
+  { label: "Athletic Training", href: `${p('/preparazione-atletica')}?${UTM_BASE}&utm_campaign=bio_prep_atletica` },
+  { label: "Class Timetable", href: `${p('/planning')}?${UTM_BASE}&utm_campaign=bio_planning` },
+  { label: "Membership", href: `${p('/iscrizioni')}?${UTM_BASE}&utm_campaign=bio_abbonamenti` },
+  { label: "Events", href: `${p('/eventi')}?${UTM_BASE}&utm_campaign=bio_eventi` },
 ];
 
 const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
@@ -27,7 +24,7 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
 <BaseLayout
   lang={lang}
   title="Link | TC Ambrosiano"
-  description="Tutti i link utili del TC Ambrosiano: tennis, preparazione atletica, planning corsi, abbonamenti ed eventi."
+  description="All the useful links from TC Ambrosiano: tennis, athletic training, class timetable, membership and events."
   hideChrome
   hideLeadFormInline
 >
@@ -42,7 +39,7 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
         width="225"
         height="224"
       />
-      <span class="linkbio__eyebrow">Dal 1963, il tennis a Milano</span>
+      <span class="linkbio__eyebrow">Since 1963, tennis in Milan</span>
       <h1 class="linkbio__title">TC Ambrosiano</h1>
     </div>
 
@@ -55,8 +52,8 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
       ))}
 
       <a class="linkbio__home" href={homeHref}>
-        <span class="linkbio__home-label">Vai al sito</span>
-        <span class="linkbio__home-sub">Tutte le altre attività e informazioni</span>
+        <span class="linkbio__home-label">Visit the website</span>
+        <span class="linkbio__home-sub">All other activities and information</span>
       </a>
     </div>
   </section>
@@ -152,7 +149,7 @@ const homeHref = `${p('/')}?${UTM_BASE}&utm_campaign=bio_home`;
     flex-shrink: 0;
   }
 
-  /* ── Home: pulsante di formato diverso, per chi cerca altro non elencato sopra ── */
+  /* ── Home: differently styled button, for anything not listed above ── */
   .linkbio__home {
     display: flex;
     flex-direction: column;
