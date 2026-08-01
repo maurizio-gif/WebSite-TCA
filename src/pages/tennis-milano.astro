@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Reassurance from "../components/Reassurance.astro";
 import WeeklySchedule from "../components/WeeklySchedule.astro";
+import PlanningPrintButton from "../components/PlanningPrintButton.astro";
 import { publicUrl, type Lang } from "../i18n/utils";
 
 // Landing page dedicata alle campagne Google Ads (tennis + membership).
@@ -291,6 +292,7 @@ const communityFeatures = [
           Oltre 80 sessioni a settimana guidate da istruttori certificati.
           Ecco come si compone la tua settimana di allenamento.
         </p>
+        <PlanningPrintButton />
         <WeeklySchedule />
       </div>
 
@@ -767,6 +769,30 @@ const communityFeatures = [
     .lp-tennis__media img,
     .lp-community__media img { height: clamp(240px, 46vh, 400px); }
     .lp-gallery__track { height: clamp(200px, 52vw, 320px); }
+  }
+
+  /* ── Stampa: solo il planning corsi, il resto della landing nascosto ── */
+  @media print {
+    .lp-hero-group,
+    .lp-tennis,
+    .lp-member,
+    .lp-community,
+    .lp-cta,
+    .lp-prep__top,
+    .lp-lightbox,
+    .lp-actions,
+    :global(.why) {
+      display: none !important;
+    }
+
+    .lp-planning .eyebrow,
+    .lp-planning__title,
+    .lp-planning .lp-lead {
+      display: none !important;
+    }
+
+    .lp-prep { padding: 0; border-top: none; }
+    .lp-planning :global(.ws) { margin-top: 0; }
   }
 </style>
 

@@ -1,0 +1,67 @@
+---
+import type { Lang } from '../i18n/utils';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+
+const label = lang === 'en' ? 'Print / Save PDF' : 'Stampa / Salva PDF';
+const printTitle = lang === 'en' ? 'TC Ambrosiano — Class Timetable' : 'TC Ambrosiano — Planning Corsi';
+---
+
+<!-- Titolo compatto visibile solo in stampa, al posto dell'intestazione decorativa della sezione -->
+<p class="pp-print-title">{printTitle}</p>
+
+<div class="pp-toolbar">
+  <button type="button" class="btn btn-outline--dark pp-btn" data-planning-print>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2M6 14h12v7H6v-7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    {label}
+  </button>
+</div>
+
+<style>
+  .pp-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+  }
+
+  .pp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .pp-print-title {
+    display: none;
+  }
+
+  @media print {
+    @page {
+      size: A4 landscape;
+      margin: 12mm;
+    }
+
+    .pp-toolbar {
+      display: none !important;
+    }
+
+    .pp-print-title {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      color: #000;
+      margin: 0 0 10px;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-planning-print]').forEach((btn) => {
+    btn.addEventListener('click', () => window.print());
+  });
+</script>

@@ -4,6 +4,7 @@ import FaqAccordion from "../../components/FaqAccordion.astro";
 import PageHero from "../../components/PageHero.astro";
 import MembershipSection from "../../components/MembershipSection.astro";
 import WeeklySchedule from "../../components/WeeklySchedule.astro";
+import PlanningPrintButton from "../../components/PlanningPrintButton.astro";
 import { publicUrl } from "../../i18n/utils";
 import { getEntry } from "astro:content";
 
@@ -167,6 +168,7 @@ const salaIcons = [
       <h2 class="section-title">{d.prep_calendario_titolo_en ?? d.prep_calendario_titolo}<br><em>{d.prep_calendario_titolo_accent_en ?? d.prep_calendario_titolo_accent}</em></h2>
       <p class="corsi-sub">{d.prep_calendario_sub_en ?? d.prep_calendario_sub}</p>
 
+      <PlanningPrintButton lang={lang} />
       <WeeklySchedule lang={lang} />
     </div>
   </section>
@@ -523,6 +525,24 @@ const salaIcons = [
 
   .calendar-section { padding: 7vh var(--pad-x); }
   .calendar-section__inner { max-width: var(--max-width); margin: 0 auto; }
+
+  /* ── Print: only the planning, the rest of the page hidden ── */
+  @media print {
+    :global(.page-hero),
+    .sala-section,
+    .corsi-section,
+    #membership,
+    :global(.faq-section) {
+      display: none !important;
+    }
+
+    .calendar-section { padding: 0; }
+    .calendar-section > .eyebrow,
+    .calendar-section .section-title,
+    .calendar-section .corsi-sub {
+      display: none !important;
+    }
+  }
 
   @media (max-width: 860px) {
     .course-card { flex: 0 0 calc((100% - 1.25rem) / 2); }
