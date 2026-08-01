@@ -501,6 +501,48 @@ const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgy
   }
 
   /* ══════════════════════════════════════════════════════════════
+     STAMPA — griglia compressa per stare su una singola pagina A4
+     orizzontale (vedi @page in planning.astro). Badge app e link al
+     portale prenotazioni non servono su carta.
+  ══════════════════════════════════════════════════════════════ */
+  @media print {
+    .ws { margin-top: 0; }
+
+    .ws__legend { gap: 1rem; margin-bottom: 8px; }
+    .ws__leg { font-size: 8px; }
+    .ws__leg::before { width: 8px; height: 8px; }
+
+    .ws__scroll-wrap { overflow: visible; margin: 0; padding: 0; }
+
+    .ws__grid {
+      grid-template-columns: repeat(7, 1fr);
+      min-width: 0;
+      width: 100%;
+      border-color: #999;
+    }
+
+    .ws__col { border-color: #ccc; }
+
+    .ws__day-head { padding: 5px 4px 4px; border-bottom-color: #999; }
+    .ws__day-abbr { font-size: 7.5px; }
+    .ws__day-name { font-size: 10.5px; }
+
+    .ws__card { padding: 4px 4px 4px 6px; gap: 3px; border-bottom-color: #ddd; }
+    .ws__card-time { font-size: 8.5px; min-width: 22px; }
+    .ws__card-cat { font-size: 6.5px; }
+    .ws__card-name {
+      font-size: 9px;
+      line-height: 1.2;
+      white-space: normal;
+      overflow: visible;
+    }
+
+    .ws__rest { padding: 0.75rem 0.3rem; font-size: 8.5px; }
+
+    .ws__footer { display: none; }
+  }
+
+  /* ══════════════════════════════════════════════════════════════
      MODAL DESCRIZIONE LEZIONE
   ══════════════════════════════════════════════════════════════ */
   .ws-modal {

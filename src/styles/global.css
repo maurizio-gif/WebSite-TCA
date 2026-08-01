@@ -391,3 +391,17 @@ body.menu-open { overflow: hidden; }
     clip-path: none !important;
   }
 }
+
+/* ---------- Stampa: nasconde il chrome del sito su qualunque pagina ---------- */
+@media print {
+  .navbar,
+  .footer,
+  .powered-by,
+  .info,
+  .affiliazioni-slider,
+  .lfi,
+  #back-to-top,
+  dialog {
+    display: none !important;
+  }
+}

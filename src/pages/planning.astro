@@ -18,6 +18,15 @@ const d = (await getEntry("pagine", "planning"))!.data;
 
   <section class="planning-section">
     <div class="planning-section__inner">
+      <p class="planning-print-title">TC Ambrosiano — {d.hero_titolo}</p>
+      <div class="planning-toolbar">
+        <button type="button" class="btn btn-outline--dark planning-print-btn" id="planning-print">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2M6 14h12v7H6v-7Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Stampa / Salva PDF
+        </button>
+      </div>
       <WeeklySchedule />
     </div>
   </section>
@@ -27,6 +36,10 @@ const d = (await getEntry("pagine", "planning"))!.data;
     <a class="btn btn-outline--dark" href="/preparazione-atletica">Torna a Preparazione Atletica</a>
   </div>
 </BaseLayout>
+
+<script>
+  document.getElementById('planning-print')?.addEventListener('click', () => window.print());
+</script>
 
 <style>
   .page-header {
@@ -74,5 +87,49 @@ const d = (await getEntry("pagine", "planning"))!.data;
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .planning-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+  }
+
+  .planning-print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Titolo compatto visibile solo in stampa, al posto del page-header decorativo */
+  .planning-print-title {
+    display: none;
+  }
+
+  /* ── Stampa: planning su una pagina A4 orizzontale, senza header/CTA ── */
+  @media print {
+    @page {
+      size: A4 landscape;
+      margin: 12mm;
+    }
+
+    .page-header,
+    .planning-toolbar,
+    .planning-cta {
+      display: none !important;
+    }
+
+    .planning-section { padding: 0; }
+
+    .planning-print-title {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      color: #000;
+      margin: 0 0 10px;
+    }
   }
 </style>
