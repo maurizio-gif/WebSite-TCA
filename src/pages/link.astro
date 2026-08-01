@@ -1,0 +1,145 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { publicUrl } from "../i18n/utils";
+
+// Pagina "link in bio" per Instagram: un solo link da mettere in bio,
+// da qui si smista verso le sezioni del sito che vogliamo promuovere.
+// Ogni voce porta i suoi UTM: utm_campaign cambia per ogni link così
+// da poter confrontare quale performa meglio.
+const UTM_BASE = "utm_source=instagram&utm_medium=bio";
+
+const links = [
+  { label: "Tennis Adulti", href: `/tennis?${UTM_BASE}&utm_campaign=bio_tennis_adulti` },
+  { label: "Tennis Junior", href: `/scuola-tennis?${UTM_BASE}&utm_campaign=bio_tennis_junior` },
+  { label: "Preparazione Atletica", href: `/preparazione-atletica?${UTM_BASE}&utm_campaign=bio_prep_atletica` },
+  { label: "Planning Corsi", href: `/planning?${UTM_BASE}&utm_campaign=bio_planning` },
+  { label: "Abbonamenti", href: `/iscrizioni?${UTM_BASE}&utm_campaign=bio_abbonamenti` },
+  { label: "Eventi", href: `/eventi?${UTM_BASE}&utm_campaign=bio_eventi` },
+];
+---
+
+<BaseLayout
+  title="Link | TC Ambrosiano"
+  description="Tutti i link utili del TC Ambrosiano: tennis, preparazione atletica, planning corsi, abbonamenti ed eventi."
+  hideChrome
+  hideLeadFormInline
+>
+  <section class="linkbio">
+    <div class="linkbio__masthead">
+      <img
+        src={publicUrl('/logos/tca-logo.png')}
+        alt="TC Ambrosiano"
+        class="linkbio__logo"
+        width="225"
+        height="224"
+      />
+      <span class="linkbio__eyebrow">Dal 1963, il tennis a Milano</span>
+      <h1 class="linkbio__title">TC Ambrosiano</h1>
+    </div>
+
+    <div class="linkbio__list">
+      {links.map((l) => (
+        <a class="linkbio__link" href={l.href}>
+          <span class="linkbio__link-label">{l.label}</span>
+          <span class="linkbio__link-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .linkbio {
+    min-height: 100vh;
+    padding: 0;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% 0%, rgba(139, 26, 26, 0.5), transparent 65%),
+      #0f1013;
+  }
+
+  .linkbio__masthead {
+    text-align: center;
+    padding: 7vh var(--pad-x) 6vh;
+  }
+
+  .linkbio__logo {
+    height: 46px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.95;
+    margin: 0 auto 18px;
+  }
+
+  .linkbio__eyebrow {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 12px;
+  }
+
+  .linkbio__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 8vw, 2.4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .linkbio__list {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--pad-x) 8vh;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .linkbio__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.4rem;
+    background: #fbf7f5;
+    border: 1px solid rgba(139, 26, 26, 0.18);
+    border-left: 3px solid var(--color-accent);
+    text-decoration: none;
+    transition: background 0.18s, transform 0.18s;
+  }
+
+  .linkbio__link:hover,
+  .linkbio__link:focus-visible {
+    background: #ffffff;
+    transform: translateX(3px);
+  }
+
+  .linkbio__link-label {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 4vw, 1.15rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: #1a1a1a;
+  }
+
+  .linkbio__link-arrow {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 560px) {
+    .linkbio__masthead { padding: 6vh 20px 5vh; }
+    .linkbio__list { padding: 0 16px 6vh; }
+  }
+</style>
