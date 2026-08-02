@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '../i18n/utils';
 import { getEntry } from 'astro:content';
+import { perfectGym } from '../data/links';
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
 const tx = (itVal: string, enVal?: string) => (lang === 'en' && enVal ? enVal : itVal);
@@ -18,7 +19,7 @@ const cellClass = (tipo: string, isPlat: boolean) => {
   return `ms__cell ${map[tipo]}${isPlat ? ' ms__cell--plat' : ''}`;
 };
 
-const REGISTER_URL = 'https://tcambrosiano.perfectgym.com/clientportal2/#/Registration';
+const REGISTER_URL = perfectGym.register;
 
 // Il tfoot è emesso via set:html per aggirare un bug del compilatore Astro:
 // un elemento di formattazione (<a>) in coda a una <table> viene "ricostruito"

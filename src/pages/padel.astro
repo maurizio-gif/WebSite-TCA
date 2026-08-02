@@ -5,6 +5,7 @@ import PageHero from "../components/PageHero.astro";
 import MembershipSection from "../components/MembershipSection.astro";
 import ConversionBlock from "../components/ConversionBlock.astro";
 import { publicUrl } from "../i18n/utils";
+import { playtomic } from "../data/links";
 import { getEntry } from "astro:content";
 
 // SEO + hero gestibili da TinaCMS → src/content/pagine/padel.md
@@ -28,7 +29,7 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
     imageAlt={d.hero_immagine_alt!}
     ctas={[
       { label: "Diventa Socio", href: "#membership" },
-      { label: "Prenota un Campo", href: "https://playtomic.io/club-ambrosiano-padel/3c5b3aaa-85e7-41dc-838e-e72899aae1cd?q=PADEL~2024-10-23~~~", external: true, outline: true },
+      { label: "Prenota un Campo", href: playtomic.padelCourt, external: true, outline: true },
     ]}
   />
 

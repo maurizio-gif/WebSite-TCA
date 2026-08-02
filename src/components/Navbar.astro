@@ -1,5 +1,6 @@
 ---
 import { useTranslations, getLocalePath, getAlternatePath, publicUrl, type Lang } from '../i18n/utils';
+import { perfectGym, playtomic, memberApp } from '../data/links';
 
 interface Props {
   lang?: Lang;
@@ -259,10 +260,10 @@ const secondaryItems = [
       <span class="accedi-modal__title-sub">{t.accediModal.subtitle}</span>
     </h2>
     <div class="accedi-modal__btns">
-      <a class="accedi-modal__btn accedi-modal__btn--red" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Login" target="_blank" rel="noopener">
+      <a class="accedi-modal__btn accedi-modal__btn--red" href={perfectGym.login} target="_blank" rel="noopener">
         {t.accediModal.webBtn}
       </a>
-      <a class="accedi-modal__btn accedi-modal__btn--outline" id="btn-app-store" href="https://onelink.to/7vfvz2" target="_blank" rel="noopener">
+      <a class="accedi-modal__btn accedi-modal__btn--outline" id="btn-app-store" href={memberApp.smartLink} target="_blank" rel="noopener">
         {t.accediModal.appBtn}
       </a>
     </div>
@@ -271,10 +272,10 @@ const secondaryItems = [
 
     <p class="accedi-modal__eyebrow">{t.accediModal.bookingsEyebrow}</p>
     <div class="accedi-modal__btns">
-      <a class="accedi-modal__btn accedi-modal__btn--outline" href="https://playtomic.com/clubs/club-ambrosiano-tennis" target="_blank" rel="noopener">
+      <a class="accedi-modal__btn accedi-modal__btn--outline" href={playtomic.club} target="_blank" rel="noopener">
         {t.accediModal.bookCourt}
       </a>
-      <a class="accedi-modal__btn accedi-modal__btn--outline" href={`https://tcambrosiano.perfectgym.com/clientportal2/?lang=${lang}#/Classes/1/Calendar`} target="_blank" rel="noopener">
+      <a class="accedi-modal__btn accedi-modal__btn--outline" href={perfectGym.classBooking(lang)} target="_blank" rel="noopener">
         {t.accediModal.bookCourse}
       </a>
     </div>
@@ -334,7 +335,7 @@ const secondaryItems = [
     <div class="g-menu__foot" style="--i:3">
       <div class="g-menu__ctas">
         <button class="g-menu__cta g-menu__cta--red" data-open-modal="modal-contatti">{t.nav.contattaci}</button>
-        <a class="g-menu__cta g-menu__cta--ghost" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Registration" target="_blank" rel="noopener noreferrer">{t.nav.diventaSocio}</a>
+        <a class="g-menu__cta g-menu__cta--ghost" href={perfectGym.register} target="_blank" rel="noopener noreferrer">{t.nav.diventaSocio}</a>
       </div>
       <div class="g-menu__meta">
         <div class="g-menu__lang">
