@@ -4,6 +4,7 @@ import FaqAccordion from "../components/FaqAccordion.astro";
 import PageHero from "../components/PageHero.astro";
 import MembershipSection from "../components/MembershipSection.astro";
 import WeeklySchedule from "../components/WeeklySchedule.astro";
+import PlanningPrintButton from "../components/PlanningPrintButton.astro";
 import { publicUrl } from "../i18n/utils";
 import { getEntry } from "astro:content";
 
@@ -166,6 +167,7 @@ const salaIcons = [
       <h2 class="section-title">{d.prep_calendario_titolo}<br><em>{d.prep_calendario_titolo_accent}</em></h2>
       <p class="corsi-sub">{d.prep_calendario_sub}</p>
 
+      <PlanningPrintButton />
       <WeeklySchedule />
     </div>
   </section>
@@ -661,6 +663,24 @@ const salaIcons = [
   }
 
   /* Calendar weekly schedule → WeeklySchedule.astro */
+
+  /* ── Stampa: solo il planning, il resto della pagina nascosto ── */
+  @media print {
+    :global(.page-hero),
+    .sala-section,
+    .corsi-section,
+    #membership,
+    :global(.faq-section) {
+      display: none !important;
+    }
+
+    .calendar-section { padding: 0; }
+    .calendar-section > .eyebrow,
+    .calendar-section .section-title,
+    .calendar-section .corsi-sub {
+      display: none !important;
+    }
+  }
 
   /* ── Responsive ── */
   @media (max-width: 860px) {
