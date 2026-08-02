@@ -5,6 +5,7 @@ import PageHero from "../components/PageHero.astro";
 import MembershipSection from "../components/MembershipSection.astro";
 import ConversionBlock from "../components/ConversionBlock.astro";
 import { publicUrl } from "../i18n/utils";
+import { playtomic } from "../data/links";
 import { getEntry } from "astro:content";
 
 // SEO + hero + corpo pagina gestibili da TinaCMS → src/content/pagine/tennis.md
@@ -28,7 +29,7 @@ const mdBold = (s: string) => s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>
     imageAlt={d.hero_immagine_alt!}
     ctas={[
       { label: "Diventa Socio", href: "#membership" },
-      { label: "Prenota un Campo", href: "https://playtomic.io/tennis-club-ambrosiano/5440b3ab-1500-4d62-8c9b-6a8b96949501?q=TENNIS~2022-12-08~~~", external: true, outline: true },
+      { label: "Prenota un Campo", href: playtomic.tennisCourt, external: true, outline: true },
     ]}
   />
 

@@ -1,6 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
 import { publicUrl, type Lang } from '../i18n/utils';
+import { perfectGym, memberApp } from '../data/links';
 
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
@@ -87,9 +88,9 @@ const DAYS: Array<{ full: string; short: string; lessons: Lesson[] }> = GIORNI.m
     }),
 }));
 
-const PG_URL      = 'https://tcambrosiano.perfectgym.com/clientportal2/?lang=it#/Classes/1/Calendar';
-const APPLE_URL   = 'https://apps.apple.com/it/app/club-ambrosiano/id1583896957';
-const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.perfectgym.perfectgymgo2.ambrosiano';
+const PG_URL      = perfectGym.classBooking(lang);
+const APPLE_URL   = memberApp.appleUrl;
+const ANDROID_URL = memberApp.androidUrl;
 ---
 
 <div class="ws">

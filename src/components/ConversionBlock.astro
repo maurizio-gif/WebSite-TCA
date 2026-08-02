@@ -1,5 +1,6 @@
 ---
 import type { Lang } from '../i18n/utils';
+import { perfectGym } from '../data/links';
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
 
@@ -37,7 +38,7 @@ const c = lang === 'en' ? {
       <div class="conversion__card conversion__card--light">
         <h3 class="conversion__card-title">{c.card1title}</h3>
         <p class="conversion__card-text">{c.card1text}</p>
-        <a class="btn btn-red" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Registration" target="_blank" rel="noopener noreferrer">{c.card1cta}</a>
+        <a class="btn btn-red" href={perfectGym.register} target="_blank" rel="noopener noreferrer">{c.card1cta}</a>
       </div>
 
       <div class="conversion__card conversion__card--dark">

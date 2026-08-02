@@ -1,5 +1,6 @@
 ---
 import { publicUrl, type Lang } from '../i18n/utils';
+import { perfectGym } from '../data/links';
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
 
@@ -56,7 +57,7 @@ const img = publicUrl('/home-1-club-3-sport.avif');
       </ul>
 
       <div class="socio__cta-wrap">
-        <a class="btn btn-red socio__cta" href="https://tcambrosiano.perfectgym.com/clientportal2/#/Registration" target="_blank" rel="noopener noreferrer">{t.cta} &rarr;</a>
+        <a class="btn btn-red socio__cta" href={perfectGym.register} target="_blank" rel="noopener noreferrer">{t.cta} &rarr;</a>
         <p class="socio__note">{t.note}</p>
       </div>
     </div>
