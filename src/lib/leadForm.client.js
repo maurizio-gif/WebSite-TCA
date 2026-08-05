@@ -386,13 +386,19 @@ export function initLeadForm(root, options) {
     return slots;
   }
 
-  // Visita in sede: slot ogni 30 minuti (la richiamata resta a 20)
+  // Visita in sede: disponibilità da sabato 8 agosto 2026 (prima nessuna
+  // disponibilità — vedi VISIT_START in buildCalendar), orario 10:30-19:00
+  // ogni giorno, chiuso sabato 15 agosto 2026.
+  var VISIT_CLOSED_DATES = ['2026-08-15'];
+
   function slotsVisit(date) {
-    var day=date.getDay(), isWE=(day===0||day===6), slots=[];
-    if(isWE){ for(var h=9;h<19;h++) for(var m=0;m<60;m+=30) slots.push(pad2(h)+':'+pad2(m)); }
-    else {
-      for(var h=9;h<13;h++)  for(var m=0;m<60;m+=30) slots.push(pad2(h)+':'+pad2(m));
-      for(var h=15;h<20;h++) for(var m=0;m<60;m+=30) slots.push(pad2(h)+':'+pad2(m));
+    if (VISIT_CLOSED_DATES.indexOf(isoDateLocal(date)) !== -1) return [];
+    var slots = [];
+    for (var h = 10; h < 19; h++) {
+      for (var m = 0; m < 60; m += 30) {
+        if (h === 10 && m === 0) continue; // parte da 10:30, non da 10:00
+        slots.push(pad2(h) + ':' + pad2(m));
+      }
     }
     return slots;
   }
@@ -434,7 +440,12 @@ export function initLeadForm(root, options) {
       return slots;
     }
 
-    var today   = new Date(); today.setHours(0,0,0,0);
+    var today = new Date(); today.setHours(0,0,0,0);
+    // Visita in sede: nessuna disponibilità prima di sabato 8 agosto 2026.
+    if (type === 'visit') {
+      var visitStart = new Date(2026, 7, 8);
+      if (today < visitStart) today = visitStart;
+    }
     var endDate = new Date(today); endDate.setDate(today.getDate() + numDays - 1);
     var viewY   = today.getFullYear();
     var viewM   = today.getMonth();
@@ -474,11 +485,9 @@ export function initLeadForm(root, options) {
         var d    = new Date(viewY, viewM, day);
         var past = d < today;
         var fut  = d > endDate;
-        var avail = !past && !fut;
+        var avail = !past && !fut && availFor(d).length > 0;
         var isTod = d.getTime() === today.getTime();
         var isSel = selDate && d.getTime() === selDate.getTime();
-
-        if (avail && isTod && availFor(d).length === 0) avail = false;
 
         var cls = 'lm__cal-cell lm__cal-day';
         cls += avail ? ' lm__cal-day--avail' : ' lm__cal-day--off';
