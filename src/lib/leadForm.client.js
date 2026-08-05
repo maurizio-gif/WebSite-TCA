@@ -380,22 +380,27 @@ export function initLeadForm(root, options) {
   });
 
   // GENERAZIONE SLOT
-  function slotsCallback(date) {
-    var day=date.getDay(), isWE=(day===0||day===6), endH=isWE?19:20, slots=[];
-    for(var h=9;h<endH;h++) for(var m=0;m<60;m+=20) slots.push(pad2(h)+':'+pad2(m));
-    return slots;
-  }
+  // Richiamata e visita in sede condividono le stesse regole di disponibilità
+  // (nessuna disponibilità prima di sabato 8 agosto 2026 — vedi AVAIL_START in
+  // buildCalendar — orario 10:30-19:00 ogni giorno, chiuso sabato 15 agosto
+  // 2026); cambia solo il passo degli slot: 20 minuti per la richiamata,
+  // 30 per la visita.
+  var AVAIL_CLOSED_DATES = ['2026-08-15'];
 
-  // Visita in sede: slot ogni 30 minuti (la richiamata resta a 20)
-  function slotsVisit(date) {
-    var day=date.getDay(), isWE=(day===0||day===6), slots=[];
-    if(isWE){ for(var h=9;h<19;h++) for(var m=0;m<60;m+=30) slots.push(pad2(h)+':'+pad2(m)); }
-    else {
-      for(var h=9;h<13;h++)  for(var m=0;m<60;m+=30) slots.push(pad2(h)+':'+pad2(m));
-      for(var h=15;h<20;h++) for(var m=0;m<60;m+=30) slots.push(pad2(h)+':'+pad2(m));
+  function slotsInRange(date, stepMinutes) {
+    if (AVAIL_CLOSED_DATES.indexOf(isoDateLocal(date)) !== -1) return [];
+    var slots = [];
+    // Griglia ancorata esattamente alle 10:30, non ai multipli di stepMinutes
+    // dalla mezzanotte: altrimenti col passo di 20' il primo slot cadrebbe
+    // alle 10:20/10:40 invece che alle 10:30.
+    for (var t = 10 * 60 + 30; t < 19 * 60; t += stepMinutes) {
+      slots.push(pad2(Math.floor(t / 60)) + ':' + pad2(t % 60));
     }
     return slots;
   }
+
+  function slotsCallback(date) { return slotsInRange(date, 20); }
+  function slotsVisit(date)    { return slotsInRange(date, 30); }
 
   // Ora corrente a Milano (Europe/Rome), indipendente dal fuso del browser
   function milanParts(d) {
@@ -434,7 +439,10 @@ export function initLeadForm(root, options) {
       return slots;
     }
 
-    var today   = new Date(); today.setHours(0,0,0,0);
+    var today = new Date(); today.setHours(0,0,0,0);
+    // Richiamata e visita: nessuna disponibilità prima di sabato 8 agosto 2026.
+    var availStart = new Date(2026, 7, 8);
+    if (today < availStart) today = availStart;
     var endDate = new Date(today); endDate.setDate(today.getDate() + numDays - 1);
     var viewY   = today.getFullYear();
     var viewM   = today.getMonth();
@@ -474,11 +482,9 @@ export function initLeadForm(root, options) {
         var d    = new Date(viewY, viewM, day);
         var past = d < today;
         var fut  = d > endDate;
-        var avail = !past && !fut;
+        var avail = !past && !fut && availFor(d).length > 0;
         var isTod = d.getTime() === today.getTime();
         var isSel = selDate && d.getTime() === selDate.getTime();
-
-        if (avail && isTod && availFor(d).length === 0) avail = false;
 
         var cls = 'lm__cal-cell lm__cal-day';
         cls += avail ? ' lm__cal-day--avail' : ' lm__cal-day--off';
