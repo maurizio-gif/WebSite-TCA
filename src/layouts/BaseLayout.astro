@@ -360,10 +360,20 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
             referrer: document.referrer || null,
             utm: utm
           });
+          // Content-Type "text/plain" e non "application/json": è uno dei
+          // content-type "semplici" CORS-safelisted, quindi niente preflight
+          // cross-origin. sendBeacon include sempre le credenziali (a
+          // differenza di fetch di default) e n8n non risponde con
+          // Access-Control-Allow-Credentials: true, quindi con
+          // application/json il preflight fallisce e il browser non invia
+          // affatto la richiesta reale (verificato in DevTools: 0 esecuzioni
+          // su n8n). In modalità "semplice" la richiesta parte comunque
+          // anche se la risposta resta illeggibile, che qui non ci serve.
+          // n8n riceve comunque JSON valido: va solo fatto JSON.parse(body).
           if (navigator.sendBeacon) {
-            navigator.sendBeacon(WEBHOOK_VISIT, new Blob([body], { type: 'application/json' }));
+            navigator.sendBeacon(WEBHOOK_VISIT, new Blob([body], { type: 'text/plain;charset=UTF-8' }));
           } else {
-            fetch(WEBHOOK_VISIT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, keepalive: true }).catch(function () {});
+            fetch(WEBHOOK_VISIT, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: body, keepalive: true }).catch(function () {});
           }
         }
 
