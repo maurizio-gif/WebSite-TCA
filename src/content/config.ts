@@ -725,8 +725,10 @@ const legal = defineCollection({
 // ─── DATI STAGIONALI DEI FORM ──────────────────────────────────────────────────
 // File unico (dati-stagionali.md) con quote, date e scadenze usate nei form di
 // iscrizione Summer Camp e Scuola Tennis (SummerCampForm.astro,
-// IscrizioneScuolaForm.astro). Le etichette dei campi restano nel codice: qui
-// vive solo ciò che cambia ogni stagione. Gestibile da TinaCMS → collection
+// IscrizioneScuolaForm.astro), più i parametri di disponibilità per
+// richiamata telefonica e visita in sede (LeadModal.astro, LeadFormInline.astro
+// → leadForm.client.js). Le etichette dei campi restano nel codice: qui vive
+// solo ciò che cambia ogni stagione. Gestibile da TinaCMS → collection
 // 'moduli'.
 // ─────────────────────────────────────────────────────────────────────────────
 const moduli = defineCollection({
@@ -760,6 +762,16 @@ const moduli = defineCollection({
     scuola_mini_tennis_nati_en: z.string(),
     scuola_tennis_nati: z.string(),
     scuola_tennis_nati_en: z.string(),
+
+    // ── Prenotazioni (richiamata telefonica / visita in sede) ──
+    prenotazioni_data_inizio: z.date(),
+    prenotazioni_ora_apertura: z.string(),
+    prenotazioni_ora_chiusura: z.string(),
+    prenotazioni_durata_slot_richiamata: z.number(),
+    prenotazioni_durata_slot_visita: z.number(),
+    prenotazioni_giorni_avanti_richiamata: z.number(),
+    prenotazioni_giorni_avanti_visita: z.number(),
+    prenotazioni_date_chiuse: z.array(z.date()).default([]),
   }),
 });
 

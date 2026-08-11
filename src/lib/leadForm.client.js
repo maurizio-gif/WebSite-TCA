@@ -21,6 +21,21 @@ export function initLeadForm(root, options) {
   var WEBHOOK_CHECK = 'https://automazione.n8ndevelop.it/webhook/tca-verifica-iscritto';
   var WEBHOOK_LEAD  = 'https://automazione.n8ndevelop.it/webhook/tca-form-compilato';
 
+  // Parametri di prenotazione (orari, durata slot, date di chiusura), gestiti
+  // da TinaCMS e passati dal componente Astro via data-availability sul nodo
+  // radice. Il fallback riproduce i valori di default se l'attributo manca
+  // o non è JSON valido, così il form non si rompe mai.
+  var AVAIL = (function () {
+    var fallback = {
+      dataInizio: '2026-08-08', oraApertura: '10:30', oraChiusura: '19:00',
+      durataRichiamata: 20, durataVisita: 30,
+      giorniRichiamata: 7, giorniVisita: 14, dateChiuse: ['2026-08-15'],
+    };
+    try {
+      return Object.assign({}, fallback, JSON.parse(root.dataset.availability || ''));
+    } catch (e) { return fallback; }
+  })();
+
   var ATTIVITA_LABELS = LANG === 'en' ? {
     tennis:'Adult Tennis', padel:'Padel', prep:'Athletic Training',
     scuola:'Tennis School (children)', agonistica:'Competitive Tennis',
@@ -385,22 +400,31 @@ export function initLeadForm(root, options) {
   // buildCalendar — orario 10:30-19:00 ogni giorno, chiuso sabato 15 agosto
   // 2026); cambia solo il passo degli slot: 20 minuti per la richiamata,
   // 30 per la visita.
-  var AVAIL_CLOSED_DATES = ['2026-08-15'];
+  var AVAIL_CLOSED_DATES = AVAIL.dateChiuse;
+
+  // "HH:MM" -> minuti da mezzanotte
+  function parseHHMM(s) {
+    var m = /^(\d{1,2}):(\d{2})$/.exec(String(s || '').trim());
+    return m ? (parseInt(m[1], 10) * 60 + parseInt(m[2], 10)) : null;
+  }
 
   function slotsInRange(date, stepMinutes) {
     if (AVAIL_CLOSED_DATES.indexOf(isoDateLocal(date)) !== -1) return [];
+    var start = parseHHMM(AVAIL.oraApertura);
+    var end   = parseHHMM(AVAIL.oraChiusura);
+    if (start == null || end == null) return [];
     var slots = [];
-    // Griglia ancorata esattamente alle 10:30, non ai multipli di stepMinutes
-    // dalla mezzanotte: altrimenti col passo di 20' il primo slot cadrebbe
-    // alle 10:20/10:40 invece che alle 10:30.
-    for (var t = 10 * 60 + 30; t < 19 * 60; t += stepMinutes) {
+    // Griglia ancorata esattamente all'orario di apertura, non ai multipli
+    // di stepMinutes dalla mezzanotte: altrimenti col passo di 20' il primo
+    // slot potrebbe cadere fuori orario se l'apertura non è un suo multiplo.
+    for (var t = start; t < end; t += stepMinutes) {
       slots.push(pad2(Math.floor(t / 60)) + ':' + pad2(t % 60));
     }
     return slots;
   }
 
-  function slotsCallback(date) { return slotsInRange(date, 20); }
-  function slotsVisit(date)    { return slotsInRange(date, 30); }
+  function slotsCallback(date) { return slotsInRange(date, AVAIL.durataRichiamata); }
+  function slotsVisit(date)    { return slotsInRange(date, AVAIL.durataVisita); }
 
   // Ora corrente a Milano (Europe/Rome), indipendente dal fuso del browser
   function milanParts(d) {
@@ -419,7 +443,7 @@ export function initLeadForm(root, options) {
   }
 
   function buildCalendar(type) {
-    var numDays     = type === 'cb' ? 7 : 14;
+    var numDays     = type === 'cb' ? AVAIL.giorniRichiamata : AVAIL.giorniVisita;
     var slotsFn     = type === 'cb' ? slotsCallback : slotsVisit;
     var calWrapEl   = document.getElementById(P+'-cal-'+type);
     var slotsWrapEl = document.getElementById(P+'-slots-wrap-'+type);
@@ -440,8 +464,10 @@ export function initLeadForm(root, options) {
     }
 
     var today = new Date(); today.setHours(0,0,0,0);
-    // Richiamata e visita: nessuna disponibilità prima di sabato 8 agosto 2026.
-    var availStart = new Date(2026, 7, 8);
+    // Richiamata e visita: nessuna disponibilità prima della data configurata
+    // in AVAIL.dataInizio (formato "YYYY-MM-DD", fuso locale, non UTC).
+    var inizioParts = AVAIL.dataInizio.split('-').map(function (n) { return parseInt(n, 10); });
+    var availStart = new Date(inizioParts[0], inizioParts[1] - 1, inizioParts[2]);
     if (today < availStart) today = availStart;
     var endDate = new Date(today); endDate.setDate(today.getDate() + numDays - 1);
     var viewY   = today.getFullYear();
