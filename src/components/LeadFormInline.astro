@@ -1,12 +1,19 @@
 ---
 import LeadFormBody from "./LeadFormBody.astro";
 import { publicUrl, type Lang } from '../i18n/utils';
+import { getEntry } from 'astro:content';
+import { bookingAvailability } from '../lib/bookingAvailability';
 
 interface Props { lang?: Lang; standalone?: boolean; standaloneTitle?: string; standaloneEyebrow?: string; }
 const { lang = 'it', standalone = false, standaloneTitle, standaloneEyebrow } = Astro.props;
 
 const WEBHOOK_CHECK = '';
 const WEBHOOK_LEAD  = '';
+
+// Parametri di prenotazione (orari, durata slot, date di chiusura) gestibili
+// da TinaCMS → src/content/moduli/dati-stagionali.md
+const modDati = (await getEntry('moduli', 'dati-stagionali'))!.data;
+const availability = bookingAvailability(modDati);
 
 const lfi = lang === 'en' ? {
   eyebrow: 'Contact us',
@@ -48,7 +55,7 @@ const lfi = lang === 'en' ? {
     )}
 
     <!-- Right: form panel -->
-    <div class="lfi__panel" id="lfi-root">
+    <div class="lfi__panel" id="lfi-root" data-availability={JSON.stringify(availability)}>
       <LeadFormBody prefix="li" lang={lang} />
     </div>
 
