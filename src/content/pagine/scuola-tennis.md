@@ -192,6 +192,10 @@ faq:
     risposta: "Sì, il certificato medico è obbligatorio per tutti gli iscritti ai corsi e va consegnato in segreteria prima di iniziare le lezioni. Per l'attività non agonistica è sufficiente il certificato non agonistico."
     domanda_en: "Is a medical certificate required to enrol?"
     risposta_en: "Yes, a medical certificate is mandatory for everyone enrolled in courses and must be handed in at reception before lessons begin. For non-competitive activity, a non-competitive certificate is sufficient."
+  - domanda: "Come faccio a sapere in quale livello/gruppo verrà inserito mio figlio?"
+    risposta: "L'inserimento nel livello corretto (rosso, arancio, verde o giallo) avviene dopo una breve valutazione con i nostri maestri, che tiene conto dell'età indicativa e delle capacità già acquisite. Richiedi una prova tramite il form: ti proporremo giorno e orario disponibili per il gruppo più adatto."
+    domanda_en: "How do I know which level/group my child will be placed in?"
+    risposta_en: "Placement in the correct level (red, orange, green or yellow) follows a brief assessment with our coaches, based on indicative age and existing skills. Request a trial through the form and we'll propose an available day and time for the most suitable group."
 _template: scuola_tennis
 ---
 
