@@ -193,9 +193,9 @@ faq:
     domanda_en: "Is a medical certificate required to enrol?"
     risposta_en: "Yes, a medical certificate is mandatory for everyone enrolled in courses and must be handed in at reception before lessons begin. For non-competitive activity, a non-competitive certificate is sufficient."
   - domanda: "Come faccio a sapere in quale livello/gruppo verrà inserito mio figlio?"
-    risposta: "L'inserimento nel livello corretto (rosso, arancio, verde o giallo) avviene dopo una breve valutazione con i nostri maestri, che tiene conto dell'età indicativa e delle capacità già acquisite. Richiedi una prova tramite il form: ti proporremo giorno e orario disponibili per il gruppo più adatto."
+    risposta: "L'inserimento nel livello corretto (rosso, arancio, verde o giallo) avviene dopo un breve provino conoscitivo con i nostri maestri, che valuta livello e capacità per creare gruppi omogenei. Il provino non richiede appuntamento: registrati tramite il form e presentati nei giorni e negli orari indicati."
     domanda_en: "How do I know which level/group my child will be placed in?"
-    risposta_en: "Placement in the correct level (red, orange, green or yellow) follows a brief assessment with our coaches, based on indicative age and existing skills. Request a trial through the form and we'll propose an available day and time for the most suitable group."
+    risposta_en: "Placement in the correct level (red, orange, green or yellow) follows a brief introductory trial with our coaches, assessing level and skills to build homogeneous groups. No appointment is needed for the trial: register through the form and come along on the days and within the time windows indicated."
 _template: scuola_tennis
 ---
 
