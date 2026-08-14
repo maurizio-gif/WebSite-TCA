@@ -63,4 +63,8 @@ faq:
     risposta: "Sì, organizziamo corsi di padel per adulti di ogni livello, dai principianti ai giocatori avanzati, con lezioni individuali o in piccoli gruppi seguite da maestri certificati FITP."
     domanda_en: "Are there padel courses for complete beginners?"
     risposta_en: "Yes, we run adult padel courses for every level, from beginners to advanced players, with individual or small-group lessons led by FITP-certified coaches."
+  - domanda: "I campi da padel sono climatizzati?"
+    risposta: "Il Club dispone di 2 campi da padel, uno coperto e uno scoperto: nessuno dei due è climatizzato. Il campo coperto è comunque riparato da pioggia e vento, per un gioco confortevole in ogni stagione."
+    domanda_en: "Are the padel courts air-conditioned?"
+    risposta_en: "The Club has 2 padel courts, one covered and one uncovered: neither is air-conditioned. The covered court is still sheltered from rain and wind, for comfortable play all year round."
 ---
