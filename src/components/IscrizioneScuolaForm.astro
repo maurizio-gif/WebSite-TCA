@@ -34,6 +34,7 @@ const t = lang === 'en' ? {
   parentTitle: "Parent's details",
   parentFirst: "Parent's first name",
   parentLast: "Parent's last name",
+  parentDob: 'Date of birth',
   email: 'Email',
   emailNote: "Make sure the email address is correct: you'll receive all communications from the Club there.",
   mobile: 'Mobile',
@@ -126,6 +127,7 @@ const t = lang === 'en' ? {
   parentTitle: 'Dati del genitore',
   parentFirst: 'Nome del genitore',
   parentLast: 'Cognome del genitore',
+  parentDob: 'Data di nascita',
   email: 'Email',
   emailNote: "Controlla bene di aver inserito un indirizzo email corretto: lì riceverai tutte le comunicazioni da parte del Club.",
   mobile: 'Cellulare',
@@ -262,6 +264,10 @@ const t = lang === 'en' ? {
       <div class="lm__field">
         <label for="isc-parent-cognome">{t.parentLast} <span aria-hidden="true">*</span></label>
         <input id="isc-parent-cognome" type="text" autocomplete="family-name" required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-parent-dob">{t.parentDob} <span aria-hidden="true">*</span></label>
+        <input id="isc-parent-dob" type="date" autocomplete="bday" required />
       </div>
       <div class="lm__field lm__field--full">
         <label for="isc-email">{t.email} <span aria-hidden="true">*</span></label>
@@ -565,7 +571,7 @@ const t = lang === 'en' ? {
     clearError('1');
     const required = ['isc-minor-nome','isc-minor-cognome','isc-minor-dob','isc-minor-pob','isc-minor-cf',
                       'isc-addr','isc-city','isc-prov','isc-cap',
-                      'isc-parent-nome','isc-parent-cognome','isc-email','isc-cell'];
+                      'isc-parent-nome','isc-parent-cognome','isc-parent-dob','isc-email','isc-cell'];
     for (const id of required) {
       const el = document.getElementById(id);
       if (!el.value.trim()) { showError('1', ERR.required); el.focus(); return; }
@@ -624,6 +630,7 @@ const t = lang === 'en' ? {
       genitore: {
         nome: val('isc-parent-nome'),
         cognome: val('isc-parent-cognome'),
+        dataNascita: val('isc-parent-dob'),
         email: val('isc-email'),
         cellulare: `${document.getElementById('isc-pfx').value} ${val('isc-cell')}`,
       },
