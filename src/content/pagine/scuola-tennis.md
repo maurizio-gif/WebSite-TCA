@@ -119,7 +119,7 @@ scuola_iscrizione_cards:
     testo_en: |-
       60 minutes of tennis + 30 minutes of athletic training.
       Frequency: 1, 2 or 3 times a week.
-scuola_iscrizione_cta_label: Richiedi la Tua Prova
+scuola_iscrizione_cta_label: Richiedi Informazioni
 scuola_sezione3_eyebrow: Il nostro metodo
 scuola_sezione3_titolo: TOP SCHOOL FITP.
 scuola_sezione3_titolo_accent: VAVASSORI TEAM.
@@ -154,7 +154,7 @@ scuola_tornei:
 scuola_sezione4_footer_testo: 'Agli allievi selezionati viene inoltre proposto il **FITP Junior Program**, l''attività non agonistica del circuito federale: un percorso di tornei a tappe, da novembre alla primavera, per chi vuole iniziare a confrontarsi in gara.'
 scuola_livelli_footer_testo_en: 'After the yellow level, players move into the competitive squad.'
 scuola_livelli_footer_link_label_en: Discover competition →
-scuola_iscrizione_cta_label_en: Request Your Trial
+scuola_iscrizione_cta_label_en: Request Information
 scuola_sezione3_eyebrow_en: Our method
 scuola_sezione3_titolo_en: TOP SCHOOL FITP.
 scuola_sezione3_titolo_accent_en: VAVASSORI TEAM.
