@@ -544,6 +544,11 @@ const ogLocaleAlternate = lang === 'it' ? 'en_US' : 'it_IT';
       // cross-origin (Google Maps) provoca un bug di compositing in Chromium
       // per cui l'iframe resta vuoto o non si carica. La mappa è quindi statica.
 
+      // ── Planning corsi: colonne giorno in cascata ──
+      register('.ws__legend',                  'from-left',   0,   0);
+      register('.ws__col',                     'true',        0,  70);
+      register('.ws__footer',                  'true',      100,   0);
+
       // ── Card disciplina (tennis / padel / scuola / agonistica) ──
       register('.content-card',                'true',        0, 100);
       register('.age-card',                    'true',        0,  90);
