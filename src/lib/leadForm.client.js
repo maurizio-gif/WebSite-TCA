@@ -231,9 +231,14 @@ export function initLeadForm(root, options) {
 
   // Numero locale (senza prefisso, gestito a parte dalla select): solo
   // cifre/spazi/trattini, lunghezza plausibile per un cellulare reale.
+  // Esclude anche le cifre tutte uguali (es. 9999999999, 0000000000),
+  // pattern che supererebbe il controllo di lunghezza ma non è un numero reale.
   function isValidPhone(v) {
     var cifre = v.replace(/[^0-9]/g, '');
-    return /^[0-9\s-]+$/.test(v.trim()) && cifre.length >= 6 && cifre.length <= 14;
+    if (!/^[0-9\s-]+$/.test(v.trim())) return false;
+    if (cifre.length < 6 || cifre.length > 14) return false;
+    if (/^(\d)\1+$/.test(cifre)) return false;
+    return true;
   }
 
   // Etichette complete delle attività selezionate, per i payload inviati ai webhook
