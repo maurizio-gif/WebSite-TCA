@@ -24,6 +24,17 @@ fonte di verità per stack, flusso di lavoro, struttura e regole.
 
 ---
 
+## Se modifichi lo schema TinaCMS (`tina/config.ts`)
+Esegui **`npm run tina:lock`** e committa i file modificati in `tina/`.
+
+TinaCloud non legge `tina/config.ts`: indicizza lo schema da `tina/tina-lock.json`,
+che però viene scritto solo da `tinacms dev` — la build di produzione
+(`tina:build`) **non** lo aggiorna. Senza quel passaggio il lock resta indietro e
+l'admin mostra `GraphQL Schema Mismatch`, con le modifiche ai contenuti che
+possono non salvarsi. La CI lo verifica (`npm run check:tina`).
+
+---
+
 ## Struttura directory
 ```
 src/components/        → componenti riutilizzabili (PascalCase)
