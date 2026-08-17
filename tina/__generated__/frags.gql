@@ -108,6 +108,46 @@ fragment LegalParts on Legal {
   nomina_responsabile
 }
 
+fragment ModuliParts on Moduli {
+  __typename
+  camp_settimane {
+    __typename
+    id
+    range
+    fine
+  }
+  camp_quota_soci
+  camp_quota_soci_dal2
+  camp_quota_scuola
+  camp_quota_scuola_dal2
+  camp_quota_non_soci
+  camp_quota_non_soci_dal2
+  camp_pre_camp
+  camp_caparra
+  camp_csain
+  scuola_scadenza_preiscrizione
+  scuola_scadenza_preiscrizione_en
+  scuola_acconto
+  scuola_prove_periodo1
+  scuola_prove_periodo1_en
+  scuola_prove_periodo2
+  scuola_prove_periodo2_en
+  scuola_inizio_corsi
+  scuola_inizio_corsi_en
+  scuola_mini_tennis_nati
+  scuola_mini_tennis_nati_en
+  scuola_tennis_nati
+  scuola_tennis_nati_en
+  prenotazioni_data_inizio
+  prenotazioni_ora_apertura
+  prenotazioni_ora_chiusura
+  prenotazioni_durata_slot_richiamata
+  prenotazioni_durata_slot_visita
+  prenotazioni_giorni_avanti_richiamata
+  prenotazioni_giorni_avanti_visita
+  prenotazioni_date_chiuse
+}
+
 fragment HelpdeskParts on Helpdesk {
   __typename
   titolo

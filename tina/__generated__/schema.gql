@@ -66,6 +66,8 @@ type Query {
   infoConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: InfoFilter): InfoConnection!
   legal(relativePath: String): Legal!
   legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
+  moduli(relativePath: String): Moduli!
+  moduliConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ModuliFilter): ModuliConnection!
   helpdesk(relativePath: String): Helpdesk!
   helpdeskConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: HelpdeskFilter): HelpdeskConnection!
   news(relativePath: String): News!
@@ -81,6 +83,7 @@ input DocumentFilter {
   membership: MembershipFilter
   info: InfoFilter
   legal: LegalFilter
+  moduli: ModuliFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
   pagine: PagineFilter
@@ -109,7 +112,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder
+union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Moduli | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -450,6 +453,100 @@ type LegalConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
   edges: [LegalConnectionEdges]
+}
+
+type ModuliCamp_settimane {
+  id: String!
+  range: String!
+  fine: String!
+}
+
+type Moduli implements Node & Document {
+  camp_settimane: [ModuliCamp_settimane]
+  camp_quota_soci: String!
+  camp_quota_soci_dal2: String!
+  camp_quota_scuola: String!
+  camp_quota_scuola_dal2: String!
+  camp_quota_non_soci: String!
+  camp_quota_non_soci_dal2: String!
+  camp_pre_camp: String!
+  camp_caparra: String!
+  camp_csain: String!
+  scuola_scadenza_preiscrizione: String!
+  scuola_scadenza_preiscrizione_en: String!
+  scuola_acconto: String!
+  scuola_prove_periodo1: String!
+  scuola_prove_periodo1_en: String!
+  scuola_prove_periodo2: String!
+  scuola_prove_periodo2_en: String!
+  scuola_inizio_corsi: String!
+  scuola_inizio_corsi_en: String!
+  scuola_mini_tennis_nati: String!
+  scuola_mini_tennis_nati_en: String!
+  scuola_tennis_nati: String!
+  scuola_tennis_nati_en: String!
+  prenotazioni_data_inizio: String!
+  prenotazioni_ora_apertura: String!
+  prenotazioni_ora_chiusura: String!
+  prenotazioni_durata_slot_richiamata: Float!
+  prenotazioni_durata_slot_visita: Float!
+  prenotazioni_giorni_avanti_richiamata: Float!
+  prenotazioni_giorni_avanti_visita: Float!
+  prenotazioni_date_chiuse: [String]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input ModuliCamp_settimaneFilter {
+  id: StringFilter
+  range: StringFilter
+  fine: DatetimeFilter
+}
+
+input ModuliFilter {
+  camp_settimane: ModuliCamp_settimaneFilter
+  camp_quota_soci: StringFilter
+  camp_quota_soci_dal2: StringFilter
+  camp_quota_scuola: StringFilter
+  camp_quota_scuola_dal2: StringFilter
+  camp_quota_non_soci: StringFilter
+  camp_quota_non_soci_dal2: StringFilter
+  camp_pre_camp: StringFilter
+  camp_caparra: StringFilter
+  camp_csain: StringFilter
+  scuola_scadenza_preiscrizione: StringFilter
+  scuola_scadenza_preiscrizione_en: StringFilter
+  scuola_acconto: StringFilter
+  scuola_prove_periodo1: StringFilter
+  scuola_prove_periodo1_en: StringFilter
+  scuola_prove_periodo2: StringFilter
+  scuola_prove_periodo2_en: StringFilter
+  scuola_inizio_corsi: StringFilter
+  scuola_inizio_corsi_en: StringFilter
+  scuola_mini_tennis_nati: StringFilter
+  scuola_mini_tennis_nati_en: StringFilter
+  scuola_tennis_nati: StringFilter
+  scuola_tennis_nati_en: StringFilter
+  prenotazioni_data_inizio: DatetimeFilter
+  prenotazioni_ora_apertura: StringFilter
+  prenotazioni_ora_chiusura: StringFilter
+  prenotazioni_durata_slot_richiamata: NumberFilter
+  prenotazioni_durata_slot_visita: NumberFilter
+  prenotazioni_giorni_avanti_richiamata: NumberFilter
+  prenotazioni_giorni_avanti_visita: NumberFilter
+  prenotazioni_date_chiuse: DatetimeFilter
+}
+
+type ModuliConnectionEdges {
+  cursor: String!
+  node: Moduli
+}
+
+type ModuliConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [ModuliConnectionEdges]
 }
 
 type Helpdesk implements Node & Document {
@@ -2226,6 +2323,8 @@ type Mutation {
   createInfo(relativePath: String!, params: InfoMutation!): Info!
   updateLegal(relativePath: String!, params: LegalMutation!): Legal!
   createLegal(relativePath: String!, params: LegalMutation!): Legal!
+  updateModuli(relativePath: String!, params: ModuliMutation!): Moduli!
+  createModuli(relativePath: String!, params: ModuliMutation!): Moduli!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
   createHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
   updateNews(relativePath: String!, params: NewsMutation!): News!
@@ -2241,6 +2340,7 @@ input DocumentUpdateMutation {
   membership: MembershipMutation
   info: InfoMutation
   legal: LegalMutation
+  moduli: ModuliMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
   pagine: PagineMutation
@@ -2254,6 +2354,7 @@ input DocumentMutation {
   membership: MembershipMutation
   info: InfoMutation
   legal: LegalMutation
+  moduli: ModuliMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
   pagine: PagineMutation
@@ -2364,6 +2465,46 @@ input InfoMutation {
 input LegalMutation {
   codice_condotta: String
   nomina_responsabile: String
+}
+
+input ModuliCamp_settimaneMutation {
+  id: String
+  range: String
+  fine: String
+}
+
+input ModuliMutation {
+  camp_settimane: [ModuliCamp_settimaneMutation]
+  camp_quota_soci: String
+  camp_quota_soci_dal2: String
+  camp_quota_scuola: String
+  camp_quota_scuola_dal2: String
+  camp_quota_non_soci: String
+  camp_quota_non_soci_dal2: String
+  camp_pre_camp: String
+  camp_caparra: String
+  camp_csain: String
+  scuola_scadenza_preiscrizione: String
+  scuola_scadenza_preiscrizione_en: String
+  scuola_acconto: String
+  scuola_prove_periodo1: String
+  scuola_prove_periodo1_en: String
+  scuola_prove_periodo2: String
+  scuola_prove_periodo2_en: String
+  scuola_inizio_corsi: String
+  scuola_inizio_corsi_en: String
+  scuola_mini_tennis_nati: String
+  scuola_mini_tennis_nati_en: String
+  scuola_tennis_nati: String
+  scuola_tennis_nati_en: String
+  prenotazioni_data_inizio: String
+  prenotazioni_ora_apertura: String
+  prenotazioni_ora_chiusura: String
+  prenotazioni_durata_slot_richiamata: Float
+  prenotazioni_durata_slot_visita: Float
+  prenotazioni_giorni_avanti_richiamata: Float
+  prenotazioni_giorni_avanti_visita: Float
+  prenotazioni_date_chiuse: [String]
 }
 
 input HelpdeskMutation {

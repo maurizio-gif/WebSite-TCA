@@ -443,6 +443,80 @@ var config_default = defineConfig({
           }
         ]
       },
+      // ─── DATI STAGIONALI DEI FORM ──────────────────────────────────────────
+      // File unico con quote, date e scadenze usate nei form di iscrizione
+      // Summer Camp e Scuola Tennis. Le etichette dei campi (nomi, testi
+      // fissi) restano nel codice: qui si modificano solo i valori che
+      // cambiano ogni stagione — così non serve un developer per aggiornare
+      // un prezzo o una data.
+      // ─────────────────────────────────────────────────────────────────────
+      {
+        name: "moduli",
+        label: "Dati Stagionali Form",
+        path: "src/content/moduli",
+        format: "md",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          {
+            type: "object",
+            name: "camp_settimane",
+            label: "Summer Camp \u2014 Settimane",
+            list: true,
+            ui: {
+              itemProps: (item) => ({ label: item?.range || "Settimana" })
+            },
+            fields: [
+              { type: "string", name: "id", label: "ID interno (es. w1) \u2014 non modificare", required: true },
+              { type: "string", name: "range", label: 'Intervallo date mostrato in tabella (es. "8/06 \u2013 12/06")', required: true },
+              {
+                type: "datetime",
+                name: "fine",
+                label: "Ultimo giorno della settimana",
+                required: true,
+                ui: { dateFormat: "DD/MM/YYYY" }
+              }
+            ]
+          },
+          { type: "string", name: "camp_quota_soci", label: "Summer Camp \u2014 Quota Soci (\u20AC/settimana)", required: true },
+          { type: "string", name: "camp_quota_soci_dal2", label: "Summer Camp \u2014 Quota Soci dalla 2\xAA settimana o fratelli (\u20AC)", required: true },
+          { type: "string", name: "camp_quota_scuola", label: "Summer Camp \u2014 Quota Scuola Tennis (\u20AC/settimana)", required: true },
+          { type: "string", name: "camp_quota_scuola_dal2", label: "Summer Camp \u2014 Quota Scuola Tennis dalla 2\xAA settimana (\u20AC)", required: true },
+          { type: "string", name: "camp_quota_non_soci", label: "Summer Camp \u2014 Quota Non Soci (\u20AC/settimana)", required: true },
+          { type: "string", name: "camp_quota_non_soci_dal2", label: "Summer Camp \u2014 Quota Non Soci dalla 2\xAA settimana (\u20AC)", required: true },
+          { type: "string", name: "camp_pre_camp", label: "Summer Camp \u2014 Costo Pre-Camp (\u20AC/settimana)", required: true },
+          { type: "string", name: "camp_caparra", label: "Summer Camp \u2014 Caparra richiesta (\u20AC)", required: true },
+          { type: "string", name: "camp_csain", label: "Summer Camp \u2014 Assicurazione CSAIN per non soci (\u20AC)", required: true },
+          { type: "string", name: "scuola_scadenza_preiscrizione", label: "Scuola Tennis \u2014 Scadenza preiscrizione", required: true },
+          { type: "string", name: "scuola_scadenza_preiscrizione_en", label: "\u{1F1EC}\u{1F1E7} Scadenza preiscrizione (inglese)", required: true },
+          { type: "string", name: "scuola_acconto", label: "Scuola Tennis \u2014 Acconto richiesto (\u20AC)", required: true },
+          { type: "string", name: "scuola_prove_periodo1", label: "Scuola Tennis \u2014 Prove, primo periodo", required: true },
+          { type: "string", name: "scuola_prove_periodo1_en", label: "\u{1F1EC}\u{1F1E7} Prove, primo periodo (inglese)", required: true },
+          { type: "string", name: "scuola_prove_periodo2", label: "Scuola Tennis \u2014 Prove, secondo periodo", required: true },
+          { type: "string", name: "scuola_prove_periodo2_en", label: "\u{1F1EC}\u{1F1E7} Prove, secondo periodo (inglese)", required: true },
+          { type: "string", name: "scuola_inizio_corsi", label: "Scuola Tennis \u2014 Inizio corsi", required: true },
+          { type: "string", name: "scuola_inizio_corsi_en", label: "\u{1F1EC}\u{1F1E7} Inizio corsi (inglese)", required: true },
+          { type: "string", name: "scuola_mini_tennis_nati", label: "Scuola Tennis \u2014 Mini Tennis, anni di nascita ammessi", required: true },
+          { type: "string", name: "scuola_mini_tennis_nati_en", label: "\u{1F1EC}\u{1F1E7} Mini Tennis, anni di nascita (inglese)", required: true },
+          { type: "string", name: "scuola_tennis_nati", label: "Scuola Tennis \u2014 Scuola Tennis, anni di nascita ammessi", required: true },
+          { type: "string", name: "scuola_tennis_nati_en", label: "\u{1F1EC}\u{1F1E7} Scuola Tennis, anni di nascita (inglese)", required: true },
+          { type: "datetime", name: "prenotazioni_data_inizio", label: "Prenotazioni \u2014 disponibilit\xE0 a partire da", required: true, ui: { dateFormat: "DD/MM/YYYY" } },
+          { type: "string", name: "prenotazioni_ora_apertura", label: "Prenotazioni \u2014 primo orario disponibile (es. 10:30)", required: true },
+          { type: "string", name: "prenotazioni_ora_chiusura", label: "Prenotazioni \u2014 ultimo orario disponibile (es. 19:00)", required: true },
+          { type: "number", name: "prenotazioni_durata_slot_richiamata", label: "Prenotazioni \u2014 durata slot richiamata (minuti)", required: true },
+          { type: "number", name: "prenotazioni_durata_slot_visita", label: "Prenotazioni \u2014 durata slot visita in sede (minuti)", required: true },
+          { type: "number", name: "prenotazioni_giorni_avanti_richiamata", label: "Prenotazioni \u2014 giorni mostrati in calendario (richiamata)", required: true },
+          { type: "number", name: "prenotazioni_giorni_avanti_visita", label: "Prenotazioni \u2014 giorni mostrati in calendario (visita in sede)", required: true },
+          {
+            type: "datetime",
+            name: "prenotazioni_date_chiuse",
+            label: "Prenotazioni \u2014 giorni di chiusura eccezionale",
+            list: true,
+            ui: { dateFormat: "DD/MM/YYYY" }
+          }
+        ]
+      },
       // ─── HELP DESK ─────────────────────────────────────────────────────────
       // Guide della knowledge base Club Life (sezione Help Desk).
       // Ogni guida è un file .md in src/content/helpdesk/
