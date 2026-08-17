@@ -12,7 +12,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "check:redirects": "node scripts/check-vercel-redirects.mjs"
+    "check:redirects": "node scripts/check-vercel-redirects.mjs",
+    "check:tina": "node scripts/check-tina-lock.mjs",
+    "tina:lock": "node scripts/generate-tina-lock.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

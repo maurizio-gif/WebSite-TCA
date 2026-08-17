@@ -5,6 +5,11 @@ name: CI
 # sovrapposizione con pagine reali in vercel.json (bug che hanno reso
 # irraggiungibili /agonistica, /tennis, le pagine /news e l'intero sito in
 # inglese — vedi scripts/check-vercel-redirects.mjs).
+#
+# Verifica inoltre che lo schema TinaCMS generato e committato sia allineato a
+# tina/config.ts: TinaCloud legge lo schema da tina/tina-lock.json, che la build
+# di produzione non aggiorna, quindi il lock può restare indietro e far apparire
+# "GraphQL Schema Mismatch" nell'admin (vedi scripts/check-tina-lock.mjs).
 
 on:
   pull_request:
@@ -30,6 +35,12 @@ jobs:
 
       - name: Controlla redirect vercel.json (self-loop)
         run: npm run check:redirects
+
+      # Rigenera lo schema in una directory temporanea e lo confronta con i file
+      # committati: non sporca il workspace (in particolare non crea
+      # public/admin/, che manderebbe "astro check" in out-of-memory).
+      - name: Controlla allineamento schema TinaCMS (tina-lock.json)
+        run: npm run check:tina
 
       - name: Type check
         run: npm run check
