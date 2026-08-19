@@ -35,6 +35,7 @@ const t = lang === 'en' ? {
   parentFirst: "Parent's first name",
   parentLast: "Parent's last name",
   email: 'Email',
+  emailPlaceholder: 'name@example.com',
   emailNote: "Make sure the email address is correct: you'll receive all communications from the Club there.",
   mobile: 'Mobile',
 
@@ -107,6 +108,7 @@ const t = lang === 'en' ? {
   parentFirst: 'Nome del genitore',
   parentLast: 'Cognome del genitore',
   email: 'Email',
+  emailPlaceholder: 'nome@esempio.com',
   emailNote: "Controlla bene di aver inserito un indirizzo email corretto: lì riceverai tutte le comunicazioni da parte del Club.",
   mobile: 'Cellulare',
 
@@ -221,7 +223,7 @@ const t = lang === 'en' ? {
       </div>
       <div class="lm__field lm__field--full">
         <label for="sc-email">{t.email} <span aria-hidden="true">*</span></label>
-        <input id="sc-email" type="email" autocomplete="email" placeholder="nome@esempio.com" required />
+        <input id="sc-email" type="email" autocomplete="email" placeholder={t.emailPlaceholder} required />
       </div>
     </div>
     <p class="lm__hint">{t.emailNote}</p>

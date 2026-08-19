@@ -9,6 +9,7 @@ const t = lang === 'en' ? {
   eyebrow: 'Word of mouth',
   title: 'Invite a<br><em>Friend.</em>',
   closeLabel: 'Close',
+  emailPlaceholder: 'name@example.com',
   promoLead: 'Introduce a friend and get <strong>€30 credit</strong> on your membership when they join.',
   promoStepsTitle: 'How it works',
   promoSteps: [
@@ -46,6 +47,7 @@ const t = lang === 'en' ? {
   eyebrow: 'Passaparola',
   title: 'Invita un<br><em>Amico.</em>',
   closeLabel: 'Chiudi',
+  emailPlaceholder: 'nome@esempio.com',
   promoLead: 'Presenta un amico e ricevi <strong>30 € di credito</strong> sulla tua membership quando si iscrive.',
   promoStepsTitle: 'Come funziona',
   promoSteps: [
@@ -131,7 +133,7 @@ const t = lang === 'en' ? {
       <p class="lm__sub">{t.step1Sub}</p>
       <div class="lm__field">
         <label for="ia-email">{t.step1Label} <span aria-hidden="true">*</span></label>
-        <input id="ia-email" type="email" autocomplete="email" placeholder="nome@esempio.com" required />
+        <input id="ia-email" type="email" autocomplete="email" placeholder={t.emailPlaceholder} required />
       </div>
       <p class="lm__error" hidden></p>
       <div class="lm__actions">
@@ -155,7 +157,7 @@ const t = lang === 'en' ? {
         </div>
         <div class="lm__field">
           <label for="ia-friend-email">{t.friendEmail} <span aria-hidden="true">*</span></label>
-          <input id="ia-friend-email" type="email" autocomplete="off" placeholder="nome@esempio.com" required />
+          <input id="ia-friend-email" type="email" autocomplete="off" placeholder={t.emailPlaceholder} required />
         </div>
         <div class="lm__field">
           <label for="ia-friend-cell">{t.friendPhone} <span aria-hidden="true">*</span></label>
