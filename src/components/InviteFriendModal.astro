@@ -9,6 +9,19 @@ const t = lang === 'en' ? {
   eyebrow: 'Word of mouth',
   title: 'Invite a<br><em>Friend.</em>',
   closeLabel: 'Close',
+  promoLead: 'Introduce a friend and get <strong>€30 credit</strong> on your membership when they join.',
+  promoStepsTitle: 'How it works',
+  promoSteps: [
+    'Leave your details and your friend’s.',
+    'Our team gets in touch to introduce them to the Club and the available options.',
+    'If they take out a membership, you get €30 credit on your next fee.',
+  ],
+  promoPerks: ['No limit on invites', 'Always on, no end date'],
+  promoDetailsLabel: 'Who you can invite and conditions',
+  promoDetails: [
+    'Friends or family who have had no active TC Ambrosiano membership from 2021 to today.',
+    'If the new member withdraws within the first 14 days, the €30 credit is cancelled.',
+  ],
   step1Sub: "Enter the email address you used to register on our app.",
   step1Label: 'Your email',
   step1Next: 'Continue',
@@ -33,6 +46,19 @@ const t = lang === 'en' ? {
   eyebrow: 'Passaparola',
   title: 'Invita un<br><em>Amico.</em>',
   closeLabel: 'Chiudi',
+  promoLead: 'Presenta un amico e ricevi <strong>30 € di credito</strong> sulla tua membership quando si iscrive.',
+  promoStepsTitle: 'Come funziona',
+  promoSteps: [
+    'Lasci i tuoi dati e quelli della persona che vuoi invitare.',
+    'Il nostro team la contatta per presentarle il Club e le formule disponibili.',
+    'Se sottoscrive una membership, ricevi 30 € di credito sulla tua prossima quota.',
+  ],
+  promoPerks: ['Nessun limite di inviti', 'Sempre attiva, senza scadenza'],
+  promoDetailsLabel: 'Chi puoi invitare e condizioni',
+  promoDetails: [
+    'Amici o familiari che non abbiano avuto un abbonamento attivo al TC Ambrosiano dal 2021 a oggi.',
+    'Se il nuovo socio esercita il diritto di recesso entro i primi 14 giorni, il credito di 30 € viene annullato.',
+  ],
   step1Sub: "Scrivi qui l'indirizzo email con il quale sei registrato alla nostra APP.",
   step1Label: 'Il tuo indirizzo email',
   step1Next: 'Continua',
@@ -79,6 +105,29 @@ const t = lang === 'en' ? {
 
     <!-- STEP 1 — la tua email -->
     <div class="lm__body" data-ia-step="1">
+      <!-- Promo: il vantaggio e il meccanismo restano sempre visibili, requisiti e
+           nota sul recesso in un blocco richiudibile — trasparenti senza pesare
+           sul form, che resta l'azione principale. -->
+      <div class="ia-promo">
+        <p class="ia-promo__lead" set:html={t.promoLead} />
+
+        <p class="ia-promo__steps-title">{t.promoStepsTitle}</p>
+        <ol class="ia-promo__steps">
+          {t.promoSteps.map((s) => <li>{s}</li>)}
+        </ol>
+
+        <ul class="ia-promo__perks">
+          {t.promoPerks.map((p) => <li>{p}</li>)}
+        </ul>
+
+        <details class="ia-promo__details">
+          <summary>{t.promoDetailsLabel}</summary>
+          <ul>
+            {t.promoDetails.map((d) => <li>{d}</li>)}
+          </ul>
+        </details>
+      </div>
+
       <p class="lm__sub">{t.step1Sub}</p>
       <div class="lm__field">
         <label for="ia-email">{t.step1Label} <span aria-hidden="true">*</span></label>
@@ -152,6 +201,172 @@ const t = lang === 'en' ? {
 
   </div>
 </dialog>
+
+<style>
+  /* ── Blocco promo (step 1) ──────────────────────────────────────────────
+     Usa i token del modal lead (--lm-*), definiti globalmente in LeadModal. */
+  .ia-promo {
+    background: var(--lm-input-bg);
+    border-left: 3px solid var(--color-accent);
+    padding: 1.1rem 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ia-promo__lead {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.1vw, 15.5px);
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--lm-text);
+    margin: 0;
+  }
+
+  /* Il <strong> arriva da set:html, quindi senza attributo di scope Astro:
+     va raggiunto con :global(). */
+  .ia-promo__lead :global(strong) {
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .ia-promo__steps-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lm-text-sub);
+    margin: 1.1rem 0 0.5rem;
+  }
+
+  .ia-promo__steps {
+    list-style: none;
+    counter-reset: ia-step;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .ia-promo__steps li {
+    counter-increment: ia-step;
+    position: relative;
+    padding-left: 1.75rem;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.45;
+    color: var(--lm-text-sub);
+  }
+
+  .ia-promo__steps li::before {
+    content: counter(ia-step);
+    position: absolute;
+    left: 0;
+    top: 0.05em;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Rassicurazioni brevi: spingono a compilare senza aggiungere testo lungo */
+  .ia-promo__perks {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+  }
+
+  .ia-promo__perks li {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--lm-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .ia-promo__perks li::before {
+    content: '✓';
+    color: var(--color-accent);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* Requisiti e nota sul recesso: disponibili ma non invadenti */
+  .ia-promo__details {
+    margin-top: 1rem;
+    border-top: 1px solid var(--lm-border);
+    padding-top: 0.75rem;
+  }
+
+  .ia-promo__details summary {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--lm-text-sub);
+    cursor: pointer;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.18s;
+  }
+
+  .ia-promo__details summary::-webkit-details-marker { display: none; }
+
+  .ia-promo__details summary::after {
+    content: '+';
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--color-accent);
+  }
+
+  .ia-promo__details[open] summary::after { content: '−'; }
+
+  .ia-promo__details summary:hover { color: var(--lm-text); }
+
+  .ia-promo__details summary:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .ia-promo__details ul {
+    margin: 0.7rem 0 0;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .ia-promo__details li {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: var(--lm-text-sub);
+  }
+
+  @media (max-width: 600px) {
+    .ia-promo { padding: 1rem; }
+    .ia-promo__perks { gap: 0.35rem 0.8rem; }
+  }
+</style>
 
 <script define:vars={{ ERR: {
   email: t.errEmail,
