@@ -46,8 +46,21 @@ export function initLeadForm(root, options) {
     camps:'Summer Camps', membership:'Membership / Abbonamento',
   };
 
-  // Gruppo attività: determina il flusso condizionale insieme allo stato utente
-  var JUNIOR_IDS = ['scuola','agonistica','camps'];
+  // Gruppo attività: determina il flusso condizionale insieme allo stato utente.
+  // Regola: basta UNA attività adulti perché il contatto sia adulti; junior solo
+  // se tutte le attività scelte sono junior. È la stessa regola dell'IF
+  // "Adulti / Bambini" nei workflow n8n, che sulla risposta del check è
+  // autoritativo: tenerle allineate evita classificazioni contraddittorie.
+  var JUNIOR_IDS  = ['scuola','agonistica','camps'];
+  var ADULTI_IDS  = ['tennis','padel','prep','membership'];
+
+  // Nessuna attività selezionata (i checkbox non sono obbligatori) → adulti,
+  // come si è sempre comportato il form.
+  function gruppoDa(attivita) {
+    var haAdulti = attivita.some(function(id){ return ADULTI_IDS.indexOf(id) !== -1; });
+    var haJunior = attivita.some(function(id){ return JUNIOR_IDS.indexOf(id) !== -1; });
+    return (haJunior && !haAdulti) ? 'junior' : 'adulti';
+  }
 
   var DAYS_LONG = LANG === 'en'
     ? ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
@@ -248,8 +261,14 @@ export function initLeadForm(root, options) {
 
   // Il webhook n8n restituisce stato+gruppo insieme (es. "iscritto_adulto",
   // "esiste_bambino"): li separiamo qui. Il gruppo di n8n è autoritativo
-  // (deriva dallo stesso IF "Adulti / Bambini" del workflow) e sovrascrive
-  // la classificazione client-side.
+  // (deriva dall'IF "Adulti / Bambini" del workflow) e sovrascrive la
+  // classificazione fatta da gruppoDa().
+  //
+  // Le due devono applicare la STESSA regola (una attività adulti ⇒ adulti).
+  // Attenzione: l'IF di n8n confronta le ETICHETTE tradotte, non gli id, quindi
+  // va aggiornato a ogni nuova lingua o rinomina di un'attività — se un'etichetta
+  // non è nell'elenco, quel contatto finisce sul ramo junior. È esattamente così
+  // che i lead adulti dal sito inglese venivano salvati come junior.
   var GRUPPO_MAP = { adulto:'adulti', bambino:'junior' };
   function parseStato(raw) {
     var m = /^(iscritto|esiste|nuovo)(?:_(adulto|bambino))?$/.exec(String(raw || ''));
@@ -317,7 +336,7 @@ export function initLeadForm(root, options) {
 
     state.email    = emailInput.value.trim();
     state.attivita = Array.from(root.querySelectorAll('input[name="attivita"]:checked')).map(function(c){return c.value;});
-    state.gruppoAttivita = state.attivita.some(function(id){ return JUNIOR_IDS.indexOf(id) !== -1; }) ? 'junior' : 'adulti';
+    state.gruppoAttivita = gruppoDa(state.attivita);
     btn.disabled   = true; loader.hidden = false;
 
     try {
