@@ -342,7 +342,11 @@ export function initLeadForm(root, options) {
     try {
       var stato = 'nuovo';
       if (WEBHOOK_CHECK) {
-        var r = await fetch(WEBHOOK_CHECK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:state.email, attivita:attivitaLabels(), pagina:state.pagina, cta:state.cta, utm:getUtm(), vid:getVid()})});
+        // gruppoAttivita e attivitaIds viaggiano insieme alle etichette: l'IF
+        // "Adulti / Bambini" di n8n legge il gruppo già calcolato qui, invece di
+        // dedurlo dalle etichette tradotte (vedi il commento su parseStato).
+        // Le etichette restano nel payload perché servono ai testi delle email.
+        var r = await fetch(WEBHOOK_CHECK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:state.email, attivita:attivitaLabels(), attivitaIds:state.attivita, gruppoAttivita:state.gruppoAttivita, pagina:state.pagina, cta:state.cta, utm:getUtm(), vid:getVid()})});
         var data   = await r.json();
         var parsed = parseStato(data.stato);
         stato = parsed.stato;
