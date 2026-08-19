@@ -27,6 +27,7 @@ const attivita = lang === 'en' ? [
 
 const t = lang === 'en' ? {
   step1sub:         "Enter your email and tell us what you're interested in.",
+  emailPlaceholder: 'name@example.com',
   activitiesLabel:  'Activities of interest',
   continueBtn:      'Continue',
   checking:         'Checking…',
@@ -69,6 +70,7 @@ const t = lang === 'en' ? {
   confirmNote:      "We'll reply to the email address you provided as soon as possible.<br>See you at TCA!",
 } : {
   step1sub:         'Inserisci la tua email e dicci cosa ti interessa.',
+  emailPlaceholder: 'nome@esempio.com',
   activitiesLabel:  'Attività di interesse',
   continueBtn:      'Continua',
   checking:         'Verifica in corso…',
@@ -128,7 +130,7 @@ const t = lang === 'en' ? {
   <div class="lm__field">
     <label for={`${prefix}-email`}>Email <span aria-hidden="true">*</span></label>
     <input id={`${prefix}-email`} name="email" type="email" autocomplete="email"
-           placeholder="nome@esempio.com" required />
+           placeholder={t.emailPlaceholder} required />
   </div>
 
   <div>
