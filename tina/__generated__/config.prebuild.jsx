@@ -1,5 +1,111 @@
 // tina/config.ts
 import { defineConfig } from "tinacms";
+var GIORNI_SETTIMANA = [
+  { value: "lun", label: "Luned\xEC" },
+  { value: "mar", label: "Marted\xEC" },
+  { value: "mer", label: "Mercoled\xEC" },
+  { value: "gio", label: "Gioved\xEC" },
+  { value: "ven", label: "Venerd\xEC" },
+  { value: "sab", label: "Sabato" },
+  { value: "dom", label: "Domenica" }
+];
+var etichettaGiorno = (value) => GIORNI_SETTIMANA.find((g) => g.value === value)?.label ?? "Giorno";
+var dataBreve = (iso) => {
+  if (!iso) return "";
+  const [y, m, d] = String(iso).slice(0, 10).split("-");
+  return d && m && y ? `${d}/${m}/${y}` : String(iso);
+};
+var fasceField = (label, description) => ({
+  type: "object",
+  name: "fasce",
+  label,
+  description,
+  list: true,
+  ui: {
+    itemProps: (item) => ({
+      label: item?.dalle && item?.alle ? `${item.dalle} \u2013 ${item.alle}` : "Fascia oraria"
+    })
+  },
+  fields: [
+    { type: "string", name: "dalle", label: "Dalle (es. 10:30)", required: true },
+    { type: "string", name: "alle", label: "Alle (es. 19:00)", required: true }
+  ]
+});
+var tipoAppuntamentoField = (name, label, esempioDurata) => ({
+  type: "object",
+  name,
+  label,
+  fields: [
+    {
+      type: "boolean",
+      name: "attivo",
+      label: "Attivo",
+      description: 'Se disattivato, questa opzione sparisce dal form contatti e dal modal "Contattaci": restano disponibili le altre.'
+    },
+    {
+      type: "datetime",
+      name: "data_inizio",
+      label: "Disponibilit\xE0 a partire dal",
+      description: "Prima di questa data il calendario non mostra alcun giorno prenotabile.",
+      required: true,
+      ui: { dateFormat: "DD/MM/YYYY" }
+    },
+    {
+      type: "number",
+      name: "giorni_avanti",
+      label: "Giorni prenotabili in avanti",
+      description: "Quanti giorni mostrare nel calendario a partire da oggi (o dalla data di inizio, se successiva).",
+      required: true
+    },
+    {
+      type: "number",
+      name: "durata_slot",
+      label: `Durata di ogni slot in minuti (es. ${esempioDurata})`,
+      description: "Determina anche il passo degli orari proposti: con 30 minuti, dalle 10:30 escono 10:30, 11:00, 11:30\u2026",
+      required: true
+    },
+    {
+      type: "object",
+      name: "orari",
+      label: "Orari settimanali",
+      description: "Una riga per giorno della settimana, con una o pi\xF9 fasce orarie. Un giorno non elencato \u2014 o elencato senza fasce \u2014 \xE8 chiuso per questo tipo di appuntamento.",
+      list: true,
+      ui: {
+        itemProps: (item) => {
+          const fasce = (item?.fasce ?? []).filter((f) => f?.dalle && f?.alle).map((f) => `${f.dalle}\u2013${f.alle}`).join(", ");
+          return { label: `${etichettaGiorno(item?.giorno)}${fasce ? ` \xB7 ${fasce}` : " \xB7 chiuso"}` };
+        }
+      },
+      fields: [
+        {
+          type: "string",
+          name: "giorno",
+          label: "Giorno della settimana",
+          required: true,
+          options: GIORNI_SETTIMANA
+        },
+        fasceField("Fasce orarie del giorno", "Es. 10:30\u201313:00 e 15:00\u201319:00 per una pausa a met\xE0 giornata.")
+      ]
+    },
+    {
+      type: "object",
+      name: "eccezioni",
+      label: "Orari speciali su date singole",
+      description: `Sostituiscono l'orario settimanale solo nella data indicata. Una data senza fasce chiude quel giorno per questo tipo di appuntamento. Per chiudere il Club a entrambi i tipi usa invece "Chiusure del Club" in fondo.`,
+      list: true,
+      ui: {
+        itemProps: (item) => ({
+          label: [dataBreve(item?.data), item?.nota].filter(Boolean).join(" \xB7 ") || "Data"
+        })
+      },
+      fields: [
+        { type: "datetime", name: "data", label: "Data", required: true, ui: { dateFormat: "DD/MM/YYYY" } },
+        { type: "string", name: "nota", label: "Nota interna (non pubblicata)" },
+        fasceField("Fasce orarie di questa data", "Lascia vuoto per chiudere completamente la giornata.")
+      ]
+    }
+  ]
+});
 var config_default = defineConfig({
   branch: process.env.VERCEL_GIT_COMMIT_REF || process.env.GITHUB_BRANCH || process.env.HEAD || "main",
   clientId: process.env.TINA_CLIENT_ID || "",
@@ -500,20 +606,42 @@ var config_default = defineConfig({
           { type: "string", name: "scuola_mini_tennis_nati", label: "Scuola Tennis \u2014 Mini Tennis, anni di nascita ammessi", required: true },
           { type: "string", name: "scuola_mini_tennis_nati_en", label: "\u{1F1EC}\u{1F1E7} Mini Tennis, anni di nascita (inglese)", required: true },
           { type: "string", name: "scuola_tennis_nati", label: "Scuola Tennis \u2014 Scuola Tennis, anni di nascita ammessi", required: true },
-          { type: "string", name: "scuola_tennis_nati_en", label: "\u{1F1EC}\u{1F1E7} Scuola Tennis, anni di nascita (inglese)", required: true },
-          { type: "datetime", name: "prenotazioni_data_inizio", label: "Prenotazioni \u2014 disponibilit\xE0 a partire da", required: true, ui: { dateFormat: "DD/MM/YYYY" } },
-          { type: "string", name: "prenotazioni_ora_apertura", label: "Prenotazioni \u2014 primo orario disponibile (es. 10:30)", required: true },
-          { type: "string", name: "prenotazioni_ora_chiusura", label: "Prenotazioni \u2014 ultimo orario disponibile (es. 19:00)", required: true },
-          { type: "number", name: "prenotazioni_durata_slot_richiamata", label: "Prenotazioni \u2014 durata slot richiamata (minuti)", required: true },
-          { type: "number", name: "prenotazioni_durata_slot_visita", label: "Prenotazioni \u2014 durata slot visita in sede (minuti)", required: true },
-          { type: "number", name: "prenotazioni_giorni_avanti_richiamata", label: "Prenotazioni \u2014 giorni mostrati in calendario (richiamata)", required: true },
-          { type: "number", name: "prenotazioni_giorni_avanti_visita", label: "Prenotazioni \u2014 giorni mostrati in calendario (visita in sede)", required: true },
+          { type: "string", name: "scuola_tennis_nati_en", label: "\u{1F1EC}\u{1F1E7} Scuola Tennis, anni di nascita (inglese)", required: true }
+        ]
+      },
+      // ─── DISPONIBILITÀ APPUNTAMENTI ────────────────────────────────────────
+      // File unico (appuntamenti.md) con le regole di disponibilità dei due
+      // tipi di appuntamento del form contatti (LeadModal.astro,
+      // LeadFormInline.astro → leadForm.client.js). Qui la segreteria decide
+      // quando si può essere richiamati e quando si può venire in sede, senza
+      // passare da un developer.
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: "disponibilita",
+        label: "Disponibilit\xE0 Appuntamenti",
+        path: "src/content/disponibilita",
+        format: "md",
+        ui: {
+          allowedActions: { create: false, delete: false }
+        },
+        fields: [
+          tipoAppuntamentoField("telefonico", "\u{1F4DE} Appuntamento telefonico (richiamata)", "20"),
+          tipoAppuntamentoField("sede", "\u{1F4CD} Appuntamento in sede (visita al Club)", "30"),
           {
-            type: "datetime",
-            name: "prenotazioni_date_chiuse",
-            label: "Prenotazioni \u2014 giorni di chiusura eccezionale",
+            type: "object",
+            name: "chiusure",
+            label: "\u{1F512} Chiusure del Club",
+            description: "Giorni in cui non si prende alcun appuntamento, n\xE9 telefonico n\xE9 in sede: hanno la precedenza su orari settimanali e orari speciali.",
             list: true,
-            ui: { dateFormat: "DD/MM/YYYY" }
+            ui: {
+              itemProps: (item) => ({
+                label: [dataBreve(item?.data), item?.nota].filter(Boolean).join(" \xB7 ") || "Data"
+              })
+            },
+            fields: [
+              { type: "datetime", name: "data", label: "Data di chiusura", required: true, ui: { dateFormat: "DD/MM/YYYY" } },
+              { type: "string", name: "nota", label: "Motivo (nota interna, non pubblicata)" }
+            ]
           }
         ]
       },

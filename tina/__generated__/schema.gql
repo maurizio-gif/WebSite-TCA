@@ -68,6 +68,8 @@ type Query {
   legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
   moduli(relativePath: String): Moduli!
   moduliConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ModuliFilter): ModuliConnection!
+  disponibilita(relativePath: String): Disponibilita!
+  disponibilitaConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: DisponibilitaFilter): DisponibilitaConnection!
   helpdesk(relativePath: String): Helpdesk!
   helpdeskConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: HelpdeskFilter): HelpdeskConnection!
   news(relativePath: String): News!
@@ -84,6 +86,7 @@ input DocumentFilter {
   info: InfoFilter
   legal: LegalFilter
   moduli: ModuliFilter
+  disponibilita: DisponibilitaFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
   pagine: PagineFilter
@@ -112,7 +115,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Moduli | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder
+union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Moduli | Disponibilita | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -485,14 +488,6 @@ type Moduli implements Node & Document {
   scuola_mini_tennis_nati_en: String!
   scuola_tennis_nati: String!
   scuola_tennis_nati_en: String!
-  prenotazioni_data_inizio: String!
-  prenotazioni_ora_apertura: String!
-  prenotazioni_ora_chiusura: String!
-  prenotazioni_durata_slot_richiamata: Float!
-  prenotazioni_durata_slot_visita: Float!
-  prenotazioni_giorni_avanti_richiamata: Float!
-  prenotazioni_giorni_avanti_visita: Float!
-  prenotazioni_date_chiuse: [String]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -528,14 +523,6 @@ input ModuliFilter {
   scuola_mini_tennis_nati_en: StringFilter
   scuola_tennis_nati: StringFilter
   scuola_tennis_nati_en: StringFilter
-  prenotazioni_data_inizio: DatetimeFilter
-  prenotazioni_ora_apertura: StringFilter
-  prenotazioni_ora_chiusura: StringFilter
-  prenotazioni_durata_slot_richiamata: NumberFilter
-  prenotazioni_durata_slot_visita: NumberFilter
-  prenotazioni_giorni_avanti_richiamata: NumberFilter
-  prenotazioni_giorni_avanti_visita: NumberFilter
-  prenotazioni_date_chiuse: DatetimeFilter
 }
 
 type ModuliConnectionEdges {
@@ -547,6 +534,162 @@ type ModuliConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
   edges: [ModuliConnectionEdges]
+}
+
+type DisponibilitaTelefonicoOrariFasce {
+  dalle: String!
+  alle: String!
+}
+
+type DisponibilitaTelefonicoOrari {
+  giorno: String!
+  fasce: [DisponibilitaTelefonicoOrariFasce]
+}
+
+type DisponibilitaTelefonicoEccezioniFasce {
+  dalle: String!
+  alle: String!
+}
+
+type DisponibilitaTelefonicoEccezioni {
+  data: String!
+  nota: String
+  fasce: [DisponibilitaTelefonicoEccezioniFasce]
+}
+
+type DisponibilitaTelefonico {
+  attivo: Boolean
+  data_inizio: String!
+  giorni_avanti: Float!
+  durata_slot: Float!
+  orari: [DisponibilitaTelefonicoOrari]
+  eccezioni: [DisponibilitaTelefonicoEccezioni]
+}
+
+type DisponibilitaSedeOrariFasce {
+  dalle: String!
+  alle: String!
+}
+
+type DisponibilitaSedeOrari {
+  giorno: String!
+  fasce: [DisponibilitaSedeOrariFasce]
+}
+
+type DisponibilitaSedeEccezioniFasce {
+  dalle: String!
+  alle: String!
+}
+
+type DisponibilitaSedeEccezioni {
+  data: String!
+  nota: String
+  fasce: [DisponibilitaSedeEccezioniFasce]
+}
+
+type DisponibilitaSede {
+  attivo: Boolean
+  data_inizio: String!
+  giorni_avanti: Float!
+  durata_slot: Float!
+  orari: [DisponibilitaSedeOrari]
+  eccezioni: [DisponibilitaSedeEccezioni]
+}
+
+type DisponibilitaChiusure {
+  data: String!
+  nota: String
+}
+
+type Disponibilita implements Node & Document {
+  telefonico: DisponibilitaTelefonico
+  sede: DisponibilitaSede
+  chiusure: [DisponibilitaChiusure]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input DisponibilitaTelefonicoOrariFasceFilter {
+  dalle: StringFilter
+  alle: StringFilter
+}
+
+input DisponibilitaTelefonicoOrariFilter {
+  giorno: StringFilter
+  fasce: DisponibilitaTelefonicoOrariFasceFilter
+}
+
+input DisponibilitaTelefonicoEccezioniFasceFilter {
+  dalle: StringFilter
+  alle: StringFilter
+}
+
+input DisponibilitaTelefonicoEccezioniFilter {
+  data: DatetimeFilter
+  nota: StringFilter
+  fasce: DisponibilitaTelefonicoEccezioniFasceFilter
+}
+
+input DisponibilitaTelefonicoFilter {
+  attivo: BooleanFilter
+  data_inizio: DatetimeFilter
+  giorni_avanti: NumberFilter
+  durata_slot: NumberFilter
+  orari: DisponibilitaTelefonicoOrariFilter
+  eccezioni: DisponibilitaTelefonicoEccezioniFilter
+}
+
+input DisponibilitaSedeOrariFasceFilter {
+  dalle: StringFilter
+  alle: StringFilter
+}
+
+input DisponibilitaSedeOrariFilter {
+  giorno: StringFilter
+  fasce: DisponibilitaSedeOrariFasceFilter
+}
+
+input DisponibilitaSedeEccezioniFasceFilter {
+  dalle: StringFilter
+  alle: StringFilter
+}
+
+input DisponibilitaSedeEccezioniFilter {
+  data: DatetimeFilter
+  nota: StringFilter
+  fasce: DisponibilitaSedeEccezioniFasceFilter
+}
+
+input DisponibilitaSedeFilter {
+  attivo: BooleanFilter
+  data_inizio: DatetimeFilter
+  giorni_avanti: NumberFilter
+  durata_slot: NumberFilter
+  orari: DisponibilitaSedeOrariFilter
+  eccezioni: DisponibilitaSedeEccezioniFilter
+}
+
+input DisponibilitaChiusureFilter {
+  data: DatetimeFilter
+  nota: StringFilter
+}
+
+input DisponibilitaFilter {
+  telefonico: DisponibilitaTelefonicoFilter
+  sede: DisponibilitaSedeFilter
+  chiusure: DisponibilitaChiusureFilter
+}
+
+type DisponibilitaConnectionEdges {
+  cursor: String!
+  node: Disponibilita
+}
+
+type DisponibilitaConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [DisponibilitaConnectionEdges]
 }
 
 type Helpdesk implements Node & Document {
@@ -2325,6 +2468,8 @@ type Mutation {
   createLegal(relativePath: String!, params: LegalMutation!): Legal!
   updateModuli(relativePath: String!, params: ModuliMutation!): Moduli!
   createModuli(relativePath: String!, params: ModuliMutation!): Moduli!
+  updateDisponibilita(relativePath: String!, params: DisponibilitaMutation!): Disponibilita!
+  createDisponibilita(relativePath: String!, params: DisponibilitaMutation!): Disponibilita!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
   createHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
   updateNews(relativePath: String!, params: NewsMutation!): News!
@@ -2341,6 +2486,7 @@ input DocumentUpdateMutation {
   info: InfoMutation
   legal: LegalMutation
   moduli: ModuliMutation
+  disponibilita: DisponibilitaMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
   pagine: PagineMutation
@@ -2355,6 +2501,7 @@ input DocumentMutation {
   info: InfoMutation
   legal: LegalMutation
   moduli: ModuliMutation
+  disponibilita: DisponibilitaMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
   pagine: PagineMutation
@@ -2497,14 +2644,77 @@ input ModuliMutation {
   scuola_mini_tennis_nati_en: String
   scuola_tennis_nati: String
   scuola_tennis_nati_en: String
-  prenotazioni_data_inizio: String
-  prenotazioni_ora_apertura: String
-  prenotazioni_ora_chiusura: String
-  prenotazioni_durata_slot_richiamata: Float
-  prenotazioni_durata_slot_visita: Float
-  prenotazioni_giorni_avanti_richiamata: Float
-  prenotazioni_giorni_avanti_visita: Float
-  prenotazioni_date_chiuse: [String]
+}
+
+input DisponibilitaTelefonicoOrariFasceMutation {
+  dalle: String
+  alle: String
+}
+
+input DisponibilitaTelefonicoOrariMutation {
+  giorno: String
+  fasce: [DisponibilitaTelefonicoOrariFasceMutation]
+}
+
+input DisponibilitaTelefonicoEccezioniFasceMutation {
+  dalle: String
+  alle: String
+}
+
+input DisponibilitaTelefonicoEccezioniMutation {
+  data: String
+  nota: String
+  fasce: [DisponibilitaTelefonicoEccezioniFasceMutation]
+}
+
+input DisponibilitaTelefonicoMutation {
+  attivo: Boolean
+  data_inizio: String
+  giorni_avanti: Float
+  durata_slot: Float
+  orari: [DisponibilitaTelefonicoOrariMutation]
+  eccezioni: [DisponibilitaTelefonicoEccezioniMutation]
+}
+
+input DisponibilitaSedeOrariFasceMutation {
+  dalle: String
+  alle: String
+}
+
+input DisponibilitaSedeOrariMutation {
+  giorno: String
+  fasce: [DisponibilitaSedeOrariFasceMutation]
+}
+
+input DisponibilitaSedeEccezioniFasceMutation {
+  dalle: String
+  alle: String
+}
+
+input DisponibilitaSedeEccezioniMutation {
+  data: String
+  nota: String
+  fasce: [DisponibilitaSedeEccezioniFasceMutation]
+}
+
+input DisponibilitaSedeMutation {
+  attivo: Boolean
+  data_inizio: String
+  giorni_avanti: Float
+  durata_slot: Float
+  orari: [DisponibilitaSedeOrariMutation]
+  eccezioni: [DisponibilitaSedeEccezioniMutation]
+}
+
+input DisponibilitaChiusureMutation {
+  data: String
+  nota: String
+}
+
+input DisponibilitaMutation {
+  telefonico: DisponibilitaTelefonicoMutation
+  sede: DisponibilitaSedeMutation
+  chiusure: [DisponibilitaChiusureMutation]
 }
 
 input HelpdeskMutation {

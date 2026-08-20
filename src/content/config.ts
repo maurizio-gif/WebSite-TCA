@@ -725,11 +725,11 @@ const legal = defineCollection({
 // ─── DATI STAGIONALI DEI FORM ──────────────────────────────────────────────────
 // File unico (dati-stagionali.md) con quote, date e scadenze usate nei form di
 // iscrizione Summer Camp e Scuola Tennis (SummerCampForm.astro,
-// IscrizioneScuolaForm.astro), più i parametri di disponibilità per
-// richiamata telefonica e visita in sede (LeadModal.astro, LeadFormInline.astro
-// → leadForm.client.js). Le etichette dei campi restano nel codice: qui vive
-// solo ciò che cambia ogni stagione. Gestibile da TinaCMS → collection
+// IscrizioneScuolaForm.astro). Le etichette dei campi restano nel codice: qui
+// vive solo ciò che cambia ogni stagione. Gestibile da TinaCMS → collection
 // 'moduli'.
+// La disponibilità di richiamata telefonica e visita in sede sta invece nella
+// collection 'disponibilita' (vedi più sotto).
 // ─────────────────────────────────────────────────────────────────────────────
 const moduli = defineCollection({
   type: 'content',
@@ -762,17 +762,54 @@ const moduli = defineCollection({
     scuola_mini_tennis_nati_en: z.string(),
     scuola_tennis_nati: z.string(),
     scuola_tennis_nati_en: z.string(),
-
-    // ── Prenotazioni (richiamata telefonica / visita in sede) ──
-    prenotazioni_data_inizio: z.date(),
-    prenotazioni_ora_apertura: z.string(),
-    prenotazioni_ora_chiusura: z.string(),
-    prenotazioni_durata_slot_richiamata: z.number(),
-    prenotazioni_durata_slot_visita: z.number(),
-    prenotazioni_giorni_avanti_richiamata: z.number(),
-    prenotazioni_giorni_avanti_visita: z.number(),
-    prenotazioni_date_chiuse: z.array(z.date()).default([]),
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, planning, membership, info, legal, moduli };
+// ─── DISPONIBILITÀ APPUNTAMENTI ────────────────────────────────────────────────
+// File unico (appuntamenti.md) con le regole di disponibilità dei due tipi di
+// appuntamento offerti dal form contatti (LeadModal.astro,
+// LeadFormInline.astro → leadForm.client.js):
+//   • telefonico → "Richiamami", la segreteria richiama il contatto
+//   • sede       → "Prenota una visita in sede"
+// Per ciascuno: interruttore di attivazione, data da cui parte la
+// disponibilità, quanti giorni mostrare in calendario, durata dello slot e
+// orari settimanali (una o più fasce per giorno della settimana), più le
+// eccezioni su singole date. Le chiusure del Club valgono per entrambi.
+// Un giorno della settimana assente dall'elenco 'orari' — o presente senza
+// fasce — è chiuso. Gestibile da TinaCMS → collection 'disponibilita'.
+// ─────────────────────────────────────────────────────────────────────────────
+const fascia = z.object({
+  dalle: z.string(),
+  alle: z.string(),
+});
+
+const tipoAppuntamento = z.object({
+  attivo: z.boolean().default(true),
+  data_inizio: z.date(),
+  giorni_avanti: z.number(),
+  durata_slot: z.number(),
+  orari: z.array(z.object({
+    giorno: z.enum(['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom']),
+    fasce: z.array(fascia).default([]),
+  })).default([]),
+  // Eccezione senza fasce = giorno chiuso per quel tipo di appuntamento.
+  eccezioni: z.array(z.object({
+    data: z.date(),
+    nota: z.string().optional(),
+    fasce: z.array(fascia).default([]),
+  })).default([]),
+});
+
+const disponibilita = defineCollection({
+  type: 'content',
+  schema: z.object({
+    telefonico: tipoAppuntamento,
+    sede: tipoAppuntamento,
+    chiusure: z.array(z.object({
+      data: z.date(),
+      nota: z.string().optional(),
+    })).default([]),
+  }),
+});
+
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, membership, info, legal, moduli, disponibilita };

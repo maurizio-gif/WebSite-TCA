@@ -138,14 +138,67 @@ fragment ModuliParts on Moduli {
   scuola_mini_tennis_nati_en
   scuola_tennis_nati
   scuola_tennis_nati_en
-  prenotazioni_data_inizio
-  prenotazioni_ora_apertura
-  prenotazioni_ora_chiusura
-  prenotazioni_durata_slot_richiamata
-  prenotazioni_durata_slot_visita
-  prenotazioni_giorni_avanti_richiamata
-  prenotazioni_giorni_avanti_visita
-  prenotazioni_date_chiuse
+}
+
+fragment DisponibilitaParts on Disponibilita {
+  __typename
+  telefonico {
+    __typename
+    attivo
+    data_inizio
+    giorni_avanti
+    durata_slot
+    orari {
+      __typename
+      giorno
+      fasce {
+        __typename
+        dalle
+        alle
+      }
+    }
+    eccezioni {
+      __typename
+      data
+      nota
+      fasce {
+        __typename
+        dalle
+        alle
+      }
+    }
+  }
+  sede {
+    __typename
+    attivo
+    data_inizio
+    giorni_avanti
+    durata_slot
+    orari {
+      __typename
+      giorno
+      fasce {
+        __typename
+        dalle
+        alle
+      }
+    }
+    eccezioni {
+      __typename
+      data
+      nota
+      fasce {
+        __typename
+        dalle
+        alle
+      }
+    }
+  }
+  chiusure {
+    __typename
+    data
+    nota
+  }
 }
 
 fragment HelpdeskParts on Helpdesk {

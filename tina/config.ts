@@ -6,6 +6,132 @@ import type { Collection, TinaField } from 'tinacms';
 //   TINA_TOKEN      →  stessa posizione
 // Ottienile su: https://app.tina.io
 
+// ─── DISPONIBILITÀ APPUNTAMENTI ────────────────────────────────────────────────
+// Blocco di campi ripetuto identico per i due tipi di appuntamento offerti dal
+// form contatti: richiamata telefonica e visita in sede. Sta in una funzione
+// perché le regole sono le stesse e devono restare allineate: cambiarle in un
+// punto solo evita che i due tipi divergano per una svista.
+// ───────────────────────────────────────────────────────────────────────────────
+const GIORNI_SETTIMANA = [
+  { value: 'lun', label: 'Lunedì' },
+  { value: 'mar', label: 'Martedì' },
+  { value: 'mer', label: 'Mercoledì' },
+  { value: 'gio', label: 'Giovedì' },
+  { value: 'ven', label: 'Venerdì' },
+  { value: 'sab', label: 'Sabato' },
+  { value: 'dom', label: 'Domenica' },
+];
+
+const etichettaGiorno = (value?: string) =>
+  GIORNI_SETTIMANA.find((g) => g.value === value)?.label ?? 'Giorno';
+
+// Le date arrivano dall'editor come stringa ISO: mostrarla intera nel titolo
+// della riga la renderebbe illeggibile, basta la parte gg/mm/aaaa.
+const dataBreve = (iso?: string) => {
+  if (!iso) return '';
+  const [y, m, d] = String(iso).slice(0, 10).split('-');
+  return d && m && y ? `${d}/${m}/${y}` : String(iso);
+};
+
+const fasceField = (label: string, description: string): TinaField => ({
+  type: 'object',
+  name: 'fasce',
+  label,
+  description,
+  list: true,
+  ui: {
+    itemProps: (item) => ({
+      label: item?.dalle && item?.alle ? `${item.dalle} – ${item.alle}` : 'Fascia oraria',
+    }),
+  },
+  fields: [
+    { type: 'string', name: 'dalle', label: 'Dalle (es. 10:30)', required: true },
+    { type: 'string', name: 'alle', label: 'Alle (es. 19:00)', required: true },
+  ],
+});
+
+const tipoAppuntamentoField = (name: string, label: string, esempioDurata: string): TinaField => ({
+  type: 'object',
+  name,
+  label,
+  fields: [
+    {
+      type: 'boolean',
+      name: 'attivo',
+      label: 'Attivo',
+      description:
+        'Se disattivato, questa opzione sparisce dal form contatti e dal modal "Contattaci": restano disponibili le altre.',
+    },
+    {
+      type: 'datetime',
+      name: 'data_inizio',
+      label: 'Disponibilità a partire dal',
+      description: 'Prima di questa data il calendario non mostra alcun giorno prenotabile.',
+      required: true,
+      ui: { dateFormat: 'DD/MM/YYYY' },
+    },
+    {
+      type: 'number',
+      name: 'giorni_avanti',
+      label: 'Giorni prenotabili in avanti',
+      description: 'Quanti giorni mostrare nel calendario a partire da oggi (o dalla data di inizio, se successiva).',
+      required: true,
+    },
+    {
+      type: 'number',
+      name: 'durata_slot',
+      label: `Durata di ogni slot in minuti (es. ${esempioDurata})`,
+      description: 'Determina anche il passo degli orari proposti: con 30 minuti, dalle 10:30 escono 10:30, 11:00, 11:30…',
+      required: true,
+    },
+    {
+      type: 'object',
+      name: 'orari',
+      label: 'Orari settimanali',
+      description:
+        'Una riga per giorno della settimana, con una o più fasce orarie. Un giorno non elencato — o elencato senza fasce — è chiuso per questo tipo di appuntamento.',
+      list: true,
+      ui: {
+        itemProps: (item) => {
+          const fasce = (item?.fasce ?? [])
+            .filter((f: { dalle?: string; alle?: string }) => f?.dalle && f?.alle)
+            .map((f: { dalle: string; alle: string }) => `${f.dalle}–${f.alle}`)
+            .join(', ');
+          return { label: `${etichettaGiorno(item?.giorno)}${fasce ? ` · ${fasce}` : ' · chiuso'}` };
+        },
+      },
+      fields: [
+        {
+          type: 'string',
+          name: 'giorno',
+          label: 'Giorno della settimana',
+          required: true,
+          options: GIORNI_SETTIMANA,
+        },
+        fasceField('Fasce orarie del giorno', 'Es. 10:30–13:00 e 15:00–19:00 per una pausa a metà giornata.'),
+      ],
+    },
+    {
+      type: 'object',
+      name: 'eccezioni',
+      label: 'Orari speciali su date singole',
+      description:
+        "Sostituiscono l'orario settimanale solo nella data indicata. Una data senza fasce chiude quel giorno per questo tipo di appuntamento. Per chiudere il Club a entrambi i tipi usa invece \"Chiusure del Club\" in fondo.",
+      list: true,
+      ui: {
+        itemProps: (item) => ({
+          label: [dataBreve(item?.data), item?.nota].filter(Boolean).join(' · ') || 'Data',
+        }),
+      },
+      fields: [
+        { type: 'datetime', name: 'data', label: 'Data', required: true, ui: { dateFormat: 'DD/MM/YYYY' } },
+        { type: 'string', name: 'nota', label: 'Nota interna (non pubblicata)' },
+        fasceField('Fasce orarie di questa data', 'Lascia vuoto per chiudere completamente la giornata.'),
+      ],
+    },
+  ],
+});
+
 export default defineConfig({
   branch: process.env.VERCEL_GIT_COMMIT_REF || process.env.GITHUB_BRANCH || process.env.HEAD || 'main',
   clientId: process.env.TINA_CLIENT_ID || '',
@@ -504,20 +630,42 @@ export default defineConfig({
           { type: 'string', name: 'scuola_mini_tennis_nati_en', label: '🇬🇧 Mini Tennis, anni di nascita (inglese)', required: true },
           { type: 'string', name: 'scuola_tennis_nati', label: 'Scuola Tennis — Scuola Tennis, anni di nascita ammessi', required: true },
           { type: 'string', name: 'scuola_tennis_nati_en', label: '🇬🇧 Scuola Tennis, anni di nascita (inglese)', required: true },
-
-          { type: 'datetime', name: 'prenotazioni_data_inizio', label: 'Prenotazioni — disponibilità a partire da', required: true, ui: { dateFormat: 'DD/MM/YYYY' } },
-          { type: 'string', name: 'prenotazioni_ora_apertura', label: 'Prenotazioni — primo orario disponibile (es. 10:30)', required: true },
-          { type: 'string', name: 'prenotazioni_ora_chiusura', label: 'Prenotazioni — ultimo orario disponibile (es. 19:00)', required: true },
-          { type: 'number', name: 'prenotazioni_durata_slot_richiamata', label: 'Prenotazioni — durata slot richiamata (minuti)', required: true },
-          { type: 'number', name: 'prenotazioni_durata_slot_visita', label: 'Prenotazioni — durata slot visita in sede (minuti)', required: true },
-          { type: 'number', name: 'prenotazioni_giorni_avanti_richiamata', label: 'Prenotazioni — giorni mostrati in calendario (richiamata)', required: true },
-          { type: 'number', name: 'prenotazioni_giorni_avanti_visita', label: 'Prenotazioni — giorni mostrati in calendario (visita in sede)', required: true },
+        ],
+      },
+      // ─── DISPONIBILITÀ APPUNTAMENTI ────────────────────────────────────────
+      // File unico (appuntamenti.md) con le regole di disponibilità dei due
+      // tipi di appuntamento del form contatti (LeadModal.astro,
+      // LeadFormInline.astro → leadForm.client.js). Qui la segreteria decide
+      // quando si può essere richiamati e quando si può venire in sede, senza
+      // passare da un developer.
+      // ───────────────────────────────────────────────────────────────────────
+      {
+        name: 'disponibilita',
+        label: 'Disponibilità Appuntamenti',
+        path: 'src/content/disponibilita',
+        format: 'md',
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          tipoAppuntamentoField('telefonico', '📞 Appuntamento telefonico (richiamata)', '20'),
+          tipoAppuntamentoField('sede', '📍 Appuntamento in sede (visita al Club)', '30'),
           {
-            type: 'datetime',
-            name: 'prenotazioni_date_chiuse',
-            label: 'Prenotazioni — giorni di chiusura eccezionale',
+            type: 'object',
+            name: 'chiusure',
+            label: '🔒 Chiusure del Club',
+            description:
+              'Giorni in cui non si prende alcun appuntamento, né telefonico né in sede: hanno la precedenza su orari settimanali e orari speciali.',
             list: true,
-            ui: { dateFormat: 'DD/MM/YYYY' },
+            ui: {
+              itemProps: (item) => ({
+                label: [dataBreve(item?.data), item?.nota].filter(Boolean).join(' · ') || 'Data',
+              }),
+            },
+            fields: [
+              { type: 'datetime', name: 'data', label: 'Data di chiusura', required: true, ui: { dateFormat: 'DD/MM/YYYY' } },
+              { type: 'string', name: 'nota', label: 'Motivo (nota interna, non pubblicata)' },
+            ],
           },
         ],
       },
