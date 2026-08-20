@@ -7,7 +7,12 @@
 
 const PERFECTGYM_PORTAL = 'https://tcambrosiano.perfectgym.com/clientportal2';
 
-const APPTCA_URL = 'https://app.tcambrosiano.com';
+// Dominio di produzione del pannello: è `crm.`, non `app.`. Il sottodominio
+// sbagliato non fa errore visibile — la fetch di disponibilità muore in DNS e
+// fetchOccupati (src/lib/leadForm.client.js) ripiega volutamente su "nessuno
+// slot occupato", quindi il form torna a offrire anche gli orari già presi in
+// agenda senza che nulla lo segnali.
+const APPTCA_URL = 'https://crm.tcambrosiano.com';
 
 export const appTca = {
   // Endpoint pubblico e senza autenticazione (AppTCA/app/api/disponibilita):
