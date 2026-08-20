@@ -24,20 +24,40 @@ export function initLeadForm(root, options) {
   var WEBHOOK_LEAD  = 'https://automazione.n8ndevelop.it/webhook/tca-form-compilato';
   var DISPONIBILITA_ENDPOINT = appTca.disponibilita;
 
-  // Parametri di prenotazione (orari, durata slot, date di chiusura), gestiti
-  // da TinaCMS e passati dal componente Astro via data-availability sul nodo
-  // radice. Il fallback riproduce i valori di default se l'attributo manca
-  // o non è JSON valido, così il form non si rompe mai.
+  // Disponibilità dei due tipi di appuntamento (richiamata telefonica e visita
+  // in sede), gestita da TinaCMS → src/content/disponibilita/appuntamenti.md e
+  // passata dal componente Astro via data-availability sul nodo radice. Il
+  // fallback riproduce la configurazione storica se l'attributo manca o non è
+  // JSON valido, così il form non si rompe mai.
   var AVAIL = (function () {
+    function fallbackTipo(durata, giorni) {
+      var orari = {};
+      for (var g = 0; g < 7; g++) orari[g] = [{ dalle: '10:30', alle: '19:00' }];
+      return {
+        attivo: true, dataInizio: '2026-08-08', giorniAvanti: giorni,
+        durataSlot: durata, orari: orari, eccezioni: {},
+      };
+    }
     var fallback = {
-      dataInizio: '2026-08-08', oraApertura: '10:30', oraChiusura: '19:00',
-      durataRichiamata: 20, durataVisita: 30,
-      giorniRichiamata: 7, giorniVisita: 14, dateChiuse: ['2026-08-15'],
+      telefonico: fallbackTipo(20, 7),
+      sede: fallbackTipo(30, 14),
+      chiusure: ['2026-08-15'],
     };
     try {
-      return Object.assign({}, fallback, JSON.parse(root.dataset.availability || ''));
+      var parsed = JSON.parse(root.dataset.availability || '');
+      return {
+        telefonico: Object.assign({}, fallback.telefonico, parsed.telefonico),
+        sede: Object.assign({}, fallback.sede, parsed.sede),
+        chiusure: parsed.chiusure || [],
+      };
     } catch (e) { return fallback; }
   })();
+
+  // 'cb' = richiamata telefonica, 'visit' = visita in sede: la sigla è quella
+  // usata negli id del markup (LeadFormBody.astro) e nei rami di buildCalendar.
+  function configTipo(type) {
+    return type === 'cb' ? AVAIL.telefonico : AVAIL.sede;
+  }
 
   var ATTIVITA_LABELS = LANG === 'en' ? {
     tennis:'Adult Tennis', padel:'Padel', prep:'Athletic Training',
@@ -428,12 +448,15 @@ export function initLeadForm(root, options) {
   });
 
   // GENERAZIONE SLOT
-  // Richiamata e visita in sede condividono le stesse regole di disponibilità
-  // (nessuna disponibilità prima di sabato 8 agosto 2026 — vedi AVAIL_START in
-  // buildCalendar — orario 10:30-19:00 ogni giorno, chiuso sabato 15 agosto
-  // 2026); cambia solo il passo degli slot: 20 minuti per la richiamata,
-  // 30 per la visita.
-  var AVAIL_CLOSED_DATES = AVAIL.dateChiuse;
+  // Ogni tipo di appuntamento ha le proprie regole, tutte gestite da TinaCMS:
+  // data di inizio disponibilità, giorni mostrati in calendario, durata dello
+  // slot e orari settimanali (una o più fasce per giorno della settimana).
+  // Priorità nel decidere le fasce di un giorno:
+  //   1. chiusure del Club        → chiuso per entrambi i tipi
+  //   2. eccezione su quella data → sostituisce l'orario settimanale
+  //                                 (senza fasce = chiuso per quel tipo)
+  //   3. orario settimanale del giorno (assente o senza fasce = chiuso)
+  var AVAIL_CLOSED_DATES = AVAIL.chiusure;
 
   // "HH:MM" -> minuti da mezzanotte
   function parseHHMM(s) {
@@ -441,23 +464,35 @@ export function initLeadForm(root, options) {
     return m ? (parseInt(m[1], 10) * 60 + parseInt(m[2], 10)) : null;
   }
 
-  function slotsInRange(date, stepMinutes) {
-    if (AVAIL_CLOSED_DATES.indexOf(isoDateLocal(date)) !== -1) return [];
-    var start = parseHHMM(AVAIL.oraApertura);
-    var end   = parseHHMM(AVAIL.oraChiusura);
-    if (start == null || end == null) return [];
-    var slots = [];
-    // Griglia ancorata esattamente all'orario di apertura, non ai multipli
-    // di stepMinutes dalla mezzanotte: altrimenti col passo di 20' il primo
-    // slot potrebbe cadere fuori orario se l'apertura non è un suo multiplo.
-    for (var t = start; t < end; t += stepMinutes) {
-      slots.push(pad2(Math.floor(t / 60)) + ':' + pad2(t % 60));
-    }
-    return slots;
+  function fasceDelGiorno(date, cfg) {
+    var iso = isoDateLocal(date);
+    if (AVAIL_CLOSED_DATES.indexOf(iso) !== -1) return [];
+    var eccezioni = cfg.eccezioni || {};
+    if (Object.prototype.hasOwnProperty.call(eccezioni, iso)) return eccezioni[iso] || [];
+    return (cfg.orari || {})[date.getDay()] || [];
   }
 
-  function slotsCallback(date) { return slotsInRange(date, AVAIL.durataRichiamata); }
-  function slotsVisit(date)    { return slotsInRange(date, AVAIL.durataVisita); }
+  function slotsPerTipo(date, cfg) {
+    var step = cfg.durataSlot;
+    if (!step || step <= 0) return [];
+    var slots = [];
+    fasceDelGiorno(date, cfg).forEach(function (fascia) {
+      var start = parseHHMM(fascia.dalle);
+      var end   = parseHHMM(fascia.alle);
+      if (start == null || end == null) return;
+      // Griglia ancorata esattamente all'inizio della fascia, non ai multipli
+      // di step dalla mezzanotte: altrimenti col passo di 20' il primo slot
+      // potrebbe cadere fuori orario se l'apertura non è un suo multiplo.
+      for (var t = start; t < end; t += step) {
+        var s = pad2(Math.floor(t / 60)) + ':' + pad2(t % 60);
+        if (slots.indexOf(s) === -1) slots.push(s);
+      }
+    });
+    // Fasce inserite in ordine sparso nel CMS (o sovrapposte) non devono
+    // produrre orari fuori sequenza nella griglia mostrata all'utente.
+    slots.sort();
+    return slots;
+  }
 
   // Ora corrente a Milano (Europe/Rome), indipendente dal fuso del browser
   function milanParts(d) {
@@ -501,18 +536,19 @@ export function initLeadForm(root, options) {
   }
 
   async function buildCalendar(type) {
-    var numDays     = type === 'cb' ? AVAIL.giorniRichiamata : AVAIL.giorniVisita;
-    var slotsFn     = type === 'cb' ? slotsCallback : slotsVisit;
-    var durataSlot  = type === 'cb' ? AVAIL.durataRichiamata : AVAIL.durataVisita;
+    var cfg         = configTipo(type);
+    var numDays     = cfg.giorniAvanti;
+    var slotsFn     = function (date) { return slotsPerTipo(date, cfg); };
+    var durataSlot  = cfg.durataSlot;
     var calWrapEl   = document.getElementById(P+'-cal-'+type);
     var slotsWrapEl = document.getElementById(P+'-slots-wrap-'+type);
     var slotsBodyEl = document.getElementById(P+'-cal-slots-'+type);
     var reasonEl    = document.getElementById(type === 'cb' ? P+'-cb-reason' : P+'-visit-reason');
 
     var today = new Date(); today.setHours(0,0,0,0);
-    // Richiamata e visita: nessuna disponibilità prima della data configurata
-    // in AVAIL.dataInizio (formato "YYYY-MM-DD", fuso locale, non UTC).
-    var inizioParts = AVAIL.dataInizio.split('-').map(function (n) { return parseInt(n, 10); });
+    // Nessuna disponibilità prima della data configurata per questo tipo di
+    // appuntamento (formato "YYYY-MM-DD", fuso locale, non UTC).
+    var inizioParts = cfg.dataInizio.split('-').map(function (n) { return parseInt(n, 10); });
     var availStart = new Date(inizioParts[0], inizioParts[1] - 1, inizioParts[2]);
     if (today < availStart) today = availStart;
     var endDate = new Date(today); endDate.setDate(today.getDate() + numDays - 1);

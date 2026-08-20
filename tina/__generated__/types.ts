@@ -96,6 +96,8 @@ export type Query = {
   legalConnection: LegalConnection;
   moduli: Moduli;
   moduliConnection: ModuliConnection;
+  disponibilita: Disponibilita;
+  disponibilitaConnection: DisponibilitaConnection;
   helpdesk: Helpdesk;
   helpdeskConnection: HelpdeskConnection;
   news: News;
@@ -231,6 +233,21 @@ export type QueryModuliConnectionArgs = {
 };
 
 
+export type QueryDisponibilitaArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryDisponibilitaConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<DisponibilitaFilter>;
+};
+
+
 export type QueryHelpdeskArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -283,6 +300,7 @@ export type DocumentFilter = {
   info?: InputMaybe<InfoFilter>;
   legal?: InputMaybe<LegalFilter>;
   moduli?: InputMaybe<ModuliFilter>;
+  disponibilita?: InputMaybe<DisponibilitaFilter>;
   helpdesk?: InputMaybe<HelpdeskFilter>;
   news?: InputMaybe<NewsFilter>;
   pagine?: InputMaybe<PagineFilter>;
@@ -325,7 +343,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Moduli | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder;
+export type DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Moduli | Disponibilita | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -721,14 +739,6 @@ export type Moduli = Node & Document & {
   scuola_mini_tennis_nati_en: Scalars['String']['output'];
   scuola_tennis_nati: Scalars['String']['output'];
   scuola_tennis_nati_en: Scalars['String']['output'];
-  prenotazioni_data_inizio: Scalars['String']['output'];
-  prenotazioni_ora_apertura: Scalars['String']['output'];
-  prenotazioni_ora_chiusura: Scalars['String']['output'];
-  prenotazioni_durata_slot_richiamata: Scalars['Float']['output'];
-  prenotazioni_durata_slot_visita: Scalars['Float']['output'];
-  prenotazioni_giorni_avanti_richiamata: Scalars['Float']['output'];
-  prenotazioni_giorni_avanti_visita: Scalars['Float']['output'];
-  prenotazioni_date_chiuse?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
@@ -764,14 +774,6 @@ export type ModuliFilter = {
   scuola_mini_tennis_nati_en?: InputMaybe<StringFilter>;
   scuola_tennis_nati?: InputMaybe<StringFilter>;
   scuola_tennis_nati_en?: InputMaybe<StringFilter>;
-  prenotazioni_data_inizio?: InputMaybe<DatetimeFilter>;
-  prenotazioni_ora_apertura?: InputMaybe<StringFilter>;
-  prenotazioni_ora_chiusura?: InputMaybe<StringFilter>;
-  prenotazioni_durata_slot_richiamata?: InputMaybe<NumberFilter>;
-  prenotazioni_durata_slot_visita?: InputMaybe<NumberFilter>;
-  prenotazioni_giorni_avanti_richiamata?: InputMaybe<NumberFilter>;
-  prenotazioni_giorni_avanti_visita?: InputMaybe<NumberFilter>;
-  prenotazioni_date_chiuse?: InputMaybe<DatetimeFilter>;
 };
 
 export type ModuliConnectionEdges = {
@@ -785,6 +787,176 @@ export type ModuliConnection = Connection & {
   pageInfo: PageInfo;
   totalCount: Scalars['Float']['output'];
   edges?: Maybe<Array<Maybe<ModuliConnectionEdges>>>;
+};
+
+export type DisponibilitaTelefonicoOrariFasce = {
+  __typename?: 'DisponibilitaTelefonicoOrariFasce';
+  dalle: Scalars['String']['output'];
+  alle: Scalars['String']['output'];
+};
+
+export type DisponibilitaTelefonicoOrari = {
+  __typename?: 'DisponibilitaTelefonicoOrari';
+  giorno: Scalars['String']['output'];
+  fasce?: Maybe<Array<Maybe<DisponibilitaTelefonicoOrariFasce>>>;
+};
+
+export type DisponibilitaTelefonicoEccezioniFasce = {
+  __typename?: 'DisponibilitaTelefonicoEccezioniFasce';
+  dalle: Scalars['String']['output'];
+  alle: Scalars['String']['output'];
+};
+
+export type DisponibilitaTelefonicoEccezioni = {
+  __typename?: 'DisponibilitaTelefonicoEccezioni';
+  data: Scalars['String']['output'];
+  nota?: Maybe<Scalars['String']['output']>;
+  fasce?: Maybe<Array<Maybe<DisponibilitaTelefonicoEccezioniFasce>>>;
+};
+
+export type DisponibilitaTelefonico = {
+  __typename?: 'DisponibilitaTelefonico';
+  attivo?: Maybe<Scalars['Boolean']['output']>;
+  data_inizio: Scalars['String']['output'];
+  giorni_avanti: Scalars['Float']['output'];
+  durata_slot: Scalars['Float']['output'];
+  orari?: Maybe<Array<Maybe<DisponibilitaTelefonicoOrari>>>;
+  eccezioni?: Maybe<Array<Maybe<DisponibilitaTelefonicoEccezioni>>>;
+};
+
+export type DisponibilitaSedeOrariFasce = {
+  __typename?: 'DisponibilitaSedeOrariFasce';
+  dalle: Scalars['String']['output'];
+  alle: Scalars['String']['output'];
+};
+
+export type DisponibilitaSedeOrari = {
+  __typename?: 'DisponibilitaSedeOrari';
+  giorno: Scalars['String']['output'];
+  fasce?: Maybe<Array<Maybe<DisponibilitaSedeOrariFasce>>>;
+};
+
+export type DisponibilitaSedeEccezioniFasce = {
+  __typename?: 'DisponibilitaSedeEccezioniFasce';
+  dalle: Scalars['String']['output'];
+  alle: Scalars['String']['output'];
+};
+
+export type DisponibilitaSedeEccezioni = {
+  __typename?: 'DisponibilitaSedeEccezioni';
+  data: Scalars['String']['output'];
+  nota?: Maybe<Scalars['String']['output']>;
+  fasce?: Maybe<Array<Maybe<DisponibilitaSedeEccezioniFasce>>>;
+};
+
+export type DisponibilitaSede = {
+  __typename?: 'DisponibilitaSede';
+  attivo?: Maybe<Scalars['Boolean']['output']>;
+  data_inizio: Scalars['String']['output'];
+  giorni_avanti: Scalars['Float']['output'];
+  durata_slot: Scalars['Float']['output'];
+  orari?: Maybe<Array<Maybe<DisponibilitaSedeOrari>>>;
+  eccezioni?: Maybe<Array<Maybe<DisponibilitaSedeEccezioni>>>;
+};
+
+export type DisponibilitaChiusure = {
+  __typename?: 'DisponibilitaChiusure';
+  data: Scalars['String']['output'];
+  nota?: Maybe<Scalars['String']['output']>;
+};
+
+export type Disponibilita = Node & Document & {
+  __typename?: 'Disponibilita';
+  telefonico?: Maybe<DisponibilitaTelefonico>;
+  sede?: Maybe<DisponibilitaSede>;
+  chiusure?: Maybe<Array<Maybe<DisponibilitaChiusure>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type DisponibilitaTelefonicoOrariFasceFilter = {
+  dalle?: InputMaybe<StringFilter>;
+  alle?: InputMaybe<StringFilter>;
+};
+
+export type DisponibilitaTelefonicoOrariFilter = {
+  giorno?: InputMaybe<StringFilter>;
+  fasce?: InputMaybe<DisponibilitaTelefonicoOrariFasceFilter>;
+};
+
+export type DisponibilitaTelefonicoEccezioniFasceFilter = {
+  dalle?: InputMaybe<StringFilter>;
+  alle?: InputMaybe<StringFilter>;
+};
+
+export type DisponibilitaTelefonicoEccezioniFilter = {
+  data?: InputMaybe<DatetimeFilter>;
+  nota?: InputMaybe<StringFilter>;
+  fasce?: InputMaybe<DisponibilitaTelefonicoEccezioniFasceFilter>;
+};
+
+export type DisponibilitaTelefonicoFilter = {
+  attivo?: InputMaybe<BooleanFilter>;
+  data_inizio?: InputMaybe<DatetimeFilter>;
+  giorni_avanti?: InputMaybe<NumberFilter>;
+  durata_slot?: InputMaybe<NumberFilter>;
+  orari?: InputMaybe<DisponibilitaTelefonicoOrariFilter>;
+  eccezioni?: InputMaybe<DisponibilitaTelefonicoEccezioniFilter>;
+};
+
+export type DisponibilitaSedeOrariFasceFilter = {
+  dalle?: InputMaybe<StringFilter>;
+  alle?: InputMaybe<StringFilter>;
+};
+
+export type DisponibilitaSedeOrariFilter = {
+  giorno?: InputMaybe<StringFilter>;
+  fasce?: InputMaybe<DisponibilitaSedeOrariFasceFilter>;
+};
+
+export type DisponibilitaSedeEccezioniFasceFilter = {
+  dalle?: InputMaybe<StringFilter>;
+  alle?: InputMaybe<StringFilter>;
+};
+
+export type DisponibilitaSedeEccezioniFilter = {
+  data?: InputMaybe<DatetimeFilter>;
+  nota?: InputMaybe<StringFilter>;
+  fasce?: InputMaybe<DisponibilitaSedeEccezioniFasceFilter>;
+};
+
+export type DisponibilitaSedeFilter = {
+  attivo?: InputMaybe<BooleanFilter>;
+  data_inizio?: InputMaybe<DatetimeFilter>;
+  giorni_avanti?: InputMaybe<NumberFilter>;
+  durata_slot?: InputMaybe<NumberFilter>;
+  orari?: InputMaybe<DisponibilitaSedeOrariFilter>;
+  eccezioni?: InputMaybe<DisponibilitaSedeEccezioniFilter>;
+};
+
+export type DisponibilitaChiusureFilter = {
+  data?: InputMaybe<DatetimeFilter>;
+  nota?: InputMaybe<StringFilter>;
+};
+
+export type DisponibilitaFilter = {
+  telefonico?: InputMaybe<DisponibilitaTelefonicoFilter>;
+  sede?: InputMaybe<DisponibilitaSedeFilter>;
+  chiusure?: InputMaybe<DisponibilitaChiusureFilter>;
+};
+
+export type DisponibilitaConnectionEdges = {
+  __typename?: 'DisponibilitaConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Disponibilita>;
+};
+
+export type DisponibilitaConnection = Connection & {
+  __typename?: 'DisponibilitaConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<DisponibilitaConnectionEdges>>>;
 };
 
 export type Helpdesk = Node & Document & {
@@ -2620,6 +2792,8 @@ export type Mutation = {
   createLegal: Legal;
   updateModuli: Moduli;
   createModuli: Moduli;
+  updateDisponibilita: Disponibilita;
+  createDisponibilita: Disponibilita;
   updateHelpdesk: Helpdesk;
   createHelpdesk: Helpdesk;
   updateNews: News;
@@ -2746,6 +2920,18 @@ export type MutationCreateModuliArgs = {
 };
 
 
+export type MutationUpdateDisponibilitaArgs = {
+  relativePath: Scalars['String']['input'];
+  params: DisponibilitaMutation;
+};
+
+
+export type MutationCreateDisponibilitaArgs = {
+  relativePath: Scalars['String']['input'];
+  params: DisponibilitaMutation;
+};
+
+
 export type MutationUpdateHelpdeskArgs = {
   relativePath: Scalars['String']['input'];
   params: HelpdeskMutation;
@@ -2789,6 +2975,7 @@ export type DocumentUpdateMutation = {
   info?: InputMaybe<InfoMutation>;
   legal?: InputMaybe<LegalMutation>;
   moduli?: InputMaybe<ModuliMutation>;
+  disponibilita?: InputMaybe<DisponibilitaMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
@@ -2803,6 +2990,7 @@ export type DocumentMutation = {
   info?: InputMaybe<InfoMutation>;
   legal?: InputMaybe<LegalMutation>;
   moduli?: InputMaybe<ModuliMutation>;
+  disponibilita?: InputMaybe<DisponibilitaMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
@@ -2945,14 +3133,77 @@ export type ModuliMutation = {
   scuola_mini_tennis_nati_en?: InputMaybe<Scalars['String']['input']>;
   scuola_tennis_nati?: InputMaybe<Scalars['String']['input']>;
   scuola_tennis_nati_en?: InputMaybe<Scalars['String']['input']>;
-  prenotazioni_data_inizio?: InputMaybe<Scalars['String']['input']>;
-  prenotazioni_ora_apertura?: InputMaybe<Scalars['String']['input']>;
-  prenotazioni_ora_chiusura?: InputMaybe<Scalars['String']['input']>;
-  prenotazioni_durata_slot_richiamata?: InputMaybe<Scalars['Float']['input']>;
-  prenotazioni_durata_slot_visita?: InputMaybe<Scalars['Float']['input']>;
-  prenotazioni_giorni_avanti_richiamata?: InputMaybe<Scalars['Float']['input']>;
-  prenotazioni_giorni_avanti_visita?: InputMaybe<Scalars['Float']['input']>;
-  prenotazioni_date_chiuse?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type DisponibilitaTelefonicoOrariFasceMutation = {
+  dalle?: InputMaybe<Scalars['String']['input']>;
+  alle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DisponibilitaTelefonicoOrariMutation = {
+  giorno?: InputMaybe<Scalars['String']['input']>;
+  fasce?: InputMaybe<Array<InputMaybe<DisponibilitaTelefonicoOrariFasceMutation>>>;
+};
+
+export type DisponibilitaTelefonicoEccezioniFasceMutation = {
+  dalle?: InputMaybe<Scalars['String']['input']>;
+  alle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DisponibilitaTelefonicoEccezioniMutation = {
+  data?: InputMaybe<Scalars['String']['input']>;
+  nota?: InputMaybe<Scalars['String']['input']>;
+  fasce?: InputMaybe<Array<InputMaybe<DisponibilitaTelefonicoEccezioniFasceMutation>>>;
+};
+
+export type DisponibilitaTelefonicoMutation = {
+  attivo?: InputMaybe<Scalars['Boolean']['input']>;
+  data_inizio?: InputMaybe<Scalars['String']['input']>;
+  giorni_avanti?: InputMaybe<Scalars['Float']['input']>;
+  durata_slot?: InputMaybe<Scalars['Float']['input']>;
+  orari?: InputMaybe<Array<InputMaybe<DisponibilitaTelefonicoOrariMutation>>>;
+  eccezioni?: InputMaybe<Array<InputMaybe<DisponibilitaTelefonicoEccezioniMutation>>>;
+};
+
+export type DisponibilitaSedeOrariFasceMutation = {
+  dalle?: InputMaybe<Scalars['String']['input']>;
+  alle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DisponibilitaSedeOrariMutation = {
+  giorno?: InputMaybe<Scalars['String']['input']>;
+  fasce?: InputMaybe<Array<InputMaybe<DisponibilitaSedeOrariFasceMutation>>>;
+};
+
+export type DisponibilitaSedeEccezioniFasceMutation = {
+  dalle?: InputMaybe<Scalars['String']['input']>;
+  alle?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DisponibilitaSedeEccezioniMutation = {
+  data?: InputMaybe<Scalars['String']['input']>;
+  nota?: InputMaybe<Scalars['String']['input']>;
+  fasce?: InputMaybe<Array<InputMaybe<DisponibilitaSedeEccezioniFasceMutation>>>;
+};
+
+export type DisponibilitaSedeMutation = {
+  attivo?: InputMaybe<Scalars['Boolean']['input']>;
+  data_inizio?: InputMaybe<Scalars['String']['input']>;
+  giorni_avanti?: InputMaybe<Scalars['Float']['input']>;
+  durata_slot?: InputMaybe<Scalars['Float']['input']>;
+  orari?: InputMaybe<Array<InputMaybe<DisponibilitaSedeOrariMutation>>>;
+  eccezioni?: InputMaybe<Array<InputMaybe<DisponibilitaSedeEccezioniMutation>>>;
+};
+
+export type DisponibilitaChiusureMutation = {
+  data?: InputMaybe<Scalars['String']['input']>;
+  nota?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type DisponibilitaMutation = {
+  telefonico?: InputMaybe<DisponibilitaTelefonicoMutation>;
+  sede?: InputMaybe<DisponibilitaSedeMutation>;
+  chiusure?: InputMaybe<Array<InputMaybe<DisponibilitaChiusureMutation>>>;
 };
 
 export type HelpdeskMutation = {
@@ -3813,7 +4064,9 @@ export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_ar
 
 export type LegalPartsFragment = { __typename: 'Legal', codice_condotta?: string | null, nomina_responsabile?: string | null };
 
-export type ModuliPartsFragment = { __typename: 'Moduli', camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, prenotazioni_data_inizio: string, prenotazioni_ora_apertura: string, prenotazioni_ora_chiusura: string, prenotazioni_durata_slot_richiamata: number, prenotazioni_durata_slot_visita: number, prenotazioni_giorni_avanti_richiamata: number, prenotazioni_giorni_avanti_visita: number, prenotazioni_date_chiuse?: Array<string | null> | null, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null };
+export type ModuliPartsFragment = { __typename: 'Moduli', camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null };
+
+export type DisponibilitaPartsFragment = { __typename: 'Disponibilita', telefonico?: { __typename: 'DisponibilitaTelefonico', attivo?: boolean | null, data_inizio: string, giorni_avanti: number, durata_slot: number, orari?: Array<{ __typename: 'DisponibilitaTelefonicoOrari', giorno: string, fasce?: Array<{ __typename: 'DisponibilitaTelefonicoOrariFasce', dalle: string, alle: string } | null> | null } | null> | null, eccezioni?: Array<{ __typename: 'DisponibilitaTelefonicoEccezioni', data: string, nota?: string | null, fasce?: Array<{ __typename: 'DisponibilitaTelefonicoEccezioniFasce', dalle: string, alle: string } | null> | null } | null> | null } | null, sede?: { __typename: 'DisponibilitaSede', attivo?: boolean | null, data_inizio: string, giorni_avanti: number, durata_slot: number, orari?: Array<{ __typename: 'DisponibilitaSedeOrari', giorno: string, fasce?: Array<{ __typename: 'DisponibilitaSedeOrariFasce', dalle: string, alle: string } | null> | null } | null> | null, eccezioni?: Array<{ __typename: 'DisponibilitaSedeEccezioni', data: string, nota?: string | null, fasce?: Array<{ __typename: 'DisponibilitaSedeEccezioniFasce', dalle: string, alle: string } | null> | null } | null> | null } | null, chiusure?: Array<{ __typename: 'DisponibilitaChiusure', data: string, nota?: string | null } | null> | null };
 
 export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
 
@@ -3966,7 +4219,7 @@ export type ModuliQueryVariables = Exact<{
 }>;
 
 
-export type ModuliQuery = { __typename?: 'Query', moduli: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, prenotazioni_data_inizio: string, prenotazioni_ora_apertura: string, prenotazioni_ora_chiusura: string, prenotazioni_durata_slot_richiamata: number, prenotazioni_durata_slot_visita: number, prenotazioni_giorni_avanti_richiamata: number, prenotazioni_giorni_avanti_visita: number, prenotazioni_date_chiuse?: Array<string | null> | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } };
+export type ModuliQuery = { __typename?: 'Query', moduli: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } };
 
 export type ModuliConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3978,7 +4231,26 @@ export type ModuliConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ModuliConnectionQuery = { __typename?: 'Query', moduliConnection: { __typename?: 'ModuliConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ModuliConnectionEdges', cursor: string, node?: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, prenotazioni_data_inizio: string, prenotazioni_ora_apertura: string, prenotazioni_ora_chiusura: string, prenotazioni_durata_slot_richiamata: number, prenotazioni_durata_slot_visita: number, prenotazioni_giorni_avanti_richiamata: number, prenotazioni_giorni_avanti_visita: number, prenotazioni_date_chiuse?: Array<string | null> | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } | null } | null> | null } };
+export type ModuliConnectionQuery = { __typename?: 'Query', moduliConnection: { __typename?: 'ModuliConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ModuliConnectionEdges', cursor: string, node?: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } | null } | null> | null } };
+
+export type DisponibilitaQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type DisponibilitaQuery = { __typename?: 'Query', disponibilita: { __typename: 'Disponibilita', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, telefonico?: { __typename: 'DisponibilitaTelefonico', attivo?: boolean | null, data_inizio: string, giorni_avanti: number, durata_slot: number, orari?: Array<{ __typename: 'DisponibilitaTelefonicoOrari', giorno: string, fasce?: Array<{ __typename: 'DisponibilitaTelefonicoOrariFasce', dalle: string, alle: string } | null> | null } | null> | null, eccezioni?: Array<{ __typename: 'DisponibilitaTelefonicoEccezioni', data: string, nota?: string | null, fasce?: Array<{ __typename: 'DisponibilitaTelefonicoEccezioniFasce', dalle: string, alle: string } | null> | null } | null> | null } | null, sede?: { __typename: 'DisponibilitaSede', attivo?: boolean | null, data_inizio: string, giorni_avanti: number, durata_slot: number, orari?: Array<{ __typename: 'DisponibilitaSedeOrari', giorno: string, fasce?: Array<{ __typename: 'DisponibilitaSedeOrariFasce', dalle: string, alle: string } | null> | null } | null> | null, eccezioni?: Array<{ __typename: 'DisponibilitaSedeEccezioni', data: string, nota?: string | null, fasce?: Array<{ __typename: 'DisponibilitaSedeEccezioniFasce', dalle: string, alle: string } | null> | null } | null> | null } | null, chiusure?: Array<{ __typename: 'DisponibilitaChiusure', data: string, nota?: string | null } | null> | null } };
+
+export type DisponibilitaConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<DisponibilitaFilter>;
+}>;
+
+
+export type DisponibilitaConnectionQuery = { __typename?: 'Query', disponibilitaConnection: { __typename?: 'DisponibilitaConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'DisponibilitaConnectionEdges', cursor: string, node?: { __typename: 'Disponibilita', id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, telefonico?: { __typename: 'DisponibilitaTelefonico', attivo?: boolean | null, data_inizio: string, giorni_avanti: number, durata_slot: number, orari?: Array<{ __typename: 'DisponibilitaTelefonicoOrari', giorno: string, fasce?: Array<{ __typename: 'DisponibilitaTelefonicoOrariFasce', dalle: string, alle: string } | null> | null } | null> | null, eccezioni?: Array<{ __typename: 'DisponibilitaTelefonicoEccezioni', data: string, nota?: string | null, fasce?: Array<{ __typename: 'DisponibilitaTelefonicoEccezioniFasce', dalle: string, alle: string } | null> | null } | null> | null } | null, sede?: { __typename: 'DisponibilitaSede', attivo?: boolean | null, data_inizio: string, giorni_avanti: number, durata_slot: number, orari?: Array<{ __typename: 'DisponibilitaSedeOrari', giorno: string, fasce?: Array<{ __typename: 'DisponibilitaSedeOrariFasce', dalle: string, alle: string } | null> | null } | null> | null, eccezioni?: Array<{ __typename: 'DisponibilitaSedeEccezioni', data: string, nota?: string | null, fasce?: Array<{ __typename: 'DisponibilitaSedeEccezioniFasce', dalle: string, alle: string } | null> | null } | null> | null } | null, chiusure?: Array<{ __typename: 'DisponibilitaChiusure', data: string, nota?: string | null } | null> | null } | null } | null> | null } };
 
 export type HelpdeskQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4184,14 +4456,68 @@ export const ModuliPartsFragmentDoc = gql`
   scuola_mini_tennis_nati_en
   scuola_tennis_nati
   scuola_tennis_nati_en
-  prenotazioni_data_inizio
-  prenotazioni_ora_apertura
-  prenotazioni_ora_chiusura
-  prenotazioni_durata_slot_richiamata
-  prenotazioni_durata_slot_visita
-  prenotazioni_giorni_avanti_richiamata
-  prenotazioni_giorni_avanti_visita
-  prenotazioni_date_chiuse
+}
+    `;
+export const DisponibilitaPartsFragmentDoc = gql`
+    fragment DisponibilitaParts on Disponibilita {
+  __typename
+  telefonico {
+    __typename
+    attivo
+    data_inizio
+    giorni_avanti
+    durata_slot
+    orari {
+      __typename
+      giorno
+      fasce {
+        __typename
+        dalle
+        alle
+      }
+    }
+    eccezioni {
+      __typename
+      data
+      nota
+      fasce {
+        __typename
+        dalle
+        alle
+      }
+    }
+  }
+  sede {
+    __typename
+    attivo
+    data_inizio
+    giorni_avanti
+    durata_slot
+    orari {
+      __typename
+      giorno
+      fasce {
+        __typename
+        dalle
+        alle
+      }
+    }
+    eccezioni {
+      __typename
+      data
+      nota
+      fasce {
+        __typename
+        dalle
+        alle
+      }
+    }
+  }
+  chiusure {
+    __typename
+    data
+    nota
+  }
 }
     `;
 export const HelpdeskPartsFragmentDoc = gql`
@@ -5384,6 +5710,63 @@ export const ModuliConnectionDocument = gql`
   }
 }
     ${ModuliPartsFragmentDoc}`;
+export const DisponibilitaDocument = gql`
+    query disponibilita($relativePath: String!) {
+  disponibilita(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...DisponibilitaParts
+  }
+}
+    ${DisponibilitaPartsFragmentDoc}`;
+export const DisponibilitaConnectionDocument = gql`
+    query disponibilitaConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: DisponibilitaFilter) {
+  disponibilitaConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...DisponibilitaParts
+      }
+    }
+  }
+}
+    ${DisponibilitaPartsFragmentDoc}`;
 export const HelpdeskDocument = gql`
     query helpdesk($relativePath: String!) {
   helpdesk(relativePath: $relativePath) {
@@ -5599,6 +5982,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     moduliConnection(variables?: ModuliConnectionQueryVariables, options?: C): Promise<{data: ModuliConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ModuliConnectionQueryVariables, query: string}> {
         return requester<{data: ModuliConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ModuliConnectionQueryVariables, query: string}, ModuliConnectionQueryVariables>(ModuliConnectionDocument, variables, options);
+      },
+    disponibilita(variables: DisponibilitaQueryVariables, options?: C): Promise<{data: DisponibilitaQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DisponibilitaQueryVariables, query: string}> {
+        return requester<{data: DisponibilitaQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DisponibilitaQueryVariables, query: string}, DisponibilitaQueryVariables>(DisponibilitaDocument, variables, options);
+      },
+    disponibilitaConnection(variables?: DisponibilitaConnectionQueryVariables, options?: C): Promise<{data: DisponibilitaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DisponibilitaConnectionQueryVariables, query: string}> {
+        return requester<{data: DisponibilitaConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: DisponibilitaConnectionQueryVariables, query: string}, DisponibilitaConnectionQueryVariables>(DisponibilitaConnectionDocument, variables, options);
       },
     helpdesk(variables: HelpdeskQueryVariables, options?: C): Promise<{data: HelpdeskQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskQueryVariables, query: string}> {
         return requester<{data: HelpdeskQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskQueryVariables, query: string}, HelpdeskQueryVariables>(HelpdeskDocument, variables, options);
