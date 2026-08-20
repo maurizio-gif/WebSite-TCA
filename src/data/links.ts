@@ -7,6 +7,16 @@
 
 const PERFECTGYM_PORTAL = 'https://tcambrosiano.perfectgym.com/clientportal2';
 
+const APPTCA_URL = 'https://app.tcambrosiano.com';
+
+export const appTca = {
+  // Endpoint pubblico e senza autenticazione (AppTCA/app/api/disponibilita):
+  // risponde solo con data/ora/durata degli impegni già in agenda, mai dati
+  // personali. Usato dal form di richiamata/visita per non offrire in
+  // prenotazione un orario già occupato (vedi src/lib/leadForm.client.js).
+  disponibilita: `${APPTCA_URL}/api/disponibilita`,
+};
+
 export const perfectGym = {
   login: `${PERFECTGYM_PORTAL}/#/Login`,
   register: `${PERFECTGYM_PORTAL}/#/Registration`,

@@ -181,6 +181,14 @@ export const en: UI = {
     floatingHelpCta: 'Request Assistance',
     helpFormSub:     "Send us a message and we'll get back to you as soon as possible.",
   },
+  promo: {
+    eyebrow: 'Restart Promo',
+    badge:   '-50%',
+    title:   'off the activation fee',
+    text:    'On all annual Memberships.',
+    cta:     'Join now',
+    close:   'Close',
+  },
   meta: {
     defaultDescription: "Milan's sport club since 1963: tennis, padel, pickleball, athletic training and conditioning for the whole family. Home of the Avvenire Tournament, close to Udine metro station.",
     switchLang:      'IT',

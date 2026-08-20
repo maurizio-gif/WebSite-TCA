@@ -179,6 +179,14 @@ export const it = {
     floatingHelpCta: 'Richiedi Assistenza',
     helpFormSub:     'Scrivici la tua richiesta: ti risponderemo il prima possibile.',
   },
+  promo: {
+    eyebrow: 'Promo Restart',
+    badge:   '-50%',
+    title:   'sulla quota di attivazione',
+    text:    'Su tutte le Membership annuali.',
+    cta:     'Iscriviti ora',
+    close:   'Chiudi',
+  },
   meta: {
     defaultDescription: 'Lo sport club di Milano dal 1963: tennis, padel, pickleball, preparazione atletica e training per tutta la famiglia. Il club del Torneo Avvenire, a pochi passi dalla metro Udine.',
     switchLang:      'EN',

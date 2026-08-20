@@ -43,6 +43,7 @@ html.is-app-embed {
 html.is-app-embed .navbar,
 html.is-app-embed .info,
 html.is-app-embed .footer,
+html.is-app-embed .promo,
 html.is-app-embed #back-to-top {
   display: none !important;
 }
@@ -414,6 +415,7 @@ body.menu-open { overflow: hidden; }
   .info,
   .affiliazioni-slider,
   .lfi,
+  .promo,
   #back-to-top,
   dialog {
     display: none !important;

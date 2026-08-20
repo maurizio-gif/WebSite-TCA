@@ -1,0 +1,198 @@
+---
+// ─────────────────────────────────────────────────────────────────────────
+// Banner promozionale fisso in basso a destra (Promo Restart).
+// Vive nello stack flottante di BaseLayout insieme al "torna in cima":
+// non ha posizionamento proprio, così i due elementi non si sovrappongono
+// mai e il pulsante scende automaticamente quando il banner viene chiuso.
+//
+// La chiusura è memorizzata per PROMO_ID: cambiando l'id (nuova promo) il
+// banner ricompare anche a chi aveva chiuso quello precedente.
+// ─────────────────────────────────────────────────────────────────────────
+import { useTranslations, type Lang } from '../i18n/utils';
+import { perfectGym } from '../data/links';
+
+interface Props { lang?: Lang; }
+const { lang = 'it' } = Astro.props;
+const t = useTranslations(lang);
+
+const PROMO_ID = 'restart-2026';
+---
+
+<aside class="promo" id="promo-banner" data-promo-id={PROMO_ID} aria-label={t.promo.eyebrow} hidden>
+  <button type="button" class="promo__close" aria-label={t.promo.close} data-promo-close>
+    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <span class="promo__eyebrow">{t.promo.eyebrow}</span>
+
+  <div class="promo__headline">
+    <span class="promo__badge">{t.promo.badge}</span>
+    <span class="promo__title">{t.promo.title}</span>
+  </div>
+
+  <p class="promo__text">{t.promo.text}</p>
+
+  <a
+    class="promo__cta"
+    href={perfectGym.register}
+    target="_blank"
+    rel="noopener noreferrer"
+    data-promo-cta
+  >
+    {t.promo.cta}
+    <span class="promo__arrow" aria-hidden="true">→</span>
+  </a>
+</aside>
+
+<style>
+  .promo {
+    position: relative;
+    pointer-events: auto;
+    width: min(280px, calc(100vw - 2rem));
+    padding: 0.9rem 1rem 1rem;
+    background: linear-gradient(150deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+    color: #fff;
+    box-shadow: 0 10px 34px rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.22, 0.68, 0, 1.1);
+  }
+
+  .promo.is-visible { opacity: 1; transform: translateY(0); }
+  .promo[hidden]    { display: none !important; }
+
+  .promo__close {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+    transition: border-color 0.18s, color 0.18s, background 0.18s;
+  }
+  .promo__close:hover {
+    border-color: #fff;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .promo__eyebrow {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.65);
+    padding-right: 1.6rem;
+  }
+
+  .promo__headline {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    margin-top: 0.4rem;
+  }
+
+  .promo__badge {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 0.82;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+
+  .promo__title {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.02;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+  }
+
+  .promo__text {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.82);
+    margin-top: 0.55rem;
+  }
+
+  .promo__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.8rem;
+    padding: 8px 15px;
+    background: #fff;
+    color: var(--color-accent);
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.18s, color 0.18s;
+  }
+  .promo__cta:hover { background: rgba(255, 255, 255, 0.88); }
+  .promo__cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .promo__arrow { transition: transform 0.18s; }
+  .promo__cta:hover .promo__arrow { transform: translateX(3px); }
+
+  @media (max-width: 560px) {
+    .promo { padding: 0.85rem 0.9rem 0.95rem; }
+    .promo__badge { font-size: 1.7rem; }
+    .promo__title { font-size: 0.78rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .promo { transform: none; transition: opacity 0.2s ease; }
+    .promo.is-visible { transform: none; }
+    .promo__cta:hover .promo__arrow { transform: none; }
+  }
+</style>
+
+<script>
+  const promo = document.getElementById('promo-banner');
+
+  if (promo) {
+    const KEY = 'tca_promo_dismissed';
+    const promoId = promo.dataset.promoId ?? '';
+
+    let dismissed: string | null = null;
+    try { dismissed = localStorage.getItem(KEY); } catch (e) { /* storage negato */ }
+
+    // Comparsa ritardata: il banner non deve competere con il primo paint
+    // né con il banner cookie, che appare subito al caricamento.
+    if (dismissed !== promoId) {
+      window.setTimeout(() => {
+        promo.hidden = false;
+        requestAnimationFrame(() => promo.classList.add('is-visible'));
+      }, 3000);
+    }
+
+    promo.querySelector<HTMLButtonElement>('[data-promo-close]')?.addEventListener('click', () => {
+      promo.classList.remove('is-visible');
+      window.setTimeout(() => { promo.hidden = true; }, 300);
+      try { localStorage.setItem(KEY, promoId); } catch (e) { /* storage negato */ }
+    });
+
+    // Conversione per GTM/Google Ads (vedi tcaTrack in BaseLayout).
+    promo.querySelector<HTMLAnchorElement>('[data-promo-cta]')?.addEventListener('click', () => {
+      const track = (window as any).tcaTrack;
+      if (typeof track === 'function') track('promo_click', { promo_id: promoId });
+    });
+  }
+</script>

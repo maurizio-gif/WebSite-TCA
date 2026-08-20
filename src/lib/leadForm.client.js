@@ -12,6 +12,8 @@
 //   .open(pagina, cta)  → imposta pagina/cta di provenienza e mostra lo step 1
 //   .reset()            → azzera stato e campi, richiama onReset() (es. chiudere il modal)
 
+import { appTca } from '../data/links';
+
 export function initLeadForm(root, options) {
   var P = options.prefix;
   var onReset = options.onReset || function () {};
@@ -20,6 +22,7 @@ export function initLeadForm(root, options) {
 
   var WEBHOOK_CHECK = 'https://automazione.n8ndevelop.it/webhook/tca-verifica-iscritto';
   var WEBHOOK_LEAD  = 'https://automazione.n8ndevelop.it/webhook/tca-form-compilato';
+  var DISPONIBILITA_ENDPOINT = appTca.disponibilita;
 
   // Parametri di prenotazione (orari, durata slot, date di chiusura), gestiti
   // da TinaCMS e passati dal componente Astro via data-availability sul nodo
@@ -115,6 +118,8 @@ export function initLeadForm(root, options) {
     visitReason: 'Campo obbligatorio: descrivi il motivo della visita.',
     msg:         'Scrivi la tua richiesta prima di inviare.',
   };
+
+  var CAL_LOADING = LANG === 'en' ? 'Checking availability…' : 'Verifica disponibilità…';
 
   var WHEN = LANG === 'en' ? {
     cb:      "We'll call you on",
@@ -470,15 +475,59 @@ export function initLeadForm(root, options) {
     };
   }
 
-  function buildCalendar(type) {
+  // Impegni già in agenda (AppTCA/Supabase), caricati una sola volta per
+  // apertura del calendario — non ad ogni click di giorno/slot: la
+  // probabilità che nel frattempo si crei una sovrapposizione è nulla, e
+  // interrogare l'endpoint una volta per giorno cliccato non aggiungerebbe
+  // nulla, solo latenza percepita. Fallisce "aperto" (nessuno slot tolto) se
+  // l'endpoint non risponde in tempo: un'agenda momentaneamente irraggiungibile
+  // non deve bloccare chi vuole prenotare.
+  function fetchOccupati(da, a) {
+    if (!DISPONIBILITA_ENDPOINT) return Promise.resolve({});
+    var controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, 5000) : null;
+    return fetch(DISPONIBILITA_ENDPOINT + '?da=' + da + '&a=' + a, controller ? { signal: controller.signal } : {})
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .then(function (d) { return (d && d.occupati) || {}; })
+      .catch(function () { return {}; })
+      .then(function (occupati) { if (timer) clearTimeout(timer); return occupati; });
+  }
+
+  // Due intervalli [inizio, inizio+durata) si sovrappongono: usato per
+  // togliere dagli slot offerti quelli che cadrebbero sopra un impegno già
+  // preso, di qualunque durata abbia quest'ultimo.
+  function siSovrappongono(inizioA, durataA, inizioB, durataB) {
+    return inizioA < (inizioB + durataB) && inizioB < (inizioA + durataA);
+  }
+
+  async function buildCalendar(type) {
     var numDays     = type === 'cb' ? AVAIL.giorniRichiamata : AVAIL.giorniVisita;
     var slotsFn     = type === 'cb' ? slotsCallback : slotsVisit;
+    var durataSlot  = type === 'cb' ? AVAIL.durataRichiamata : AVAIL.durataVisita;
     var calWrapEl   = document.getElementById(P+'-cal-'+type);
     var slotsWrapEl = document.getElementById(P+'-slots-wrap-'+type);
     var slotsBodyEl = document.getElementById(P+'-cal-slots-'+type);
     var reasonEl    = document.getElementById(type === 'cb' ? P+'-cb-reason' : P+'-visit-reason');
 
-    // Primo orario disponibile: almeno 2 ore dall'ora attuale di Milano (solo per oggi)
+    var today = new Date(); today.setHours(0,0,0,0);
+    // Richiamata e visita: nessuna disponibilità prima della data configurata
+    // in AVAIL.dataInizio (formato "YYYY-MM-DD", fuso locale, non UTC).
+    var inizioParts = AVAIL.dataInizio.split('-').map(function (n) { return parseInt(n, 10); });
+    var availStart = new Date(inizioParts[0], inizioParts[1] - 1, inizioParts[2]);
+    if (today < availStart) today = availStart;
+    var endDate = new Date(today); endDate.setDate(today.getDate() + numDays - 1);
+
+    calWrapEl.innerHTML = '<p class="lm__cal-loading">' + CAL_LOADING + '</p>';
+    var occupati = await fetchOccupati(isoDateLocal(today), isoDateLocal(endDate));
+
+    var viewY   = today.getFullYear();
+    var viewM   = today.getMonth();
+    var selDate = null;
+    var selTime = null;
+
+    // Primo orario disponibile: almeno 2 ore dall'ora attuale di Milano (solo
+    // per oggi), e mai uno slot che si sovrapporrebbe con un impegno già
+    // preso in agenda per quel giorno.
     function availFor(date) {
       var slots = slotsFn(date);
       var now = milanParts(new Date());
@@ -488,20 +537,18 @@ export function initLeadForm(root, options) {
           return (parseInt(s.slice(0,2),10) * 60 + parseInt(s.slice(3,5),10)) >= cutoff;
         });
       }
+      var occupatiGiorno = occupati[isoDateLocal(date)];
+      if (occupatiGiorno && occupatiGiorno.length) {
+        slots = slots.filter(function (s) {
+          var inizioSlot = parseHHMM(s);
+          return !occupatiGiorno.some(function (o) {
+            var inizioOccupato = parseHHMM(o.ora);
+            return inizioOccupato != null && siSovrappongono(inizioSlot, durataSlot, inizioOccupato, o.durataMinuti);
+          });
+        });
+      }
       return slots;
     }
-
-    var today = new Date(); today.setHours(0,0,0,0);
-    // Richiamata e visita: nessuna disponibilità prima della data configurata
-    // in AVAIL.dataInizio (formato "YYYY-MM-DD", fuso locale, non UTC).
-    var inizioParts = AVAIL.dataInizio.split('-').map(function (n) { return parseInt(n, 10); });
-    var availStart = new Date(inizioParts[0], inizioParts[1] - 1, inizioParts[2]);
-    if (today < availStart) today = availStart;
-    var endDate = new Date(today); endDate.setDate(today.getDate() + numDays - 1);
-    var viewY   = today.getFullYear();
-    var viewM   = today.getMonth();
-    var selDate = null;
-    var selTime = null;
 
     if (reasonEl) {
       var newReason = reasonEl.cloneNode(true);
