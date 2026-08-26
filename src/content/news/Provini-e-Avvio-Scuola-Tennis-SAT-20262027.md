@@ -2,22 +2,10 @@
 titolo: Provini e Avvio Scuola Tennis SAT 2026/2027
 data: 2026-09-01T00:00:00.000Z
 categoria: Scuola Tennis
-sintesi: |
-  Al via la nuova stagione per la Scuola Avviamento Tennis (SAT) del Tennis Club Ambrosiano! 
-
-  Di seguito tutti i dettagli su giornate di provino, inizio corsi e requisiti di tesseramento.
-
-  GIORNATE DEDICATE AI PROVINI:
-  Preiscritti entro il 15 agosto: dal 1° al 4 Settembre 2026 (dalle 15:00 alle 18:30).
-
-  Non Preiscritti (Aperto a tutti): dal 7 al 18 Settembre 2026, da lunedì a venerdì (dalle 15:00 alle 18:30).
-
-  INIZIO CORSI:
-  Lunedì 21 Settembre 2026.
-
-  Tesseramento Obbligatorio: Per partecipare ai corsi è obbligatorio essere in possesso del tesseramento FITP (Agonistico o Non Agonistico) e presentare un certificato medico in corso di validità.
+sintesi: 'Al via la nuova stagione per la Scuola Avviamento Tennis (SAT) del Tennis Club Ambrosiano! '
 immagine: /DSC07297 (2).jpg
 immagine_alt: Scuola Tennis SAT
+pubblicato: true
 cta_label: Prenota il tuo provino
 cta_href: 'https://www.tcambrosiano.com/iscrizione-scuola-tennis'
 titolo_en: Tryouts and Start of the SAT Tennis School 2026/2027
@@ -43,9 +31,7 @@ corpo_en: |-
 
 Al via la nuova stagione per la Scuola Avviamento Tennis (SAT) del Tennis Club Ambrosiano!
 
-
 Di seguito tutti i dettagli su giornate di provino, inizio corsi e requisiti di tesseramento.
-
 
 GIORNATE DEDICATE AI PROVINI:
 
@@ -53,10 +39,8 @@ Preiscritti entro il 15 agosto: dal 1° al 4 Settembre 2026 (dalle 15:00 alle 18
 
 Non Preiscritti (Aperto a tutti): dal 7 al 18 Settembre 2026, da lunedì a venerdì (dalle 15:00 alle 18:30).
 
-
 INIZIO CORSI:
 
 Lunedì 21 Settembre 2026.
-
 
 Tesseramento Obbligatorio: Per partecipare ai corsi è obbligatorio essere in possesso del tesseramento FITP (Agonistico o Non Agonistico) e presentare un certificato medico in corso di validità.
