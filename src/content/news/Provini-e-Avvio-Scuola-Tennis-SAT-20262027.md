@@ -11,7 +11,7 @@ cta_href: 'https://www.tcambrosiano.com/iscrizione-scuola-tennis'
 titolo_en: Tryouts and Start of the SAT Tennis School 2026/2027
 categoria_en: Tennis School
 cta_label_en: Book your audition
-sintesi_en: ''
+sintesi_en: The new season is kicking off for the Tennis Beginners' School (SAT) at the Ambrosiano Tennis Club!
 immagine_alt_en: Tennis School SAT
 corpo_en: |-
   The new season is kicking off for the Tennis Club Ambrosiano’s Tennis Training School (SAT)!
