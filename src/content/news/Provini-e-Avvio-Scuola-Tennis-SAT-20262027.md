@@ -37,7 +37,7 @@ GIORNATE DEDICATE AI PROVINI:
 
 Preiscritti entro il 15 agosto: dal 1° al 4 Settembre 2026 (dalle 15:00 alle 18:30).
 
-Non Preiscritti (Aperto a tutti): dal 7 al 18 Settembre 2026, da lunedì a venerdì (dalle 15:00 alle 18:30).
+Non Preiscritti (aperto a tutti): dal 7 al 18 Settembre 2026, da lunedì a venerdì (dalle 15:00 alle 18:30).
 
 INIZIO CORSI:
 
