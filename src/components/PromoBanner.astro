@@ -16,35 +16,43 @@ const { lang = 'it' } = Astro.props;
 const t = useTranslations(lang);
 
 const PROMO_ID = 'restart-2026';
+
+// Scadenza promo: 15 settembre 2026, fine giornata (fuso orario Italia).
+// Oltre questa data il banner non viene più generato in build.
+const PROMO_DEADLINE = '2026-09-15T23:59:59+02:00';
+const promoExpired = Date.now() > new Date(PROMO_DEADLINE).getTime();
 ---
 
-<aside class="promo" id="promo-banner" data-promo-id={PROMO_ID} aria-label={t.promo.eyebrow} hidden>
-  <button type="button" class="promo__close" aria-label={t.promo.close} data-promo-close>
-    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
-  </button>
+{!promoExpired && (
+  <aside class="promo" id="promo-banner" data-promo-id={PROMO_ID} data-promo-deadline={PROMO_DEADLINE} aria-label={t.promo.eyebrow} hidden>
+    <button type="button" class="promo__close" aria-label={t.promo.close} data-promo-close>
+      <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
 
-  <span class="promo__eyebrow">{t.promo.eyebrow}</span>
+    <span class="promo__eyebrow">{t.promo.eyebrow}</span>
 
-  <div class="promo__headline">
-    <span class="promo__badge">{t.promo.badge}</span>
-    <span class="promo__title">{t.promo.title}</span>
-  </div>
+    <div class="promo__headline">
+      <span class="promo__badge">{t.promo.badge}</span>
+      <span class="promo__title">{t.promo.title}</span>
+    </div>
 
-  <p class="promo__text">{t.promo.text}</p>
+    <p class="promo__text">{t.promo.text}</p>
+    <p class="promo__deadline">{t.promo.deadline}</p>
 
-  <a
-    class="promo__cta"
-    href={perfectGym.register}
-    target="_blank"
-    rel="noopener noreferrer"
-    data-promo-cta
-  >
-    {t.promo.cta}
-    <span class="promo__arrow" aria-hidden="true">→</span>
-  </a>
-</aside>
+    <a
+      class="promo__cta"
+      href={perfectGym.register}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-promo-cta
+    >
+      {t.promo.cta}
+      <span class="promo__arrow" aria-hidden="true">→</span>
+    </a>
+  </aside>
+)}
 
 <style>
   .promo {
@@ -130,6 +138,15 @@ const PROMO_ID = 'restart-2026';
     margin-top: 0.55rem;
   }
 
+  .promo__deadline {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #fff;
+    margin-top: 0.3rem;
+  }
+
   .promo__cta {
     display: inline-flex;
     align-items: center;
@@ -167,7 +184,15 @@ const PROMO_ID = 'restart-2026';
 <script>
   const promo = document.getElementById('promo-banner');
 
-  if (promo) {
+  // Doppia sicurezza sulla scadenza: se l'HTML servito è una build precedente
+  // al 15 settembre (cache CDN, deploy non rifatto), il banner si nasconde
+  // comunque lato client in base all'orario del visitatore.
+  const deadline = promo?.dataset.promoDeadline;
+  const expired = deadline ? Date.now() > new Date(deadline).getTime() : false;
+
+  if (promo && expired) {
+    promo.remove();
+  } else if (promo) {
     const KEY = 'tca_promo_dismissed';
     const promoId = promo.dataset.promoId ?? '';
 
