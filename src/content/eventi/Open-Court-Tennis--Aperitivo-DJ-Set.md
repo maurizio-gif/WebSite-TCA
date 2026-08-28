@@ -23,7 +23,7 @@ corpo_en: |
   Background music curated by a DJ throughout the event to set the right mood.
   Bar & Food
   Non-stop bar and catering service for food and drinks, culminating in an Aperitif on the Terrace.
-  To participate in the on-court challenge, you can sign up directly at the front desk.
+  For information on costs and reservations for the on-field challenge, please contact the front desk directly.
 ---
 
 Un pomeriggio speciale che unisce campo, musica e intrattenimento, aperto a soci, amici e famiglie!
@@ -44,4 +44,4 @@ Bar & Food
 
 Servizio bar e catering attivo no-stop per cibo e bevande, culminante nell'Aperitivo in Terrazza.
 
-Per partecipare alla sfida sul campo è possibile prenotarsi direttamente in Reception.
+Per info costi e prenotazione per la sfida sul campo è possibile rivolgersi direttamente in Reception.
