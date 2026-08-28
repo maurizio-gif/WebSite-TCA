@@ -14,21 +14,16 @@ descrizione_en: |-
   Matches on the court, DJ sets, and drinks on the terrace for an afternoon of sports, fun, and club life.
 luogo_en: Clay Courts and Clubhouse
 corpo_en: |
-  Release accumulated tension and reawaken your vital energy for the new season!
-  In collaboration with EraZen, we’re offering an experiential session that integrates movement, breath, and somatic listening to release muscular and emotional tension. This practice is ideal for those who hold stress in their bodies, for athletes, and for anyone seeking greater emotional and bodily awareness.
-
-  When: Saturday, September 20, 2026, from 10:00 a.m. to 12:00 p.m.
-
-  Session structure (75–90 min):
-  body activation (15 min)
-  bioenergetic work (50 min)
-  final relaxation (15 min)
-
-  Instructor: Certified Bioenergetic Practitioner – Somatic Practitioner.
-
-  What to bring: Your own yoga mat and comfortable clothing.
-
-  Participation is limited to a maximum of 15 people. Reservations are required at the front desk.
+  A special afternoon combining sports, music, and entertainment, open to members, friends, and families!
+  2:00 PM – 3:00 PM | Live Ball Tennis
+  A high-energy, fast-paced session. A dynamic and fun warm-up to get to know each other on the court.
+  Starting at 3:30 PM | Ten-Point Tie-Break Tournament
+  Fast-paced, exciting 10-point matches to make the afternoon competitive and dynamic.
+  DJ Set & Lounge
+  Background music curated by a DJ throughout the event to set the right mood.
+  Bar & Food
+  Non-stop bar and catering service for food and drinks, culminating in an Aperitif on the Terrace.
+  To participate in the on-court challenge, you can sign up directly at the front desk.
 ---
 
 Un pomeriggio speciale che unisce campo, musica e intrattenimento, aperto a soci, amici e famiglie!
@@ -41,7 +36,7 @@ Dalle 15:30 | Torneo Ten-Points Tie-Break
 
 Sfide veloci e coinvolgenti a 10 punti per rendere il pomeriggio competitivo e dinamico.
 
-DJ Set & Lounge 
+DJ Set & Lounge
 
 Musica di sottofondo curata da consolle DJ per tutta la durata dell'evento per creare la giusta atmosfera.
 
