@@ -26,6 +26,9 @@ corpo_en: |
   Instructor: Certified Bioenergetic Practitioner – Somatic Practitioner.
 
   What to bring: Your own yoga mat and comfortable clothing.
+  Participation fee:
+  25€ - Member
+  35€ - Not Member
 
   Participation is limited to a maximum of 15 people. Reservations are required at the front desk.
 ---
@@ -47,5 +50,11 @@ rilassamento finale (15 min)
 Insegnante: Operatore bioenergetico – Somatic Practitioner certificato.
 
 Cosa portare: tappetino personale ed abbigliamento comodo.
+
+Costo di partecipazione: 
+
+25€ - Soci
+
+35€ - Non Soci
 
 Partecipazione limitata a un massimo di 15 persone. Richiesta la prenotazione in Reception.
