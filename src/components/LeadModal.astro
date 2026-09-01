@@ -10,10 +10,10 @@ const { lang = 'it' } = Astro.props;
 const WEBHOOK_CHECK = '';
 const WEBHOOK_LEAD  = '';
 
-// Parametri di prenotazione (orari, durata slot, date di chiusura) gestibili
-// da TinaCMS → src/content/moduli/dati-stagionali.md
-const modDati = (await getEntry('moduli', 'dati-stagionali'))!.data;
-const availability = bookingAvailability(modDati);
+// Parametri di prenotazione (orari, durata slot, preavviso, date di chiusura)
+// gestibili da TinaCMS → src/content/appuntamenti/disponibilita.md
+const dispo = (await getEntry('appuntamenti', 'disponibilita'))!.data;
+const availability = bookingAvailability(dispo);
 
 const lm = lang === 'en' ? {
   eyebrow:  'Contact us',

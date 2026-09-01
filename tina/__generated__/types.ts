@@ -96,6 +96,8 @@ export type Query = {
   legalConnection: LegalConnection;
   moduli: Moduli;
   moduliConnection: ModuliConnection;
+  appuntamenti: Appuntamenti;
+  appuntamentiConnection: AppuntamentiConnection;
   helpdesk: Helpdesk;
   helpdeskConnection: HelpdeskConnection;
   news: News;
@@ -231,6 +233,21 @@ export type QueryModuliConnectionArgs = {
 };
 
 
+export type QueryAppuntamentiArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryAppuntamentiConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<AppuntamentiFilter>;
+};
+
+
 export type QueryHelpdeskArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -283,6 +300,7 @@ export type DocumentFilter = {
   info?: InputMaybe<InfoFilter>;
   legal?: InputMaybe<LegalFilter>;
   moduli?: InputMaybe<ModuliFilter>;
+  appuntamenti?: InputMaybe<AppuntamentiFilter>;
   helpdesk?: InputMaybe<HelpdeskFilter>;
   news?: InputMaybe<NewsFilter>;
   pagine?: InputMaybe<PagineFilter>;
@@ -325,7 +343,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Moduli | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder;
+export type DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Moduli | Appuntamenti | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_Camps | PagineScuola_Tennis | PaginePersonal_Trainer | PaginePreparazione_Atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_Avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder;
 
 export type Eventi = Node & Document & {
   __typename?: 'Eventi';
@@ -689,19 +707,6 @@ export type LegalConnection = Connection & {
   edges?: Maybe<Array<Maybe<LegalConnectionEdges>>>;
 };
 
-export type ModuliAppuntamenti = {
-  __typename?: 'ModuliAppuntamenti';
-  data_inizio: Scalars['String']['output'];
-  ora_apertura: Scalars['String']['output'];
-  ora_chiusura: Scalars['String']['output'];
-  preavviso_minimo_ore: Scalars['Float']['output'];
-  durata_slot_richiamata: Scalars['Float']['output'];
-  durata_slot_visita: Scalars['Float']['output'];
-  giorni_avanti_richiamata: Scalars['Float']['output'];
-  giorni_avanti_visita: Scalars['Float']['output'];
-  date_chiuse?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-};
-
 export type ModuliCamp_Settimane = {
   __typename?: 'ModuliCamp_settimane';
   id: Scalars['String']['output'];
@@ -711,7 +716,6 @@ export type ModuliCamp_Settimane = {
 
 export type Moduli = Node & Document & {
   __typename?: 'Moduli';
-  appuntamenti?: Maybe<ModuliAppuntamenti>;
   camp_settimane?: Maybe<Array<Maybe<ModuliCamp_Settimane>>>;
   camp_quota_soci: Scalars['String']['output'];
   camp_quota_soci_dal2: Scalars['String']['output'];
@@ -740,18 +744,6 @@ export type Moduli = Node & Document & {
   _values: Scalars['JSON']['output'];
 };
 
-export type ModuliAppuntamentiFilter = {
-  data_inizio?: InputMaybe<DatetimeFilter>;
-  ora_apertura?: InputMaybe<StringFilter>;
-  ora_chiusura?: InputMaybe<StringFilter>;
-  preavviso_minimo_ore?: InputMaybe<NumberFilter>;
-  durata_slot_richiamata?: InputMaybe<NumberFilter>;
-  durata_slot_visita?: InputMaybe<NumberFilter>;
-  giorni_avanti_richiamata?: InputMaybe<NumberFilter>;
-  giorni_avanti_visita?: InputMaybe<NumberFilter>;
-  date_chiuse?: InputMaybe<DatetimeFilter>;
-};
-
 export type ModuliCamp_SettimaneFilter = {
   id?: InputMaybe<StringFilter>;
   range?: InputMaybe<StringFilter>;
@@ -759,7 +751,6 @@ export type ModuliCamp_SettimaneFilter = {
 };
 
 export type ModuliFilter = {
-  appuntamenti?: InputMaybe<ModuliAppuntamentiFilter>;
   camp_settimane?: InputMaybe<ModuliCamp_SettimaneFilter>;
   camp_quota_soci?: InputMaybe<StringFilter>;
   camp_quota_soci_dal2?: InputMaybe<StringFilter>;
@@ -796,6 +787,47 @@ export type ModuliConnection = Connection & {
   pageInfo: PageInfo;
   totalCount: Scalars['Float']['output'];
   edges?: Maybe<Array<Maybe<ModuliConnectionEdges>>>;
+};
+
+export type Appuntamenti = Node & Document & {
+  __typename?: 'Appuntamenti';
+  data_inizio: Scalars['String']['output'];
+  ora_apertura: Scalars['String']['output'];
+  ora_chiusura: Scalars['String']['output'];
+  preavviso_minimo_ore: Scalars['Float']['output'];
+  durata_slot_richiamata: Scalars['Float']['output'];
+  durata_slot_visita: Scalars['Float']['output'];
+  giorni_avanti_richiamata: Scalars['Float']['output'];
+  giorni_avanti_visita: Scalars['Float']['output'];
+  date_chiuse?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type AppuntamentiFilter = {
+  data_inizio?: InputMaybe<DatetimeFilter>;
+  ora_apertura?: InputMaybe<StringFilter>;
+  ora_chiusura?: InputMaybe<StringFilter>;
+  preavviso_minimo_ore?: InputMaybe<NumberFilter>;
+  durata_slot_richiamata?: InputMaybe<NumberFilter>;
+  durata_slot_visita?: InputMaybe<NumberFilter>;
+  giorni_avanti_richiamata?: InputMaybe<NumberFilter>;
+  giorni_avanti_visita?: InputMaybe<NumberFilter>;
+  date_chiuse?: InputMaybe<DatetimeFilter>;
+};
+
+export type AppuntamentiConnectionEdges = {
+  __typename?: 'AppuntamentiConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<Appuntamenti>;
+};
+
+export type AppuntamentiConnection = Connection & {
+  __typename?: 'AppuntamentiConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<AppuntamentiConnectionEdges>>>;
 };
 
 export type Helpdesk = Node & Document & {
@@ -2631,6 +2663,8 @@ export type Mutation = {
   createLegal: Legal;
   updateModuli: Moduli;
   createModuli: Moduli;
+  updateAppuntamenti: Appuntamenti;
+  createAppuntamenti: Appuntamenti;
   updateHelpdesk: Helpdesk;
   createHelpdesk: Helpdesk;
   updateNews: News;
@@ -2757,6 +2791,18 @@ export type MutationCreateModuliArgs = {
 };
 
 
+export type MutationUpdateAppuntamentiArgs = {
+  relativePath: Scalars['String']['input'];
+  params: AppuntamentiMutation;
+};
+
+
+export type MutationCreateAppuntamentiArgs = {
+  relativePath: Scalars['String']['input'];
+  params: AppuntamentiMutation;
+};
+
+
 export type MutationUpdateHelpdeskArgs = {
   relativePath: Scalars['String']['input'];
   params: HelpdeskMutation;
@@ -2800,6 +2846,7 @@ export type DocumentUpdateMutation = {
   info?: InputMaybe<InfoMutation>;
   legal?: InputMaybe<LegalMutation>;
   moduli?: InputMaybe<ModuliMutation>;
+  appuntamenti?: InputMaybe<AppuntamentiMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
@@ -2814,6 +2861,7 @@ export type DocumentMutation = {
   info?: InputMaybe<InfoMutation>;
   legal?: InputMaybe<LegalMutation>;
   moduli?: InputMaybe<ModuliMutation>;
+  appuntamenti?: InputMaybe<AppuntamentiMutation>;
   helpdesk?: InputMaybe<HelpdeskMutation>;
   news?: InputMaybe<NewsMutation>;
   pagine?: InputMaybe<PagineMutation>;
@@ -2926,18 +2974,6 @@ export type LegalMutation = {
   nomina_responsabile?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ModuliAppuntamentiMutation = {
-  data_inizio?: InputMaybe<Scalars['String']['input']>;
-  ora_apertura?: InputMaybe<Scalars['String']['input']>;
-  ora_chiusura?: InputMaybe<Scalars['String']['input']>;
-  preavviso_minimo_ore?: InputMaybe<Scalars['Float']['input']>;
-  durata_slot_richiamata?: InputMaybe<Scalars['Float']['input']>;
-  durata_slot_visita?: InputMaybe<Scalars['Float']['input']>;
-  giorni_avanti_richiamata?: InputMaybe<Scalars['Float']['input']>;
-  giorni_avanti_visita?: InputMaybe<Scalars['Float']['input']>;
-  date_chiuse?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-};
-
 export type ModuliCamp_SettimaneMutation = {
   id?: InputMaybe<Scalars['String']['input']>;
   range?: InputMaybe<Scalars['String']['input']>;
@@ -2945,7 +2981,6 @@ export type ModuliCamp_SettimaneMutation = {
 };
 
 export type ModuliMutation = {
-  appuntamenti?: InputMaybe<ModuliAppuntamentiMutation>;
   camp_settimane?: InputMaybe<Array<InputMaybe<ModuliCamp_SettimaneMutation>>>;
   camp_quota_soci?: InputMaybe<Scalars['String']['input']>;
   camp_quota_soci_dal2?: InputMaybe<Scalars['String']['input']>;
@@ -2969,6 +3004,18 @@ export type ModuliMutation = {
   scuola_mini_tennis_nati_en?: InputMaybe<Scalars['String']['input']>;
   scuola_tennis_nati?: InputMaybe<Scalars['String']['input']>;
   scuola_tennis_nati_en?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AppuntamentiMutation = {
+  data_inizio?: InputMaybe<Scalars['String']['input']>;
+  ora_apertura?: InputMaybe<Scalars['String']['input']>;
+  ora_chiusura?: InputMaybe<Scalars['String']['input']>;
+  preavviso_minimo_ore?: InputMaybe<Scalars['Float']['input']>;
+  durata_slot_richiamata?: InputMaybe<Scalars['Float']['input']>;
+  durata_slot_visita?: InputMaybe<Scalars['Float']['input']>;
+  giorni_avanti_richiamata?: InputMaybe<Scalars['Float']['input']>;
+  giorni_avanti_visita?: InputMaybe<Scalars['Float']['input']>;
+  date_chiuse?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type HelpdeskMutation = {
@@ -3829,7 +3876,9 @@ export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_ar
 
 export type LegalPartsFragment = { __typename: 'Legal', codice_condotta?: string | null, nomina_responsabile?: string | null };
 
-export type ModuliPartsFragment = { __typename: 'Moduli', camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, appuntamenti?: { __typename: 'ModuliAppuntamenti', data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null } | null, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null };
+export type ModuliPartsFragment = { __typename: 'Moduli', camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null };
+
+export type AppuntamentiPartsFragment = { __typename: 'Appuntamenti', data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null };
 
 export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
 
@@ -3982,7 +4031,7 @@ export type ModuliQueryVariables = Exact<{
 }>;
 
 
-export type ModuliQuery = { __typename?: 'Query', moduli: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, appuntamenti?: { __typename: 'ModuliAppuntamenti', data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null } | null, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } };
+export type ModuliQuery = { __typename?: 'Query', moduli: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } };
 
 export type ModuliConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3994,7 +4043,26 @@ export type ModuliConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ModuliConnectionQuery = { __typename?: 'Query', moduliConnection: { __typename?: 'ModuliConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ModuliConnectionEdges', cursor: string, node?: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, appuntamenti?: { __typename: 'ModuliAppuntamenti', data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null } | null, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } | null } | null> | null } };
+export type ModuliConnectionQuery = { __typename?: 'Query', moduliConnection: { __typename?: 'ModuliConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ModuliConnectionEdges', cursor: string, node?: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } | null } | null> | null } };
+
+export type AppuntamentiQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type AppuntamentiQuery = { __typename?: 'Query', appuntamenti: { __typename: 'Appuntamenti', id: string, data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+
+export type AppuntamentiConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<AppuntamentiFilter>;
+}>;
+
+
+export type AppuntamentiConnectionQuery = { __typename?: 'Query', appuntamentiConnection: { __typename?: 'AppuntamentiConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AppuntamentiConnectionEdges', cursor: string, node?: { __typename: 'Appuntamenti', id: string, data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type HelpdeskQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4172,18 +4240,6 @@ export const LegalPartsFragmentDoc = gql`
 export const ModuliPartsFragmentDoc = gql`
     fragment ModuliParts on Moduli {
   __typename
-  appuntamenti {
-    __typename
-    data_inizio
-    ora_apertura
-    ora_chiusura
-    preavviso_minimo_ore
-    durata_slot_richiamata
-    durata_slot_visita
-    giorni_avanti_richiamata
-    giorni_avanti_visita
-    date_chiuse
-  }
   camp_settimane {
     __typename
     id
@@ -4212,6 +4268,20 @@ export const ModuliPartsFragmentDoc = gql`
   scuola_mini_tennis_nati_en
   scuola_tennis_nati
   scuola_tennis_nati_en
+}
+    `;
+export const AppuntamentiPartsFragmentDoc = gql`
+    fragment AppuntamentiParts on Appuntamenti {
+  __typename
+  data_inizio
+  ora_apertura
+  ora_chiusura
+  preavviso_minimo_ore
+  durata_slot_richiamata
+  durata_slot_visita
+  giorni_avanti_richiamata
+  giorni_avanti_visita
+  date_chiuse
 }
     `;
 export const HelpdeskPartsFragmentDoc = gql`
@@ -5404,6 +5474,63 @@ export const ModuliConnectionDocument = gql`
   }
 }
     ${ModuliPartsFragmentDoc}`;
+export const AppuntamentiDocument = gql`
+    query appuntamenti($relativePath: String!) {
+  appuntamenti(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        hasReferences
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...AppuntamentiParts
+  }
+}
+    ${AppuntamentiPartsFragmentDoc}`;
+export const AppuntamentiConnectionDocument = gql`
+    query appuntamentiConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: AppuntamentiFilter) {
+  appuntamentiConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            hasReferences
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...AppuntamentiParts
+      }
+    }
+  }
+}
+    ${AppuntamentiPartsFragmentDoc}`;
 export const HelpdeskDocument = gql`
     query helpdesk($relativePath: String!) {
   helpdesk(relativePath: $relativePath) {
@@ -5619,6 +5746,12 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     moduliConnection(variables?: ModuliConnectionQueryVariables, options?: C): Promise<{data: ModuliConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ModuliConnectionQueryVariables, query: string}> {
         return requester<{data: ModuliConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: ModuliConnectionQueryVariables, query: string}, ModuliConnectionQueryVariables>(ModuliConnectionDocument, variables, options);
+      },
+    appuntamenti(variables: AppuntamentiQueryVariables, options?: C): Promise<{data: AppuntamentiQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AppuntamentiQueryVariables, query: string}> {
+        return requester<{data: AppuntamentiQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AppuntamentiQueryVariables, query: string}, AppuntamentiQueryVariables>(AppuntamentiDocument, variables, options);
+      },
+    appuntamentiConnection(variables?: AppuntamentiConnectionQueryVariables, options?: C): Promise<{data: AppuntamentiConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AppuntamentiConnectionQueryVariables, query: string}> {
+        return requester<{data: AppuntamentiConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: AppuntamentiConnectionQueryVariables, query: string}, AppuntamentiConnectionQueryVariables>(AppuntamentiConnectionDocument, variables, options);
       },
     helpdesk(variables: HelpdeskQueryVariables, options?: C): Promise<{data: HelpdeskQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskQueryVariables, query: string}> {
         return requester<{data: HelpdeskQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: HelpdeskQueryVariables, query: string}, HelpdeskQueryVariables>(HelpdeskDocument, variables, options);

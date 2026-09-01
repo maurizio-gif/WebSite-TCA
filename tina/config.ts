@@ -461,32 +461,6 @@ export default defineConfig({
           allowedActions: { create: false, delete: false },
         },
         fields: [
-          // ── Appuntamenti e disponibilità ────────────────────────────────
-          // Parametri del calendario di richiamata telefonica e visita in sede
-          // dei form del sito (LeadModal / LeadFormInline).
-          {
-            type: 'object',
-            name: 'appuntamenti',
-            label: '📅 Appuntamenti e disponibilità',
-            fields: [
-              { type: 'datetime', name: 'data_inizio', label: 'Disponibilità a partire da', required: true, ui: { dateFormat: 'DD/MM/YYYY' } },
-              { type: 'string', name: 'ora_apertura', label: 'Primo orario disponibile (es. 10:30)', required: true },
-              { type: 'string', name: 'ora_chiusura', label: 'Ultimo orario disponibile (es. 19:00)', required: true },
-              { type: 'number', name: 'preavviso_minimo_ore', label: 'Preavviso minimo per prenotare (ore) — es. 2 = due ore prima, 24 = un giorno prima', required: true },
-              { type: 'number', name: 'durata_slot_richiamata', label: 'Durata slot richiamata (minuti)', required: true },
-              { type: 'number', name: 'durata_slot_visita', label: 'Durata slot visita in sede (minuti)', required: true },
-              { type: 'number', name: 'giorni_avanti_richiamata', label: 'Giorni mostrati in calendario (richiamata)', required: true },
-              { type: 'number', name: 'giorni_avanti_visita', label: 'Giorni mostrati in calendario (visita in sede)', required: true },
-              {
-                type: 'datetime',
-                name: 'date_chiuse',
-                label: 'Giorni di chiusura eccezionale',
-                list: true,
-                ui: { dateFormat: 'DD/MM/YYYY' },
-              },
-            ],
-          },
-
           {
             type: 'object',
             name: 'camp_settimane',
@@ -531,6 +505,36 @@ export default defineConfig({
           { type: 'string', name: 'scuola_tennis_nati', label: 'Scuola Tennis — Scuola Tennis, anni di nascita ammessi', required: true },
           { type: 'string', name: 'scuola_tennis_nati_en', label: '🇬🇧 Scuola Tennis, anni di nascita (inglese)', required: true },
 
+        ],
+      },
+      // ─── APPUNTAMENTI E DISPONIBILITÀ ──────────────────────────────────────
+      // File unico (disponibilita.md) con i parametri del calendario di
+      // richiamata telefonica e visita in sede dei form del sito
+      // (LeadModal.astro, LeadFormInline.astro via src/lib/bookingAvailability).
+      {
+        name: 'appuntamenti',
+        label: '📅 Appuntamenti e disponibilità',
+        path: 'src/content/appuntamenti',
+        format: 'md',
+        ui: {
+          allowedActions: { create: false, delete: false },
+        },
+        fields: [
+          { type: 'datetime', name: 'data_inizio', label: 'Disponibilità a partire da', required: true, ui: { dateFormat: 'DD/MM/YYYY' } },
+          { type: 'string', name: 'ora_apertura', label: 'Primo orario disponibile (es. 10:30)', required: true },
+          { type: 'string', name: 'ora_chiusura', label: 'Ultimo orario disponibile (es. 19:00)', required: true },
+          { type: 'number', name: 'preavviso_minimo_ore', label: 'Preavviso minimo per prenotare (ore) — es. 2 = due ore prima, 24 = un giorno prima', required: true },
+          { type: 'number', name: 'durata_slot_richiamata', label: 'Durata slot richiamata (minuti)', required: true },
+          { type: 'number', name: 'durata_slot_visita', label: 'Durata slot visita in sede (minuti)', required: true },
+          { type: 'number', name: 'giorni_avanti_richiamata', label: 'Giorni mostrati in calendario (richiamata)', required: true },
+          { type: 'number', name: 'giorni_avanti_visita', label: 'Giorni mostrati in calendario (visita in sede)', required: true },
+          {
+            type: 'datetime',
+            name: 'date_chiuse',
+            label: 'Giorni di chiusura eccezionale',
+            list: true,
+            ui: { dateFormat: 'DD/MM/YYYY' },
+          },
         ],
       },
       // ─── HELP DESK ─────────────────────────────────────────────────────────

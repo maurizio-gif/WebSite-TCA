@@ -110,18 +110,6 @@ fragment LegalParts on Legal {
 
 fragment ModuliParts on Moduli {
   __typename
-  appuntamenti {
-    __typename
-    data_inizio
-    ora_apertura
-    ora_chiusura
-    preavviso_minimo_ore
-    durata_slot_richiamata
-    durata_slot_visita
-    giorni_avanti_richiamata
-    giorni_avanti_visita
-    date_chiuse
-  }
   camp_settimane {
     __typename
     id
@@ -150,6 +138,19 @@ fragment ModuliParts on Moduli {
   scuola_mini_tennis_nati_en
   scuola_tennis_nati
   scuola_tennis_nati_en
+}
+
+fragment AppuntamentiParts on Appuntamenti {
+  __typename
+  data_inizio
+  ora_apertura
+  ora_chiusura
+  preavviso_minimo_ore
+  durata_slot_richiamata
+  durata_slot_visita
+  giorni_avanti_richiamata
+  giorni_avanti_visita
+  date_chiuse
 }
 
 fragment HelpdeskParts on Helpdesk {
