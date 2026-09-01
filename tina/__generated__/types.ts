@@ -689,6 +689,19 @@ export type LegalConnection = Connection & {
   edges?: Maybe<Array<Maybe<LegalConnectionEdges>>>;
 };
 
+export type ModuliAppuntamenti = {
+  __typename?: 'ModuliAppuntamenti';
+  data_inizio: Scalars['String']['output'];
+  ora_apertura: Scalars['String']['output'];
+  ora_chiusura: Scalars['String']['output'];
+  preavviso_minimo_ore: Scalars['Float']['output'];
+  durata_slot_richiamata: Scalars['Float']['output'];
+  durata_slot_visita: Scalars['Float']['output'];
+  giorni_avanti_richiamata: Scalars['Float']['output'];
+  giorni_avanti_visita: Scalars['Float']['output'];
+  date_chiuse?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+};
+
 export type ModuliCamp_Settimane = {
   __typename?: 'ModuliCamp_settimane';
   id: Scalars['String']['output'];
@@ -698,6 +711,7 @@ export type ModuliCamp_Settimane = {
 
 export type Moduli = Node & Document & {
   __typename?: 'Moduli';
+  appuntamenti?: Maybe<ModuliAppuntamenti>;
   camp_settimane?: Maybe<Array<Maybe<ModuliCamp_Settimane>>>;
   camp_quota_soci: Scalars['String']['output'];
   camp_quota_soci_dal2: Scalars['String']['output'];
@@ -721,17 +735,21 @@ export type Moduli = Node & Document & {
   scuola_mini_tennis_nati_en: Scalars['String']['output'];
   scuola_tennis_nati: Scalars['String']['output'];
   scuola_tennis_nati_en: Scalars['String']['output'];
-  prenotazioni_data_inizio: Scalars['String']['output'];
-  prenotazioni_ora_apertura: Scalars['String']['output'];
-  prenotazioni_ora_chiusura: Scalars['String']['output'];
-  prenotazioni_durata_slot_richiamata: Scalars['Float']['output'];
-  prenotazioni_durata_slot_visita: Scalars['Float']['output'];
-  prenotazioni_giorni_avanti_richiamata: Scalars['Float']['output'];
-  prenotazioni_giorni_avanti_visita: Scalars['Float']['output'];
-  prenotazioni_date_chiuse?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
+};
+
+export type ModuliAppuntamentiFilter = {
+  data_inizio?: InputMaybe<DatetimeFilter>;
+  ora_apertura?: InputMaybe<StringFilter>;
+  ora_chiusura?: InputMaybe<StringFilter>;
+  preavviso_minimo_ore?: InputMaybe<NumberFilter>;
+  durata_slot_richiamata?: InputMaybe<NumberFilter>;
+  durata_slot_visita?: InputMaybe<NumberFilter>;
+  giorni_avanti_richiamata?: InputMaybe<NumberFilter>;
+  giorni_avanti_visita?: InputMaybe<NumberFilter>;
+  date_chiuse?: InputMaybe<DatetimeFilter>;
 };
 
 export type ModuliCamp_SettimaneFilter = {
@@ -741,6 +759,7 @@ export type ModuliCamp_SettimaneFilter = {
 };
 
 export type ModuliFilter = {
+  appuntamenti?: InputMaybe<ModuliAppuntamentiFilter>;
   camp_settimane?: InputMaybe<ModuliCamp_SettimaneFilter>;
   camp_quota_soci?: InputMaybe<StringFilter>;
   camp_quota_soci_dal2?: InputMaybe<StringFilter>;
@@ -764,14 +783,6 @@ export type ModuliFilter = {
   scuola_mini_tennis_nati_en?: InputMaybe<StringFilter>;
   scuola_tennis_nati?: InputMaybe<StringFilter>;
   scuola_tennis_nati_en?: InputMaybe<StringFilter>;
-  prenotazioni_data_inizio?: InputMaybe<DatetimeFilter>;
-  prenotazioni_ora_apertura?: InputMaybe<StringFilter>;
-  prenotazioni_ora_chiusura?: InputMaybe<StringFilter>;
-  prenotazioni_durata_slot_richiamata?: InputMaybe<NumberFilter>;
-  prenotazioni_durata_slot_visita?: InputMaybe<NumberFilter>;
-  prenotazioni_giorni_avanti_richiamata?: InputMaybe<NumberFilter>;
-  prenotazioni_giorni_avanti_visita?: InputMaybe<NumberFilter>;
-  prenotazioni_date_chiuse?: InputMaybe<DatetimeFilter>;
 };
 
 export type ModuliConnectionEdges = {
@@ -2915,6 +2926,18 @@ export type LegalMutation = {
   nomina_responsabile?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ModuliAppuntamentiMutation = {
+  data_inizio?: InputMaybe<Scalars['String']['input']>;
+  ora_apertura?: InputMaybe<Scalars['String']['input']>;
+  ora_chiusura?: InputMaybe<Scalars['String']['input']>;
+  preavviso_minimo_ore?: InputMaybe<Scalars['Float']['input']>;
+  durata_slot_richiamata?: InputMaybe<Scalars['Float']['input']>;
+  durata_slot_visita?: InputMaybe<Scalars['Float']['input']>;
+  giorni_avanti_richiamata?: InputMaybe<Scalars['Float']['input']>;
+  giorni_avanti_visita?: InputMaybe<Scalars['Float']['input']>;
+  date_chiuse?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
 export type ModuliCamp_SettimaneMutation = {
   id?: InputMaybe<Scalars['String']['input']>;
   range?: InputMaybe<Scalars['String']['input']>;
@@ -2922,6 +2945,7 @@ export type ModuliCamp_SettimaneMutation = {
 };
 
 export type ModuliMutation = {
+  appuntamenti?: InputMaybe<ModuliAppuntamentiMutation>;
   camp_settimane?: InputMaybe<Array<InputMaybe<ModuliCamp_SettimaneMutation>>>;
   camp_quota_soci?: InputMaybe<Scalars['String']['input']>;
   camp_quota_soci_dal2?: InputMaybe<Scalars['String']['input']>;
@@ -2945,14 +2969,6 @@ export type ModuliMutation = {
   scuola_mini_tennis_nati_en?: InputMaybe<Scalars['String']['input']>;
   scuola_tennis_nati?: InputMaybe<Scalars['String']['input']>;
   scuola_tennis_nati_en?: InputMaybe<Scalars['String']['input']>;
-  prenotazioni_data_inizio?: InputMaybe<Scalars['String']['input']>;
-  prenotazioni_ora_apertura?: InputMaybe<Scalars['String']['input']>;
-  prenotazioni_ora_chiusura?: InputMaybe<Scalars['String']['input']>;
-  prenotazioni_durata_slot_richiamata?: InputMaybe<Scalars['Float']['input']>;
-  prenotazioni_durata_slot_visita?: InputMaybe<Scalars['Float']['input']>;
-  prenotazioni_giorni_avanti_richiamata?: InputMaybe<Scalars['Float']['input']>;
-  prenotazioni_giorni_avanti_visita?: InputMaybe<Scalars['Float']['input']>;
-  prenotazioni_date_chiuse?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type HelpdeskMutation = {
@@ -3813,7 +3829,7 @@ export type InfoPartsFragment = { __typename: 'Info', indirizzo: string, come_ar
 
 export type LegalPartsFragment = { __typename: 'Legal', codice_condotta?: string | null, nomina_responsabile?: string | null };
 
-export type ModuliPartsFragment = { __typename: 'Moduli', camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, prenotazioni_data_inizio: string, prenotazioni_ora_apertura: string, prenotazioni_ora_chiusura: string, prenotazioni_durata_slot_richiamata: number, prenotazioni_durata_slot_visita: number, prenotazioni_giorni_avanti_richiamata: number, prenotazioni_giorni_avanti_visita: number, prenotazioni_date_chiuse?: Array<string | null> | null, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null };
+export type ModuliPartsFragment = { __typename: 'Moduli', camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, appuntamenti?: { __typename: 'ModuliAppuntamenti', data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null } | null, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null };
 
 export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
 
@@ -3966,7 +3982,7 @@ export type ModuliQueryVariables = Exact<{
 }>;
 
 
-export type ModuliQuery = { __typename?: 'Query', moduli: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, prenotazioni_data_inizio: string, prenotazioni_ora_apertura: string, prenotazioni_ora_chiusura: string, prenotazioni_durata_slot_richiamata: number, prenotazioni_durata_slot_visita: number, prenotazioni_giorni_avanti_richiamata: number, prenotazioni_giorni_avanti_visita: number, prenotazioni_date_chiuse?: Array<string | null> | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } };
+export type ModuliQuery = { __typename?: 'Query', moduli: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, appuntamenti?: { __typename: 'ModuliAppuntamenti', data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null } | null, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } };
 
 export type ModuliConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3978,7 +3994,7 @@ export type ModuliConnectionQueryVariables = Exact<{
 }>;
 
 
-export type ModuliConnectionQuery = { __typename?: 'Query', moduliConnection: { __typename?: 'ModuliConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ModuliConnectionEdges', cursor: string, node?: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, prenotazioni_data_inizio: string, prenotazioni_ora_apertura: string, prenotazioni_ora_chiusura: string, prenotazioni_durata_slot_richiamata: number, prenotazioni_durata_slot_visita: number, prenotazioni_giorni_avanti_richiamata: number, prenotazioni_giorni_avanti_visita: number, prenotazioni_date_chiuse?: Array<string | null> | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } | null } | null> | null } };
+export type ModuliConnectionQuery = { __typename?: 'Query', moduliConnection: { __typename?: 'ModuliConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'ModuliConnectionEdges', cursor: string, node?: { __typename: 'Moduli', id: string, camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, appuntamenti?: { __typename: 'ModuliAppuntamenti', data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null } | null, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null } | null } | null> | null } };
 
 export type HelpdeskQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4156,6 +4172,18 @@ export const LegalPartsFragmentDoc = gql`
 export const ModuliPartsFragmentDoc = gql`
     fragment ModuliParts on Moduli {
   __typename
+  appuntamenti {
+    __typename
+    data_inizio
+    ora_apertura
+    ora_chiusura
+    preavviso_minimo_ore
+    durata_slot_richiamata
+    durata_slot_visita
+    giorni_avanti_richiamata
+    giorni_avanti_visita
+    date_chiuse
+  }
   camp_settimane {
     __typename
     id
@@ -4184,14 +4212,6 @@ export const ModuliPartsFragmentDoc = gql`
   scuola_mini_tennis_nati_en
   scuola_tennis_nati
   scuola_tennis_nati_en
-  prenotazioni_data_inizio
-  prenotazioni_ora_apertura
-  prenotazioni_ora_chiusura
-  prenotazioni_durata_slot_richiamata
-  prenotazioni_durata_slot_visita
-  prenotazioni_giorni_avanti_richiamata
-  prenotazioni_giorni_avanti_visita
-  prenotazioni_date_chiuse
 }
     `;
 export const HelpdeskPartsFragmentDoc = gql`

@@ -455,6 +455,18 @@ type LegalConnection implements Connection {
   edges: [LegalConnectionEdges]
 }
 
+type ModuliAppuntamenti {
+  data_inizio: String!
+  ora_apertura: String!
+  ora_chiusura: String!
+  preavviso_minimo_ore: Float!
+  durata_slot_richiamata: Float!
+  durata_slot_visita: Float!
+  giorni_avanti_richiamata: Float!
+  giorni_avanti_visita: Float!
+  date_chiuse: [String]
+}
+
 type ModuliCamp_settimane {
   id: String!
   range: String!
@@ -462,6 +474,7 @@ type ModuliCamp_settimane {
 }
 
 type Moduli implements Node & Document {
+  appuntamenti: ModuliAppuntamenti
   camp_settimane: [ModuliCamp_settimane]
   camp_quota_soci: String!
   camp_quota_soci_dal2: String!
@@ -485,17 +498,21 @@ type Moduli implements Node & Document {
   scuola_mini_tennis_nati_en: String!
   scuola_tennis_nati: String!
   scuola_tennis_nati_en: String!
-  prenotazioni_data_inizio: String!
-  prenotazioni_ora_apertura: String!
-  prenotazioni_ora_chiusura: String!
-  prenotazioni_durata_slot_richiamata: Float!
-  prenotazioni_durata_slot_visita: Float!
-  prenotazioni_giorni_avanti_richiamata: Float!
-  prenotazioni_giorni_avanti_visita: Float!
-  prenotazioni_date_chiuse: [String]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
+}
+
+input ModuliAppuntamentiFilter {
+  data_inizio: DatetimeFilter
+  ora_apertura: StringFilter
+  ora_chiusura: StringFilter
+  preavviso_minimo_ore: NumberFilter
+  durata_slot_richiamata: NumberFilter
+  durata_slot_visita: NumberFilter
+  giorni_avanti_richiamata: NumberFilter
+  giorni_avanti_visita: NumberFilter
+  date_chiuse: DatetimeFilter
 }
 
 input ModuliCamp_settimaneFilter {
@@ -505,6 +522,7 @@ input ModuliCamp_settimaneFilter {
 }
 
 input ModuliFilter {
+  appuntamenti: ModuliAppuntamentiFilter
   camp_settimane: ModuliCamp_settimaneFilter
   camp_quota_soci: StringFilter
   camp_quota_soci_dal2: StringFilter
@@ -528,14 +546,6 @@ input ModuliFilter {
   scuola_mini_tennis_nati_en: StringFilter
   scuola_tennis_nati: StringFilter
   scuola_tennis_nati_en: StringFilter
-  prenotazioni_data_inizio: DatetimeFilter
-  prenotazioni_ora_apertura: StringFilter
-  prenotazioni_ora_chiusura: StringFilter
-  prenotazioni_durata_slot_richiamata: NumberFilter
-  prenotazioni_durata_slot_visita: NumberFilter
-  prenotazioni_giorni_avanti_richiamata: NumberFilter
-  prenotazioni_giorni_avanti_visita: NumberFilter
-  prenotazioni_date_chiuse: DatetimeFilter
 }
 
 type ModuliConnectionEdges {
@@ -2467,6 +2477,18 @@ input LegalMutation {
   nomina_responsabile: String
 }
 
+input ModuliAppuntamentiMutation {
+  data_inizio: String
+  ora_apertura: String
+  ora_chiusura: String
+  preavviso_minimo_ore: Float
+  durata_slot_richiamata: Float
+  durata_slot_visita: Float
+  giorni_avanti_richiamata: Float
+  giorni_avanti_visita: Float
+  date_chiuse: [String]
+}
+
 input ModuliCamp_settimaneMutation {
   id: String
   range: String
@@ -2474,6 +2496,7 @@ input ModuliCamp_settimaneMutation {
 }
 
 input ModuliMutation {
+  appuntamenti: ModuliAppuntamentiMutation
   camp_settimane: [ModuliCamp_settimaneMutation]
   camp_quota_soci: String
   camp_quota_soci_dal2: String
@@ -2497,14 +2520,6 @@ input ModuliMutation {
   scuola_mini_tennis_nati_en: String
   scuola_tennis_nati: String
   scuola_tennis_nati_en: String
-  prenotazioni_data_inizio: String
-  prenotazioni_ora_apertura: String
-  prenotazioni_ora_chiusura: String
-  prenotazioni_durata_slot_richiamata: Float
-  prenotazioni_durata_slot_visita: Float
-  prenotazioni_giorni_avanti_richiamata: Float
-  prenotazioni_giorni_avanti_visita: Float
-  prenotazioni_date_chiuse: [String]
 }
 
 input HelpdeskMutation {

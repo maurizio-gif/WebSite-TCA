@@ -763,15 +763,18 @@ const moduli = defineCollection({
     scuola_tennis_nati: z.string(),
     scuola_tennis_nati_en: z.string(),
 
-    // ── Prenotazioni (richiamata telefonica / visita in sede) ──
-    prenotazioni_data_inizio: z.date(),
-    prenotazioni_ora_apertura: z.string(),
-    prenotazioni_ora_chiusura: z.string(),
-    prenotazioni_durata_slot_richiamata: z.number(),
-    prenotazioni_durata_slot_visita: z.number(),
-    prenotazioni_giorni_avanti_richiamata: z.number(),
-    prenotazioni_giorni_avanti_visita: z.number(),
-    prenotazioni_date_chiuse: z.array(z.date()).default([]),
+    // ── Appuntamenti e disponibilità (richiamata telefonica / visita in sede) ──
+    appuntamenti: z.object({
+      data_inizio: z.date(),
+      ora_apertura: z.string(),
+      ora_chiusura: z.string(),
+      preavviso_minimo_ore: z.number(),
+      durata_slot_richiamata: z.number(),
+      durata_slot_visita: z.number(),
+      giorni_avanti_richiamata: z.number(),
+      giorni_avanti_visita: z.number(),
+      date_chiuse: z.array(z.date()).default([]),
+    }),
   }),
 });
 

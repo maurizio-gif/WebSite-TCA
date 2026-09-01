@@ -31,6 +31,7 @@ export function initLeadForm(root, options) {
   var AVAIL = (function () {
     var fallback = {
       dataInizio: '2026-08-08', oraApertura: '10:30', oraChiusura: '19:00',
+      preavvisoMinuti: 120,
       durataRichiamata: 20, durataVisita: 30,
       giorniRichiamata: 7, giorniVisita: 14, dateChiuse: ['2026-08-15'],
     };
@@ -525,14 +526,21 @@ export function initLeadForm(root, options) {
     var selDate = null;
     var selTime = null;
 
-    // Primo orario disponibile: almeno 2 ore dall'ora attuale di Milano (solo
-    // per oggi), e mai uno slot che si sovrapporrebbe con un impegno già
-    // preso in agenda per quel giorno.
+    // Primo orario disponibile: almeno AVAIL.preavvisoMinuti dall'ora attuale
+    // di Milano (parametro "Preavviso minimo per prenotare" in TinaCMS), e mai
+    // uno slot che si sovrapporrebbe con un impegno già preso in agenda per
+    // quel giorno. Il confronto è su minuti assoluti dall'epoch-giorno, così
+    // il preavviso può superare le 24 ore e ritagliare anche i giorni
+    // successivi, non solo quello corrente.
     function availFor(date) {
       var slots = slotsFn(date);
       var now = milanParts(new Date());
-      if (date.getFullYear() === now.y && (date.getMonth()+1) === now.m && date.getDate() === now.d) {
-        var cutoff = now.minutes + 120;
+      var giorniDiff = Math.round(
+        (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) -
+         Date.UTC(now.y, now.m - 1, now.d)) / 86400000
+      );
+      var cutoff = now.minutes + AVAIL.preavvisoMinuti - giorniDiff * 1440;
+      if (cutoff > 0) {
         slots = slots.filter(function(s){
           return (parseInt(s.slice(0,2),10) * 60 + parseInt(s.slice(3,5),10)) >= cutoff;
         });
