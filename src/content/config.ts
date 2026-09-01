@@ -725,9 +725,9 @@ const legal = defineCollection({
 // ─── DATI STAGIONALI DEI FORM ──────────────────────────────────────────────────
 // File unico (dati-stagionali.md) con quote, date e scadenze usate nei form di
 // iscrizione Summer Camp e Scuola Tennis (SummerCampForm.astro,
-// IscrizioneScuolaForm.astro), più i parametri di disponibilità per
-// richiamata telefonica e visita in sede (LeadModal.astro, LeadFormInline.astro
-// → leadForm.client.js). Le etichette dei campi restano nel codice: qui vive
+// IscrizioneScuolaForm.astro). I parametri di richiamata telefonica e visita
+// in sede vivono nella collection 'appuntamenti', qui sotto.
+// Le etichette dei campi restano nel codice: qui vive
 // solo ciò che cambia ogni stagione. Gestibile da TinaCMS → collection
 // 'moduli'.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -763,19 +763,26 @@ const moduli = defineCollection({
     scuola_tennis_nati: z.string(),
     scuola_tennis_nati_en: z.string(),
 
-    // ── Appuntamenti e disponibilità (richiamata telefonica / visita in sede) ──
-    appuntamenti: z.object({
-      data_inizio: z.date(),
-      ora_apertura: z.string(),
-      ora_chiusura: z.string(),
-      preavviso_minimo_ore: z.number(),
-      durata_slot_richiamata: z.number(),
-      durata_slot_visita: z.number(),
-      giorni_avanti_richiamata: z.number(),
-      giorni_avanti_visita: z.number(),
-      date_chiuse: z.array(z.date()).default([]),
-    }),
   }),
 });
 
-export const collections = { pagine, eventi, news, helpdesk, servizi, planning, membership, info, legal, moduli };
+// ─── APPUNTAMENTI E DISPONIBILITÀ ──────────────────────────────────────────────
+// File unico (disponibilita.md) con i parametri del calendario di richiamata
+// telefonica e visita in sede dei form (LeadModal.astro, LeadFormInline.astro),
+// letti tramite src/lib/bookingAvailability.ts.
+const appuntamenti = defineCollection({
+  type: 'content',
+  schema: z.object({
+    data_inizio: z.date(),
+    ora_apertura: z.string(),
+    ora_chiusura: z.string(),
+    preavviso_minimo_ore: z.number(),
+    durata_slot_richiamata: z.number(),
+    durata_slot_visita: z.number(),
+    giorni_avanti_richiamata: z.number(),
+    giorni_avanti_visita: z.number(),
+    date_chiuse: z.array(z.date()).default([]),
+  }),
+});
+
+export const collections = { pagine, eventi, news, helpdesk, servizi, planning, membership, info, legal, moduli, appuntamenti };

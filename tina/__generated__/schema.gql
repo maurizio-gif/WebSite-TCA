@@ -68,6 +68,8 @@ type Query {
   legalConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalFilter): LegalConnection!
   moduli(relativePath: String): Moduli!
   moduliConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: ModuliFilter): ModuliConnection!
+  appuntamenti(relativePath: String): Appuntamenti!
+  appuntamentiConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: AppuntamentiFilter): AppuntamentiConnection!
   helpdesk(relativePath: String): Helpdesk!
   helpdeskConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: HelpdeskFilter): HelpdeskConnection!
   news(relativePath: String): News!
@@ -84,6 +86,7 @@ input DocumentFilter {
   info: InfoFilter
   legal: LegalFilter
   moduli: ModuliFilter
+  appuntamenti: AppuntamentiFilter
   helpdesk: HelpdeskFilter
   news: NewsFilter
   pagine: PagineFilter
@@ -112,7 +115,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Moduli | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder
+union DocumentNode = Eventi | Servizi | Planning | Membership | Info | Legal | Moduli | Appuntamenti | Helpdesk | News | PagineGenerica | PagineStoria | PagineSummer_camps | PagineScuola_tennis | PaginePersonal_trainer | PaginePreparazione_atletica | PagineTennis | PaginePadel | PagineAgonistica | PagineTorneo_avvenire | PagineRegolamento | PaginePrivacy | PaginePartners | Folder
 
 type Eventi implements Node & Document {
   titolo: String!
@@ -455,18 +458,6 @@ type LegalConnection implements Connection {
   edges: [LegalConnectionEdges]
 }
 
-type ModuliAppuntamenti {
-  data_inizio: String!
-  ora_apertura: String!
-  ora_chiusura: String!
-  preavviso_minimo_ore: Float!
-  durata_slot_richiamata: Float!
-  durata_slot_visita: Float!
-  giorni_avanti_richiamata: Float!
-  giorni_avanti_visita: Float!
-  date_chiuse: [String]
-}
-
 type ModuliCamp_settimane {
   id: String!
   range: String!
@@ -474,7 +465,6 @@ type ModuliCamp_settimane {
 }
 
 type Moduli implements Node & Document {
-  appuntamenti: ModuliAppuntamenti
   camp_settimane: [ModuliCamp_settimane]
   camp_quota_soci: String!
   camp_quota_soci_dal2: String!
@@ -503,18 +493,6 @@ type Moduli implements Node & Document {
   _values: JSON!
 }
 
-input ModuliAppuntamentiFilter {
-  data_inizio: DatetimeFilter
-  ora_apertura: StringFilter
-  ora_chiusura: StringFilter
-  preavviso_minimo_ore: NumberFilter
-  durata_slot_richiamata: NumberFilter
-  durata_slot_visita: NumberFilter
-  giorni_avanti_richiamata: NumberFilter
-  giorni_avanti_visita: NumberFilter
-  date_chiuse: DatetimeFilter
-}
-
 input ModuliCamp_settimaneFilter {
   id: StringFilter
   range: StringFilter
@@ -522,7 +500,6 @@ input ModuliCamp_settimaneFilter {
 }
 
 input ModuliFilter {
-  appuntamenti: ModuliAppuntamentiFilter
   camp_settimane: ModuliCamp_settimaneFilter
   camp_quota_soci: StringFilter
   camp_quota_soci_dal2: StringFilter
@@ -557,6 +534,44 @@ type ModuliConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
   edges: [ModuliConnectionEdges]
+}
+
+type Appuntamenti implements Node & Document {
+  data_inizio: String!
+  ora_apertura: String!
+  ora_chiusura: String!
+  preavviso_minimo_ore: Float!
+  durata_slot_richiamata: Float!
+  durata_slot_visita: Float!
+  giorni_avanti_richiamata: Float!
+  giorni_avanti_visita: Float!
+  date_chiuse: [String]
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input AppuntamentiFilter {
+  data_inizio: DatetimeFilter
+  ora_apertura: StringFilter
+  ora_chiusura: StringFilter
+  preavviso_minimo_ore: NumberFilter
+  durata_slot_richiamata: NumberFilter
+  durata_slot_visita: NumberFilter
+  giorni_avanti_richiamata: NumberFilter
+  giorni_avanti_visita: NumberFilter
+  date_chiuse: DatetimeFilter
+}
+
+type AppuntamentiConnectionEdges {
+  cursor: String!
+  node: Appuntamenti
+}
+
+type AppuntamentiConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [AppuntamentiConnectionEdges]
 }
 
 type Helpdesk implements Node & Document {
@@ -2335,6 +2350,8 @@ type Mutation {
   createLegal(relativePath: String!, params: LegalMutation!): Legal!
   updateModuli(relativePath: String!, params: ModuliMutation!): Moduli!
   createModuli(relativePath: String!, params: ModuliMutation!): Moduli!
+  updateAppuntamenti(relativePath: String!, params: AppuntamentiMutation!): Appuntamenti!
+  createAppuntamenti(relativePath: String!, params: AppuntamentiMutation!): Appuntamenti!
   updateHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
   createHelpdesk(relativePath: String!, params: HelpdeskMutation!): Helpdesk!
   updateNews(relativePath: String!, params: NewsMutation!): News!
@@ -2351,6 +2368,7 @@ input DocumentUpdateMutation {
   info: InfoMutation
   legal: LegalMutation
   moduli: ModuliMutation
+  appuntamenti: AppuntamentiMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
   pagine: PagineMutation
@@ -2365,6 +2383,7 @@ input DocumentMutation {
   info: InfoMutation
   legal: LegalMutation
   moduli: ModuliMutation
+  appuntamenti: AppuntamentiMutation
   helpdesk: HelpdeskMutation
   news: NewsMutation
   pagine: PagineMutation
@@ -2477,18 +2496,6 @@ input LegalMutation {
   nomina_responsabile: String
 }
 
-input ModuliAppuntamentiMutation {
-  data_inizio: String
-  ora_apertura: String
-  ora_chiusura: String
-  preavviso_minimo_ore: Float
-  durata_slot_richiamata: Float
-  durata_slot_visita: Float
-  giorni_avanti_richiamata: Float
-  giorni_avanti_visita: Float
-  date_chiuse: [String]
-}
-
 input ModuliCamp_settimaneMutation {
   id: String
   range: String
@@ -2496,7 +2503,6 @@ input ModuliCamp_settimaneMutation {
 }
 
 input ModuliMutation {
-  appuntamenti: ModuliAppuntamentiMutation
   camp_settimane: [ModuliCamp_settimaneMutation]
   camp_quota_soci: String
   camp_quota_soci_dal2: String
@@ -2520,6 +2526,18 @@ input ModuliMutation {
   scuola_mini_tennis_nati_en: String
   scuola_tennis_nati: String
   scuola_tennis_nati_en: String
+}
+
+input AppuntamentiMutation {
+  data_inizio: String
+  ora_apertura: String
+  ora_chiusura: String
+  preavviso_minimo_ore: Float
+  durata_slot_richiamata: Float
+  durata_slot_visita: Float
+  giorni_avanti_richiamata: Float
+  giorni_avanti_visita: Float
+  date_chiuse: [String]
 }
 
 input HelpdeskMutation {

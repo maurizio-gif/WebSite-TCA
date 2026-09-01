@@ -1,15 +1,13 @@
-// Converte i parametri di prenotazione dell'entry CMS "moduli" (gruppo
-// "Appuntamenti e disponibilità", con le date come oggetti Date gestite da
+// Converte i parametri dell'entry CMS "appuntamenti" (collection dedicata
+// "📅 Appuntamenti e disponibilità", con le date come oggetti Date gestite da
 // Astro Content Collections) in un oggetto serializzabile in JSON da passare
 // al client script via attributo data-*.
 // Usato da LeadModal.astro e LeadFormInline.astro.
 
-// I campi arrivano opzionali dal tipo generato da astro:content per la
-// collection "moduli" (vale anche per gli altri campi esistenti, es.
-// camp_quota_soci): i fallback qui sotto rispecchiano quelli richiesti in
-// Tina, così il form resta funzionante anche se un valore non fosse ancora
-// stato compilato.
-interface Appuntamenti {
+// I campi arrivano opzionali dal tipo generato da astro:content: i fallback
+// qui sotto rispecchiano quelli richiesti in Tina, così il form resta
+// funzionante anche se un valore non fosse ancora stato compilato.
+interface AppuntamentiData {
   data_inizio?: Date;
   ora_apertura?: string;
   ora_chiusura?: string;
@@ -21,16 +19,11 @@ interface Appuntamenti {
   date_chiuse?: Date[];
 }
 
-interface ModuliData {
-  appuntamenti?: Appuntamenti;
-}
-
 function isoDate(d: Date): string {
   return d.toISOString().split('T')[0];
 }
 
-export function bookingAvailability(m: ModuliData) {
-  const d = m.appuntamenti ?? {};
+export function bookingAvailability(d: AppuntamentiData) {
   return {
     dataInizio: isoDate(d.data_inizio ?? new Date(2026, 7, 8)),
     oraApertura: d.ora_apertura ?? '10:30',
