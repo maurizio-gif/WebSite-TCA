@@ -25,23 +25,40 @@ import { perfectGym } from '../data/links';
 const ESTENSIONI_EMAIL_SAFE = ['.jpg', '.jpeg', '.png', '.gif'];
 const DIR_PUBLIC = path.resolve('public');
 
+// Un percorso già codificato ('%20') non corrisponde al nome del file su
+// disco: si decodifica per cercarlo, e si ricodifica per pubblicarne l'URL.
+// Su una stringa non codificata decodeURIComponent è innocuo, tranne quando
+// contiene un '%' isolato — in quel caso lancia, e si tiene l'originale.
+function decodifica(percorso: string): string {
+  try {
+    return decodeURIComponent(percorso);
+  } catch {
+    return percorso;
+  }
+}
+
 // Le immagini del sito sono spesso .avif/.webp: perfette sul sito, invisibili
 // in Outlook e in gran parte dei client di posta. Quando accanto al file c'è
 // lo stesso scatto in .jpg/.png (è il caso di diverse foto in public/) la
 // newsletter usa quello; altrimenti la voce parte segnalata come non sicura e
 // il CRM lascia scegliere un'altra immagine.
 function immagineEmail(percorso: string): { percorso: string; sicura: boolean } {
-  const estensione = path.extname(percorso).toLowerCase();
-  if (ESTENSIONI_EMAIL_SAFE.includes(estensione)) return { percorso, sicura: true };
+  // I percorsi salvati da Tina sono a volte già codificati per l'URL
+  // ('/Tennis%20Adulti.avif'): senza decodificarli il file non si trova su
+  // disco e il gemello .jpg accanto resterebbe invisibile. Il percorso torna
+  // decodificato, e la codifica per l'URL la applica urlImmagine().
+  const decodificato = decodifica(percorso);
+  const estensione = path.extname(decodificato).toLowerCase();
+  if (ESTENSIONI_EMAIL_SAFE.includes(estensione)) return { percorso: decodificato, sicura: true };
 
-  const senzaEstensione = percorso.slice(0, percorso.length - estensione.length);
+  const senzaEstensione = decodificato.slice(0, decodificato.length - estensione.length);
   for (const alternativa of ESTENSIONI_EMAIL_SAFE) {
     const candidato = `${senzaEstensione}${alternativa}`;
     if (fs.existsSync(path.join(DIR_PUBLIC, candidato.replace(/^\//, '')))) {
       return { percorso: candidato, sicura: true };
     }
   }
-  return { percorso, sicura: false };
+  return { percorso: decodificato, sicura: false };
 }
 
 // Elenco delle foto già pubblicate sul sito e utilizzabili in email: serve
@@ -100,6 +117,7 @@ type Voce = {
   data: string | null;
   sintesi: string;
   paragrafi: string[];
+  luogo: string | null;
   immagine: string | null;
   immagineAlt: string | null;
   immagineEmailSafe: boolean;
@@ -132,6 +150,10 @@ export const GET: APIRoute = async ({ site }) => {
   const origine = (site?.toString() ?? 'https://www.tcambrosiano.com').replace(/\/+$/, '');
   const base = (import.meta.env.BASE_URL ?? '/').replace(/\/+$/, '');
   const assoluto = (percorso: string) => `${origine}${base}${percorso}`;
+  // Le foto del Club hanno nomi con spazi e parentesi ('/DSC07297 (2).jpg'):
+  // in un src di email uno spazio non codificato rompe l'immagine in diversi
+  // client, quindi l'URL delle immagini si pubblica sempre codificato.
+  const urlImmagine = (percorso: string) => `${origine}${base}${encodeURI(decodifica(percorso))}`;
 
   const voci: Voce[] = [];
 
@@ -147,7 +169,8 @@ export const GET: APIRoute = async ({ site }) => {
       data: entry.data.data.toISOString(),
       sintesi: entry.data.sintesi,
       paragrafi: paragrafiDaMarkdown(entry.body),
-      immagine: assoluto(foto.percorso),
+      luogo: null,
+      immagine: urlImmagine(foto.percorso),
       immagineAlt: entry.data.immagine_alt,
       immagineEmailSafe: foto.sicura,
       url: assoluto(`/news/${entry.slug}`),
@@ -175,6 +198,9 @@ export const GET: APIRoute = async ({ site }) => {
       data: entry.data.data.toISOString(),
       sintesi: entry.data.descrizione,
       paragrafi: paragrafiDaMarkdown(entry.body),
+      // Campo a sé e non solo dentro "note": nella card evento della
+      // newsletter il luogo ha una sua riga accanto alla categoria.
+      luogo: entry.data.luogo ?? null,
       immagine: null,
       immagineAlt: null,
       immagineEmailSafe: true,
@@ -205,6 +231,7 @@ export const GET: APIRoute = async ({ site }) => {
       data: null,
       sintesi: entry.data.desc,
       paragrafi: [entry.data.dettaglio, ...paragrafiDaMarkdown(entry.body)].filter(Boolean),
+      luogo: null,
       immagine: null,
       immagineAlt: null,
       immagineEmailSafe: true,
@@ -233,6 +260,7 @@ export const GET: APIRoute = async ({ site }) => {
       data: scadenzaPromo.toISOString(),
       sintesi: it.promo.text,
       paragrafi: [it.promo.text, it.promo.deadline],
+      luogo: null,
       immagine: null,
       immagineAlt: null,
       immagineEmailSafe: true,
@@ -256,7 +284,8 @@ export const GET: APIRoute = async ({ site }) => {
       data: null,
       sintesi: entry.data.hero_sottotitolo ?? entry.data.description,
       paragrafi: entry.data.hero_sottotitolo ? [entry.data.hero_sottotitolo] : [entry.data.description],
-      immagine: foto ? assoluto(foto.percorso) : null,
+      luogo: null,
+      immagine: foto ? urlImmagine(foto.percorso) : null,
       immagineAlt: entry.data.hero_immagine_alt ?? entry.data.title,
       immagineEmailSafe: foto ? foto.sicura : true,
       url: assoluto(`/${slug}`),
@@ -272,7 +301,7 @@ export const GET: APIRoute = async ({ site }) => {
     // Foto già online e visibili in email, per le voci che non ne hanno una.
     immagini: galleriaEmailSafe().map((percorso) => ({
       nome: percorso.replace(/^\//, ''),
-      url: assoluto(percorso),
+      url: urlImmagine(percorso),
     })),
     voci,
   };
