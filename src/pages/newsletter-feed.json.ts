@@ -117,6 +117,7 @@ type Voce = {
   data: string | null;
   sintesi: string;
   paragrafi: string[];
+  luogo: string | null;
   immagine: string | null;
   immagineAlt: string | null;
   immagineEmailSafe: boolean;
@@ -168,6 +169,7 @@ export const GET: APIRoute = async ({ site }) => {
       data: entry.data.data.toISOString(),
       sintesi: entry.data.sintesi,
       paragrafi: paragrafiDaMarkdown(entry.body),
+      luogo: null,
       immagine: urlImmagine(foto.percorso),
       immagineAlt: entry.data.immagine_alt,
       immagineEmailSafe: foto.sicura,
@@ -196,6 +198,9 @@ export const GET: APIRoute = async ({ site }) => {
       data: entry.data.data.toISOString(),
       sintesi: entry.data.descrizione,
       paragrafi: paragrafiDaMarkdown(entry.body),
+      // Campo a sé e non solo dentro "note": nella card evento della
+      // newsletter il luogo ha una sua riga accanto alla categoria.
+      luogo: entry.data.luogo ?? null,
       immagine: null,
       immagineAlt: null,
       immagineEmailSafe: true,
@@ -226,6 +231,7 @@ export const GET: APIRoute = async ({ site }) => {
       data: null,
       sintesi: entry.data.desc,
       paragrafi: [entry.data.dettaglio, ...paragrafiDaMarkdown(entry.body)].filter(Boolean),
+      luogo: null,
       immagine: null,
       immagineAlt: null,
       immagineEmailSafe: true,
@@ -254,6 +260,7 @@ export const GET: APIRoute = async ({ site }) => {
       data: scadenzaPromo.toISOString(),
       sintesi: it.promo.text,
       paragrafi: [it.promo.text, it.promo.deadline],
+      luogo: null,
       immagine: null,
       immagineAlt: null,
       immagineEmailSafe: true,
@@ -277,6 +284,7 @@ export const GET: APIRoute = async ({ site }) => {
       data: null,
       sintesi: entry.data.hero_sottotitolo ?? entry.data.description,
       paragrafi: entry.data.hero_sottotitolo ? [entry.data.hero_sottotitolo] : [entry.data.description],
+      luogo: null,
       immagine: foto ? urlImmagine(foto.percorso) : null,
       immagineAlt: entry.data.hero_immagine_alt ?? entry.data.title,
       immagineEmailSafe: foto ? foto.sicura : true,
