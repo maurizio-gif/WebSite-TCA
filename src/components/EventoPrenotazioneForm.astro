@@ -10,6 +10,12 @@ import prefissi from '../data/prefissi-telefonici';
 // riletti a runtime dal CRM, che è l'unico a poterli far rispettare. Al
 // componente serve solo lo slug: da lì ricava tutto il resto.
 //
+// Lo stato di socio è DICHIARATO da chi prenota, non verificato: la quota
+// mostrata è quindi una proposta, e chi incassa in cassa è il punto in cui la
+// dichiarazione viene controllata davvero. La verifica automatica contro
+// PerfectGym esisteva e verrà ripristinata: per questo la quota resta decisa
+// dal server e non dal browser.
+//
 // Stili: riusa le classi lm__* già globali (definite da LeadModal.astro, che
 // BaseLayout include su ogni pagina), così il form eventi ha lo stesso aspetto
 // del form contatti senza duplicare CSS.
@@ -22,16 +28,19 @@ const p = (path: string) => getLocalePath(lang, path);
 const t = lang === 'en' ? {
   eyebrow:     'Booking',
   title:       'Book your<br><em>spot.</em>',
-  emailSub:    'Enter your email address: we will check whether you are a Club Member to apply the right rate.',
-  email:       'Email',
-  emailPh:     'name@example.com',
-  next:        'Continue',
-  datiSub:     'Nice to meet you! Please add your details to complete the booking.',
+  socioSub:    'Are you a Club Member? The participation fee depends on it.',
+  socioYes:    'I am a Club Member',
+  socioNo:     'I am not a Member',
+  datiSub:     'Please add your details to complete the booking.',
   firstName:   'First name',
   lastName:    'Last name',
+  email:       'Email',
+  emailPh:     'name@example.com',
+  emailNote:   'Make sure the address is correct: your booking summary is sent there.',
   mobile:      'Mobile',
   privacy:     'I have read and accept the <a href="{href}" target="_blank">Privacy Policy</a>. I consent to the processing of my personal data to manage this booking. <strong>(required)</strong>',
   back:        '← Back',
+  next:        'Continue',
   rulesTitle:  'How your booking works',
   submit:      'Confirm booking',
   fullTitle:   'Fully<br><em>booked.</em>',
@@ -39,29 +48,29 @@ const t = lang === 'en' ? {
   unavailTitle:'Booking<br><em>at reception.</em>',
   unavailNote: 'Online booking is not available for this event right now. Please book at reception, at the Club.',
   loading:     'Checking availability…',
-  checking:    'Checking your details…',
+  sending:     'Saving your booking…',
   confirmMail: 'We have sent you a summary by email.',
   closeNote:   'See you at TCA!',
-  stepEmail:   'Email',
+  stepSocio:   'Member',
   stepDati:    'Details',
   stepQuota:   'Fee',
-  feesTitle:   'Participation fee',
-  feeMember:   'Members',
-  feeGuest:    'Non-members',
   recapTitle:  'Booking for',
 } : {
   eyebrow:     'Prenotazione',
   title:       'Prenota il<br><em>tuo posto.</em>',
-  emailSub:    'Inserisci la tua email: verifichiamo se sei Socio del Club per applicarti la quota corretta.',
-  email:       'Email',
-  emailPh:     'nome@esempio.com',
-  next:        'Continua',
-  datiSub:     'Piacere di conoscerti! Aggiungi i tuoi dati per completare la prenotazione.',
+  socioSub:    'Sei Socio del Club? Dalla risposta dipende la quota di partecipazione.',
+  socioYes:    'Sono Socio del Club',
+  socioNo:     'Non sono Socio',
+  datiSub:     'Aggiungi i tuoi dati per completare la prenotazione.',
   firstName:   'Nome',
   lastName:    'Cognome',
+  email:       'Email',
+  emailPh:     'nome@esempio.com',
+  emailNote:   'Controlla che l’indirizzo sia corretto: è lì che ricevi il riepilogo della prenotazione.',
   mobile:      'Cellulare',
   privacy:     'Ho letto e accetto la <a href="{href}" target="_blank">Privacy Policy</a>. Acconsento al trattamento dei dati personali per gestire questa prenotazione. <strong>(obbligatorio)</strong>',
   back:        '← Indietro',
+  next:        'Continua',
   rulesTitle:  'Come funziona la prenotazione',
   submit:      'Confermo la prenotazione',
   fullTitle:   'Posti<br><em>esauriti.</em>',
@@ -69,15 +78,12 @@ const t = lang === 'en' ? {
   unavailTitle:'Prenotazione<br><em>in Reception.</em>',
   unavailNote: 'La prenotazione online per questo evento non è disponibile in questo momento. Puoi prenotare direttamente in Reception, al Club.',
   loading:     'Verifica disponibilità…',
-  checking:    'Verifica dei tuoi dati…',
+  sending:     'Salvataggio della prenotazione…',
   confirmMail: 'Ti abbiamo inviato un riepilogo per email.',
   closeNote:   'A presto al TCA!',
-  stepEmail:   'Email',
+  stepSocio:   'Socio',
   stepDati:    'Dati',
   stepQuota:   'Quota',
-  feesTitle:   'Quota di partecipazione',
-  feeMember:   'Soci',
-  feeGuest:    'Non soci',
   recapTitle:  'Prenoti come',
 };
 
@@ -99,20 +105,13 @@ const privacyHtml = t.privacy.replace('{href}', p('/privacy-policy'));
         )}
         <p class="evp__seats" data-ev-seats hidden></p>
       </div>
-
-      <div class="evp__fees-block" data-ev-fees-block hidden>
-        <p class="evp__fees-title">{t.feesTitle}</p>
-        <div class="evp__fees" data-ev-fees></div>
-      </div>
     </div>
 
     <div class="evp__panel" data-ev-root data-slug={slug}>
 
-      <!-- Indicatore di passo: dice sempre a che punto si è e quanto manca.
-           Il passo "Dati" viene marcato come saltato per i soci, di cui il
-           Club ha già l'anagrafica. -->
+      <!-- Indicatore di passo: dice sempre a che punto si è e quanto manca. -->
       <div class="evp__steps" data-ev-steps hidden aria-hidden="true">
-        <span class="evp__step" data-ev-dot="1"><i>1</i><em>{t.stepEmail}</em></span>
+        <span class="evp__step" data-ev-dot="1"><i>1</i><em>{t.stepSocio}</em></span>
         <span class="evp__step-line"></span>
         <span class="evp__step" data-ev-dot="2"><i>2</i><em>{t.stepDati}</em></span>
         <span class="evp__step-line"></span>
@@ -126,27 +125,23 @@ const privacyHtml = t.privacy.replace('{href}', p('/privacy-policy'));
         </div>
       </div>
 
-      <!-- STEP 1 · Email -->
-      <div class="lm__body" data-ev-step="email" hidden>
-        <p class="lm__sub">{t.emailSub}</p>
+      <!-- STEP 1 · Socio o non socio -->
+      <div class="lm__body" data-ev-step="socio" hidden>
+        <p class="lm__sub">{t.socioSub}</p>
 
-        <div class="lm__field">
-          <label for={`evp-${slug}-email`}>{t.email} <span aria-hidden="true">*</span></label>
-          <input id={`evp-${slug}-email`} type="email" autocomplete="email" placeholder={t.emailPh} data-ev-email required />
-        </div>
-
-        <div class="lm__actions">
-          <button type="button" class="btn btn-red lm__next" data-ev-email-next>
-            {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+        <div class="evp__choices">
+          <button type="button" class="evp__choice" data-ev-socio="si">
+            <span class="evp__choice-title">{t.socioYes}</span>
+          </button>
+          <button type="button" class="evp__choice" data-ev-socio="no">
+            <span class="evp__choice-title">{t.socioNo}</span>
           </button>
         </div>
-        <div class="lm__loader" hidden aria-live="polite">
-          <span class="lm__spinner"></span> <span data-ev-loader-text>{t.checking}</span>
-        </div>
+
         <p class="lm__error" hidden role="alert"></p>
       </div>
 
-      <!-- STEP 2 · Dati (solo non soci) -->
+      <!-- STEP 2 · Dati -->
       <div class="lm__body" data-ev-step="dati" hidden>
         <p class="lm__sub">{t.datiSub}</p>
 
@@ -159,6 +154,13 @@ const privacyHtml = t.privacy.replace('{href}', p('/privacy-policy'));
             <label for={`evp-${slug}-cognome`}>{t.lastName} <span aria-hidden="true">*</span></label>
             <input id={`evp-${slug}-cognome`} type="text" autocomplete="family-name" data-ev-cognome required />
           </div>
+          <div class="lm__field lm__field--full">
+            <label for={`evp-${slug}-email`}>{t.email} <span aria-hidden="true">*</span></label>
+            <input id={`evp-${slug}-email`} type="email" autocomplete="email" placeholder={t.emailPh} data-ev-email required />
+          </div>
+        </div>
+        <p class="lm__hint">{t.emailNote}</p>
+        <div class="lm__grid">
           <div class="lm__field lm__field--full">
             <label for={`evp-${slug}-cell`}>{t.mobile} <span aria-hidden="true">*</span></label>
             <div class="lm__tel-wrap">
@@ -213,7 +215,7 @@ const privacyHtml = t.privacy.replace('{href}', p('/privacy-policy'));
           </button>
         </div>
         <div class="lm__loader" hidden aria-live="polite">
-          <span class="lm__spinner"></span> <span data-ev-loader-text>{t.checking}</span>
+          <span class="lm__spinner"></span> <span data-ev-loader-text>{t.sending}</span>
         </div>
       </div>
 
@@ -314,16 +316,6 @@ const privacyHtml = t.privacy.replace('{href}', p('/privacy-policy'));
     margin: 0;
   }
 
-  .evp__fees-title {
-    font-family: var(--font-display);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-text-light);
-    margin: 0 0 0.6rem;
-  }
-
   .evp__panel {
     background: var(--lm-bg);
     color: var(--lm-text);
@@ -379,41 +371,54 @@ const privacyHtml = t.privacy.replace('{href}', p('/privacy-policy'));
     border-color: rgba(139, 26, 26, 0.22);
   }
 
-  /* ── Quote come schede affiancate ───────────────────────────────────── */
-  .evp__fees {
+  /* ── Scelta socio / non socio ───────────────────────────────────────── */
+  /* Due bersagli grandi invece di due radio: è la prima cosa che si tocca sul
+     form, e su mobile un radio da 18px accanto a un'etichetta è il modo più
+     facile per sbagliare risposta — qui la risposta sbagliata cambia la
+     quota. Nessuna indicazione di prezzo qui, nemmeno "ridotta"/"intera": si
+     dichiara chi si è, il costo si vede al riepilogo. */
+  .evp__choices {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
+    gap: 0.7rem;
   }
 
-  .evp__fee-card {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    padding: 0.85rem 0.95rem;
+  .evp__choice {
     display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
+    align-items: center;
+    min-height: 78px;
+    text-align: left;
+    padding: 1.1rem 1.15rem;
+    background: var(--lm-input-bg);
+    border: 1px solid var(--lm-input-bd);
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s, transform 0.18s;
   }
 
-  .evp__fee-card-label {
-    font-family: var(--font-display);
-    font-size: 10.5px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-text-light);
+  .evp__choice:hover {
+    border-color: var(--color-accent);
+    background: var(--lm-bg);
+    transform: translateY(-2px);
   }
 
-  .evp__fee-card-value {
+  .evp__choice:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .evp__choice-title {
     font-family: var(--font-display);
-    font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+    font-size: clamp(0.95rem, 1.3vw, 1.1rem);
     font-weight: 800;
-    line-height: 1;
-    color: var(--color-text);
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 1.15;
+    color: var(--lm-text);
   }
 
-  .evp__fee-card--member { border-left: 3px solid var(--color-accent); }
-  .evp__fee-card--member .evp__fee-card-value { color: var(--color-accent); }
+  @media (max-width: 480px) {
+    .evp__choices { grid-template-columns: 1fr; }
+  }
 
   /* ── Indicatore di passo ────────────────────────────────────────────── */
   .evp__steps {
