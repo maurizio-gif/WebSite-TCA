@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import EventoPrenotazioneForm from '../../../components/EventoPrenotazioneForm.astro';
 import { getLocalePath } from '../../../i18n/utils';
 import { mdParagraphsHtml } from '../../../lib/richtext';
 
@@ -47,6 +48,12 @@ const catColor: Record<string, string> = {
   Camp:   '#1a7a44',
 };
 const accent = catColor[ev.categoria] ?? '#8B1A1A';
+
+// Vedi la pagina italiana: con la prenotazione online attiva la CTA porta al
+// form in fondo alla pagina invece che al link esterno.
+const prenotaOnline = ev.prenotazioniAttive;
+const ctaHref  = prenotaOnline ? '#prenota' : ev.iscrizioniHref;
+const ctaLabel = prenotaOnline ? 'Book your spot' : 'Register now';
 ---
 
 <BaseLayout
@@ -77,9 +84,9 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
 
       <p class="ev-hero__desc">{descrizione}</p>
 
-      {ev.iscrizioniHref && (
+      {ctaHref && (
         <div class="ev-hero__actions">
-          <a class="btn btn-red" href={ev.iscrizioniHref}>Register now</a>
+          <a class="btn btn-red" href={ctaHref}>{ctaLabel}</a>
         </div>
       )}
     </div>
@@ -112,10 +119,10 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
           <p class="ev-sidebar__value">{categoria}</p>
         </div>
 
-        {ev.iscrizioniHref && (
+        {ctaHref && (
           <div class="ev-sidebar__cta">
-            <a class="btn btn-red" href={ev.iscrizioniHref} style="width:100%;text-align:center;">
-              Register now
+            <a class="btn btn-red" href={ctaHref} style="width:100%;text-align:center;">
+              {ctaLabel}
             </a>
           </div>
         )}
@@ -126,6 +133,12 @@ const accent = catColor[ev.categoria] ?? '#8B1A1A';
       </aside>
     </div>
   </section>
+
+  {prenotaOnline && (
+    <div id="prenota">
+      <EventoPrenotazioneForm slug={entry.slug} lang={lang} titolo={titolo} data={dataFormattata} luogo={luogo} />
+    </div>
+  )}
 </BaseLayout>
 
 <style define:vars={{ evAccent: accent }}>

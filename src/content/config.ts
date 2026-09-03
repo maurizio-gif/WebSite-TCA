@@ -528,6 +528,19 @@ const eventi = defineCollection({
     luogo: z.string().optional(),
     iscrizioniHref: z.string().optional(),
     pubblicato: z.boolean().default(true),
+    // ── Prenotazione online (form riutilizzabile) ────────────────────────
+    // Attivando prenotazioniAttive la pagina dell'evento mostra
+    // EventoPrenotazioneForm.astro al posto del link esterno, e l'evento
+    // entra nel manifest /eventi-prenotabili.json che il CRM usa per
+    // validare capienza e quota (vedi src/pages/eventi-prenotabili.json.ts).
+    // I default replicano il caso EraZen: senza numeri espliciti il form
+    // resterebbe muto su quanto si paga.
+    prenotazioniAttive: z.boolean().default(false),
+    postiTotali: z.number().int().positive().default(16),
+    quotaSocio: z.number().nonnegative().default(25),
+    quotaNonSocio: z.number().nonnegative().default(35),
+    // Ore entro cui pagare in cassa prima che il posto torni disponibile.
+    oreScadenzaPagamento: z.number().int().positive().default(48),
     // Versione inglese (opzionale): se assente si usa il fallback italiano
     titolo_en: z.string().optional(),
     descrizione_en: z.string().optional(),

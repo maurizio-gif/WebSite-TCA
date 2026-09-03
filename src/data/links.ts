@@ -12,7 +12,11 @@ const PERFECTGYM_PORTAL = 'https://tcambrosiano.perfectgym.com/clientportal2';
 // fetchOccupati (src/lib/leadForm.client.js) ripiega volutamente su "nessuno
 // slot occupato", quindi il form torna a offrire anche gli orari già presi in
 // agenda senza che nulla lo segnali.
-const APPTCA_URL = 'https://crm.tcambrosiano.com';
+// Sovrascrivibile con PUBLIC_APPTCA_URL in un .env locale (gitignorato): serve
+// a puntare il form eventi al CRM in esecuzione in locale, altrimenti l'unico
+// modo di provare il flusso completo sarebbe deployare. In produzione la
+// variabile non c'è e vale il dominio reale.
+const APPTCA_URL = import.meta.env.PUBLIC_APPTCA_URL ?? 'https://crm.tcambrosiano.com';
 
 export const appTca = {
   // Endpoint pubblico e senza autenticazione (AppTCA/app/api/disponibilita):
@@ -20,6 +24,19 @@ export const appTca = {
   // personali. Usato dal form di richiamata/visita per non offrire in
   // prenotazione un orario già occupato (vedi src/lib/leadForm.client.js).
   disponibilita: `${APPTCA_URL}/api/disponibilita`,
+
+  // Prenotazione eventi (AppTCA/app/api/eventi/*), usata da
+  // src/lib/eventoForm.client.js. Anche questi endpoint sono pubblici e non
+  // restituiscono mai dati personali: la disponibilità è solo un conteggio di
+  // posti, la verifica risponde con il solo bit "questa email è socio" (lo
+  // stesso che il webhook n8n del form contatti già restituisce), e la
+  // prenotazione rilegge quota e capienza lato server invece di fidarsi del
+  // browser.
+  eventi: {
+    disponibilita: (slug: string) => `${APPTCA_URL}/api/eventi/${encodeURIComponent(slug)}/disponibilita`,
+    verifica: `${APPTCA_URL}/api/eventi/verifica`,
+    prenotazione: `${APPTCA_URL}/api/eventi/prenotazione`,
+  },
 };
 
 export const perfectGym = {

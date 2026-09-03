@@ -125,6 +125,11 @@ type Eventi implements Node & Document {
   luogo: String
   iscrizioniHref: String
   pubblicato: Boolean
+  prenotazioniAttive: Boolean
+  postiTotali: Float
+  quotaSocio: Float
+  quotaNonSocio: Float
+  oreScadenzaPagamento: Float
   titolo_en: String
   descrizione_en: String
   luogo_en: String
@@ -155,6 +160,16 @@ input BooleanFilter {
   exists: Boolean
 }
 
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
 input RichTextFilter {
   startsWith: String
   eq: String
@@ -169,6 +184,11 @@ input EventiFilter {
   luogo: StringFilter
   iscrizioniHref: StringFilter
   pubblicato: BooleanFilter
+  prenotazioniAttive: BooleanFilter
+  postiTotali: NumberFilter
+  quotaSocio: NumberFilter
+  quotaNonSocio: NumberFilter
+  oreScadenzaPagamento: NumberFilter
   titolo_en: StringFilter
   descrizione_en: StringFilter
   luogo_en: StringFilter
@@ -200,16 +220,6 @@ type Servizi implements Node & Document {
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
-}
-
-input NumberFilter {
-  lt: Float
-  lte: Float
-  gte: Float
-  gt: Float
-  eq: Float
-  exists: Boolean
-  in: [Float]
 }
 
 input ServiziFilter {
@@ -2397,6 +2407,11 @@ input EventiMutation {
   luogo: String
   iscrizioniHref: String
   pubblicato: Boolean
+  prenotazioniAttive: Boolean
+  postiTotali: Float
+  quotaSocio: Float
+  quotaNonSocio: Float
+  oreScadenzaPagamento: Float
   titolo_en: String
   descrizione_en: String
   luogo_en: String

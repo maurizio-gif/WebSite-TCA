@@ -7,6 +7,11 @@ fragment EventiParts on Eventi {
   luogo
   iscrizioniHref
   pubblicato
+  prenotazioniAttive
+  postiTotali
+  quotaSocio
+  quotaNonSocio
+  oreScadenzaPagamento
   titolo_en
   descrizione_en
   luogo_en

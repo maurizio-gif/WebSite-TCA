@@ -354,6 +354,11 @@ export type Eventi = Node & Document & {
   luogo?: Maybe<Scalars['String']['output']>;
   iscrizioniHref?: Maybe<Scalars['String']['output']>;
   pubblicato?: Maybe<Scalars['Boolean']['output']>;
+  prenotazioniAttive?: Maybe<Scalars['Boolean']['output']>;
+  postiTotali?: Maybe<Scalars['Float']['output']>;
+  quotaSocio?: Maybe<Scalars['Float']['output']>;
+  quotaNonSocio?: Maybe<Scalars['Float']['output']>;
+  oreScadenzaPagamento?: Maybe<Scalars['Float']['output']>;
   titolo_en?: Maybe<Scalars['String']['output']>;
   descrizione_en?: Maybe<Scalars['String']['output']>;
   luogo_en?: Maybe<Scalars['String']['output']>;
@@ -384,6 +389,16 @@ export type BooleanFilter = {
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
+
 export type RichTextFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
   eq?: InputMaybe<Scalars['String']['input']>;
@@ -398,6 +413,11 @@ export type EventiFilter = {
   luogo?: InputMaybe<StringFilter>;
   iscrizioniHref?: InputMaybe<StringFilter>;
   pubblicato?: InputMaybe<BooleanFilter>;
+  prenotazioniAttive?: InputMaybe<BooleanFilter>;
+  postiTotali?: InputMaybe<NumberFilter>;
+  quotaSocio?: InputMaybe<NumberFilter>;
+  quotaNonSocio?: InputMaybe<NumberFilter>;
+  oreScadenzaPagamento?: InputMaybe<NumberFilter>;
   titolo_en?: InputMaybe<StringFilter>;
   descrizione_en?: InputMaybe<StringFilter>;
   luogo_en?: InputMaybe<StringFilter>;
@@ -432,16 +452,6 @@ export type Servizi = Node & Document & {
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
-};
-
-export type NumberFilter = {
-  lt?: InputMaybe<Scalars['Float']['input']>;
-  lte?: InputMaybe<Scalars['Float']['input']>;
-  gte?: InputMaybe<Scalars['Float']['input']>;
-  gt?: InputMaybe<Scalars['Float']['input']>;
-  eq?: InputMaybe<Scalars['Float']['input']>;
-  exists?: InputMaybe<Scalars['Boolean']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
 };
 
 export type ServiziFilter = {
@@ -2875,6 +2885,11 @@ export type EventiMutation = {
   luogo?: InputMaybe<Scalars['String']['input']>;
   iscrizioniHref?: InputMaybe<Scalars['String']['input']>;
   pubblicato?: InputMaybe<Scalars['Boolean']['input']>;
+  prenotazioniAttive?: InputMaybe<Scalars['Boolean']['input']>;
+  postiTotali?: InputMaybe<Scalars['Float']['input']>;
+  quotaSocio?: InputMaybe<Scalars['Float']['input']>;
+  quotaNonSocio?: InputMaybe<Scalars['Float']['input']>;
+  oreScadenzaPagamento?: InputMaybe<Scalars['Float']['input']>;
   titolo_en?: InputMaybe<Scalars['String']['input']>;
   descrizione_en?: InputMaybe<Scalars['String']['input']>;
   luogo_en?: InputMaybe<Scalars['String']['input']>;
@@ -3864,7 +3879,7 @@ export type PagineMutation = {
   partners?: InputMaybe<PaginePartnersMutation>;
 };
 
-export type EventiPartsFragment = { __typename: 'Eventi', titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null };
+export type EventiPartsFragment = { __typename: 'Eventi', titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, prenotazioniAttive?: boolean | null, postiTotali?: number | null, quotaSocio?: number | null, quotaNonSocio?: number | null, oreScadenzaPagamento?: number | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null };
 
 export type ServiziPartsFragment = { __typename: 'Servizi', titolo: string, ordine: number, icon: string, desc: string, dettaglio: string, href?: string | null, titolo_en?: string | null, desc_en?: string | null, dettaglio_en?: string | null };
 
@@ -3917,7 +3932,7 @@ export type EventiQueryVariables = Exact<{
 }>;
 
 
-export type EventiQuery = { __typename?: 'Query', eventi: { __typename: 'Eventi', id: string, titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type EventiQuery = { __typename?: 'Query', eventi: { __typename: 'Eventi', id: string, titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, prenotazioniAttive?: boolean | null, postiTotali?: number | null, quotaSocio?: number | null, quotaNonSocio?: number | null, oreScadenzaPagamento?: number | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
 export type EventiConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3929,7 +3944,7 @@ export type EventiConnectionQueryVariables = Exact<{
 }>;
 
 
-export type EventiConnectionQuery = { __typename?: 'Query', eventiConnection: { __typename?: 'EventiConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'EventiConnectionEdges', cursor: string, node?: { __typename: 'Eventi', id: string, titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type EventiConnectionQuery = { __typename?: 'Query', eventiConnection: { __typename?: 'EventiConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'EventiConnectionEdges', cursor: string, node?: { __typename: 'Eventi', id: string, titolo: string, data: string, categoria: string, descrizione: string, luogo?: string | null, iscrizioniHref?: string | null, pubblicato?: boolean | null, prenotazioniAttive?: boolean | null, postiTotali?: number | null, quotaSocio?: number | null, quotaNonSocio?: number | null, oreScadenzaPagamento?: number | null, titolo_en?: string | null, descrizione_en?: string | null, luogo_en?: string | null, corpo_en?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type ServiziQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4131,6 +4146,11 @@ export const EventiPartsFragmentDoc = gql`
   luogo
   iscrizioniHref
   pubblicato
+  prenotazioniAttive
+  postiTotali
+  quotaSocio
+  quotaNonSocio
+  oreScadenzaPagamento
   titolo_en
   descrizione_en
   luogo_en

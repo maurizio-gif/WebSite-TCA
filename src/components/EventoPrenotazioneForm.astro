@@ -1,0 +1,616 @@
+---
+import type { Lang } from '../i18n/utils';
+import { getLocalePath } from '../i18n/utils';
+import prefissi from '../data/prefissi-telefonici';
+
+// Form di prenotazione evento, riutilizzabile su qualsiasi evento.
+//
+// Non contiene nulla di specifico di un singolo evento: titolo, posti, quote e
+// scadenza vivono nel .md dell'evento (gestito da TinaCMS) e i numeri vengono
+// riletti a runtime dal CRM, che è l'unico a poterli far rispettare. Al
+// componente serve solo lo slug: da lì ricava tutto il resto.
+//
+// Stili: riusa le classi lm__* già globali (definite da LeadModal.astro, che
+// BaseLayout include su ogni pagina), così il form eventi ha lo stesso aspetto
+// del form contatti senza duplicare CSS.
+
+interface Props { slug: string; lang?: Lang; titolo: string; data?: string; luogo?: string; }
+const { slug, lang = 'it', titolo, data, luogo } = Astro.props;
+
+const p = (path: string) => getLocalePath(lang, path);
+
+const t = lang === 'en' ? {
+  eyebrow:     'Booking',
+  title:       'Book your<br><em>spot.</em>',
+  emailSub:    'Enter your email address: we will check whether you are a Club Member to apply the right rate.',
+  email:       'Email',
+  emailPh:     'name@example.com',
+  next:        'Continue',
+  datiSub:     'Nice to meet you! Please add your details to complete the booking.',
+  firstName:   'First name',
+  lastName:    'Last name',
+  mobile:      'Mobile',
+  privacy:     'I have read and accept the <a href="{href}" target="_blank">Privacy Policy</a>. I consent to the processing of my personal data to manage this booking. <strong>(required)</strong>',
+  back:        '← Back',
+  rulesTitle:  'How your booking works',
+  submit:      'Confirm booking',
+  fullTitle:   'Fully<br><em>booked.</em>',
+  fullNote:    'All spots for this event are taken. Ask at reception whether a waiting list is available.',
+  unavailTitle:'Booking<br><em>at reception.</em>',
+  unavailNote: 'Online booking is not available for this event right now. Please book at reception, at the Club.',
+  loading:     'Checking availability…',
+  checking:    'Checking your details…',
+  confirmMail: 'We have sent you a summary by email.',
+  closeNote:   'See you at TCA!',
+  stepEmail:   'Email',
+  stepDati:    'Details',
+  stepQuota:   'Fee',
+  feesTitle:   'Participation fee',
+  feeMember:   'Members',
+  feeGuest:    'Non-members',
+  recapTitle:  'Booking for',
+} : {
+  eyebrow:     'Prenotazione',
+  title:       'Prenota il<br><em>tuo posto.</em>',
+  emailSub:    'Inserisci la tua email: verifichiamo se sei Socio del Club per applicarti la quota corretta.',
+  email:       'Email',
+  emailPh:     'nome@esempio.com',
+  next:        'Continua',
+  datiSub:     'Piacere di conoscerti! Aggiungi i tuoi dati per completare la prenotazione.',
+  firstName:   'Nome',
+  lastName:    'Cognome',
+  mobile:      'Cellulare',
+  privacy:     'Ho letto e accetto la <a href="{href}" target="_blank">Privacy Policy</a>. Acconsento al trattamento dei dati personali per gestire questa prenotazione. <strong>(obbligatorio)</strong>',
+  back:        '← Indietro',
+  rulesTitle:  'Come funziona la prenotazione',
+  submit:      'Confermo la prenotazione',
+  fullTitle:   'Posti<br><em>esauriti.</em>',
+  fullNote:    'I posti per questo evento sono tutti occupati. Chiedi in Reception se è disponibile una lista d’attesa.',
+  unavailTitle:'Prenotazione<br><em>in Reception.</em>',
+  unavailNote: 'La prenotazione online per questo evento non è disponibile in questo momento. Puoi prenotare direttamente in Reception, al Club.',
+  loading:     'Verifica disponibilità…',
+  checking:    'Verifica dei tuoi dati…',
+  confirmMail: 'Ti abbiamo inviato un riepilogo per email.',
+  closeNote:   'A presto al TCA!',
+  stepEmail:   'Email',
+  stepDati:    'Dati',
+  stepQuota:   'Quota',
+  feesTitle:   'Quota di partecipazione',
+  feeMember:   'Soci',
+  feeGuest:    'Non soci',
+  recapTitle:  'Prenoti come',
+};
+
+const privacyHtml = t.privacy.replace('{href}', p('/privacy-policy'));
+---
+
+<section class="evp" id={`evp-${slug}`}>
+  <div class="evp__inner">
+    <div class="evp__intro">
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h2 class="evp__title" set:html={t.title} />
+
+      <div class="evp__card">
+        <p class="evp__event">{titolo}</p>
+        {(data || luogo) && (
+          <p class="evp__meta">
+            {data}{data && luogo && <span aria-hidden="true"> · </span>}{luogo}
+          </p>
+        )}
+        <p class="evp__seats" data-ev-seats hidden></p>
+      </div>
+
+      <div class="evp__fees-block" data-ev-fees-block hidden>
+        <p class="evp__fees-title">{t.feesTitle}</p>
+        <div class="evp__fees" data-ev-fees></div>
+      </div>
+    </div>
+
+    <div class="evp__panel" data-ev-root data-slug={slug}>
+
+      <!-- Indicatore di passo: dice sempre a che punto si è e quanto manca.
+           Il passo "Dati" viene marcato come saltato per i soci, di cui il
+           Club ha già l'anagrafica. -->
+      <div class="evp__steps" data-ev-steps hidden aria-hidden="true">
+        <span class="evp__step" data-ev-dot="1"><i>1</i><em>{t.stepEmail}</em></span>
+        <span class="evp__step-line"></span>
+        <span class="evp__step" data-ev-dot="2"><i>2</i><em>{t.stepDati}</em></span>
+        <span class="evp__step-line"></span>
+        <span class="evp__step" data-ev-dot="3"><i>3</i><em>{t.stepQuota}</em></span>
+      </div>
+
+      <!-- Caricamento disponibilità -->
+      <div class="lm__body" data-ev-step="loading">
+        <div class="lm__loader" aria-live="polite">
+          <span class="lm__spinner"></span> <span data-ev-loader-text>{t.loading}</span>
+        </div>
+      </div>
+
+      <!-- STEP 1 · Email -->
+      <div class="lm__body" data-ev-step="email" hidden>
+        <p class="lm__sub">{t.emailSub}</p>
+
+        <div class="lm__field">
+          <label for={`evp-${slug}-email`}>{t.email} <span aria-hidden="true">*</span></label>
+          <input id={`evp-${slug}-email`} type="email" autocomplete="email" placeholder={t.emailPh} data-ev-email required />
+        </div>
+
+        <div class="lm__actions">
+          <button type="button" class="btn btn-red lm__next" data-ev-email-next>
+            {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+        <div class="lm__loader" hidden aria-live="polite">
+          <span class="lm__spinner"></span> <span data-ev-loader-text>{t.checking}</span>
+        </div>
+        <p class="lm__error" hidden role="alert"></p>
+      </div>
+
+      <!-- STEP 2 · Dati (solo non soci) -->
+      <div class="lm__body" data-ev-step="dati" hidden>
+        <p class="lm__sub">{t.datiSub}</p>
+
+        <div class="lm__grid">
+          <div class="lm__field">
+            <label for={`evp-${slug}-nome`}>{t.firstName} <span aria-hidden="true">*</span></label>
+            <input id={`evp-${slug}-nome`} type="text" autocomplete="given-name" data-ev-nome required />
+          </div>
+          <div class="lm__field">
+            <label for={`evp-${slug}-cognome`}>{t.lastName} <span aria-hidden="true">*</span></label>
+            <input id={`evp-${slug}-cognome`} type="text" autocomplete="family-name" data-ev-cognome required />
+          </div>
+          <div class="lm__field lm__field--full">
+            <label for={`evp-${slug}-cell`}>{t.mobile} <span aria-hidden="true">*</span></label>
+            <div class="lm__tel-wrap">
+              <select class="lm__tel-prefix" autocomplete="tel-country-code" data-ev-prefisso aria-label={t.mobile}>
+                {prefissi.map((pf) => (
+                  <option value={pf.dial} selected={pf.dial === '+39'}>{pf.flag} {pf.dial}</option>
+                ))}
+              </select>
+              <input id={`evp-${slug}-cell`} type="tel" autocomplete="tel-national" placeholder="3XX XXX XXXX" data-ev-cell required />
+            </div>
+          </div>
+        </div>
+
+        <div class="lm__consent">
+          <label class="lm__consent-item">
+            <input type="checkbox" data-ev-privacy required />
+            <span set:html={privacyHtml} />
+          </label>
+        </div>
+
+        <p class="lm__error" hidden role="alert"></p>
+        <div class="lm__actions">
+          <button type="button" class="lm__back" data-ev-dati-back>{t.back}</button>
+          <button type="button" class="btn btn-red lm__next" data-ev-dati-next>
+            {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3 · Quota e regole -->
+      <div class="lm__body" data-ev-step="summary" hidden>
+        <p class="lm__sub" data-ev-who></p>
+
+        <div class="evp__recap" data-ev-recap hidden>
+          <span class="evp__recap-label">{t.recapTitle}</span>
+          <span class="evp__recap-value" data-ev-recap-value></span>
+        </div>
+
+        <div class="evp__price">
+          <span class="evp__price-label" data-ev-price-label></span>
+          <span class="evp__price-value" data-ev-price-value></span>
+        </div>
+
+        <p class="lm__section-title lm__section-title--first">{t.rulesTitle}</p>
+        <ul class="evp__rules" data-ev-rules></ul>
+
+        <p class="lm__error" hidden role="alert"></p>
+        <div class="lm__actions">
+          <button type="button" class="lm__back" data-ev-summary-back>{t.back}</button>
+          <button type="button" class="btn btn-red lm__next" data-ev-submit>
+            {t.submit} <span class="lm__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+        <div class="lm__loader" hidden aria-live="polite">
+          <span class="lm__spinner"></span> <span data-ev-loader-text>{t.checking}</span>
+        </div>
+      </div>
+
+      <!-- Conferma -->
+      <div class="lm__body lm__confirm" data-ev-step="confirm" hidden aria-live="polite">
+        <div class="lm__confirm-check" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="lm__confirm-title" set:html={lang === 'en' ? 'Spot<br><em>held!</em>' : 'Posto<br><em>impegnato!</em>'} />
+        <div class="evp__confirm-box">
+          <p class="evp__confirm-line" data-ev-confirm-fee></p>
+          <p class="evp__confirm-line" data-ev-confirm-by></p>
+        </div>
+        <p class="lm__hint">{t.confirmMail}<br>{t.closeNote}</p>
+      </div>
+
+      <!-- Posti esauriti -->
+      <div class="lm__body lm__confirm" data-ev-step="full" hidden aria-live="polite">
+        <h3 class="lm__confirm-title" set:html={t.fullTitle} />
+        <p class="lm__hint">{t.fullNote}</p>
+      </div>
+
+      <!-- Prenotazione online non disponibile -->
+      <div class="lm__body lm__confirm" data-ev-step="unavailable" hidden aria-live="polite">
+        <h3 class="lm__confirm-title" set:html={t.unavailTitle} />
+        <p class="lm__hint">{t.unavailNote}</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .evp {
+    padding: 7vh var(--pad-x) 8vh;
+    background: var(--color-off-white);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .evp__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: clamp(2.5rem, 5vw, 6rem);
+    align-items: start;
+  }
+
+  .evp__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+  }
+
+  .evp__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.6vw, 3.4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 0.95;
+    margin: 0;
+  }
+  .evp__title em { color: var(--color-accent); font-style: normal; }
+
+  /* Scheda evento: titolo, data/luogo e posti stanno insieme, così si legge
+     "di cosa si tratta" in un colpo solo invece che come righe sparse. */
+  .evp__card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .evp__event {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 1.15;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  .evp__meta {
+    font-family: var(--font-body);
+    font-size: clamp(12px, 0.85vw, 13.5px);
+    font-weight: 300;
+    color: var(--color-text-light);
+    margin: 0;
+  }
+
+  .evp__fees-title {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    margin: 0 0 0.6rem;
+  }
+
+  .evp__panel {
+    background: var(--lm-bg);
+    color: var(--lm-text);
+    border: 1px solid var(--lm-border);
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 900px) {
+    .evp__inner { grid-template-columns: 1fr; }
+    .evp__intro { position: static; }
+    .evp__event { max-width: 100%; }
+  }
+</style>
+
+<style is:global>
+  /* Tutto ciò che sta qui è, in parte o del tutto, creato a runtime dal client
+     (posti, quote, regole, riepilogo): con gli stili scoped di Astro quegli
+     elementi non riceverebbero l'attributo di scope e resterebbero senza CSS. */
+
+  /* ── Posti residui ──────────────────────────────────────────────────── */
+  .evp__seats {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    align-self: flex-start;
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #1a7a44;
+    background: rgba(26, 122, 68, 0.09);
+    border: 1px solid rgba(26, 122, 68, 0.22);
+    padding: 0.3rem 0.65rem;
+    margin: 0.2rem 0 0;
+  }
+
+  .evp__seats::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+
+  /* Pochi posti: stesso componente in rosso, senza cambiare il testo — è
+     l'urgenza reale, non un messaggio in più da leggere. */
+  .evp__seats.is-low {
+    color: var(--color-accent);
+    background: rgba(139, 26, 26, 0.07);
+    border-color: rgba(139, 26, 26, 0.22);
+  }
+
+  /* ── Quote come schede affiancate ───────────────────────────────────── */
+  .evp__fees {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .evp__fee-card {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    padding: 0.85rem 0.95rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .evp__fee-card-label {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+  }
+
+  .evp__fee-card-value {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-text);
+  }
+
+  .evp__fee-card--member { border-left: 3px solid var(--color-accent); }
+  .evp__fee-card--member .evp__fee-card-value { color: var(--color-accent); }
+
+  /* ── Indicatore di passo ────────────────────────────────────────────── */
+  .evp__steps {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 2rem;
+    background: var(--lm-bg-head);
+    border-bottom: 1px solid var(--lm-border);
+  }
+
+  .evp__step {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--lm-text-dim);
+  }
+
+  .evp__step i {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+  .evp__step em {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    font-weight: 700;
+    font-style: normal;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .evp__step.is-active { color: var(--color-accent); }
+  .evp__step.is-active i { background: var(--color-accent); border-color: var(--color-accent); color: #fff; }
+
+  .evp__step.is-done { color: var(--lm-text-sub); }
+  .evp__step.is-done i { background: var(--lm-text-sub); border-color: var(--lm-text-sub); color: var(--lm-bg); }
+  /* Il numero lascia il posto alla spunta: un passo fatto non si rifà, il
+     numero non serve più a orientarsi. */
+  .evp__step.is-done i { font-size: 0; }
+  .evp__step.is-done i::after { content: '✓'; font-size: 12px; }
+
+  /* Passo saltato (i dati, per i soci): resta visibile ma barrato, così è
+     chiaro che non è stato dimenticato — è che non serviva. */
+  .evp__step.is-skipped { opacity: 0.45; }
+  .evp__step.is-skipped em { text-decoration: line-through; }
+
+  .evp__step-line {
+    flex: 1;
+    height: 1px;
+    background: var(--lm-border);
+  }
+
+  @media (max-width: 560px) {
+    .evp__steps { padding: 0.8rem 1.25rem; gap: 0.35rem; }
+    .evp__step em { display: none; }
+  }
+
+  /* ── Riepilogo: chi prenota ─────────────────────────────────────────── */
+  .evp__recap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    background: var(--lm-input-bg);
+    border: 1px solid var(--lm-border);
+    padding: 0.7rem 0.9rem;
+  }
+
+  .evp__recap-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lm-text-dim);
+  }
+
+  .evp__recap-value {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 15px);
+    font-weight: 400;
+    color: var(--lm-text);
+    word-break: break-word;
+  }
+
+  /* ── Riepilogo: la quota ────────────────────────────────────────────── */
+  /* È il numero per cui si sta leggendo quella schermata: sta in una scheda
+     propria, non in mezzo al testo. */
+  .evp__price {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: var(--color-accent);
+    color: #fff;
+    padding: 1rem 1.25rem;
+  }
+
+  .evp__price-label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+
+  .evp__price-value {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.6vw, 2.8rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  /* ── Riepilogo: le regole ───────────────────────────────────────────── */
+  .evp__rules {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .evp__rule {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-family: var(--font-body);
+    font-size: clamp(13px, 0.95vw, 14.5px);
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--lm-text-sub);
+  }
+
+  .evp__rule-icon {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--lm-input-bg);
+    border: 1px solid var(--lm-border);
+    color: var(--color-accent);
+    margin-top: 1px;
+  }
+
+  /* L'ultima regola è quella che fa perdere il posto: va letta anche da chi
+     scorre in fretta. */
+  .evp__rule--warn { color: var(--lm-text); font-weight: 400; }
+  .evp__rule--warn .evp__rule-icon {
+    background: rgba(139, 26, 26, 0.08);
+    border-color: rgba(139, 26, 26, 0.25);
+  }
+
+  /* ── Conferma ───────────────────────────────────────────────────────── */
+  .evp__confirm-box {
+    background: var(--lm-input-bg);
+    border: 1px solid var(--lm-border);
+    border-left: 3px solid var(--color-accent);
+    padding: 1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+    width: 100%;
+  }
+
+  .evp__confirm-line {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1vw, 16px);
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--lm-text-sub);
+    margin: 0;
+  }
+  .evp__confirm-line strong { font-weight: 700; color: var(--lm-text); }
+</style>
+
+<script>
+  // @ts-nocheck — vanilla browser script (DOM access, no type annotations)
+  import { initEventoForm } from '../lib/eventoForm.client.js';
+
+  document.querySelectorAll('[data-ev-root]').forEach(function (root) {
+    initEventoForm(root);
+  });
+</script>

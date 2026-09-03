@@ -80,6 +80,36 @@ export default defineConfig({
             label: 'Pubblicato',
           },
           {
+            type: 'boolean',
+            name: 'prenotazioniAttive',
+            label: 'Prenotazione online attiva',
+            description:
+              'Mostra il form di prenotazione sulla pagina dell’evento (al posto del link iscrizioni) e attiva il conteggio dei posti sul CRM.',
+          },
+          {
+            type: 'number',
+            name: 'postiTotali',
+            label: 'Posti disponibili',
+            description: 'Numero massimo di partecipanti. Raggiunto il limite il form si chiude da solo.',
+          },
+          {
+            type: 'number',
+            name: 'quotaSocio',
+            label: 'Quota soci (€)',
+          },
+          {
+            type: 'number',
+            name: 'quotaNonSocio',
+            label: 'Quota non soci (€)',
+          },
+          {
+            type: 'number',
+            name: 'oreScadenzaPagamento',
+            label: 'Ore per pagare in cassa',
+            description:
+              'Entro quante ore va pagata la quota in cassa. Scaduto il termine la prenotazione decade e il posto torna disponibile (default 48).',
+          },
+          {
             type: 'string',
             name: 'titolo_en',
             label: '🇬🇧 Titolo (inglese)',

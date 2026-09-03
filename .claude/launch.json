@@ -4,9 +4,8 @@
     {
       "name": "tca-dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 4321,
-      "autoPort": true
+      "runtimeArgs": ["run", "dev", "--", "--port", "4330", "--strictPort"],
+      "port": 4330
     },
     {
       "name": "tca-tina-dev",
