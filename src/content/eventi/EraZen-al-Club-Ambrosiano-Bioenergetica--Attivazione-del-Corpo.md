@@ -33,7 +33,9 @@ corpo_en: |
   Participation is limited to a maximum of 16 people. Book online using the form below: your place is reserved for 48 hours; payment is made at Reception.
 ---
 
-Le tensioni che portiamo nelle spalle, nel collo, nel diaframma custodiscono una storia, e possono scioglierla. Due ore per ritrovare il peso sotto i piedi, lasciare che il respiro si allarghi, e accorgersi della quiete che arriva da sé quando il corpo smette di trattenere.
+Le tensioni che portiamo nelle spalle, nel collo, nel diaframma custodiscono una storia, e possono scioglierla. 
+
+Due ore per ritrovare il peso sotto i piedi, lasciare che il respiro si allarghi, e accorgersi della quiete che arriva da sé quando il corpo smette di trattenere.
 
 Non abbiamo un corpo: siamo il nostro corpo. Quando smettiamo di comandarlo e cominciamo ad ascoltarlo, torna a parlarci — e ci dice come stiamo davvero, prima e meglio di qualsiasi ragionamento.
 
