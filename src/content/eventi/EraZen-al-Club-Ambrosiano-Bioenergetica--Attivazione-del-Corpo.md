@@ -18,7 +18,7 @@ corpo_en: |
   We do not have a body: we are our body. When we stop commanding it and start listening to it, it begins to speak to us again — and tells us how we really are, before and better than any rational thought.
   No experience required: all you need is comfortable clothing and a willingness to listen.
 
-  When: Saturday 20 September 2026, from 10.00 to 12.00
+  When: Sunday 20 September 2026, from 10.00 to 12.00
   Structure of the session (75–90 mins):
   body activation (15 mins)
   bioenergetic work (50 mins)
@@ -33,7 +33,7 @@ corpo_en: |
   Participation is limited to a maximum of 16 people. Book online using the form below: your place is reserved for 48 hours; payment is made at Reception.
 ---
 
-Le tensioni che portiamo nelle spalle, nel collo, nel diaframma custodiscono una storia, e possono scioglierla. 
+Le tensioni che portiamo nelle spalle, nel collo, nel diaframma custodiscono una storia, e possono scioglierla.
 
 Due ore per ritrovare il peso sotto i piedi, lasciare che il respiro si allarghi, e accorgersi della quiete che arriva da sé quando il corpo smette di trattenere.
 
@@ -41,7 +41,7 @@ Non abbiamo un corpo: siamo il nostro corpo. Quando smettiamo di comandarlo e co
 
 Nessuna esperienza richiesta: bastano abbigliamento comodo e la disponibilità a stare in ascolto.
 
-*Quando*: sabato 20 settembre 2026, dalle 10:00 alle 12:00
+*Quando*: domenica 20 settembre 2026, dalle 10:00 alle 12:00
 
 *Struttura del percorso* (75–90 min):
 
