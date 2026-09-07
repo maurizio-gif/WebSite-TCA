@@ -529,11 +529,11 @@ var config_default = defineConfig({
           { type: "string", name: "scuola_mini_tennis_nati_en", label: "\u{1F1EC}\u{1F1E7} Mini Tennis, anni di nascita (inglese)", required: true },
           { type: "string", name: "scuola_tennis_nati", label: "Scuola Tennis \u2014 Scuola Tennis, anni di nascita ammessi", required: true },
           { type: "string", name: "scuola_tennis_nati_en", label: "\u{1F1EC}\u{1F1E7} Scuola Tennis, anni di nascita (inglese)", required: true },
-          { type: "string", name: "scuola_quota_mini_mono", label: "Scuola Tennis \u2014 Quota Mini-tennis monosettimanale (\u20AC)", required: true },
-          { type: "string", name: "scuola_quota_mini_bi", label: "Scuola Tennis \u2014 Quota Mini-tennis bisettimanale (\u20AC)", required: true },
-          { type: "string", name: "scuola_quota_tennis_mono", label: "Scuola Tennis \u2014 Quota Tennis monosettimanale (\u20AC)", required: true },
-          { type: "string", name: "scuola_quota_tennis_bi", label: "Scuola Tennis \u2014 Quota Tennis bisettimanale (\u20AC)", required: true },
-          { type: "string", name: "scuola_quota_tennis_tri", label: "Scuola Tennis \u2014 Quota Tennis trisettimanale (\u20AC)", required: true }
+          { type: "string", name: "scuola_quota_mini_mono", label: "Scuola Tennis \u2014 Quota stagionale Mini-tennis monosettimanale (\u20AC)", required: true },
+          { type: "string", name: "scuola_quota_mini_bi", label: "Scuola Tennis \u2014 Quota stagionale Mini-tennis bisettimanale (\u20AC)", required: true },
+          { type: "string", name: "scuola_quota_tennis_mono", label: "Scuola Tennis \u2014 Quota stagionale Tennis monosettimanale (\u20AC)", required: true },
+          { type: "string", name: "scuola_quota_tennis_bi", label: "Scuola Tennis \u2014 Quota stagionale Tennis bisettimanale (\u20AC)", required: true },
+          { type: "string", name: "scuola_quota_tennis_tri", label: "Scuola Tennis \u2014 Quota stagionale Tennis trisettimanale (\u20AC)", required: true }
         ]
       },
       // ─── APPUNTAMENTI E DISPONIBILITÀ ──────────────────────────────────────
