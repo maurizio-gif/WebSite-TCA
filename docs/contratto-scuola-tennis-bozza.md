@@ -99,9 +99,17 @@ La quota comprende le lezioni di tennis e, per la Scuola tennis, la preparazione
 secondo quanto indicato all'art. 1. Non comprende il tesseramento FITP, gli oneri
 assicurativi e le eventuali attività non ricomprese nel programma del corso.
 
-Il pagamento della quota è effettuato **in un'unica soluzione presso la segreteria del
-Club** al momento del perfezionamento dell'iscrizione. L'iscrizione si intende
-perfezionata solo a pagamento avvenuto.
+Il pagamento della quota è effettuato **in un'unica soluzione anticipata**, con una
+delle seguenti modalità:
+
+- **POS presso la segreteria del Club**, in Via Feltre 33, 20134 Milano;
+- **bonifico bancario** intestato a Tennis Club Ambrosiano SSDRL,
+  **IBAN IT06 T030 6909 6061 0000 0070 180**, indicando nella causale
+  "Scuola Tennis {{stagione}} — {{minore_nome}} {{minore_cognome}}".
+
+L'iscrizione si intende perfezionata solo a pagamento avvenuto; in caso di bonifico, alla
+data di accredito sul conto del Club. L'accesso alle lezioni è consentito a partire dal
+perfezionamento dell'iscrizione.
 
 Sono a carico del Genitore, in aggiunta alla quota, il tesseramento FITP e ogni altro
 onere federale o assicurativo previsto.
@@ -207,7 +215,8 @@ Il Genitore / esercente la responsabilità genitoriale
 Ai sensi e per gli effetti degli artt. 1341 e 1342 c.c., il Genitore dichiara di
 approvare specificamente, previa attenta rilettura, le seguenti clausole:
 
-- **Art. 3** — Quota di partecipazione e pagamento in unica soluzione;
+- **Art. 3** — Quota di partecipazione, pagamento in unica soluzione anticipata e
+  perfezionamento dell'iscrizione subordinato all'avvenuto pagamento;
 - **Art. 4** — Requisiti obbligatori per l'accesso alle lezioni e conseguenze della loro
   mancanza;
 - **Art. 5** — Esclusione di ogni rimborso, anche parziale, in caso di ritiro;
