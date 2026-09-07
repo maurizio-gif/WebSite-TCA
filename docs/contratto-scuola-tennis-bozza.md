@@ -194,22 +194,6 @@ Foro del luogo di residenza o domicilio elettivo del consumatore, se ubicato in 
 
 ---
 
-## SOTTOSCRIZIONE
-
-Il Genitore dichiara di aver letto, compreso e accettato integralmente il presente
-contratto, il Regolamento del Club e l'Informativa Privacy, e conferma la veridicità dei
-dati anagrafici indicati.
-
-Luogo e data: **Milano, {{data_firma}}**
-
-Il Genitore / esercente la responsabilità genitoriale
-
-**{{genitore_nome}} {{genitore_cognome}}**
-
-{{FIRMA_1}}
-
----
-
 ## APPROVAZIONE SPECIFICA DELLE CLAUSOLE (artt. 1341 e 1342 c.c.)
 
 Ai sensi e per gli effetti degli artt. 1341 e 1342 c.c., il Genitore dichiara di
@@ -228,13 +212,34 @@ approvare specificamente, previa attenta rilettura, le seguenti clausole:
 - **Art. 9** — Facoltà di sospensione ed esclusione dal corso senza rimborso;
 - **Art. 12** — Foro competente.
 
+**{{FLAG_CLAUSOLE}}** — Approvazione specifica delle clausole sopra elencate, prestata
+spuntando l'apposita casella nel modulo di iscrizione il {{timestamp_clausole}}.
+
+---
+
+## SOTTOSCRIZIONE
+
+Il Genitore dichiara di aver letto, compreso e accettato integralmente il presente
+contratto, il Regolamento del Club e l'Informativa Privacy, di approvare specificamente
+le clausole elencate al paragrafo che precede, e conferma la veridicità dei dati
+anagrafici indicati.
+
+Consensi prestati nel modulo di iscrizione:
+
+| Dichiarazione | Esito |
+|---|---|
+| Termini e condizioni del contratto | {{FLAG_TERMINI}} |
+| Regolamento della Scuola Tennis | {{FLAG_REGOLAMENTO}} |
+| Informativa Privacy | {{FLAG_PRIVACY}} |
+| Approvazione clausole ex artt. 1341-1342 c.c. | {{FLAG_CLAUSOLE}} |
+
 Luogo e data: **Milano, {{data_firma}}**
 
 Il Genitore / esercente la responsabilità genitoriale
 
 **{{genitore_nome}} {{genitore_cognome}}**
 
-{{FIRMA_2}}
+{{FIRMA}}
 
 ---
 
