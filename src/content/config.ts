@@ -776,6 +776,12 @@ const moduli = defineCollection({
     scuola_tennis_nati: z.string(),
     scuola_tennis_nati_en: z.string(),
 
+    scuola_quota_mini_mono: z.string(),
+    scuola_quota_mini_bi: z.string(),
+    scuola_quota_tennis_mono: z.string(),
+    scuola_quota_tennis_bi: z.string(),
+    scuola_quota_tennis_tri: z.string(),
+
   }),
 });
 

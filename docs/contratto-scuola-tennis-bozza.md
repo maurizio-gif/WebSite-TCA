@@ -82,8 +82,22 @@ calendario pubblicato dal Club.
 
 ### Art. 3 — Quota di partecipazione e pagamento
 
-La quota di partecipazione al corso è pari a **€ {{quota_totale}}**, comprensiva di
-{{quota_dettaglio}}.
+La quota di partecipazione per la formula concordata all'art. 1 è pari a
+**€ {{quota_totale}}** per la stagione sportiva {{stagione}}.
+
+Listino stagione {{stagione}}:
+
+| Corso | Frequenza | Quota stagionale |
+|---|---|---|
+| Scuola mini-tennis | monosettimanale | € {{quota_mini_mono}} |
+| Scuola mini-tennis | bisettimanale | € {{quota_mini_bi}} |
+| Scuola tennis | monosettimanale | € {{quota_tennis_mono}} |
+| Scuola tennis | bisettimanale | € {{quota_tennis_bi}} |
+| Scuola tennis | trisettimanale | € {{quota_tennis_tri}} |
+
+La quota comprende le lezioni di tennis e, per la Scuola tennis, la preparazione fisica
+secondo quanto indicato all'art. 1. Non comprende il tesseramento FITP, gli oneri
+assicurativi e le eventuali attività non ricomprese nel programma del corso.
 
 Il pagamento della quota è effettuato **in un'unica soluzione presso la segreteria del
 Club** al momento del perfezionamento dell'iscrizione. L'iscrizione si intende

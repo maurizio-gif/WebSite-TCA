@@ -498,6 +498,11 @@ type Moduli implements Node & Document {
   scuola_mini_tennis_nati_en: String!
   scuola_tennis_nati: String!
   scuola_tennis_nati_en: String!
+  scuola_quota_mini_mono: String!
+  scuola_quota_mini_bi: String!
+  scuola_quota_tennis_mono: String!
+  scuola_quota_tennis_bi: String!
+  scuola_quota_tennis_tri: String!
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
@@ -533,6 +538,11 @@ input ModuliFilter {
   scuola_mini_tennis_nati_en: StringFilter
   scuola_tennis_nati: StringFilter
   scuola_tennis_nati_en: StringFilter
+  scuola_quota_mini_mono: StringFilter
+  scuola_quota_mini_bi: StringFilter
+  scuola_quota_tennis_mono: StringFilter
+  scuola_quota_tennis_bi: StringFilter
+  scuola_quota_tennis_tri: StringFilter
 }
 
 type ModuliConnectionEdges {
@@ -2541,6 +2551,11 @@ input ModuliMutation {
   scuola_mini_tennis_nati_en: String
   scuola_tennis_nati: String
   scuola_tennis_nati_en: String
+  scuola_quota_mini_mono: String
+  scuola_quota_mini_bi: String
+  scuola_quota_tennis_mono: String
+  scuola_quota_tennis_bi: String
+  scuola_quota_tennis_tri: String
 }
 
 input AppuntamentiMutation {

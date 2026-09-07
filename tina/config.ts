@@ -535,6 +535,12 @@ export default defineConfig({
           { type: 'string', name: 'scuola_tennis_nati', label: 'Scuola Tennis — Scuola Tennis, anni di nascita ammessi', required: true },
           { type: 'string', name: 'scuola_tennis_nati_en', label: '🇬🇧 Scuola Tennis, anni di nascita (inglese)', required: true },
 
+          { type: 'string', name: 'scuola_quota_mini_mono', label: 'Scuola Tennis — Quota Mini-tennis monosettimanale (€)', required: true },
+          { type: 'string', name: 'scuola_quota_mini_bi', label: 'Scuola Tennis — Quota Mini-tennis bisettimanale (€)', required: true },
+          { type: 'string', name: 'scuola_quota_tennis_mono', label: 'Scuola Tennis — Quota Tennis monosettimanale (€)', required: true },
+          { type: 'string', name: 'scuola_quota_tennis_bi', label: 'Scuola Tennis — Quota Tennis bisettimanale (€)', required: true },
+          { type: 'string', name: 'scuola_quota_tennis_tri', label: 'Scuola Tennis — Quota Tennis trisettimanale (€)', required: true },
+
         ],
       },
       // ─── APPUNTAMENTI E DISPONIBILITÀ ──────────────────────────────────────

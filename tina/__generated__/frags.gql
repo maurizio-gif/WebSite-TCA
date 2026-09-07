@@ -143,6 +143,11 @@ fragment ModuliParts on Moduli {
   scuola_mini_tennis_nati_en
   scuola_tennis_nati
   scuola_tennis_nati_en
+  scuola_quota_mini_mono
+  scuola_quota_mini_bi
+  scuola_quota_tennis_mono
+  scuola_quota_tennis_bi
+  scuola_quota_tennis_tri
 }
 
 fragment AppuntamentiParts on Appuntamenti {
