@@ -1,0 +1,928 @@
+---
+import type { Lang } from '../i18n/utils';
+import prefissi from '../data/prefissi-telefonici';
+import { getEntry } from 'astro:content';
+
+interface Props { lang?: Lang; backHref?: string; }
+const { lang = 'it', backHref = '/scuola-tennis' } = Astro.props;
+
+const PREP_SLOTS = ['14:30','15:30','16:30','17:30','18:30'];
+
+// Scadenze, acconto e fasce d'età gestibili da TinaCMS → src/content/moduli/dati-stagionali.md
+const d = (await getEntry('moduli', 'dati-stagionali'))!.data;
+
+// Le quote stagionali vivono in TinaCMS (moduli/dati-stagionali): il modulo le
+// mostra nel riepilogo prima della firma, il contratto le riporta per intero.
+const QUOTE = {
+  mini: { mono: d.scuola_quota_mini_mono, bi: d.scuola_quota_mini_bi },
+  tennis: { mono: d.scuola_quota_tennis_mono, bi: d.scuola_quota_tennis_bi, tri: d.scuola_quota_tennis_tri },
+};
+
+const t = lang === 'en' ? {
+  intro: `This is the <strong>course enrolment form</strong>. It can be completed <strong>only after the trial and once the Technical Team has approved</strong> the child's place: days, times and frequency below are the ones agreed with the coaches.`,
+  introTrials: 'At the end you will sign the contract, which you will receive by email as a PDF.',
+
+  minorTitle: "Minor's details",
+  minorSub: 'Enter the details of the child/teenager to be enrolled.',
+  minorFirst: "Child's first name",
+  minorLast: "Child's last name",
+  minorDob: 'Date of birth',
+  minorPob: 'Place of birth',
+  minorCf: 'Fiscal code',
+  minorCfNote: 'If you have trouble entering it, contact the Club at tennis-academy@tcambrosiano.com',
+  addr: 'Address',
+  addrPh: 'Via Feltre 33',
+  city: 'City',
+  cityPh: 'Milano',
+  prov: 'Province',
+  provPh: 'MI',
+  cap: 'Postcode',
+
+  parentTitle: "Parent's details",
+  parentFirst: "Parent's first name",
+  parentLast: "Parent's last name",
+  parentDob: 'Date of birth',
+  email: 'Email',
+  emailPlaceholder: 'name@example.com',
+  emailNote: "Make sure the email address is correct: you'll receive all communications from the Club there.",
+  mobile: 'Mobile',
+
+  detailsTitle: 'Enrolment details',
+  miniLabel: 'Mini-Tennis School',
+  miniAge: `(born in ${d.scuola_mini_tennis_nati_en})`,
+  miniDesc: '60-minute lessons, tennis only. Frequency: 1 or 2 times a week.',
+  tennisLabel: 'Tennis School',
+  tennisAge: `(born in ${d.scuola_tennis_nati_en})`,
+  tennisDesc: '60 minutes of tennis + 30 minutes of athletics. Frequency: 1, 2 or 3 times a week.',
+  warnSaldo: 'The fee is paid in a single advance instalment, by card at reception or by bank transfer to IBAN IT06 T030 6909 6061 0000 0070 180. Enrolment is only complete once payment has been received.',
+  warnFitp: 'Please note that a valid FITP membership card is required (the fee is needed to complete enrolment). A valid medical certificate must also be provided.',
+
+  courseType: 'Course type',
+  courseTypePh: 'Select a course type…',
+  frequency: 'Frequency',
+  miniMono: 'Mini-Tennis once a week',
+  miniBi: 'Mini-Tennis twice a week',
+  tennisMono: 'Tennis once a week',
+  tennisBi: 'Tennis twice a week',
+  tennisTri: 'Tennis three times a week',
+  days: 'Agreed day',
+  dayNames: ['Monday','Tuesday','Wednesday','Thursday','Friday'],
+  timePrefs: 'Agreed time',
+  buddy: 'Preferred tennis partner',
+  athleticTitle: 'Athletic Training',
+  athleticSlot: 'Athletic training time slot (not offered for Mini-Tennis) — see table',
+  athleticSlotPh: 'Select a time…',
+  athleticNote: 'Not offered for the Mini-Tennis School.',
+  athleticTablePick: 'Chosen slot',
+  athleticTableTime: 'Athletic training time',
+  athleticRows: [
+    ['14:30 – 15:30','14:00 – 14:30 (30 min before)'],
+    ['15:30 – 16:30','15:00 – 15:30 (before) or 16:30 – 17:00 (after)'],
+    ['16:30 – 17:30','16:00 – 16:30 (30 min before)'],
+    ['17:30 – 18:30','17:00 – 17:30 (30 min before)'],
+    ['18:30 – 19:30','18:00 – 18:30 (30 min before)'],
+  ],
+
+  termsTitle: 'Terms & Conditions',
+  termsList: [
+    'the fee is paid in a single advance instalment, by card at reception or by bank transfer; enrolment is only complete once payment has been received;',
+    'withdrawal from the courses during the year, for any reason, does not give the right to any refund, not even partial;',
+    'it is mandatory to submit the medical certificate of fitness for sports activity before the course begins;',
+    'FITP (Italian Tennis and Padel Federation) membership is mandatory.',
+  ],
+  acceptTerms: 'I have read and accept the Terms & Conditions.',
+  acceptRules: 'I have read and accept the {link} of the Tennis School.',
+  acceptRulesLink: 'rules',
+  acceptPrivacy: 'I have read and accept your {link}.',
+  acceptPrivacyLink: 'Privacy Policy',
+  acceptClausole: 'Pursuant to articles 1341 and 1342 of the Italian Civil Code, I specifically approve the following clauses: art. 3 (fee and advance payment), art. 4 (mandatory requirements), art. 5 (no refund on withdrawal), art. 6 (lessons not held and make-ups), art. 7 (organisational changes), art. 8 (limits of the Club\u2019s liability), art. 9 (suspension and exclusion), art. 11 (jurisdiction).',
+
+  signTitle: 'Signature of the contract',
+  signIntro: 'Sign in the box below using your finger, stylus or mouse. The signature will be applied to the contract, which you will receive by email as a PDF.',
+  signHint: 'Sign here',
+  signClear: 'Clear',
+  summaryTitle: 'Summary',
+  summaryCourse: 'Course',
+  summaryFrequency: 'Frequency',
+  summaryDays: 'Agreed day',
+  summaryTimes: 'Agreed time',
+  summaryFee: 'Season fee',
+
+  back: '← Back',
+  next: 'Next',
+  submit: 'Sign and enrol',
+  sending: 'Sending…',
+  backToPage: 'Back to the Tennis School page',
+
+  errSign: 'Please sign in the box to continue.',
+  errSend: 'The enrolment could not be sent. Please try again or contact the Club.',
+
+  confirmTitle: 'Thank<br><em>you!</em>',
+  confirmNote: 'We have received the enrolment and the signed contract, which you will find attached in the email we have just sent you.',
+  confirmNextSteps: 'To complete the enrolment you now need to pay the fee in a single instalment, by card at reception or by bank transfer to IBAN IT06 T030 6909 6061 0000 0070 180. Remember that FITP membership and a valid medical certificate are mandatory before the courses begin.',
+
+  errRequired: 'Please fill in this required field.',
+  errEmail: 'Please enter a valid email address.',
+  errChoice: 'Please make a choice.',
+  errCheck: 'Please select at least one option.',
+  errConsent: 'This consent is required.',
+} : {
+  intro: `Questo è il <strong>modulo di iscrizione al corso</strong>. È compilabile <strong>solo dopo il provino e dopo l'approvazione del Team Tecnico</strong>: giorni, orari e frequenza indicati qui sotto sono quelli concordati con i maestri.`,
+  introTrials: 'Al termine firmerai il contratto, che riceverai via email in PDF.',
+
+  minorTitle: 'Dati del minore',
+  minorSub: 'Inserisci di seguito i dati del bambino/ragazzo da iscrivere.',
+  minorFirst: 'Nome del minore',
+  minorLast: 'Cognome del minore',
+  minorDob: 'Data di nascita',
+  minorPob: 'Luogo di nascita',
+  minorCf: 'Codice fiscale',
+  minorCfNote: "In caso di problemi con l'inserimento, contattare il Club all'indirizzo tennis-academy@tcambrosiano.com",
+  addr: 'Indirizzo',
+  addrPh: 'Via Feltre 33',
+  city: 'Città',
+  cityPh: 'Milano',
+  prov: 'Provincia',
+  provPh: 'MI',
+  cap: 'Codice postale',
+
+  parentTitle: 'Dati del genitore',
+  parentFirst: 'Nome del genitore',
+  parentLast: 'Cognome del genitore',
+  parentDob: 'Data di nascita',
+  email: 'Email',
+  emailPlaceholder: 'nome@esempio.com',
+  emailNote: "Controlla bene di aver inserito un indirizzo email corretto: lì riceverai tutte le comunicazioni da parte del Club.",
+  mobile: 'Cellulare',
+
+  detailsTitle: 'Dettagli iscrizione',
+  miniLabel: 'Scuola mini-tennis',
+  miniAge: `(nati nel ${d.scuola_mini_tennis_nati})`,
+  miniDesc: 'Lezioni di 60 minuti, solo tennis. Frequenza: 1 o 2 volte a settimana.',
+  tennisLabel: 'Scuola tennis',
+  tennisAge: `(nati nel ${d.scuola_tennis_nati})`,
+  tennisDesc: 'Lezioni di 60 minuti di tennis + 30 minuti di atletica. Frequenza: 1, 2 o 3 volte a settimana.',
+  warnSaldo: "Il pagamento della quota va effettuato in un'unica soluzione anticipata, con POS in segreteria oppure con bonifico sull'IBAN IT06 T030 6909 6061 0000 0070 180. L'iscrizione si perfeziona solo a pagamento avvenuto.",
+  warnFitp: "Si prega di notare che è richiesto il possesso della tessera FITP (in corso di validità), la cui quota è necessaria per completare l'iscrizione. Inoltre, è obbligatorio presentare un certificato medico in corso di validità.",
+
+  courseType: 'Tipo di corso',
+  courseTypePh: 'Seleziona un tipo di corso…',
+  frequency: 'Frequenza',
+  miniMono: 'Mini-tennis mono settimanale',
+  miniBi: 'Mini-tennis bisettimanale',
+  tennisMono: 'Tennis mono settimanale',
+  tennisBi: 'Tennis bisettimanale',
+  tennisTri: 'Tennis trisettimanale',
+  days: 'Giorno concordato',
+  dayNames: ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì'],
+  timePrefs: 'Orario concordato',
+  buddy: 'Compagno di tennis preferito',
+  athleticTitle: 'Preparazione Fisica',
+  athleticSlot: 'Scelta orario per preparazione fisica SCUOLA TENNIS (non prevista per Mini Tennis) — vedi tabella',
+  athleticSlotPh: 'Seleziona un orario…',
+  athleticNote: 'Non prevista per la Scuola Mini-Tennis.',
+  athleticTablePick: 'Scelta slot orario',
+  athleticTableTime: 'Orario preparazione fisica',
+  athleticRows: [
+    ['14:30 – 15:30','14:00 – 14:30 (30 min prima)'],
+    ['15:30 – 16:30','15:00 – 15:30 (prima) oppure 16:30 – 17:00 (dopo)'],
+    ['16:30 – 17:30','16:00 – 16:30 (30 min prima)'],
+    ['17:30 – 18:30','17:00 – 17:30 (30 min prima)'],
+    ['18:30 – 19:30','18:00 – 18:30 (30 min prima)'],
+  ],
+
+  termsTitle: 'Termini e condizioni',
+  termsList: [
+    'il pagamento della quota va effettuato in un’unica soluzione anticipata, con POS in segreteria oppure con bonifico; l’iscrizione si perfeziona solo a pagamento avvenuto;',
+    'l’eventuale ritiro dai corsi durante l’anno, per qualsiasi motivo, non dà diritto ad alcun rimborso, neppure parziale;',
+    'si ricorda che è obbligatorio consegnare il certificato medico di idoneità all’attività sportiva prima dell’inizio del corso;',
+    'è obbligatorio effettuare il tesseramento alla FITP (Federazione Italiana Tennis e Padel).',
+  ],
+  acceptTerms: 'Ho letto e accetto i Termini e Condizioni.',
+  acceptRules: 'Ho letto e accetto il {link} della Scuola Tennis.',
+  acceptRulesLink: 'regolamento',
+  acceptPrivacy: 'Ho letto e accetto la vostra {link}.',
+  acceptPrivacyLink: 'Privacy Policy',
+  acceptClausole: 'Ai sensi degli artt. 1341 e 1342 c.c. approvo specificamente le seguenti clausole: art. 3 (quota e pagamento anticipato), art. 4 (requisiti obbligatori), art. 5 (nessun rimborso in caso di ritiro), art. 6 (lezioni non svolte e recuperi), art. 7 (modifiche organizzative), art. 8 (limiti di responsabilità del Club), art. 9 (sospensione ed esclusione), art. 11 (foro competente).',
+
+  signTitle: 'Firma del contratto',
+  signIntro: 'Firma nel riquadro qui sotto con il dito, con un pennino o con il mouse. La firma verrà applicata al contratto, che riceverai via email in PDF.',
+  signHint: 'Firma qui',
+  signClear: 'Cancella',
+  summaryTitle: 'Riepilogo',
+  summaryCourse: 'Corso',
+  summaryFrequency: 'Frequenza',
+  summaryDays: 'Giorno concordato',
+  summaryTimes: 'Orario concordato',
+  summaryFee: 'Quota stagionale',
+
+  back: '← Indietro',
+  next: 'Avanti',
+  submit: 'Firma e iscrivi',
+  sending: 'Invio in corso…',
+  backToPage: 'Torna alla pagina Scuola Tennis',
+
+  errSign: 'Firma nel riquadro per proseguire.',
+  errSend: "Non è stato possibile inviare l'iscrizione. Riprova o contatta il Club.",
+
+  confirmTitle: 'Grazie!',
+  confirmNote: 'Abbiamo ricevuto l’iscrizione e il contratto firmato, che trovi in allegato nell’email che ti abbiamo appena inviato.',
+  confirmNextSteps: 'Per completare l’iscrizione resta da versare la quota in un’unica soluzione, con POS in segreteria oppure con bonifico sull’IBAN IT06 T030 6909 6061 0000 0070 180. Ricorda che, prima dell’inizio dei corsi, sono obbligatori il tesseramento FITP e il certificato medico in corso di validità.',
+
+  errRequired: 'Compila questo campo obbligatorio.',
+  errEmail: 'Inserisci un indirizzo email valido.',
+  errChoice: 'Effettua una scelta.',
+  errCheck: 'Seleziona almeno un’opzione.',
+  errConsent: 'Questo consenso è obbligatorio.',
+};
+---
+
+<div class="isc-form isc-form--corso" id="isc-corso-form-root">
+
+  <!-- STEP 1 — Dati minore + genitore -->
+  <div class="lm__body" data-isc-step="1">
+    <div class="lm__notice">
+      <p set:html={t.intro} />
+      <p>{t.introTrials}</p>
+    </div>
+
+    <p class="lm__section-title lm__section-title--first">{t.minorTitle}</p>
+    <p class="lm__sub">{t.minorSub}</p>
+
+    <div class="lm__grid">
+      <div class="lm__field">
+        <label for="isc-minor-nome">{t.minorFirst} <span aria-hidden="true">*</span></label>
+        <input id="isc-minor-nome" type="text" required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-minor-cognome">{t.minorLast} <span aria-hidden="true">*</span></label>
+        <input id="isc-minor-cognome" type="text" required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-minor-dob">{t.minorDob} <span aria-hidden="true">*</span></label>
+        <input id="isc-minor-dob" type="date" required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-minor-pob">{t.minorPob} <span aria-hidden="true">*</span></label>
+        <input id="isc-minor-pob" type="text" required />
+      </div>
+      <div class="lm__field lm__field--full">
+        <label for="isc-minor-cf">{t.minorCf} <span aria-hidden="true">*</span></label>
+        <input id="isc-minor-cf" type="text" maxlength="16" class="lm__input--cf" required />
+      </div>
+    </div>
+    <p class="lm__hint">{t.minorCfNote}</p>
+
+    <div class="lm__grid">
+      <div class="lm__field lm__field--full">
+        <label for="isc-addr">{t.addr} <span aria-hidden="true">*</span></label>
+        <input id="isc-addr" type="text" placeholder={t.addrPh} required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-city">{t.city} <span aria-hidden="true">*</span></label>
+        <input id="isc-city" type="text" placeholder={t.cityPh} required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-prov">{t.prov} <span aria-hidden="true">*</span></label>
+        <input id="isc-prov" type="text" maxlength="2" placeholder={t.provPh} required />
+      </div>
+      <div class="lm__field lm__field--full">
+        <label for="isc-cap">{t.cap} <span aria-hidden="true">*</span></label>
+        <input id="isc-cap" type="text" inputmode="numeric" required />
+      </div>
+    </div>
+
+    <p class="lm__section-title">{t.parentTitle}</p>
+    <div class="lm__grid">
+      <div class="lm__field">
+        <label for="isc-parent-nome">{t.parentFirst} <span aria-hidden="true">*</span></label>
+        <input id="isc-parent-nome" type="text" autocomplete="given-name" required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-parent-cognome">{t.parentLast} <span aria-hidden="true">*</span></label>
+        <input id="isc-parent-cognome" type="text" autocomplete="family-name" required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-parent-dob">{t.parentDob} <span aria-hidden="true">*</span></label>
+        <input id="isc-parent-dob" type="date" autocomplete="bday" required />
+      </div>
+      <div class="lm__field lm__field--full">
+        <label for="isc-email">{t.email} <span aria-hidden="true">*</span></label>
+        <input id="isc-email" type="email" autocomplete="email" placeholder={t.emailPlaceholder} required />
+      </div>
+    </div>
+    <p class="lm__hint">{t.emailNote}</p>
+    <div class="lm__grid">
+      <div class="lm__field lm__field--full">
+        <label for="isc-cell">{t.mobile} <span aria-hidden="true">*</span></label>
+        <div class="lm__tel-wrap">
+          <select id="isc-pfx" class="lm__tel-prefix" autocomplete="tel-country-code">
+            {prefissi.map((pf) => (
+              <option value={pf.dial} selected={pf.dial === '+39'}>{pf.flag} {pf.dial}</option>
+            ))}
+          </select>
+          <input id="isc-cell" type="tel" autocomplete="tel-national" placeholder="3XX XXX XXXX" required />
+        </div>
+      </div>
+    </div>
+
+    <p class="lm__error" hidden role="alert"></p>
+    <div class="lm__actions">
+      <button type="button" class="btn btn-red lm__next" data-isc-next="1">
+        {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 2 — Dettagli iscrizione -->
+  <div class="lm__body" data-isc-step="2" hidden>
+    <p class="lm__section-title lm__section-title--first">{t.detailsTitle}</p>
+    <div class="lm__notice">
+      <p><strong>{t.miniLabel}</strong> {t.miniAge}<br />{t.miniDesc}</p>
+      <p><strong>{t.tennisLabel}</strong> {t.tennisAge}<br />{t.tennisDesc}</p>
+    </div>
+    <p class="lm__notice-warn">{t.warnSaldo}</p>
+    <p class="lm__notice-warn">{t.warnFitp}</p>
+
+    <div class="lm__field">
+      <label for="isc-tipo">{t.courseType} <span aria-hidden="true">*</span></label>
+      <select id="isc-tipo" required>
+        <option value="" selected disabled>{t.courseTypePh}</option>
+        <option value="mini">{t.miniLabel}</option>
+        <option value="tennis">{t.tennisLabel}</option>
+      </select>
+    </div>
+
+    <div data-isc-tipo-group="mini" hidden>
+      <p class="lm__label-group">{t.frequency} <span aria-hidden="true">*</span></p>
+      <div class="lm__checks">
+        <label class="lm__check-item"><input type="radio" name="isc-freq-mini" value="mono" /> <span>{t.miniMono}</span></label>
+        <label class="lm__check-item"><input type="radio" name="isc-freq-mini" value="bi" /> <span>{t.miniBi}</span></label>
+      </div>
+      <p class="lm__label-group">{t.days} <span aria-hidden="true">*</span></p>
+      <div class="lm__checks">
+        {t.dayNames.map((d) => (
+          <label class="lm__check-item"><input type="checkbox" name="isc-giorni-mini" value={d} /> <span>{d} 17.30</span></label>
+        ))}
+      </div>
+    </div>
+
+    <div data-isc-tipo-group="tennis" hidden>
+      <p class="lm__label-group">{t.frequency} <span aria-hidden="true">*</span></p>
+      <div class="lm__checks">
+        <label class="lm__check-item"><input type="radio" name="isc-freq-tennis" value="mono" /> <span>{t.tennisMono}</span></label>
+        <label class="lm__check-item"><input type="radio" name="isc-freq-tennis" value="bi" /> <span>{t.tennisBi}</span></label>
+        <label class="lm__check-item"><input type="radio" name="isc-freq-tennis" value="tri" /> <span>{t.tennisTri}</span></label>
+      </div>
+      <p class="lm__label-group">{t.days} <span aria-hidden="true">*</span></p>
+      <div class="lm__checks">
+        {t.dayNames.map((d) => (
+          <label class="lm__check-item"><input type="checkbox" name="isc-giorni-tennis" value={d} /> <span>{d}</span></label>
+        ))}
+      </div>
+      <p class="lm__label-group">{t.timePrefs} <span aria-hidden="true">*</span></p>
+      <div class="lm__checks">
+        {PREP_SLOTS.map((s) => (
+          <label class="lm__check-item"><input type="checkbox" name="isc-orari-tennis" value={s} /> <span>{s.replace(':', '.')}</span></label>
+        ))}
+      </div>
+    </div>
+
+    <div class="lm__field">
+      <label for="isc-buddy">{t.buddy}</label>
+      <input id="isc-buddy" type="text" />
+    </div>
+
+    <p class="lm__section-title">{t.athleticTitle}</p>
+    <div data-isc-tipo-group="tennis" hidden>
+      <div class="lm__field">
+        <label for="isc-prep-orario">{t.athleticSlot} <span aria-hidden="true">*</span></label>
+        <select id="isc-prep-orario">
+          <option value="" selected disabled>{t.athleticSlotPh}</option>
+          {PREP_SLOTS.map((s) => <option value={s}>{s}</option>)}
+        </select>
+      </div>
+      <div class="lm__table-wrap">
+        <table class="lm__table">
+          <thead><tr><th>{t.athleticTablePick}</th><th>{t.athleticTableTime}</th></tr></thead>
+          <tbody>
+            {t.athleticRows.map((r) => <tr><td>{r[0]}</td><td>{r[1]}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="lm__hint" data-isc-tipo-group="mini" hidden>{t.athleticNote}</p>
+
+    <p class="lm__error" hidden role="alert"></p>
+    <div class="lm__actions">
+      <button type="button" class="lm__back" data-isc-back="1">{t.back}</button>
+      <button type="button" class="btn btn-red lm__next" data-isc-next="2">
+        {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 3 — Termini e condizioni -->
+  <div class="lm__body" data-isc-step="3" hidden>
+    <p class="lm__section-title lm__section-title--first">{t.termsTitle}</p>
+    <ul class="lm__terms-list">
+      {t.termsList.map((item) => <li>{item}</li>)}
+    </ul>
+
+    <div class="lm__consent">
+      <label class="lm__consent-item">
+        <input type="checkbox" id="isc-accept-terms" required />
+        <span>{t.acceptTerms}</span>
+      </label>
+      <label class="lm__consent-item">
+        <input type="checkbox" id="isc-accept-rules" required />
+        <span set:html={t.acceptRules.replace('{link}', `<a href="/regolamento" target="_blank">${t.acceptRulesLink}</a>`)} />
+      </label>
+      <label class="lm__consent-item">
+        <input type="checkbox" id="isc-accept-privacy" required />
+        <span set:html={t.acceptPrivacy.replace('{link}', `<a href="/privacy-policy" target="_blank">${t.acceptPrivacyLink}</a>`)} />
+      </label>
+      <label class="lm__consent-item lm__consent-item--clausole">
+        <input type="checkbox" id="isc-accept-clausole" required />
+        <span>{t.acceptClausole}</span>
+      </label>
+    </div>
+
+    <p class="lm__error" hidden role="alert"></p>
+    <div class="lm__actions">
+      <button type="button" class="lm__back" data-isc-back-dynamic>{t.back}</button>
+      <button type="button" class="btn btn-red lm__next" data-isc-next="3">
+        {t.next} <span class="lm__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 4 — Riepilogo e firma grafometrica -->
+  <div class="lm__body" data-isc-step="4" hidden>
+    <p class="lm__section-title lm__section-title--first">{t.summaryTitle}</p>
+    <table class="lm__table lm__riepilogo">
+      <tbody>
+        <tr><th>{t.summaryCourse}</th><td data-isc-riep="corso">—</td></tr>
+        <tr><th>{t.summaryFrequency}</th><td data-isc-riep="frequenza">—</td></tr>
+        <tr><th>{t.summaryDays}</th><td data-isc-riep="giorni">—</td></tr>
+        <tr><th>{t.summaryTimes}</th><td data-isc-riep="orari">—</td></tr>
+        <tr><th>{t.summaryFee}</th><td data-isc-riep="quota">—</td></tr>
+      </tbody>
+    </table>
+
+    <p class="lm__section-title">{t.signTitle}</p>
+    <p class="lm__sub">{t.signIntro}</p>
+
+    <div class="lm__firma">
+      <canvas id="isc-firma" class="lm__firma-canvas" aria-label={t.signHint}></canvas>
+      <span class="lm__firma-hint" data-isc-firma-hint>{t.signHint}</span>
+    </div>
+    <div class="lm__firma-azioni">
+      <button type="button" class="lm__back" id="isc-firma-clear">{t.signClear}</button>
+    </div>
+
+    <p class="lm__error" hidden role="alert"></p>
+    <div class="lm__actions">
+      <button type="button" class="lm__back" data-isc-back="3">{t.back}</button>
+      <button type="button" class="btn btn-red lm__next" id="isc-submit">
+        {t.submit} <span class="lm__arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CONFERMA -->
+  <div class="lm__body lm__confirm" data-isc-step="confirm" hidden aria-live="polite">
+    <div class="lm__confirm-check" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3 class="lm__confirm-title" set:html={t.confirmTitle} />
+    <p class="lm__confirm-note">{t.confirmNote}</p>
+    <p class="lm__confirm-note">{t.confirmNextSteps}</p>
+    <a class="btn btn-red lm__confirm-cta" href={backHref}>{t.backToPage}</a>
+  </div>
+
+</div>
+
+<style>
+  .isc-form {
+    background: var(--lm-bg);
+    color: var(--lm-text);
+    border: 1px solid var(--lm-border);
+  }
+</style>
+
+<style is:global>
+  /* ── Select coerenti con input/textarea del sistema .lm ───────────
+     Selettore ristretto ai figli diretti di .lm__field: il select del
+     prefisso telefonico (dentro .lm__tel-wrap) ha le sue regole dedicate
+     e non deve ereditare width:100%. ───────────────────────────────── */
+  .lm__field > select {
+    font-family: var(--font-body); font-size: clamp(13px,.95vw,15px);
+    font-weight: 300; padding: 0.7rem 2rem 0.7rem 0.85rem;
+    border: 1px solid var(--lm-input-bd);
+    background: var(--lm-input-bg); color: var(--lm-text);
+    width: 100%; transition: border-color 0.18s;
+    -webkit-appearance: none; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236B5C57' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+  }
+  .lm__field > select:invalid { color: var(--lm-text-dim); }
+  .lm__field > select:focus { outline: none; border-color: var(--color-accent); background-color: #fff; }
+
+  .lm__check-item input[type="radio"] { accent-color: var(--color-accent); flex-shrink: 0; }
+
+  .lm__input--cf { text-transform: uppercase; }
+
+  /* ── Titoli di sotto-sezione dentro uno step ─────────────────────── */
+  .lm__section-title {
+    font-family: var(--font-display); font-size: clamp(1rem,1.6vw,1.25rem);
+    font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em;
+    color: var(--lm-text); margin: 0.6rem 0 0;
+    padding-top: 1rem; border-top: 1px solid var(--lm-border);
+  }
+  .lm__section-title--first { padding-top: 0; border-top: none; margin-top: 0; }
+
+  .lm__hint {
+    font-family: var(--font-body); font-size: clamp(11px,.8vw,12px);
+    font-weight: 300; color: var(--lm-text-dim); margin: -0.6rem 0 0;
+  }
+
+  .lm__sub a { color: var(--color-accent); text-decoration: underline; }
+  .lm__sub a:hover { color: var(--color-accent-dark); }
+
+  /* ── Box informativo (date, quote di riferimento) ────────────────── */
+  .lm__notice {
+    background: var(--lm-input-bg); border: 1px solid var(--lm-border);
+    border-left: 3px solid var(--color-accent);
+    padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .lm__notice p {
+    font-family: var(--font-body); font-size: clamp(12px,.9vw,13px);
+    font-weight: 300; line-height: 1.6; color: var(--lm-text-sub); margin: 0;
+  }
+  .lm__notice p strong { color: var(--lm-text); font-weight: 700; }
+
+  .lm__notice-warn {
+    font-family: var(--font-body); font-size: clamp(12px,.9vw,13px);
+    font-weight: 400; line-height: 1.6; color: var(--color-accent); margin: 0;
+  }
+
+  /* ── Elenco termini e condizioni ──────────────────────────────────── */
+  .lm__terms-list {
+    margin: 0; padding-left: 1.1rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    font-family: var(--font-body); font-size: clamp(12px,.9vw,13px);
+    font-weight: 300; line-height: 1.6; color: var(--lm-text-sub);
+  }
+
+  /* ── Tabella slot preparazione fisica ─────────────────────────────── */
+  .lm__table-wrap { overflow-x: auto; border: 1px solid var(--lm-border); }
+  .lm__table { width: 100%; border-collapse: collapse; font-family: var(--font-body); font-size: clamp(11px,.85vw,12.5px); }
+  .lm__table th, .lm__table td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--lm-border); text-align: left; }
+  .lm__table th { font-weight: 700; color: var(--lm-text); background: var(--lm-bg-head); white-space: nowrap; }
+  .lm__table td { font-weight: 300; color: var(--lm-text-sub); }
+  .lm__table tr:last-child td { border-bottom: none; }
+
+
+  /* ── Riepilogo e firma grafometrica (step 4) ─────────────────────── */
+  .lm__riepilogo th {
+    width: 42%;
+    text-align: left;
+    font-weight: 600;
+    color: var(--lm-text-mut, #555);
+  }
+
+  .lm__firma {
+    position: relative;
+    margin: 10px 0 8px;
+    border: 1px solid var(--lm-border);
+    border-radius: 4px;
+    background: #FFFFFF;
+    /* Il canvas non ha altezza intrinseca: senza questa, il riquadro
+       collassa e non c'e' nulla su cui firmare. */
+    height: 180px;
+    touch-action: none;
+  }
+
+  .lm__firma-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+
+  .lm__firma-hint {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    color: #9A9A9A;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .lm__firma-azioni {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 18px;
+  }
+
+  .lm__consent-item--clausole {
+    border-top: 1px solid var(--lm-border);
+    padding-top: 14px;
+    margin-top: 4px;
+  }
+</style>
+
+<script define:vars={{ ERR: {
+  required: t.errRequired,
+  email: t.errEmail,
+  choice: t.errChoice,
+  check: t.errCheck,
+  consent: t.errConsent,
+}, QUOTE, ETICHETTE: {
+  corso: { mini: t.miniLabel, tennis: t.tennisLabel },
+  freq: { mono: t.miniMono, bi: t.miniBi, tri: t.tennisTri },
+  freqTennis: { mono: t.tennisMono, bi: t.tennisBi, tri: t.tennisTri },
+}, ERR_SIGN: t.errSign, ERR_SEND: t.errSend, TXT_SUBMIT: t.submit, TXT_SENDING: t.sending }}>
+  const root = document.getElementById('isc-corso-form-root');
+
+  const WEBHOOK_ISCRIZIONE = 'https://automazione.n8ndevelop.it/webhook/iscrizione-scuola-tennis-tca';
+
+  // UTM/click-id e ID visitatore persistente (vedi BaseLayout.astro)
+  function getUtm() {
+    if (window.tcaGetUtm) return window.tcaGetUtm();
+    try { return JSON.parse(sessionStorage.getItem('tca_utm') || '{}'); } catch (e) { return {}; }
+  }
+  function getVid() {
+    return window.tcaGetVid ? window.tcaGetVid() : null;
+  }
+
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+
+  function showStep(key) {
+    root.querySelectorAll('[data-isc-step]').forEach((el) => {
+      el.hidden = el.dataset.iscStep !== String(key);
+    });
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showError(step, msg) {
+    const err = root.querySelector(`[data-isc-step="${step}"] > .lm__error`);
+    if (err) { err.textContent = msg; err.hidden = false; }
+  }
+  function clearError(step) {
+    const err = root.querySelector(`[data-isc-step="${step}"] > .lm__error`);
+    if (err) err.hidden = true;
+  }
+
+  const tipoSelect = document.getElementById('isc-tipo');
+  const prepSelect = document.getElementById('isc-prep-orario');
+
+  function syncTipoGroups() {
+    const tipo = tipoSelect.value;
+    root.querySelectorAll('[data-isc-tipo-group]').forEach((el) => {
+      el.hidden = el.dataset.iscTipoGroup !== tipo;
+    });
+  }
+  tipoSelect.addEventListener('change', syncTipoGroups);
+
+  root.querySelectorAll('[data-isc-back]').forEach((btn) => {
+    btn.addEventListener('click', () => showStep(btn.dataset.iscBack));
+  });
+
+  // STEP 1 → 2
+  root.querySelector('[data-isc-next="1"]').addEventListener('click', () => {
+    clearError('1');
+    const required = ['isc-minor-nome','isc-minor-cognome','isc-minor-dob','isc-minor-pob','isc-minor-cf',
+                      'isc-addr','isc-city','isc-prov','isc-cap',
+                      'isc-parent-nome','isc-parent-cognome','isc-parent-dob','isc-email','isc-cell'];
+    for (const id of required) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { showError('1', ERR.required); el.focus(); return; }
+    }
+    const emailEl = document.getElementById('isc-email');
+    if (!isValidEmail(emailEl.value)) { showError('1', ERR.email); emailEl.focus(); return; }
+    showStep('2');
+  });
+
+  // STEP 2 → 3 (o 4 se Mini Tennis)
+  root.querySelector('[data-isc-next="2"]').addEventListener('click', () => {
+    clearError('2');
+    const tipo = tipoSelect.value;
+    if (!tipo) { showError('2', ERR.choice); tipoSelect.focus(); return; }
+
+    const freqChecked = root.querySelector(`input[name="isc-freq-${tipo}"]:checked`);
+    if (!freqChecked) { showError('2', ERR.choice); return; }
+
+    const giorniChecked = root.querySelectorAll(`input[name="isc-giorni-${tipo}"]:checked`);
+    if (giorniChecked.length === 0) { showError('2', ERR.check); return; }
+
+    if (tipo === 'tennis') {
+      const orariChecked = root.querySelectorAll('input[name="isc-orari-tennis"]:checked');
+      if (orariChecked.length === 0) { showError('2', ERR.check); return; }
+      if (!prepSelect.value) { showError('2', ERR.choice); prepSelect.focus(); return; }
+    }
+    showStep('3');
+  });
+
+  // Indietro da step 3 (termini)
+  root.querySelector('[data-isc-back-dynamic]').addEventListener('click', () => {
+    showStep('2');
+  });
+
+  // ── Riepilogo dello step 4 ─────────────────────────────────────────────
+  function quotaScelta() {
+    const tipo = tipoSelect.value;
+    const freqEl = root.querySelector(`input[name="isc-freq-${tipo}"]:checked`);
+    if (!tipo || !freqEl) return null;
+    const q = (QUOTE[tipo] || {})[freqEl.value];
+    return q == null ? null : Number(q);
+  }
+
+  function compilaRiepilogo() {
+    const tipo = tipoSelect.value;
+    const freqEl = root.querySelector(`input[name="isc-freq-${tipo}"]:checked`);
+    const giorni = Array.from(root.querySelectorAll(`input[name="isc-giorni-${tipo}"]:checked`)).map((el) => el.value);
+    const orari = Array.from(root.querySelectorAll('input[name="isc-orari-tennis"]:checked')).map((el) => el.value);
+    const etichetteFreq = tipo === 'tennis' ? ETICHETTE.freqTennis : ETICHETTE.freq;
+    const quota = quotaScelta();
+
+    const set = (chiave, valore) => {
+      const el = root.querySelector(`[data-isc-riep="${chiave}"]`);
+      if (el) el.textContent = valore || '—';
+    };
+    set('corso', ETICHETTE.corso[tipo]);
+    set('frequenza', freqEl ? etichetteFreq[freqEl.value] : '');
+    set('giorni', giorni.join(', '));
+    set('orari', tipo === 'tennis' ? orari.join(', ') : '');
+    set('quota', quota == null ? '' : `€ ${quota}`);
+  }
+
+  // ── Firma grafometrica ────────────────────────────────────────────────
+  // Canvas ridimensionato sul devicePixelRatio: senza, su mobile il tratto
+  // risulta sfocato e la firma nel PDF si vede male.
+  const canvas = document.getElementById('isc-firma');
+  const ctx = canvas.getContext('2d');
+  const hintFirma = root.querySelector('[data-isc-firma-hint]');
+  let firmato = false;
+  let disegnando = false;
+
+  function preparaCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    if (!rect.width) return;
+    const dpr = window.devicePixelRatio || 1;
+    const dati = firmato ? canvas.toDataURL('image/png') : null;
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#1A1A1A';
+    if (dati) {
+      const img = new Image();
+      img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
+      img.src = dati;
+    }
+  }
+
+  function posizione(ev) {
+    const rect = canvas.getBoundingClientRect();
+    const punto = ev.touches ? ev.touches[0] : ev;
+    return { x: punto.clientX - rect.left, y: punto.clientY - rect.top };
+  }
+
+  function iniziaTratto(ev) {
+    ev.preventDefault();
+    disegnando = true;
+    const p = posizione(ev);
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+    if (!firmato) { firmato = true; hintFirma.hidden = true; }
+  }
+  function continuaTratto(ev) {
+    if (!disegnando) return;
+    ev.preventDefault();
+    const p = posizione(ev);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+  }
+  function chiudiTratto() { disegnando = false; }
+
+  canvas.addEventListener('mousedown', iniziaTratto);
+  canvas.addEventListener('mousemove', continuaTratto);
+  window.addEventListener('mouseup', chiudiTratto);
+  canvas.addEventListener('touchstart', iniziaTratto, { passive: false });
+  canvas.addEventListener('touchmove', continuaTratto, { passive: false });
+  canvas.addEventListener('touchend', chiudiTratto);
+
+  document.getElementById('isc-firma-clear').addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    firmato = false;
+    hintFirma.hidden = false;
+  });
+
+  window.addEventListener('resize', preparaCanvas);
+
+  // STEP 3 → 4: consensi, poi riepilogo e firma
+  root.querySelector('[data-isc-next="3"]').addEventListener('click', () => {
+    clearError('3');
+    const consensi = ['isc-accept-terms','isc-accept-rules','isc-accept-privacy','isc-accept-clausole'];
+    for (const id of consensi) {
+      if (!document.getElementById(id).checked) { showError('3', ERR.consent); return; }
+    }
+    compilaRiepilogo();
+    showStep('4');
+    // Il canvas ha larghezza 0 finche' lo step e' hidden: si dimensiona qui.
+    requestAnimationFrame(preparaCanvas);
+  });
+
+  // Raccoglie tutti i campi compilati negli step 1-3 per l'invio finale
+  function collectPayload() {
+    const val = (id) => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+    const tipo = tipoSelect.value;
+    const giorni = Array.from(root.querySelectorAll(`input[name="isc-giorni-${tipo}"]:checked`)).map((el) => el.value);
+    const freqEl = root.querySelector(`input[name="isc-freq-${tipo}"]:checked`);
+
+    const payload = {
+      minore: {
+        nome: val('isc-minor-nome'),
+        cognome: val('isc-minor-cognome'),
+        dataNascita: val('isc-minor-dob'),
+        luogoNascita: val('isc-minor-pob'),
+        codiceFiscale: val('isc-minor-cf'),
+      },
+      indirizzo: {
+        via: val('isc-addr'),
+        citta: val('isc-city'),
+        provincia: val('isc-prov'),
+        cap: val('isc-cap'),
+      },
+      genitore: {
+        nome: val('isc-parent-nome'),
+        cognome: val('isc-parent-cognome'),
+        dataNascita: val('isc-parent-dob'),
+        email: val('isc-email'),
+        cellulare: `${document.getElementById('isc-pfx').value} ${val('isc-cell')}`,
+      },
+      iscrizione: {
+        tipo,
+        frequenza: freqEl ? freqEl.value : '',
+        giorni,
+        compagnoPreferito: val('isc-buddy'),
+      },
+      consensi: {
+        termini: document.getElementById('isc-accept-terms').checked,
+        regolamento: document.getElementById('isc-accept-rules').checked,
+        privacy: document.getElementById('isc-accept-privacy').checked,
+        clausole: document.getElementById('isc-accept-clausole').checked,
+      },
+      quotaTotale: quotaScelta(),
+      firma_base64: canvas.toDataURL('image/png'),
+      pagina: location.href,
+      referrer: document.referrer || null,
+      utm: getUtm(),
+      vid: getVid(),
+    };
+
+    if (tipo === 'tennis') {
+      payload.iscrizione.orariPreferiti = Array.from(root.querySelectorAll('input[name="isc-orari-tennis"]:checked')).map((el) => el.value);
+      payload.iscrizione.orarioPreparazione = prepSelect.value;
+    }
+
+    return payload;
+  }
+
+  // STEP 4 → invio + conferma
+  const submitBtn = document.getElementById('isc-submit');
+  submitBtn.addEventListener('click', async () => {
+    clearError('4');
+    if (!firmato) { showError('4', ERR_SIGN); return; }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = TXT_SENDING;
+
+    // A differenza del modulo provino qui l'esito conta: se il webhook non
+    // risponde il contratto non e' stato generato, quindi niente conferma.
+    try {
+      const res = await fetch(WEBHOOK_ISCRIZIONE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(collectPayload()),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    } catch (e) {
+      showError('4', ERR_SEND);
+      submitBtn.disabled = false;
+      submitBtn.textContent = TXT_SUBMIT;
+      return;
+    }
+
+    showStep('confirm');
+  });
+</script>
