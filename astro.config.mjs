@@ -29,6 +29,9 @@ export default defineConfig({
         defaultLocale: 'it',
         locales: { it: 'it', en: 'en' },
       },
+      // Pagine non pubbliche: l'indirizzo lo dà la segreteria a chi di dovere,
+      // in sitemap non ci devono stare (sono anche noindex).
+      filter: (page) => !page.includes('/iscrizione-corso-scuola-tennis'),
     }),
   ],
 });

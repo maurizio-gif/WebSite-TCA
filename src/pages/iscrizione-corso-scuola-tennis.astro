@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import IscrizioneCorsoForm from "../components/IscrizioneCorsoForm.astro";
+import { getLocalePath } from "../i18n/utils";
+
+const lang = 'it' as const;
+const p = (path: string) => getLocalePath(lang, path);
+
+// Modulo di iscrizione al corso con firma del contratto. Non è una pagina
+// pubblica: l'indirizzo viene dato dalla segreteria alle famiglie il cui
+// inserimento è stato approvato dal Team Tecnico dopo il provino. Per questo
+// è noindex, fuori dalla sitemap (vedi il filtro in astro.config.mjs) e senza
+// link dal sito.
+---
+
+<BaseLayout
+  title="Iscrizione ai corsi di Scuola Tennis | TC Ambrosiano"
+  description="Modulo di iscrizione ai corsi della Scuola Tennis del TC Ambrosiano, riservato agli allievi approvati dal Team Tecnico dopo il provino."
+  hideChrome
+  hideLeadFormInline
+>
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+
+  <div class="page-header">
+    <div class="page-header__inner">
+      <span class="eyebrow">Stagione 2026/2027</span>
+      <h1 class="page-header__title">Iscrizione <em>Scuola Tennis</em></h1>
+      <p class="page-header__sub">
+        Modulo riservato agli allievi il cui inserimento è stato approvato dal Team Tecnico
+        al termine del provino.
+      </p>
+    </div>
+  </div>
+
+  <section class="isc-page">
+    <div class="isc-page__inner">
+      <IscrizioneCorsoForm lang={lang} backHref={p('/scuola-tennis')} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    padding: calc(var(--header-h) + 6vh) var(--pad-x) 5vh;
+    background: var(--color-off-white);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .page-header__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+  }
+
+  .page-header__title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 0.95;
+    color: var(--color-text);
+    margin: 0.4em 0 0.6em;
+  }
+
+  .page-header__title em {
+    font-style: normal;
+    color: var(--color-accent);
+  }
+
+  .page-header__sub {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: clamp(17px, 1.2vw, 21px);
+    color: var(--color-text-light);
+  }
+
+  .isc-page {
+    padding: 6vh var(--pad-x) 10vh;
+    background: var(--color-bg);
+  }
+
+  .isc-page__inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+</style>
