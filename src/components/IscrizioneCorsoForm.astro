@@ -30,13 +30,6 @@ const t = lang === 'en' ? {
   minorPob: 'Place of birth',
   minorCf: 'Fiscal code',
   minorCfNote: 'If you have trouble entering it, contact the Club at tennis-academy@tcambrosiano.com',
-  addr: 'Address',
-  addrPh: 'Via Feltre 33',
-  city: 'City',
-  cityPh: 'Milano',
-  prov: 'Province',
-  provPh: 'MI',
-  cap: 'Postcode',
 
   parentTitle: "Parent's details",
   parentFirst: "Parent's first name",
@@ -138,13 +131,6 @@ const t = lang === 'en' ? {
   minorPob: 'Luogo di nascita',
   minorCf: 'Codice fiscale',
   minorCfNote: "In caso di problemi con l'inserimento, contattare il Club all'indirizzo tennis-academy@tcambrosiano.com",
-  addr: 'Indirizzo',
-  addrPh: 'Via Feltre 33',
-  city: 'Città',
-  cityPh: 'Milano',
-  prov: 'Provincia',
-  provPh: 'MI',
-  cap: 'Codice postale',
 
   parentTitle: 'Dati del genitore',
   parentFirst: 'Nome del genitore',
@@ -272,25 +258,6 @@ const t = lang === 'en' ? {
       </div>
     </div>
     <p class="lm__hint">{t.minorCfNote}</p>
-
-    <div class="lm__grid">
-      <div class="lm__field lm__field--full">
-        <label for="isc-addr">{t.addr} <span aria-hidden="true">*</span></label>
-        <input id="isc-addr" type="text" placeholder={t.addrPh} required />
-      </div>
-      <div class="lm__field">
-        <label for="isc-city">{t.city} <span aria-hidden="true">*</span></label>
-        <input id="isc-city" type="text" placeholder={t.cityPh} required />
-      </div>
-      <div class="lm__field">
-        <label for="isc-prov">{t.prov} <span aria-hidden="true">*</span></label>
-        <input id="isc-prov" type="text" maxlength="2" placeholder={t.provPh} required />
-      </div>
-      <div class="lm__field lm__field--full">
-        <label for="isc-cap">{t.cap} <span aria-hidden="true">*</span></label>
-        <input id="isc-cap" type="text" inputmode="numeric" required />
-      </div>
-    </div>
 
     <p class="lm__section-title">{t.parentTitle}</p>
     <div class="lm__grid">
@@ -699,7 +666,6 @@ const t = lang === 'en' ? {
   root.querySelector('[data-isc-next="1"]').addEventListener('click', () => {
     clearError('1');
     const required = ['isc-minor-nome','isc-minor-cognome','isc-minor-dob','isc-minor-pob','isc-minor-cf',
-                      'isc-addr','isc-city','isc-prov','isc-cap',
                       'isc-parent-nome','isc-parent-cognome','isc-parent-dob','isc-email','isc-cell'];
     for (const id of required) {
       const el = document.getElementById(id);
@@ -856,12 +822,6 @@ const t = lang === 'en' ? {
         dataNascita: val('isc-minor-dob'),
         luogoNascita: val('isc-minor-pob'),
         codiceFiscale: val('isc-minor-cf'),
-      },
-      indirizzo: {
-        via: val('isc-addr'),
-        citta: val('isc-city'),
-        provincia: val('isc-prov'),
-        cap: val('isc-cap'),
       },
       genitore: {
         nome: val('isc-parent-nome'),
