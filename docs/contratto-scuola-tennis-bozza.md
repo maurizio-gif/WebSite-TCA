@@ -22,6 +22,7 @@ C.F. 80104250156 – P.IVA 06869300159, in persona del legale rappresentante pro
 ### E
 
 **{{genitore_nome}} {{genitore_cognome}}**, nato/a il {{genitore_data_nascita}},
+residente in {{indirizzo}}, {{cap}} {{citta}},
 email {{email}}, cellulare {{prefisso}} {{cellulare}},
 in qualità di genitore/esercente la responsabilità genitoriale
 (di seguito "**il Genitore**")
