@@ -35,6 +35,12 @@ const t = lang === 'en' ? {
   parentFirst: "Parent's first name",
   parentLast: "Parent's last name",
   parentDob: 'Date of birth',
+  addr: 'Address of residence',
+  addrPh: 'Via Feltre 33',
+  city: 'City',
+  cityPh: 'Milano',
+  cap: 'Postcode',
+  capPh: '20134',
   email: 'Email',
   emailPlaceholder: 'name@example.com',
   emailNote: "Make sure the email address is correct: you'll receive all communications from the Club there.",
@@ -136,6 +142,12 @@ const t = lang === 'en' ? {
   parentFirst: 'Nome del genitore',
   parentLast: 'Cognome del genitore',
   parentDob: 'Data di nascita',
+  addr: 'Indirizzo di residenza',
+  addrPh: 'Via Feltre 33',
+  city: 'Città',
+  cityPh: 'Milano',
+  cap: 'CAP',
+  capPh: '20134',
   email: 'Email',
   emailPlaceholder: 'nome@esempio.com',
   emailNote: "Controlla bene di aver inserito un indirizzo email corretto: lì riceverai tutte le comunicazioni da parte del Club.",
@@ -272,6 +284,18 @@ const t = lang === 'en' ? {
       <div class="lm__field">
         <label for="isc-parent-dob">{t.parentDob} <span aria-hidden="true">*</span></label>
         <input id="isc-parent-dob" type="date" autocomplete="bday" required />
+      </div>
+      <div class="lm__field lm__field--full">
+        <label for="isc-addr">{t.addr} <span aria-hidden="true">*</span></label>
+        <input id="isc-addr" type="text" autocomplete="street-address" placeholder={t.addrPh} required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-city">{t.city} <span aria-hidden="true">*</span></label>
+        <input id="isc-city" type="text" autocomplete="address-level2" placeholder={t.cityPh} required />
+      </div>
+      <div class="lm__field">
+        <label for="isc-cap">{t.cap} <span aria-hidden="true">*</span></label>
+        <input id="isc-cap" type="text" inputmode="numeric" autocomplete="postal-code" placeholder={t.capPh} required />
       </div>
       <div class="lm__field lm__field--full">
         <label for="isc-email">{t.email} <span aria-hidden="true">*</span></label>
@@ -666,7 +690,9 @@ const t = lang === 'en' ? {
   root.querySelector('[data-isc-next="1"]').addEventListener('click', () => {
     clearError('1');
     const required = ['isc-minor-nome','isc-minor-cognome','isc-minor-dob','isc-minor-pob','isc-minor-cf',
-                      'isc-parent-nome','isc-parent-cognome','isc-parent-dob','isc-email','isc-cell'];
+                      'isc-parent-nome','isc-parent-cognome','isc-parent-dob',
+                      'isc-addr','isc-city','isc-cap',
+                      'isc-email','isc-cell'];
     for (const id of required) {
       const el = document.getElementById(id);
       if (!el.value.trim()) { showError('1', ERR.required); el.focus(); return; }
@@ -829,6 +855,13 @@ const t = lang === 'en' ? {
         dataNascita: val('isc-parent-dob'),
         email: val('isc-email'),
         cellulare: `${document.getElementById('isc-pfx').value} ${val('isc-cell')}`,
+      },
+      // Residenza del genitore: la dichiara il contratto e serve al Club per
+      // le comunicazioni cartacee. Provincia esclusa: bastano via, citta' e CAP.
+      indirizzo: {
+        via: val('isc-addr'),
+        citta: val('isc-city'),
+        cap: val('isc-cap'),
       },
       iscrizione: {
         tipo,
