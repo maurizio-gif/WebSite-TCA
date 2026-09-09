@@ -1,192 +1,237 @@
 ---
-_template: personal_trainer
-title: "Personal Trainer e Training Su Misura | TCA Sport Club Milano"
-description: "Personal trainer certificati per programmi di training su misura, potenziamento e preparazione atletica in palestra, al TC Ambrosiano, sport club di Milano con tennis, padel e pickleball."
-hero_eyebrow: "Adulti · Preparazione Atletica"
-hero_titolo: "Personal"
-hero_titolo_accent: "Trainer"
-hero_sottotitolo: "Professionisti certificati che costruiscono il tuo programma di allenamento partendo dal tuo obiettivo. Nessun protocollo standard: solo lavoro su misura."
-hero_immagine: "/Sala%20Attrezzi%202.avif"
-hero_immagine_alt: "Personal trainer TCA"
-title_en: "Personal Trainers & Tailored Training | TCA Sport Club Milan"
-description_en: "Certified personal trainers for tailored training programmes, strength building and athletic conditioning, at TC Ambrosiano, Milan's sport club with tennis, padel and pickleball."
-hero_eyebrow_en: "Adults · Athletic Training"
-hero_titolo_en: "Personal"
-hero_titolo_accent_en: "Trainer"
-hero_sottotitolo_en: "Certified professionals who build your training programme around your goal. No standard protocol: only tailored work."
-hero_immagine_alt_en: "TCA personal trainer"
-pt_sezione1_eyebrow: "Il tuo allenamento"
-pt_sezione1_titolo: "Allenarti bene"
-pt_sezione1_titolo_accent: "è una scienza."
-pt_sezione1_paragrafo1: "Ogni persona è diversa: storia clinica, obiettivi, tempi di recupero, motivazioni. I nostri personal trainer partono da un assessment iniziale approfondito per costruire un programma che ti porti risultati reali, senza sprecare energia né tempo."
-pt_sezione1_paragrafo2: "Che tu voglia perdere peso, aumentare la forza, prepararti per una gara di tennis o semplicemente muoverti meglio, lavorerai sempre con qualcuno che sa dove vuole portarti."
+title: Personal Trainer e Training Su Misura | TCA Sport Club Milano
+description: 'Personal trainer certificati per programmi di training su misura, potenziamento e preparazione atletica in palestra, al TC Ambrosiano, sport club di Milano con tennis, padel e pickleball.'
+hero_eyebrow: Adulti · Preparazione Atletica
+hero_titolo: Personal
+hero_titolo_accent: Trainer
+hero_sottotitolo: 'Professionisti certificati che costruiscono il tuo programma di allenamento partendo dal tuo obiettivo. Nessun protocollo standard: solo lavoro su misura.'
+hero_immagine: /Sala%20Attrezzi%202.avif
+hero_immagine_alt: Personal trainer TCA
+title_en: Personal Trainers & Tailored Training | TCA Sport Club Milan
+description_en: 'Certified personal trainers for tailored training programmes, strength building and athletic conditioning, at TC Ambrosiano, Milan''s sport club with tennis, padel and pickleball.'
+hero_eyebrow_en: Adults · Athletic Training
+hero_titolo_en: Personal
+hero_titolo_accent_en: Trainer
+hero_sottotitolo_en: 'Certified professionals who build your training programme around your goal. No standard protocol: only tailored work.'
+hero_immagine_alt_en: TCA personal trainer
+pt_sezione1_eyebrow: Il tuo allenamento
+pt_sezione1_titolo: Allenarti bene
+pt_sezione1_titolo_accent: è una scienza.
+pt_sezione1_paragrafo1: 'Ogni persona è diversa: storia clinica, obiettivi, tempi di recupero, motivazioni. I nostri personal trainer partono da un assessment iniziale approfondito per costruire un programma che ti porti risultati reali, senza sprecare energia né tempo.'
+pt_sezione1_paragrafo2: 'Che tu voglia perdere peso, aumentare la forza, prepararti per una gara di tennis o semplicemente muoverti meglio, lavorerai sempre con qualcuno che sa dove vuole portarti.'
 pt_stats:
-  - numero: "4"
-    etichetta: "Personal Trainer\ncertificati"
-    etichetta_en: "Certified\npersonal trainers"
-  - numero: "1:1"
-    etichetta: "Sedute individuali\no in coppia"
-    etichetta_en: "Individual sessions\nor in pairs"
-  - numero: "60'"
-    etichetta: "Durata standard\nper sessione"
-    etichetta_en: "Standard duration\nper session"
-  - numero: "∞"
-    etichetta: "Obiettivi\nraggiungibili"
-    etichetta_en: "Achievable\ngoals"
-pt_sezione2_eyebrow: "Il Team"
-pt_sezione2_titolo: "Conosci i tuoi"
-pt_sezione2_titolo_accent: "trainer."
+  - numero: '4'
+    etichetta: |-
+      Personal Trainer
+      certificati
+    etichetta_en: |-
+      Certified
+      personal trainers
+  - numero: '1:1'
+    etichetta: |-
+      Sedute individuali
+      o in coppia
+    etichetta_en: |-
+      Individual sessions
+      or in pairs
+  - numero: 60'
+    etichetta: |-
+      Durata standard
+      per sessione
+    etichetta_en: |-
+      Standard duration
+      per session
+  - numero: ∞
+    etichetta: |-
+      Obiettivi
+      raggiungibili
+    etichetta_en: |-
+      Achievable
+      goals
+pt_sezione2_eyebrow: Il Team
+pt_sezione2_titolo: Conosci i tuoi
+pt_sezione2_titolo_accent: trainer.
 pt_trainers:
-  - nome: "Alessio Andolina"
-    foto: "/Personal%20Trainer%20Alessio%20Andolina.jpg"
+  - nome: Alessio Andolina
+    foto: /Personal%20Trainer%20Alessio%20Andolina.jpg
     specializzazioni:
-      - "Sport da combattimento, Boxe, Kickboxing"
-      - "Crossfit e High Intensity Training"
-      - "Preparazione atletica specifica"
+      - 'Sport da combattimento, Boxe, Kickboxing'
+      - Crossfit e High Intensity Training
+      - Preparazione atletica specifica
     qualifiche:
-      - "Atleta professionista sport da combattimento"
-      - "Maestro Kick Boxing"
-      - "Istruttore Kettlebell"
+      - Atleta professionista sport da combattimento
+      - Maestro Kick Boxing
+      - Istruttore Kettlebell
     lingue:
-      - "Italiano"
+      - Italiano
     specializzazioni_en:
-      - "Combat sports, Boxing, Kickboxing"
-      - "Crossfit and High Intensity Training"
-      - "Sport-specific athletic training"
+      - 'Combat sports, Boxing, Kickboxing'
+      - Crossfit and High Intensity Training
+      - Sport-specific athletic training
     qualifiche_en:
-      - "Professional combat sports athlete"
-      - "Kickboxing master instructor"
-      - "Kettlebell instructor"
+      - Professional combat sports athlete
+      - Kickboxing master instructor
+      - Kettlebell instructor
     lingue_en:
-      - "Italian"
-  - nome: "Federico Tronconi"
-    foto: "/Personal%20Trainer%20Federico%20Tronconi.jpg"
+      - Italian
+  - nome: Federico Tronconi
+    foto: /Personal%20Trainer%20Federico%20Tronconi.jpg
     specializzazioni:
-      - "Allenamento funzionale e Kettlebell"
-      - "Allenamento della forza"
-      - "Sport da combattimento (boxe, kick boxing, K-1)"
+      - Allenamento funzionale e Kettlebell
+      - Allenamento della forza
+      - 'Sport da combattimento (boxe, kick boxing, K-1)'
     qualifiche:
-      - "Personal trainer certificato"
-      - "Preparatore atletico sport da combattimento"
+      - Personal trainer certificato
+      - Preparatore atletico sport da combattimento
     lingue:
-      - "Italiano"
-      - "Francese"
+      - Italiano
+      - Francese
     specializzazioni_en:
-      - "Functional training and Kettlebell"
-      - "Strength training"
-      - "Combat sports (boxing, kickboxing, K-1)"
+      - Functional training and Kettlebell
+      - Strength training
+      - 'Combat sports (boxing, kickboxing, K-1)'
     qualifiche_en:
-      - "Certified personal trainer"
-      - "Combat sports athletic coach"
+      - Certified personal trainer
+      - Combat sports athletic coach
     lingue_en:
-      - "Italian"
-      - "French"
-  - nome: "Giusi De Rosa"
-    foto: "/Personal%20Trainer%20Giusi%20De%20Rosa.jpg"
+      - Italian
+      - French
+  - nome: Giusi De Rosa
+    foto: /Personal%20Trainer%20Giusi%20De%20Rosa.jpg
     specializzazioni:
-      - "Body Building"
-      - "Allenamento funzionale"
-      - "Allenamento al femminile"
-      - "Ricomposizione corporea"
-      - "Allenamento in mini gruppi"
+      - Body Building
+      - Allenamento funzionale
+      - Allenamento al femminile
+      - Ricomposizione corporea
+      - Allenamento in mini gruppi
     qualifiche:
-      - "Personal trainer certificato e docente A.I.F."
-      - "Specialista funzionale"
+      - Personal trainer certificato e docente A.I.F.
+      - Specialista funzionale
     lingue:
-      - "Italiano"
-      - "Inglese"
+      - Italiano
+      - Inglese
     specializzazioni_en:
-      - "Body Building"
-      - "Functional training"
-      - "Women's training"
-      - "Body recomposition"
-      - "Small-group training"
+      - Body Building
+      - Functional training
+      - Women's training
+      - Body recomposition
+      - Small-group training
     qualifiche_en:
-      - "Certified personal trainer and A.I.F. instructor"
-      - "Functional training specialist"
+      - Certified personal trainer and A.I.F. instructor
+      - Functional training specialist
     lingue_en:
-      - "Italian"
-      - "English"
-  - nome: "Matteo Sandri"
-    foto: "/Personal%20Trainer%20Matteo%20Sandri.jpg"
+      - Italian
+      - English
+  - nome: Matteo Sandri
+    foto: /Personal%20Trainer%20Matteo%20Sandri.jpg
     specializzazioni:
-      - "Allenamento della forza"
-      - "Preparazione sport-specifica"
-      - "Recupero post-operatorio"
-      - "Postura"
+      - Allenamento della forza
+      - Preparazione sport-specifica
+      - Recupero post-operatorio
+      - Postura
     qualifiche:
-      - "Laurea in scienze motorie"
-      - "Esercizio correttivo"
-      - "Esercizio terapeutico per patologie articolari"
+      - Laurea in scienze motorie
+      - Esercizio correttivo
+      - Esercizio terapeutico per patologie articolari
     lingue:
-      - "Italiano"
+      - Italiano
     specializzazioni_en:
-      - "Strength training"
-      - "Sport-specific preparation"
-      - "Post-surgery recovery"
-      - "Posture"
+      - Strength training
+      - Sport-specific preparation
+      - Post-surgery recovery
+      - Posture
     qualifiche_en:
-      - "Degree in Sport Science"
-      - "Corrective exercise"
-      - "Therapeutic exercise for joint conditions"
+      - Degree in Sport Science
+      - Corrective exercise
+      - Therapeutic exercise for joint conditions
     lingue_en:
-      - "Italian"
-pt_sezione3_eyebrow: "Come funziona"
-pt_sezione3_titolo: "Dal primo giorno"
-pt_sezione3_titolo_accent: "al tuo obiettivo."
+      - Italian
+  - nome: Vincenzo Michelino
+    foto: /PT%20Vincenzo%20Michelino.jpeg
+    specializzazioni:
+      - Bodybuilding e ricomposizione corporea
+      - Preparazione atletica e allenamento funzionale
+      - Prevenzione infortuni e potenziamento per Tennis e Padel
+      - Preparazione agonistica Bodybuilding Natural
+    qualifiche:
+      - Docente formatore Bodybuilding e Fitness
+      - Tecnico Sportivo C.O.N.I.
+      - Personal Trainer certificato
+      - Preparatore agonistico Bodybuilding Natural
+    lingue:
+      - Italiano
+      - Inglese
+    specializzazioni_en:
+      - Bodybuilding and body recomposition
+      - Athletic preparation and functional training
+      - Injury prevention and strength training for tennis and padel
+      - Competitive preparation for natural bodybuilding
+    qualifiche_en:
+      - Bodybuilding and fitness instructor
+      - C.O.N.I. sports coach
+      - Certified personal trainer
+      - Competitive coach for natural bodybuilding
+    lingue_en:
+      - Italian
+      - English
+pt_sezione3_eyebrow: Come funziona
+pt_sezione3_titolo: Dal primo giorno
+pt_sezione3_titolo_accent: al tuo obiettivo.
 pt_steps:
-  - titolo: "Assessment iniziale"
-    testo: "Incontro gratuito con il trainer per valutare postura, mobilità, forza e definire gli obiettivi."
-    titolo_en: "Initial assessment"
-    testo_en: "A free meeting with the trainer to assess posture, mobility and strength and to define your goals."
-  - titolo: "Programma su misura"
-    testo: "Il trainer costruisce un piano periodizzato settimana per settimana, adattato ai tuoi tempi e alla tua condizione."
-    titolo_en: "Tailored programme"
-    testo_en: "The trainer builds a periodised plan week by week, adapted to your schedule and your condition."
-  - titolo: "Allenamento & monitoraggio"
-    testo: "Sessioni guidate in sala attrezzi con feedback continuo e aggiornamenti progressivi del programma."
-    titolo_en: "Training & monitoring"
-    testo_en: "Guided sessions in the gym with continuous feedback and progressive updates to the programme."
-  - titolo: "Risultati misurabili"
-    testo: "Rivalutazione periodica per tracciare i progressi e aggiustare la rotta. Ogni dato conta."
-    titolo_en: "Measurable results"
-    testo_en: "Periodic re-assessment to track progress and adjust course. Every data point counts."
-pt_sezione4_titolo: "Pronto a iniziare?"
-pt_sezione4_sottotitolo: "Prenota una sessione di assessment gratuita con uno dei nostri trainer. Nessun impegno: solo un'ora per capire come allenarti meglio."
-pt_sezione4_cta_label: "Prenota il tuo assessment gratuito"
-pt_sezione1_eyebrow_en: "Your training"
-pt_sezione1_titolo_en: "Training well"
-pt_sezione1_titolo_accent_en: "is a science."
-pt_sezione1_paragrafo1_en: "Everyone is different: medical history, goals, recovery times, motivation. Our personal trainers start with an in-depth initial assessment to build a programme that delivers real results, without wasting energy or time."
-pt_sezione1_paragrafo2_en: "Whether you want to lose weight, build strength, prepare for a tennis match or simply move better, you'll always work with someone who knows where they want to take you."
-pt_sezione2_eyebrow_en: "The Team"
-pt_sezione2_titolo_en: "Meet your"
-pt_sezione2_titolo_accent_en: "trainers."
-pt_sezione3_eyebrow_en: "How it works"
-pt_sezione3_titolo_en: "From day one"
-pt_sezione3_titolo_accent_en: "to your goal."
-pt_sezione4_titolo_en: "Ready to start?"
-pt_sezione4_sottotitolo_en: "Book a free assessment session with one of our trainers. No commitment: just one hour to understand how to train better."
-pt_sezione4_cta_label_en: "Book your free assessment"
+  - titolo: Assessment iniziale
+    testo: 'Incontro gratuito con il trainer per valutare postura, mobilità, forza e definire gli obiettivi.'
+    titolo_en: Initial assessment
+    testo_en: 'A free meeting with the trainer to assess posture, mobility and strength and to define your goals.'
+  - titolo: Programma su misura
+    testo: 'Il trainer costruisce un piano periodizzato settimana per settimana, adattato ai tuoi tempi e alla tua condizione.'
+    titolo_en: Tailored programme
+    testo_en: 'The trainer builds a periodised plan week by week, adapted to your schedule and your condition.'
+  - titolo: Allenamento & monitoraggio
+    testo: Sessioni guidate in sala attrezzi con feedback continuo e aggiornamenti progressivi del programma.
+    titolo_en: Training & monitoring
+    testo_en: Guided sessions in the gym with continuous feedback and progressive updates to the programme.
+  - titolo: Risultati misurabili
+    testo: Rivalutazione periodica per tracciare i progressi e aggiustare la rotta. Ogni dato conta.
+    titolo_en: Measurable results
+    testo_en: Periodic re-assessment to track progress and adjust course. Every data point counts.
+pt_sezione4_titolo: Pronto a iniziare?
+pt_sezione4_sottotitolo: 'Prenota una sessione di assessment gratuita con uno dei nostri trainer. Nessun impegno: solo un''ora per capire come allenarti meglio.'
+pt_sezione4_cta_label: Prenota il tuo assessment gratuito
+pt_sezione1_eyebrow_en: Your training
+pt_sezione1_titolo_en: Training well
+pt_sezione1_titolo_accent_en: is a science.
+pt_sezione1_paragrafo1_en: 'Everyone is different: medical history, goals, recovery times, motivation. Our personal trainers start with an in-depth initial assessment to build a programme that delivers real results, without wasting energy or time.'
+pt_sezione1_paragrafo2_en: 'Whether you want to lose weight, build strength, prepare for a tennis match or simply move better, you''ll always work with someone who knows where they want to take you.'
+pt_sezione2_eyebrow_en: The Team
+pt_sezione2_titolo_en: Meet your
+pt_sezione2_titolo_accent_en: trainers.
+pt_sezione3_eyebrow_en: How it works
+pt_sezione3_titolo_en: From day one
+pt_sezione3_titolo_accent_en: to your goal.
+pt_sezione4_titolo_en: Ready to start?
+pt_sezione4_sottotitolo_en: 'Book a free assessment session with one of our trainers. No commitment: just one hour to understand how to train better.'
+pt_sezione4_cta_label_en: Book your free assessment
 faq:
-  - domanda: "Come si inizia un percorso con un personal trainer al TCA?"
-    risposta: "Si parte da un assessment iniziale approfondito, in cui il trainer analizza storia, obiettivi e condizione fisica, per poi costruire un programma di allenamento su misura. Puoi richiedere informazioni tramite il modulo contatti o in segreteria."
-    domanda_en: "How do I start with a personal trainer at TCA?"
-    risposta_en: "It all starts with an in-depth initial assessment, where the trainer reviews your history, goals and physical condition, then builds a tailored training programme. You can request information through the contact form or at reception."
-  - domanda: "Quanto dura una sessione di personal training?"
-    risposta: "La durata standard di una sessione è di 60 minuti. Le sedute possono essere individuali o in coppia."
-    domanda_en: "How long is a personal training session?"
-    risposta_en: "A standard session lasts 60 minutes. Sessions can be individual or in pairs."
-  - domanda: "Devo essere socio per allenarmi con un personal trainer?"
-    risposta: "Le sessioni si svolgono nella sala attrezzi del Club, riservata ai soci. Contattaci e ti aiutiamo a individuare la formula di membership più adatta al percorso che vuoi iniziare."
-    domanda_en: "Do I need to be a member to train with a personal trainer?"
-    risposta_en: "Sessions take place in the Club gym, which is reserved for members. Get in touch and we'll help you find the membership option that best fits the programme you want to start."
-  - domanda: "In cosa sono specializzati i personal trainer del TCA?"
-    risposta: "Il team copre specializzazioni che vanno dall'allenamento della forza e funzionale agli sport da combattimento, fino alla preparazione atletica sport-specifica. Tutti i trainer sono certificati e alcuni parlano anche lingue straniere."
-    domanda_en: "What are TCA's personal trainers specialised in?"
-    risposta_en: "The team covers specialisations ranging from strength and functional training to combat sports and sport-specific athletic preparation. All trainers are certified, and some also speak foreign languages."
-  - domanda: "Il personal trainer può aiutarmi a migliorare nel tennis?"
-    risposta: "Sì, i nostri trainer sviluppano programmi di preparazione atletica specifici per il tennis, lavorando su esplosività, resistenza e agilità, anche in vista della stagione agonistica."
-    domanda_en: "Can a personal trainer help me improve my tennis?"
-    risposta_en: "Yes, our trainers develop tennis-specific athletic preparation programmes, working on explosiveness, endurance and agility, including ahead of the competitive season."
+  - domanda: Come si inizia un percorso con un personal trainer al TCA?
+    risposta: 'Si parte da un assessment iniziale approfondito, in cui il trainer analizza storia, obiettivi e condizione fisica, per poi costruire un programma di allenamento su misura. Puoi richiedere informazioni tramite il modulo contatti o in segreteria.'
+    domanda_en: How do I start with a personal trainer at TCA?
+    risposta_en: 'It all starts with an in-depth initial assessment, where the trainer reviews your history, goals and physical condition, then builds a tailored training programme. You can request information through the contact form or at reception.'
+  - domanda: Quanto dura una sessione di personal training?
+    risposta: La durata standard di una sessione è di 60 minuti. Le sedute possono essere individuali o in coppia.
+    domanda_en: How long is a personal training session?
+    risposta_en: A standard session lasts 60 minutes. Sessions can be individual or in pairs.
+  - domanda: Devo essere socio per allenarmi con un personal trainer?
+    risposta: 'Le sessioni si svolgono nella sala attrezzi del Club, riservata ai soci. Contattaci e ti aiutiamo a individuare la formula di membership più adatta al percorso che vuoi iniziare.'
+    domanda_en: Do I need to be a member to train with a personal trainer?
+    risposta_en: 'Sessions take place in the Club gym, which is reserved for members. Get in touch and we''ll help you find the membership option that best fits the programme you want to start.'
+  - domanda: In cosa sono specializzati i personal trainer del TCA?
+    risposta: 'Il team copre specializzazioni che vanno dall''allenamento della forza e funzionale agli sport da combattimento, fino alla preparazione atletica sport-specifica. Tutti i trainer sono certificati e alcuni parlano anche lingue straniere.'
+    domanda_en: What are TCA's personal trainers specialised in?
+    risposta_en: 'The team covers specialisations ranging from strength and functional training to combat sports and sport-specific athletic preparation. All trainers are certified, and some also speak foreign languages.'
+  - domanda: Il personal trainer può aiutarmi a migliorare nel tennis?
+    risposta: 'Sì, i nostri trainer sviluppano programmi di preparazione atletica specifici per il tennis, lavorando su esplosività, resistenza e agilità, anche in vista della stagione agonistica.'
+    domanda_en: Can a personal trainer help me improve my tennis?
+    risposta_en: 'Yes, our trainers develop tennis-specific athletic preparation programmes, working on explosiveness, endurance and agility, including ahead of the competitive season.'
+_template: personal_trainer
 ---
+
