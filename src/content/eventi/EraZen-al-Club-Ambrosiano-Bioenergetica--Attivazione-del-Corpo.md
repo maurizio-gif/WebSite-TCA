@@ -43,19 +43,12 @@ Nessuna esperienza richiesta: bastano abbigliamento comodo e la disponibilità a
 
 *Quando*: domenica 20 settembre 2026, dalle 10:00 alle 12:00
 
-*Struttura del percorso* (75–90 min):
-
-* attivazione corporea (15 min)
-* lavoro bioenergetico (50 min)
-* rilassamento finale (15 min)
+*Struttura del percorso* (75–90 min): attivazione corporea (15 min), lavoro bioenergetico (50 min), rilassamento finale (15 min)
 
 *Insegnante*: Daniele Guanazzi, terapista corporeo, conduttore di gruppi di Pratica Bioenergetica e insegnante di BioYoga.
 
 *Cosa portare:*  bastano abbigliamento comodo e la disponibilità a stare in ascolto.
 
-*Costo di partecipazione*:
-
-* 25€ - Soci
-* 35€ - Non Soci
+*Costo di partecipazione*: 25€ - Soci, 35€ - Non Soci
 
 Partecipazione limitata a un massimo di 16 persone. Prenotazione online dal form qui sotto: il posto resta impegnato per 48 ore, il pagamento si effettua in Reception.
