@@ -3,7 +3,7 @@ titolo: Open Court Tennis & Aperitivo DJ Set
 data: 2026-09-27T00:00:00.000Z
 categoria: Evento
 descrizione: |-
-  Tennis, musica e aperitivo: una domenica da vivere insieme!
+  Tennis, musica e aperitivo: una domenica da vivere insieme al Club Ambrosiano!
   Sfide sul campo, DJ set e aperitivo in terrazza per un pomeriggio di sport, divertimento e Club Life.
 luogo: Campi in Terra e Club House
 iscrizioniHref: 'https://www.thecliq.app/event/open-court-milano'
