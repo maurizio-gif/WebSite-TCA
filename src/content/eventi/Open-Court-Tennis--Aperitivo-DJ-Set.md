@@ -38,9 +38,11 @@ corpo_en: |-
   Spots are limited to guarantee ample play time for all participants. Secure your spot on court by contacting the club front desk or through the official event registration channels.
 ---
 
-## Open Court fa tappa al Tennis Club Ambrosiano: tennis, musica e socialità a Milano
+# Open Court fa tappa al Tennis Club Ambrosiano: tennis, musica e socialità a Milano
 
-### Il grande tennis incontra il ritmo della musica e la voglia di stare insieme: domenica 27 settembre 2026, il Tennis Club Ambrosiano accoglie nei suoi spazi di Via Feltre l'evento Open Court. Un pomeriggio speciale ideato per chi vuole scendere in campo, mettersi alla prova con format innovativi e godersi un'atmosfera di pura festa a bordo campo.
+## Il grande tennis incontra il ritmo della musica e la voglia di stare insieme!
+
+### Domenica 27 settembre 2026, il Tennis Club Ambrosiano accoglie nei suoi spazi di Via Feltre l'evento Open Court. Un pomeriggio speciale ideato per chi vuole scendere in campo, mettersi alla prova con format innovativi e godersi un'atmosfera di pura festa a bordo campo.
 
 ##### Il programma della giornata
 
