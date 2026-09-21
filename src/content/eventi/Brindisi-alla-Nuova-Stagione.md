@@ -15,7 +15,7 @@ descrizione_en: |-
   The event will provide the backdrop to the afternoon’s Open Court matches, with live DJ sets by Rico Dallas and MAGNVM providing the soundtrack.
   Free entry for all members; no booking required.
 luogo_en: Terrace
-corpo_en: |+
+corpo_en: |
   Let’s raise a glass to the new season!
   The Ambrosiano Tennis Club is back in action and is celebrating the start of the season with a special event entirely dedicated to members and club life.
   On Sunday 27 September 2026, the terrace of our clubhouse will become the beating heart of the day as we come together to celebrate the start of the new sporting season, in an atmosphere of relaxation, music and conviviality.
@@ -41,7 +41,7 @@ corpo_en: |+
 
 # Brindiamo alla Nuova Stagione!
 
-## Il **Tennis Club Ambrosiano** riparte e celebra l'avvio delle attività con un momento speciale interamente dedicato ai soci e alla vita di club. 
+## Il **Tennis Club Ambrosiano** riparte e celebra l'avvio delle attività con un momento speciale interamente dedicato ai soci e alla vita di club.
 
 Domenica 27 settembre 2026, la terrazza della nostra club house si trasformerà nel cuore pulsante della giornata per festeggiare insieme l'inizio della nuova stagione sportiva, all'insegna del relax, della musica e della convivialità.
 
