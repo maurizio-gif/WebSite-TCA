@@ -36,7 +36,7 @@ corpo_en: |
 
 #### Smetti di giocare ogni colpo isolatamente e impara a strutturare uno scambio vincente. Domenica 4 ottobre, il Tennis Club Ambrosiano ti invita a un’esperienza formativa intensiva focalizzata sulla visione tattica del gioco: due ore di lavoro sul campo per dominare la geometria dello scambio, dall'apertura del campo fino alla chiusura a rete.
 
-###### Dettagli dell'Evento:
+**Dettagli dell'Evento:**
 
 * Data: Domenica 4 Ottobre 2026
 * Orario: Slot Mattino | 09:00 – 11:00
@@ -45,7 +45,7 @@ corpo_en: |
 * Quote di Partecipazione: Soci TC Ambrosiano 50 € | Non Soci 70 €
 * La quota comprende: 2 ore di clinic intensiva, materiale tecnico per l'attività, attestato di partecipazione.
 
-###### Programma Didattico (2 Ore)
+**Programma Didattico (2 Ore)**
 
 * Attivazione & Controllo: Palleggio progressivo con obiettivi di direzione e profondità (cross, lungolinea e cambi).
 * Pattern 1 – Aprire il campo: Sequenze di 2 colpi incrociati per muovere l'avversario e accelerare sul campo libero.
