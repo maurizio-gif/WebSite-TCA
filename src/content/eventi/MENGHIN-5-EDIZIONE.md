@@ -4,6 +4,7 @@ data: 2026-11-01T00:00:00.000Z
 categoria: Torneo
 descrizione: 5 EDIZIONE
 iscrizioniHref: ''
+pubblicato: true
 prenotazioniAttive: true
 postiTotali: 100
 quotaSocio: 0
