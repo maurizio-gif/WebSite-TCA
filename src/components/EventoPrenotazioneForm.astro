@@ -226,7 +226,7 @@ const privacyHtml = t.privacy.replace('{href}', p('/privacy-policy'));
             <path d="M4 13L10 19L22 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <h3 class="lm__confirm-title" set:html={lang === 'en' ? 'Spot<br><em>held!</em>' : 'Posto<br><em>impegnato!</em>'} />
+        <h3 class="lm__confirm-title" data-ev-confirm-title set:html={lang === 'en' ? 'Spot<br><em>held!</em>' : 'Posto<br><em>impegnato!</em>'} />
         <div class="evp__confirm-box">
           <p class="evp__confirm-line" data-ev-confirm-fee></p>
           <p class="evp__confirm-line" data-ev-confirm-by></p>

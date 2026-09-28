@@ -77,6 +77,10 @@ function galleriaEmailSafe(): string[] {
 // marketing usa davvero da Tina (titoli, liste, grassetto, link, immagini,
 // citazioni): il resto viene ripulito, perché in email quel testo finisce
 // dentro un <p> costruito dal CRM, non in un renderer markdown.
+function quotaTesto(quota: number): string {
+  return quota === 0 ? 'gratuita' : `€ ${quota}`;
+}
+
 function paragrafiDaMarkdown(corpo: string | undefined): string[] {
   if (!corpo) return [];
   return corpo
@@ -212,7 +216,9 @@ export const GET: APIRoute = async ({ site }) => {
       note: [
         entry.data.luogo ? `Luogo: ${entry.data.luogo}` : null,
         prenotabile
-          ? `Prenotazione online attiva — quota soci € ${entry.data.quotaSocio}, non soci € ${entry.data.quotaNonSocio}`
+          ? entry.data.quotaSocio === 0 && entry.data.quotaNonSocio === 0
+            ? 'Prenotazione online attiva — partecipazione gratuita'
+            : `Prenotazione online attiva — quota soci ${quotaTesto(entry.data.quotaSocio)}, non soci ${quotaTesto(entry.data.quotaNonSocio)}`
           : null,
       ]
         .filter(Boolean)
