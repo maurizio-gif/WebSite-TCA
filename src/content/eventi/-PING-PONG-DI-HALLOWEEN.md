@@ -7,6 +7,7 @@ descrizione: |-
 
   Preparate il vostro travestimento più terrorizzante: mostri, vampiri, streghe e fantasmi sono i benvenuti al tavolo da gioco! Oltre ai premi per il 1° e 2° classificato, verrà assegnato un riconoscimento speciale al Miglior Travestimento.
 luogo: Body&Mind
+pubblicato: true
 prenotazioniAttive: true
 postiTotali: 16
 quotaSocio: 0
