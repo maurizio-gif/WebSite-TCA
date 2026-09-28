@@ -11,7 +11,7 @@ pubblicato: true
 prenotazioniAttive: false
 postiTotali: 100
 quotaSocio: 0
-oreScadenzaPagamento: 0
+oreScadenzaPagamento: 48
 titolo_en: ROAD TO BOLOGNA By FULFIL 26
 descrizione_en: |-
   The amateur circuit “Road to Bologna by FULFIL” awards places in the National Masters, which will be held in Bologna.

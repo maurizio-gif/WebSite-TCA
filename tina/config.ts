@@ -108,6 +108,15 @@ export default defineConfig({
             label: 'Ore per pagare in cassa',
             description:
               'Entro quante ore va pagata la quota in cassa. Scaduto il termine la prenotazione decade e il posto torna disponibile (default 48).',
+            // Deve rispettare lo schema Astro (intero > 0): con 0 la build fallisce.
+            ui: {
+              validate: (value) => {
+                if (value === undefined || value === null || value === '') return;
+                if (!Number.isInteger(Number(value)) || Number(value) <= 0) {
+                  return 'Inserisci un numero intero di ore maggiore di 0, oppure lascia vuoto per il default (48).';
+                }
+              },
+            },
           },
           {
             type: 'string',
