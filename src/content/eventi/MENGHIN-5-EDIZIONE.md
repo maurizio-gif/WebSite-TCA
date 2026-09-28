@@ -7,7 +7,7 @@ descrizione: |-
   I vincitori e i qualificati dei Master Regionali volano alla fase nazionale di Bologna per rappresentare la propria regione durante l'evento della Coppa Davis.
 luogo: Terra Rossa
 iscrizioniHref: ''
-pubblicato: false
+pubblicato: true
 prenotazioniAttive: false
 postiTotali: 100
 quotaSocio: 0
