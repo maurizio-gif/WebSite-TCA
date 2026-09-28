@@ -7,6 +7,7 @@ descrizione: |-
   Asciugamano in borsa e agenda alla mano: sabato 24 ottobre prende il via il Wellness Day. 
   Resta sintonizzato per scoprire tutte le attività in programma e gli specialisti coinvolti: nei prossimi giorni sveleremo il calendario completo e le modalità di prenotazione!
 luogo: Club
+pubblicato: true
 descrizione_en: |-
   SAVE THE DATE!
   Pack a towel and keep your diary to hand: Wellness Day kicks off on Saturday 24 October.
@@ -25,14 +26,14 @@ corpo_en: |
   Stay tuned: we’ll be revealing the full programme and how to book very soon, so you can secure a front-row spot.
 ---
 
-# Segna la data in agenda: sabato 24 ottobre arriva il Wellness Day! 
+# Segna la data in agenda: sabato 24 ottobre arriva il Wellness Day!
 
 ## Una giornata carica di energia interamente pensata per la tua salute e il tuo benessere.
 
-I nostri fantastici istruttori e alcune tra le realtà più vicine al club uniranno le forze per offrirti un’esperienza unica tra movimento, prevenzione e stile di vita sano. 
+I nostri fantastici istruttori e alcune tra le realtà più vicine al club uniranno le forze per offrirti un’esperienza unica tra movimento, prevenzione e stile di vita sano.
 
 Ad accompagnare la giornata ci sarà anche il nostro Ghusto Cafe TCA, aperto con una selezione di proposte healthy, fresche e di stagione pensate appositamente per l'evento.
 
-L’ingresso è totalmente gratuito, ma i posti saranno limitati! 
+L’ingresso è totalmente gratuito, ma i posti saranno limitati!
 
 Rimani informato: a brevissimo sveleremo il programma completo e le modalità di prenotazione per assicurarti un posto in prima fila.
