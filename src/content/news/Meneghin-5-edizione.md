@@ -3,7 +3,7 @@ titolo: Meneghin 5° edizione
 data: 2026-09-28T00:00:00.000Z
 categoria: Torneo sociale
 sintesi: 'Il Tennis Club Ambrosiano apre le iscrizioni per la 5ª Edizione del MENEGHIN, il torneo amatoriale open riservato ai Soci. La competizione prevede la fase "Race" a gironi virtuali dal 1° novembre 2026 al 28 marzo 2027, con sfide autogestite e punteggi parametrati al divario di Ranking. I primi 8 tennisti della classifica accederanno al Master Finale ad eliminazione diretta il 17 e 18 aprile 2027. La partecipazione è totalmente gratuita: i nuovi iscritti possono registrarsi accedendo al gruppo WhatsApp dedicato inviando nome, cognome e numero di cellulare.'
-immagine: /logo meneghin 2026_2027.jpg
+immagine: /SAT E MINITENNIS.png
 immagine_alt: Meneghin 5° Edizione
 cta_label: Partecipa
 cta_href: 'https://chat.whatsapp.com/HIcDzSt6L641bHzyGdyG7c '
@@ -56,53 +56,53 @@ corpo_en: |
   2025–2026: Virginia Lucchini
 ---
 
-# MENEGHIN 2026/2027 
+# MENEGHIN 2026/2027
 
 ## AL VIA LA NUOVA STAGIONE AL TENNIS CLUB AMBROSIANO
 
-Il Tennis Club Ambrosiano è lieto di annunciare l'apertura delle iscrizioni per la 5ª Edizione del MENEGHIN, lo storico appuntamento sociale open non agonistico riservato ai nostri Soci.   
+Il Tennis Club Ambrosiano è lieto di annunciare l'apertura delle iscrizioni per la 5ª Edizione del MENEGHIN, lo storico appuntamento sociale open non agonistico riservato ai nostri Soci.
 
-Che siate giocatori esperti o soci desiderosi di divertirsi e ampliare il proprio network sportivo all'interno del Club, il MENEGHIN rappresenta l'occasione perfetta per sfidarsi sui campi della nostra struttura, mantenendo vivo lo spirito del gentlemen’s agreement e del puro agonismo amatoriale.   
+Che siate giocatori esperti o soci desiderosi di divertirsi e ampliare il proprio network sportivo all'interno del Club, il MENEGHIN rappresenta l'occasione perfetta per sfidarsi sui campi della nostra struttura, mantenendo vivo lo spirito del gentlemen’s agreement e del puro agonismo amatoriale.
 
 ### Come funziona la competizione
 
 La competizione si articola in due macro-fasi:
 
-1. La Race (dal 1° novembre 2026 al 28 marzo 2027): la fase a gironi virtuali durante la quale i soci organizzano autonomamente le proprie sfide. Durante la Race contano i migliori 21 risultati accumulati, incontrando lo stesso avversario per un massimo di 4 volte. La Ranking viene aggiornata ed emessa ogni lunedì nel gruppo WhatsApp ufficiale.   
-2. Il Master Finale (17 e 18 aprile 2027): i primi 8 tennisti della Ranking al termine della Race si qualificheranno per il tabellone ad eliminazione diretta che incoronerà il vincitore della stagione.   
+1. La Race (dal 1° novembre 2026 al 28 marzo 2027): la fase a gironi virtuali durante la quale i soci organizzano autonomamente le proprie sfide. Durante la Race contano i migliori 21 risultati accumulati, incontrando lo stesso avversario per un massimo di 4 volte. La Ranking viene aggiornata ed emessa ogni lunedì nel gruppo WhatsApp ufficiale.
+2. Il Master Finale (17 e 18 aprile 2027): i primi 8 tennisti della Ranking al termine della Race si qualificheranno per il tabellone ad eliminazione diretta che incoronerà il vincitore della stagione.
 
 ### Modalità di gioco e punteggi
 
-Per facilitare la gestione delle sfide tra Soci, sono previste due modalità di match: 2 set su 3 in 2 ore contigue: con killer point al secondo vantaggio e super tie-break ai 10 punti per il terzo set.   
+Per facilitare la gestione delle sfide tra Soci, sono previste due modalità di match: 2 set su 3 in 2 ore contigue: con killer point al secondo vantaggio e super tie-break ai 10 punti per il terzo set.
 
-* Vittoria 2-0: 60 punti al vincitore, 0 allo sconfitto.   
-* Vittoria 2-1: 50 punti al vincitore, 20 allo sconfitto.   
+* Vittoria 2-0: 60 punti al vincitore, 0 allo sconfitto.
+* Vittoria 2-1: 50 punti al vincitore, 20 allo sconfitto.
 
-2 set su 3 in 2 ore non contigue (1h + 1h): la seconda ora deve essere recuperata entro 15 giorni.   
+2 set su 3 in 2 ore non contigue (1h + 1h): la seconda ora deve essere recuperata entro 15 giorni.
 
-* Vittoria 2-0: 50 punti al vincitore, 0 allo sconfitto.   
-* Vittoria 2-1: 40 punti al vincitore, 10 allo sconfitto.   
+* Vittoria 2-0: 50 punti al vincitore, 0 allo sconfitto.
+* Vittoria 2-1: 40 punti al vincitore, 10 allo sconfitto.
 
-Per garantire equità sportiva, i punti assegnati vengono riproporzionati in base al divario di Ranking iniziale tra i due contendenti.   
+Per garantire equità sportiva, i punti assegnati vengono riproporzionati in base al divario di Ranking iniziale tra i due contendenti.
 
 ### Come iscriversi e partecipare
 
-Giocatori dell'edizione precedente: sono stati inclusi direttamente nella chat di coordinamento WhatsApp "MENEGHIN 5° edizione". Qualora non desiderassero partecipare, potranno semplicemente uscire dal gruppo.   
+Giocatori dell'edizione precedente: sono stati inclusi direttamente nella chat di coordinamento WhatsApp "MENEGHIN 5° edizione". Qualora non desiderassero partecipare, potranno semplicemente uscire dal gruppo.
 
-Nuovi iscritti e soci senza Ranking: per garantire un inserimento ordinato nella Ranking di partenza dell'1 novembre, l'iscrizione avviene aggiungendosi al gruppo. Una volta fatto l'accesso, per concludere positivamente la propria partecipazione, è necessario scrivere via messaggio: Nome, Cognome e Numero di cellulare (con applicazione WhatsApp attiva).   
+Nuovi iscritti e soci senza Ranking: per garantire un inserimento ordinato nella Ranking di partenza dell'1 novembre, l'iscrizione avviene aggiungendosi al gruppo. Una volta fatto l'accesso, per concludere positivamente la propria partecipazione, è necessario scrivere via messaggio: Nome, Cognome e Numero di cellulare (con applicazione WhatsApp attiva).
 
-La partecipazione al MENEGHIN è totalmente gratuita per i Soci TCA.   
+La partecipazione al MENEGHIN è totalmente gratuita per i Soci TCA.
 
 ### Albo d'Oro
 
 #### Singolare Maschile:
 
-* 2022–2023: Enrico Ragazzo   
-* 2023–2024: Enrico Ragazzo   
-* 2024–2025: Vittorio Ligresti   
-* 2025–2026: Umberto Gerosa   
+* 2022–2023: Enrico Ragazzo
+* 2023–2024: Enrico Ragazzo
+* 2024–2025: Vittorio Ligresti
+* 2025–2026: Umberto Gerosa
 
 #### Singolare Femminile:
 
-* 2024–2025: Anastasia Polgorodnik   
-* 2025–2026: Virginia Lucchini 
+* 2024–2025: Anastasia Polgorodnik
+* 2025–2026: Virginia Lucchini
