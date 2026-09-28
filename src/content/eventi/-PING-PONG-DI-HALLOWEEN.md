@@ -11,7 +11,7 @@ prenotazioniAttive: true
 postiTotali: 16
 quotaSocio: 0
 quotaNonSocio: 5
-oreScadenzaPagamento: 47
+oreScadenzaPagamento: 48
 titolo_en: ' HALLOWEEN PING PONG'
 descrizione_en: |-
   On Friday 30 October, from 5.00 pm to 7.30 pm, the Body and Mind Room will host the traditional Halloween Table Tennis Tournament! A special occasion combining sport and fun, dedicated entirely to our little champions from the Kid Members’ scheme and SAT members.
@@ -53,14 +53,14 @@ corpo_en: |-
 
 ## Siete pronti a far tremare la pallina e a conquistare il tavolo a colpi di racchetta?
 
-Il **30 ottobre** la nostra Sala Body and Mind si trasformerà nel teatro di una sfida da brividi: torna il tanto atteso Torneo di Ping Pong di Halloween! 
+Il **30 ottobre** la nostra Sala Body and Mind si trasformerà nel teatro di una sfida da brividi: torna il tanto atteso Torneo di Ping Pong di Halloween!
 
 Un pomeriggio di puro divertimento, risate e colpi spettrali dedicato interamente ai nostri piccoli campioni.
 
 Dettagli dell'Evento
 
 * Quando: Venerdì 30 ottobre
-* Orario: Dalle** 17:00 alle 19:30**
+* Orario: Dalle\*\* 17:00 alle 19:30\*\*
 * Dove: Sala Body and Mind
 * A chi è rivolto: **Soci Kid e iscritti alla SAT**
 * Dress Code: Mostruoso! Mostri, vampiri, streghe e fantasmi... il campo vi aspetta! Indossate il vostro costume più terrorizzante e venite pronti a gareggiare.
@@ -69,8 +69,8 @@ Premi in Palio
 
 Mettete da parte la paura e date il massimo: ci saranno fantastici premi per:
 
-* 1° Classificato 
-* 2° Classificato 
+* 1° Classificato
+* 2° Classificato
 * Miglior Travestimento  (sfoderate la vostra creatività più mostruosa!)
 
 Quota di Partecipazione
@@ -81,4 +81,4 @@ Iscritti SAT: 5€
 
 Non prendete impegni per venerdì pomeriggio: affilate le racchette, preparate il travestimento e venite a scoprire chi si aggiudicherà il titolo di campione della notte più spaventosa dell'anno!
 
-Posti limitati! Iscriviti subito in segreteria e accetta la sfida... se ne hai il coraggio! 
+Posti limitati! Iscriviti subito in segreteria e accetta la sfida... se ne hai il coraggio!
