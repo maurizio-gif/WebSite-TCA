@@ -7,7 +7,7 @@ descrizione: |-
   I vincitori e i qualificati dei Master Regionali volano alla fase nazionale di Bologna per rappresentare la propria regione durante l'evento della Coppa Davis.
 luogo: Terra Rossa
 iscrizioniHref: ''
-pubblicato: true
+pubblicato: false
 prenotazioniAttive: false
 postiTotali: 100
 quotaSocio: 0
@@ -40,15 +40,15 @@ corpo_en: |-
 
 # MASTER REGIONALE "FULFIL ROAD TO BOLOGNA"
 
-## La grande sfida si gioca al nostro Club! 
+## La grande sfida si gioca al nostro Club!
 
-Segnate in agenda queste date: sabato 24 e domenica 25 ottobre. 
+Segnate in agenda queste date: sabato 24 e domenica 25 ottobre.
 
 Il nostro circolo ospiterà il prestigioso Master Regionale del circuito "Fulfil Road to Bologna", un appuntamento imperdibile per tutti gli amanti del grande tennis!
 
 I migliori atleti e atlete della regione si affronteranno sui nostri campi per conquistare un pass verso il traguardo più ambito
 
-Destinazione Bologna: Insieme alla Coppa Davis! I vincitori e le vincitrici del Master Regionale staccheranno il biglietto per il Master che si terrà a Bologna a novembre in concomitanza con le Finali di Coppa Davis! Un'opportunità incredibile per i giocatori di vivere l'atmosfera del più grande evento mondiale a squadre e scendere in campo negli stessi giorni dei campioni azzurri.   
+Destinazione Bologna: Insieme alla Coppa Davis! I vincitori e le vincitrici del Master Regionale staccheranno il biglietto per il Master che si terrà a Bologna a novembre in concomitanza con le Finali di Coppa Davis! Un'opportunità incredibile per i giocatori di vivere l'atmosfera del più grande evento mondiale a squadre e scendere in campo negli stessi giorni dei campioni azzurri.
 
 L'ingresso per assistere alle partite sarà aperto a tutti i soci, appassionati e amici.
 
