@@ -1,58 +1,65 @@
 ---
-titolo: MENGHIN 5° EDIZIONE
-data: 2026-11-01T00:00:00.000Z
+titolo: ROAD TO BOLOGNA By FULFIL 26
+data: 2026-10-24T00:00:00.000Z
 categoria: Torneo
-descrizione: 5 edizione
+descrizione: |-
+  Il circuito amatoriale "Road to Bologna by FULFIL" assegna la qualificazione ai Master Nazionali che si terranno a Bologna.
+  I vincitori e i qualificati dei Master Regionali volano alla fase nazionale di Bologna per rappresentare la propria regione durante l'evento della Coppa Davis.
+luogo: Terra Rossa
 iscrizioniHref: ''
-pubblicato: false
-prenotazioniAttive: true
+pubblicato: true
+prenotazioniAttive: false
 postiTotali: 100
 quotaSocio: 0
 oreScadenzaPagamento: 0
+titolo_en: ROAD TO BOLOGNA By FULFIL 26
+descrizione_en: |-
+  The amateur circuit “Road to Bologna by FULFIL” awards places in the National Masters, which will be held in Bologna.
+  The winners and qualifiers from the Regional Masters will go on to the national stage in Bologna to represent their region during the Davis Cup event.
+luogo_en: clay courts
+corpo_en: |-
+  “FULFIL ROAD TO BOLOGNA” REGIONAL MASTERS
+  The big challenge takes place at our Club!
+
+  Make a note of these dates in your diaries: Saturday 24 and Sunday 25 October.
+  Our club will host the prestigious Regional Masters of the “Fulfil Road to Bologna” circuit – an unmissable event for all tennis enthusiasts!
+  The region’s top male and female players will compete on our courts to secure a place at the most coveted destination
+  Destination Bologna: Alongside the Davis Cup! The winners of the Regional Masters will earn their place at the Masters to be held in Bologna in November, coinciding with the Davis Cup Finals! An incredible opportunity for players to experience the atmosphere of the world’s biggest team event and take to the court on the same days as the Italian champions.
+
+  Admission to watch the matches will be open to all members, fans and friends.
+
+  It will not only be a weekend of top-level competition, but also a chance to enjoy together the usual great atmosphere found within our club
+  Thrilling action guaranteed on the courts with fiercely contested matches and unexpected twists.
+  Cheering and passion to support the players and let them feel the warmth of our crowd.
+  Moments of camaraderie at the bar and in the clubhouse to share the day’s excitement.
+  We look forward to seeing lots of you there to show the participants our full support and treat ourselves to two days of pure sport and fun!
+
+
+  Don’t miss it!
 ---
 
-# AL VIA LA NUOVA EDIZIONE DEL TORNEO MENEGHIN AL TENNIS CLUB AMBROSIANO
+# MASTER REGIONALE "FULFIL ROAD TO BOLOGNA"
 
-## Il Tennis Club Ambrosiano è lieto di annunciare l'apertura delle iscrizioni per la 5ª Edizione del MENEGHIN, lo storico appuntamento sociale open non agonistico riservato ai nostri Soci.   
+## La grande sfida si gioca al nostro Club! 
 
-### Che siate giocatori esperti o soci desiderosi di divertirsi e ampliare il proprio network sportivo all'interno del Club, il MENEGHIN rappresenta l'occasione perfetta per sfidarsi sui campi della nostra struttura, mantenendo vivo lo spirito del gentlemen’s agreement e del puro agonismo amatoriale.   
+Segnate in agenda queste date: sabato 24 e domenica 25 ottobre. 
 
-#### Come funziona la competizione
+Il nostro circolo ospiterà il prestigioso Master Regionale del circuito "Fulfil Road to Bologna", un appuntamento imperdibile per tutti gli amanti del grande tennis!
 
-La competizione si articola in due macro-fasi:
+I migliori atleti e atlete della regione si affronteranno sui nostri campi per conquistare un pass verso il traguardo più ambito
 
-La Race (dal 1° novembre 2026 al 28 marzo 2027): la fase a gironi virtuali durante la quale i soci organizzano autonomamente le proprie sfide. Durante la Race contano i migliori 21 risultati accumulati, incontrando lo stesso avversario per un massimo di 4 volte. La Ranking viene aggiornata ed emessa ogni lunedì nel gruppo WhatsApp ufficiale.   
+Destinazione Bologna: Insieme alla Coppa Davis! I vincitori e le vincitrici del Master Regionale staccheranno il biglietto per il Master che si terrà a Bologna a novembre in concomitanza con le Finali di Coppa Davis! Un'opportunità incredibile per i giocatori di vivere l'atmosfera del più grande evento mondiale a squadre e scendere in campo negli stessi giorni dei campioni azzurri.   
 
-Il Master Finale (17 e 18 aprile 2027): i primi 8 tennisti della Ranking al termine della Race si qualificheranno per il tabellone ad eliminazione diretta che incoronerà il vincitore della stagione.   
+L'ingresso per assistere alle partite sarà aperto a tutti i soci, appassionati e amici.
 
-#### Modalità di gioco e punteggi
+Non sarà solo un weekend di gare ad altissimo livello agonistico, ma un'occasione per vivere insieme la solita grande atmosfera che si respira all'interno del nostro circolo
 
-Per facilitare la gestione delle sfide tra Soci, sono previste due modalità di match:   2 set su 3 in 2 ore contigue: con killer point al secondo vantaggio e super tie-break ai 10 punti per il terzo set.   
+Spettacolo garantito sui campi con match accesi e colpi di scena.
 
-Vittoria 2-0: 60 punti al vincitore, 0 allo sconfitto.   
+Tifo e passione per sostenere i giocatori e far sentire il calore del nostro pubblico
 
-Vittoria 2-1: 50 punti al vincitore, 20 allo sconfitto.   2 set su 3 in 2 ore non contigue (1h + 1h): la seconda ora deve essere recuperata entro 15 giorni.   Vittoria 2-0: 50 punti al vincitore, 0 allo sconfitto.   Vittoria 2-1: 40 punti al vincitore, 10 allo sconfitto.   Per garantire equità sportiva, i punti assegnati vengono riproporzionati in base al divario di Ranking iniziale tra i due contendenti.   
+Momenti di convivialità al bar e nella club house per condividere le emozioni della giornata.
 
-#### Come iscriversi e partecipare
+Vi aspettiamo numerosi per far sentire il massimo del supporto ai partecipanti e regalarci due giorni di puro sport e divertimento!
 
-Giocatori dell'edizione precedente: sono stati inclusi direttamente nella chat di coordinamento WhatsApp "MENEGHIN 5° edizione". Qualora non desiderassero partecipare, potranno semplicemente uscire dal gruppo.   
-
-Nuovi iscritti e soci senza Ranking: per garantire un inserimento ordinato nella Ranking di partenza dell'1 novembre, l'iscrizione avviene aggiungendosi al gruppo https\://chat.whatsapp.com/HIcDzSt6L641bHzyGdyG7c  . Una volta fatto l'accesso, per concludere la propria partecipazione, è necessario scrivere via messaggio: Nome, Cognome e Numero di cellulare (con applicazione WhatsApp attiva).   
-
-Nota: La partecipazione al MENEGHIN è totalmente gratuita per i Soci TCA.   
-
-Albo d'OroSingolare Maschile:
-
-2022–2023: Enrico Ragazzo   
-
-2023–2024: Enrico Ragazzo   
-
-2024–2025: Vittorio Ligresti   
-
-2025–2026: Umberto Gerosa   
-
-Singolare Femminile:
-
-2024–2025: Anastasia Polgorodnik   
-
-2025–2026: Virginia Lucchini 
+Non mancate!
