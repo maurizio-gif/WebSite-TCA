@@ -85,18 +85,20 @@ var config_default = defineConfig({
           {
             type: "number",
             name: "quotaSocio",
-            label: "Quota soci (\u20AC)"
+            label: "Quota soci (\u20AC)",
+            description: "0 = gratuito per i soci: la prenotazione \xE8 confermata subito, senza pagamento in cassa."
           },
           {
             type: "number",
             name: "quotaNonSocio",
-            label: "Quota non soci (\u20AC)"
+            label: "Quota non soci (\u20AC)",
+            description: "0 = gratuito per i non soci: la prenotazione \xE8 confermata subito, senza pagamento in cassa."
           },
           {
             type: "number",
             name: "oreScadenzaPagamento",
             label: "Ore per pagare in cassa",
-            description: "Entro quante ore va pagata la quota in cassa. Scaduto il termine la prenotazione decade e il posto torna disponibile (default 48).",
+            description: "Entro quante ore va pagata la quota in cassa. Scaduto il termine la prenotazione decade e il posto torna disponibile (default 48). Non si applica a chi ha quota 0.",
             // Deve rispettare lo schema Astro (intero > 0): con 0 la build fallisce.
             ui: {
               validate: (value) => {

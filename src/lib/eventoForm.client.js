@@ -38,6 +38,9 @@ export function initEventoForm(root) {
     errAlready:   'There is already a booking with this email address for this event.',
     seatsLeft:    function (n) { return n === 1 ? '1 spot left' : n + ' spots left'; },
     youAreMember: 'You have declared you are a Club Member, so the member rate applies. It is checked at reception when you pay.',
+    youAreMemberFree: 'You have declared you are a Club Member.',
+    youAreGuestFree: 'You have declared you are not a Club Member.',
+    socioSubFree: 'Are you a Club Member?',
     youAreGuest:  'You have declared you are not a Club Member, so the standard rate applies.',
     payLabel:     'To pay at reception',
     hold:         function (ore) {
@@ -50,6 +53,15 @@ export function initEventoForm(root) {
     },
     confirmFee:   function (q) { return 'Amount to pay at reception: <strong>€' + q + '</strong>'; },
     confirmBy:    function (quando) { return 'Pay by <strong>' + quando + '</strong>, otherwise the spot is released.'; },
+    freeLabel:    'Participation',
+    freeValue:    'Free',
+    freeRules:    [
+      { icona: 'check', testo: 'Participation is <strong>free</strong>: there is nothing to pay.' },
+      { icona: 'check', testo: 'Your booking is <strong>confirmed straight away</strong>.' },
+      { icona: 'warn',  testo: 'If you can no longer attend, please let reception know so the spot can go to someone else.', warn: true },
+    ],
+    confirmTitleFree: 'Booking<br><em>confirmed!</em>',
+    confirmFree:  'Participation is <strong>free</strong>: there is nothing to pay.',
   } : {
     sending:      'Salvataggio della prenotazione…',
     errEmail:     'Inserisci un indirizzo email valido.',
@@ -61,6 +73,9 @@ export function initEventoForm(root) {
     errAlready:   'Con questa email risulta già una prenotazione per questo evento.',
     seatsLeft:    function (n) { return n === 1 ? '1 posto disponibile' : n + ' posti disponibili'; },
     youAreMember: 'Hai dichiarato di essere Socio del Club, quindi si applica la quota soci. Viene verificata in cassa al momento del pagamento.',
+    youAreMemberFree: 'Hai dichiarato di essere Socio del Club.',
+    youAreGuestFree: 'Hai dichiarato di non essere Socio del Club.',
+    socioSubFree: 'Sei Socio del Club?',
     youAreGuest:  'Hai dichiarato di non essere Socio del Club, quindi si applica la quota intera.',
     payLabel:     'Da pagare in cassa',
     hold:         function (ore) {
@@ -73,6 +88,15 @@ export function initEventoForm(root) {
     },
     confirmFee:   function (q) { return 'Quota da pagare in cassa: <strong>€' + q + '</strong>'; },
     confirmBy:    function (quando) { return 'Paga entro <strong>' + quando + '</strong>, altrimenti il posto torna disponibile.'; },
+    freeLabel:    'Partecipazione',
+    freeValue:    'Gratuita',
+    freeRules:    [
+      { icona: 'check', testo: 'La partecipazione è <strong>gratuita</strong>: non c’è nulla da pagare.' },
+      { icona: 'check', testo: 'La prenotazione è <strong>confermata subito</strong>.' },
+      { icona: 'warn',  testo: 'Se non puoi più partecipare avvisa la Reception, così il posto torna disponibile per qualcun altro.', warn: true },
+    ],
+    confirmTitleFree: 'Prenotazione<br><em>confermata!</em>',
+    confirmFree:  'La partecipazione è <strong>gratuita</strong>: non c’è nulla da pagare.',
   };
 
   var stato = { socio: null, quota: null, oreScadenza: 48 };
@@ -181,6 +205,13 @@ export function initEventoForm(root) {
       stato.quota = { socio: d.quotaSocio, nonSocio: d.quotaNonSocio };
       stato.oreScadenza = d.oreScadenza;
 
+      // Evento gratuito per tutti: la domanda sul socio resta (è un dato utile
+      // alla segreteria), ma "dalla risposta dipende la quota" sarebbe falso.
+      if (d.quotaSocio === 0 && d.quotaNonSocio === 0) {
+        var socioSub = step('socio').querySelector('.lm__sub');
+        if (socioSub) socioSub.textContent = T.socioSubFree;
+      }
+
       var posti = q('[data-ev-seats]');
       if (posti) {
         posti.hidden = false;
@@ -248,9 +279,16 @@ export function initEventoForm(root) {
   // ── Passo 3: riepilogo e regole ───────────────────────────────────────
   function preparaRiepilogo() {
     var quota = stato.socio ? stato.quota.socio : stato.quota.nonSocio;
+    // Quota 0 = nulla da pagare: niente cassa né scadenza, e il CRM salva la
+    // prenotazione già confermata (vedi AppTCA → app/api/eventi/prenotazione).
+    var gratuita = quota === 0;
 
     var chi = q('[data-ev-who]');
-    if (chi) chi.textContent = stato.socio ? T.youAreMember : T.youAreGuest;
+    if (chi) {
+      chi.textContent = gratuita
+        ? (stato.socio ? T.youAreMemberFree : T.youAreGuestFree)
+        : (stato.socio ? T.youAreMember : T.youAreGuest);
+    }
 
     // Chi sta prenotando, riportato prima di confermare: l'email è stata
     // digitata nella schermata precedente e un refuso lì significa non
@@ -264,14 +302,14 @@ export function initEventoForm(root) {
     }
 
     var etichetta = q('[data-ev-price-label]');
-    if (etichetta) etichetta.textContent = T.payLabel;
+    if (etichetta) etichetta.textContent = gratuita ? T.freeLabel : T.payLabel;
 
     var valore = q('[data-ev-price-value]');
-    if (valore) valore.textContent = '€' + quota;
+    if (valore) valore.textContent = gratuita ? T.freeValue : '€' + quota;
 
     var regole = q('[data-ev-rules]');
     if (regole) {
-      regole.innerHTML = T.hold(stato.oreScadenza).map(function (r) {
+      regole.innerHTML = (gratuita ? T.freeRules : T.hold(stato.oreScadenza)).map(function (r) {
         return '<li class="evp__rule' + (r.warn ? ' evp__rule--warn' : '') + '">' +
           '<span class="evp__rule-icon" aria-hidden="true">' + ICONE[r.icona] + '</span>' +
           '<span>' + r.testo + '</span>' +
@@ -321,11 +359,19 @@ export function initEventoForm(root) {
 
       // Quota e scadenza mostrate in conferma sono quelle calcolate dal
       // server, non quelle proposte qui.
+      var gratuita = d.quota === 0;
+
+      var titolo = q('[data-ev-confirm-title]');
+      if (titolo && gratuita) titolo.innerHTML = T.confirmTitleFree;
+
       var fee = q('[data-ev-confirm-fee]');
-      if (fee) fee.innerHTML = T.confirmFee(d.quota);
+      if (fee) fee.innerHTML = gratuita ? T.confirmFree : T.confirmFee(d.quota);
 
       var quando = q('[data-ev-confirm-by]');
-      if (quando) quando.innerHTML = T.confirmBy(formattaQuando(d.scadenzaPagamento));
+      if (quando) {
+        quando.hidden = gratuita;
+        if (!gratuita) quando.innerHTML = T.confirmBy(formattaQuando(d.scadenzaPagamento));
+      }
 
       loader('summary', false);
       var barra = q('[data-ev-steps]');
