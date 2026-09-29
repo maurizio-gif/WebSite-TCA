@@ -89,7 +89,7 @@ Per garantire equità sportiva, i punti assegnati vengono riproporzionati in bas
 
 Giocatori dell'edizione precedente: sono stati inclusi direttamente nella chat di coordinamento WhatsApp "MENEGHIN 5° edizione". Qualora non desiderassero partecipare, potranno semplicemente uscire dal gruppo.
 
-Nuovi iscritti e soci senza Ranking: per garantire un inserimento ordinato nella Ranking di partenza dell'1 novembre, l'iscrizione avviene aggiungendosi al gruppo. Una volta fatto l'accesso, per concludere positivamente la propria partecipazione, è necessario scrivere via messaggio: Nome, Cognome e Numero di cellulare (con applicazione WhatsApp attiva).
+Nuovi iscritti e soci senza Ranking: per garantire un inserimento ordinato nella Ranking di partenza dell'1 novembre, l'iscrizione avviene aggiungendosi al gruppo. Una volta fatto l'accesso, per concludere positivamente la propria partecipazione ed essenre inseriti nella classifica, è necessario scrivere un messaggio all'interno del gruppo: Nome, Cognome e Numero di cellulare (con applicazione WhatsApp attiva).
 
 La partecipazione al MENEGHIN è totalmente gratuita per i Soci TCA.
 
