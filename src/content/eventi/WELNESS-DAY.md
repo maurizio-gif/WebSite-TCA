@@ -9,6 +9,7 @@ descrizione: |-
 luogo: Club
 pubblicato: true
 prenotazioniAttive: true
+postiTotali: 100
 quotaSocio: 0
 quotaNonSocio: 0
 titolo_en: WELNESS DAY
