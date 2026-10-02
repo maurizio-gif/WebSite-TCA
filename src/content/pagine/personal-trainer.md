@@ -146,34 +146,6 @@ pt_trainers:
       - Therapeutic exercise for joint conditions
     lingue_en:
       - Italian
-  - nome: Vincenzo Michelino
-    foto: /PT%20Vincenzo%20Michelino.jpeg
-    specializzazioni:
-      - Bodybuilding e ricomposizione corporea
-      - Preparazione atletica e allenamento funzionale
-      - Prevenzione infortuni e potenziamento per Tennis e Padel
-      - Preparazione agonistica Bodybuilding Natural
-    qualifiche:
-      - Docente formatore Bodybuilding e Fitness
-      - Tecnico Sportivo C.O.N.I.
-      - Personal Trainer certificato
-      - Preparatore agonistico Bodybuilding Natural
-    lingue:
-      - Italiano
-      - Inglese
-    specializzazioni_en:
-      - Bodybuilding and body recomposition
-      - Athletic preparation and functional training
-      - Injury prevention and strength training for tennis and padel
-      - Competitive preparation for natural bodybuilding
-    qualifiche_en:
-      - Bodybuilding and fitness instructor
-      - C.O.N.I. sports coach
-      - Certified personal trainer
-      - Competitive coach for natural bodybuilding
-    lingue_en:
-      - Italian
-      - English
 pt_sezione3_eyebrow: Come funziona
 pt_sezione3_titolo: Dal primo giorno
 pt_sezione3_titolo_accent: al tuo obiettivo.
