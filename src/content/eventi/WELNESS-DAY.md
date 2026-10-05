@@ -1,5 +1,5 @@
 ---
-titolo: WELNESS DAY
+titolo: WELLNESS DAY
 data: 2026-10-24T00:00:00.000Z
 categoria: Evento
 descrizione: |-
@@ -12,7 +12,7 @@ prenotazioniAttive: true
 postiTotali: 100
 quotaSocio: 0
 quotaNonSocio: 0
-titolo_en: WELNESS DAY
+titolo_en: WELLNESS DAY
 descrizione_en: |-
   SAVE THE DATE!
   Pack a towel and keep your diary to hand: Wellness Day kicks off on Saturday 24 October.
@@ -37,7 +37,7 @@ corpo_en: |
 
 Una giornata carica di energia interamente pensata per la tua salute e il tuo benessere: un’occasione speciale e completamente gratuita per provare, attraverso coinvolgenti sessioni da 30 minuti, tante pratiche diverse per prenderti cura di te.
 
-Per offrirti un’esperienza unica tra movimento, prevenzione e stile di vita sano, i nostri fantastici istruttori uniranno le forze con realtà d'eccellenza. Insieme al nostro team troverai infatti i professionisti di Erazen, agenzia milanese dedicata a longevità e benessere integrato, e gli specialisti di The Athlete Architects, nostro medical partner. 
+Per offrirti un’esperienza unica tra movimento, prevenzione e stile di vita sano, i nostri fantastici istruttori uniranno le forze con realtà d'eccellenza. Insieme al nostro team troverai infatti i professionisti di Erazen, agenzia milanese dedicata a longevità e benessere integrato, e gli specialisti di The Athlete Architects, nostro medical partner.
 
 Ad accompagnare la giornata ci sarà anche il Ghusto Cafe TCA, che vi accoglierà con una selezione di proposte healthy, fresche e di stagione pensate appositamente per l'evento.
 
