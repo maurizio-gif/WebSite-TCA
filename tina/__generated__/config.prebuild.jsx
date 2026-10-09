@@ -569,11 +569,16 @@ var config_default = defineConfig({
           { type: "number", name: "giorni_avanti_richiamata", label: "Giorni mostrati in calendario (richiamata)", required: true },
           { type: "number", name: "giorni_avanti_visita", label: "Giorni mostrati in calendario (visita in sede)", required: true },
           {
-            type: "datetime",
+            type: "object",
             name: "date_chiuse",
             label: "Giorni di chiusura eccezionale",
             list: true,
-            ui: { dateFormat: "DD/MM/YYYY" }
+            ui: {
+              itemProps: (item) => ({ label: item?.data ? String(item.data).slice(0, 10) : "Nuova data" })
+            },
+            fields: [
+              { type: "datetime", name: "data", label: "Data", required: true, ui: { dateFormat: "DD/MM/YYYY" } }
+            ]
           }
         ]
       },

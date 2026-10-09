@@ -556,6 +556,10 @@ type ModuliConnection implements Connection {
   edges: [ModuliConnectionEdges]
 }
 
+type AppuntamentiDate_chiuse {
+  data: String!
+}
+
 type Appuntamenti implements Node & Document {
   data_inizio: String!
   ora_apertura: String!
@@ -565,10 +569,14 @@ type Appuntamenti implements Node & Document {
   durata_slot_visita: Float!
   giorni_avanti_richiamata: Float!
   giorni_avanti_visita: Float!
-  date_chiuse: [String]
+  date_chiuse: [AppuntamentiDate_chiuse]
   id: ID!
   _sys: SystemInfo!
   _values: JSON!
+}
+
+input AppuntamentiDate_chiuseFilter {
+  data: DatetimeFilter
 }
 
 input AppuntamentiFilter {
@@ -580,7 +588,7 @@ input AppuntamentiFilter {
   durata_slot_visita: NumberFilter
   giorni_avanti_richiamata: NumberFilter
   giorni_avanti_visita: NumberFilter
-  date_chiuse: DatetimeFilter
+  date_chiuse: AppuntamentiDate_chiuseFilter
 }
 
 type AppuntamentiConnectionEdges {
@@ -2558,6 +2566,10 @@ input ModuliMutation {
   scuola_quota_tennis_tri: String
 }
 
+input AppuntamentiDate_chiuseMutation {
+  data: String
+}
+
 input AppuntamentiMutation {
   data_inizio: String
   ora_apertura: String
@@ -2567,7 +2579,7 @@ input AppuntamentiMutation {
   durata_slot_visita: Float
   giorni_avanti_richiamata: Float
   giorni_avanti_visita: Float
-  date_chiuse: [String]
+  date_chiuse: [AppuntamentiDate_chiuseMutation]
 }
 
 input HelpdeskMutation {
