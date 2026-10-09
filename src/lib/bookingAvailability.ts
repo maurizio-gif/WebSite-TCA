@@ -16,7 +16,7 @@ interface AppuntamentiData {
   durata_slot_visita?: number;
   giorni_avanti_richiamata?: number;
   giorni_avanti_visita?: number;
-  date_chiuse?: { data: Date }[];
+  date_chiuse?: { data?: Date }[];
 }
 
 function isoDate(d: Date): string {
@@ -34,6 +34,7 @@ export function bookingAvailability(d: AppuntamentiData) {
     durataVisita: d.durata_slot_visita ?? 30,
     giorniRichiamata: d.giorni_avanti_richiamata ?? 7,
     giorniVisita: d.giorni_avanti_visita ?? 14,
-    dateChiuse: (d.date_chiuse ?? [{ data: new Date(2026, 7, 15) }]).map((c) => isoDate(c.data)),
+    dateChiuse: (d.date_chiuse ?? [{ data: new Date(2026, 7, 15) }])
+      .flatMap((c) => (c.data ? [isoDate(c.data)] : [])),
   };
 }
