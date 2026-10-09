@@ -160,7 +160,10 @@ fragment AppuntamentiParts on Appuntamenti {
   durata_slot_visita
   giorni_avanti_richiamata
   giorni_avanti_visita
-  date_chiuse
+  date_chiuse {
+    __typename
+    data
+  }
 }
 
 fragment HelpdeskParts on Helpdesk {

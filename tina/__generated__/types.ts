@@ -809,6 +809,11 @@ export type ModuliConnection = Connection & {
   edges?: Maybe<Array<Maybe<ModuliConnectionEdges>>>;
 };
 
+export type AppuntamentiDate_Chiuse = {
+  __typename?: 'AppuntamentiDate_chiuse';
+  data: Scalars['String']['output'];
+};
+
 export type Appuntamenti = Node & Document & {
   __typename?: 'Appuntamenti';
   data_inizio: Scalars['String']['output'];
@@ -819,10 +824,14 @@ export type Appuntamenti = Node & Document & {
   durata_slot_visita: Scalars['Float']['output'];
   giorni_avanti_richiamata: Scalars['Float']['output'];
   giorni_avanti_visita: Scalars['Float']['output'];
-  date_chiuse?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  date_chiuse?: Maybe<Array<Maybe<AppuntamentiDate_Chiuse>>>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
   _values: Scalars['JSON']['output'];
+};
+
+export type AppuntamentiDate_ChiuseFilter = {
+  data?: InputMaybe<DatetimeFilter>;
 };
 
 export type AppuntamentiFilter = {
@@ -834,7 +843,7 @@ export type AppuntamentiFilter = {
   durata_slot_visita?: InputMaybe<NumberFilter>;
   giorni_avanti_richiamata?: InputMaybe<NumberFilter>;
   giorni_avanti_visita?: InputMaybe<NumberFilter>;
-  date_chiuse?: InputMaybe<DatetimeFilter>;
+  date_chiuse?: InputMaybe<AppuntamentiDate_ChiuseFilter>;
 };
 
 export type AppuntamentiConnectionEdges = {
@@ -3036,6 +3045,10 @@ export type ModuliMutation = {
   scuola_quota_tennis_tri?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type AppuntamentiDate_ChiuseMutation = {
+  data?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type AppuntamentiMutation = {
   data_inizio?: InputMaybe<Scalars['String']['input']>;
   ora_apertura?: InputMaybe<Scalars['String']['input']>;
@@ -3045,7 +3058,7 @@ export type AppuntamentiMutation = {
   durata_slot_visita?: InputMaybe<Scalars['Float']['input']>;
   giorni_avanti_richiamata?: InputMaybe<Scalars['Float']['input']>;
   giorni_avanti_visita?: InputMaybe<Scalars['Float']['input']>;
-  date_chiuse?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  date_chiuse?: InputMaybe<Array<InputMaybe<AppuntamentiDate_ChiuseMutation>>>;
 };
 
 export type HelpdeskMutation = {
@@ -3908,7 +3921,7 @@ export type LegalPartsFragment = { __typename: 'Legal', codice_condotta?: string
 
 export type ModuliPartsFragment = { __typename: 'Moduli', camp_quota_soci: string, camp_quota_soci_dal2: string, camp_quota_scuola: string, camp_quota_scuola_dal2: string, camp_quota_non_soci: string, camp_quota_non_soci_dal2: string, camp_pre_camp: string, camp_caparra: string, camp_csain: string, scuola_scadenza_preiscrizione: string, scuola_scadenza_preiscrizione_en: string, scuola_acconto: string, scuola_prove_periodo1: string, scuola_prove_periodo1_en: string, scuola_prove_periodo2: string, scuola_prove_periodo2_en: string, scuola_inizio_corsi: string, scuola_inizio_corsi_en: string, scuola_mini_tennis_nati: string, scuola_mini_tennis_nati_en: string, scuola_tennis_nati: string, scuola_tennis_nati_en: string, scuola_quota_mini_mono: string, scuola_quota_mini_bi: string, scuola_quota_tennis_mono: string, scuola_quota_tennis_bi: string, scuola_quota_tennis_tri: string, camp_settimane?: Array<{ __typename: 'ModuliCamp_settimane', id: string, range: string, fine: string } | null> | null };
 
-export type AppuntamentiPartsFragment = { __typename: 'Appuntamenti', data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null };
+export type AppuntamentiPartsFragment = { __typename: 'Appuntamenti', data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<{ __typename: 'AppuntamentiDate_chiuse', data: string } | null> | null };
 
 export type HelpdeskPartsFragment = { __typename: 'Helpdesk', titolo: string, categoria: string, sintesi: string, tags?: Array<string | null> | null, aggiornato: string, titolo_en?: string | null, sintesi_en?: string | null, tags_en?: Array<string | null> | null, corpo_en?: string | null, body?: any | null };
 
@@ -4080,7 +4093,7 @@ export type AppuntamentiQueryVariables = Exact<{
 }>;
 
 
-export type AppuntamentiQuery = { __typename?: 'Query', appuntamenti: { __typename: 'Appuntamenti', id: string, data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type AppuntamentiQuery = { __typename?: 'Query', appuntamenti: { __typename: 'Appuntamenti', id: string, data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, date_chiuse?: Array<{ __typename: 'AppuntamentiDate_chiuse', data: string } | null> | null } };
 
 export type AppuntamentiConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -4092,7 +4105,7 @@ export type AppuntamentiConnectionQueryVariables = Exact<{
 }>;
 
 
-export type AppuntamentiConnectionQuery = { __typename?: 'Query', appuntamentiConnection: { __typename?: 'AppuntamentiConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AppuntamentiConnectionEdges', cursor: string, node?: { __typename: 'Appuntamenti', id: string, data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, date_chiuse?: Array<string | null> | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type AppuntamentiConnectionQuery = { __typename?: 'Query', appuntamentiConnection: { __typename?: 'AppuntamentiConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'AppuntamentiConnectionEdges', cursor: string, node?: { __typename: 'Appuntamenti', id: string, data_inizio: string, ora_apertura: string, ora_chiusura: string, preavviso_minimo_ore: number, durata_slot_richiamata: number, durata_slot_visita: number, giorni_avanti_richiamata: number, giorni_avanti_visita: number, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, date_chiuse?: Array<{ __typename: 'AppuntamentiDate_chiuse', data: string } | null> | null } | null } | null> | null } };
 
 export type HelpdeskQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -4321,7 +4334,10 @@ export const AppuntamentiPartsFragmentDoc = gql`
   durata_slot_visita
   giorni_avanti_richiamata
   giorni_avanti_visita
-  date_chiuse
+  date_chiuse {
+    __typename
+    data
+  }
 }
     `;
 export const HelpdeskPartsFragmentDoc = gql`

@@ -7,6 +7,7 @@ durata_slot_richiamata: 20
 durata_slot_visita: 30
 giorni_avanti_richiamata: 7
 giorni_avanti_visita: 14
-date_chiuse: 2026-10-18T00:00:00.000Z
+date_chiuse:
+  - data: 2026-10-18T00:00:00.000Z
 ---
 

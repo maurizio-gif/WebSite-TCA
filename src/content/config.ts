@@ -800,7 +800,7 @@ const appuntamenti = defineCollection({
     durata_slot_visita: z.number(),
     giorni_avanti_richiamata: z.number(),
     giorni_avanti_visita: z.number(),
-    date_chiuse: z.array(z.date()).default([]),
+    date_chiuse: z.array(z.object({ data: z.date() })).default([]),
   }),
 });
 
