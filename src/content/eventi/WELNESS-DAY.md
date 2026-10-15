@@ -9,7 +9,7 @@ descrizione: |-
 luogo: Club
 pubblicato: true
 prenotazioniAttive: true
-postiTotali: 100
+postiTotali: 200
 quotaSocio: 0
 quotaNonSocio: 0
 titolo_en: WELLNESS DAY
