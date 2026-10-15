@@ -5,7 +5,7 @@ categoria: Evento
 descrizione: |-
   SAVE THE DATE!
   Asciugamano in borsa e agenda alla mano: sabato 24 ottobre prende il via il Wellness Day. 
-  Resta sintonizzato per scoprire tutte le attività in programma e gli specialisti coinvolti: nei prossimi giorni sveleremo il calendario completo e le modalità di prenotazione!
+  Resta sintonizzato per scoprire tutte le attività in programma e gli specialisti coinvolti: PRENOTA IL TUO POSTO!
 luogo: Club
 pubblicato: true
 prenotazioniAttive: true
@@ -16,7 +16,7 @@ titolo_en: WELLNESS DAY
 descrizione_en: |-
   SAVE THE DATE!
   Pack a towel and keep your diary to hand: Wellness Day kicks off on Saturday 24 October.
-  Stay tuned to find out about all the activities on the programme and the specialists taking part: over the next few days, we’ll be revealing the full programme and how to book!
+  Stay tuned to find out about all the activities on the programme and the specialists taking part: BOOK NOW!
 luogo_en: Club
 corpo_en: |
   Mark the date in your diary: Wellness Day is coming up on Saturday 24 October!
