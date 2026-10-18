@@ -3,9 +3,9 @@ titolo: WELLNESS DAY
 data: 2026-10-24T00:00:00.000Z
 categoria: Evento
 descrizione: |-
-  SAVE THE DATE!
-  Asciugamano in borsa e agenda alla mano: sabato 24 ottobre prende il via il Wellness Day. 
-  Resta sintonizzato per scoprire tutte le attività in programma e gli specialisti coinvolti: PRENOTA IL TUO POSTO!
+  WELLNESS DAY AL TENNIS CLUB AMBROSIANO: IL PROGRAMMA COMPLETO E COME PARTECIPARE
+  Sabato 24 Ottobre, dalle 10:00 alle 18:00, il Tennis Club Ambrosiano apre le sue porte per il Wellness Day: una giornata interamente dedicata alla cura di sé, al movimento consapevole, alla prevenzione e al relax.
+  L'evento è a partecipazione gratuita e aperto a tutti (soci e non soci), previa preregistrazione.
 luogo: Club
 pubblicato: true
 prenotazioniAttive: true
@@ -14,9 +14,9 @@ quotaSocio: 0
 quotaNonSocio: 0
 titolo_en: WELLNESS DAY
 descrizione_en: |-
-  SAVE THE DATE!
-  Pack a towel and keep your diary to hand: Wellness Day kicks off on Saturday 24 October.
-  Stay tuned to find out about all the activities on the programme and the specialists taking part: BOOK NOW!
+  WELLNESS DAY AT THE AMBROSIANO TENNIS CLUB: THE FULL PROGRAMME AND HOW TO TAKE PART
+  On Saturday 24 October, from 10.00 am to 6.00 pm, the Ambrosiano Tennis Club is opening its doors for Wellness Day: a day entirely dedicated to self-care, mindful movement, prevention and relaxation.
+  The event is free to attend and open to everyone (members and non-members alike), subject to prior registration.
 luogo_en: Club
 corpo_en: |
   Mark the date in your diary: Wellness Day is coming up on Saturday 24 October!
@@ -31,16 +31,66 @@ corpo_en: |
   Stay tuned: we’ll be revealing the full programme and how to book very soon, so you can secure a front-row spot.
 ---
 
-# Segna la data in agenda: sabato 24 ottobre arriva il Wellness Day!
+# WELLNESS DAY AL TENNIS CLUB AMBROSIANO
 
-## Una giornata carica di energia interamente pensata per la tua salute e il tuo benessere.
+## IL PROGRAMMA COMPLETO E COME PARTECIPARE
 
-Una giornata carica di energia interamente pensata per la tua salute e il tuo benessere: un’occasione speciale e completamente gratuita per provare, attraverso coinvolgenti sessioni da 30 minuti, tante pratiche diverse per prenderti cura di te.
+Sabato 24 Ottobre, dalle 10:00 alle 18:00, il Tennis Club Ambrosiano apre le sue porte per il Wellness Day: una giornata interamente dedicata alla cura di sé, al movimento consapevole, alla prevenzione e al relax.
 
-Per offrirti un’esperienza unica tra movimento, prevenzione e stile di vita sano, i nostri fantastici istruttori uniranno le forze con realtà d'eccellenza. Insieme al nostro team troverai infatti i professionisti di Erazen, agenzia milanese dedicata a longevità e benessere integrato, e gli specialisti di The Athlete Architects, nostro medical partner.
+L'evento è a partecipazione gratuita e aperto a tutti (soci e non soci), previa preregistrazione.
 
-Ad accompagnare la giornata ci sarà anche il Ghusto Cafe TCA, che vi accoglierà con una selezione di proposte healthy, fresche e di stagione pensate appositamente per l'evento.
+*Orari specifici e programma orario di dettaglio: Per consultare la griglia oraria completa di ciascuna sessione e per rimanere aggiornato su tutti i dettagli in tempo reale, visita la nostra [pagina Instagram](https://www.instagram.com/clubambrosiano?psln=MTJyZXE1b3Ftd2kyMg==)!*
 
-Si tratterà di una vera e propria giornata Open, pensata per lasciarti la massima libertà: non è prevista alcuna registrazione per le singole attività, quindi potrai semplicemente presentarti in struttura ed entrare a seguire le sessioni che più ti incuriosiscono e ti interessano.
+### COME FUNZIONA LA GIORNATA
 
-Per permetterci di offrire una migliore organizzazione, ti invitiamo comunque a registrarti alla giornata dell'evento tramite il pulsante dedicato: in questo modo potrai dimostrare il tuo interesse e rimanere sempre aggiornato su tutte le novità e sui dettagli del programma.
+La giornata è strutturata in sessioni di prova da massimo 30 minuti, pensate per permetterti di sperimentare diverse discipline e percorsi. Potrai comporre in totale libertà il tuo itinerario di benessere, scegliendo le attività che più ti incuriosiscono, senza vincoli o obblighi.
+
+* Orari: Dalle 10:00 alle 18:00
+* Partecipazione: Gratuita (aperta a tutti) previa preregistrazione
+* Cosa portare: Abbigliamento comodo e un asciugamano
+
+### IL PROGRAMMA D'ECCELLENZA E I NOSTRI PARTNER
+
+Durante l'evento potrai accedere a quattro differenti aree tematiche curate dai nostri specialisti:
+
+#### 1. AREA BALANCE TCA – Movimento, Postura & Equilibrio
+
+Sessioni dinamiche e posturali pensate per rinforzare il corpo, migliorare la flessibilità e liberare le tensioni:
+
+* Pilates con Federica Donno — Precisione e controllo della muscolatura profonda.
+* Hatha Yoga con Nancy Sasso — Tre sessioni dedicate: 30' Saluto al Sole (per tutti i livelli), La Danza del Guerriero (in piedi) e Fluire e Respirare con 10' di Yoga Nidra.
+* Riequilibrio Posturale e Allungamento in Panca con Federica Barbieri — Lavoro mirato per ridurre asimmetrie, alleviare rigidità muscolari e dolori alla colonna.
+* Power Yoga con Matteo Zenzale — Pratica ritmica e intensa di forza, resistenza e concentrazione.
+* Core Ball con Alessia Besuzzi — Allenamento funzionale con fitball per stabilità e tonificazione del corsetto addominale.
+
+#### 2. AREA ERAZEN – Trattamenti, Olistica & Consapevolezza
+
+Percorsi dedicati alla rigenerazione profonda e alla connessione mente-corpo:
+
+* Sound Healing con Silvia Bassano — Esperienza sonora immersiva con campane tibetane, handpan e tamburo sciamanico.
+* Ginnastica Pelvica con Barbara Barbieri — Lavoro guidato su connessione, tono ed elasticità del pavimento pelvico.
+* Mindfulness con Stefano Borzacchiello — Introduzione alla meditazione e alla gestione dello stress nella vita quotidiana.
+* Bioenergetica con Daniele Guainazzi — Tecniche psico-corporee per liberare le tensioni e ritrovare chiarezza mentale.
+* Microbiota Talk con Marina Ferrario — Incontro informativo sulla salute intestinale e sui test per piani di benessere personalizzati.
+* Massaggi Olistici & Manuali con Francesca D'Ascola — Trattamenti decontratturanti, linfodrenaggio, coppettazione, bambù, ayurvedico e balinese.
+* Shiatsu con Barbara Barbieri — Pressioni calibrate per stimolare l'energia vitale e favorire il rilassamento profondo.
+
+#### 3. AREA THE ATHLETE ARCHITECTS – Salute & Performance Sportiva
+
+Incontri e consulenze con professionisti della salute dedicati ad atleti, sportivi e famiglie:
+
+* Osteopatia Sportiva & Pediatrica con Jacopo Bertolini — Trattamenti manuali per la prevenzione degli infortuni, il recupero funzionale e lo sviluppo armonico dei più giovani.
+* Psicologia dello Sport & Mental Performance con Andrea Agostini — Percorsi sul potenziamento della concentrazione e la gestione della pressione agonistica.
+
+#### 4. AREA FOOD & RELAX – Ghusto Cafè
+
+Per tutta la durata dell'evento, Ghusto Cafè proporrà un menù Healthy & Gourmet con ingredienti 100% freschi, ricette bilanciate ed opzioni per vegetariani e vegani:
+
+* Centrifughe & Smoothie estemporanei ricchi di vitamine (Orange Boost, Green Fresh, Berry Love, Green Power).
+* Avocado Toast golosi e sani (classici, con uova sode o pollo alla piastra).
+* Healthy Bowl Complete ricche e bilanciate (Pollo, Salmone al vapore, Vegetariana con Feta, Vegana).
+* Yogurt Bowl & Snack Healthy (Overnight Oats, Hummus Toast, macedonia fresca).
+
+COME RISERVARE IL TUO POSTO
+
+Per garantire la migliore esperienza e la corretta gestione dei posti disponibili per ogni singola sessione, è richiesta la la preregistrazione.
