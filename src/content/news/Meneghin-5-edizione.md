@@ -2,7 +2,9 @@
 titolo: Meneghin 5° edizione
 data: 2026-09-28T00:00:00.000Z
 categoria: Torneo sociale
-sintesi: 'Il Tennis Club Ambrosiano apre le iscrizioni per la 5ª Edizione del MENEGHIN, il torneo amatoriale open riservato ai Soci. La competizione prevede la fase "Race" a gironi virtuali dal 1° novembre 2026 al 28 marzo 2027, con sfide autogestite e punteggi parametrati al divario di Ranking. I primi 8 tennisti della classifica accederanno al Master Finale ad eliminazione diretta il 17 e 18 aprile 2027. La partecipazione è totalmente gratuita: i nuovi iscritti possono registrarsi accedendo al gruppo WhatsApp dedicato inviando nome, cognome e numero di cellulare.'
+sintesi: |-
+  Il Tennis Club Ambrosiano apre le iscrizioni per la 5ª Edizione del MENEGHIN, il torneo amatoriale open riservato ai Soci che si svolge dal 1° novembre 2026 al 28 marzo 2027.
+  Master Finale ad eliminazione diretta il 17 e 18 aprile 2027. La partecipazione è totalmente gratuita.
 immagine: /SAT E MINITENNIS.png
 immagine_alt: Meneghin 5° Edizione
 cta_label: Partecipa
