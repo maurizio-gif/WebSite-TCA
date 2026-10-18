@@ -1,7 +1,7 @@
 ---
 titolo: Wellness Day Promo
 data: 2026-10-18T00:00:00.000Z
-categoria: WELLNESS
+categoria: MEMBERSHIP
 sintesi: |-
   Wellness Day al Tennis Club Ambrosiano: trasforma la tua passione in uno stile di vita!
   La Promo Esclusiva: solo per la giornata del 24 Ottobre!
@@ -12,7 +12,7 @@ pubblicato: true
 cta_label: Scopri le Membership
 cta_href: 'https://www.tcambrosiano.com/tennis#membership'
 titolo_en: Wellness Day Promo
-categoria_en: WELLNESS
+categoria_en: MEMBERSHIP
 cta_label_en: Discover our membership options
 sintesi_en: |-
   Wellness Day at the Ambrosiano Tennis Club: turn your passion into a way of life!
@@ -78,6 +78,6 @@ Partecipa alla giornata ‘Wellness Day’, il nostro staff sarà a tua disposiz
 
 *Nota di trasparenza: La promozione con il codice W\_DAY è valida esclusivamente dalle ore 00:00 alle ore 23:59 del 24 ottobre. Non potrà essere applicata prima o dopo tale data.*
 
-#### Non rinviare la tua carica. 
+#### Non rinviare la tua carica.
 
 #### Partecipa al Wellness Day e diventa socio del Tennis Club Ambrosiano!
