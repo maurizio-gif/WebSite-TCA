@@ -39,7 +39,7 @@ Sabato 24 Ottobre, dalle 10:00 alle 18:00, il Tennis Club Ambrosiano apre le sue
 
 L'evento è a partecipazione gratuita e aperto a tutti (soci e non soci), previa preregistrazione.
 
-*Orari specifici e programma orario di dettaglio: Per consultare la griglia oraria completa di ciascuna sessione e per rimanere aggiornato su tutti i dettagli in tempo reale, visita la nostra [pagina Instagram](https://www.instagram.com/clubambrosiano?psln=MTJyZXE1b3Ftd2kyMg==)!*
+*Orari specifici e programma orario di dettaglio: Per consultare la griglia oraria completa di ciascuna sessione e per rimanere aggiornato su tutti i dettagli in tempo reale, visita la nostra [pagina Instagram](https://www.instagram.com/clubambrosiano?exln=MWZwOTd3OHNpOG9maA==)!*
 
 ### COME FUNZIONA LA GIORNATA
 
