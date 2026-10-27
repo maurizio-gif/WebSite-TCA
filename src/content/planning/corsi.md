@@ -189,17 +189,9 @@ lezioni:
     categoria: B
     nome: Ginnastica Dolce
   - giorno: gio
-    ora: '10:00'
-    categoria: B
-    nome: Pilates
-  - giorno: gio
     ora: '10:30'
     categoria: B
     nome: Postural
-  - giorno: gio
-    ora: '11:00'
-    categoria: S
-    nome: High Performance
   - giorno: gio
     ora: '11:45'
     categoria: B
@@ -228,10 +220,6 @@ lezioni:
     ora: '19:05'
     categoria: S
     nome: Circuit
-  - giorno: gio
-    ora: '19:15'
-    categoria: E
-    nome: Running Club
   - giorno: gio
     ora: '19:30'
     categoria: S
@@ -275,7 +263,7 @@ lezioni:
   - giorno: ven
     ora: '13:00'
     categoria: S
-    nome: Funracket
+    nome: Funcional
   - giorno: ven
     ora: '13:00'
     categoria: B
