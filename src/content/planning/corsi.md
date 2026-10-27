@@ -301,7 +301,7 @@ lezioni:
     categoria: S
     nome: Active Pump
   - giorno: sab
-    ora: '10:30'
+    ora: '10:45'
     categoria: E
     nome: Aeroboxe
   - giorno: sab
