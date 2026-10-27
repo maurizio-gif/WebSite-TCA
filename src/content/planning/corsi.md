@@ -165,9 +165,9 @@ lezioni:
     categoria: B
     nome: Power Yoga
   - giorno: mer
-    ora: '19:00'
-    categoria: S
-    nome: Total Body
+    ora: '19:10'
+    categoria: E
+    nome: Cycling
   - giorno: mer
     ora: '19:05'
     categoria: S
