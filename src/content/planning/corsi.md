@@ -117,7 +117,7 @@ lezioni:
     categoria: B
     nome: Power Yoga
   - giorno: mar
-    ora: '19:55'
+    ora: '20.05'
     categoria: E
     nome: Cycling
   - giorno: mar
