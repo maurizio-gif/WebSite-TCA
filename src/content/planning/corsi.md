@@ -356,5 +356,9 @@ lezioni:
     ora: '12:00'
     categoria: S
     nome: Tribal-x
+  - giorno: mar
+    ora: '19.15'
+    categoria: B
+    nome: Pilates
 ---
 
