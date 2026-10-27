@@ -124,10 +124,6 @@ lezioni:
     ora: '20:00'
     categoria: S
     nome: Circuit
-  - giorno: mar
-    ora: '20:00'
-    categoria: E
-    nome: Twist and Shout
   - giorno: mer
     ora: '07:00'
     categoria: S
@@ -172,10 +168,6 @@ lezioni:
     ora: '19:05'
     categoria: S
     nome: Funracket
-  - giorno: mer
-    ora: '20:00'
-    categoria: E
-    nome: Twist and Shout
   - giorno: mer
     ora: '20:15'
     categoria: E
