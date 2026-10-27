@@ -105,7 +105,7 @@ lezioni:
     categoria: S
     nome: Circuit
   - giorno: mar
-    ora: '18:15'
+    ora: '18:30'
     categoria: B
     nome: Pilates
   - giorno: mar
