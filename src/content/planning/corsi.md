@@ -360,5 +360,9 @@ lezioni:
     ora: '19.15'
     categoria: B
     nome: Pilates
+  - giorno: mer
+    ora: '20.15'
+    categoria: E
+    nome: Cycling
 ---
 
