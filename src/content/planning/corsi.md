@@ -15,7 +15,7 @@ lezioni:
   - giorno: lun
     ora: '11:00'
     categoria: B
-    nome: Flexability
+    nome: Hatha Yoga
   - giorno: lun
     ora: '11:35'
     categoria: B
@@ -357,3 +357,4 @@ lezioni:
     categoria: S
     nome: Tribal-x
 ---
+
