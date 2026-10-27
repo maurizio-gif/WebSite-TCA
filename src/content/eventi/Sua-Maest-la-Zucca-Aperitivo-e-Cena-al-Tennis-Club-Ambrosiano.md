@@ -1,6 +1,6 @@
 ---
 titolo: 'Sua Maestà la Zucca: Aperitivo e Cena al Tennis Club Ambrosiano'
-data: 2026-10-31T00:00:00.000Z
+data: 2026-09-30T00:00:00.000Z
 categoria: Evento
 descrizione: |-
   Il 31 ottobre il TCAmbrosiano in collaborazione con Ghusto Café vi aspetta per un’esclusiva serata autunnale tutta dedicata alla zucca, tra drink a tema, piatti creativi e un'atmosfera cozy. 
@@ -34,26 +34,26 @@ corpo_en: |
   We recommend booking in advance, specifying your preferred option (Aperitif, Dinner or Both) and the number of guests.
 ---
 
-Il Tennis Club Ambrosiano, in collaborazione con Ghusto Café, è lieto di invitarvi all'evento speciale **"Sua Maestà la Zucca"**, in programma per **sabato 31 ottobre dalle ore 18:00**.   
+Il Tennis Club Ambrosiano, in collaborazione con Ghusto Café, è lieto di invitarvi all'evento speciale **"Sua Maestà la Zucca"**, in programma per **sabato 31 ottobre dalle ore 18:00**.
 
-Una serata pensata per celebrare i sapori e i colori dell'autunno in un'atmosfera calda e accogliente. 
+Una serata pensata per celebrare i sapori e i colori dell'autunno in un'atmosfera calda e accogliente.
 
-I nostri chef e bartender hanno ideato per l'occasione un menu alla carta tematico dove la zucca è la vera protagonista, declinata in ricette originali e abbinamenti sfiziosi.   
+I nostri chef e bartender hanno ideato per l'occasione un menu alla carta tematico dove la zucca è la vera protagonista, declinata in ricette originali e abbinamenti sfiziosi.
 
-Potrai personalizzare la tua serata scegliendo l'esperienza più adatta a te:   
+Potrai personalizzare la tua serata scegliendo l'esperienza più adatta a te:
 
-Solo Aperitivo: Drink autunnali accompagnati da sfiziosità a base di zucca.   
+Solo Aperitivo: Drink autunnali accompagnati da sfiziosità a base di zucca.
 
-Solo Cena: Un percorso degustazione con piatti creativi ideati per esaltare il gusto di "Sua Maestà la Zucca".   
+Solo Cena: Un percorso degustazione con piatti creativi ideati per esaltare il gusto di "Sua Maestà la Zucca".
 
-Entrambi (Aperitivo + Cena): L'esperienza completa per godersi appieno l'intera proposta enogastronomica della serata.   
+Entrambi (Aperitivo + Cena): L'esperienza completa per godersi appieno l'intera proposta enogastronomica della serata.
 
-Un'occasione perfetta per trascorrere la serata del 31 ottobre in compagnia, immersi nell'atmosfera del Club e deliziati da un'offerta culinaria d'eccellenza.   
+Un'occasione perfetta per trascorrere la serata del 31 ottobre in compagnia, immersi nell'atmosfera del Club e deliziati da un'offerta culinaria d'eccellenza.
 
 ### Modalità di prenotazione
 
-La prenotazione è obbligatoria per garantire la migliore gestione dell'evento.   
+La prenotazione è obbligatoria per garantire la migliore gestione dell'evento.
 
-Contatto: Paola - Telefono / WhatsApp: **339 1635667  ** 
+Contatto: Paola - Telefono / WhatsApp: \*\*339 1635667  \*\*
 
 Si consiglia di prenotare con anticipo specificando la formula desiderata (Aperitivo, Cena o Entrambi) e il numero di persone.
