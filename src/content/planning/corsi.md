@@ -115,7 +115,7 @@ lezioni:
   - giorno: mar
     ora: '19:00'
     categoria: B
-    nome: Pilates
+    nome: Power Yoga
   - giorno: mar
     ora: '19:55'
     categoria: E
