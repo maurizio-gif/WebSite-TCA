@@ -9,7 +9,7 @@ descrizione: |-
 luogo: Body&Mind
 pubblicato: true
 prenotazioniAttive: true
-postiTotali: 16
+postiTotali: 8
 quotaSocio: 0
 quotaNonSocio: 5
 oreScadenzaPagamento: 48
