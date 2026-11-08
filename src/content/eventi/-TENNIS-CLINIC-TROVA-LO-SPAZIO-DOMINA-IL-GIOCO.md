@@ -7,13 +7,13 @@ descrizione: |
   Domenica 15 novembre torna la Tennis Clinic del Tennis Club Ambrosiano: due ore di lavoro specifico in campo con i Maestri Vavassori, dedicate al movimento e al gioco di gambe, la base di ogni colpo efficace. 
   Una mattinata con i Maestri Vavassori per imparare a muoversi meglio in campo. 
 luogo: Campi in Terra
-iscrizioniHref: 'https://app.playtomic.io/tournaments/2bd4e60f-66fa-44bc-8709-1691afa171d3'
+iscrizioniHref: 'https://app.playtomic.io/tournaments/cfe221a4-7021-4cfb-9191-c5a37485f27e?utm_source=manager'
 descrizione_en: |-
   Do you always seem to be a split second too late to the ball? Do you find yourself too close or too far away to hit it properly?
   On Sunday 15 November, the Ambrosiano Tennis Club’s Tennis Clinic returns: two hours of targeted on-court training with the Vavassori coaches, focusing on movement and footwork – the foundation of every effective shot.
   A morning with the Vavassori coaches to learn how to move better on court.
 luogo_en: clay courts
-corpo_en: |+
+corpo_en: |
   ADAPTATION, DEPTH, SPACE AND RECOVERY
   Adaptation: use short or long strides depending on your distance from the ball.
   Depth: move forwards and backwards to find the right position for your shot.
