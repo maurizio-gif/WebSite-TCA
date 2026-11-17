@@ -117,7 +117,7 @@ lezioni:
     categoria: B
     nome: Power Yoga
   - giorno: mar
-    ora: '20.05'
+    ora: '20:05'
     categoria: E
     nome: Cycling
   - giorno: mar
@@ -336,12 +336,16 @@ lezioni:
     ora: '12:00'
     categoria: S
     nome: Tribal-x
+  - giorno: dom
+    ora: '18:00'
+    categoria: E
+    nome: Cycling
   - giorno: mar
-    ora: '19.15'
+    ora: '19:15'
     categoria: B
     nome: Pilates
   - giorno: mer
-    ora: '20.15'
+    ora: '20:15'
     categoria: E
     nome: Cycling
 ---
