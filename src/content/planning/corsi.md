@@ -336,10 +336,6 @@ lezioni:
     ora: '12:00'
     categoria: S
     nome: Tribal-x
-  - giorno: dom
-    ora: '18:00'
-    categoria: E
-    nome: Cycling
   - giorno: mar
     ora: '19:15'
     categoria: B
