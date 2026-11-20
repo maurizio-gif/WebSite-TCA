@@ -25,6 +25,11 @@ export const appTca = {
   // prenotazione un orario già occupato (vedi src/lib/leadForm.client.js).
   disponibilita: `${APPTCA_URL}/api/disponibilita`,
 
+  // «Invita un amico» (AppTCA/app/api/referral/invitabile): prima di inviare,
+  // il modal chiede se l'amico rientra nel regolamento (mai abbonato dal 2021,
+  // non e' chi invita). Risponde solo sì/no e il motivo, nessun dato personale.
+  referralInvitabile: `${APPTCA_URL}/api/referral/invitabile`,
+
   // Prenotazione eventi (AppTCA/app/api/eventi/*), usata da
   // src/lib/eventoForm.client.js. Anche questi endpoint sono pubblici e non
   // restituiscono mai dati personali: la disponibilità è solo un conteggio di
