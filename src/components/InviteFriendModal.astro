@@ -1,6 +1,7 @@
 ---
 import type { Lang } from '../i18n/utils';
 import prefissi from '../data/prefissi-telefonici';
+import { appTca } from '../data/links';
 
 interface Props { lang?: Lang; }
 const { lang = 'it' } = Astro.props;
@@ -43,6 +44,8 @@ const t = lang === 'en' ? {
   errFriendEmail: "Please enter your friend's email address.",
   errCell: "Please enter your friend's mobile number.",
   errConsent: 'You must confirm you are authorised to share this data.',
+  errGiaSocio: 'This person has already been a TC Ambrosiano member: the invite is only for friends who have not had a membership since 2021.',
+  errStessoSocio: "You can't invite yourself: enter your friend's email address.",
 } : {
   eyebrow: 'Passaparola',
   title: 'Invita un<br><em>Amico.</em>',
@@ -81,6 +84,8 @@ const t = lang === 'en' ? {
   errFriendEmail: "Inserisci l'email del tuo amico.",
   errCell: 'Inserisci il numero di cellulare del tuo amico.',
   errConsent: 'Devi confermare di essere autorizzato a comunicare questi dati.',
+  errGiaSocio: "Questa persona è già stata socia del TC Ambrosiano: l'invito vale solo per chi non ha avuto un abbonamento dal 2021 a oggi.",
+  errStessoSocio: "Non puoi invitare te stesso: inserisci l'email del tuo amico.",
 };
 ---
 
@@ -370,13 +375,15 @@ const t = lang === 'en' ? {
   }
 </style>
 
-<script define:vars={{ ERR: {
+<script define:vars={{ URL_INVITABILE: appTca.referralInvitabile, ERR: {
   email: t.errEmail,
   nome: t.errNome,
   cognome: t.errCognome,
   friendEmail: t.errFriendEmail,
   cell: t.errCell,
   consent: t.errConsent,
+  giaSocio: t.errGiaSocio,
+  stessoSocio: t.errStessoSocio,
 } }}>
   const modal = document.getElementById('modal-invita-amico');
   const dots = modal.querySelectorAll('[data-ia-dot]');
@@ -483,6 +490,33 @@ const t = lang === 'en' ? {
     if (!consent.checked) { showError(2, ERR.consent); return; }
 
     step2SendBtn.disabled = true;
+
+    // Il regolamento: si invita solo chi non ha avuto un abbonamento dal 2021, e
+    // non se stessi. Lo controlla il CRM (lo stesso controllo blocca comunque
+    // l'invito nel database); qui serve a dirlo subito, invece di mostrare
+    // «Invito inviato» per un invito che non conterebbe.
+    try {
+      const r = await fetch(URL_INVITABILE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: friendEmail.value.trim(),
+          cellulare: prefisso.value + cell.value.trim(),
+          email_socio: emailInput.value.trim(),
+        }),
+      });
+      const esito = r.ok ? await r.json() : null;
+      if (esito && esito.invitabile === false) {
+        step2SendBtn.disabled = false;
+        showError(2, esito.motivo === 'stesso_socio' ? ERR.stessoSocio : ERR.giaSocio);
+        friendEmail.focus();
+        return;
+      }
+    } catch (e) {
+      // Il controllo non ha risposto: l'invito parte lo stesso, e se fosse fuori
+      // regola lo ferma il database. Meglio che bloccare tutti gli inviti.
+    }
+
     try {
       await fetch(WEBHOOK_REFERRAL, {
         method: 'POST',
