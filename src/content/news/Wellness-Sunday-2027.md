@@ -7,6 +7,9 @@ sintesi: |-
 immagine: /wellness-sunday.webp
 immagine_alt: Wellness Sunday 2027 al Tennis Club Ambrosiano
 pubblicato: true
+cta_label: Iscriviti
+cta_href: https://tcambrosiano.perfectgym.com/clientportal2/#/Login
+cta_label_en: Register
 titolo_en: 'Wellness Sunday 2027: introducing the Wellness Pass'
 categoria_en: WELLNESS
 sintesi_en: |-
@@ -88,7 +91,11 @@ corpo_en: |-
 
   Promotions cannot be combined. Non-members have access to the activity only.
 
-  Registration details will be available soon.
+  **How to register**
+
+  **Members:** the pass is purchased from the Client Portal, SHOP section: [tcambrosiano.perfectgym.com/clientportal2](https://tcambrosiano.perfectgym.com/clientportal2/#/Login), by logging in with your credentials.
+
+  **Non-members:** register on the portal, select a membership to continue, then "Create your free account". You can ask the secretariat for support by filling in the "Send us a message" form, specifying "external wellness pass purchase".
 ---
 
 La domenica che ti meriti inizia al Club. Nel 2027 il Tennis Club Ambrosiano ed ERAZEN presentano le **Wellness Sunday**: 16 domeniche mattina dedicate all'equilibrio tra corpo e mente, nella sala Body\&Mind.
@@ -194,4 +201,8 @@ In vendita **dal 1° al 24 dicembre**, da attivare entro il 17 gennaio.
 
 *Le promozioni non sono cumulabili. Gli esterni hanno accesso alla sola attività.*
 
-Le modalità di iscrizione saranno disponibili a breve.
+## Come iscriversi
+
+**Soci:** l'acquisto del pass avviene dal Client Portal, sezione SHOP: [tcambrosiano.perfectgym.com/clientportal2](https://tcambrosiano.perfectgym.com/clientportal2/#/Login), inserendo le proprie credenziali.
+
+**Non soci:** procedere con la registrazione al portale, selezionare una membership per andare avanti e poi "Crea il tuo account gratuito". Si potrà richiedere supporto alla segreteria compilando il form "Inviaci un messaggio", specificando "acquisto wellness pass esterni".
