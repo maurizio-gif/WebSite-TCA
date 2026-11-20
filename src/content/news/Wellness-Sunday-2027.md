@@ -3,7 +3,7 @@ titolo: 'Wellness Sunday 2027: arriva il Wellness Pass'
 data: 2026-11-19T00:00:00.000Z
 categoria: WELLNESS
 sintesi: |-
-  Dal 17 gennaio al 23 maggio 2027, 16 domeniche mattina dedicate al benessere con ERAZEN: Mindfulness, Bioenergetica, Breathwork e Sound Healing.
+  Dal 17 gennaio al 23 maggio 2027, 16 domeniche mattina dedicate al benessere con erazen: Mindfulness, Bioenergetica, Breathwork e Sound Healing.
 immagine: /wellness-sunday.webp
 immagine_alt: Wellness Sunday 2027 al Tennis Club Ambrosiano
 pubblicato: true
@@ -13,16 +13,16 @@ cta_label_en: Register
 titolo_en: 'Wellness Sunday 2027: introducing the Wellness Pass'
 categoria_en: WELLNESS
 sintesi_en: |-
-  From 17 January to 23 May 2027, 16 Sunday mornings dedicated to wellbeing with ERAZEN: Mindfulness, Bioenergetics, Breathwork and Sound Healing.
+  From 17 January to 23 May 2027, 16 Sunday mornings dedicated to wellbeing with erazen: Mindfulness, Bioenergetics, Breathwork and Sound Healing.
 immagine_alt_en: Wellness Sunday 2027 at the Ambrosiano Tennis Club
 corpo_en: |-
-  The Sunday you deserve starts at the Club. In 2027 the Ambrosiano Tennis Club and ERAZEN present Wellness Sunday: 16 Sunday mornings dedicated to mind–body balance, in our Body&Mind studio.
+  The Sunday you deserve starts at the Club. In 2027 the Ambrosiano Tennis Club and erazen present Wellness Sunday: 16 Sunday mornings dedicated to mind–body balance, in our Body&Mind studio.
 
   **When**
   Every Sunday from 17 January to 23 May 2027, from 10:30 to 11:30 (60 minutes).
 
   **The activities**
-  Four ERAZEN practices on rotation, each with 4 dates:
+  Four erazen practices on rotation, each with 4 dates:
   **Mindfulness** with Stefano Borzacchiello
   **Bioenergetics** with Daniele Guainazzi
   **Breathwork** with Daniele Guainazzi
@@ -98,7 +98,7 @@ corpo_en: |-
   **Non-members:** register on the portal, select a membership to continue, then "Create your free account". You can ask the secretariat for support by filling in the "Send us a message" form, specifying "external wellness pass purchase".
 ---
 
-La domenica che ti meriti inizia al Club. Nel 2027 il Tennis Club Ambrosiano ed ERAZEN presentano le **Wellness Sunday**: 16 domeniche mattina dedicate all'equilibrio tra corpo e mente, nella sala Body\&Mind.
+La domenica che ti meriti inizia al Club. Nel 2027 il Tennis Club Ambrosiano ed erazen presentano le **Wellness Sunday**: 16 domeniche mattina dedicate all'equilibrio tra corpo e mente, nella sala Body\&Mind.
 
 ## Quando
 
@@ -106,7 +106,7 @@ Ogni domenica **dal 17 gennaio al 23 maggio 2027**, **dalle 10:30 alle 11:30** (
 
 ## Le attività
 
-Quattro pratiche ERAZEN a rotazione, ognuna con 4 date:
+Quattro pratiche erazen a rotazione, ognuna con 4 date:
 
 * **Mindfulness** con Stefano Borzacchiello
 * **Bioenergetica** con Daniele Guainazzi

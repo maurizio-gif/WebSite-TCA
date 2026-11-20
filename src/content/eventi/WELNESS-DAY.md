@@ -63,7 +63,7 @@ Sessioni dinamiche e posturali pensate per rinforzare il corpo, migliorare la fl
 * Power Yoga con Matteo Zenzale — Pratica ritmica e intensa di forza, resistenza e concentrazione.
 * Core Ball con Alessia Besuzzi — Allenamento funzionale con fitball per stabilità e tonificazione del corsetto addominale.
 
-#### 2. AREA ERAZEN – Trattamenti, Olistica & Consapevolezza
+#### 2. AREA erazen – Trattamenti, Olistica & Consapevolezza
 
 Percorsi dedicati alla rigenerazione profonda e alla connessione mente-corpo:
 
